@@ -19,12 +19,12 @@ class ClassicStatusBar : BaseStatusBar
 	{
 		Super.Draw(state, TicFrac);
 
-		if (screenblocks < 11 || automapactive)
+		if (state == HUD_StatusBar)
 		{
 			BeginStatusBar(screenblocks < 11);
 			DrawClassicBar();
 		}
-		else if (screenblocks < 12)
+		else if (state == HUD_Fullscreen)
 		{
 			DrawHUD();
 		}
