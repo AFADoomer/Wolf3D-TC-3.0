@@ -1,0 +1,8 @@
+IWad
+{
+	Name = "Wolfenstein 3D TC"
+	Autoname = "Wolf3D"
+	Game = "Doom"
+	Config = "Wolf3d"
+	BannerColors = "FC F4 00", "CC 00 00"
+}

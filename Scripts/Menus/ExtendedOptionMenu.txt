@@ -1,0 +1,574 @@
+class ExtendedOptionMenu : OptionMenu
+{
+	TextureID title, generictitle;
+	TextureID controls;
+	TextureID top, bottom, left, right;
+	TextureID topleft, topright, bottomleft, bottomright;
+	TextureID select0, select1;
+
+	int fadetarget;
+	int fadetime;
+	double fadealpha;
+	int fadecolor;
+
+	bool exitmenu;
+	int exittimeout;
+
+	bool nodim;
+
+	OptionMenuItem activated;
+
+	override void Init(Menu parent, OptionMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+
+		String prefix = "M_BOR";
+
+		title = TexMan.CheckForTexture(mDesc.mTitle, TexMan.Type_Any);
+		generictitle = TexMan.CheckForTexture("M_CUSTOM", TexMan.Type_Any);
+		controls = TexMan.CheckForTexture("M_CONTROLS", TexMan.Type_Any);
+		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
+		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
+		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
+		right = TexMan.CheckForTexture(prefix .. "R", TexMan.Type_Any);
+		topleft = TexMan.CheckForTexture(prefix .. "TL", TexMan.Type_Any);
+		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
+		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
+		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
+		select0 = TexMan.CheckForTexture("M_SELCT0", TexMan.Type_Any);
+		select1 = TexMan.CheckForTexture("M_SELCT1", TexMan.Type_Any);
+
+		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
+
+		fadetime = 12;
+		fadetarget = gametic;
+		fadealpha = 1.0;
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = 0x880000; }
+
+		nodim = true;
+		DontDim = true;
+	}
+
+	override void OnReturn()
+	{
+		if (!nodim) { fadetarget = gametic; }
+		nodim = false;
+		fadecolor = 0x880000;
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (fadealpha != 0) { return false; }
+
+		int startedAt = mDesc.mSelectedItem;
+
+		switch (mkey)
+		{
+		case MKEY_Back:
+			if (gamestate != GS_FINALE)
+			{ 
+				fadetarget = gametic + fadetime;
+				exitmenu = true;
+			}
+			return false;
+		case MKEY_Up:
+			if (mDesc.mSelectedItem == -1)
+			{
+				mDesc.mSelectedItem = FirstSelectable();
+				break;
+			}
+			do
+			{
+				--mDesc.mSelectedItem;
+
+				if (mDesc.mScrollPos > 0 &&
+					mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos)
+				{
+					mDesc.mScrollPos = MAX(mDesc.mSelectedItem - mDesc.mScrollTop - 1, 0);
+				}
+
+				if (mDesc.mSelectedItem < 0) 
+				{
+					// Figure out how many lines of text fit on the menu
+					int y = mDesc.mPosition * CleanYfac_1;
+
+					if (y <= 0)
+					{
+						if (!title.Exists() && BigFont && mDesc.mTitle.Length() > 0)
+						{
+							if (generictitle.Exists())
+							{
+								y = DrawTitle(generictitle, 0, false) + 8 * CleanYfac;
+							}
+
+							y += (BigFont.GetHeight() + 8) * CleanYfac;
+						}
+
+						if (title.Exists())
+						{
+							y = DrawTitle(title, 0, false) + 8 * CleanYfac;
+						}
+					}
+
+					int rowheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
+					int maxitems = (screen.GetHeight() - rowheight - y - 12 * CleanYfac) / rowheight + 1;
+
+					mDesc.mScrollPos = max(0, mDesc.mItems.Size() - maxitems + mDesc.mScrollTop);
+					mDesc.mSelectedItem = mDesc.mItems.Size() - 1;
+				}
+			}
+			while (!mDesc.mItems[mDesc.mSelectedItem].Selectable() && mDesc.mSelectedItem != startedAt);
+			break;
+
+		case MKEY_Down:
+			if (mDesc.mSelectedItem == -1)
+			{
+				mDesc.mSelectedItem = FirstSelectable();
+				break;
+			}
+			do
+			{
+				++mDesc.mSelectedItem;
+				
+				if (CanScrollDown && mDesc.mSelectedItem == VisBottom)
+				{
+					mDesc.mScrollPos++;
+					VisBottom++;
+				}
+				if (mDesc.mSelectedItem >= mDesc.mItems.Size()) 
+				{
+					if (startedAt == -1)
+					{
+						mDesc.mSelectedItem = -1;
+						mDesc.mScrollPos = -1;
+						break;
+					}
+					else
+					{
+						mDesc.mSelectedItem = 0;
+						mDesc.mScrollPos = 0;
+					}
+				}
+			}
+			while (!mDesc.mItems[mDesc.mSelectedItem].Selectable() && mDesc.mSelectedItem != startedAt);
+			break;
+
+		case MKEY_PageUp:
+			if (mDesc.mScrollPos > 0)
+			{
+				mDesc.mScrollPos -= VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
+				if (mDesc.mScrollPos < 0)
+				{
+					mDesc.mScrollPos = 0;
+				}
+				if (mDesc.mSelectedItem != -1)
+				{
+					mDesc.mSelectedItem = mDesc.mScrollTop + mDesc.mScrollPos + 1;
+					while (!mDesc.mItems[mDesc.mSelectedItem].Selectable())
+					{
+						if (++mDesc.mSelectedItem >= mDesc.mItems.Size())
+						{
+							mDesc.mSelectedItem = 0;
+						}
+					}
+					if (mDesc.mScrollPos > mDesc.mSelectedItem)
+					{
+						mDesc.mScrollPos = mDesc.mSelectedItem;
+					}
+				}
+			}
+			break;
+
+		case MKEY_PageDown:
+			if (CanScrollDown)
+			{
+				int pagesize = VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
+				mDesc.mScrollPos += pagesize;
+				if (mDesc.mScrollPos + mDesc.mScrollTop + pagesize > mDesc.mItems.Size())
+				{
+					mDesc.mScrollPos = mDesc.mItems.Size() - mDesc.mScrollTop - pagesize;
+				}
+				if (mDesc.mSelectedItem != -1)
+				{
+					mDesc.mSelectedItem = mDesc.mScrollTop + mDesc.mScrollPos;
+					while (!mDesc.mItems[mDesc.mSelectedItem].Selectable())
+					{
+						if (++mDesc.mSelectedItem >= mDesc.mItems.Size())
+						{
+							mDesc.mSelectedItem = 0;
+						}
+					}
+					if (mDesc.mScrollPos > mDesc.mSelectedItem)
+					{
+						mDesc.mScrollPos = mDesc.mSelectedItem;
+					}
+				}
+			}
+			break;
+
+		case MKEY_Enter:
+			if (mDesc.mSelectedItem >= 0)
+			{
+				if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemSubmenu")
+				{
+					if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemSafeCommand")
+					{
+						nodim = true;
+						return mDesc.mItems[mDesc.mSelectedItem].Activate();
+					}
+
+					fadecolor = 0x880000;
+					activated = mDesc.mItems[mDesc.mSelectedItem];
+					MenuSound("menu/select");
+					fadetarget = gametic + fadetime;
+
+					return true;
+				}
+				else if (mDesc.mItems[mDesc.mSelectedItem].Activate())
+				{
+					nodim = true;
+					return true;
+				}
+			}
+		default:
+			if (mDesc.mSelectedItem >= 0 && 
+				mDesc.mItems[mDesc.mSelectedItem].MenuEvent(mkey, fromcontroller)) return true;
+			return Super.MenuEvent(mkey, fromcontroller);
+		}
+
+		if (mDesc.mSelectedItem != startedAt)
+		{
+			MenuSound ("menu/cursor");
+		}
+		return true;
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0x880000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+		if (controls)
+		{
+			Vector2 size = TexMan.GetScaledSize(controls);
+
+			screen.DrawTexture(controls, true, screen.GetWidth() / 2 - size.x * CleanXfac / 2, screen.GetHeight() - size.y * CleanyFac, DTA_CleanNoMove, true, DTA_DestWidth, int(size.x * CleanXfac), DTA_DestHeight, int(size.y * CleanYfac));
+		}
+
+		int y = mDesc.mPosition * CleanYfac_1;
+
+		if (y <= 0)
+		{
+			y = DrawStrip(10 * CleanYfac);
+
+			if (!title.Exists() && BigFont && mDesc.mTitle.Length() > 0)
+			{
+				if (generictitle.Exists())
+				{
+					y = DrawTitle(generictitle) + 8 * CleanYfac;
+				}
+
+				let tt = Stringtable.Localize(mDesc.mTitle);
+				screen.DrawText (BigFont, OptionMenuSettings.mTitleColor,
+					(screen.GetWidth() - BigFont.StringWidth(tt) * CleanXfac_1) / 2, y,
+					tt, DTA_CleanNoMove_1, true);
+
+				y += (BigFont.GetHeight() + 8) * CleanYfac;
+			}
+
+			if (title.Exists())
+			{
+				y = DrawTitle(title) + 8 * CleanYfac;
+			}
+		}
+
+		mDesc.mDrawTop = y;
+		int fontheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
+
+		int ytop = y + mDesc.mScrollTop * 8 * CleanYfac_1;
+		int lastrow = screen.GetHeight() - fontheight - 12 * CleanYfac;
+
+		int indent = mDesc.mIndent;
+
+		indent = max(indent, 120);
+
+		if (indent > 280)
+		{ // kludge for the compatibility options with their extremely long labels
+			if (indent + 40 <= CleanWidth_1)
+			{
+				indent = (screen.GetWidth() - ((indent + 40) * CleanXfac_1)) / 2 + indent * CleanXfac_1;
+			}
+			else
+			{
+				indent = screen.GetWidth() - 40 * CleanXfac_1;
+			}
+		}
+		else
+		{
+			indent = (indent - 160) * CleanXfac_1 + screen.GetWidth() / 2;
+		}
+
+		DrawFrame(int(indent + (16 + 120) * CleanXfac_1), lastrow - y + fontheight, -y);
+
+		int i;
+		for (i = 0; i < mDesc.mItems.Size() && y <= lastrow; i++)
+		{
+			// Don't scroll the uppermost items
+			if (i == mDesc.mScrollTop)
+			{
+				i += mDesc.mScrollPos;
+				if (i >= mDesc.mItems.Size()) break;	// skipped beyond end of menu 
+			}
+			bool isSelected = mDesc.mSelectedItem == i;
+			int cur_indent = mDesc.mItems[i].Draw(mDesc, y, indent, isSelected);
+			if (cur_indent >= 0 && isSelected && mDesc.mItems[i].Selectable())
+			{
+				if (((MenuTime() % 8) < 6) || GetCurrentMenu() != self)
+				{
+					DrawConText(OptionMenuSettings.mFontColorSelection, cur_indent + 3 * CleanXfac_1, y+fontheight-9*CleanYfac_1, "\xd");
+				}
+			}
+
+			int selectstate;
+
+			if (mDesc.mItems[i] is "OptionMenuItemOptionBase")
+			{
+				OptionMenuItemOptionBase item = OptionMenuItemOptionBase(mDesc.mItems[i]);
+
+				double ix = indent + item.Cursorspace();
+				double iy = y + 1 * CleanYfac_1;
+
+				selectstate = -1;
+
+				if (item)
+				{
+					if (item.mValues == "YesNo" || item.mValues == "OnOff")
+					{
+						if (item.GetSelection() > 0) { selectstate = 1; }
+						else { selectstate = 0; }
+					}
+					else if (item.mValues == "NoYes" || item.mValues == "OffOn")
+					{
+						if (item.GetSelection() > 0) { selectstate = 0; }
+						else { selectstate = 1; }
+					}
+
+					if (selectstate > -1)
+					{
+						screen.DrawTexture(selectstate ? select1 : select0, true, ix, iy, DTA_CleanNoMove, true, DTA_DestHeight, 8 * CleanYfac_1, DTA_DestWidth, 24 * CleanXfac_1);
+					}
+				}
+			}
+
+			y += fontheight;
+		}
+
+		CanScrollUp = (mDesc.mScrollPos > 0);
+		CanScrollDown = (i < mDesc.mItems.Size());
+		VisBottom = i - 1;
+
+		int scrollpos = Screen.GetWidth() / 2 - (indent + (16 + 120 - 3) * CleanXfac) / 2;
+
+		if (CanScrollUp)
+		{
+			DrawConText(Font.FindFontColor("WolfMenuYellowBright"), scrollpos, ytop + 3 * CleanYfac_1, "\x1a");
+		}
+		if (CanScrollDown)
+		{
+			DrawConText(Font.FindFontColor("WolfMenuYellowBright"), scrollpos, y - 8*CleanYfac_1, "\x1b");
+		}
+
+		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void Ticker()
+	{
+		Super.Ticker();
+
+		if (gametic > 35)
+		{
+			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+		}
+
+		if (exitmenu)
+		{
+			exittimeout++;
+
+			if (exittimeout >= fadetime)
+			{
+				if (!mParentMenu || (mParentMenu is "IntroSlideshow")) { S_ChangeMusic(level.music); }
+				Close();
+			}
+		}
+
+		if (activated && gametic >= fadetarget)
+		{
+			if (activated.Activate()) { activated = null; }
+		}
+	}
+
+	int DrawStrip(int yOffset = 0)
+	{
+		int y;
+
+		if (yoffset < 0) { y = -yOffset; }
+		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
+
+		screen.Dim(0x000000, 1.0, 0, y, screen.GetWidth(), int(22 * CleanYfac));
+		screen.Dim(0x000000, 0.3, 0, y + int(22 * CleanYfac), screen.GetWidth(), int(1 * CleanYfac));
+		screen.Dim(0x000000, 1.0, 0, y + int(23 * CleanYfac), screen.GetWidth(), int(1 * CleanYfac));
+
+		return y + 24 * CleanYfac;
+	}
+
+	void DrawFrame(int w, int h, int yoffset = 0)
+	{
+		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return; }
+
+		int x = Screen.GetWidth() / 2 - w / 2;
+		int y;
+		
+		if (yoffset < 0) { y = -yOffset; }
+		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
+
+		screen.Dim(0x000000, 0.35, x, y, w, h);
+
+		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottom, true, x, y + h, DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(left, true, x - int(3 * CleanXfac), y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
+		screen.DrawTexture(right, true, x + w, y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
+
+		screen.DrawTexture(topleft, true, x - int(3 * CleanXfac), y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(topright, true, x + w, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottomleft, true, x - int(3 * CleanXfac), y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottomright, true, x + w, y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+	}
+
+	int DrawTitle(TextureID title, int yoffset = 0, bool dodraw = true)
+	{
+		Vector2 size = TexMan.GetScaledSize(title);
+
+		int x = Screen.GetWidth() / 2 - int(size.x * CleanXfac / 2);
+		int y;
+
+		if (yoffset < 0) { y = -yOffset; }
+		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
+
+		if (dodraw) { screen.DrawTexture (title, true, x, y, DTA_CleanNoMove, true); }
+
+		return y + int(size.y * CleanYfac);
+	}
+}
+
+class OptionMenuItemBox : OptionMenuItem
+{
+	TextureID top, bottom, left, right;
+	TextureID topleft, topright, bottomleft, bottomright;
+	int x, y, w, h, yoffset, inputw, inputh;
+
+	OptionMenuItemBox Init(int width, int height, int offset, string prefix = "M_BOR")
+	{
+		Super.Init("Box", 'None', true);
+
+		inputw = width;
+		inputh = height;
+		yoffset = offset;
+
+		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
+		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
+		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
+		right = TexMan.CheckForTexture(prefix .. "R", TexMan.Type_Any);
+		topleft = TexMan.CheckForTexture(prefix .. "TL", TexMan.Type_Any);
+		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
+		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
+		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
+
+		return self;
+	}
+	
+	override int Draw(OptionMenuDescriptor desc, int ypos, int indent, bool selected)
+	{
+		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return indent; }
+
+		w = int(inputw * CleanXfac);
+		h = int(inputh * CleanYfac);
+		x = Screen.GetWidth() / 2 - w / 2;
+		y = Screen.GetHeight() / 2 - 103 * CleanYfac + int(yoffset * CleanYfac);
+
+		screen.Dim(0x000000, 0.35, x, y, w, h);
+
+		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottom, true, x, y + h, DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(left, true, x - int(3 * CleanXfac), y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
+		screen.DrawTexture(right, true, x + w, y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
+
+		screen.DrawTexture(topleft, true, x - int(3 * CleanXfac), y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(topright, true, x + w, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottomleft, true, x - int(3 * CleanXfac), y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		screen.DrawTexture(bottomright, true, x + w, y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+
+		return indent;
+	}
+
+	override bool Selectable() { return false; }
+}
+
+class OptionMenuItemTopStrip : OptionMenuItem
+{
+	int yoffset;
+
+	OptionMenuItemTopStrip Init(int offset)
+	{
+		Super.Init("Strip", 'None', true);
+
+		yoffset = offset;
+
+		return self;
+	}
+
+	override int Draw(OptionMenuDescriptor desc, int y, int indent, bool selected)
+	{
+		int y = Screen.GetHeight() / 2 - 100 * CleanYfac + int((yOffset + mYpos) * CleanYfac);
+
+		screen.Dim(0x000000, 1.0, 0, y, screen.GetWidth(), int(22 * CleanYfac));
+		screen.Dim(0x000000, 0.3, 0, y + int(22 * CleanYfac), screen.GetWidth(), int(1 * CleanYfac));
+		screen.Dim(0x000000, 1.0, 0, y + int(23 * CleanYfac), screen.GetWidth(), int(1 * CleanYfac));
+
+		return indent;
+	}
+
+	override bool Selectable() { return false; }
+}
+
+class OptionMenuItemStripTitle : OptionMenuItem
+{
+	TextureID mTexture;
+	double xoffset, yoffset;
+
+	OptionMenuItemStripTitle Init(double x_offs, double y_offs, String patch)
+	{
+		xoffset = x_offs;
+		yoffset = y_offs;
+
+		mTexture = TexMan.CheckForTexture(patch, TexMan.Type_Any);
+
+		Super.Init("Title", 'None', true);
+
+		return self;
+	}
+
+	override int Draw(OptionMenuDescriptor desc, int y, int indent, bool selected)
+	{
+		if (!mTexture.Exists()) { return indent; }
+
+		Vector2 size = TexMan.GetScaledSize(mTexture);
+
+		int x = Screen.GetWidth() / 2 - int(size.x * CleanXfac / 2) + int(xOffset* CleanXfac);
+		int y = Screen.GetHeight() / 2 - 100 * CleanYfac + int((yOffset + mYpos) * CleanYfac);
+
+		screen.DrawTexture (mTexture, true, x, y, DTA_CleanNoMove, true);
+
+		return indent;
+	}
+
+	override bool Selectable() { return false; }
+}

@@ -1,0 +1,378 @@
+#library "WLF3DLIB"
+#include "zcommon.acs"
+
+int	polyinfo[255];
+int	PushWalls[255];
+int	intPushWallMoveDist = 128.0;
+global int 18:SecretMarkers[];
+
+Function int WolfCoord(int intCoord)
+{
+	int intReturn = 0;
+	intCoord = intCoord / 1.0;
+	intCoord = (intCoord + 2048 - 32) / 64;
+	return intCoord;
+}
+
+Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
+{
+	SetHudSize(320, 200, 1);
+
+	if (!font) { font = "BLACK"; }
+
+	SetFont(font);
+	HudMessage (s:"A"; 3, 0, -1, 160.0, 100.0, holdTime, inTime, outTime);
+}
+
+
+Script "Initialize" ENTER
+{
+	if (GameType() != GAME_TITLE_MAP)
+	{
+		int lives = ScriptCall("LifeHandler", "GetLives");
+		int justdied = ScriptCall("LifeHandler", "JustDied");
+
+		if (lives == -1 && justdied)
+		{
+			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+			ScriptCall("Menu", "SetMenu", "HighScores");
+			SetMusic("HITLWLTZ");
+		}
+		else
+		{
+			if (!GetCVar("g_nointro")) { ScriptCall("Menu", "SetMenu", "GetPsyched"); }
+
+			if (justdied) // New pistol start after losing a life
+			{
+				ResetWeapons();
+			}
+			else if (lives == 0) // First entry in new game
+			{
+				ResetWeapons();
+
+				ScriptCall("LifeHandler", "TakeLife", 10);
+				ScriptCall("LifeHandler", "GiveLife", 4);
+			}
+		}
+	}
+}
+
+Function void ResetWeapons(void)
+{
+	GiveInventory("WolfKnife", 1);
+	GiveInventory("WolfPistol", 1);
+}
+
+Script 1 (int po, int dir, int lock)
+{
+	ACS_NamedExecuteAlways("W_DoSlidingDoor", 0, po, dir, lock);
+}
+
+Script 2 (int po, int dir)
+{
+	ACS_NamedExecuteAlways("W_DoSecretDoor", 0, po, dir);
+}
+
+Script 4 (int type)
+{
+	if (GameType() == GAME_NET_DEATHMATCH) { Terminate; }
+
+	if (type == 1)
+	{
+		ACS_NamedExecuteWait("W_VictorySetup", 0, 0, 0, 64);
+		
+		Delay(1);
+
+		SetActorProperty(ActivatorTID(), APROP_RenderStyle, 0);
+		Thing_Activate (2);
+		ChangeCamera(2,1,0);
+		Delay(35);
+		SetActorProperty(1, APROP_RenderStyle, 1);
+		Thing_Activate (1);
+		Delay(200);
+	}
+
+	FadeToBlack(5.0, 0.5, 0.0, 0);
+
+	Delay(18);
+
+	Exit_Normal(0);
+}
+
+Script 10 (int Type)
+{
+	Delay(15); // Give time for the switch animation and sound to play
+
+	FadeToBlack(5.0, 0.5, 0.0, 0);
+
+	Delay(18);
+
+	if (Type) { Exit_Secret(0); }
+	else { Exit_Normal(0); }
+}
+
+Script 15 (int WallID)
+{}
+
+Script 27 (void)
+{
+	ACS_NamedExecuteAlways("W_DeathCam", 0);
+}
+
+Script 601 (void)
+{}
+
+//Polyobject Doors
+Script "W_DoSlidingDoor" (int po, int dir, int lock)
+{
+	int index = po - 1;
+	int dirStart, dirEnd, bAccess = 0;
+
+	if(dir == 1)
+	{
+		dirStart = 192;
+		dirEnd = 64;
+	}
+	else if(dir == 2)
+	{
+		dirStart = 0;
+		dirEnd = 128;
+	}
+
+	if(lock == 1)
+	{
+		If (CheckInventory("BlueKey"))
+			bAccess = 1;
+		Else
+		{
+			activatorsound("*usefail", 127);
+			bAccess = 0;
+		}
+	}
+	else if(lock == 2)
+	{
+		If (CheckInventory("YellowKey"))
+			bAccess = 1;
+		Else
+		{
+			activatorsound("*usefail", 127);
+			bAccess = 0;
+		}
+	}
+	else if (lock == 5)
+	{
+		If (PlayerNumber() < 0)
+		{
+				bAccess = 1;
+		}
+		Else
+			bAccess = 0;
+	}
+	else
+		bAccess = 1;
+
+	if (bAccess == 1)
+	{
+		if (polyinfo[index] == 0)
+		{
+			If (lock==5 && !ActivatorTID()) Thing_Deactivate(0);
+			polyinfo[index] = 1;
+
+			activatorsound("door/classic/open",127);
+
+			Polyobj_OR_Move(po,16,dirStart,64);
+			delay(30);
+			If (lock==5 && !ActivatorTID()) Thing_Activate(0);
+			delay(120);
+			if (polyinfo[index] == 1)
+			{
+				activatorsound("door/classic/close",127);
+
+				Polyobj_OR_Move(po,16,dirEnd,64);
+				polyinfo[index] = 0;
+			}
+		}
+		else if (polyinfo[index] == 1 && lock != 5)
+		{
+			activatorsound("door/classic/close",127);
+
+			Polyobj_OR_Move(po,16,dirEnd,64);
+			polyinfo[index] = 0;
+		}
+	}
+}
+
+//Secret Doors
+Script "W_DoSecretDoor" (int po, int Angle)
+{
+	int intSpawnDist = 64.0;
+	int intMaxMove = GetCvar("g_maxpushwallmove");
+
+	If (intMaxMove == 0)
+	{
+		intMaxMove = 2;
+	}
+
+	If (!PushWalls[po] || (GetCvar("g_infinitepushwalls") == 1))
+	{
+		int PolyX = GetPolyObjX(po) + 24.0;
+		int PolyY = GetPolyObjY(po);
+
+		int originX, originY, destX, destY, moveX, moveY, intMoveDist;
+
+		moveX = 0;
+		moveY = 0;
+
+		Switch (Angle)
+		{
+			Case 0:
+				moveX = 1;
+			break;
+			Case 64:
+				moveY = 1;
+			break;
+			Case 128:
+				moveX = -1;
+			break;
+			Case 192:
+				moveY = -1;
+			break;
+		}
+
+		originX = PolyX + (32.0 * moveX);
+		originY = PolyY + (32.0 * moveY);
+
+		Spawn("Secret_Check", originX, originY, 0, 1900 + po, 0);
+
+		For (int i=1; i<=intMaxMove; i=i+1)
+		{
+			destX = originX + (moveX * 64.0 * i) - (32.0 * moveX);
+			destY = originY + (moveY * 64.0 * i) - (32.0 * moveY);
+
+			If (Spawn("Secret_Block", destX, destY, 0, 2000 + po, 0)) //Check if no object is in the way
+			{
+				If(CheckSight (2000 + po, 1900 + po, CSF_NOBLOCKALL)) //Check if destination is inside map
+					intMoveDist += 64.0;
+				Thing_Remove(2000 + po);
+			}
+		}
+		Thing_Remove(1900 + po);
+
+		If (intMoveDist > 0)
+		{
+			PushWalls[po] = 1;
+
+			PolyObj_Move(po, 8, Angle, intMoveDist/1.0);
+
+			AmbientSound("door/classic/secret",127);
+
+			PolyX = GetPolyObjX(po) + 24.0;
+			PolyY = GetPolyObjY(po);
+
+			If (SecretMarkers[WolfCoord(PolyX + (intMoveDist * moveX)) * 64 + WolfCoord(PolyY + (intMoveDist * moveY))] != 0)
+				PushWalls[po] = 0;
+		}
+
+		Thing_Remove(2000+po);
+	}
+}
+
+Script "W_PlayerDeath" DEATH //501
+{
+	If (PlayerCount() == 1) { SetMusic(""); }
+
+	If (!(GameType() == GAME_NET_DEATHMATCH)) { FadeTo(255, 0, 0, 1.0, 1.0); }
+
+	ScriptCall("LifeHandler", "TakeLife", 1);
+}
+
+Script "W_DeathCam" (void)
+{
+	Delay(35);
+
+	//Set Activator to Death Cam replay state
+	SetActorState (0, "Death.Cam", true);
+
+	ScriptCall("Menu", "SetMenu", "DeathCamMessage");
+
+	Delay(18);
+
+	SetActivatorToTarget(ActivatorTID());
+
+	SetPlayerProperty(1, 1, PROP_NOTARGET);
+	SetPlayerProperty (1, 1, PROP_TOTALLYFROZEN);
+
+	Delay(3 * 35);
+
+	ChangeCamera(999, 1, 0);
+
+	Delay(6 * 35);
+
+	Exit_Normal(0);
+}
+
+Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
+{
+	If (StartX == 0 && StartY == 0)
+	{
+		StartX = GetActorX(0);
+		StartY = GetActorY(0);
+	}
+	Else
+	{
+		StartX = StartX * 1.0;
+		StartY = StartY * 1.0;
+	}
+
+	if (BitAngle == 0) { BitAngle = GetActorAngle(0) >> 8; }
+
+	int Angle = BitAngle << 8;
+
+	int OffsetX;
+	int OffsetY;
+
+	OffsetX = cos(Angle) * 32;
+	OffsetY = sin(Angle) * 32;
+
+	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 3, BitAngle);
+	SetThingSpecial (3, 0, 0, 2, 0, 4);
+
+	OffsetX = cos(Angle) * 64;
+	OffsetY = sin(Angle) * 64;
+
+	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 4, BitAngle);
+	SetThingSpecial (4, 0, 0, 10, 0, 5);
+
+	OffsetX = cos(Angle) * 128;
+	OffsetY = sin(Angle) * 128;
+
+	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 5, BitAngle + 128);
+	SetThingSpecial (5, 0, 0, 6, 0, 6);
+
+	OffsetX = cos(Angle) * 224;
+	OffsetY = sin(Angle) * 224;
+
+	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 6, BitAngle + 128);
+	SetThingSpecial (6, 0, 0, 0, 0, 0);
+
+	OffsetX = cos(Angle) * -32;
+	OffsetY = sin(Angle) * -32;
+
+	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 7, BitAngle);
+	SetThingSpecial (7, 0, 0, 4, 0, 3);
+
+	OffsetX = cos(Angle) * 224;
+	OffsetY = sin(Angle) * 224;
+
+	SpawnForced ("PatrolPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 9, BitAngle);
+
+	OffsetX = cos(Angle) * -96;
+	OffsetY = sin(Angle) * -96;
+
+	SpawnForced ("MovingCamera", StartX + OffsetX, StartY + OffsetY, 32.0, 2, BitAngle);
+	SetThingSpecial (2, 0, 7, 0, 3);
+
+	SpawnForced ("BJ", StartX, StartY, 32, 1, BitAngle);
+	Thing_Deactivate(1);
+	SetThingSpecial (1, 229, 0, 9, 1);
+}

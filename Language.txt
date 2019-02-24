@@ -1,0 +1,114 @@
+[enu default]
+
+//Wolf Exit Messages
+QUITMSG1 = "Dost thou wish to\nleave with such hasty\nabandon?";
+QUITMSG2 = "Chickening out...\nalready?";
+QUITMSG3 = "Press N for more carnage.\nPress Y to be a weenie.";
+QUITMSG4 = "So, you think you can\nquit this easily, huh?";
+QUITMSG5 = "Press N to save the world.\nPress Y to abandon it in\nits hour of need.";
+QUITMSG6 = "Press N if you are brave.\nPress Y to cower in shame.\n";
+QUITMSG7 = "Heroes, press N.\nWimps, press Y.";
+QUITMSG8 = "You are at an intersection.\nA sign says, 'Press Y to quit.'\n>";
+QUITMSG9 = "For guns and glory, press N.\nFor work and worry, press Y.";
+
+// Engine strings, adjusted for standard capitalization and to remove prompts
+ENDGAME = "Are you sure you want \nto end the game you \nare playing? (Y or N):";
+LOADNET = "You can't do load while in a net game!";
+QLOADNET = "You can't quickload during a netgame!";
+QSAVESPOT = "You haven't picked a quicksave slot yet!";
+SAVEDEAD = "You can't save if you aren't playing!";
+QSPROMPT = "Quicksave over your game named\n\n'%s'?";
+QLPROMPT = "Do you want to quickload the game named\n\n'%s'?";
+NEWGAME = "You can't start a new game\nwhile in a network game.";
+NETEND = "You can't end a netgame!";
+
+SWSTRING = "Please Select \"Read This!\"\nfrom the Options menu to\nfind out how to order this\nepisode from Apogee.";
+
+SAVEGAMENAME = "wolf3dsv";
+OPTMNU_TITLE = "GAME OPTIONS";
+HUDMNU_TITLE = "HUD OPTIONS";
+SCALEMNU_TITLE = "SCALING OPTIONS";
+ALTHUDMNU_TITLE = "ALTERNATIVE HUD";
+MISCMNU_TITLE = "MISCELLANEOUS OPTIONS";
+
+//Custom Messages
+PRESS = "Press a key";
+PRESSKEY = "Press a key.";
+PRESSYN = "\c[TrueBlack]Press Y or N.";
+DOSY = "(Press Y to quit)";
+SAFEMESSAGE = "\c[TrueBlack]Do you really want to do this?";
+MNU_DELETESG = "\c[TrueBlack]Do you really want to delete the savegame ";
+
+// Cheat strings
+STSTR_DQDON = "God Mode ON";
+STSTR_DQDOFF = "God Mode OFF";
+STSTR_KFAADDED = "All Weapons, Keys, and Ammo Added";
+STSTR_FAADDED = "All Weapons and Ammo Added";
+STSTR_NCON = "Walk Through Walls ON";
+STSTR_NCOFF = "Walk Through Walls OFF";
+STSTR_CHOPPERS = "Nothing happened...";
+GOOBERS = "Debugging keys are\nnow available!";
+CHEAT_ILM = "You now have 100% Health,\n99 Ammo and both Keys!\n\nNote that you have basically\neliminated your chances of\ngetting a high score!";
+CHEAT_GOD_ON = "God mode ON";
+CHEAT_GOD_OFF = "God mode OFF";
+CHEAT_ITEMS = "Free items!";
+
+// Deathcam screen message
+DEATHCAM = "Let's see that again!";
+
+// Menu Strings
+M_EPIS = "Which episode to play?";
+M_SKILL = "How tough are you?";
+
+// Episode Names
+EP_1 = "Episode 1\nEscape from Wolfenstein";
+EP_2 = "[Optional]Episode 2\nOperation: Eisenfaust";
+EP_3 = "[Optional]Episode 3\nDie, Fuhrer, Die!";
+EP_4 = "[Optional]Episode 4\nA Dark Secret";
+EP_5 = "[Optional]Episode 5\nTrail of the Madman";
+EP_6 = "[Optional]Episode 6\nConfrontation";
+
+// Skill Names
+SK_1 = "Can I play, Daddy?";
+SK_2 = "Don't hurt me.";
+SK_3 = "Bring 'em on!";
+SK_4 = "I am Death incarnate!";
+
+// Automap Labels
+AM_ITEMS = "Treasure:";
+AM_MONSTERS = "Enemies:";
+
+// Stats Screen
+STATS_ITEMS = "Total Treasure:";
+STATS_MONSTERS = "Total Kills:";
+STATS_SECRETS = "Total Secrets:";
+STATS_TIME = "Total Time:";
+STATS_CHAPTER = "Episode ";
+STATS_NONE = "No statistics available";
+
+STATS_COMPLETED = "Completed";
+STATS_BONUS = "Bonus";
+STATS_BONUS2 = "Bonus!";
+STATS_LEVELTIME = "Time";
+STATS_PAR = "PAR";
+STATS_KILLRATIO = "Kill Ratio";
+STATS_SECRETRATIO = "Secret Ratio";
+STATS_TREASURERATIO = "Treasure Ratio";
+STATS_YOUWIN = "You Win!";
+STATS_TOTALTIME = "Total Time";
+STATS_KILL = "Kill";
+STATS_SECRET = "Secret";
+STATS_TREASURE = "Treasure";
+STATS_AVERAGES = "Averages";
+
+// Level Names
+FLOOR_1 = "Floor 1";
+FLOOR_2 = "Floor 2";
+FLOOR_3 = "Floor 3";
+FLOOR_4 = "Floor 4";
+FLOOR_5 = "Floor 5";
+FLOOR_6 = "Floor 6";
+FLOOR_7 = "Floor 7";
+FLOOR_8 = "Floor 8";
+FLOOR_9 = "Floor 9";
+FLOOR_10 = "Secret Floor";

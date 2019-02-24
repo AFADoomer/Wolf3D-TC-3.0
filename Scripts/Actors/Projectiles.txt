@@ -1,0 +1,127 @@
+// Wolf3D Projectiles and Puffs
+
+// Wolf3D Rocket
+class WolfRocketBase : Actor
+{
+	Default
+	{
+		Projectile;
+		Radius 4;
+		Speed 14;
+		SeeSound "missile/fire";
+		DeathSound "missile/hit";
+	}
+
+	States
+	{
+		Spawn:
+			MISL A 1 Bright;
+			MISL A 1 Bright A_SpawnItemEx("WolfRocketSmoke", 0, 0, 0);
+			Loop;
+		Death:
+			BAL3 CDE 4 Bright A_Explode(16, 32, 1);
+			Stop;
+	}
+}
+
+class WolfRocket : WolfRocketBase
+{
+	Default
+	{
+		DamageType "WolfNazi";
+	}
+}
+
+class WolfRocketSmoke : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP;
+		+DROPOFF;
+		+NOGRAVITY;
+		-SOLID;
+		Height 5;
+		Radius 5;
+		Speed 0;
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A 3;
+			RTRL ABC 2;
+		Death:
+			RTRL D 2;
+			Stop;
+	}
+}
+
+// Schabbs Syringe
+class Syringe : Actor
+{
+	Default
+	{
+		Projectile;
+		Speed 14;
+		Damage 6;
+		ExplosionDamage 6;
+		ExplosionRadius 10;
+		SeeSound "syringe/throw";
+		DamageType "WolfNaziSyringe";
+	}
+
+	States
+	{
+		Spawn:
+			WB3P ABCD 3;
+			Loop;
+		Death:
+			TNT1 AAA 4 A_Explode;
+			Stop;
+	}
+}
+
+// Hitler Ghost Fireballs 
+class GhostFireBallBase : Actor
+{
+	Default
+	{
+		Projectile;
+		+MTHRUSPECIES
+		Radius 4;
+		Speed 2;
+		DamageType "Fire";
+		SeeSound "flame/fire";
+	}
+
+	States
+	{
+		Spawn:
+			BAL3 AB 4 Bright;
+			Loop;
+		Death:
+			BAL3 A 0 Bright A_Explode (16, 16, 1);
+			Stop;
+	}
+}
+
+class GhostFireball : GhostFireballBase
+{
+	Default
+	{
+		DamageType "WolfNazi";
+	}
+}
+
+//Used instead of GhostFireball when 'g_fastfireballs' cvar is true
+// The original fireball speed in Wolf3D was dependant on processor speed
+// instead of gametics...  So fireballs were faster on slower computers -
+// the GhostFireBall actor above approximates the speed on a faster 
+// machine; the one here is closer to the id-intended speed.
+class FastGhostFireBall : GhostFireball
+{
+	Default
+	{
+		Speed 8;
+	}
+}

@@ -1,0 +1,156 @@
+// Empty sound placeholder
+NULL				DSEMPTY
+
+/* Pickup Sounds */
+// Ammo
+pickups/ammo			P_AMMO
+
+// Weapons
+pickups/mgun			P_MGUN
+pickups/cgun			P_CGUN
+
+$singular pickups\mgun
+$singular pickups\cgun
+
+// Health
+pickups/food			P_FOOD
+pickups/medkit			P_MEDKIT
+pickups/life			P_LIFE
+
+// Keys
+pickups/key			P_KEY
+
+$singular pickups\key
+
+// Score Items
+pickups/chest			T_CHEST
+pickups/cross			T_CROSS
+pickups/crown			T_CROWN
+pickups/cup			T_CUP
+
+/* Map Sounds */
+// Doors
+door/classic/open		WSND0003
+door/classic/close		WSND0002
+door/classic/secret		WSND0015
+
+// Switches
+switches/elevator		WSND0030
+
+/* Menu Sounds */
+menu/activate			M_SELECT
+menu/backup			M_BACK
+menu/change			M_MOVE
+menu/choose			NULL
+menu/select			M_SELECT
+menu/clear			M_BACK
+menu/cursor			M_MOVE
+menu/dismiss			M_BACK
+menu/invalid			NULL
+menu/prompt			M_MOVE
+menu/alert			DSNOWAY
+$alias menu/quit1		NULL
+$alias menu/quit2		NULL
+
+/* Stat Screen Sounds */
+stats/bonus100			S_100
+stats/bonuscount		S_BONUSD
+stats/total			S_BONUSC
+stats/nobonus			S_BONUSN
+
+$limit stats/bonuscount		1
+
+/* Weapon Sounds */
+// Player weapons
+weapons/wknife			DSWKNIF
+weapons/wpistol			WSND0005
+weapons/wmachinegun		WSND0004
+weapons/wchaingun		WSND0006
+
+// Enemy weapons
+shots/burst			WSND0011
+shots/single			WSND0021
+
+boss/attack			WSND0010
+
+syringe/throw			DSBO3ATK
+
+flame/fire			DSFLAME
+
+missile/fire			DSMISSF
+missile/hit			DSMISSX
+
+/* Player Sounds */
+$playersound	player	male	*pain100	WSND0014
+$playersound	player	male	*death		DSDEATH
+$playersound	player	male	*xdeath		DSDEATH
+$playersound	player	male	*usefail	DSNOWAY
+bj/yell				WSND0032
+
+/* Miscellaneous */
+$alias misc/secret		NULL
+slurpie				WSND0022
+goobers				S_GOOB
+
+/* Enemy Sounds */
+// Dog
+dog/sight			WSND0001
+dog/attack			WSND0029
+dog/death			WSND0016
+
+// Brownshirt Guard
+brown/die1			WSND0012
+brown/die2			WSND0013
+brown/die4			WSND0034
+brown/die5			WSND0035
+brown/die6			WSND0039
+brown/die7			WSND0040
+brown/die8			WSND0041
+brown/die9			WSND0042
+$random brown/die3 		{ brown/die2 brown/die4 }
+brown/sight			WSND0000
+$random brown/death		{ brown/die1 brown/die2 brown/die3 brown/die4 brown/die5 brown/die7 brown/die8 brown/die9 }
+
+// SS Guard
+blue/sight			WSND0007
+blue/death			WSND0020
+
+// Officer
+white/sight			WSND0027
+white/death			WSND0028
+
+// Mutant
+$alias mutant/sight		NULL
+mutant/death			WSND0017
+
+// Hans Grosse
+hans/sight			WSND0008
+hans/death			WSND0009
+
+// Dr. Schabbs
+schabbs/sight			WSND0025
+schabbs/death			WSND0024
+
+// Hitler Ghost
+hgst/sight			WSND0023
+hgst/death			WSND0026
+
+// Hitler Mech
+hitler1/sight			WSND0018
+hitler1/death			WSND0031
+
+// Hitler
+hitler2/sight			WSND0033
+hitler2/death			WSND0019
+
+// Giftmacher
+gift/sight			WSND0037
+gift/death			WSND0036
+
+// Gretel Grosse
+gretel/sight			WSND0043
+gretel/death			WSND0044
+
+// Fettgesicht
+fatface/sight			WSND0038
+fatface/death			WSND0045

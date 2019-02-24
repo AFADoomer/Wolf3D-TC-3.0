@@ -1,0 +1,16 @@
+^P
+^G16,16,5
+^C7eCONGRATULATIONS!
+^C00
+The General gasps his last breath, and the free world is safe from the terrifying Nazi chemical war.  You return to Allied Headquarters, a Medal of Honor waiting for you.
+
+Allied Command informs you of some nefarious activities around Castle Hollehammer.  Something about some grey-skinned berserk soldiers . . . .
+^P
+^c7eYOU DID IT!
+^c00
+You have finished the sixth Wolfenstein episode!
+
+You are truly one of the great heroes!  The world cheers your name!  You get your picture taken with the president!  People name their babies after you!  You marry a movie star!  Yes!  You are so cool!
+
+THE END
+^E

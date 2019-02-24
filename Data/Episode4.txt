@@ -1,0 +1,10 @@
+^P
+^G16,16,5
+^C7eMAD OTTO GIFTMACHER IS DEAD!
+^C00
+The twisted scientist behind the chemical war lies at your feet, but the fruits of his labor grow elsewhere!  The first wave of chemical war is already underway.  In the heavily guarded fortress of Erlangen are the plans for the upcoming Giftkrieg (or Poison War).  Find them and you'll know where to find General Fettgesicht, leader of the deadly assault.
+^P
+^c7eTHE NEXT ADVENTURE AWAITS!
+^c00
+So don't wait . . . start the next adventure and find those plans!
+^E

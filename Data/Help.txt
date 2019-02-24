@@ -1,0 +1,430 @@
+^PAGE 1
+^c7eQUICK COMMAND REFERENCE
+^c00
+Arrows move. Ctrl shoots. Alt strafes.
+
+F1			Help
+F2			Save game (F8 for Quick save)
+F3			Load game (F9 for Quick load)
+F4			Sound menu
+F5			Resize view window
+F6			Controls menu
+F7			End Game
+F10		Exit to DOS
+
+Read on for more information.
+^PAGE 2
+
+
+^c7e										TABLE OF CONTENTS
+^c00
+
+								STORY	.	.	.	.	.	.	.	.	.	.	.	.	.	3
+								CONTROLS	.	.	.	.	.	.	.	.	.	.	6
+								ABOUT ^c7cId ^c00	.	.	.	.	.	.	.	.	.	.	12
+								^c28ORDERING	^c00.	.	.	.	.	.	.	.	.	.	.	16
+								MORE WOLFENSTEIN!	.	.	.	19
+								^c6dSOFTWARE CREATIONS ^c00		24
+								FOREIGN ORDERS	.	.	.	.	.	28
+^PAGE 3
+^G12,76,13
+^G66,16,3
+
+
+
+
+
+^c00You stand over the guard's body, grabbing frantically for his gun. You're not sure if the other guards heard his muffled scream.  Deep in the belly of a Nazi dungeon, you've only a knife, a gun, and your wits to aid your escape.
+^PAGE 4
+^G16,16,4
+^c00Just a few weeks ago you were on a reconnaissance mission of extreme importance.  You were to infiltrate the Nazi fortress and find the plans for Operation Eisenfaust.  Captured in your attempt, you were taken to their prison, and awaited your execution.  Only you know where the plans are kept, and the Allies will face a great defeat if you don't escape!  You must face the horrors of the prison keep known as Wolfenstein.
+^PAGE 5
+^G16,16,11
+Captain William J. "B.J." Blazkowicz, you've got a gun and eight floors of hell to get through.  Good luck!
+
+
+
+
+Hey, if you make it, you'll have something to tell your grandkids about . . . .
+
+If you don't, at least you'll go out in a blaze of glory!
+^PAGE 6
+^G16,16,6
+^c7eCONTROLS
+^c00
+In Wolfenstein 3-D, you can use the keyboard, mouse, joystick, or Gravis PC Gamepad.
+ 
+To move around the menus, use the arrow keys to move from item to item, then press ^c6eEnter ^c00to select that item.  ^c6eEsc ^c00always backs out.  You can press the first letter of a menu item to go to that item.
+
+Or use the mouse, joystick, or Gamepad-- they work, too!
+^PAGE 7
+^G20,16,5
+Once you are in the game, use the arrow keys to move. Hold down ^c6eShift ^c00to run fast.
+
+Press ^c6eCtrl ^c00to fire your weapon.
+
+Use ^c6eAlt ^c00 with the left and right arrows to slide side to side instead of turning left or right.  This is called "Strafe Mode."
+
+Press ^c6eSpace ^c00to Open Doors and activate elevators to go to the next floor of the keep.
+^PAGE 8
+^G16,16,6
+When using the mouse or joystick, use button 1 to shoot, button 2 to strafe.
+
+
+
+With a three-button mouse, use the third button to open doors.
+
+Gravis PC Gamepads have a fourth button, useful as a run button.
+^PAGE 9
+^G50,110,12
+Once you have more than one weapon, the keys 1-4 choose the weapons:
+
+
+
+
+
+
+
+
+Holding down the fire button is fun, but short bursts save bullets.
+^PAGE 10
+^G74,16,10
+^G124,8,7
+Some walls in the prison can be pushed back to reveal hidden rooms. Hold down Space to push the wall in front of you. Just think of Space as the Use key. It will use doors, use elevators, and so on.
+
+There are locked doors in the castle that require either a gold or silver key.  It will be somewhere on the floor you're on.
+
+If you find your health dropping, pick up some food or first aid.  You'll find you're damaged more when shot at close range.
+^PAGE 11
+^G16,16,9
+Pick up the ammo left behind when you toast someone.  For instance, perforate an SS--free machine gun!
+
+
+You get a free guy every 40,000 points, so collect those treasures! (You can have a maximum of nine lives.)
+
+When you get killed, you lose everything but your gun and start at the beginning of the floor you were on.
+^PAGE 12
+^G116,244,16
+^c7eABOUT ^c6eId ^c7eSOFTWARE
+^c00
+Yes, that's Id, as in the id, ego, and superego in the psyche.  We think shareware is a fine alternative to the high prices of commercial vendors.  For under twelve dollars a game, you can get the hottest, fastest texture-mapped game available.  How can you beat that?
+
+^c2cWe'll answer that question in a few months. . . .
+^PAGE 13
+^G116,244,16
+^c7eId Software is . . .
+
+^c6ePROGRAMMERS
+^c00John Carmack
+John Romero
+
+^c6eARTIST
+^c00Adrian Carmack
+
+^c6eCREATIVE DIRECTOR
+^c00Tom Hall
+^PAGE 14
+^G116,244,16
+^c7eId Software is . . .
+
+^c6eMANUAL DESIGN
+^c00Kevin Cloud
+
+^c6eCHIEF OPERATING OFFICER
+^c00Jay Wilbur
+^PAGE 15
+^c7eCONTRIBUTORS
+
+^c6eCOMPOSER
+^c00Robert Prince
+
+^c6fADDITIONAL PROGRAMMING
+^c00Jason Blochowiak
+^PAGE 16
+^c7eORDERING WOLFENSTEIN 3-D
+^c00
+Don't miss the next two exciting episodes:
+
+^c29Operation: Eisenfaust
+^c00Fight an evil army of undead killing machines, the hideous experiments of the maniacal Dr. Schabbs!  Then battle the deadly Doctor himself!
+
+^c29Die, Fuhrer, Die!
+^c00With the Third Reich crumbling around him, Hitler seems bent on taking the world with him.  You must charge his gigantic bunker, find him, and end the evil once and for all!
+^PAGE 17
+^G50,230,14
+^G100,230,15
+^c7eORDERING WOLFENSTEIN 3-D
+^c00
+Register now and receive:
+  * All three exciting adventures
+  * All digitized sounds
+  * New graphics and enemies
+  * Cool 16-page manual
+  * The Secret Cheat password
+  * Exciting new bonus game
+
+  To order, call toll free:
+			1-800-426-3123
+  (Visa and MasterCard Welcome)
+  Order all three adventures for only $35, plus $4 shipping.
+^PAGE 18
+^c7eORDERING INFORMATION
+
+^c00Please specify disk size:   5.25"  or  3.5"
+
+Please indicate if you have high-density disk drives.
+
+To order send $35, plus $4 shipping, USA funds, to:
+
+		Apogee Software
+		P.O. Box 496389
+		Garland, TX 75049-6389  (USA)
+
+  Or CALL NOW toll free: 1-800-426-3123
+^PAGE 19
+^c7eALSO AVAILABLE
+^c00
+Ready for a real challenge?  Available right now are three more episodes of ^c6eWolfenstein 3-D: the Nocturnal Missions! ^c00In this prequel, B.J. must stop a Nazi plan for chemical warfare. Don't miss an action-packed second of it!
+
+Nocturnal Missions			$20 + $4 S&H
+Both trilogies							$50 + $4 S&H
+Hint Book										$10
+
+What hint book? See the next page!
+^PAGE 20
+^c7eWOLFENSTEIN HINT BOOK!
+^c00
+If you want to know every nook and cranny of every level, get the ^c6eWolfenstein 3-D Hint Book ^c00for only $10!  All six episodes are shown in exquisite detail.
+
+It's also filled with fun facts about Id and the development of Wolfenstein 3-D.  Find out secrets about B.J. Blazkowicz and get cool tips. Snazzy!
+^PAGE 21
+^c7eNOCTURNAL MISSIONS (Wolf 1-3 Required)
+
+^c29Episode Four: A Dark Secret
+^c00Intelligence has uncovered a Nazi plot for large scale chemical warfare.  You must eliminate maniac scientist Otto Giftmacher.
+
+^c29Episode Five: Trail of the Madman
+^c00The scientist is dead but the plans are in motion. Explore the dark dungeon and find the plans, man!
+
+^c29Episode Six: Confrontation
+^c00Prepare for the final battle with General Fettgesicht, organizer of the chemical war!
+^PAGE 22
+^c7eSPEAR OF DESTINY
+
+^c00This new, incredibly challenging Wolfenstein adventure boasts twenty levels, four tough bosses, plus new graphics and music for the most amazing Wolfenstein yet!
+
+The Spear of Destiny--legend has it that with this spear no force may be defeated in battle. BJ must fight the forces in Castle Nuremberg and wrest the Spear from Adolf's clutches!
+
+Get this amazing adventure for only $35 from Apogee!
+^PAGE23
+^G16,16,21
+^PAGE 24
+^c7eUSE YOUR FAX MACHINE TO ORDER!
+
+^c00You can now use your FAX machine to order your favorite Apogee games quickly and easily.
+
+Simply print out the ORDER.FRM file, fill it out and FAX it to us for prompt processing.
+
+FAX Orders: (214) 278-4670
+^PAGE 25
+^c7eTHE OFFICIAL APOGEE BBS
+
+^c00The SOFTWARE CREATIONS BBS is the home BBS for the latest Apogee games. Check out our FREE 'Apogee' file section for new releases and updates.
+
+BBS phone lines:
+		(508) 365-2359			2400 baud
+		(508) 368-4137			2400-14.4K USR
+		(508) 368-7036		2400-14.4k V.32
+
+Home of the Apogee BBS Network!
+A Major Multi-Line BBS.
+^PAGE 26
+^c7eAPOGEE ON AMERICA ONLINE!
+^c00
+America Online (AOL) is host of the Apogee Forum, where you can get new Apogee games. Use the Apogee message areas to talk and exchange ideas, comments and secrets with our designers and other players.  If you're already a member, after you log on, use the keyword "Apogee" (Ctrl-K) to go to the Apogee area.
+
+If you'd like to know how to join, please call toll free: 1-800-827-6364.  Please ask for extension 6131. You'll get the FREE startup kit.
+^PAGE 27
+^C7eWATCH OUT!
+^c00
+Apogee now has their own official section on Exec-PC, the world's largest bulletin board. All the hottest new shareware games are there!
+
+Look in the section named "Apogee Games Collection."  (Currently in file collection "R".)
+
+Call (414) 789-4210 with your modem to join the fun on Exec-PC!
+^PAGE 28
+^c7eFOREIGN CUSTOMERS
+
+^c00The following screens list our dealers outside the United States: Australia, Canada and the United Kingdom.  These are official Apogee dealers with the latest games and updates.    
+
+If your country is not listed, you may order directly from Apogee by phone:
+
+											(214) 278-5655
+^PAGE 29
+^c7eAUSTRALIAN CUSTOMERS (1 of 3)
+^c00
+	BudgetWare
+	P.O. Box 496
+	Newtown, NSW  2042
+
+TRILOGY PRICE:	$45 + $5 shipping.
+					ALL SIX:	$65 + $5 shipping.
+
+	Phone:					(02) 519-4233
+	Toll free:		(008) 022-064
+	Fax:						(02) 516-4236
+	CompuServe:	71520,1475
+
+  Use MasterCard, Visa, Bankcard, cheques.
+^PAGE 30
+^c7eAUSTRALIA (2 of 3)
+^c00
+	Manaccom
+	9 Camford Str.
+	Milton, QLD  4064
+
+^c00TRILOGY PRICE:	$45 + $5 shipping.
+					ALL SIX:	$65 + $5 shipping.
+	Phone:		(07) 368-2366
+	Toll free:				(008) 022-064
+	Fax:						(07) 369-7589
+	CompuServe:	71520,1475
+  Use MasterCard, Visa, Bankcard, AmEx, cheques.
+^PAGE 31
+^c7eAUSTRALIA (3 of 3)
+^c00
+	Vision Shareware
+	4/146 Greenhill Rd.
+	Parkside SA 5063
+
+TRILOGY PRICE:	$45 + $5 shipping.
+					ALL SIX:	$65 + $5 shipping.
+
+	Phone:						(08) 373-4469
+	Toll free:		(008) 807 486
+	Fax:						(08) 373-4482
+	CompuServe:	71520,1475
+
+  Use MasterCard, Visa, Bankcard, cheques.
+^PAGE 32
+^c7eCANADIAN CUSTOMERS
+^c00
+	Distant Markets
+	Box 1149
+	194 - 3803 Calgary Trail S.
+	Edmonton, Alb.  T6J 5M8
+	CANADA
+
+TRILOGY PRICE:	$47 Canadian.
+					ALL SIX:	$70 Canadian.
+
+	Orders:			1-800-661-7383
+	Inquiries:	(403) 436-3009
+	Fax:					1-800-661-9756
+  Use MasterCard, Visa or money orders.
+^PAGE 33
+^c7eUNITED KINGDOM CUSTOMERS
+^c00
+	Precision Software Applications
+	Unit 3, Valley Court Offices
+	Lower Rd.
+	Croydon, Near Royston
+	Herts. SG8 0HF, United Kingdom
+
+TRILOGY PRICE:	29# + VAT + 2 P&P
+					ALL SIX:	44# + VAT + 2 P&P
+
+	Phone:	+44 (0) 223 208 288
+	FAX:		+44 (0) 223 208 089
+Credit cards, Access, or cheques. Make cheques payable to PSA.
+^PAGE34
+^c7eNEW ZEALAND CUSTOMERS
+^c00
+	PC-SIG New Zealand
+	P.O. Box 90088
+	Victoria Street West
+	Auckland, New Zealand
+
+TRILOGY PRICE:	$85 (including shipping, etc.)
+					ALL SIX:	$120
+
+	Phone:		3600-500
+	Fax:			3600-800
+
+Use Visa, Mastercard, Amex, Diners.
+^PAGE35
+^c7eDANISH CUSTOMERS
+^c00
+	Prof. Shareware Danmark
+	Benlose Skel 4 G
+	DK-4100 Ringsted Denmark
+
+TRILOGY PRICE:	kr. 277,00 (includes shipping)
+					ALL SIX:	kr. 390,00
+
+	Phone:		(+45) 53 51 90 42
+	Fax:			(+45) 53 61 93 91
+Use Visa, Mastercard, cheques.
+^PAGE 36
+^c7eA FRIENDLY REMINDER
+
+^c00Episode One is shareware.  The other five episodes are not: they are only available from Apogee or authorized dealers.  Please do not distribute episodes two through six.  It's easy to do, but the next game will just cost more if you do it.
+
+Please report any illegal selling and distribution of this game to Apogee by calling 1-800-GAME123.  Or call the SPA Piracy Hotline: 1-800-388-PIR8.
+^PAGE 37
+^c7eABOUT APOGEE
+
+^c00Our goal is to establish Apogee as the leading distributor of commercial quality shareware games. With enthusiasm and dedication, we think our goal can be achieved.
+
+However,  we need your support. Shareware is not free software.
+
+We thank you in advance for your contribution to the growing shareware community. Your honesty pays . . . .
+^PAGE 38
+^c7eQUOTES FROM THE GUYS
+^c00
+Here's some quotes from the Id guys:
+
+Adrian Carmack, Master of the Pixel:
+"Okay, now for the CGA version . . . NOT!"
+
+
+John Carmack, Technical Director:
+"I just mapped video memory into User Address Space on my Color NeXTStation!"
+^PAGE 39
+^c7eQUOTES FROM THE GUYS
+^c00
+John Romero, Programming Director:
+"I really need to work on my Total Time of 5:20 for Episode One.  I was messing around too much in those rooms."
+
+
+Tom Hall, Creative Director:
+"Ya don't bring a pistol to a machine gun fight."
+(Since I'm typing this, I'd like to plug John Blackwell's ^c29F.Godmom ^c00game. It's a great puzzle game.  Look for his new 4.0 version online!)
+^PAGE 40
+^c7eAUTO-BACKSCRATCHING
+
+^c00Other Id games also available from Apogee:
+
+^c29Commander Keen
+^c00"Invasion of the Vorticons": $30 for trilogy
+
+"Goodbye, Galaxy!": $35 for two episodes
+
+"Aliens Ate My BabySitter!": $35 
+(That's our commercial game.)
+
+Super Keen Fun Pack: $90 (for all 6)
+
+Call 1-800-GAME123 for information.
+^PAGE 41
+^G80,16,11
+^c7eCONCLUSION
+
+^c00Thanks for playing Wolfenstein 3-D.  Please support Id's efforts in making ground- breaking software available at shareware prices.
+
+
+
+Now, go get 'em!
+
+(ESC to return to menu.)
+^E

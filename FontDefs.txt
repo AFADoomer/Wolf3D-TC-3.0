@@ -1,0 +1,10 @@
+WOLFNUM
+{
+	Template FONT%03d
+}
+
+IntermissionFont
+{
+	Template WOLF%02d
+	SpaceWidth 16
+}

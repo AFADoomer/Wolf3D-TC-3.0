@@ -1,0 +1,603 @@
+class ClassicStats : DoomStatusScreen
+{
+	int intermissioncounter;
+	int bonus, cnt_bonus[MAXPLAYERS], breathestate, breathetime, killcount, secretcount, itemcount;
+	TextureID Breathe[2], BJFinal, Bar, YellowKey, BlueKey, Weapon, Face;
+	int points, lives, health, ammo;
+	String levelnum;
+	bool classicweapon;
+	int style;
+	Font ClassicFont;
+	LevelData totals;
+	int PAR_AMOUNT, PERCENT100AMT, SECRETAMT;
+
+	int fadetarget;
+	int fadetime;
+	double fadealpha;
+
+	int mugshottimer;
+
+	enum styles
+	{
+		normal,
+		secret,
+		finale,
+	};
+
+	override void initStats ()
+	{
+		intermissioncounter = gameinfo.intermissioncounter;
+		CurState = StatCount;
+		acceleratestage = 0;
+		cnt_kills[0] = cnt_items[0] = cnt_secret[0] = -1;
+		cnt_pause = Thinker.TICRATE;
+		cnt_bonus[0] = 0;
+
+		PAR_AMOUNT = 500;
+		PERCENT100AMT = 10000;
+		SECRETAMT = 15000;
+
+		switch (style)
+		{
+			case secret:
+				bonus = SECRETAMT;
+				sp_state = 10;
+				break;
+			case finale:
+				totals = GetTotals();
+				killcount = totals.killcount;
+				secretcount = totals.secretcount;
+				itemcount = totals.itemcount;
+				sp_state = 4;
+				break;
+			default:
+				killcount = Plrs[me].skills;
+				secretcount = Plrs[me].ssecret;
+				itemcount = Plrs[me].sitems;
+				sp_state = 1;
+				break;
+		}
+
+		if (gamestate == GS_FINALE) { S_ChangeMusic("URAHERO"); }
+	}
+
+	LevelData GetTotals() // Pull the total stats from the map stats event handler - it saves stats for *all* maps, not just main chapters
+	{
+		LevelData totals = New("LevelData");
+		totals.mapname = "Stat Totals";
+		totals.levelname = "Stat Totals";
+		totals.levelnum = 0;
+		totals.totalkills = 0;
+		totals.killcount  = 0;
+		totals.totalitems  = 0;
+		totals.itemcount = 0;
+		totals.totalsecrets = 0;
+		totals.secretcount = 0;
+		totals.leveltime = 0;
+
+		MapStatsHandler stats = MapStatsHandler(StaticEventHandler.Find("MapStatsHandler"));
+
+		if (stats)
+		{
+			Array<LevelData> summary;
+
+			for (int i = 0; i < stats.Levels.Size(); i++)
+			{
+				let m = stats.Levels[i];
+
+				// Filter to only show results from maps named in this episode (e.g., matching "E1L").
+				if (m.mapname.Mid(0, 3) ~== wbs.current.Mid(0, 3)) { summary.Push(m); }
+				else { continue; }
+			}
+
+			for (int i = 0; i < summary.Size(); i++)
+			{
+				let l = summary[i];
+
+				totals.totalkills += l.totalkills;
+				totals.killcount += l.killcount;
+				totals.totalitems += l.totalitems;
+				totals.itemcount += l.itemcount;
+				totals.totalsecrets += l.totalsecrets;
+				totals.secretcount += l.secretcount;
+				totals.leveltime += l.leveltime;
+			}
+		}
+
+		return totals;
+	}
+
+	override void updateStats ()
+	{
+		int timeleft = (style == normal && wbs.partime > 0) ? max(wbs.partime / Thinker.TICRATE - Thinker.Tics2Seconds(Plrs[me].stime), 0) : 0;
+
+		if (acceleratestage && sp_state < 10)
+		{
+			acceleratestage = 0;
+			sp_state = 11;
+
+			cnt_kills[0] = killcount;
+			cnt_secret[0] = secretcount;
+			cnt_items[0] = itemcount;
+
+			bonus = timeleft * PAR_AMOUNT;
+
+			if (style == normal)
+			{
+				if (cnt_kills[0] == wbs.maxkills) { bonus += PERCENT100AMT; }
+				if (cnt_secret[0] == wbs.maxsecret) { bonus += PERCENT100AMT; }
+				if (cnt_items[0] == wbs.maxitems) { bonus += PERCENT100AMT; }
+			}
+
+			if (style != finale)
+			{
+				cnt_bonus[0] = bonus;
+
+				AddPoints(bonus);
+			}
+		}
+
+		if (sp_state == 2)
+		{
+			if (timeleft)
+			{
+				bonus = timeleft * PAR_AMOUNT;
+
+				UpdateCounter(cnt_bonus[0], bonus, 0, PAR_AMOUNT * 2, PAR_AMOUNT / 40);
+			}
+			else { sp_state += 2; }
+		}
+		else if (sp_state == 4)
+		{
+			UpdateCounter(cnt_kills[0], killcount, style == normal ? wbs.maxkills : 0);
+		}
+		else if (sp_state == 6)
+		{
+			UpdateCounter(cnt_secret[0], secretcount, style == normal ? wbs.maxsecret : 0);
+		}
+		else if (sp_state == 8)
+		{
+			UpdateCounter(cnt_items[0], itemcount, style == normal ? wbs.maxitems : 0);
+		}
+		else if (sp_state == 10)
+		{
+			if (bonus > 0)
+			{
+				AddPoints(bonus);
+				sp_state++;
+			}
+			else { sp_state += 2; }
+		}
+		else if (sp_state == 12)
+		{
+			if (acceleratestage)
+			{
+				if (style == finale)
+				{
+					int episode = wbs.current.mid(1, 1).ToInt();
+					Menu.SetMenu("Episode" .. episode .. "End", -1);
+				}
+
+				if (gametic > fadetarget) { fadetarget = gametic + fadetime; }
+
+				if (fadetarget == gametic) { initNoState(); }
+			}
+		}
+		else if (sp_state & 1)
+		{
+			if (!--cnt_pause)
+			{
+				sp_state++;
+				cnt_pause = Thinker.TICRATE;
+			}
+		}
+	}
+
+	void UpdateCounter(out int current, int count, int max = 0, int step = 2, int freq = 5)
+	{
+		if (intermissioncounter)
+		{
+			if (count)
+			{
+				current += step;
+
+				if (!(bcnt % freq)) { PlaySound("stats/bonuscount"); }
+			}
+			else { current = 0; }
+		}
+
+		if (!intermissioncounter || current >= count)
+		{
+			current = count;
+			if (max > 0 && count == max)
+			{
+				bonus += PERCENT100AMT;
+				cnt_bonus[0] = bonus;
+				PlaySound("stats/bonus100");
+			}
+			else if (count) { PlaySound("stats/total"); }
+			else { PlaySound("stats/nobonus"); }
+			sp_state++;
+		}
+	}
+
+	override void DrawStats (void)
+	{
+		DrawStatusBar(160, 199);
+
+		switch (style)
+		{
+			case secret:
+				DrawBJ(0, 16);
+
+				Write(14, 4, lnametexts[0]);
+				Write(16, 6, "$STATS_COMPLETED");
+
+				Write(22, 16, "$STATS_BONUS2");
+				Write(10, 16, String.Format("%i", bonus));
+				break;
+			case finale:
+				DrawImage(8, 8, BJFinal);
+
+				Write(18, 2, "$STATS_YOUWIN");
+
+				Write(14, 6, "$STATS_TOTALTIME");
+				WriteTime(14, 8, wbs.totaltime);
+
+				Write(12, 12, "$STATS_AVERAGES");
+				Write(22, 14, "$STATS_KILL", right);
+				WritePercent(30, 14, cnt_kills[0], totals.totalkills);
+				Write(30, 14, "%");
+
+				Write(22, 16, "$STATS_SECRET", right);
+				WritePercent(30, 16, cnt_secret[0], totals.totalsecrets);
+				Write(30, 16, "%");
+
+				Write(22, 18, "$STATS_TREASURE", right);
+				WritePercent(30, 18, cnt_items[0], totals.totalitems);
+				Write(30, 18, "%");
+
+				break;
+			default:
+				DrawBJ(0, 16);
+
+				Write(14, 2, lnametexts[0]);
+				Write(14, 4, "$STATS_COMPLETED");
+
+				Write(14, 7, "$STATS_BONUS");
+				Write(36, 7, String.Format("%i", cnt_bonus[0]), right);
+
+				Write(24, 10, "$STATS_LEVELTIME", right);
+				WriteTime(26, 10, Plrs[me].stime);
+
+				if (wbs.partime > 0)
+				{ 
+					Write(24, 12, "$STATS_PAR", right);
+					WriteTime(26, 12, wbs.partime, true);
+				}
+
+				Write(29, 14, "$STATS_KILLRATIO", right);
+				WritePercent(37, 14, cnt_kills[0], wbs.maxkills);
+				Write(37, 14, "%");
+
+				Write(29, 16, "$STATS_SECRETRATIO", right);
+				WritePercent(37, 16, cnt_secret[0], wbs.maxsecret);
+				Write(37, 16, "%");
+
+				Write(29, 18, "$STATS_TREASURERATIO", right);
+				WritePercent(37, 18, cnt_items[0], wbs.maxitems);
+				Write(37, 18, "%");
+				break;
+		}
+	}
+
+	void DrawBJ(int x, int y)
+	{
+		if (bcnt > breathetime)
+		{
+			breathestate ^= 1;
+			breathetime = bcnt + 17;
+		}
+
+		DrawImage(x, y, Breathe[breathestate]);
+	}
+
+	void DrawStatusBar(int x, int y)
+	{
+		DrawImage(x, y, Bar, center, bottom);
+		DrawText(x - 44, y - 22, String.Format("%i", lives), ClassicFont, align:center);
+		DrawText(x - 128, y - 22, levelnum, ClassicFont, align:right);
+		DrawText(x - 65, y - 22, String.Format("%i", points % 1000000), ClassicFont, align:right);
+		DrawText(x + 31, y - 22, String.Format("%i", health), ClassicFont, align:right);
+		DrawImage(x - 23, y - 34, Face);
+		if (YellowKey) { DrawImage(x + 84, y - 26, YellowKey, center, middle); }
+		if (BlueKey) { DrawImage(x + 84, y - 10, BlueKey, center, middle); }
+		DrawImage(x + 120, y - 19, weapon, center, middle, 48, 24, classicweapon ? -1 : 0x000000);
+		DrawText(x + 71, y - 22, String.Format("%i", ammo), ClassicFont, align:right);
+	}
+
+	enum align
+	{
+		left,
+		right,
+		center,
+	};
+
+	enum valign
+	{
+		top,
+		bottom,
+		middle,
+	};
+
+	void DrawImage(int x, int y, TextureID img, int align = left, int valign = top, int w = 0, int h = 0, color shade = -1, double alpha = 1.0)
+	{
+		if (!img) { return; }
+
+		Vector2 size = TexMan.GetScaledSize(img);
+
+		Vector2 scalexy = (1.0, 1.0);
+
+		if (w && size.x > w) { scalexy.x = double(w) / size.x; }
+		if (h && size.y > h) { scalexy.y = double(h) / size.y; }
+
+		double scale = min(scalexy.x, scalexy.y);
+
+		size *= scale;
+
+		if (align == right) { x = int(x - size.x); }
+		else if (align == center) { x = int(x - size.x / 2); }
+
+		if (valign == bottom) { y = int(y - size.y); }
+		else if (valign == middle) { y = int(y - size.y / 2); }
+
+		bool alphachannel;
+
+		if (shade > 0) { alphachannel = true; }
+
+		screen.DrawTexture(img, true, x, y, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_Alpha, alpha, DTA_AlphaChannel, alphachannel, DTA_FillColor, shade);
+	}
+
+	void DrawText(int x, int y, String text, Font fnt = null, color clr = Font.CR_UNTRANSLATED, int align = left)
+	{
+		if (!fnt) { fnt = IntermissionFont; }
+
+		text = StringTable.Localize(text);
+
+		if (align == right) { x -= fnt.StringWidth(text); }
+		else if (align == center) { x -= fnt.StringWidth(text) / 2; }
+
+		screen.DrawText(fnt, clr, x, y, text, DTA_320x200, true);
+	}
+
+	void Write(int x, int y, String text, int align = left)
+	{
+		x *= 8;
+		y *= 8;
+
+		DrawText(x, y, text, align:align);
+	}
+
+	void WriteTime(int x, int y, int t, bool altmethod = false)
+	{
+		if (t < 0) { return; }
+
+		if (altmethod) { t /= Thinker.TICRATE; }
+		else { t = Thinker.Tics2Seconds(t); }
+
+		int minutes = min(t / 60, 99);
+		int seconds = t % 60;
+
+		Write(x, y, String.Format("%02d:%02d", minutes, seconds));
+	}
+
+	void WritePercent(int x, int y, int n, int d)
+	{
+		if (n <= 0 || d <= 0)
+		{
+			Write(x, y, "0", right);
+		}
+		else
+		{
+			Write(x, y, String.Format("%i", n * 100 / d), right);
+		}
+	}
+
+	override void Start (wbstartstruct wbstartstruct)
+	{
+		wbs = wbstartstruct;
+		acceleratestage = 0;
+		cnt = bcnt = 0;
+		me = wbs.pnum;
+		for (int i = 0; i < MAXPLAYERS; i++) Plrs[i] = wbs.plyr[i];
+
+		ClassicFont = Font.GetFont("WOLFNUM");
+
+		Breathe[0] = TexMan.CheckForTexture("BREATHE0", TexMan.Type_Any);
+		Breathe[1] = TexMan.CheckForTexture("BREATHE1", TexMan.Type_Any); 
+		BJFinal =  TexMan.CheckForTexture("BJFinal", TexMan.Type_Any); 
+		Bar =  TexMan.CheckForTexture("BAR", TexMan.Type_Any); 
+
+		if (players[me].mo.FindInventory("YellowKey")) { YellowKey =  TexMan.CheckForTexture("YKEY", TexMan.Type_Any); }
+		if (players[me].mo.FindInventory("BlueKey")) { BlueKey =  TexMan.CheckForTexture("BKEY", TexMan.Type_Any); }
+
+		[Weapon, classicweapon] =  WeaponIcon();
+
+		levelnum = String.Format("%i", level.levelnum % 100);
+		if (levelnum == "0") { levelnum = "10"; }
+
+		points = GetScore();
+		lives = LifeHandler.GetLivesPlay(players[me].mo);
+		health = players[me].mo.health;
+		ammo = GetAmmo();
+
+		// Use the local level structure which can be overridden by hubs
+		lnametexts[0] = Level.levelname;
+		lnametexts[1] = wbstartstruct.nextname;
+
+		if (wbs.next == "") { style = finale; }
+		else if (levelnum == "10") { style = secret; }
+		else { style = normal; }
+
+		fadealpha = 1.0;
+		fadetime = 12;
+		fadetarget = gametic;
+
+		initStats();
+	}
+
+	int GetScore()
+	{
+		let score = players[me].mo.FindInventory("Score");
+		if (score) { return score.Amount; }
+
+		return 0;
+	}
+
+	void AddPoints(int amt)
+	{
+		players[me].mo.GiveInventory("Score", amt);
+		points = GetScore();
+		Score.CheckLifeAmount(players[me].mo);
+
+		int oldlives = lives;
+		lives = LifeHandler.GetLivesPlay(players[me].mo);
+
+		if (lives != oldlives) { PlaySound("pickups/life"); }
+	}
+
+	int GetAmmo()
+	{
+		Inventory ammo1, ammo2;
+		int ammocount = 0, ammocount1, ammocount2;
+		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
+		if (ammo2) { ammocount += ammocount2; }
+		if (ammo1) { ammocount += ammocount1; } 
+
+		return ammocount;
+	}
+
+	Inventory, Inventory, int, int GetClassicDisplayAmmo()
+	{
+		Inventory ammo1, ammo2;
+
+		if (players[me].ReadyWeapon)
+		{
+			ammo1 = players[me].ReadyWeapon.Ammo1;
+			ammo2 = players[me].ReadyWeapon.Ammo2;
+			if (!ammo1)
+			{
+				ammo1 = ammo2;
+				ammo2 = null;
+			}
+		}
+		else
+		{
+			ammo1 = ammo2 = null;
+		}
+
+		if (!ammo1 && !ammo2)
+		{
+			ammo2 = Ammo(players[me].mo.FindInventory("WolfClip"));
+		}
+
+		let ammocount1 = ammo1 ? ammo1.Amount : 0;
+		let ammocount2 = ammo2 ? ammo2.Amount : 0;
+
+		return ammo1, ammo2, ammocount1, ammocount2;
+	}
+
+	TextureID GetMugShot()
+	{
+		int level = 0;
+		int accuracy = 5;
+
+		int maxhealth = players[me].mo.mugshotmaxhealth > 0 ? players[me].mo.mugshotmaxhealth : players[me].mo.maxhealth;
+		if (maxhealth <= 0) { maxhealth = 100; }
+
+		while (players[me].health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
+
+		int index = Random[mugshot](0, 255) >> 6;
+		if (index == 3) { index = 1; }
+
+		String mugshot = players[me].mo.face .. "ST" .. level .. index;
+
+		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
+	}
+
+	TextureID, bool WeaponIcon()
+	{
+		TextureID icontex;
+		bool classic;
+
+		let weapon = players[me].ReadyWeapon;
+		if (weapon)
+		{
+			String classname = weapon.GetClassName();
+
+			icontex = Inventory(weapon).Icon;
+
+			if (!icontex && weapon.SpawnState) { icontex = weapon.SpawnState.GetSpriteTexture(0); }
+
+			if (weapon is "ClassicWeapon") { classic = true; }
+		}
+
+		return icontex, classic;
+	}
+
+	override void Ticker(void)
+	{
+		// counter for general background animation
+		bcnt++;  
+	
+		if (bcnt == 1)
+		{
+			StartMusic();
+		}
+	
+		checkForAccelerate();
+	
+		switch (CurState)
+		{
+			case StatCount:
+				updateStats();
+				break;
+		
+			case NoState:
+				updateNoState();
+				break;
+
+			case LeavingIntermission:
+				break;
+		}
+
+		if (gametic > 35)
+		{
+			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+		}
+
+		mugshottimer++;
+
+		if (!Face || mugshottimer > Random[mugshot](0, 255))
+		{
+			Face = GetMugShot();
+			mugshottimer = 0;
+		}
+	}
+
+	override void Drawer (void)
+	{
+		switch (CurState)
+		{
+			case StatCount:
+				Screen.Dim(0x004040, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
+				DrawStats();
+				break;
+	
+			case LeavingIntermission:
+			default:
+				break;
+		}
+		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+}

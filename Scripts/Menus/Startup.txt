@@ -1,0 +1,524 @@
+class Startup : GenericMenu
+{
+	Font DOSFont;
+	Vector2 dimcoords, dimsize;
+	int lineheight, charwidth;
+
+	String buffer[26][80];
+	String backgroundbuffer[26][80];
+	String cursorbuffer[26][80];
+	String command;
+	String path, prompt;
+	String FColor;
+	String BColor;
+
+	int cursorx, cursory, prompty;
+
+	int ticcount, curstate, cursortimeout, typestart;
+
+	bool SoDMenu;
+
+	override void Init(Menu parent)
+	{
+		S_ChangeMusic("");
+
+		Super.Init(parent);
+
+		DOSFont = Font.GetFont("DOSFont");
+
+		lineheight = 16;
+		charwidth = 8;
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+
+		path = "GAMES\\WOLF3D";
+		prompt = String.Format("C:\\%s>", path);
+
+		curstate = 0;
+		ticcount = 0;
+
+		FColor = "White";
+		BColor = "TrueBlack";
+
+		Print(prompt, nobreak:true);
+//sodmenu = true;
+	}
+
+	override void Ticker()
+	{
+//		Boot();
+		Super.Ticker();
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+		if (sodmenu) { DrawSoDMenu(); }
+		else
+		{
+			DrawBuffer();
+
+			DrawCursor();
+		}
+	}
+
+	void Clear()
+	{
+		for (int r = 0; r < 25; r++)
+		{
+			for (int c = 0; c < 80; c++)
+			{
+				buffer[r][c] = "";
+				backgroundbuffer[r][c] = " ";
+			}
+		}
+
+		cursorx = 0;
+		cursory = 0;
+	}
+
+	void Print(String text = "", int x = -1, int y = -1, bool nobreak = false)
+	{
+		bool ins = true;
+
+		if (x > -1 && x != cursorx || y > -1 && y != cursory) { ins = false; }
+
+		if (x > -1) { cursorx = x; }
+		if (y > -1) { cursory = y; }
+
+		for (int i = 0; i < text.Length(); i++)
+		{
+			if (text.CharAt(i) == "\n" || cursorx > 79)
+			{
+				text = text.Mid(i);
+				i = 0;
+
+				NewLine();
+			}
+
+			if (ins) { Insert(); }
+			backgroundbuffer[cursory][cursorx] = "\c[" .. BColor .. "]Û";
+			buffer[cursory][cursorx] = "\c[" .. FColor .. "]" .. text.CharAt(i);
+
+			cursorx++;
+		}
+
+		if (!nobreak) { NewLine(); }
+	}
+
+	void DrawBuffer()
+	{
+		for (int r = 0; r < 25; r++)
+		{
+			for (int c = 0; c < 80; c++)
+			{
+				screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), c * charwidth - 1, r * lineheight, backgroundbuffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), c * charwidth, r * lineheight, buffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), c * charwidth, r * lineheight, cursorbuffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+			}
+		}
+	}
+
+	void NewLine(int amt = 1)
+	{
+		cursorx = 0;
+		cursory++;
+
+		if (cursory > 24)
+		{
+			amt = max(amt, cursory - 24);
+
+			for (int r = 0; r < 25; r++)
+			{
+				for (int c = 0; c < 80; c++)
+				{	
+					backgroundbuffer[r][c] = backgroundbuffer[r + amt][c];
+					buffer[r][c] = buffer[r + amt][c];
+					cursorbuffer[r][c] = cursorbuffer[r + amt][c];
+				}
+			}
+
+			for (int r = 0; r < amt; r++)
+			{
+				for (int c = 0; c < 80; c++)
+				{
+					backgroundbuffer[25 - amt][c] = "";
+					buffer[25 - amt][c] = "";
+					cursorbuffer[25 - amt][c] = "";
+				}
+			}
+
+			cursory -= amt;
+		}
+	}
+
+	void Delete()
+	{
+		for (int r = cursory; r < 25; r++)
+		{
+			for (int c = 0; c < 79; c++)
+			{	
+				if (r == cursory && c >= cursorx || r > cursory)
+				{
+					backgroundbuffer[r][c] = backgroundbuffer[r][c + 1];
+					buffer[r][c] = buffer[r][c + 1];
+				}
+			}
+			backgroundbuffer[r][79] = "";
+			buffer[r][79] = "";
+		}
+
+		command = command.Left(cursorx - prompt.Length()) .. command.Mid(cursorx - prompt.Length() + 1);
+	}
+
+	void Insert()
+	{
+		for (int r = cursory; r < 25; r++)
+		{
+			for (int c = 78; c > 0; c--)
+			{	
+				if (r == cursory && c >= cursorx || r > cursory)
+				{
+					backgroundbuffer[r][c + 1] = backgroundbuffer[r][c];
+					buffer[r][c + 1] = buffer[r][c];
+				}
+			}
+		}
+	}
+
+	void DrawCursor()
+	{
+		for (int r = 0; r < 25; r++)
+		{
+			for (int c = 0; c < 80; c++)
+			{
+				if (c == cursorx && r ==cursory) { cursorbuffer[cursory][cursorx] = (cursortimeout || gametic % 30 < 15) ? "\c[" .. FColor .. "]_" : ""; }
+				else { cursorbuffer[r][c] = ""; }
+			}
+		}
+		cursortimeout = max(0, cursortimeout - 1);
+	}
+
+	void DrawSoDMenu()
+	{
+		Clear();
+
+		screen.Dim(0x0000AA, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+
+		DrawTextSpan(15, 3, 48, 1, "°", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(15, 4, 1, 13, "°", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(62, 4, 1, 13, "°", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(15, 17, 48, 1, "°", clr:Font.FindFontColor("StartupBlue"));
+
+		DrawText(20, 6, "1 - Spear of Destiny (original mission)", clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 8, "2 - Mission 2: Return to Danger", clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 10, "3 - Mission 3: Ultimate Challenge", clr:Font.FindFontColor("TrueWhite"));
+
+		DrawText(20, 14, "0 - Exit to DOS", clr:Font.FindFontColor("TrueWhite"));
+	}
+
+	void Boot()
+	{
+		ticcount++;
+
+		switch(curstate)
+		{
+			case 0:
+				Print(String.Format("%4i KB OK", clamp((ticcount - 70) * 20, 0, 1024)), 0, 1, true);
+				if (ticcount >= 140) { ticcount = 0; curstate++; }
+				break;
+			case 1:
+				Clear();
+				curstate++;
+				break;
+			case 2:
+				if (ticcount > 70) { ticcount = 0; curstate++; }
+				break;
+			case 3:
+				Clear();
+				curstate++;
+				break;
+			case 4:
+				Print("Starting MS-DOS...", 0, 2);
+				NewLine();
+				if (ticcount > 70) { ticcount = 0; curstate++; }
+				break;
+			case 5:
+				if (ticcount == 1) { Print(prompt, nobreak:true); prompty = cursory; }
+			default:
+				break;
+		}
+	}
+
+	void DrawText(int x, int y, String text, Font fnt = null, color clr = Font.CR_GRAY)
+	{
+		if (!fnt) { fnt = DOSFont; }
+
+		text = StringTable.Localize(text);
+
+		int linecount = 0;
+
+		for (int c = 0; c < text.Length(); c++)
+		{
+			if (text.CharAt(c) == "\n" || x + c > 79)
+			{
+				text = text.Mid(c);
+				c = 0;
+
+				linecount++;
+			}
+
+			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.CharAt(c), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+		}
+	}
+
+	void DrawTextSpan(int x, int y, int w, int h, String text, Font fnt = null, color clr = Font.CR_GRAY)
+	{
+		if (!fnt) { fnt = DOSFont; }
+
+		text = StringTable.Localize(text);
+
+		for (int r = y; r < y + h; r++)
+		{
+			for (int c = x; c < x + w; c++)
+			{
+				DrawText(c, r, text, fnt, clr);
+			}
+		}
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_KeyDown)
+		{
+			switch (ev.KeyChar)
+			{
+				case UIEvent.Key_Del:
+					Delete();
+					break;
+				case UIEvent.Key_Home:
+					cursorx = prompt.Length();
+					break;
+				case UIEvent.Key_End:
+					cursorx = prompt.Length() + command.Length();
+					break;
+				default:
+					break;
+			}
+		}
+		else if (ev.type == UIEvent.Type_Char)
+		{
+			String key = String.Format("%c", ev.KeyChar);
+
+			if (sodmenu)
+			{
+				if (key == "0")
+				{
+					sodmenu = false;
+					Clear();
+					Print(prompt, nobreak:true);
+				}
+				else
+				{
+					console.printf("TODO: Option " .. key);
+				}
+			}
+			else
+			{
+				command = command.Left(cursorx - prompt.Length()) .. key .. command.Mid(cursorx - prompt.Length());
+				Print(key, nobreak:true);
+			}
+		}
+
+		return false;
+	}	
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		String DOSColors[16] = { "TrueBlack", "Blue", "DarkGreen", "Cyan", "DarkRed", "Purple", "Gold", "White", "Gray", "Blue", "Green", "StartupBlue", "Red", "LightBlue", "Yellow", "TrueWhite" };
+
+		switch (mkey)
+		{
+			case MKEY_ENTER:
+				if (command ~== "cls") { Clear(); }
+				else if (command ~== "exit")
+				{
+					S_ChangeMusic(level.music);
+					Close();
+				}
+				else if (command.left(5) ~== "echo ")
+				{
+					command = command.mid(5);
+					NewLine();
+					Print(command);
+				}
+				else if (command.left(4) ~== "del " || command.left(5) ~== "mkdir " || command.left(5) ~== "rm ")
+				{
+					NewLine();
+					Print("Access is denied.");
+					NewLine();
+				}
+				else if (command.left(2) ~== "cd" || command.left(4) ~== "chdir")
+				{
+					if (command ~== "cd")
+					{
+						NewLine();
+						Print(path);
+						NewLine();
+					}
+					if (command ~== "cd." || command ~== "cd ." )
+					{
+						NewLine();
+					}
+					else
+					{
+						NewLine();
+						Print("The system could not find the path specified.");
+						NewLine();
+					}
+				}
+				else if (command ~== "dir" || command.left(4) ~== "dir ")
+				{
+					NewLine();
+					Print("Directory of " .. path);
+					Print(".              <DIR>               05-05-1992 9:15");
+					Print("..             <DIR>               06-06-1990 0:00");
+					Print("AUDIOHED WL1                 1,156 05-05-1992 9:15");
+					Print("AUDIOT   WL1               132,613 05-05-1992 9:15");
+					Print("CONFIG   WL1                   522 05-05-1992 9:15");
+					Print("GAMEMAPS WL1                27,425 05-05-1992 9:15");
+					Print("MAPHEAD  WL1                   402 05-05-1992 9:15");
+					Print("VGADICT  WL1                 1,024 05-05-1992 9:15");
+					Print("VGAGRAPH WL1               326,568 05-05-1992 9:15");
+					Print("VGAHEAD  WL1                   471 05-05-1992 9:15");
+					Print("VSWAP    WL1               742,912 05-05-1992 9:15");
+					Print("WOLF3D   EXE               109,959 05-05-1992 9:15");
+					Print("   10 File(s)            1,343,052 Bytes.");
+					Print("    2 Dir(s)            20,767,019 Bytes free.");
+					NewLine();
+				}
+				else if (command.left(5) ~== "color")
+				{
+					if (command ~== "color")
+					{
+						FColor = "White";
+						BColor = "TrueBlack";
+					}
+					else
+					{
+						int fore = HexStrToInt(command.Mid(7, 1));
+						if (fore < 0 ) { FColor = "White"; }
+						else { FColor = DOSColors[fore]; }
+
+						int back = HexStrToInt(command.Mid(6, 1));
+						if (back < 0 ) { BColor = "TrueBlack"; }
+						else { BColor = DOSColors[back]; }
+					}
+					NewLine();
+				}
+				else if (command.left(6) ~== "wolf3d")
+				{
+					Close();
+					SetMenu("IntroSlideShow", -1);
+				}
+				else if (command.left(3) ~== "sod")
+				{
+					sodmenu = true;
+				}
+				else if (command == "")
+				{
+					NewLine();
+				}
+				else
+				{
+					NewLine();
+					Print("Bad command or file name");
+					NewLine();
+				}
+				command = "";
+				Print(prompt, nobreak:true);
+				prompty = cursory;
+				break;
+			case MKEY_CLEAR:
+				if (command.Length())
+				{
+					cursorx--;
+					if (cursorx < 0)
+					{
+						cursorx = 79;
+						cursory--;
+					}
+
+					Delete();
+				}
+				break;
+			case MKEY_LEFT:
+				if (cursorx > (command.Length() > 80 - prompt.Length() ? 0 : prompt.Length()))
+				{
+					cursorx--;
+					cursorbuffer[cursory][cursorx] = "_";
+					cursortimeout = 5;
+				}
+				break;
+			case MKEY_RIGHT:
+				int linelength = 0;
+
+				for (int c = 79; c > 0 && !linelength; c--) { if (buffer[cursory][c] != "") { linelength = c + 1; } }
+
+				if (cursorx < linelength)
+				{
+					cursorx++;
+					cursorbuffer[cursory][cursorx] = "_";
+					cursortimeout = 5;
+				}
+				break;
+			case MKEY_BACK:
+				for (int r = prompty; r < 25; r++)
+				{
+					for (int c = 0; c < 80; c++)
+					{	
+						if (r == prompty && c >= prompt.Length() || r > prompty) { buffer[r][c] = ""; }
+					}
+				}
+				command = "";
+				cursory = prompty;
+				cursorx = prompt.Length();
+				break;
+			default:
+				break;
+		}
+
+		return false;
+	}
+
+	int HexStrToInt(String input)
+	{
+		int output;
+
+		input.ToUpper();
+
+		for (int i = 0; i < input.Length(); i++)
+		{		
+			int index = input.CharAt(i).ToInt();
+
+			if (!(input.CharAt(i) == "0") && !index)
+			{
+				index = input.CharCodeAt(i) - 55;
+				if (index > 15) { return -1; }
+			}
+
+			if (index < 0) { return -1; }
+
+			int multiplier = 1;
+			for (int j = 0; j < input.Length() - i - 1; j++)
+			{
+				multiplier *= 16;
+			}
+
+			output += multiplier * index;
+		}
+
+		return output;
+	}
+}

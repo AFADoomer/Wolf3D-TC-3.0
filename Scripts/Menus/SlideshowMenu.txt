@@ -1,0 +1,827 @@
+class HelpMenu : ReadThisMenu
+{
+	TextureID border;
+	Vector2 dimcoords, dimsize;
+	Array<String> pages;
+	int margins[15][2];
+	int currentline;
+	int fontheight;
+	bool sharewareremap;
+	bool allowexit;
+
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		sharewareremap = true;
+		allowexit = true;
+		ParseFile("data/help.txt");
+
+		if (gamestate != GS_FINALE)
+		{
+			S_ChangeMusic("CORNER");
+		}
+	}
+
+	void InitCommon(Menu parent)
+	{
+		GenericMenu.Init(parent);
+		mScreen = 1;
+		mInfoTic = gametic;
+		border = TexMan.CheckForTexture("BORDER", TexMan.Type_Any);
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+
+		fontheight = 10;
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(0xDCDCDC, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+
+		DrawText(pages[mScreen]);
+
+		if (border) { screen.DrawTexture(border, false, 0, 0, DTA_320x200, true); }
+
+		screen.DrawText(SmallFont, Font.FindFontColor("WolfDarkGold"), 213, 183, "pg " .. mScreen .. " of " .. pages.Size() - 1, DTA_320x200, true);
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		if (mkey == MKEY_Back)
+		{
+			if (allowexit)
+			{
+				Close();
+			}
+			else
+			{
+				if (gamestate == GS_FINALE) { SetMenu("HighScores", -1); }
+				else { SetMenu("MainMenu", -1); }
+			}
+
+			if (gamestate != GS_FINALE)
+			{
+				if (!mParentMenu) { S_ChangeMusic(level.music); }
+				else { S_ChangeMusic("WONDERIN"); }
+			}
+
+			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
+			return true;
+		}
+		else if (mkey == MKEY_Enter || mkey == MKEY_Right)
+		{
+			mScreen = min(pages.Size() - 1, mScreen + 1);
+			mInfoTic = gametic;
+
+			return true;
+		}
+		else if (mkey == MKEY_Left)
+		{
+			mScreen = max(1, mScreen - 1);
+			mInfoTic = gametic;
+
+			return true;
+		}
+		else return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (type == MOUSE_Click)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	ui void ParseFile(String filename)
+	{
+		String data = ReadLump(filename);
+		data.Split(pages, "^P");
+	}
+
+	ui String ReadLump(String lumpname)
+	{
+		int lump = -1;
+
+		lump = Wads.CheckNumForFullName(lumpname);
+
+		if (lump > -1) { return Wads.ReadLump(lump); }
+
+		return "";
+	}
+
+	void DrawText(String input)
+	{
+		Array<String> lines;
+		input.Split(lines, "\n");
+
+		currentline = 0;
+
+		for (int i = 0; i < margins.Size(); i++)
+		{
+			margins[i][0] = 16;
+			margins[i][1] = 16;
+		}
+
+		// Intentionally skip the first line, which is either blank or a page number
+		for (int l = 1; l < lines.Size(); l++)
+		{
+			currentline += ParseLine(lines[l]);
+		}
+	}
+
+	int ParseLine(String input)
+	{
+		String word = "";
+		int linecount = 0;
+		int lastbreak = 0;
+		String clr = "\c[Palette00]";
+		int lineindex = currentline;
+
+		if (lineindex > margins.Size() - 1) { return linecount; }
+
+		int currentx = margins[lineindex][0];
+		int currenty = 16 + lineindex * fontheight;
+
+		for (int i = 0; i < input.Length(); i++)
+		{
+			switch(input.CharCodeAt(i))
+			{
+				// Handle control characters
+				case 0x5E: // ^
+					i++;
+					switch(input.CharCodeAt(i))
+					{
+						// Change the text color
+						case 0x43: // C
+						case 0x63: // c
+							clr = "\c[Palette" .. input.Mid(i + 1, 2) .. "]";
+							i += 2;
+							break;
+						// Insert a graphic...  Looks for graphic number x as "SLIDEGx", then fails back to "WVGA000x"
+						case 0x47: // G
+						case 0x67: // g
+							Array<String> graphicinfo;
+							input.Mid(i + 1).Split(graphicinfo, ",");
+
+							for (int g = 0; g < graphicinfo.Size(); g++)
+							{
+								int x = graphicinfo[1].ToInt();
+								int y = graphicinfo[0].ToInt();
+								int g = graphicinfo[2].ToInt();
+
+								TextureID tex;
+								if (sharewareremap) { tex = TexMan.CheckForTexture(String.Format("SLIDEG%i", g), TexMan.Type_Any); }
+								if (!sharewareremap || !tex.IsValid()) { tex = TexMan.CheckForTexture(String.Format("WVGA%04i", g), TexMan.Type_Any); }
+
+								if (tex)
+								{
+									screen.DrawTexture(tex, false, x, y, DTA_320x200, true);
+
+									Vector2 size = TexMan.GetScaledSize(tex);
+
+									int adjustleft = 0;
+									int adjustright = 0;
+
+									if (x + size.x / 2 > 160) { adjustright = (320 - x) + 8; }
+									else { adjustleft = x + int(size.x) + 8; }
+
+									int top = clamp((y - 16) / fontheight, 0, margins.Size() - 1);
+									int bottom = clamp((y + int(size.y) - 16) / FONTHEIGHT, 0, margins.Size() - 1);
+
+									for (int i = top; i <= bottom; i++)
+									{
+										if (adjustleft) { margins[i][0] = adjustleft; }
+										if (adjustright) { margins[i][1] = adjustright; }
+									}
+								}
+							}
+							return 0;
+						// Marks end of file.  Not used in this implementation
+						case 0x45: // E
+						case 0x65: // e
+						default:
+							break;
+					}
+					break;
+				// Handle tabs and spaces
+				case 0x09: // Tab
+				case 0x20: // Space
+					PrintText(clr .. word, currentx, currenty); // Print the word, then check to see if a line break is needed...
+					currentx += SmallFont.StringWidth(word);
+					word = "";
+
+					if (input.CharCodeAt(i) == 0x09) { currentx = (currentx + 8) & 0xf8; }
+					else if (input.CharCodeAt(i) == 0x20) { currentx += 7; }
+
+					int nextspace = input.IndexOf(" ", i + 1); // Find the next space
+					if (nextspace < 0) { nextspace = input.Length() - 1; }
+
+					String teststring = input.mid(i + 1, nextspace - (i + 1));
+
+					if (teststring.CharCodeAt(0) == 0x5E) { teststring = teststring.Mid(4); } // Skip color codes that are in lines when calculating length
+
+					int testlength = SmallFont.StringWidth(teststring);
+
+					if (testlength > 320 - margins[lineindex][1] - currentx)
+					{
+						lastbreak = i;
+						linecount++;
+						lineindex = currentline + linecount;
+						if (lineindex > margins.Size() - 1) { return linecount; }
+						currentx = margins[lineindex][0];
+						currenty = 16 + lineindex * fontheight;
+					}
+					break;
+				// Build the current word one character at  time
+				default:
+					if (input.CharAt(i))
+					{
+						word = word .. input.CharAt(i);
+					}
+					else { lastbreak = i; }
+					break;
+			}
+		}
+
+		PrintText(clr .. word, currentx, currenty); // Print the last word that wasn't caught in the loop...
+
+		return linecount + 1;
+	}
+
+	void PrintText(String text, int x, int y)
+	{
+		screen.DrawText(SmallFont, Font.FindFontColor("TrueBlack"), x, y, text, DTA_320x200, true);
+	}
+}
+
+class Episode1End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode1.txt");
+	}
+}
+
+class Episode2End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode2.txt");
+	}
+}
+
+class Episode3End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode3.txt");
+	}
+}
+
+class Episode4End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode4.txt");
+	}
+}
+
+class Episode5End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode5.txt");
+	}
+}
+
+class Episode6End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode6.txt");
+	}
+}
+
+class IntroSlideshow : GenericMenu
+{
+	int curscreen;
+	int inputtic;
+
+	int fadetarget;
+	int fadetime;
+	double fadealpha;
+
+	int advancetime;
+
+	TextureID startup, startup2, warning, title, credits, current, prev, next, selected;
+
+	Vector2 dimcoords, dimsize;
+
+	override void Init(Menu parent)
+	{
+		S_ChangeMusic("");
+
+		GenericMenu.Init(parent);
+
+		curscreen = 0;
+		fadetime = 12;
+		fadetarget = 0;
+		advancetime = 15;
+
+		startup = TexMan.CheckForTexture("STARTUP", TexMan.Type_Any);
+		startup2 = TexMan.CheckForTexture("STARTUP2", TexMan.Type_Any);
+		warning = TexMan.CheckForTexture("WARNING", TexMan.Type_Any);
+		title = TexMan.CheckForTexture("TITLEPIC", TexMan.Type_Any);
+		credits = TexMan.CheckForTexture("CREDIT", TexMan.Type_Any);
+		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
+
+		current = startup;
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+		if (current == startup2)
+		{
+			screen.DrawTexture(current, false, 0, 0, DTA_320x200, true);
+
+			screen.Dim(0x880000, 1.0, screen.GetWidth() / 2 - 60 * CleanXfac, Screen.GetHeight() - 11 * CleanYfac, 120 * CleanXfac, 11 * CleanYfac);
+
+			if (curscreen == 2)
+			{
+				String press = "Press a key";
+				int w = SmallFont.StringWidth(press);
+				screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupYellow"), 160 - w / 2, 190, press, DTA_320x200, true);
+			}
+			else
+			{
+				String press = "Working...";
+				int w = SmallFont.StringWidth(press);
+				screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupGreen"), 160 - w / 2, 190, press, DTA_320x200, true);
+			}
+
+			if (use_mouse) { screen.DrawTexture(selected, false, 164, 82, DTA_320x200, true); }
+			if (use_joystick) { screen.DrawTexture(selected, false, 164, 106, DTA_320x200, true); }
+		}
+		else if (current == warning)
+		{
+			screen.Dim(0x20A8FC, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+
+			screen.DrawTexture(current, false, 216, 110, DTA_320x200, true);
+		}
+		else
+		{
+			screen.DrawTexture(current, false, 0, 0, DTA_320x200, true);
+		}
+
+		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void Ticker()
+	{
+		if (advancetime > 0 && advancetime <= gametic)
+		{
+			inputtic = gametic;
+			curscreen++;
+			advancetime = 0;
+		}
+
+		if (inputtic == gametic)
+		{
+			switch (curscreen)
+			{
+				case 1: // Initial load screen
+					advancetime = gametic + 20;
+					break;
+				case 2: // Press a key
+					current = startup2;
+					advancetime = 0;
+					break;
+				case 3: // Working...
+					advancetime = 5;
+					break;
+				case 4: // Start demo loop
+					S_ChangeMusic(level.music);
+					next = warning;
+					fadetarget = gametic + fadetime;
+					advancetime = gametic + 35 * 7;
+					break;
+				case 5: // Title picture
+					next = title;
+					fadetarget = gametic + fadetime;
+					advancetime = gametic + 35 * 15;
+					break;
+				case 6: // Credits
+					next = credits;
+					fadetarget = gametic + fadetime;
+					advancetime = gametic + 35 * 10;
+					break;
+				default: // Swap between title and credits after the initial run-through
+					fadetarget = gametic + fadetime;
+					if (current == title)
+					{
+						next = credits;
+						advancetime = gametic + 35 * 10;
+					}
+					else
+					{
+						next = title;
+						advancetime = gametic + 35 * 15;
+					}
+					break;
+			}
+		}
+
+		if (gametic > 35)
+		{
+			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+		}
+
+		if (fadetarget == gametic)
+		{
+			prev = current;
+			current = next;
+		}
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		if (mkey && fadetarget < gametic)
+		{
+			inputtic = gametic;
+			curscreen++;
+
+			if (curscreen > 5) { Menu.SetMenu("MainMenu", -1); }
+
+			return true;
+		}
+	
+		return false;
+	}
+
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (type == MOUSE_Click)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_KeyDown)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return false;
+	}
+}
+
+class IntroSlideShowLoop : IntroSlideShow
+{
+	override void Init(Menu parent)
+	{
+		Super.Init(parent);
+
+		curscreen = 6;
+		current = title;
+		advancetime = gametic + 35 * 10;
+
+		S_ChangeMusic("NAZI_NOR");
+	}
+}
+
+class ScoreEntry
+{
+	String n;
+	String l;
+	String s;
+}
+
+class HighScores : GenericMenu
+{
+	Vector2 dimcoords, dimsize;
+	TextureID title, nametitle, scoretitle, leveltitle;
+	int currentline, fontheight;
+	Array<ScoreEntry> scores;
+
+	int fadetarget;
+	int fadetime;
+	double fadealpha;
+	int fadecolor;
+
+	int exittimeout;
+	bool exitmenu;
+	bool finale;
+
+	TextEnterMenu mInput;
+	int inputindex;
+	String mPlayerName;
+
+	override void Init(Menu parent)
+	{
+		GenericMenu.Init(parent);
+
+		fadetime = 12;
+		fadetarget = gametic;
+		fadealpha = 1.0;
+		fadecolor = 0x880000;
+
+		title = TexMan.CheckForTexture("SCORES", TexMan.Type_Any);
+		nametitle = TexMan.CheckForTexture("M_NAME", TexMan.Type_Any);
+		scoretitle = TexMan.CheckForTexture("M_SCORE", TexMan.Type_Any);
+		leveltitle = TexMan.CheckForTexture("M_LEVEL", TexMan.Type_Any);
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+
+		fontheight = 10;
+
+		S_ChangeMusic("ROSTER");
+
+		for (int s = 1; s <= 7; s++)
+		{
+			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. s);
+
+			if (scorevalue)
+			{
+				Array<String> entry;
+
+				decode(scorevalue.GetString(), s).Split(entry, "||");
+
+				ScoreEntry h = New("ScoreEntry");
+				if (entry.Size()) { h.n = entry[0]; }
+				if (entry.Size() > 1) { h.l = entry[1]; }
+				if (entry.Size() > 2) { h.s = entry[2]; }
+
+				scores.Push(h);
+
+				entry.Clear();
+				scorevalue = null;
+			}
+		}
+
+		let p = players[consoleplayer].mo;
+
+		finale = (gamestate == GS_FINALE || LifeHandler.GetLives(p) < 0);
+		inputindex = -1;
+
+		if (finale && (!mParentMenu || !ListMenu(mParentMenu) || (!ListMenu(mParentMenu).mDesc || ListMenu(mParentMenu).mDesc.mMenuName != "MainMenu")))
+		{
+			ScoreEntry h = New("ScoreEntry");
+
+			h.n = "";
+			h.l = LevelString();
+			h.s = p.FindInventory("Score") ? String.Format("%i", p.FindInventory("Score").Amount) : "0";
+
+			scores.Push(h);
+
+			inputindex = SortScores();
+
+			WriteScores();
+		}
+
+		mInput = null;
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(0x880000, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+
+		double ratio = screen.GetHeight() / 200.;
+
+		screen.Dim(0x000000, 1.0, 0, int(10 * ratio), screen.GetWidth(), int(22 * ratio));
+		screen.Dim(0x000000, 0.3, 0, int(32 * ratio), screen.GetWidth(), int(1 * ratio));
+		screen.Dim(0x000000, 1.0, 0, int(33 * ratio), screen.GetWidth(), int(1 * ratio));
+
+		if (title) { screen.DrawTexture(title, false, 48, 0, DTA_320x200, true); }
+
+		if (nametitle) { screen.DrawTexture(nametitle, false, 32, 68, DTA_320x200, true); }
+		if (leveltitle) { screen.DrawTexture(leveltitle, false, 160, 68, DTA_320x200, true); }
+		if (scoretitle) { screen.DrawTexture(scoretitle, false, 228, 68, DTA_320x200, true); }
+
+		for (int s = 0; s < 7; s++)
+		{
+			int y = 76 + 16 * s;
+
+			screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 32, y, scores[s].n, DTA_320x200, true);
+			screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 163, y, scores[s].l, DTA_320x200, true);
+
+			for (int t = scores[s].s.Length(); t > 0; t--)
+			{
+				String chr = scores[s].s.CharAt(scores[s].s.Length() - t);
+
+				// The Wolf fixed-width numbers center the 1 but left-align all of the other numbers...
+				int x = chr == "1" ? 264 - 8 * t + 4 - SmallFont.StringWidth(chr) / 2 : 264 - 8 * t;
+				screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), x, y, chr, DTA_320x200, true);
+			}
+		}
+
+		if (inputindex > -1 && mInput)
+		{
+			let printit = mInput.GetText() .. ((gametic % 30 < 15) ? String.Format("%c", 0x80) : "");
+			screen.DrawText (SmallFont, Font.FindFontColor("TrueWhite"), 32, 76 + 16 * inputindex, printit, DTA_320x200, true);
+		}
+ 
+		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void Ticker()
+	{
+		Super.Ticker();
+
+		if (gametic > 35)
+		{
+			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+		}
+
+		if (exitmenu)
+		{
+			exittimeout++;
+
+			if (exittimeout >= fadetime)
+			{
+				if (mParentMenu || finale) { S_ChangeMusic("WONDERIN"); SetMenu("MainMenu", -1); }
+				else { SetMenu("CloseMenu", -1); }
+			}
+		}
+
+		if (!fadealpha && inputindex > -1 && !mInput)
+		{
+			GetInput();
+		}
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		if (inputindex == -1)
+		{
+			exitmenu = true;
+
+			if (gamestate == GS_FINALE) { fadecolor = 0x000000; }
+			MenuSound (GetCurrentMenu() != null ? "menu/backup" : "menu/clear");
+			return true;
+		}
+
+		if (mkey == Menu.MKEY_Input)
+		{
+			scores[inputindex].n = mInput.GetText();
+			WriteScores();
+			mInput = null;
+			inputindex = -1;
+			return true;
+		}
+
+		return false;
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (type == MOUSE_Click)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	String LevelString()
+	{
+		String levelname = level.mapname;
+
+		if (levelname.Length() == 4 && levelname.Mid(0, 1) ~== "E" && levelname.Mid(2, 1) ~== "L")
+		{
+			levelname = levelname.Mid(0, 2) .. "/" .. levelname.Mid(2, 2);
+			levelname.ToUpper();
+		}
+
+		return levelname;
+	}
+
+	// Algorithms adapted from https://en.wikibooks.org/wiki/Algorithm_Implementation/Miscellaneous/Base64
+	// Pass in v value as an offset to slightly obfuscate the encoded value (added ROT cipher, effectively)
+	String Encode(String s, int v = 0)
+	{
+		String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		String r = ""; 
+		String p = ""; 
+		int c = s.Length() % 3;
+
+		if (c)
+		{
+			for (; c < 3; c++)
+			{ 
+				p = p .. '='; 
+				s = s .. "\0"; 
+			} 
+		}
+
+		for (c = 0; c < s.Length(); c += 3)
+		{
+			int m = (s.charCodeAt(c) + v << 16) + (s.charCodeAt(c + 1) + v << 8) + s.charCodeAt(c + 2) + v;
+			int n[] = { (m >>> 18) & 63, (m >>> 12) & 63, (m >>> 6) & 63, m & 63 };
+			r = r .. base64chars.charAt(n[0]) .. base64chars.charAt(n[1]) .. base64chars.charAt(n[2]) .. base64chars.charAt(n[3]);
+		}
+
+		return r.Mid(0, r.Length() - p.Length()) .. p;
+	}
+
+	String Decode(String s, int v = 0)
+	{
+		String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+		String p = (s.charAt(s.Length() - 1) == '=' ? (s.charAt(s.Length() - 2) == '=' ? "AA" : "A") : ""); 
+		String r = ""; 
+		s = s.Mid(0, s.Length() - p.Length()) .. p;
+
+		for (int c = 0; c < s.Length(); c += 4)
+		{
+			int c1 = base64chars.IndexOf(s.charAt(c)) << 18;
+			int c2 = base64chars.IndexOf(s.charAt(c + 1)) << 12;
+			int c3 = base64chars.IndexOf(s.charAt(c + 2)) << 6;
+			int c4 = base64chars.IndexOf(s.charAt(c + 3));
+
+			int n = (c1 + c2 + c3 + c4);
+			r = r .. String.Format("%c%c%c", ((n >>> 16) - v) & 127, ((n >>> 8) - v) & 127, (n - v) & 127); // Sorry extened ASCII and Unicode...  No support for you here.
+		}
+
+		return r.Mid(0, r.Length() - p.Length());
+	}
+
+	int SortScores()
+	{
+		bool swapped = true;
+
+		int currentindex = scores.Size() - 1;
+
+		while (swapped)
+		{
+			swapped = false;
+
+			for (int s = 1; s < scores.Size(); s++)
+			{
+				if (scores[s].s.ToInt() > scores[s - 1].s.ToInt())
+				{
+					ScoreEntry temp = scores[s - 1];
+					scores[s - 1] = scores[s];
+					scores[s] = temp;
+
+					if (s == currentindex) { currentindex = s - 1; }
+
+					swapped = true;
+				}
+			}
+		}
+
+		return currentindex > 6 ? -1 : currentindex;
+	}
+
+	void WriteScores()
+	{
+		for (int s = 0; s < 7; s++)
+		{
+			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. s + 1);
+
+			if (scorevalue && scores[s])
+			{
+				String value = scores[s].n .. "||" .. scores[s].l .. "||" .. scores[s].s;
+				value = encode(value, s + 1);
+
+				scorevalue.SetString(value);
+
+				scorevalue = null;
+			}
+		}
+
+	}
+
+	void GetInput()
+	{
+		mInput = TextEnterMenu.OpenTextEnter(Menu.GetCurrentMenu(), SmallFont, mPlayerName, 128);
+		mInput.ActivateMenu();
+	}
+}

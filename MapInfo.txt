@@ -1,0 +1,751 @@
+gameinfo
+{
+	playerclasses = "WolfPlayer"
+	quitmessages = "$QUITMSG1", "$QUITMSG2", "$QUITMSG3", "$QUITMSG4", "$QUITMSG5", "$QUITMSG6", "$QUITMSG7", "$QUITMSG8", "$QUITMSG9"
+	endoom = "EndWolf"
+	dimcolor = "80 00 00" // This is only needed because of the menus that can't be assigned a new class...
+	dimamount = 1.0
+	cursorpic = "W_CURSOR"
+	borderflat = "GREEN"
+	border = 3, 3, "M_BORTR", "M_BORT", "M_BORTL", "M_BORR", "M_BORL", "M_BORBR", "M_BORB", "M_BORBL"
+	menufontcolor_title = "WolfMenuYellowBright"
+	menufontcolor_label = "WolfMenuGray"
+	menufontcolor_value = "WolfMenuLightGray"
+	menufontcolor_action = "WolfMenuGray"
+	menufontcolor_header = "WolfMenuYellow"
+	menufontcolor_highlight = "TrueWhite"
+	menufontcolor_selection = "WolfMenuYellowBright"
+	menuslidercolor = "WolfMenuYellowBright"
+	menubackbutton = "M_BACK_W"
+	pausesign = "W_PAUSE"
+	skyflatname = "CEILING" 
+	drawreadthis = true
+
+	maparrow = "maparrows/knife.txt"
+
+	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler"
+	statusbarclass = "ClassicStatusBar"
+
+	StatScreen_Single = "ClassicStats"
+	MessageboxClass = "ClassicMessageBox"
+}
+
+// Skill Definitions
+
+clearskills
+skill baby
+{
+	DamageFactor = 0.5
+	SpawnFilter = "Easy"
+	Name = "$SK_1"
+	TextColor = "WolfMenuGrey"
+	Key = "C"
+}
+
+skill easy
+{
+	SpawnFilter = "Easy"
+	Name = "$SK_2"
+	TextColor = "WolfMenuGrey"
+	Key = "D"
+}
+
+skill normal
+{
+	SpawnFilter = "Normal"
+	Name = "$SK_3"
+	TextColor = "WolfMenuGrey"
+	Key = "B"
+	defaultskill
+}
+
+skill hard
+{
+	SpawnFilter = "Hard"
+	Name = "$SK_4"
+	TextColor = "WolfMenuGrey"
+	Key = "I"
+}
+
+defaultmap
+{
+	NoCrouch
+	NoJump
+	NoFreeLook
+	No_Grinding_Polyobj
+	InterMusic = ENDLEVEL
+	Sky1 = "Ceiling"
+	Cluster = 1
+}
+
+map TITLEMAP "Wolfenstein 3D"
+{
+	music = "NAZI_NOR"
+}
+
+clearepisodes
+
+episode E1L1
+{
+	name = "$EP_1"
+	key = "e"
+}
+
+episode E2L1
+{
+	name = "$EP_2"
+	key = "o"
+}
+
+episode E3L1
+{
+	name = "$EP_3"
+	key = "d"
+}
+
+episode E4L1
+{
+	name = "$EP_4"
+	key = "a"
+}
+
+episode E5L1
+{
+	name = "$EP_5"
+	key = "t"
+}
+
+episode E6L1
+{
+	name = "$EP_6"
+	key = "c"
+}
+
+// Episode 1
+
+map E1L1 "$FLOOR_1"
+{
+	levelnum = 101
+	music = GETTHEM
+	next = E1L2
+	secretnext = E1L0
+	par = 90
+}
+
+map E1L2 "$FLOOR_2"
+{
+	levelnum = 102
+	music = SEARCHN
+	next = E1L3
+	par = 120
+}
+
+map E1L3 "$FLOOR_3"
+{
+	levelnum = 103
+	music = POW
+	next = E1L4
+	par = 120
+}
+
+map E1L4 "$FLOOR_4"
+{
+	levelnum = 104
+	music = SUSPENSE
+	next = E1L5
+	par = 210
+}
+
+map E1L5 "$FLOOR_5"
+{
+	levelnum = 105
+	music = GETTHEM
+	next = E1L6
+	par = 180
+}
+
+map E1L6 "$FLOOR_6"
+{
+	levelnum = 106
+	music = SEARCHN
+	next = E1L7
+	par = 180
+}
+
+map E1L7 "$FLOOR_7"
+{
+	levelnum = 107
+	music = POW
+	next = E1L8
+	par = 150
+}
+
+map E1L8 "$FLOOR_8"
+{
+	levelnum = 108
+	music = SUSPENSE
+	next = E1L9
+	par = 150
+}
+
+map E1L9 "$FLOOR_9"
+{
+	levelnum = 109
+	music = WARMARCH
+	intermusic = URAHERO
+	next = EndSequence, "EndEpisode"
+}
+
+map E1L0 "$FLOOR_10"
+{
+	levelnum = 110
+	music = CORNER
+	next = E1L2
+}
+
+// Episode 2
+
+map E2L1 "$FLOOR_1"
+{
+	levelnum = 201
+	music = NAZI_OMI
+	next = E2L2
+	secretnext = E2L0
+	par = 90
+}
+
+map E2L2 "$FLOOR_2"
+{
+	levelnum = 202
+	music = PREGNANT
+	next = E2L3
+	par = 210
+}
+
+map E2L3 "$FLOOR_3"
+{
+	levelnum = 203
+	music = GOINGAFT
+	next = E2L4
+	par = 180
+}
+
+map E2L4 "$FLOOR_4"
+{
+	levelnum = 204
+	music = HEADACHE
+	next = E2L5
+	par = 120
+}
+
+map E2L5 "$FLOOR_5"
+{
+	levelnum = 205
+	music = NAZI_OMI
+	next = E2L6
+	par = 240
+}
+
+map E2L6 "$FLOOR_6"
+{
+	levelnum = 206
+	music = PREGNANT
+	next = E2L7
+	par = 360
+}
+
+map E2L7 "$FLOOR_7"
+{
+	levelnum = 207
+	music = HEADACHE
+	next = E2L8
+	par = 60
+}
+
+map E2L8 "$FLOOR_8"
+{
+	levelnum = 208
+	music = GOINGAFT
+	next = E2L9
+	par = 180
+}
+
+map E2L9 "$FLOOR_9"
+{
+	levelnum = 209
+	music = WARMARCH
+	next = EndSequence, "EndEpisode"
+	specialaction = "DrSchabbs", "ACS_ExecuteAlways", 27, 0
+}
+
+map E2L0 "$FLOOR_10"
+{
+	levelnum = 210
+	music = DUNGEON
+	next = E2L2
+}
+
+// Episode 3: Die, Fuhrer, Die!
+
+map E3L1 "$FLOOR_1"
+{
+	levelnum = 301
+	music = INTROCW3
+	next = E3L2
+	par = 90
+}
+
+map E3L2 "$FLOOR_2"
+{
+	levelnum = 302
+	music = NAZI_RAP
+	next = E3L3
+	par = 90
+}
+
+map E3L3 "$FLOOR_3"
+{
+	levelnum = 303
+	music = TWELFTH
+	next = E3L4
+	par = 150
+}
+
+map E3L4 "$FLOOR_4"
+{
+	levelnum = 304
+	music = ZEROHOUR
+	next = E3L5
+	par = 150
+}
+
+map E3L5 "$FLOOR_5"
+{
+	levelnum = 305
+	music = INTROCW3
+	next = E3L6
+	par = 210
+}
+
+map E3L6 "$FLOOR_6"
+{
+	levelnum = 306
+	music = NAZI_RAP
+	next = E3L7
+	par = 150
+}
+
+map E3L7 "$FLOOR_7"
+{
+	levelnum = 307
+	music = TWELFTH
+	next = E3L8
+	secretnext = E3L0
+	par = 120
+}
+
+map E3L8 "$FLOOR_8"
+{
+	levelnum = 308
+	music = ZEROHOUR
+	next = E3L9
+	par = 360
+}
+
+map E3L9 "$FLOOR_9"
+{
+	levelnum = 309
+	music = ULTIMATE
+	next = EndSequence, "EndEpisode"
+	specialaction = "Hitler", "ACS_ExecuteAlways", 27, 0
+}
+
+map E3L0 "$FLOOR_10"
+{
+	levelnum = 310
+	music = PACMAN
+	next = E3L8
+}
+
+//Episode 4
+
+map E4L1 "$FLOOR_1"
+{
+	levelnum = 401
+	music = GETTHEM
+	next = E4L2
+	par = 120
+}
+
+map E4L2 "$FLOOR_2"
+{
+	levelnum = 402
+	music = SEARCHN
+	next = E4L3
+	par = 120
+}
+
+map E4L3 "$FLOOR_3"
+{
+	levelnum = 403
+	music = POW
+	next = E4L4
+	secretnext = E4L0
+	par = 90
+}
+
+map E4L4 "$FLOOR_4"
+{
+	levelnum = 404
+	music = SUSPENSE
+	next = E4L5
+	par = 60
+}
+
+map E4L5 "$FLOOR_5"
+{
+	levelnum = 405
+	music = GETTHEM
+	next = E4L6
+	par = 270
+}
+
+map E4L6 "$FLOOR_6"
+{
+	levelnum = 406
+	music = SEARCHN
+	next = E4L7
+	par = 210
+}
+
+map E4L7 "$FLOOR_7"
+{
+	levelnum = 407
+	music = POW
+	next = E4L8
+	par = 120
+}
+
+map E4L8 "$FLOOR_8"
+{
+	levelnum = 408
+	music = SUSPENSE
+	next = E4L9
+	par = 270
+}
+
+map E4L9 "$FLOOR_9"
+{
+	levelnum = 409
+	music = WARMARCH
+	next = EndSequence, "EndEpisode"
+	specialaction = "GiftMacher", "ACS_ExecuteAlways", 27, 0
+}
+
+map E4L0 "$FLOOR_10"
+{
+	levelnum = 410
+	music = CORNER
+	next = E4L4
+}
+
+//Episode 5
+
+map E5L1 "$FLOOR_1"
+{
+	levelnum = 501
+	music = NAZI_OMI
+	next = E5L2
+	par = 150
+}
+
+map E5L2 "$FLOOR_2"
+{
+	levelnum = 502
+	music = PREGNANT
+	next = E5L3
+	par = 90
+}
+
+map E5L3 "$FLOOR_3"
+{
+	levelnum = 503
+	music = GOINGAFT
+	next = E5L4
+	par = 150
+}
+
+map E5L4 "$FLOOR_4"
+{
+	levelnum = 504
+	music = HEADACHE
+	next = E5L5
+	par = 150
+}
+
+map E5L5 "$FLOOR_5"
+{
+	levelnum = 505
+	music = NAZI_OMI
+	next = E5L6
+	secretnext = E5L0
+	par = 240
+}
+
+map E5L6 "$FLOOR_6"
+{
+	levelnum = 506
+	music = PREGNANT
+	next = E5L7
+	par = 180
+}
+
+map E5L7 "$FLOOR_7"
+{
+	levelnum = 507
+	music = GOINGAFT
+	next = E5L8
+	par = 270
+}
+
+map E5L8 "$FLOOR_8"
+{
+	levelnum = 508
+	music = HEADACHE
+	next = E5L9
+	par = 210
+}
+
+map E5L9 "$FLOOR_9"
+{
+	levelnum = 509
+	music = WARMARCH
+	next = EndSequence, "EndEpisode"
+}
+
+map E5L0 "$FLOOR_10"
+{
+	levelnum = 510
+	music = DUNGEON
+	next = E5L6
+}
+
+//Episode 6
+
+map E6L1 "$FLOOR_1"
+{
+	levelnum = 601
+	music = INTROCW3
+	next = E6L2
+	par = 390
+}
+
+map E6L2 "$FLOOR_2"
+{
+	levelnum = 602
+	music = NAZI_RAP
+	next = E6L3
+	par = 240
+	levelnum = 52
+}
+
+map E6L3 "$FLOOR_3"
+{
+	levelnum = 603
+	music = TWELFTH
+	next = E6L4
+	secretnext = E6L0
+	par = 270
+}
+
+map E6L4 "$FLOOR_4"
+{
+	levelnum = 604
+	music = ZEROHOUR
+	next = E6L5
+	par = 360
+}
+
+map E6L5 "$FLOOR_5"
+{
+	levelnum = 605
+	music = INTROCW3
+	next = E6L6
+	par = 300
+}
+
+map E6L6 "$FLOOR_6"
+{
+	levelnum = 606
+	music = NAZI_RAP
+	next = E6L7
+	par = 330
+}
+
+map E6L7 "$FLOOR_7"
+{
+	levelnum = 607
+	music = TWELFTH
+	next = E6L8
+	par = 330
+}
+
+map E6L8 "$FLOOR_8"
+{
+	levelnum = 608
+	music = ZEROHOUR
+	next = E6L9
+	par = 510
+}
+
+map E6L9 "$FLOOR_9"
+{
+	levelnum = 609
+	music = ULTIMATE
+	next = EndSequence, "EndEpisode"
+	specialaction = "Fettgesicht", "ACS_ExecuteAlways", 27, 0
+}
+
+map E6L0 "$FLOOR_10"
+{
+	levelnum = 610
+	music = FUNKYOU
+	next = E6L4
+}
+
+DoomEdNums
+{
+	// Enemies
+	20002=Guard
+	20003=SS
+	20004=Officer
+	20005=Mutant
+	20160=HitlerGhost
+
+	// Moving Enemies
+	20201=Dog
+	20202=MGuard
+	20203=MSS
+	20204=MOfficer
+	20205=MMutant
+
+	// Compatibility
+	21002=Guard
+	21003=SS
+	21201=Dog
+	21202=MGuard
+	21203=MSS
+	21014=Hans
+
+	// Bosses
+	20214=Hans
+	20196=DrSchabbs
+	20178=HitlerMech
+	20215=Giftmacher
+	20197=GretelGrosse
+	20179=Fettgesicht
+
+	// Objects
+	21023=PoolofWater
+	21024=OilDrum
+	21025=TableandChairs
+	21026=FloorLamp
+	21027=HangingChandelier
+	21028=HangingSkeleton
+	21029=DogFood
+	21030=StoneColumn
+	21031=Plant
+	21032=Skeleton
+	21033=Sink
+	21034=PlantinVase
+	21035=Vase
+	21036=Table
+	21037=GreenCeilingLight
+	21038=KitchenUtensils
+	21039=SuitofArmor
+	21040=EmptyCage
+	21041=Cage
+	21042=Bones
+	21043=YellowKey
+	21044=BlueKey
+	21045=Bed
+	21046=Basket
+	21047=PlateofFood
+	21048=FirstAidKit
+	21049=WolfClip
+	21050=WolfMachineGun
+	21051=WolfChaingun
+	21052=JeweledCross
+	21053=Chalice
+	21054=Chest
+	21055=Crown
+	21056=Life
+	21057=BoneswithBlood
+	21058=WoodBarrel
+	21059=WellwithWater
+	21060=DryWell
+	21061=PoolofBlood
+	21062=NaziFlag
+	21063=AardwolfSign
+	21064=CrushedBones1
+	21065=CrushedBones2
+	21066=CrushedBody
+	21067=HangingUtensils
+	21068=Stove
+	21069=SpearRack
+	21070=HangingVines
+	21124=DeadGuard
+
+	// Miscellanous
+	22100=SecretMarker
+	22090=Turn
+	22091=Turn45
+	22092=Turn90
+	22093=Turn135
+	22094=Turn180
+	22095=Turn225
+	22096=Turn270
+	22097=Turn315
+
+	20224=Blinky
+	20225=Inky
+	20226=Pinky
+	20227=Clyde
+}
+
+Intermission EndEpisode
+{
+	Image
+	{
+		// This is only here to initialize the background and the music
+		Background = "BLACK"
+		Time = -60
+		Music = "None"
+	}
+
+	Link = EndEpisode // Loop it forever...
+}
+
+Automap
+{
+	Base = "Doom"
+	ShowLocks = True
+
+	Background = "22 22 22"
+	YourColor = "EE EE EE"
+	WallColor = "00 66 66"
+	TwoSidedWallColor = "66 66 66"
+	FloorDiffWallColor = "66 66 66"
+	CeilingDiffWallColor = "66 66 66"
+	ExtraFloorWallColor = "66 66 66"
+	ThingColor = "88 88 88"			//Decorations
+	ThingColor_Item = "20 9C FC"		//Weapons and Ammo
+	ThingColor_CountItem = "FC F4 20"	//Treasure (usually)
+	ThingColor_Monster = "FC 00 00"
+	ThingColor_Friend = "00 FC 00"
+	SpecialWallColor = "00 77 77"
+	SecretWallColor = "00 AA AA"
+	GridColor = "88 88 88"
+	NotSeenColor = "00 50 50"
+	AlmostBackgroundColor = "44 44 44"
+}

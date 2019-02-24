@@ -1,0 +1,167 @@
+DefaultListMenu
+{
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+	Selector "M_SEL1", -26, -2
+	Linespacing 13
+
+	Class "ExtendedListMenu"
+}
+
+DefaultOptionMenu
+{
+	Class "ExtendedOptionMenu"
+}
+
+ListMenu "MainMenu"
+{
+	TopStrip 10
+
+	StripTitle 0, 0, "M_Menu"
+
+	Position 100, 55
+
+	Box 178, 136, 0
+
+	TextItem "New Game", "n", "PlayerclassMenu"
+	TextItem "Sound", "s", "SoundOptions"
+	TextItem "Control", "c", "TCOptions"
+	TextItem "Load Game", "l", "LoadGameMenu"
+
+	Font "BigFont", "WolfMenuRed"
+	TextNotInGame "Save Game"
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+	TextItemInGame "Save Game", "s", "SaveGameMenu"
+
+	TextItem "Change View", "w", "VideoModeMenu"
+
+	IfOption(ReadThis)
+	{
+		Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
+		TextItemNotInGame "Read This!", "r", "HelpMenu"
+		Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+		TextItemInGame "Read This!", "r", "HelpMenu"
+	}
+
+	TextItemNotInGame "View Scores", "v", "HighScores"
+	TextItemInGame "End Game", "e", "EndGameMenu"
+
+	TextItemNotInGame "Back to Demo", "b", "CloseMenu"
+	Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
+	TextItemInGame "Back to Game", "b", "CloseMenu"
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+
+	TextItem "Quit", "q", "QuitMenu"
+}
+
+ListMenu "EpisodeMenu"
+{
+	NetgameMessage "$NETGAME"
+	Linespacing 26
+	Selector "M_SEL1", -88, 0
+
+	Font "BigFont", "WolfMenuYellowBright"
+	StaticTextCentered 160, 0, "$M_EPIS"
+
+	Position 72, 23
+
+	Box 308, 162, 0
+
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+
+	Class "IconListMenu"
+}
+
+ListMenu "SkillMenu"
+{
+	Font "BigFont", "WolfMenuYellowBright"
+	StaticTextCentered 160, 78, "$M_SKILL"
+
+	Position 75, 102
+
+	Box 225, 60, 0
+
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+
+	Class "StaticIconListMenu"
+}
+
+ListMenu "LoadGameMenu"
+{
+	NetgameMessage "$LOADNET"
+
+	TopStrip 10
+	StripTitle 0, 0, "M_LoadGm"
+	Position 80, 55
+
+	Class "ExtendedLoadMenu"
+}
+
+ListMenu "SaveGameMenu"
+{
+	TopStrip 10
+	StripTitle 0, 0, "M_SaveGm"
+	Position 80, 55
+
+	Class "ExtendedSaveMenu"
+}
+
+OptionMenuSettings
+{
+	Linespacing 10
+}
+
+OptionMenu "TCOptions"
+{
+	Title "M_CONTRL"
+
+	SubMenu "Game Engine Options",			"OptionsMenu"
+	StaticText ""
+	StaticText "Gameplay Options", 1
+	Option "Disable Wolf3D-style movement",		"g_momentum", "YesNo"
+	Option "Use fast fireballs",			"g_fastfireballs", "YesNo"
+	Option "Enable Wolf3D-style cheats",		"goobers", "YesNo"
+	StaticText ""
+	StaticText "Cosmetic Options", 1
+	Option "Skip 'Get Psyched' screen",		"g_nointro", "YesNo"
+	Option "Don't show blood or bullet puffs",	"g_noblood", "YesNo"
+}
+
+ListMenu "PlayerMenu"
+{
+	Linespacing 14
+
+	TopStrip 10
+	StripTitle 0, 0, "M_Menu"
+
+	Font "BigFont", "WolfMenuYellowBright"
+	StaticTextCentered 160, 55, "$MNU_PLAYERSETUP"
+	Font "SmallFont", "WolfMenuGray", "WolfMenuLightGray"
+
+	Position 48, 80
+
+	Box 300, 136, 0
+
+	Position 48, 85
+
+	PlayerNameBox "Name", -2, "Playerbox"
+	Selector "-", -16, -1
+
+	MouseWindow 0, 220
+	PlayerDisplay 220, 105, "20 00 00", "80 40 00", 1, "PlayerDisplay"
+	
+	ValueText "$PLYRMNU_TEAM", "Team"
+	ValueText "$PLYRMNU_PLAYERCOLOR", "Color"
+	Linespacing 10
+	Slider "$PLYRMNU_RED", "Red", 0, 255, 16
+	Slider "$PLYRMNU_GREEN", "Green", 0, 255, 16
+	Linespacing 14
+	Slider "$PLYRMNU_BLUE", "Blue", 0, 255, 16
+//	ValueText "$PLYRMNU_PLAYERCLASS", "Class"
+//	ValueText "$PLYRMNU_PLAYERSKIN", "Skin"
+//	ValueText "$PLYRMNU_PLAYERGENDER", "Gender", "Gender"
+	Slider "$PLYRMNU_AUTOAIM", "Autoaim", 0, 35, 1
+	ValueText "$PLYRMNU_SWITCHONPICKUP", "Switch", "OffOn"
+	ValueText "$PLYRMNU_ALWAYSRUN", "AlwaysRun", "OnOff"
+
+	Class "ExtendedPlayerMenu"
+}

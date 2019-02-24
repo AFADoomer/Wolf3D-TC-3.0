@@ -1,0 +1,289 @@
+// Wolf3D Weapons
+class ClassicWeapon : Weapon
+{
+	Default
+	{
+		//$Category Classic Wolf3D/Weapons
+		//$Color 3
+
+		Mass 10000;
+		Obituary "";
+		Inventory.PickupMessage "";
+		Weapon.YAdjust 32;
+	}
+
+	States
+	{
+		Spawn:
+			UNKN A -1;
+			Stop;
+		Deselect:
+			"####" "#" 1 A_Lower();
+			Loop;
+		Select:
+			"####" "#" 1 A_Raise();
+			Loop;
+		Ready:
+			"####" "#" 1;
+			"####" "#" 0 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Fire:
+			"####" "#" 1;
+			Goto Ready;
+		Refire:
+			"####" "#" 0  A_Refire;
+			"####" "#" 0 A_Jump (256, "Ready");
+		Hold:
+			"####" "#" 1;
+			"####" "#" 0 A_JumpIfInventory ("PowerStrength", 1, "Hold.Automatic");
+			"####" "#" 0 A_Jump (256, "Refire");
+		Hold.Automatic:
+			"####" "#" 0 A_Jump (256, "Fire");
+	}
+
+	int WolfRandom()
+	{
+		static const int rnd_table[] = {
+		  0,   8, 109, 220, 222, 241, 149, 107,  75, 248, 254, 140,  16,  66,
+		 74,  21, 211,  47,  80, 242, 154,  27, 205, 128, 161,  89,  77,  36,
+		 95, 110,  85,  48, 212, 140, 211, 249,  22,  79, 200,  50,  28, 188,
+		 52, 140, 202, 120,  68, 145,  62,  70, 184, 190,  91, 197, 152, 224,
+		149, 104,  25, 178, 252, 182, 202, 182, 141, 197,   4,  81, 181, 242,
+		145,  42,  39, 227, 156, 198, 225, 193, 219,  93, 122, 175, 249,   0,
+		175, 143,  70, 239,  46, 246, 163,  53, 163, 109, 168, 135,   2, 235,
+		 25,  92,  20, 145, 138,  77,  69, 166,  78, 176, 173, 212, 166, 113,
+		 94, 161,  41,  50, 239,  49, 111, 164,  70,  60,   2,  37, 171,  75,
+		136, 156,  11,  56,  42, 146, 138, 229,  73, 146,  77,  61,  98, 196,
+		135, 106,  63, 197, 195,  86,  96, 203, 113, 101, 170, 247, 181, 113,
+		 80, 250, 108,   7, 255, 237, 129, 226,  79, 107, 112, 166, 103, 241,
+		 24, 223, 239, 120, 198,  58,  60,  82, 128,   3, 184,  66, 143, 224,
+		145, 224,  81, 206, 163,  45,  63,  90, 168, 114,  59,  33, 159,  95,
+		 28, 139, 123,  98, 125, 196,  15,  70, 194, 253,  54,  14, 109, 226,
+		 71,  17, 161,  93, 186,  87, 244, 138,  20,  52, 123, 251,  26,  36,
+		 17,  46,  52, 231, 232,  76,  31, 221,  84,  37, 216, 165, 212, 106,
+		197, 242,  98,  43,  39, 175, 254, 145, 190,  84, 118, 222, 187, 136,
+		120, 163, 236, 249 };
+
+		return rnd_table[Random(0, 255)];
+	}
+}
+
+class WolfPuff : BulletPuff
+{
+	override void PostBeginPlay()
+	{
+		bInvisible = g_noblood;
+
+		Super.PostBeginPlay();
+	}
+}
+
+class WolfClip : Ammo
+{
+	Default
+	{
+		//$Category Classic Wolf3D/Weapons
+		//$Color 3
+
+		Mass 10000;
+		Inventory.Amount 8;
+		Inventory.Icon "CCLIA0";
+		Inventory.MaxAmount 99;
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickups/ammo";
+		Ammo.BackpackMaxAmount 0;
+	}
+
+	States
+	{
+		Spawn:
+			CCLI A -1;
+			Loop;
+	}
+}
+
+class WolfClipDrop : WolfClip
+{
+	Default
+	{
+		Inventory.Amount 4;
+	}
+}
+
+class WolfKnife : ClassicWeapon
+{
+	Default
+	{
+		+Weapon.NoAlert
+		AttackSound "";
+		Inventory.Icon "KNIFE";
+		Weapon.AmmoUse 0;
+		Weapon.SelectionOrder 4;
+	}
+
+	States
+	{
+		Spawn:
+			CKNI P -1;
+			Loop;
+		Ready:
+			CKNI A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Select:
+			CKNI A 0;
+			Goto Super::Select;
+		Fire:
+			CKNI B 3;
+			CKNI A 0 A_JumpIfInventory ("PowerStrength", 1, "Fire.Adrenaline");
+			CKNI C 3 A_CustomPunch (invoker.WolfRandom() >> 4, 1, 0, "WolfPuff");
+			CKNI A 0 A_Jump(256, "Fire.Resume");
+		Fire.Adrenaline:
+			CKNI C 3 A_CustomPunch (invoker.WolfRandom() >> 1, 1, 0, "WolfPuff");
+			CKNI A 0 A_Jump(256, "Fire.Resume");
+		Fire.Resume:
+			CKNI A 0 A_PlaySound("weapons/wknife", CHAN_WEAPON);
+			CKNI DE 3;
+			CKNI A 0 A_Jump(256, "Refire");
+	}
+} 
+
+
+class WolfPistol : ClassicWeapon
+{
+	Default
+	{
+		AttackSound "weapons/wpistol";
+		Inventory.Icon "LUGER";
+		Inventory.PickupSound "pickups/ammo";
+		Weapon.AmmoType "WolfClip";
+		Weapon.AmmoGive 8;
+		Weapon.AmmoUse 1;
+		Weapon.SelectionOrder 3;
+	}
+
+	States
+	{
+		Spawn:
+			CLUG P -1;
+			Loop;
+		Ready:
+			CLUG A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Select:
+			CLUG A 0;
+			Goto Super::Select;
+		Fire:
+			CLUG B 2;
+			CLUG A 0 A_JumpIfCloser (128, "Fire.Close");
+			CLUG A 0 A_JumpIfCloser (256, "Fire.Medium");
+			CLUG A 0 A_JumpIfCloser (invoker.WolfRandom() / 12, "Fire.Missed");
+		Fire.Medium:
+			CLUG C 3 BRIGHT A_FireBullets (2.0, 2.0, 1, invoker.WolfRandom() / 4, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CLUG A 0 A_Jump(256, "Fire.Resume");
+		Fire.Close:
+			CLUG C 3 BRIGHT A_FireBullets (2.0, 2.0, 1, invoker.WolfRandom() / 2, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CLUG A 0 A_Jump(256, "Fire.Resume");
+		Fire.Missed:
+			CLUG C 3 BRIGHT A_FireBullets (2.0, 2.0, 1, 0, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CLUG A 0 A_Jump(256, "Fire.Resume");
+		Fire.Resume:
+			CLUG DE 3;
+			CLUG A 0 A_Jump(256, "Refire");
+	}
+}
+ 
+class WolfMachineGun : ClassicWeapon
+{
+	Default
+	{
+		AttackSound "weapons/wmachinegun";
+		Inventory.Icon "MGUN";
+		Inventory.PickupSound "pickups/MGUN";
+		Weapon.AmmoType "WolfClip";
+		Weapon.AmmoGive 6;
+		Weapon.AmmoUse 1;
+		Weapon.SelectionOrder 2;
+	}
+
+	States
+	{
+		Spawn:
+			CMGU P -1;
+			Loop;
+		Ready:
+			CMGU W 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Select:
+			CMGU A 0;
+			Goto Super::Select;
+		Fire:
+			CMGU W 2;
+			CMGU B 2;
+		Hold:
+			CMGU W 0;
+			CMGU A 0 A_JumpIfCloser (128, "Fire.Close");
+			CMGU A 0 A_JumpIfCloser (256, "Fire.Medium");
+			CMGU A 0 A_JumpIfCloser (invoker.WolfRandom() / 12, "Fire.Missed");
+		Fire.Medium:
+			CMGU C 3 BRIGHT A_FireBullets (3.0, 3.0, 1, invoker.WolfRandom() / 6, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			Goto Fire.Resume;
+		Fire.Close:
+			CMGU C 3 BRIGHT A_FireBullets (3.0, 3.0, 1, invoker.WolfRandom() / 4, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			Goto Fire.Resume;
+		Fire.Missed:
+			CMGU C 3 BRIGHT A_FireBullets (3.0, 3.0, 1, 0, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+		Fire.Resume:
+			CMGU D 3;
+			CMGU D 0 A_ReFire;
+			CMGU E 3;
+			CMGU A 0 A_Jump(256, "Ready");
+	}
+} 
+
+class WolfChaingun : ClassicWeapon
+{
+	Default
+	{
+		AttackSound "weapons/wchaingun";
+		Inventory.Icon "CGUN";
+		Inventory.PickupSound "pickups/CGUN";
+		Weapon.AmmoType "WolfClip";
+		Weapon.AmmoGive 6;
+		Weapon.AmmoUse 1;
+		Weapon.SelectionOrder 1;
+	}
+
+	States
+	{
+		Spawn:
+			CCGU P -1;
+			Loop;
+		Ready:
+			CCGU A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Select:
+			CCGU A 0;
+			Goto Super::Select;
+		Fire:
+			CCGU AB 2;
+			CCGU A 0 A_Jump(256, "Hold");
+		Hold:
+			CCGU A 0 A_JumpIfCloser (128, "Fire.Close");
+			CCGU A 0 A_JumpIfCloser (256, "Fire.Medium");
+			CCGU A 0 A_JumpIfCloser (invoker.WolfRandom() / 12, "Fire.Missed");
+			CCGU A 0 A_Jump(256, "Fire.Medium");
+		Fire.Medium:
+			CCGU CD 3 BRIGHT A_FireBullets (4.0, 4.0, 1, invoker.WolfRandom() / 6, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CCGU A 0 A_Jump(256, "Fire.Resume");
+		Fire.Close:
+			CCGU CD 3 BRIGHT A_FireBullets (4.0, 4.0, 1, invoker.WolfRandom() / 4, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CCGU A 0 A_Jump(256, "Fire.Resume");
+		Fire.Missed:
+			CCGU CD 3 BRIGHT A_FireBullets (4.0, 4.0, 1, 0, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+			CCGU A 0 A_Jump(256, "Fire.Resume");
+		Fire.Resume:
+			CCGU A 0 A_ReFire;
+			CCGU E 2;
+			CCGU A 0 A_Jump(256, "Ready");
+	}
+}

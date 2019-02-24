@@ -1,0 +1,14 @@
+^P
+^G16,16,5
+^C7eCONGRATULATIONS!
+^C00
+You run out of the castle and hook up with the Underground.  They inform you that the rumors were true: some hideous human experiments were seen around Castle Hollehammer. So Operation Eisenfaust is real!
+
+You must journey there and terminate the maniacal Dr. Schabbs before his undead army marches against humanity!
+^P
+^c7eMORE WOLFENSTEIN
+^c00
+And in episode three, Hitler hides in his titanic bunker as the Third Reich crumbles about him.  It is your job to assassinate him, ending his mad reign.
+
+And if you like Wolfenstein, you'll love the prequel trilogy of Nocturnal Missions!  Thirty more action-packed, super- challenging levels!
+^E
