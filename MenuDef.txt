@@ -78,7 +78,7 @@ ListMenu "SkillMenu"
 
 	Position 75, 102
 
-	Box 225, 60, 0
+	Box 225, 58, 0
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 

@@ -80,7 +80,7 @@ class GetPsyched : GenericMenu
 				}
 			}
 
-			DrawStatusBar(160, 199);
+			DrawStatusBar(160, 198);
 		}
 
 		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());

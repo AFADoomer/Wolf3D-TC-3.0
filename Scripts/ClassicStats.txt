@@ -223,7 +223,7 @@ class ClassicStats : DoomStatusScreen
 
 	override void DrawStats (void)
 	{
-		DrawStatusBar(160, 199);
+		DrawStatusBar(160, 198);
 
 		switch (style)
 		{

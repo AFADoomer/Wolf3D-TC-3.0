@@ -76,21 +76,21 @@ class ClassicStatusBar : BaseStatusBar
 			DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x / 4, 1.0));
 		}
 
-		DrawImage("BAR", (160, 199), DI_SCREEN_CENTER_BOTTOM);
+		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM);
 
 		//Lives
-		DrawString(ClassicFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (116, 177), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
 
 		//Level
 		String levelnum = String.Format("%i", level.levelnum % 100);
 		if (levelnum == "0") { levelnum = "10"; }
-		DrawString(ClassicFont, levelnum, (32, 177), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, levelnum, (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
-		DrawString(ClassicFont, FormatNumber(GetAmount("Score") % 1000000), (95, 177), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, FormatNumber(GetAmount("Score") % 1000000), (95, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Health
-		DrawString(ClassicFont, FormatNumber(CPlayer.health), (191, 177), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, FormatNumber(CPlayer.health), (191, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		if (!mugshot || mugshottimer > Random[mugshot](0, 255))
 		{
@@ -104,11 +104,11 @@ class ClassicStatusBar : BaseStatusBar
 			if (mutated) { mugshot = mutated; }
 		}
 
-		DrawTexture(mugshot, (136, 165), DI_ITEM_OFFSETS);
+		DrawTexture(mugshot, (136, 164), DI_ITEM_OFFSETS);
 
 		//Keys
-		if (GetAmount("YellowKey")) { DrawImage("YKEY", (244, 173), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
-		if (GetAmount("BlueKey")) { DrawImage("BKEY", (244, 189), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
+		if (GetAmount("YellowKey")) { DrawImage("YKEY", (244, 172), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
+		if (GetAmount("BlueKey")) { DrawImage("BKEY", (244, 188), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
 
 		//Weapon
 		TextureID icontex;
@@ -133,7 +133,7 @@ class ClassicStatusBar : BaseStatusBar
 
 				scale = min(scalexy.x, scalexy.y);
 
-				DrawToHUD.DrawTexture(icontex, (280, 180), 1.0, scale, weapon is "ClassicWeapon" ? -1 : 0x000000, DrawToHUD.center, DrawToHUD.bottom, true);
+				DrawToHUD.DrawTexture(icontex, (280, 179), 1.0, scale, weapon is "ClassicWeapon" ? -1 : 0x000000, DrawToHUD.center, DrawToHUD.bottom, true);
 			}
 		}
 
@@ -143,7 +143,7 @@ class ClassicStatusBar : BaseStatusBar
 		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
 		if (ammo2) { ammocount += ammocount2; }
 		if (ammo1) { ammocount += ammocount1; } 
-		DrawString(ClassicFont, FormatNumber(ammocount), (231, 177), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 	}
 
 	TextureID GetMugShot(int accuracy = 5, int flags = 0, String face = "")
