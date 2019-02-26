@@ -174,7 +174,7 @@ class ClassicStats : DoomStatusScreen
 			{
 				if (style == finale)
 				{
-					int episode = wbs.current.mid(1, 1).ToInt();
+					int episode = level.levelnum / 100;
 					Menu.SetMenu("Episode" .. episode .. "End", -1);
 				}
 

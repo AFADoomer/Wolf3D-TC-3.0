@@ -139,6 +139,7 @@ Texture WLF0JMBD, 64, 64 {Patch WALL0101, 0, 0 {FlipX}}
 Texture DOORTRAK, 64, 64 {Patch BLACK, 0, 0}
 
 // Alternate Ceilings
+Texture SKY1, 8, 8 {Patch Ceiling, 0, 0 {Translation "0:255=[38,38,38]:[38,38,38]"}}
 Texture 1D, 8, 8 {Patch Ceiling, 0, 0 {Translation "0:255=[38,38,38]:[38,38,38]"}}
 Texture 2D, 8, 8 {Patch Ceiling, 0, 0 {Translation "0:255=[88,0,0]:[88,0,0]"}}
 Texture 2E, 8, 8 {Patch Ceiling, 0, 0 {Translation "0:255=[76,0,0]:[76,0,0]"}}

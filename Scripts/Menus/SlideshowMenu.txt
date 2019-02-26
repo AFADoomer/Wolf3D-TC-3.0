@@ -259,6 +259,16 @@ class HelpMenu : ReadThisMenu
 	}
 }
 
+class Episode0End : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile("data/episode0.txt");
+	}
+}
+
 class Episode1End : HelpMenu
 {
 	override void Init(Menu parent)
