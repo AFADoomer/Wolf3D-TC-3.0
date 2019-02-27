@@ -281,14 +281,20 @@ Script "W_PlayerDeath" DEATH //501
 {
 	If (PlayerCount() == 1) { SetMusic(""); }
 
-	If (!(GameType() == GAME_NET_DEATHMATCH)) { FadeTo(255, 0, 0, 1.0, 1.0); }
+	ScriptCall("ClassicStatusBar", "DoFizzle", 0xFF0000);
 
 	ScriptCall("LifeHandler", "TakeLife", 1);
 }
 
 Script "W_DeathCam" (void)
 {
-	Delay(35);
+	SetPlayerProperty(1, 2, PROP_INVULNERABILITY);
+
+	Delay(15);
+
+	ScriptCall("ClassicStatusBar", "DoFizzle", 0x000000);
+
+	Delay(45);
 
 	//Set Activator to Death Cam replay state
 	SetActorState (0, "Death.Cam", true);
@@ -296,6 +302,8 @@ Script "W_DeathCam" (void)
 	ScriptCall("Menu", "SetMenu", "DeathCamMessage");
 
 	Delay(18);
+
+	ScriptCall("ClassicStatusBar", "DoFizzle", 0x000000, true);
 
 	SetActivatorToTarget(ActivatorTID());
 

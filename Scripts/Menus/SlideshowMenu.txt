@@ -40,7 +40,7 @@ class HelpMenu : ReadThisMenu
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 		screen.Dim(0xDCDCDC, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
 
-		DrawText(pages[mScreen]);
+		if (mScreen < pages.Size()) { DrawText(pages[mScreen]); }
 
 		if (border) { screen.DrawTexture(border, false, 0, 0, DTA_320x200, true); }
 

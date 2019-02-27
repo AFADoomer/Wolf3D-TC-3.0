@@ -5,6 +5,12 @@ class ClassicStatusBar : BaseStatusBar
 
 	int mugshottimer;
 
+	TextureID pixel;
+	int fizzleindex;
+	Vector2 fizzlepoints[64000];
+	bool fizzleeffect;
+	Color fizzlecolor;
+
 	override void Init()
 	{
 		Super.Init();
@@ -13,11 +19,32 @@ class ClassicStatusBar : BaseStatusBar
 
 		ClassicFont = HUDFont.Create("WOLFNUM", 0);
 		BigFont = HUDFont.Create("BIGFONT", 0);
+
+		pixel = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
+
+		SetFizzleFadeSteps();
+		fizzleindex = 0;
 	}
 
 	override void Draw(int state, double TicFrac)
 	{
 		Super.Draw(state, TicFrac);
+
+		if (pixel && fizzleeffect)
+		{
+			for (int f = 0; f < fizzleindex; f++)
+			{
+				Vector2 fizzle = fizzlepoints[f];
+
+				screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				screen.DrawTexture(pixel, false, fizzle.x - 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				screen.DrawTexture(pixel, false, fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+			}
+
+			fizzleindex += 1750; // Draw 1750 pixels at a time...
+
+			if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
+		}
 
 		if (state == HUD_StatusBar)
 		{
@@ -27,6 +54,15 @@ class ClassicStatusBar : BaseStatusBar
 		else if (state == HUD_Fullscreen)
 		{
 			DrawHUD();
+		}
+	}
+
+	static void DoFizzle(color clr = 0xFF0000, bool Off = false)
+	{
+		if (StatusBar is "ClassicStatusBar")
+		{
+			ClassicStatusBar(StatusBar).fizzleeffect = !Off;
+			ClassicStatusBar(StatusBar).fizzlecolor = clr;
 		}
 	}
 
@@ -241,5 +277,33 @@ class ClassicStatusBar : BaseStatusBar
 		mugshottimer++;
 
 		Super.Tick();
+	}
+
+	// Adapted from here: http://fabiensanglard.net/fizzlefade/index.php
+	void SetFizzleFadeSteps()
+	{
+		int x, y;
+
+		int fizzleval = 1;
+
+		do
+		{
+			y = fizzleval & 0x000FF;		// Y = low 8 bits
+			x = (fizzleval & 0x1FF00) >> 8;		// X = High 9 bits
+
+			uint lsb = fizzleval & 1;		// Get the output bit.
+			fizzleval >>= 1;			// Shift register
+
+			if (lsb)				// If the output is 0, the xor can be skipped.
+			{
+				fizzleval ^= 0x00012000;
+			}
+
+			if (x < 320 && y < 200)
+			{
+				fizzlepoints[fizzleindex] = (x, y);
+				fizzleindex++;
+			}
+		} while (fizzleval != 1)
 	}
 }

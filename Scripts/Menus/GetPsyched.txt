@@ -409,6 +409,78 @@ class DeathCamMessage : GetPsyched
 	}
 }
 
+class Fader : GetPsyched
+{
+	override void Init(Menu parent)
+	{
+		Super.Init(parent);
+
+		fadetarget = gametic + fadetime;
+		fadealpha = 0;
+
+		DontDim = true;
+
+		menuactive = Menu.OnNoPause;
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void Ticker()
+	{
+		GenericMenu.Ticker();
+
+		ticcount++;
+
+		switch (curstate)
+		{
+			case 0:
+				fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+
+				if (ticcount == fadetime)
+				{
+					ticcount = 0; curstate++;
+
+					if (!g_nointro) { Close(); }
+				}
+				break;
+			case 1:
+				fadealpha = 1.0;
+
+				if (ticcount == 24)
+				{
+					ticcount = 0;
+					curstate++;
+					fadetarget = gametic;
+				}
+				break;
+			case 2:
+				ticcount = 0;
+				fadetarget = gametic;
+				curstate++;
+				break;
+			default:
+				fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+
+				if (ticcount == fadetime) { Close(); }
+				break;
+		}
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		return false;
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		return false;
+	}
+}
+
+
 class PauseMenu : GenericMenu
 {
 	TextureID pausepic;
