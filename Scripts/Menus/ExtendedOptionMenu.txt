@@ -391,6 +391,8 @@ class ExtendedOptionMenu : OptionMenu
 
 		if (exitmenu)
 		{
+			if (exittimeout == 0) { MenuSound ("menu/backup"); }
+
 			exittimeout++;
 
 			if (exittimeout >= fadetime)
