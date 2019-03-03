@@ -1,4 +1,14 @@
-class GetPsyched : GenericMenu
+class WolfMenu : GenericMenu
+{
+	static void SetMenu(Actor caller, Name mnu, int param = 0)
+	{
+		if (players[consoleplayer].mo != caller) { return; }
+
+		Menu.SetMenu(mnu, param);
+	}
+}
+
+class GetPsyched : WolfMenu
 {
 	TextureID back, statbar;
 	int starttic, ticcount, step;
@@ -346,7 +356,7 @@ class DeathCamMessage : GetPsyched
 
 	override void Ticker()
 	{
-		GenericMenu.Ticker();
+		WolfMenu.Ticker();
 
 		ticcount++;
 
@@ -430,7 +440,7 @@ class Fader : GetPsyched
 
 	override void Ticker()
 	{
-		GenericMenu.Ticker();
+		WolfMenu.Ticker();
 
 		ticcount++;
 
@@ -481,7 +491,7 @@ class Fader : GetPsyched
 }
 
 
-class PauseMenu : GenericMenu
+class PauseMenu : WolfMenu
 {
 	TextureID pausepic;
 	Vector2 size;

@@ -1,3 +1,13 @@
+class DOSItem
+{
+	String title;
+	String extension;
+	int size;
+	String date;
+	Array<DOSItem> children;
+	DOSItem parent;
+}
+
 class Startup : GenericMenu
 {
 	Font DOSFont;
@@ -18,6 +28,17 @@ class Startup : GenericMenu
 
 	bool SoDMenu;
 
+	Array<String> history;
+	int historyindex;
+
+	DOSItem curdir;
+	DOSItem root;
+
+	static const String DOSColors[] = { "TrueBlack", "DOSBlue", "DOSGreen", "DOSCyan", "DOSRed", "DOSMagenta", "DOSBrown", "DOSWhite", "DOSGray", "DOSLightBlue", "DOSLightGreen", "DOSLightCyan", "DOSLightRed", "DOSLightMagenta", "DOSYellow", "TrueWhite" };
+	bool echo;
+
+	int instances;
+
 	override void Init(Menu parent)
 	{
 		S_ChangeMusic("");
@@ -31,14 +52,32 @@ class Startup : GenericMenu
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
-		path = "GAMES\\WOLF3D";
-		prompt = String.Format("C:\\%s>", path);
-
 		curstate = 0;
 		ticcount = 0;
 
 		FColor = "White";
 		BColor = "TrueBlack";
+
+		root = New("DOSItem");
+
+		curdir = NewNode(root, "C:", "", 134217728);
+		NewNode(curdir, "COMMAND", "COM", 47845, "11-11-1991   5:00a");
+		curdir = NewNode(curdir, "GAMES");
+		curdir = NewNode(curdir, "WOLF3D");
+		NewNode(curdir, "AUDIOHED", "WL6", 1156, "02-04-1993   4:01p");
+		NewNode(curdir, "AUDIOT", "WL6", 320209, "02-04-1993   4:01p");
+		NewNode(curdir, "GAMEMAPS", "WL6", 150652, "02-04-1993   3:54p");
+		NewNode(curdir, "MAPHEAD", "WL6", 402, "02-04-1993   3:54p");
+		NewNode(curdir, "VGADICT", "WL6", 1024, "02-04-1993   1:40p");
+		NewNode(curdir, "VGAGRAPH", "WL6", 334506, "02-04-1993   1:40p");
+		NewNode(curdir, "VGAHEAD", "WL6", 486, "02-04-1993   1:40p");
+		NewNode(curdir, "VSWAP", "WL6", 1545400, "02-04-1993   4:02p");
+		NewNode(curdir, "WOLF3D", "EXE", 110715, "02-04-1993   1:40p");
+
+		curdir = FindPath("C:\\Games\\Wolf3D");
+
+		echo = true;
+		prompt = String.Format("%s>", GetPath(curdir));
 
 		Print(prompt, nobreak:true);
 //sodmenu = true;
@@ -47,6 +86,7 @@ class Startup : GenericMenu
 	override void Ticker()
 	{
 //		Boot();
+
 		Super.Ticker();
 	}
 
@@ -70,12 +110,25 @@ class Startup : GenericMenu
 			for (int c = 0; c < 80; c++)
 			{
 				buffer[r][c] = "";
-				backgroundbuffer[r][c] = " ";
+				backgroundbuffer[r][c] = "\c[" .. BColor .. "]Û";
 			}
 		}
 
 		cursorx = 0;
 		cursory = 0;
+	}
+
+
+	void ClearLine(int linenum = -1, int startcol = -1)
+	{
+		if (linenum < 0) { linenum = cursory; }
+		if (startcol < 0) { startcol = cursorx; }
+
+		for (int c = startcol; c < 80; c++)
+		{
+			buffer[linenum][c] = "";
+			backgroundbuffer[linenum][c] = "\c[" .. BColor .. "]Û";
+		}
 	}
 
 	void Print(String text = "", int x = -1, int y = -1, bool nobreak = false)
@@ -125,6 +178,14 @@ class Startup : GenericMenu
 		cursorx = 0;
 		cursory++;
 
+		for (int h = cursory; h < 25; h++)
+		{
+			for (int w = cursorx; w < 80; w++)
+			{
+				backgroundbuffer[h][w] = "\c[" .. BColor .. "]Û";
+			}
+		}
+
 		if (cursory > 24)
 		{
 			amt = max(amt, cursory - 24);
@@ -143,14 +204,16 @@ class Startup : GenericMenu
 			{
 				for (int c = 0; c < 80; c++)
 				{
-					backgroundbuffer[25 - amt][c] = "";
+					backgroundbuffer[25 - amt][c] = "\c[" .. BColor .. "]Û";
 					buffer[25 - amt][c] = "";
 					cursorbuffer[25 - amt][c] = "";
 				}
 			}
 
-			cursory -= amt;
+			cursory--;
 		}
+
+		if (echo) { prompt = String.Format("%s>", GetPath(curdir)); }
 	}
 
 	void Delete()
@@ -165,7 +228,7 @@ class Startup : GenericMenu
 					buffer[r][c] = buffer[r][c + 1];
 				}
 			}
-			backgroundbuffer[r][79] = "";
+			backgroundbuffer[r][79] = "\c[" .. BColor .. "]Û";
 			buffer[r][79] = "";
 		}
 
@@ -336,106 +399,16 @@ class Startup : GenericMenu
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
 	{
-		String DOSColors[16] = { "TrueBlack", "Blue", "DarkGreen", "Cyan", "DarkRed", "Purple", "Gold", "White", "Gray", "Blue", "Green", "StartupBlue", "Red", "LightBlue", "Yellow", "TrueWhite" };
-
 		switch (mkey)
 		{
 			case MKEY_ENTER:
-				if (command ~== "cls") { Clear(); }
-				else if (command ~== "exit")
-				{
-					S_ChangeMusic(level.music);
-					Close();
+				if (command.length())
+				{ 
+					history.Push(command);
+					historyindex = history.Size();
+					ParseCommand(command .. "\n");
 				}
-				else if (command.left(5) ~== "echo ")
-				{
-					command = command.mid(5);
-					NewLine();
-					Print(command);
-				}
-				else if (command.left(4) ~== "del " || command.left(5) ~== "mkdir " || command.left(5) ~== "rm ")
-				{
-					NewLine();
-					Print("Access is denied.");
-					NewLine();
-				}
-				else if (command.left(2) ~== "cd" || command.left(4) ~== "chdir")
-				{
-					if (command ~== "cd")
-					{
-						NewLine();
-						Print(path);
-						NewLine();
-					}
-					if (command ~== "cd." || command ~== "cd ." )
-					{
-						NewLine();
-					}
-					else
-					{
-						NewLine();
-						Print("The system could not find the path specified.");
-						NewLine();
-					}
-				}
-				else if (command ~== "dir" || command.left(4) ~== "dir ")
-				{
-					NewLine();
-					Print("Directory of " .. path);
-					Print(".              <DIR>               05-05-1992 9:15");
-					Print("..             <DIR>               06-06-1990 0:00");
-					Print("AUDIOHED WL1                 1,156 05-05-1992 9:15");
-					Print("AUDIOT   WL1               132,613 05-05-1992 9:15");
-					Print("CONFIG   WL1                   522 05-05-1992 9:15");
-					Print("GAMEMAPS WL1                27,425 05-05-1992 9:15");
-					Print("MAPHEAD  WL1                   402 05-05-1992 9:15");
-					Print("VGADICT  WL1                 1,024 05-05-1992 9:15");
-					Print("VGAGRAPH WL1               326,568 05-05-1992 9:15");
-					Print("VGAHEAD  WL1                   471 05-05-1992 9:15");
-					Print("VSWAP    WL1               742,912 05-05-1992 9:15");
-					Print("WOLF3D   EXE               109,959 05-05-1992 9:15");
-					Print("   10 File(s)            1,343,052 Bytes.");
-					Print("    2 Dir(s)            20,767,019 Bytes free.");
-					NewLine();
-				}
-				else if (command.left(5) ~== "color")
-				{
-					if (command ~== "color")
-					{
-						FColor = "White";
-						BColor = "TrueBlack";
-					}
-					else
-					{
-						int fore = HexStrToInt(command.Mid(7, 1));
-						if (fore < 0 ) { FColor = "White"; }
-						else { FColor = DOSColors[fore]; }
 
-						int back = HexStrToInt(command.Mid(6, 1));
-						if (back < 0 ) { BColor = "TrueBlack"; }
-						else { BColor = DOSColors[back]; }
-					}
-					NewLine();
-				}
-				else if (command.left(6) ~== "wolf3d")
-				{
-					Close();
-					SetMenu("IntroSlideShow", -1);
-				}
-				else if (command.left(3) ~== "sod")
-				{
-					sodmenu = true;
-				}
-				else if (command == "")
-				{
-					NewLine();
-				}
-				else
-				{
-					NewLine();
-					Print("Bad command or file name");
-					NewLine();
-				}
 				command = "";
 				Print(prompt, nobreak:true);
 				prompty = cursory;
@@ -485,6 +458,36 @@ class Startup : GenericMenu
 				cursory = prompty;
 				cursorx = prompt.Length();
 				break;
+			case MKEY_UP:
+				historyindex--;
+				if (historyindex >= 0)
+				{
+					command = history[historyindex];
+				}
+				else
+				{
+					historyindex = 0;
+				}
+
+				ClearLine(-1, prompt.length());
+				Print(command, prompt.length(), -1, true);
+				break;
+			case MKEY_DOWN:
+				historyindex++;
+
+				if (historyindex >= history.Size())
+				{
+					historyindex = history.Size();
+					command = "";
+				}
+				else
+				{
+					command = history[historyindex];
+				}
+
+				ClearLine(-1, prompt.length());
+				Print(command, prompt.length(), -1, true);
+				break;
 			default:
 				break;
 		}
@@ -517,6 +520,433 @@ class Startup : GenericMenu
 			}
 
 			output += multiplier * index;
+		}
+
+		return output;
+	}
+
+	String GetPath(DOSItem item)
+	{
+		String path;
+
+		if (item.parent == root) { return item.title .. "\x5C"; }
+
+		while (item && item != root)
+		{
+			if (!path) { path = item.title .. (item.extension.length() ? item.extension : ""); }
+			else { path = item.title .. (item.extension.length() ? item.extension : "") .. "\x5C" .. path; }
+
+			item = item.parent;	
+		}
+
+		return path;
+	}
+
+	DOSItem, bool FindPath(String path)
+	{
+		if (!path) { return null; }
+
+		Array<String> tree;
+
+		for (int c = 0; c < path.Length(); c++)
+		{
+			if (c == 0 && (path.CharCodeAt(c) == 0x20 || path.CharCodeAt(c) == 0x5C))
+			{
+				path.Remove(c, 1);
+				c--;
+			}
+			else if (path.CharCodeAt(c) == 0x5C)
+			{
+				path = path.Left(c) .. "/" .. path.Mid(c + 1);
+				c++;
+			}
+		}
+
+		path.Split(tree, "/");
+
+		bool same = false;
+		String node;
+		DOSItem curnode = curdir;
+
+		for (int nodeindex = 0; nodeindex < tree.Size(); nodeindex++)
+		{
+			node = tree[nodeindex];
+
+			if (node.Mid(1, 1) == ":")
+			{
+				for (int i = 0; i < root.children.Size(); i++)
+				{
+					if (root.children[i].title ~== node) { curnode = root.children[i]; }
+				}
+			}
+			else if (node == "..")
+			{
+				if (curnode.parent != root) { curnode = curnode.parent; }
+				else { same = true; }
+			}
+			else if (node == ".")
+			{
+				same = true;
+			}
+			else if (node == "")
+			{
+				while (curnode.parent && curnode.parent != root)
+				{
+					curnode = curnode.parent;
+				}
+
+				return curnode, true;
+			}
+			else
+			{
+				int extensionindex = node.RightIndexOf(".");
+				String nodeextension = (extensionindex > -1 ? node.mid(extensionindex + 1) : "");
+				String nodetitle = node.left(extensionindex);
+
+				for (int i = 0; i < curnode.children.Size(); i++)
+				{
+					if (curnode.children[i].title ~== nodetitle && curnode.children[i].extension ~== nodeextension && curnode.children[i].children.Size()) { curnode = curnode.children[i]; }
+				}
+			}
+		}
+
+		return curnode, same;	
+	}
+
+	void ParseCommand(String command)
+	{
+		Array<string> tokens;
+
+		for (int c = 0; c < command.length(); c++)
+		{
+			if (c == 0 && command.CharAt(c) == "@")
+			{
+				command = command.Mid(c + 1);
+				c = 0;
+			}
+			else if (command.CharAt(c) == "-" || command.CharAt(c) == "/")
+			{
+				tokens.Push(command.Left(c));
+				command = command.Mid(c);
+				c = 1;
+			}
+			else if (command.CharAt(c) == ".")
+			{
+				if (command.CharAt(c + 1) == ".")
+				{
+					tokens.Push(command.Left(c));
+					tokens.Push("..");
+					command = command.Mid(c + 2);
+				}
+				else
+				{
+					tokens.Push(command.Left(c));
+					tokens.Push(".");
+					command = command.Mid(c + 1);
+				}
+
+				c = 0;
+			}
+			else if (command.CharCodeAt(c) == 0x20 || command.CharCodeAt(c) == 0x5C || command.CharAt(c) == "\n")
+			{
+				tokens.Push(command.Left(c));
+				if (command.CharCodeAt(c) == 0x5C && c == command.length() - 2) { tokens.Push("\x5C"); }
+				command = command.Mid(c + 1);
+				c = 0;
+			}
+		}
+
+		String parameters;
+		for (int i = 1; i < tokens.Size(); i++) { parameters = parameters .. (parameters.length() ? " " : "") .. tokens[i]; }
+
+		if (tokens[0].length() == 2 && tokens[0].CharAt(1) == ":")
+		{
+			curdir = FindPath(tokens[0]);
+			NewLine();
+		}
+		else if (tokens[0] ~== "CLS") { Clear(); }
+		else if (tokens[0] ~== "EXIT")
+		{
+			if (instances == 0)
+			{
+				S_ChangeMusic(level.music);
+				Close();
+			}
+			else
+			{
+				instances--;
+				NewLine();
+				NewLine();
+			}
+		}
+		else if (tokens[0] ~== "ECHO")
+		{
+			NewLine();
+
+			if (tokens.Size() == 1)
+			{
+				Print("ECHO is " .. (echo ? "ON" : "OFF") .. ".");
+				NewLine();
+			}
+			else if (tokens[1] ~== "ON")
+			{
+				echo = true;
+				Print("ECHO is on.");
+				NewLine();
+			}
+			else if (tokens[1] ~== "OFF")
+			{
+				echo = false;
+				prompt = "";
+			}
+			else
+			{
+				Print(parameters);
+				NewLine();
+			}
+		}
+		else if (tokens[0] ~== "DEL" || tokens[0] ~== "MKDIR" || tokens[0] ~== "RM" || tokens[0] ~== "MOVE")
+		{
+			NewLine();
+			Print("Access is denied.");
+			NewLine();
+		}
+		else if (tokens[0] ~== "CD" || tokens[0] ~== "CHDIR")
+		{
+			if (tokens.Size() == 1)
+			{
+				NewLine();
+				Print(GetPath(curdir));
+				NewLine();
+			}
+			else
+			{
+				String pathto = "";
+
+				for (int i = 1; i < tokens.Size(); i++) { pathto = pathto .. (pathto.length() ? "\x5C" : "") .. tokens[i]; }
+
+				DOSItem newpath;
+				bool same;
+
+				[newpath, same] = FindPath(pathto);
+
+				if (newpath == curdir && !same)
+				{
+					NewLine();
+					Print("The system could not find the path specified.");
+				}
+				else
+				{
+					curdir = newpath;
+				}
+
+				NewLine();
+			}
+		}
+		else if (tokens[0] ~== "DIR")
+		{
+			PrintChildren(curdir);
+			NewLine();
+		}
+		else if (tokens[0] ~== "COLOR")
+		{
+			if (tokens.Size() == 1)
+			{
+				FColor = "White";
+				BColor = "TrueBlack";
+			}
+			else
+			{
+				int fore = HexStrToInt(tokens[1].Mid(1, 1));
+				int back = HexStrToInt(tokens[1].Mid(0, 1));
+
+				if (fore != back)
+				{
+					if (fore < 0 ) { FColor = "White"; }
+					else { FColor = DOSColors[fore]; }
+					if (back < 0 ) { BColor = "TrueBlack"; }
+					else { BColor = DOSColors[back]; }
+				}
+			}
+			NewLine();
+		}
+		else if (tokens[0] ~== "VER")
+		{
+			NewLine();
+			NewLine();
+			Print("MS-DOS Version 5.00");
+			NewLine();
+			NewLine();
+		}
+		else if (tokens[0] ~== "COMMAND")
+		{
+			NewLine();
+			NewLine();
+			NewLine();
+			Print("Microsoft(R) MS-DOS(R) Version 5.00");
+			Print("             (C)Copyright Microsoft Corp 1981-1991.");
+			NewLine();
+			instances++;
+		}
+		else if (tokens[0] == "")
+		{
+			NewLine();
+		}
+		else
+		{
+			if (!CheckCommand(tokens[0], parameters))
+			{
+				NewLine();
+				Print("Bad command or file name");
+				NewLine();
+			}
+		}
+	}
+
+	bool CheckCommand(String cmd, String params)
+	{
+		for (int c = 0; c < params.Length(); c++)
+		{
+			if (c == 0 && (params.CharCodeAt(c) == 0x20 || params.CharCodeAt(c) == "."))
+			{
+				params.Remove(c, 1);
+				c--;
+			}
+		}
+
+		if (!FindChild(cmd, params)) { return false; }
+
+		if (cmd ~== "WOLF3D")
+		{
+			Close();
+			SetMenu("IntroSlideShow", -1);
+			return true;
+		}
+		else if (cmd ~== "SOD")
+		{
+			sodmenu = true;
+			return true;
+		}
+
+		return false;
+	}
+
+	void PrintChildren(DOSItem node)
+	{
+		NewLine();
+
+		if (!node) { return; }
+
+		int dircount = 0;
+		int filecount = 0;
+		int dirsize = 0;
+
+		DOSItem drive = node;
+
+		while (drive.parent != root) { drive = drive.parent; }
+
+		NewLine();
+
+		Print(String.Format(" Volume in drive %s has no label.", drive.title.mid(0, 1)));
+		Print(String.Format(" Volume Serial Number is 0505-923D."));
+		Print(String.Format(" Directory of %s", GetPath(node)));
+
+		NewLine();
+
+		if (node.parent != root)
+		{
+			Print(".               <DIR>            " .. node.date);
+			Print("..              <DIR>            " .. node.parent.date);
+			dircount = 2;
+		}
+
+		for (int i = 0; i < node.children.Size(); i++)
+		{
+			DOSItem child = node.children[i];
+
+			if (child.title) { child.title.ToUpper(); }
+			if (child.extension) { child.extension.ToUpper(); }
+
+			if (child.children.Size())
+			{
+				dircount++;
+				Print(String.Format("%-8s %-3s %s %s", child.title, child.extension, "   <DIR>           ", child.date));
+			}
+
+			dirsize += child.size;
+		}
+
+		for (int i = 0; i < node.children.Size(); i++)
+		{
+			DOSItem child = node.children[i];
+
+			if (!child.children.Size())
+			{
+				filecount++;
+				Print(String.Format("%-8s %-3s  %18s %s", child.title, child.extension, CommaSeparate(child.size), child.date));
+			}
+
+			dirsize += child.size;
+		}
+
+		if (filecount) { Print(String.Format("%5i File(s) %18s Bytes.", filecount, CommaSeparate(dirsize))); }
+		else { Print(String.Format("               %18s Bytes.", CommaSeparate(dirsize))); }
+
+		if (dircount) { Print(String.Format("%5i Dir(s)  %18s Bytes free.", dircount, CommaSeparate(node.size))); }
+		else { Print(String.Format("               %18s Bytes free.", CommaSeparate(node.size))); }
+	}
+
+	DOSItem NewNode(DOSItem parent, String title, String extension = "", int size = -1, String date = "")
+	{
+		if (!parent) { return null; }
+
+		DOSItem node = New("DOSItem");
+		node.parent = parent;
+		node.title = title;
+		node.extension = extension;
+		node.size = size > 0 ? size : Random(1, 999999);
+		node.date = GetDate(date);
+
+		parent.children.Push(node);
+
+		return node;
+	}
+
+	String GetDate(string input = "")
+	{
+		String temp = String.Format("%02i-%02i-%i  %2i:%02i%s", Random(1, 12), Random(1, 28), Random(1992, 1993), Random(1, 12), Random(0, 59), Random(0, 1) ? "a" : "p");
+
+		return input .. temp.mid(input.length());
+	}
+
+	bool FindChild(String title, String extension = "")
+	{
+		for (int i = 0; i < curdir.children.Size(); i++)
+		{
+			if (curdir.children[i].children.Size()) { continue; }
+
+			if (curdir.children[i].title ~== title)
+			{
+				if (extension.Length())
+				{
+					if (curdir.children[i].extension ~== extension) { return true; }
+				}
+				else { return true; }
+			}
+		}
+
+		return false;
+	}
+
+	String CommaSeparate(int input)
+	{
+		String output;
+		int temp;
+
+		for (int i = input; i > 0; i /= 1000)
+		{
+			temp = i % 1000;
+			output = (i > 1000 ? "," : "") .. temp .. output;
 		}
 
 		return output;

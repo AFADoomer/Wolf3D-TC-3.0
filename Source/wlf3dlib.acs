@@ -35,12 +35,12 @@ Script "Initialize" ENTER
 		if (lives == -1 && justdied)
 		{
 			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
-			ScriptCall("Menu", "SetMenu", "HighScores");
+			ScriptCall("WolfMenu", "SetMenu", "HighScores");
 			SetMusic("HITLWLTZ");
 		}
 		else
 		{
-			if (!GetCVar("g_nointro")) { ScriptCall("Menu", "SetMenu", "GetPsyched"); }
+			if (!GetCVar("g_nointro")) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
 
 			if (justdied) // New pistol start after losing a life
 			{
@@ -317,6 +317,11 @@ Script "W_DeathCam" (void)
 	Delay(6 * 35);
 
 	Exit_Normal(0);
+}
+
+Script "W_PlayerRespawn" RESPAWN
+{
+	ScriptCall("ClassicStatusBar", "ClearFizzle");
 }
 
 Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)

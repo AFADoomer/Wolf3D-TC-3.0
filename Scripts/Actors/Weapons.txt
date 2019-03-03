@@ -274,9 +274,16 @@ class WolfChaingun : ClassicWeapon
 		Fire:
 			CCGU AB 2;
 		Hold:
-			CCGU C 3 BRIGHT A_FireGun(4.0);
+			CCGU CD 3 BRIGHT A_FireGun(4.0);
 			CCGU A 0 A_ReFire;
 			CCGU E 2;
 			CCGU A 0 A_Jump(256, "Ready");
+	}
+
+	override void Touch(Actor toucher)
+	{
+		if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
+
+		Super.Touch(toucher);
 	}
 }

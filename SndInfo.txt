@@ -82,6 +82,9 @@ missile/hit			DSMISSX
 
 /* Player Sounds */
 $playersound	player	male	*pain100	WSND0014
+$playersounddup	player	male	*pain75		*pain100
+$playersounddup	player	male	*pain50		*pain100
+$playersounddup	player	male	*pain25		*pain100
 $playersound	player	male	*death		DSDEATH
 $playersound	player	male	*xdeath		DSDEATH
 $playersound	player	male	*usefail	DSNOWAY

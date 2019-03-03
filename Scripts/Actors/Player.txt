@@ -105,7 +105,7 @@ class WolfPlayer : DoomPlayer
 		{
 			if (Level.maptime >= player.respawn_time || ((player.cmd.buttons & BT_USE) && player.Bot == NULL))
 			{
-				Menu.SetMenu("Fader");
+				if (players[consoleplayer] == player) { Menu.SetMenu("Fader"); }
 				deathtick++;
 			}
 		}

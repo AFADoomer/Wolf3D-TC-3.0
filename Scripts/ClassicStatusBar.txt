@@ -8,8 +8,12 @@ class ClassicStatusBar : BaseStatusBar
 	TextureID pixel;
 	int fizzleindex;
 	Vector2 fizzlepoints[64000];
+
 	bool fizzleeffect;
 	Color fizzlecolor;
+
+	play int staticmugshot;
+	play int staticmugshottimer;
 
 	override void Init()
 	{
@@ -24,6 +28,7 @@ class ClassicStatusBar : BaseStatusBar
 
 		SetFizzleFadeSteps();
 		fizzleindex = 0;
+		fizzleeffect = false;
 	}
 
 	override void Draw(int state, double TicFrac)
@@ -57,13 +62,33 @@ class ClassicStatusBar : BaseStatusBar
 		}
 	}
 
-	static void DoFizzle(color clr = 0xFF0000, bool Off = false)
+	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false)
 	{
-		if (StatusBar is "ClassicStatusBar")
-		{
-			ClassicStatusBar(StatusBar).fizzleeffect = !Off;
-			ClassicStatusBar(StatusBar).fizzlecolor = clr;
-		}
+		if (ClassicStatusBar(StatusBar).CPlayer.mo != caller) { return; }
+
+		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
+		ClassicStatusBar(StatusBar).fizzlecolor = clr;
+	}
+
+	static void ClearFizzle(Actor caller)
+	{
+		DoFizzle(caller, 0, true);
+	}
+
+	play static void DoGrin(Actor caller)
+	{
+		if (players[consoleplayer].mo != caller) { return; }
+
+		ClassicStatusBar(StatusBar).staticmugshot = 1;
+		ClassicStatusBar(StatusBar).staticmugshottimer = level.time + 80; // 80 tics is roughly the duration of the chaingun pickup sound
+	}
+
+	play void DoIdleFace(Actor caller)
+	{
+		if (players[consoleplayer].mo != caller) { return; }
+
+		ClassicStatusBar(StatusBar).staticmugshot = 2;
+		ClassicStatusBar(StatusBar).staticmugshottimer = level.time + 35;
 	}
 
 	protected void DrawClassicBar()
@@ -128,19 +153,7 @@ class ClassicStatusBar : BaseStatusBar
 		//Health
 		DrawString(ClassicFont, FormatNumber(CPlayer.health), (191, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
-		if (!mugshot || mugshottimer > Random[mugshot](0, 255))
-		{
-			mugshot = GetMugShot(5);
-			mugshottimer = 0;
-		}
-
-		if (CPlayer.mo.health <= 0 && CPlayer.mo is "WolfPlayer" && WolfPlayer(CPlayer.mo).mutated)
-		{
-			TextureID mutated = TexMan.CheckForTexture(CPlayer.mo.Face .. "MUT", TexMan.Type_Any);
-			if (mutated) { mugshot = mutated; }
-		}
-
-		DrawTexture(mugshot, (136, 164), DI_ITEM_OFFSETS);
+		DrawMugShot(136, 164);
 
 		//Keys
 		if (GetAmount("YellowKey")) { DrawImage("YKEY", (244, 172), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
@@ -182,21 +195,79 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 	}
 
-	TextureID GetMugShot(int accuracy = 5, int flags = 0, String face = "")
+	void DrawMugShot(int x, int y, int size = 32)
 	{
-		int level = 0;
+		if (staticmugshot && staticmugshottimer >= level.time)
+		{
+			mugshot = GetMugShot(5, type:staticmugshot);
+		}
+		else if (!mugshot || mugshottimer > Random[mugshot](0, 255))
+		{
+			mugshot = GetMugShot(5);
+			mugshottimer = 0;
+		}
 
-		int maxhealth = CPlayer.mo.mugshotmaxhealth > 0 ? CPlayer.mo.mugshotmaxhealth : CPlayer.mo.maxhealth;
-		if (maxhealth <= 0) { maxhealth = 100; }
+		Vector2 texsize = TexMan.GetScaledSize(mugshot);
+		if (texsize.x > size || texsize.y > size)
+		{
+			if (texsize.y > texsize.x)
+			{
+				texsize.y = size * 1.0 / texsize.y;
+				texsize.x = texsize.y;
+			}
+			else
+			{
+				texsize.x = size * 1.0 / texsize.x;
+				texsize.y = texsize.x;
+			}
+		}
+		else { texsize = (1.0, 1.0); }
 
-		while (CPlayer.health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
+		DrawTexture(mugshot, (x, y), DI_ITEM_OFFSETS, scale:texsize);
+	}
 
-		int index = Random[mugshot](0, 255) >> 6;
-		if (index == 3) { index = 1; }
+	TextureID GetMugShot(int accuracy = 5, String face = "", int type = 0)
+	{
+		String mugshot;
 
 		if (face == "") { face = CPlayer.mo.face; }
 
-		String mugshot = face .. "ST" .. level .. index;
+		if (CPlayer.health > 0)
+		{
+			int level = 0;
+
+			int maxhealth = CPlayer.mo.mugshotmaxhealth > 0 ? CPlayer.mo.mugshotmaxhealth : CPlayer.mo.maxhealth;
+			if (maxhealth <= 0) { maxhealth = 100; }
+
+			while (CPlayer.health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
+
+			int index = Random[mugshot](0, 255) >> 6;
+			if (index == 3) { index = 1; }
+
+			switch (type)
+			{
+				default:
+					mugshot = face .. "ST" .. level .. index;
+					break;
+				case 1: // Grin
+					mugshot = face .. "EVL";
+					break;
+				case 2: // Idle
+					mugshot = face .. "STT" .. Random(1, 2);
+					break;
+			}
+		}
+		else
+		{
+			if (CPlayer.mo is "WolfPlayer" && WolfPlayer(CPlayer.mo).mutated)
+			{
+				mugshot = face .. "MUT";
+			}
+			else
+			{
+				mugshot = face .. "DEAD0";
+			}
+		}
 
 		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
 	}
