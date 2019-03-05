@@ -26,8 +26,9 @@ class ClassicStatusBar : BaseStatusBar
 
 		pixel = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 
-		SetFizzleFadeSteps();
 		fizzleindex = 0;
+		SetFizzleFadeSteps();
+
 		fizzleeffect = false;
 	}
 
@@ -37,16 +38,15 @@ class ClassicStatusBar : BaseStatusBar
 
 		if (pixel && fizzleeffect)
 		{
-			for (int f = 0; f < fizzleindex; f++)
+			for (int f = 0; f  <= fizzleindex; f++)
 			{
 				Vector2 fizzle = fizzlepoints[f];
 
 				screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-				screen.DrawTexture(pixel, false, fizzle.x - 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-				screen.DrawTexture(pixel, false, fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
 			}
 
-			fizzleindex += 1750; // Draw 1750 pixels at a time...
+			fizzleindex += 1920; // Draw a chunk of pixels at a time...
 
 			if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
 		}
@@ -80,7 +80,7 @@ class ClassicStatusBar : BaseStatusBar
 		if (players[consoleplayer].mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).staticmugshot = 1;
-		ClassicStatusBar(StatusBar).staticmugshottimer = level.time + 80; // 80 tics is roughly the duration of the chaingun pickup sound
+		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 80; // 80 tics is roughly the duration of the chaingun pickup sound
 	}
 
 	play void DoIdleFace(Actor caller)
@@ -88,7 +88,7 @@ class ClassicStatusBar : BaseStatusBar
 		if (players[consoleplayer].mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).staticmugshot = 2;
-		ClassicStatusBar(StatusBar).staticmugshottimer = level.time + 35;
+		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 35;
 	}
 
 	protected void DrawClassicBar()
@@ -197,7 +197,7 @@ class ClassicStatusBar : BaseStatusBar
 
 	void DrawMugShot(int x, int y, int size = 32)
 	{
-		if (staticmugshot && staticmugshottimer >= level.time)
+		if (staticmugshot && staticmugshottimer >= gametic)
 		{
 			mugshot = GetMugShot(5, type:staticmugshot);
 		}
@@ -376,5 +376,7 @@ class ClassicStatusBar : BaseStatusBar
 				fizzleindex++;
 			}
 		} while (fizzleval != 1)
+
+		fizzleindex = 0;
 	}
 }

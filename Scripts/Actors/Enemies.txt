@@ -181,6 +181,7 @@ class ClassicNazi : ClassicBase
 			"####" A 0 A_JumpIf((vel.x == 0) && (vel.y == 0), "Spawn.PatrolNoClip");
 			Loop;
 		Chase:
+			"####" A 0 { if (health <= 0) { SetStateLabel("Dead"); } }  // Just in case...
 			"####" AAAAA 1 A_Chase;
 			"####" A 1;
 			"####" BBBB 1 A_Chase;
@@ -962,7 +963,7 @@ class PacManGhost : ClassicBase
 			Loop;
 		Melee:
 			"####" A 0 A_FaceTarget;
-			"####" AAAAABBBBB 1 A_CustomMeleeAttack(1, "", "", "WolfNazi", false);
+			"####" AAAAABBBBB 1 A_CustomMeleeAttack(3, "", "", "WolfNazi", false);
 			Goto Chase;
 		Dead:
 			"####" A -1;
