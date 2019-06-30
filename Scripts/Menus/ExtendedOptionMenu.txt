@@ -268,46 +268,30 @@ class ExtendedOptionMenu : OptionMenu
 				}
 
 				let tt = Stringtable.Localize(mDesc.mTitle);
+				tt.ToUpper();
 				screen.DrawText (BigFont, OptionMenuSettings.mTitleColor,
 					(screen.GetWidth() - BigFont.StringWidth(tt) * CleanXfac_1) / 2, y,
 					tt, DTA_CleanNoMove_1, true);
 
-				y += (BigFont.GetHeight() + 8) * CleanYfac;
+				y += (BigFont.GetHeight() + 2) * CleanYfac;
 			}
 
 			if (title.Exists())
 			{
-				y = DrawTitle(title) + 8 * CleanYfac;
+				y = DrawTitle(title) + 2 * CleanYfac;
 			}
 		}
 
 		mDesc.mDrawTop = y;
 		int fontheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
 
-		int ytop = y + mDesc.mScrollTop * 8 * CleanYfac_1;
-		int lastrow = screen.GetHeight() - fontheight - 12 * CleanYfac;
+		int indent = max(0, (mDesc.mIndent + 40) - CleanWidth_1 / 2);
+		indent = screen.GetWidth() / 2 + indent * CleanXfac_1;
 
-		int indent = mDesc.mIndent;
+		int ytop = y + mDesc.mScrollTop * OptionHeight() * CleanYfac_1;
+		int lastrow = screen.GetHeight() - fontheight - OptionHeight() * CleanYfac;
 
-		indent = max(indent, 120);
-
-		if (indent > 280)
-		{ // kludge for the compatibility options with their extremely long labels
-			if (indent + 40 <= CleanWidth_1)
-			{
-				indent = (screen.GetWidth() - ((indent + 40) * CleanXfac_1)) / 2 + indent * CleanXfac_1;
-			}
-			else
-			{
-				indent = screen.GetWidth() - 40 * CleanXfac_1;
-			}
-		}
-		else
-		{
-			indent = (indent - 160) * CleanXfac_1 + screen.GetWidth() / 2;
-		}
-
-		DrawFrame(int(indent + (16 + 120) * CleanXfac_1), lastrow - y + fontheight, -y);
+		DrawFrame(indent + 40 * CleanXfac_1, lastrow - y + fontheight, -y);
 
 		int i;
 		for (i = 0; i < mDesc.mItems.Size() && y <= lastrow; i++)
@@ -324,7 +308,7 @@ class ExtendedOptionMenu : OptionMenu
 			{
 				if (((MenuTime() % 8) < 6) || GetCurrentMenu() != self)
 				{
-					DrawConText(OptionMenuSettings.mFontColorSelection, cur_indent + 3 * CleanXfac_1, y+fontheight-9*CleanYfac_1, "\xd");
+					DrawConText(OptionMenuSettings.mFontColorSelection, cur_indent + 3 * CleanXfac_1, y, "\xd");
 				}
 			}
 
@@ -354,7 +338,7 @@ class ExtendedOptionMenu : OptionMenu
 
 					if (selectstate > -1)
 					{
-						screen.DrawTexture(selectstate ? select1 : select0, true, ix, iy, DTA_CleanNoMove, true, DTA_DestHeight, 8 * CleanYfac_1, DTA_DestWidth, 24 * CleanXfac_1);
+						screen.DrawTexture(selectstate ? select1 : select0, true, ix, iy, DTA_CleanNoMove, true, DTA_DestHeight, fontheight, DTA_DestWidth, 3 * fontheight);
 					}
 				}
 			}
@@ -366,7 +350,7 @@ class ExtendedOptionMenu : OptionMenu
 		CanScrollDown = (i < mDesc.mItems.Size());
 		VisBottom = i - 1;
 
-		int scrollpos = Screen.GetWidth() / 2 - (indent + (16 + 120 - 3) * CleanXfac) / 2;
+		int scrollpos = Screen.GetWidth() / 2 - (indent + (40 + 4) * CleanXfac) / 2;
 
 		if (CanScrollUp)
 		{

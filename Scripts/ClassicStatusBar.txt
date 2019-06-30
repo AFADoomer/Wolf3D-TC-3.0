@@ -38,7 +38,7 @@ class ClassicStatusBar : BaseStatusBar
 
 		if (pixel && fizzleeffect)
 		{
-			for (int f = 0; f  <= fizzleindex; f++)
+			for (int f = 0; f <= fizzleindex; f++)
 			{
 				Vector2 fizzle = fizzlepoints[f];
 

@@ -284,24 +284,6 @@ class MapStatsHandler : StaticEventHandler
 		DrawTextScaled(StatFont, Font.CR_GRAY, xoffset + 50, yoffset, s, fontscale, right);
 	}
 
-	static const int drawpositions[] =
-	{
-		15, 28, -12,
-		65, 38, 5,
-		17, 30, 10,
-		60, 20, -7,
-		35, 21, -10,
-		40, 33, 8,
-		15, 26, 30,
-		37, 29, -7,
-		22, 32, -9,
-		56, 34, 4,
-		35, 21, -10,
-		60, 20, -7,
-		17, 30, 10,
-		65, 38, 5
-	};
-
 	ui int DrawDataLine(String title, int n, int d, int x, int y, bool isTotals)
 	{
 		if (d > 0)

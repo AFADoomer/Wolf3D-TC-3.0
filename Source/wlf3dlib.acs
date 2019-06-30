@@ -4,6 +4,7 @@
 int	polyinfo[255];
 int	PushWalls[255];
 int	intPushWallMoveDist = 128.0;
+str 	WolfCeilings[60] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
 global int 18:SecretMarkers[];
 
 Function int WolfCoord(int intCoord)
@@ -29,6 +30,8 @@ Script "Initialize" ENTER
 {
 	if (GameType() != GAME_TITLE_MAP)
 	{
+		ACS_NamedExecute("W_SetCeilingColor", 0, 0);
+
 		int lives = ScriptCall("LifeHandler", "GetLives");
 		int justdied = ScriptCall("LifeHandler", "JustDied");
 
@@ -388,4 +391,22 @@ Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
 	SpawnForced ("BJ", StartX, StartY, 32, 1, BitAngle);
 	Thing_Deactivate(1);
 	SetThingSpecial (1, 229, 0, 9, 1);
+}
+
+//Ceiling Colors
+Script "W_SetCeilingColor" (int index)
+{
+	str Color = "CEILING";
+
+	If (!index)
+	{
+		int num = GetLevelInfo(LEVELINFO_LEVELNUM);
+		index = (num / 100 - 1) * 10 + num % 100 - 1;
+printbold(d:index);
+	}
+
+	Color = WolfCeilings[index % 60];
+
+	ChangeCeiling(0, Color);
+	ChangeCeiling(800, Color);
 }

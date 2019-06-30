@@ -105,11 +105,6 @@ ListMenu "SaveGameMenu"
 	Class "ExtendedSaveMenu"
 }
 
-OptionMenuSettings
-{
-	Linespacing 10
-}
-
 OptionMenu "TCOptions"
 {
 	Title "M_CONTRL"

@@ -1,6 +1,6 @@
 WolfMenuGrey WolfMenuGray "Wolf Menu Gray" "Wolf Menu Grey"
 {
-	#8C8C8C #8C8C8C
+	#8C8C8C  #DDDDDD  
 Console:
 	#272727  #8B8B8B    0 127
 	#505050  #FFFFFF  128 256
@@ -8,9 +8,14 @@ Flat:
 	#8C8C8C
 }
 
+WolfMenuGray2
+{
+	 #404040 #8C8C8C
+}
+
 WolfMenuLightGrey WolfMenuLightGray "Wolf Menu Light Gray" "Wolf Menu Light Grey"
 {
-	#C0C0C0 #C0C0C0
+	#C0C0C0  #DDDDDD
 Console:
 	#272727  #8B8B8B    0 127
 	#505050  #FFFFFF  128 256
@@ -18,9 +23,14 @@ Flat:
 	#C0C0C0
 }
 
+WolfMenuLightGray2
+{
+	 #737373 #C0C0C0
+}
+
 WolfMenuRed
 {
-	#710000 #710000
+	#710000  #DDDDDD
 Console:
 	#270000  #8B0000    0 127
 	#500000  #710000  128 255
@@ -30,7 +40,7 @@ Flat:
 
 WolfMenuYellow
 {
-	#B4AC00 #B4AC00
+	#B4AC00  #DDDDDD
 Console:
 	#272700  #8B8B00    0 127
 	#505000  #B4AC00  128 256
@@ -38,9 +48,14 @@ Flat:
 	#B4AC00
 }
 
+WolfMenuYellow2
+{
+	 #696300 #B4AC00
+}
+
 WolfMenuYellowBright
 {
-	#FCF400 #FCF400
+	#FCF400 #DDDDDD
 Console:
 	#000000 #B4AC00    0 127
 	#B4AC00 #FCF400  128 256
@@ -48,14 +63,19 @@ Flat:
 	#FCF400
 }
 
+WolfMenuYellowBright2
+{
+	#b0aa00 #FCF400
+}
+
 WolfMenuGreen
 {
-	#047000 #047000
+	#047000 #DDDDDD
 }
 
 WolfMenuGreenBright
 {
-	#04A400 #04A400
+	#04A400 #DDDDDD
 }
 
 WolfEndTitleGreen
@@ -70,7 +90,7 @@ Flat:
 
 TrueBlack
 {
-	#000000  #000000
+	#000000  #333333
 Console:
 	#000000  #000000   0 256
 Flat:
@@ -79,24 +99,24 @@ Flat:
 
 TrueWhite
 {
-	#FFFFFF  #FFFFFF
+	#FFFFFF  #DDDDDD
 Console:
 	#FFFFFF  #FFFFFF 0 256
 }
 
 WolfDarkGold
 {
-	#404000 #404000
+	#404000 #404000 
 }
 
 WolfStartupGreen
 {
-	#54FC54 #54FC54
+	#54FC54 #54FC54 
 }
 
 WolfStartupYellow
 {
-	#FCFC54 #FCFC54
+	#FCFC54 #FCFC54 
 }
 
 // End screen text colors
