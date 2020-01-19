@@ -840,3 +840,681 @@ class DeadGuard : ClassicDecoration
 			Stop;
 	}
 }
+
+class SkullsonStick : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			HEL3 A -1;
+			Stop;
+	}
+} 
+
+class BloodyCage : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			HEL4 A -1;
+			Stop;
+	}
+} 
+
+class CageofSkulls : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			HEL2 A -1;
+			Stop;
+	}
+} 
+
+class RedCeilingLight : ClassicDecoration
+{
+	Default
+	{
+		-SOLID
+	}
+
+	States
+	{
+		Spawn:
+			LITR A -1;
+			Stop;
+	}
+} 
+
+class BullHeadonStick : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			HEL1 A -1;
+			Stop;
+	}
+} 
+
+class BloodyWell : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			HEL5 A -1;
+			Stop;
+	}
+}
+
+class AngelofDeathStatue : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			ADTH A -1;
+			Stop;
+	}
+} 
+
+class BrownColumn : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			COL2 A -1;
+			Stop;
+	}
+}
+
+class Truck : ClassicDecoration
+{
+	Default
+	{
+		Height 64;
+		Radius 32;
+		+SOLID
+		+FLOORCLIP
+		+SHOOTABLE
+		+INVULNERABLE
+		+NODAMAGETHRUST
+	}
+
+	States
+	{
+		Spawn:
+			WTRK A 8 A_Playsound("truck/idle");
+			Loop;
+	}
+}
+
+class SpearofDestiny : CustomInventory
+{
+	Default
+	{
+		+Inventory.AUTOACTIVATE
+		Inventory.Amount 1;
+		Inventory.MaxAmount 0;
+		Inventory.PickupSound "spear/pickup";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			SOFD A -1;
+			Loop;
+		Pickup:
+			SOFD A 0 ACS_NamedExecute("W_DoLevelEnd", 0, 3);
+			Stop;
+	}
+}
+
+class PoolofWaterLost : PoolofWater
+{
+	States
+	{
+		Spawn:
+			POL2 A -1;
+			Stop;
+	}
+} 
+
+class OilDrumLost : OilDrum
+{
+	States
+	{
+		Spawn:
+			BAR3 A -1;
+			Stop;
+	}
+} 
+
+class TableandChairsLost : TableandChairs
+{
+	States
+	{
+		Spawn:
+			TAB3 A -1;
+			Stop;
+	}
+} 
+
+class FloorLampLost : FloorLamp
+{
+	States
+	{
+		Spawn:
+			LIT2 A -1 BRIGHT;
+			Stop;
+	}
+} 
+
+class HangingChandelierLost : HangingChandelier
+{
+	States
+	{
+		Spawn:
+			LIT4 A -1 BRIGHT;
+			Stop;
+	}
+} 
+
+class HangingSkeletonLost : HangingSkeleton
+{
+	States
+	{
+		Spawn:
+			HNG2 A -1;
+			Stop;
+	}
+} 
+
+class DogFoodLost : DogFood
+{
+	States
+	{
+		Spawn:
+			HLTH H -1;
+			Loop;
+	}
+}
+
+class StoneColumnLost : StoneColumn
+{
+	States
+	{
+		Spawn:
+			PILW A -1;
+			Stop;
+	}
+}
+
+class PlantLost : Plant
+{
+	States
+	{
+		Spawn:
+			PLT3 A -1;
+			Stop;
+	}
+} 
+
+class SkeletonLost : Skeleton
+{
+	States
+	{
+		Spawn:
+			BONE A -1;
+			Stop;
+	}
+} 
+
+class PileofSkullsLost : Sink
+{
+	States
+	{
+		Spawn:
+			POSK A -1;
+			Stop;
+	}
+} 
+
+class BrownPlantLost : PlantinVase
+{
+	States
+	{
+		Spawn:
+			PLT4 A -1;
+			Stop;
+	}
+} 
+
+class VaseLost : Vase
+{
+	States
+	{
+		Spawn:
+			VAS2 A -1;
+			Stop;
+	}
+} 
+
+class TableLost : Table
+{
+	States
+	{
+		Spawn:
+			TAB4 A -1;
+			Stop;
+	}
+} 
+
+class GreenCeilingLightLost : GreenCeilingLight
+{
+	States
+	{
+		Spawn:
+			LIT6 A -1 BRIGHT;
+			Stop;
+	}
+}
+
+class CagewithBloodLost : ClassicDecoration
+{
+	Default
+	{
+		+SPAWNCEILING
+		+NOGRAVITY
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			CAG6 A -1;
+			Stop;
+	}
+} 
+
+class SuitofArmorLost : SuitofArmor
+{
+	States
+	{
+		Spawn:
+			KNIG B -1;
+			Stop;
+	}
+} 
+
+class EmptyCageLost : EmptyCage
+{
+	States
+	{
+		Spawn:
+			CAG3 A -1;
+			Stop;
+	}
+} 
+
+class BrokenCageLost : Cage
+{
+	Default
+	{
+		+SPAWNCEILING
+		+NOGRAVITY
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			CAG4 A -1;
+			Stop;
+	}
+} 
+
+class Bones1Lost : Bones
+{
+	States
+	{
+		Spawn:
+			POB6 A -1;
+			Stop;
+	}
+} 
+
+class YellowKeyLost : YellowKey
+{
+	States
+	{
+		Spawn:
+			KEYS C -1;
+			Stop;
+	}
+}
+
+class BlueKeyLost : BlueKey
+{
+	States
+	{
+		Spawn:
+			KEYS D -1;
+			Stop;
+	}
+}
+
+class CageWithSkullsLost : Bed
+{
+	States
+	{
+		Spawn:
+			CAG5 A -1;
+			Stop;
+	}
+} 
+
+class DeadRatLost : Basket
+{
+	States
+	{
+		Spawn:
+			DRAT A -1;
+			Stop;
+	}
+}
+
+class PlateofFoodLost : PlateOfFood
+{
+	States
+	{
+		Spawn:
+			HLTH I -1;
+			Loop;
+	}
+}
+
+class FirstAidKitLost : FirstAidKit
+{
+	States
+	{
+		Spawn:
+			HLTH J -1;
+			Loop;
+	}
+}
+
+class RadioLost : JeweledCross
+{
+	States
+	{
+		Spawn:
+			TREA E -1;
+			Stop;
+	}
+}
+
+class ShellLost : Chalice
+{
+	States
+	{
+		Spawn:
+			TREA G -1;
+			Stop;
+	}
+}
+
+class TimerLost : Chest
+{
+	States
+	{
+		Spawn:
+			TREA H -1;
+			Stop;
+	}
+}
+
+class BombLost : Crown
+{
+
+	States
+	{
+		Spawn:
+			TREC F -1;
+			Stop;
+	}
+}
+
+class LifeLost : Life
+{
+	States
+	{
+		Spawn:
+			LIFE B -1;
+			Loop;
+	}
+}
+
+class BoneswithBloodLost : BoneswithBlood
+{
+	States
+	{
+		Spawn:
+			HLTH G -1;
+			Loop;
+	}
+}
+
+class WoodBarrelLost : WoodBarrel
+{
+	States
+	{
+		Spawn:
+			BAR4 A -1;
+			Stop;
+	}
+} 
+
+class WellwithWaterLost : WellwithWater
+{
+	States
+	{
+		Spawn:
+			WEL3 A -1;
+			Stop;
+	}
+} 
+
+class DryWellLost : DryWell
+{
+	States
+	{
+		Spawn:
+			WEL4 A -1;
+			Stop;
+	}
+} 
+
+class PoolofBloodLost : PoolofBlood
+{
+	States
+	{
+		Spawn:
+			HLTH F -1;
+			Loop;
+	}
+}
+
+class ElectrofieldLost : NaziFlag
+{
+	States
+	{
+		Spawn:
+			GZMO A -1;
+			Stop;
+	}
+}
+
+class RedCeilingLightLost : AardwolfSign
+{
+	Default
+	{
+		-SOLID
+	}
+
+	States
+	{
+		Spawn:
+			LIT7 A -1 BRIGHT;
+			Stop;
+	}
+}
+
+class Bones2Lost : CrushedBones1
+{
+	States
+	{
+		Spawn:
+			POB7 C -1;
+			Stop;
+	}
+} 
+
+class LightBulbLost : CrushedBones2
+{
+	States
+	{
+		Spawn:
+			LIT8 A -1;
+			Stop;
+	}
+} 
+
+class SlimeLost : CrushedBody
+{
+	States
+	{
+		Spawn:
+			GGOO A -1;
+			Stop;
+	}
+} 
+
+class HLabTableLost : HangingUtensils
+{
+	States
+	{
+		Spawn:
+			TAB5 A -1;
+			Stop;
+	}
+} 
+
+class RadioactiveBarrelLost  : Stove
+{
+	States
+	{
+		Spawn:
+			BAR5 A -1;
+			Stop;
+	}
+} 
+
+class PipeLost : SpearRack
+{
+	States
+	{
+		Spawn:
+			PIPE A -1;
+			Stop;
+	}
+} 
+
+class BubblesLost : HangingVines
+{
+	States
+	{
+		Spawn:
+			BUBL A -1;
+			Stop;
+	}
+}
+
+class DeadGuardLost : DeadGuard
+{
+	States
+	{
+		Spawn:
+			WGRN N -1;
+			Stop;
+	}
+}
+
+class DemonStatueLost: BrownColumn
+{ 
+	States
+	{
+		Spawn:
+			DEVS A -1;
+			Stop;
+	}
+}
+
+class BJWasHereLost : Truck
+{
+	States
+	{
+		Spawn:
+			BJWH A -1;
+			Stop;
+	}
+}
+
+class SpearofDestinyLost : SpearofDestiny
+{
+	Default
+	{
+		Inventory.PickupSound "spear/pickup2";
+	}
+
+	States
+	{
+		Spawn:
+			SOFD B -1;
+			Loop;
+	}	
+}

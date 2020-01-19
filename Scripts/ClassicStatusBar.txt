@@ -144,6 +144,7 @@ class ClassicStatusBar : BaseStatusBar
 
 		//Level
 		String levelnum = String.Format("%i", level.levelnum % 100);
+
 		if (levelnum == "0") { levelnum = "10"; }
 		DrawString(ClassicFont, levelnum, (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
@@ -156,8 +157,8 @@ class ClassicStatusBar : BaseStatusBar
 		DrawMugShot(136, 164);
 
 		//Keys
-		if (GetAmount("YellowKey")) { DrawImage("YKEY", (244, 172), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
-		if (GetAmount("BlueKey")) { DrawImage("BKEY", (244, 188), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
+		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("YKEY", (244, 172), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
+		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("BKEY", (244, 188), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
 
 		//Weapon
 		TextureID icontex;
@@ -287,8 +288,8 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(BigFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (35, baseline), 0, Font.FindFontColor("TrueWhite"));
 
 		//Keys
-		if (GetAmount("YellowKey")) { DrawImage("I_YKEY", (-8, 0), DI_ITEM_LEFT_TOP); }
-		if (GetAmount("BlueKey")) { DrawImage("I_BKEY", (-8, 14), DI_ITEM_LEFT_TOP); }
+		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("I_YKEY", (-8, 0), DI_ITEM_LEFT_TOP); }
+		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("I_BKEY", (-8, 14), DI_ITEM_LEFT_TOP); }
 
 		//Ammo
 		Ammo ammo1, ammo2;

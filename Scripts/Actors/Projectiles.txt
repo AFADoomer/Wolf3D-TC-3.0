@@ -32,6 +32,14 @@ class WolfRocket : WolfRocketBase
 	}
 }
 
+class WolfRocketSOD : WolfRocket
+{
+	Default
+	{
+		SeeSound "missile/sodfire";
+	}
+}
+
 class WolfRocketSmoke : Actor
 {
 	Default
@@ -123,5 +131,59 @@ class FastGhostFireBall : GhostFireball
 	Default
 	{
 		Speed 8;
+	}
+}
+
+class SoDFireballBase : Actor
+{
+	Default
+	{
+		Projectile;
+		+MTHRUSPECIES
+		Radius 4;
+		Speed 14;
+		DamageType "WolfNazi";
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+		Fly:
+			"####" ABCD 3 BRIGHT;
+			Loop;
+		Death:
+			"####" ABCD 1 BRIGHT A_Explode(20, 16, 1);
+			Stop;
+	}
+}
+
+//AoD Fireball
+class GreenBall : SoDFireballBase
+{
+	Default
+	{
+		SeeSound "aod/fire";
+	}
+
+	States
+	{
+		Spawn:
+			ADBL A 0 A_Jump(256, "Fly");
+	}
+}
+
+//DI Fireball
+class DIBall : SoDFireBallBase
+{
+	Default
+	{
+		SeeSound "aod/fire";
+	}
+
+	States
+	{
+		Spawn:
+			DIBL A 0 A_Jump(256, "Fly");
 	}
 }

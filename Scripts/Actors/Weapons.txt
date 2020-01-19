@@ -132,12 +132,61 @@ class WolfClip : Ammo
 	}
 }
 
+class WolfClipLost : WolfClip
+{
+	Default
+	{
+		Inventory.Icon "WCLIB0";
+	}
+
+	States
+	{
+		Spawn:
+			WCLI B -1;
+			Loop;
+	}
+}
+
 class WolfClipDrop : WolfClip
 {
 	Default
 	{
 		Inventory.Amount 4;
 	}
+}
+
+class WolfClipDropLost : WolfClipLost
+{
+	Default
+	{
+		Inventory.Amount 4;
+	}
+}
+
+class WolfClipBox : WolfClip
+{
+	Default
+	{
+		Inventory.Amount 25;
+		Inventory.Pickupsound "pickups/ammobox";
+	}
+
+	States
+	{
+		Spawn:
+			WAMM A -1;
+			Loop;
+	}
+}
+
+class WolfClipBoxLost : WolfClipBox
+{
+	States
+	{
+		Spawn:
+			WAMM B -1;
+			Loop;
+	}	
 }
 
 class WolfKnife : ClassicWeapon
@@ -160,20 +209,20 @@ class WolfKnife : ClassicWeapon
 			CKNI A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 		Select:
-			CKNI A 0;
+			"####" A 0;
 			Goto Super::Select;
 		Fire:
-			CKNI B 3;
-			CKNI A 0 A_JumpIfInventory ("PowerStrength", 1, "Fire.Adrenaline");
-			CKNI C 3 A_CustomPunch (invoker.WolfRandom() >> 4, 1, 0, "WolfPuff");
-			CKNI A 0 A_Jump(256, "Fire.Resume");
+			"####" B 3;
+			"####" A 0 A_JumpIfInventory ("PowerStrength", 1, "Fire.Adrenaline");
+			"####" C 3 A_CustomPunch (invoker.WolfRandom() >> 4, 1, 0, "WolfPuff");
+			"####" A 0 A_Jump(256, "Fire.Resume");
 		Fire.Adrenaline:
-			CKNI C 3 A_CustomPunch (invoker.WolfRandom() >> 1, 1, 0, "WolfPuff");
-			CKNI A 0 A_Jump(256, "Fire.Resume");
+			"####" C 3 A_CustomPunch (invoker.WolfRandom() >> 1, 1, 0, "WolfPuff");
+			"####" A 0 A_Jump(256, "Fire.Resume");
 		Fire.Resume:
-			CKNI A 0 A_PlaySound("weapons/wknife", CHAN_WEAPON);
-			CKNI DE 3;
-			CKNI A 0 A_Jump(256, "Refire");
+			"####" A 0 A_PlaySound("weapons/wknife", CHAN_WEAPON);
+			"####" DE 3;
+			"####" A 0 A_Jump(256, "Refire");
 	}
 } 
 
@@ -200,13 +249,13 @@ class WolfPistol : ClassicWeapon
 			CLUG A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 		Select:
-			CLUG A 0;
+			"####" A 0;
 			Goto Super::Select;
 		Fire:
-			CLUG B 2;
-			CLUG C 3 BRIGHT A_FireGun(2.0);
-			CLUG DE 3;
-			CLUG A 0 A_Jump(256, "Refire");
+			"####" B 2;
+			"####" C 3 BRIGHT A_FireGun(2.0);
+			"####" DE 3;
+			"####" A 0 A_Jump(256, "Refire");
 	}
 }
  
@@ -232,18 +281,18 @@ class WolfMachineGun : ClassicWeapon
 			CMGU W 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 		Select:
-			CMGU A 0;
+			"####" A 0;
 			Goto Super::Select;
 		Fire:
-			CMGU W 2;
-			CMGU B 2;
+			"####" W 2;
+			"####" B 2;
 		Hold:
-			CMGU W 0;
-			CMGU C 3 BRIGHT A_FireGun(3.0);
-			CMGU D 3;
-			CMGU D 0 A_ReFire;
-			CMGU E 3;
-			CMGU A 0 A_Jump(256, "Ready");
+			"####" W 0;
+			"####" C 3 BRIGHT A_FireGun(3.0);
+			"####" D 3;
+			"####" D 0 A_ReFire;
+			"####" E 3;
+			"####" A 0 A_Jump(256, "Ready");
 	}
 } 
 
@@ -269,15 +318,15 @@ class WolfChaingun : ClassicWeapon
 			CCGU A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 		Select:
-			CCGU A 0;
+			"####" A 0;
 			Goto Super::Select;
 		Fire:
-			CCGU AB 2;
+			"####" AB 2;
 		Hold:
-			CCGU CD 3 BRIGHT A_FireGun(4.0);
-			CCGU A 0 A_ReFire;
-			CCGU E 2;
-			CCGU A 0 A_Jump(256, "Ready");
+			"####" CD 3 BRIGHT A_FireGun(4.0);
+			"####" A 0 A_ReFire;
+			"####" E 2;
+			"####" A 0 A_Jump(256, "Ready");
 	}
 
 	override void Touch(Actor toucher)
@@ -285,5 +334,83 @@ class WolfChaingun : ClassicWeapon
 		if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
 
 		Super.Touch(toucher);
+	}
+}
+
+class WolfChaingunSoD : WolfChaingun
+{
+	Default
+	{
+		Inventory.PickupSound "pickups/cgunsod";
+	}
+}
+
+class WolfKnifeLost : WolfKnife
+{
+	Default
+	{
+		Weapon.SlotPriority 2;
+	}
+
+	States
+	{
+		Ready:
+			KNIL A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+	}
+}
+
+class WolfPistolLost : WolfPistol
+{
+	Default
+	{
+		AttackSound "weapons/wpistol2";
+		Weapon.SlotPriority 2;
+	}
+
+	States
+	{
+		Ready:
+			LUGL A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+	}
+}
+
+class WolfMachineGunLost : WolfMachineGun
+{
+	Default
+	{
+		AttackSound "weapons/wmachinegun2";
+		Weapon.SlotPriority 2;
+	}
+
+	States
+	{
+		Spawn:
+			MGUN U -1;
+			Loop;
+		Ready:
+			MGUL W 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+	}
+}
+
+class WolfChaingunLost : WolfChaingun
+{
+	Default
+	{
+		Inventory.PickupSound "pickups/cgunlost";
+		AttackSound "weapons/wchaingun2";
+		Weapon.SlotPriority 2;
+	}
+
+	States
+	{
+		Spawn:
+			CGUN U -1;
+			Loop;
+		Ready:
+			CGUL A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
 	}
 }

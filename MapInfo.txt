@@ -613,21 +613,557 @@ map E6L0 "$FLOOR_10"
 	next = E6L4
 }
 
+//Spear of Destiny
+
+map SOD01 "$SOD01"
+{
+	music = XTIPTOE
+	par = 90
+	next = SOD02
+	levelnum = 701
+}
+
+map SOD02 "$SOD02"
+{
+	music = XFUNKIE
+	par = 210
+	next = SOD03
+	levelnum = 702
+}
+
+map SOD03 "$SOD03"
+{
+	music = XDEATH
+	par = 165
+	next = SOD04
+	levelnum = 703
+}
+
+map SOD04 "$SOD04"
+{
+	music = XGETYOU
+	par = 210
+	next = SOD05
+	secretnext = SOD19
+	levelnum = 704
+}
+
+map SOD05 "$SOD05"
+{
+	music = ULTIMATE
+	par = 0
+	next = SOD06
+	levelnum = 705
+}
+
+map SOD06 "$SOD06"
+{
+	music = DUNGEON
+	par = 270
+	next = SOD07
+	levelnum = 706
+}
+
+map SOD07 "$SOD07"
+{
+	music = GOINGAFT
+	par = 195
+	next = SOD08
+	levelnum = 707
+}
+
+map SOD08 "$SOD08"
+{
+	music = POW
+	par = 165
+	next = SOD09
+	levelnum = 708
+}
+
+map SOD09 "$SOD09"
+{
+	music = TWELFTH
+	par = 285
+	next = SOD10
+	levelnum = 709
+}
+
+map SOD10 "$SOD10"
+{
+	music = ULTIMATE
+	par = 0
+	next = SOD11
+	levelnum = 710
+}
+
+map SOD11 "$SOD11"
+{
+	music = NAZI_OMI
+	par = 390
+	next = SOD12
+	levelnum = 711
+}
+
+map SOD12 "$SOD12"
+{
+	music = GETTHEM
+	par = 270
+	next = SOD13
+	levelnum = 712
+	secretnext = SOD20
+}
+
+map SOD13 "$SOD13"
+{
+	music = SUSPENSE
+	par = 165
+	next = SOD14
+	levelnum = 713
+}
+
+map SOD14 "$SOD14"
+{
+	music = SEARCHN
+	par = 270
+	next = SOD15
+	levelnum = 714
+}
+
+map SOD15 "$SOD15"
+{
+	music = ZEROHOUR
+	par = 360
+	next = SOD16
+	levelnum = 715
+}
+
+map SOD16 "$SOD16"
+{
+	music = ULTIMATE
+	par = 0
+	next = SOD17
+	levelnum = 716
+}
+
+map SOD17 "$SOD17"
+{
+	music = XPUTIT
+	par = 360
+	next = SOD18
+	levelnum = 717
+}
+
+map SOD18 "$SOD18"
+{
+	music = ULTIMATE
+	par = 0
+	next = SOD21
+	levelnum = 718
+}
+
+map SOD19 "$SOD19"
+{
+	music = XJAZNAZI
+	par = 0
+	next = SOD05
+	levelnum = 719
+}
+
+map SOD20 "$SOD20"
+{
+	music = XFUNKIE
+	par = 0
+	next = SOD13
+	levelnum = 720
+}
+
+map SOD21 "$SOD21"
+{
+	music = XEVIL
+	par = 0
+	levelnum = 721
+	specialaction = "AngelofDeath", "ACS_ExecuteAlways", 4, 0, 2
+}
+
+//Lost Episodes
+map SD201 "$SD201"
+{
+	music = XTIPTOE
+	par = 90
+	next = SD202
+	levelnum = 801
+}
+
+map SD202 "$SD202"
+{
+	music = XFUNKIE
+	par = 210
+	next = SD203
+	levelnum = 802
+}
+
+map SD203 "$SD203"
+{
+	music = XDEATH
+	par = 165
+	next = SD204
+	levelnum = 803
+}
+
+map SD204 "$SD204"
+{
+	music = XGETYOU
+	par = 210
+	next = SD205
+	secretnext = SD219
+	levelnum = 804
+}
+
+map SD205 "$SD205"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD206
+	levelnum = 805
+}
+
+map SD206 "$SD206"
+{
+	music = DUNGEON
+	par = 270
+	next = SD207
+	levelnum = 806
+}
+
+map SD207 "$SD207"
+{
+	music = GOINGAFT
+	par = 195
+	next = SD208
+	levelnum = 807
+}
+
+map SD208 "$SD208"
+{
+	music = POW
+	par = 165
+	next = SD209
+	levelnum = 808
+}
+
+map SD209 "$SD209"
+{
+	music = TWELFTH
+	par = 285
+	next = SD210
+	levelnum = 809
+}
+
+map SD210 "$SD210"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD211
+	levelnum = 810
+}
+
+map SD211 "$SD211"
+{
+	music = NAZI_OMI
+	par = 390
+	next = SD212
+	levelnum = 811
+}
+
+map SD212 "$SD212"
+{
+	music = GETTHEM
+	par = 270
+	next = SD213
+	levelnum = 812
+	secretnext = SD220
+}
+
+map SD213 "$SD213"
+{
+	music = SUSPENSE
+	par = 165
+	next = SD214
+	levelnum = 813
+}
+
+map SD214 "$SD214"
+{
+	music = SEARCHN
+	par = 270
+	next = SD215
+	levelnum = 814
+}
+
+map SD215 "$SD215"
+{
+	music = ZEROHOUR
+	par = 360
+	next = SD216
+	levelnum = 815
+}
+
+map SD216 "$SD216"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD217
+	levelnum = 816
+}
+
+map SD217 "$SD217"
+{
+	music = XPUTIT
+	par = 360
+	next = SD218
+	levelnum = 817
+}
+
+map SD218 "$SD218"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD221
+	levelnum = 818
+}
+
+map SD219 "$SD219"
+{
+	music = XJAZNAZI
+	par = 0
+	next = SD205
+	secretnext = SD205
+	levelnum = 819
+}
+
+map SD220 "$SD220"
+{
+	music = XFUNKIE
+	par = 0
+	next = SD213
+	levelnum = 820
+}
+
+map SD221 "$SD221"
+{
+	music = XEVIL
+	par = 0
+	levelnum = 821
+	specialaction = "DevilIncarnate", "ACS_ExecuteAlways", 4, 0, 2
+}
+
+// The Ultimate Challenge
+map SD301 "$SD301"
+{
+	music = XTIPTOE
+	par = 90
+	next = SD302
+	levelnum = 901
+}
+
+map SD302 "$SD302"
+{
+	music = XFUNKIE
+	par = 210
+	next = SD303
+	levelnum = 902
+}
+
+map SD303 "$SD303"
+{
+	music = XDEATH
+	par = 165
+	next = SD304
+	levelnum = 903
+}
+
+map SD304 "$SD304"
+{
+	music = XGETYOU
+	par = 210
+	next = SD305
+	secretnext = SD319
+	levelnum = 904
+}
+
+map SD305 "$SD305"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD306
+	levelnum = 905
+}
+
+map SD306 "$SD306"
+{
+	music = DUNGEON
+	par = 270
+	next = SD307
+	levelnum = 906
+}
+
+map SD307 "$SD307"
+{
+	music = GOINGAFT
+	par = 195
+	next = SD308
+	levelnum = 907
+}
+
+map SD308 "$SD308"
+{
+	music = POW
+	par = 165
+	next = SD309
+	levelnum = 908
+}
+
+map SD309 "$SD309"
+{
+	music = TWELFTH
+	par = 285
+	next = SD310
+	levelnum = 909
+}
+
+map SD310 "$SD310"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD311
+	levelnum = 910
+}
+
+map SD311 "$SD311"
+{
+	music = NAZI_OMI
+	par = 390
+	next = SD312
+	levelnum = 911
+}
+
+map SD312 "$SD312"
+{
+	music = GETTHEM
+	par = 270
+	next = SD313
+	levelnum = 912
+	secretnext = RTD20
+}
+
+map SD313 "$SD313"
+{
+	music = SUSPENSE
+	par = 165
+	next = SD314
+	levelnum = 913
+}
+
+map SD314 "$SD314"
+{
+	music = SEARCHN
+	par = 270
+	next = SD315
+	levelnum = 914
+}
+
+map SD315 "$SD315"
+{
+	music = ZEROHOUR
+	par = 360
+	next = SD316
+	levelnum = 915
+}
+
+map SD316 "$SD316"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD317
+	levelnum = 916
+}
+
+map SD317 "$SD317"
+{
+	music = XPUTIT
+	par = 360
+	next = SD318
+	levelnum = 917
+}
+
+map SD318 "$SD318"
+{
+	music = ULTIMATE
+	par = 0
+	next = SD321
+	levelnum = 918
+}
+
+map SD319 "$SD319"
+{
+	music = XJAZNAZI
+	par = 0
+	next = RTD05
+	secretnext = RTD05
+	levelnum = 919
+}
+
+map SD320 "$SD320"
+{
+	music = XFUNKIE
+	par = 0
+	next = SD313
+	levelnum = 920
+}
+
+map SD321 "$SD321"
+{
+	music = XEVIL
+	par = 0
+	levelnum = 921
+	specialaction = "DevilIncarnate", "ACS_ExecuteAlways", 4, 0, 2
+}
+
 DoomEdNums
 {
 	// Enemies
 	20002=Guard
+	22002=GreenGuard
 	20003=SS
+	22003=BlackSS
 	20004=Officer
+	22004=AltOfficer
 	20005=Mutant
-	20160=HitlerGhost
+	22005=BatLost
 
 	// Moving Enemies
 	20201=Dog
+	22201=Doberman
 	20202=MGuard
+	22202=MGreenGuard
 	20203=MSS
+	22203=MBlackSS
 	20204=MOfficer
+	22204=MAltOfficer
 	20205=MMutant
+	22205=MBatLost
+
+	// Special Enemies
+	20160=HitlerGhost
+
+	21106=WolfSpectre
+	22106=WolfGhost
+	23106=RadioactiveMist
+
+	20224=Blinky
+	20225=Inky
+	20226=Pinky
+	20227=Clyde
 
 	// Compatibility
 	21002=Guard
@@ -635,15 +1171,30 @@ DoomEdNums
 	21201=Dog
 	21202=MGuard
 	21203=MSS
-	21014=Hans
+	21014=HansGrosse
 
 	// Bosses
-	20214=Hans
+	20214=HansGrosse
 	20196=DrSchabbs
+	20197=GretelGrosse
 	20178=HitlerMech
 	20215=Giftmacher
-	20197=GretelGrosse
 	20179=Fettgesicht
+
+	21125=TransGrosse
+	22125=SubmarineWilly
+
+	21142=UberMutant
+	22142=TheAxe
+
+	21161=DeathKnight
+	22161=RobotDroid
+
+	21107=AngelOfDeath
+	22107=DevilIncarnate
+
+	21143=BarnacleWilhelm
+	22143=ProfessorQuarkblitz
 
 	// Objects
 	21023=PoolofWater
@@ -696,6 +1247,77 @@ DoomEdNums
 	21070=HangingVines
 	21124=DeadGuard
 
+	// SoD
+	21072=WolfClipBox
+	21074=SpearofDestiny
+	21133=SkullsonStick
+	21138=BloodyCage
+	21145=CageofSkulls
+	21151=WolfChaingunSoD
+	21163=RedCeilingLight
+	21167=BullHeadonStick
+	21168=BloodyWell
+	21169=AngelofDeathStatue
+	21171=BrownColumn
+	21172=WolfClipBox
+	21173=Truck
+	21174=SpearofDestiny
+
+	// Lost Episodes
+	21223=PoolofWaterLost
+	21224=OilDrumLost
+	21225=TableandChairsLost
+	21226=FloorLampLost
+	21227=HangingChandelierLost
+	21228=HangingSkeletonLost
+	21229=DogFoodLost
+	21230=StoneColumnLost
+	21231=PlantLost
+	21232=SkeletonLost
+	21233=PileofSkullsLost
+	21234=BrownPlantLost
+	21235=VaseLost
+	21236=TableLost
+	21237=GreenCeilingLightLost
+	21238=CagewithBloodLost
+	21239=SuitofArmorLost
+	21240=EmptyCageLost
+	21241=BrokenCageLost
+	21242=Bones1Lost
+	21243=YellowKeyLost
+	21244=BlueKeyLost
+	21245=CagewithSkullsLost
+	21246=DeadRatLost
+	21247=PlateofFoodLost
+	21248=FirstAidKitLost
+	21249=WolfClipLost
+	21250=WolfMachineGunLost
+	21251=WolfChaingunLost
+	21252=RadioLost
+	21253=ShellLost
+	21254=TimerLost
+	21255=BombLost
+	21256=LifeLost
+	21257=BoneswithBloodLost
+	21258=WoodBarrelLost
+	21259=WellwithWaterLost
+	21260=DryWellLost
+	21261=PoolofBloodLost
+	21262=ElectrofieldLost
+	21263=RedCeilingLightLost
+	21264=Bones2Lost
+	21265=LightBulbLost
+	21266=SlimeLost
+	21267=HLabTableLost
+	21268=RadioactiveBarrelLost
+	21269=PipeLost
+	21270=BubblesLost
+	21271=DemonStatueLost
+	21272=WolfClipBoxLost
+	21273=BJWasHereLost
+	21274=SpearofDestinyLost
+	21324=DeadGuardLost
+
 	// Miscellanous
 	22100=SecretMarker
 	22090=Turn
@@ -706,11 +1328,6 @@ DoomEdNums
 	22095=Turn225
 	22096=Turn270
 	22097=Turn315
-
-	20224=Blinky
-	20225=Inky
-	20226=Pinky
-	20227=Clyde
 }
 
 Intermission EndEpisode

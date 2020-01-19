@@ -6,13 +6,13 @@ class DOSItem
 	String date;
 	Array<DOSItem> children;
 	DOSItem parent;
+	int lump;
 }
 
 class Startup : GenericMenu
 {
 	Font DOSFont;
 	Vector2 dimcoords, dimsize;
-	int lineheight, charwidth;
 
 	String buffer[26][80];
 	String backgroundbuffer[26][80];
@@ -39,16 +39,17 @@ class Startup : GenericMenu
 
 	int instances;
 
+	bool noinput;
+
 	override void Init(Menu parent)
 	{
 		S_ChangeMusic("");
 
 		Super.Init(parent);
 
-		DOSFont = Font.GetFont("DOSFont");
+		DontDim = true;
 
-		lineheight = 16;
-		charwidth = 8;
+		DOSFont = Font.GetFont("DOSFont");
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
@@ -62,6 +63,7 @@ class Startup : GenericMenu
 
 		curdir = NewNode(root, "C:", "", 134217728);
 		NewNode(curdir, "COMMAND", "COM", 47845, "11-11-1991   5:00a");
+		DOSItem data = NewNode(curdir, "DATADIR");
 		curdir = NewNode(curdir, "GAMES");
 		curdir = NewNode(curdir, "WOLF3D");
 		NewNode(curdir, "AUDIOHED", "WL6", 1156, "02-04-1993   4:01p");
@@ -74,10 +76,22 @@ class Startup : GenericMenu
 		NewNode(curdir, "VSWAP", "WL6", 1545400, "02-04-1993   4:02p");
 		NewNode(curdir, "WOLF3D", "EXE", 110715, "02-04-1993   1:40p");
 
+		for (int i = 0, count = Wads.GetNumLumps(); i < count; ++i)
+		{
+			String nm = Wads.GetLumpFullName(i);
+
+			if (nm != "" && nm.IndexOf("/") > -1 && Wads.FindLump(Wads.GetLumpName(i)))
+			{
+				NewNodeFromPath(data, Wads.GetLumpFullName(i), lump:i);
+			}
+		}
+
 		curdir = FindPath("C:\\Games\\Wolf3D");
 
 		echo = true;
 		prompt = String.Format("%s>", GetPath(curdir));
+
+		Clear();
 
 		Print(prompt, nobreak:true);
 //sodmenu = true;
@@ -92,7 +106,7 @@ class Startup : GenericMenu
 
 	override void Drawer()
 	{
-		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+//		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		if (sodmenu) { DrawSoDMenu(); }
 		else
@@ -160,15 +174,30 @@ class Startup : GenericMenu
 		if (!nobreak) { NewLine(); }
 	}
 
-	void DrawBuffer()
+	void DrawBuffer(int width = 640, int height = 400, int charwidth = 8, int lineheight = 16)
 	{
+		charwidth = charwidth * width / 640;
+		lineheight = lineheight * height / 400;
+
+		int xoffset = width / 4;
+		int yoffset = height / 4;
+		width += xoffset * 2;
+		height += yoffset * 2;
+
+		double cratio = Screen.GetHeight() / height;
+		int cwidth = int(charwidth * cratio);
+		int cheight = int(lineheight * cratio);
+
 		for (int r = 0; r < 25; r++)
 		{
 			for (int c = 0; c < 80; c++)
 			{
-				screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), c * charwidth - 1, r * lineheight, backgroundbuffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), c * charwidth, r * lineheight, buffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), c * charwidth, r * lineheight, cursorbuffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+				if (!(backgroundbuffer[r][c] ~== "\c[TrueBlack]Û"))
+				{
+					screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), xoffset + c * charwidth - 1, yoffset + r * lineheight - 2, backgroundbuffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth + int(2 * cratio), DTA_CellY, int(cheight + 5 * cratio));
+				}
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, buffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, cursorbuffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
 			}
 		}
 	}
@@ -288,6 +317,8 @@ class Startup : GenericMenu
 		switch(curstate)
 		{
 			case 0:
+				noinput = true;
+
 				Print(String.Format("%4i KB OK", clamp((ticcount - 70) * 20, 0, 1024)), 0, 1, true);
 				if (ticcount >= 140) { ticcount = 0; curstate++; }
 				break;
@@ -309,18 +340,23 @@ class Startup : GenericMenu
 				break;
 			case 5:
 				if (ticcount == 1) { Print(prompt, nobreak:true); prompty = cursory; }
+				noinput = false;
 			default:
 				break;
 		}
 	}
 
-	void DrawText(int x, int y, String text, Font fnt = null, color clr = Font.CR_GRAY)
+	void DrawText(int x, int y, String text, Font fnt = null, color clr = Font.CR_GRAY, int width = 640, int height = 400, int charwidth = 8, int lineheight = 16)
 	{
 		if (!fnt) { fnt = DOSFont; }
 
 		text = StringTable.Localize(text);
 
 		int linecount = 0;
+
+		double cratio = Screen.GetHeight() / height;
+		int cwidth = int(charwidth * cratio);
+		int cheight = int(lineheight * cratio);
 
 		for (int c = 0; c < text.Length(); c++)
 		{
@@ -332,7 +368,7 @@ class Startup : GenericMenu
 				linecount++;
 			}
 
-			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.CharAt(c), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.CharAt(c), DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
 		}
 	}
 
@@ -387,7 +423,7 @@ class Startup : GenericMenu
 					console.printf("TODO: Option " .. key);
 				}
 			}
-			else
+			else if (!noinput)
 			{
 				command = command.Left(cursorx - prompt.Length()) .. key .. command.Mid(cursorx - prompt.Length());
 				Print(key, nobreak:true);
@@ -407,6 +443,10 @@ class Startup : GenericMenu
 					history.Push(command);
 					historyindex = history.Size();
 					ParseCommand(command .. "\n");
+				}
+				else
+				{
+					NewLine();
 				}
 
 				command = "";
@@ -542,12 +582,8 @@ class Startup : GenericMenu
 		return path;
 	}
 
-	DOSItem, bool FindPath(String path)
+	String CleanPath(String path)
 	{
-		if (!path) { return null; }
-
-		Array<String> tree;
-
 		for (int c = 0; c < path.Length(); c++)
 		{
 			if (c == 0 && (path.CharCodeAt(c) == 0x20 || path.CharCodeAt(c) == 0x5C))
@@ -561,6 +597,17 @@ class Startup : GenericMenu
 				c++;
 			}
 		}
+
+		return path;
+	}
+
+	DOSItem, bool FindPath(String path)
+	{
+		if (!path) { return null; }
+
+		Array<String> tree;
+
+		path = CleanPath(path);
 
 		path.Split(tree, "/");
 
@@ -629,6 +676,14 @@ class Startup : GenericMenu
 				tokens.Push(command.Left(c));
 				command = command.Mid(c);
 				c = 1;
+			}
+			else if (command.CharAt(c) == "\x5C")
+			{
+				tokens.Push(command.Left(c));
+				tokens.Push("\x5C");
+				command = command.Mid(c + 1);
+
+				c = 0;
 			}
 			else if (command.CharAt(c) == ".")
 			{
@@ -725,19 +780,23 @@ class Startup : GenericMenu
 
 				for (int i = 1; i < tokens.Size(); i++) { pathto = pathto .. (pathto.length() ? "\x5C" : "") .. tokens[i]; }
 
-				DOSItem newpath;
-				bool same;
-
-				[newpath, same] = FindPath(pathto);
-
-				if (newpath == curdir && !same)
-				{
-					NewLine();
-					Print("The system could not find the path specified.");
-				}
+				if (pathto == "\x5C") { curdir = root.children[0];}
 				else
 				{
-					curdir = newpath;
+					DOSItem newpath;
+					bool same;
+
+					[newpath, same] = FindPath(pathto);
+
+					if (newpath == curdir && !same)
+					{
+						NewLine();
+						Print("The system could not find the path specified.");
+					}
+					else
+					{
+						curdir = newpath;
+					}
 				}
 
 				NewLine();
@@ -745,7 +804,7 @@ class Startup : GenericMenu
 		}
 		else if (tokens[0] ~== "DIR")
 		{
-			PrintChildren(curdir);
+			PrintChildren(curdir, tokens.Size() > 1 ? tokens[1] : "");
 			NewLine();
 		}
 		else if (tokens[0] ~== "COLOR")
@@ -787,6 +846,36 @@ class Startup : GenericMenu
 			Print("             (C)Copyright Microsoft Corp 1981-1991.");
 			NewLine();
 			instances++;
+		}
+		else if (tokens[0] ~== "TYPE")
+		{
+			if (tokens.Size() > 1)
+			{
+				bool found;
+				DOSItem item;
+
+				[found, item] = FindChild(tokens[1], tokens.Size() > 3 ? tokens[3] : "");
+
+				NewLine();
+
+				if (found && item.lump > -1)
+				{
+					Print(Wads.ReadLump(item.lump));
+				}
+				else
+				{
+					tokens[1].ToUpper();
+					Print("File not found - " .. tokens[1] .. (tokens.Size() > 3 ? "." .. tokens[3] : ""));
+				}
+
+				NewLine();
+			}
+			else
+			{
+				NewLine();
+				Print("Required parameter missing");
+				NewLine();
+			}
 		}
 		else if (tokens[0] == "")
 		{
@@ -831,7 +920,7 @@ class Startup : GenericMenu
 		return false;
 	}
 
-	void PrintChildren(DOSItem node)
+	void PrintChildren(DOSItem node, string params = "")
 	{
 		NewLine();
 
@@ -896,7 +985,7 @@ class Startup : GenericMenu
 		else { Print(String.Format("               %18s Bytes free.", CommaSeparate(node.size))); }
 	}
 
-	DOSItem NewNode(DOSItem parent, String title, String extension = "", int size = -1, String date = "")
+	DOSItem NewNode(DOSItem parent, String title, String extension = "", int size = -1, String date = "", int lump = -1)
 	{
 		if (!parent) { return null; }
 
@@ -906,6 +995,62 @@ class Startup : GenericMenu
 		node.extension = extension;
 		node.size = size > 0 ? size : Random(1, 999999);
 		node.date = GetDate(date);
+		node.lump = lump;
+
+		parent.children.Push(node);
+
+		return node;
+	}
+
+	DOSItem NewNodeFromPath(DOSItem parent, String path, int size = -1, String date = "", int lump = -1)
+	{
+		if (!parent) { return null; }
+
+		Array<String> tree;
+
+		path = CleanPath(path);
+
+		path.Split(tree, "/");
+
+		for (int i = 0; i < tree.Size() - 1; i++)
+		{
+			if (tree[i].length() > 8)
+			{
+				tree[i] = tree[i].left(6) .. "~1";
+			}
+
+			DOSItem node = FindPath(GetPath(parent) .. "\x5C" .. tree[i]);
+
+			while (!(GetPath(node) ~== GetPath(parent) .. "\x5C" .. tree[i]))
+			{
+				node = NewNodeFromPath(parent, tree[i]);
+			}
+
+			parent = node;
+		}
+
+		Array<String> file;
+		tree[tree.Size() - 1].split(file, ".");
+
+		if (file[0] && file[0].length() > 8)
+		{
+			int index = 1;
+
+			for (int f = 0; f < parent.children.Size(); f++)
+			{
+				if (parent.children[f].title.left(6) ~== file[0].left(6)) { index++; }
+			}
+
+			file[0] = file[0].left(6) .. "~" .. index;
+		}
+
+		DOSItem node = New("DOSItem");
+		node.parent = parent;
+		node.title = file[0];
+		node.extension = (file.Size() > 1 ? file[1] : "");
+		node.size = size > 0 ? size : Random(1, 999999);
+		node.date = GetDate(date);
+		node.lump = lump;
 
 		parent.children.Push(node);
 
@@ -919,7 +1064,7 @@ class Startup : GenericMenu
 		return input .. temp.mid(input.length());
 	}
 
-	bool FindChild(String title, String extension = "")
+	bool, DOSItem FindChild(String title, String extension = "")
 	{
 		for (int i = 0; i < curdir.children.Size(); i++)
 		{
@@ -929,13 +1074,13 @@ class Startup : GenericMenu
 			{
 				if (extension.Length())
 				{
-					if (curdir.children[i].extension ~== extension) { return true; }
+					if (curdir.children[i].extension ~== extension) { return true, curdir.children[i]; }
 				}
-				else { return true; }
+				else { return true, curdir.children[i]; }
 			}
 		}
 
-		return false;
+		return false, null;
 	}
 
 	String CommaSeparate(int input)

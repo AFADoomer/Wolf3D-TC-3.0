@@ -144,7 +144,7 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 
 	if(lock == 1)
 	{
-		If (CheckInventory("BlueKey"))
+		If (CheckInventory("BlueKey") || CheckInventory("BlueKeyLost"))
 			bAccess = 1;
 		Else
 		{
@@ -154,7 +154,7 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 	}
 	else if(lock == 2)
 	{
-		If (CheckInventory("YellowKey"))
+		If (CheckInventory("YellowKey") || CheckInventory("YellowKeyLost"))
 			bAccess = 1;
 		Else
 		{
@@ -402,7 +402,6 @@ Script "W_SetCeilingColor" (int index)
 	{
 		int num = GetLevelInfo(LEVELINFO_LEVELNUM);
 		index = (num / 100 - 1) * 10 + num % 100 - 1;
-printbold(d:index);
 	}
 
 	Color = WolfCeilings[index % 60];

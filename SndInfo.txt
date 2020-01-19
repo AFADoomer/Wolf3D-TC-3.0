@@ -4,13 +4,18 @@ NULL				DSEMPTY
 /* Pickup Sounds */
 // Ammo
 pickups/ammo			P_AMMO
+pickups/ammobox			P_AMMOB
 
 // Weapons
 pickups/mgun			P_MGUN
 pickups/cgun			P_CGUN
+pickups/cgunsod			SSND0038
+pickups/cgunlost		LSND0038
 
 $singular pickups\mgun
 $singular pickups\cgun
+$singular pickups\cgunsod
+$singular pickups\cgunlost
 
 // Health
 pickups/food			P_FOOD
@@ -28,14 +33,28 @@ pickups/cross			T_CROSS
 pickups/crown			T_CROWN
 pickups/cup			T_CUP
 
+$alias pickups/bomb		pickups/chest
+$alias pickups/ctrlpanel	pickups/crown
+$alias pickups/plutonium	pickups/cup
+$alias pickups/radio		pickups/cross
+
+// Spear of Destiny
+spear/pickup			SSND0039
+spear/pickup2			LSND0039
+
 /* Map Sounds */
 // Doors
 door/classic/open		WSND0003
 door/classic/close		WSND0002
 door/classic/secret		WSND0015
 
+door/open2			LSND0003
+door/close2			LSND0002
+door/secret2			LSND0013
+
 // Switches
 switches/elevator		WSND0030
+switches/elevator2		LSND0022
 
 /* Menu Sounds */
 menu/activate			M_SELECT
@@ -67,9 +86,16 @@ weapons/wpistol			WSND0005
 weapons/wmachinegun		WSND0004
 weapons/wchaingun		WSND0006
 
+weapons/wpistol2		LSND0005
+weapons/wmachinegun2		LSND0004
+weapons/wchaingun2		LSND0006
+
 // Enemy weapons
 shots/burst			WSND0011
 shots/single			WSND0021
+
+shots/burst2			LSND0009
+shots/single2			LSND0017
 
 boss/attack			WSND0010
 
@@ -79,6 +105,7 @@ flame/fire			DSFLAME
 
 missile/fire			DSMISSF
 missile/hit			DSMISSX
+missile/sodfire			DSMISSFS
 
 /* Player Sounds */
 $playersound	player	male	*pain100	WSND0014
@@ -93,6 +120,7 @@ bj/yell				WSND0032
 /* Miscellaneous */
 $alias misc/secret		NULL
 slurpie				WSND0022
+slurpie2			LSND0018
 goobers				S_GOOB
 
 /* Enemy Sounds */
@@ -100,6 +128,10 @@ goobers				S_GOOB
 dog/sight			WSND0001
 dog/attack			WSND0029
 dog/death			WSND0016
+
+doberman/sight			LSND0001
+doberman/attack			LSND0021
+doberman/death			LSND0014
 
 // Brownshirt Guard
 brown/die1			WSND0012
@@ -114,17 +146,38 @@ $random brown/die3 		{ brown/die2 brown/die4 }
 brown/sight			WSND0000
 $random brown/death		{ brown/die1 brown/die2 brown/die3 brown/die4 brown/die5 brown/die7 brown/die8 brown/die9 }
 
+green/die1			LSND0010
+green/die2			LSND0011
+green/die3			LSND0023
+green/die4			LSND0023
+green/die5			LSND0024
+green/die6			LSND0015
+green/die7			LSND0026
+green/die8			LSND0027
+green/die9			LSND0028
+
+green/sight			LSND0000
+$random green/death		{ green/die1 green/die2 green/die3 green/die4 green/die5 green/die7 green/die7 green/die8 }
+
 // SS Guard
 blue/sight			WSND0007
 blue/death			WSND0020
+
+black/sight			LSND0007
+black/death			LSND0016
 
 // Officer
 white/sight			WSND0027
 white/death			WSND0028
 
+white2/sight			LSND0019
+white2/death			LSND0020
+
 // Mutant
 $alias mutant/sight		NULL
 mutant/death			WSND0017
+
+gunbat/death			LSND0015
 
 // Hans Grosse
 hans/sight			WSND0008
@@ -157,3 +210,48 @@ gretel/death			WSND0044
 // Fettgesicht
 fatface/sight			WSND0038
 fatface/death			WSND0045
+
+// Trans Grosse
+trans/sight			SSND0029
+trans/death			SSND0030
+
+// Submarine Willy
+willy/sight			LSND0029
+willy/death			LSND0030
+
+// Ubermutant
+$alias uber/sight		NULL 
+uber/death			SSND0033
+
+// The Axe
+$alias theaxe/sight		NULL
+theaxe/death			LSND0033
+
+// Death Knight
+dk/sight			SSND0034
+dk/death			SSND0035
+
+// Robot Droid
+robot/sight			LSND0034
+robot/death			LSND0035
+
+// Spectre
+spectre/sight			DSGHOSIT
+
+// Angel of Death
+aod/sight			SSND0036
+aod/death			SSND0037
+aod/fire			DSAODFIR
+
+// Devil Incarnate
+devil/sight			LSND0036
+devil/death			LSND0037
+$alias devil/fire		aod/fire
+
+// Barnacle Wilhelm
+wilhelm/sight			SSND0031
+wilhelm/death			SSND0032
+
+// Professor Quarkblitz
+quarkblitz/sight		LSND0031
+quarkblitz/death		LSND0032

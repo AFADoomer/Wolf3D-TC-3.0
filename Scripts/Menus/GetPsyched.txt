@@ -490,7 +490,6 @@ class Fader : GetPsyched
 	}
 }
 
-
 class PauseMenu : WolfMenu
 {
 	TextureID pausepic;
