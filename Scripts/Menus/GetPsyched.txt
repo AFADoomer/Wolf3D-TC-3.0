@@ -525,5 +525,4 @@ class PauseMenu : WolfMenu
 
 		return Super.MouseEvent(type, x, y);
 	}
-
 }
