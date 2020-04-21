@@ -76,7 +76,7 @@ class Startup : GenericMenu
 		NewNode(curdir, "VSWAP", "WL6", 1545400, "02-04-1993   4:02p");
 		NewNode(curdir, "WOLF3D", "EXE", 110715, "02-04-1993   1:40p");
 
-		for (int i = 0, count = Wads.GetNumEntries(); i < count; ++i)
+		for (int i = 0, count = Wads.GetNumLumps(); i < count; ++i)
 		{
 			String nm = Wads.GetLumpFullName(i);
 

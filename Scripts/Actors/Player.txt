@@ -34,7 +34,7 @@ class WolfPlayer : DoomPlayer
 		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";
 		Player.WeaponSlot 2, "WolfPistol", "WolfPistolLost";
 		Player.WeaponSlot 3, "WolfMachinegun", "WolfMachinegunLost";
-		Player.WeaponSlot 4, "WolfChaingun", "WolfChaingunLost";
+		Player.WeaponSlot 4, "WolfChaingun", "WolfChaingunSoD", "WolfChaingunLost";
 		Player.WeaponSlot 5, "";
 		Player.WeaponSlot 6, "";
 		Player.WeaponSlot 7, "";
