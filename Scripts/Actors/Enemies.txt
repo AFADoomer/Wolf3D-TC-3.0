@@ -386,6 +386,7 @@ class Guard : ClassicNazi
 		Health 25;
 		Speed 3;
 		SeeSound "brown/sight";
+		AttackSound "shots/single";
 		DeathSound "brown/death";
 		DropItem "WolfClip";
 

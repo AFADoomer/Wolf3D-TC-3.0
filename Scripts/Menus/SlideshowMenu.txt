@@ -395,7 +395,7 @@ class IntroSlideshow : GenericMenu
 		}
 		else if (current == warning)
 		{
-			screen.Dim(0x20A8FC, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+			screen.Dim(0x20A8FC, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 
 			screen.DrawTexture(current, false, 216, 110, DTA_320x200, true);
 		}
