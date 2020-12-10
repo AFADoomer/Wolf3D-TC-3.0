@@ -537,11 +537,11 @@ class ExtendedLoadMenu : LoadMenu
 		int listboxHeight1 = screen.GetHeight() - listboxTop - 10 * CleanYfac;
 		listboxRows = (listboxHeight1 - 1) / rowHeight;
 		listboxHeight = listboxRows * rowHeight + 1;
-		listboxBottom = listboxTop + listboxHeight;
+//		listboxBottom = listboxTop + listboxHeight;
 
 		commentTop = savepicTop + savepicHeight + 16;
 		commentHeight = listboxHeight - savepicHeight - 16;
-		commentBottom = commentTop + commentHeight;
+//		commentBottom = commentTop + commentHeight;
 	}
 
 	override void Drawer()
@@ -651,11 +651,11 @@ class ExtendedSaveMenu : SaveMenu
 		int listboxHeight1 = screen.GetHeight() - listboxTop - 10 * CleanYfac;
 		listboxRows = (listboxHeight1 - 1) / rowHeight;
 		listboxHeight = listboxRows * rowHeight + 1;
-		listboxBottom = listboxTop + listboxHeight;
+//		listboxBottom = listboxTop + listboxHeight;
 
 		commentTop = savepicTop + savepicHeight + 16;
 		commentHeight = listboxHeight - savepicHeight - 16;
-		commentBottom = commentTop + commentHeight;
+//		commentBottom = commentTop + commentHeight;
 	}
 
 	override void Drawer()
