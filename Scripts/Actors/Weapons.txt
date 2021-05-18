@@ -186,7 +186,7 @@ class WolfClipBoxLost : WolfClipBox
 		Spawn:
 			WAMM B -1;
 			Loop;
-	}	
+	}
 }
 
 class WolfKnife : ClassicWeapon
@@ -224,7 +224,7 @@ class WolfKnife : ClassicWeapon
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
-} 
+}
 
 
 class WolfPistol : ClassicWeapon
@@ -258,7 +258,7 @@ class WolfPistol : ClassicWeapon
 			"####" A 0 A_Jump(256, "Refire");
 	}
 }
- 
+
 class WolfMachineGun : ClassicWeapon
 {
 	Default
@@ -278,23 +278,20 @@ class WolfMachineGun : ClassicWeapon
 			CMGU P -1;
 			Loop;
 		Ready:
-			CMGU W 1 A_WeaponReady(WRF_NOBOB);
+			CMGU B 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 		Select:
-			"####" A 0;
+			"####" B 0;
 			Goto Super::Select;
 		Fire:
-			"####" W 2;
-			"####" B 2;
+			"####" C 3;
 		Hold:
-			"####" W 0;
-			"####" C 3 BRIGHT A_FireGun(3.0);
-			"####" D 3;
-			"####" D 0 A_ReFire;
-			"####" E 3;
-			"####" A 0 A_Jump(256, "Ready");
+			"####" D 3 BRIGHT;
+			"####" E 3 A_FireGun(3.0);
+			"####" W 3 A_ReFire;
+			"####" # 0 A_Jump(256, "Ready");
 	}
-} 
+}
 
 class WolfChaingun : ClassicWeapon
 {
@@ -390,7 +387,7 @@ class WolfMachineGunLost : WolfMachineGun
 			MGUN U -1;
 			Loop;
 		Ready:
-			MGUL W 1 A_WeaponReady(WRF_NOBOB);
+			MGUL B 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 	}
 }
