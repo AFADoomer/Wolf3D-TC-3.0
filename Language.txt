@@ -60,6 +60,11 @@ DEATHCAM = "Let's see that again!";
 M_EPIS = "Which episode to play?";
 M_SKILL = "How tough are you?";
 
+// Border style choices
+BORD_DEFAULT = "Traditional";
+BORD_FIT = "Fit Screen Width";
+BORD_MINIMAL = "Minimal";
+
 // Episode Names
 EP_1 = "Episode 1\nEscape from Wolfenstein";
 EP_2 = "[Optional]Episode 2\nOperation: Eisenfaust";

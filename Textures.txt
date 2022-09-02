@@ -1701,3 +1701,51 @@ Sprite Optional LB10R0, 64, 64 {Offset 32, 64 Graphic WSPR2400, 0, 0}
 
 // Compatibility
 Texture Optional WLF2055B, 64, 64 {Graphic WALL2041, 0, 0}
+
+// Spear of Destiny VGA Graphics
+// Menu components
+Texture Optional M_SMENU, 152, 48 { Patch WVGA1016, 0, 0 }
+Texture Optional M_SSEL1, 24, 16 {Patch WVGA1005, 0, 0}
+Texture Optional M_SSEL2, 24, 16 {Patch WVGA1006, 0, 0}
+Texture Optional M_SCNTRL, 104, 16 { Patch WVGA1004, 0, 0 }
+Texture Optional M_SCONTR, 152, 48 { Patch WVGA1015, 0, 0 }
+Texture Optional M_SCUSTO, 152, 48 { Patch WVGA1009, 0, 0 }
+Texture Optional M_SLOADG, 216, 48 { Patch WVGA1027, 0, 0 }
+Texture Optional M_SSAVEG, 216, 48 { Patch WVGA1028, 0, 0 }
+Texture Optional M_SSELC0, 24, 8 { Patch WVGA1007, 0, 0 }
+Texture Optional M_SSELC1, 24, 8 { Patch WVGA1008, 0, 0 }
+
+// Menu Background
+Texture Optional MENUBLUE, 320, 200 { Patch WVGA1003, 0, 0 }
+
+// Skill Graphics
+Texture Optional M_SSKILL, 184, 16 { Patch WVGA1020, 0, 0}
+Texture Optional SSKILL1, 24, 32 { Patch WVGA1021, 0, 0 }
+Texture Optional SSKILL2, 24, 32 { Patch WVGA1022, 0, 0 }
+Texture Optional SSKILL3, 24, 32 { Patch WVGA1023, 0, 0 }
+Texture Optional SSKILL4, 24, 32 { Patch WVGA1024, 0, 0 }
+
+//Credits Screen
+Texture Optional SCREDIT, 320, 200 { Patch WVGA1092, 0, 0 }
+
+//High Scores Screen
+Texture Optional SSCORES, 320, 72 { Patch WVGA1029, 0, 0 }
+Texture Optional SODICON, 16, 16 { Patch WVGA1030, 0, 0 }
+
+//Status Bar Face
+Texture Optional WLFGOD0, 24, 32 { Patch WVGA1142, 0, 0}
+Texture Optional WLFGOD1, 24, 32 { Patch WVGA1143, 0, 0}
+Texture Optional WLFGOD2, 24, 32 { Patch WVGA1144, 0, 0}
+
+Texture Optional WLFSTT1, 24, 32 { Patch WVGA1145, 0, 0}
+Texture Optional WLFSTT2, 24, 32 { Patch WVGA1146, 0, 0}
+
+Texture Optional WLFSCRM, 24, 32 { Patch WVGA1147, 0, 0}
+
+//Finale
+Texture Optional SODEND1, 72, 72 { Patch WVGA1031, 0, 0 }
+Texture Optional SODEND2, 72, 72 { Patch WVGA1032, 0, 0 }
+Texture Optional SODEND3, 72, 72 { Patch WVGA1033, 0, 0 }
+Texture Optional SODEND4, 72, 72 { Patch WVGA1034, 0, 0 }
+Texture Optional SODEND5, 320, 200 { Patch WVGA1081, 0, 0 }
+Texture Optional SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }

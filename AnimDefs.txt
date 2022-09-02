@@ -7,3 +7,7 @@ pic WLF0016B tics 0
 texture optional M_SEL1
 pic M_SEL1 tics 4
 pic M_SEL2 tics 35
+
+texture optional M_SSEL1
+pic M_SSEL1 tics 35
+pic M_SSEL2 tics 4

@@ -109,19 +109,21 @@ OptionMenu "TCOptions"
 {
 	Title "M_CONTRL"
 
-	SubMenu "Game Engine Options",			"OptionsMenu"
+	SubMenu "Game Engine Options",				"OptionsMenu"
 	StaticText ""
 	StaticText "Gameplay Options", 1
 	Option "Disable Wolf3D-style movement",		"g_momentum", "YesNo"
-	Option "Use fast fireballs",			"g_fastfireballs", "YesNo"
+	Option "Use fast fireballs",				"g_fastfireballs", "YesNo"
 	Option "Enable Wolf3D-style cheats",		"goobers", "YesNo"
 	StaticText ""
 	StaticText "Cosmetic Options", 1
-	Option "Skip 'Get Psyched' screen",		"g_nointro", "YesNo"
+	Option "Skip 'Get Psyched' screen",			"g_nointro", "YesNo"
 	Option "Don't show blood or bullet puffs",	"g_noblood", "YesNo"
+	Option "Screen border style",				"g_borderstyle", "BorderStyle"
 }
 
-ListMenu "PlayerMenu"
+/*
+ListMenu "WolfNewPlayerMenu"
 {
 	Linespacing 14
 
@@ -158,5 +160,294 @@ ListMenu "PlayerMenu"
 	ValueText "$PLYRMNU_SWITCHONPICKUP", "Switch", "OffOn"
 	ValueText "$PLYRMNU_ALWAYSRUN", "AlwaysRun", "OnOff"
 
-	Class "ExtendedPlayerMenu"
+	Class "WolfNewPlayerMenu"
+}
+*/
+OptionMenu "WolfColorPickerMenu" protected
+{
+	Title "$MNU_COLORPICKER"
+	// This menu will be created by the calling code
+
+	Class "WolfColorPickerMenu"
+}
+
+OptionMenu "WolfNewPlayerMenu" protected
+{
+	Title "$MNU_PLAYERSETUP"
+	PlayerNameField "$PLYRMNU_NAME"
+	PlayerTeamItem "$PLYRMNU_TEAM", "PlayerTeam"
+	PlayerColorItem "$PLYRMNU_PLAYERCOLOR", "PlayerColors"
+	PlayerColorSlider "$PLYRMNU_RED", 0
+	PlayerColorSlider "$PLYRMNU_GREEN", 1
+	PlayerColorSlider "$PLYRMNU_BLUE", 2
+	PlayerClassItem "$PLYRMNU_PLAYERCLASS", "PlayerClass"
+	PlayerSkinItem "$PLYRMNU_PLAYERSKIN", "PlayerSkin"
+	PlayerGenderItem "$PLYRMNU_PLAYERGENDER", "Gender"
+	AutoaimSlider "$PLYRMNU_AUTOAIM"
+	PlayerSwitchOnPickupItem "$PLYRMNU_SWITCHONPICKUP", "OffOn"
+
+	Option "$PLYRMNU_ALWAYSRUN", cl_run, "OnOff"
+	Class "WolfNewPlayerMenu"
+}
+
+OptionMenu "WolfJoystickConfigMenu" protected
+{
+	Title "$JOYMNU_TITLE"
+	Class "WolfJoystickConfigMenu"
+	// Will be filled in by joystick code.
+}
+
+OptionMenu "WolfGameplayOptions" protected
+{
+	Position -35
+	Title 	"$GMPLYMNU_TITLE"
+	//Indent 222
+	Submenu "$GMPLYMNU_DEATHMATCH",				"DeathmatchOptions"
+	Submenu "$GMPLYMNU_COOPERATIVE",			"CoopOptions"
+	StaticText " "
+	Option "$GMPLYMNU_TEAMPLAY",				"teamplay",	"OnOff"
+	Slider	"$GMPLYMNU_TEAMDAMAGE",	"teamdamage", 0, 1, 0.05,2
+	StaticText " "
+	Option "$GMPLYMNU_SMARTAUTOAIM",			"sv_smartaim", "SmartAim"
+	StaticText " "
+	Option "$GMPLYMNU_FALLINGDAMAGE",			"sv_fallingdamage", "FallingDM"
+	Option "$GMPLYMNU_DROPWEAPON",				"sv_weapondrop", "YesNo"
+	Option "$GMPLYMNU_DOUBLEAMMO",				"sv_doubleammo", "YesNo"
+	Option "$GMPLYMNU_INFINITEAMMO",			"sv_infiniteammo", "YesNo"
+	Option "$GMPLYMNU_INFINITEINVENTORY",		"sv_infiniteinventory", "YesNo"
+	Option "$GMPLYMNU_NOMONSTERS",				"sv_nomonsters", "YesNo"
+	Option "$GMPLYMNU_NOMONSTERSTOEXIT",		"sv_killallmonsters", "YesNo"
+	Option "$GMPLYMNU_MONSTERSRESPAWN",			"sv_monsterrespawn", "YesNo"
+	Option "$GMPLYMNU_NORESPAWN",				"sv_norespawn", "YesNo"
+	Option "$GMPLYMNU_ITEMSRESPAWN",			"sv_itemrespawn", "YesNo"
+	Option "$GMPLYMNU_SUPERRESPAWN",			"sv_respawnsuper", "YesNo"
+	Option "$GMPLYMNU_FASTMONSTERS",			"sv_fastmonsters", "YesNo"
+	Option "$GMPLYMNU_DEGENERATION",			"sv_degeneration", "YesNo"
+	Option "$GMPLYMNU_NOAUTOAIM",				"sv_noautoaim", "NoYes"
+	Option "$GMPLYMNU_ALLOWSUICIDE",			"sv_disallowsuicide", "NoYes"
+	Option "$GMPLYMNU_ALLOWJUMP",				"sv_jump", "JumpCrouchFreeLook"
+	Option "$GMPLYMNU_ALLOWCROUCH",				"sv_crouch", "JumpCrouchFreeLook"
+	Option "$GMPLYMNU_ALLOWFREELOOK",			"sv_freelook", "JumpCrouchFreeLook"
+	Option "$GMPLYMNU_ALLOWFOV",				"sv_nofov", "NoYes"
+	Option "$GMPLYMNU_BFGFREEAIM",				"sv_nobfgaim", "NoYes"
+	Option "$GMPLYMNU_ALLOWAUTOMAP",			"sv_noautomap", "NoYes"
+	Option "$GMPLYMNU_AUTOMAPALLIES",			"sv_noautomapallies", "NoYes"
+	Option "$GMPLYMNU_ALLOWSPYING",				"sv_disallowspying", "NoYes"
+	Option "$GMPLYMNU_CHASECAM",				"sv_chasecam", "YesNo"
+	Option "$GMPLYMNU_DONTCHECKAMMO",			"sv_dontcheckammo", "NoYes"
+	Option "$GMPLYMNU_KILLBOSSSPAWNS",			"sv_killbossmonst", "YesNo"
+	Option "$GMPLYMNU_NOCOUNTENDMONSTER",		"sv_nocountendmonst", "NoYes"
+	Class "WolfGameplayMenu"
+}
+
+OptionMenu "WolfDeathmatchOptions" protected
+{
+	Position -35
+	Title 	"$GMPLYMNU_DEATHMATCH"
+
+	Option "$GMPLYMNU_WEAPONSSTAY",				"sv_weaponstay", "YesNo"
+	Option "$GMPLYMNU_ALLOWPOWERUPS",			"sv_noitems", "NoYes"
+	Option "$GMPLYMNU_ALLOWHEALTH",				"sv_nohealth", "NoYes"
+	Option "$GMPLYMNU_ALLOWARMOR",				"sv_noarmor", "NoYes"
+	Option "$GMPLYMNU_SPAWNFARTHEST",			"sv_spawnfarthest", "YesNo"
+	Option "$GMPLYMNU_SAMEMAP",					"sv_samelevel", "YesNo"
+	Option "$GMPLYMNU_FORCERESPAWN",			"sv_forcerespawn", "YesNo"
+	Option "$GMPLYMNU_ALLOWEXIT",				"sv_noexit", "NoYes"
+	Option "$GMPLYMNU_BARRELSRESPAWN",			"sv_barrelrespawn", "YesNo"
+	Option "$GMPLYMNU_RESPAWNPROTECTION",		"sv_respawnprotect", "YesNo"
+	Option "$GMPLYMNU_LOSEFRAG",				"sv_losefrag", "YesNo"
+	Option "$GMPLYMNU_KEEPFRAGS",				"sv_keepfrags", "YesNo"
+	Option "$GMPLYMNU_NOTEAMSWITCH",			"sv_noteamswitch", "YesNo"
+	Class "WolfGameplayMenu"
+}
+
+OptionMenu "WolfCoopOptions" protected
+{
+	Position -35
+	Title 	"$GMPLYMNU_COOPERATIVE"
+
+	Option "$GMPLYMNU_MULTIPLAYERWEAPONS",	 	"sv_noweaponspawn", "NoYes"
+	Option "$GMPLYMNU_LOSEINVENTORY",			"sv_cooploseinventory", "YesNo"
+	Option "$GMPLYMNU_KEEPKEYS",				"sv_cooplosekeys", "NoYes"
+	Option "$GMPLYMNU_KEEPWEAPONS",				"sv_cooploseweapons", "NoYes"
+	Option "$GMPLYMNU_KEEPARMOR",				"sv_cooplosearmor", "NoYes"
+	Option "$GMPLYMNU_KEEPPOWERUPS",			"sv_cooplosepowerups", "NoYes"
+	Option "$GMPLYMNU_KEEPAMMO",				"sv_cooploseammo", "NoYes"
+	Option "$GMPLYMNU_LOSEHALFAMMO",			"sv_coophalveammo", "YesNo"
+	Option "$GMPLYMNU_SPAWNWHEREDIED",			"sv_samespawnspot", "YesNo"
+	Class "WolfGameplayMenu"
+}
+
+OptionMenu "WolfCompatibilityOptions" protected
+{
+	Position -35
+	Title "$CMPTMNU_TITLE"
+	Option "$CMPTMNU_MODE",							"compatmode", "CompatModes", "", 1
+	StaticText " "
+	Submenu "$CMPTMNU_ACTORBEHAVIOR",				"CompatActorMenu"
+	Submenu "$CMPTMNU_DEHACKEDBEHAVIOR",			"CompatDehackedMenu"
+	Submenu "$CMPTMNU_MAPACTIONBEHAVIOR",			"CompatMapMenu"
+	Submenu "$CMPTMNU_PHYSICSBEHAVIOR",				"CompatPhysicsMenu"
+	Submenu "$CMPTMNU_RENDERINGBEHAVIOR",			"CompatRenderMenu"
+	Submenu "$CMPTMNU_SOUNDBEHAVIOR",				"CompatSoundMenu"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfCompatActorMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_ACTORBEHAVIOR"
+	Option "$CMPTMNU_CORPSEGIBS",					"compat_CORPSEGIBS", "YesNo"
+	Option "$CMPTMNU_NOBLOCKFRIENDS",				"compat_NOBLOCKFRIENDS", "YesNo"
+	Option "$CMPTMNU_LIMITPAIN",					"compat_LIMITPAIN", "YesNo"
+	Option "$CMPTMNU_MBFMONSTERMOVE",				"compat_MBFMONSTERMOVE", "YesNo"
+	Option "$CMPTMNU_CROSSDROPOFF",					"compat_CROSSDROPOFF", "YesNo"
+	Option "$CMPTMNU_DROPOFF",						"compat_DROPOFF", "YesNo"
+	Option "$CMPTMNU_INVISIBILITY",					"compat_INVISIBILITY", "YesNo"
+	Option "$CMPTMNU_MINOTAUR",						"compat_MINOTAUR", "YesNo"
+	Option "$CMPTMNU_NOTOSSDROPS",					"compat_NOTOSSDROPS", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfCompatDehackedMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_DEHACKEDBEHAVIOR"
+	Option "$CMPTMNU_DEHHEALTH",					"compat_DEHHEALTH", "YesNo"
+	Option "$CMPTMNU_MUSHROOM",						"compat_MUSHROOM", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfCompatMapMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_MAPACTIONBEHAVIOR"
+	Option "$CMPTMNU_USEBLOCKING",					"compat_USEBLOCKING", "YesNo"
+	Option "$CMPTMNU_ANYBOSSDEATH",					"compat_ANYBOSSDEATH", "YesNo"
+	Option "$CMPTMNU_NODOORLIGHT",					"compat_NODOORLIGHT", "YesNo"
+	Option "$CMPTMNU_LIGHT",						"compat_LIGHT", "YesNo"
+	Option "$CMPTMNU_SHORTTEX",						"compat_SHORTTEX", "YesNo"
+	Option "$CMPTMNU_STAIRS",						"compat_stairs", "YesNo"
+	Option "$CMPTMNU_FLOORMOVE",					"compat_floormove", "YesNo"
+	Option "$CMPTMNU_POINTONLINE",					"compat_pointonline", "YesNo"
+	Option "$CMPTMNU_MULTIEXIT",					"compat_multiexit", "YesNo"
+	Option "$CMPTMNU_TELEPORT",						"compat_teleport", "YesNo"
+	Option "$CMPTMNU_PUSHWINDOW",					"compat_pushwindow", "YesNo"
+	Option "$CMPTMNU_CHECKSWITCHRANGE",				"compat_checkswitchrange", "YesNo"
+	Option "$CMPTMNU_RAILINGHACK",					"compat_railing", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfCompatPhysicsMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_PHYSICSBEHAVIOR"
+	Option "$CMPTMNU_NOPASSOVER",					"compat_nopassover", "YesNo"
+	Option "$CMPTMNU_BOOMSCROLL",					"compat_BOOMSCROLL", "YesNo"
+	Option "$CMPTMNU_BADANGLES",					"compat_badangles", "YesNo"
+	Option "$CMPTMNU_WALLRUN",						"compat_WALLRUN", "YesNo"
+	Option "$CMPTMNU_RAVENSCROLL",					"compat_RAVENSCROLL", "YesNo"
+	Option "$CMPTMNU_TRACE",						"compat_TRACE", "YesNo"
+	Option "$CMPTMNU_HITSCAN",						"compat_HITSCAN", "YesNo"
+	Option "$CMPTMNU_MISSILECLIP",					"compat_MISSILECLIP", "YesNo"
+	Option "$CMPTMNU_EXPLODE1",						"compat_explode1", "YesNo"
+	Option "$CMPTMNU_EXPLODE2",						"compat_explode2", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+
+OptionMenu "WolfCompatRenderMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_RENDERINGBEHAVIOR"
+	Option "$CMPTMNU_POLYOBJ",						"compat_POLYOBJ", "YesNo"
+	Option "$CMPTMNU_MASKEDMIDTEX",					"compat_MASKEDMIDTEX", "YesNo"
+	Option "$CMPTMNU_SPRITESORT",					"compat_SPRITESORT", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfCompatSoundMenu" protected
+{
+	Position -35
+	Title "$CMPTMNU_SOUNDBEHAVIOR"
+	Option "$CMPTMNU_SOUNDSLOTS",					"compat_soundslots", "YesNo"
+	Option "$CMPTMNU_SILENTPICKUP",					"compat_SILENTPICKUP", "YesNo"
+	Option "$CMPTMNU_SILENTINSTANTFLOORS",			"compat_silentinstantfloors", "YesNo"
+	Option "$CMPTMNU_SECTORSOUNDS",					"compat_SECTORSOUNDS", "YesNo"
+	Option "$CMPTMNU_SOUNDCUTOFF",					"compat_soundcutoff", "YesNo"
+	Option "$CMPTMNU_SOUNDTARGET",					"compat_SOUNDTARGET", "YesNo"
+	Class "WolfCompatibilityMenu"
+}
+
+OptionMenu "WolfGLTextureGLOptions" protected
+{
+	Title "$GLTEXMNU_TITLE"
+	Option "$GLTEXMNU_TEXFILTER",		gl_texture_filter,				"FilterModes"
+	Option "$GLTEXMNU_ANISOTROPIC",		gl_texture_filter_anisotropic,	"Anisotropy"
+	Option "$GLTEXMNU_ENABLEHIRES",		gl_texture_usehires,			"YesNo"
+
+	ifOption(MMX)
+	{
+		Option "$GLTEXMNU_HQRESIZE",		gl_texture_hqresizemode,		"HqResizeModes"
+	}
+	else
+	{
+		Option "$GLTEXMNU_HQRESIZE",		gl_texture_hqresizemode,		"HqResizeModesNoMMX"
+	}
+	Option "$GLTEXMNU_HQRESIZEMULT",	gl_texture_hqresizemult,		"HqResizeMultipliers"
+	StaticText "!HQRESIZE_WARNING!"
+
+	Option "$GLTEXMNU_RESIZETEX",		gl_texture_hqresize_textures,	"OnOff"
+	Option "$GLTEXMNU_RESIZESPR",		gl_texture_hqresize_sprites,	"OnOff"
+	Option "$GLTEXMNU_RESIZEFNT",		gl_texture_hqresize_fonts,		"OnOff"
+	Option "$GLTEXMNU_PRECACHETEX",		gl_precache,					"YesNo"
+	Option "$GLTEXMNU_SORTDRAWLIST", 	gl_sort_textures,				"YesNo"
+	Class "WolfGLTextureGLOptions"
+}
+
+OptionMenu "WolfReverbEdit" protected
+{
+	Class "WolfReverbEdit"
+	Title "$OPTMNU_REVERB"
+	StaticTextSwitchable 	"", "", "EvironmentName", 1
+	StaticTextSwitchable 	"", "", "EvironmentID"
+	StaticText " "
+	Submenu "$REVMNU_SELECT", "ReverbSelect"
+	Option "$REVMNU_TEST", "eaxedit_test", OnOff
+	StaticText " "
+	Submenu "$REVMNU_NEW", "ReverbNew"
+	Submenu "$REVMNU_SAVE", "ReverbSave"
+	Submenu "$REVMNU_EDIT", "ReverbSettings"
+}
+
+OptionMenu "WolfReverbSelect" protected
+{
+	Class "WolfReverbSelect"
+	Title "$REVMNU_SELECT"
+	// filled in by code
+}
+
+OptionMenu "WolfReverbSave" protected
+{
+	Class "ReverbSave"
+	Title "$REVMNU_SAVE"
+	Command "$REVMNU_Save", "savereverbs"
+	TextField "$REVMNU_File_name", "reverbsavename"
+	StaticText ""
+	StaticText "$REVMNU_Environments_to_save"
+	// Rest is filled in by code.
+}
+
+OptionMenu "os_Menu"
+{
+	Class "Wolfos_Menu"
+	Title "$OS_TITLE"
+}
+
+
+OptionValue "BorderStyle"
+{
+	0, "$BORD_DEFAULT"
+	1, "$BORD_FIT"
+	2, "$BORD_MINIMAL"
 }

@@ -1,3 +1,4 @@
+server noarchive bool g_sod = false;
 server noarchive cheat int goobers = 0;
 
 server int g_nointro = 0;
@@ -13,3 +14,5 @@ user string wolf3dtc_highscore4 = "T2l6bXIkR3BzeWiAgEk1M1A1gIA1NDQ0NA==";
 user string wolf3dtc_highscore5 = "WXRyJU1mcXGBgUo2NFE2gYE2NTU1NQ==";
 user string wolf3dtc_highscore6 = "UHVudCZYdXNreHWCgks3NVI3goI3NjY2Ng==";
 user string wolf3dtc_highscore7 = "UWiAJ15wc2l8eYODTDg2UziDgzg3Nzc3";
+
+user int g_borderstyle = 0;

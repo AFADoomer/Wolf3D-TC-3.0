@@ -8,13 +8,13 @@ gameinfo
 	cursorpic = "W_CURSOR"
 	borderflat = "GREEN"
 	border = 3, 3, "M_BORTR", "M_BORT", "M_BORTL", "M_BORR", "M_BORL", "M_BORBR", "M_BORB", "M_BORBL"
-	menufontcolor_title = "WolfMenuYellowBright2"
-	menufontcolor_label = "WolfMenuGray2"
-	menufontcolor_value = "White"
-	menufontcolor_action = "WolfMenuGray2"
-	menufontcolor_header = "WolfMenuYellow2"
+	menufontcolor_title = "WolfMenuYellow"
+	menufontcolor_label = "WolfMenuGray"
+	menufontcolor_value = "TrueWhite"
+	menufontcolor_action = "TrueWhite"
+	menufontcolor_header = "WolfMenuYellow"
 	menufontcolor_highlight = "TrueWhite"
-	menufontcolor_selection = "WolfMenuLightGray2"
+	menufontcolor_selection = "WolfMenuLightGray"
 	menuslidercolor = "WolfMenuYellowBright"
 	menubackbutton = "M_BACK_W"
 	pausesign = "W_PAUSE"
@@ -23,7 +23,7 @@ gameinfo
 
 	maparrow = "maparrows/knife.txt"
 
-	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler"
+	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler"
 	statusbarclass = "ClassicStatusBar"
 
 	StatScreen_Single = "ClassicStats"
@@ -80,6 +80,7 @@ defaultmap
 
 map TITLEMAP "Wolfenstein 3D"
 {
+	levelnum = 0
 	music = "NAZI_NOR"
 }
 
@@ -759,6 +760,7 @@ map SOD18 "$SOD18"
 	par = 0
 	next = SOD21
 	levelnum = 718
+	nointermission
 }
 
 map SOD19 "$SOD19"
@@ -930,6 +932,7 @@ map SD218 "$SD218"
 	par = 0
 	next = SD221
 	levelnum = 818
+	nointermission
 }
 
 map SD219 "$SD219"
@@ -1102,6 +1105,7 @@ map SD318 "$SD318"
 	par = 0
 	next = SD321
 	levelnum = 918
+	nointermission
 }
 
 map SD319 "$SD319"
