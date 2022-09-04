@@ -94,7 +94,7 @@ class ClassicWeapon : Weapon
 			}
 		}
 
-		A_FireBullets (spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM + FBF_USEAMMO);
+		A_FireBullets (spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM | FBF_USEAMMO);
 	}
 }
 
@@ -235,7 +235,7 @@ class WolfPistol : ClassicWeapon
 		Inventory.Icon "LUGER";
 		Inventory.PickupSound "pickups/ammo";
 		Weapon.AmmoType "WolfClip";
-		Weapon.AmmoGive 8;
+		Weapon.AmmoGive 0;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 3;
 	}

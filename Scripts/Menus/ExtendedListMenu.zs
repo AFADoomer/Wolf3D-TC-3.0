@@ -87,7 +87,7 @@ class ExtendedListMenu : ListMenu
 	String overlaytext;
 	Array<int> placeholders;
 
-	TextureID controls;
+	TextureID controls, bkg;
 
 	String cursor;
 	int blinktime;
@@ -118,7 +118,8 @@ class ExtendedListMenu : ListMenu
 
 		lookupBase = MenuName;
 
-		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
 
@@ -127,7 +128,7 @@ class ExtendedListMenu : ListMenu
 		fadealpha = 1.0;
 		initialalpha = 1.0;
 
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = 0x880000; }
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod ? 0x000088 : 0x880000); }
 		else if (!mParentMenu) { initialalpha = 0; fadealpha = 0; fadetarget = gametic + fadetime; }
 
 		nodim = false;
@@ -144,7 +145,13 @@ class ExtendedListMenu : ListMenu
 			return;
 		}
 
-		screen.Dim(0x880000, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		mDesc.mSelector = TexMan.CheckForTexture((g_sod ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		if (g_sod)
+		{
+			if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+			mDesc.mSelectOfsY = 1;
+		}
 
 		double ratio = screen.GetAspectRatio();
 
@@ -263,7 +270,7 @@ class ExtendedListMenu : ListMenu
 							}
 							else
 							{
-								fadecolor = 0x880000;
+								fadecolor = (g_sod ? 0x000088 : 0x880000);
 							}
 							fadetarget = gametic + fadetime;
 							activated = mDesc.mItems[mDesc.mSelectedItem];
@@ -287,7 +294,7 @@ class ExtendedListMenu : ListMenu
 		}
 		initialalpha = 1.0;
 		nodim = false;
-		fadecolor = 0x880000;
+		fadecolor = (g_sod ? 0x000088 : 0x880000);
 	}
 
 	void GetPlaceholders()
@@ -402,6 +409,32 @@ class IconListMenu : ExtendedListMenu
 	}
 }
 
+class EpisodeMenu : IconListMenu
+{
+	override void Drawer()
+	{
+		for (int i = 3; i < mDesc.mItems.Size(); i++)
+		{
+			mDesc.mItems[i].SetY(mDesc.mItems[i - 1].GetY() + 26);
+		}
+
+		Super.Drawer();
+
+		if (g_sod)
+		{
+			Close();
+			Menu.SetMenu("SkillMenu", 5 + g_sod);
+		}
+		else
+		{
+			for (int i = 8; i < mDesc.mItems.Size(); i++)
+			{
+				mDesc.mItems[i].mEnabled = false;
+			}
+		}
+	}
+}
+
 // For an icon that swaps out in place, like the Wolf3D skill menu
 class StaticIconListMenu : ExtendedListMenu
 {
@@ -486,9 +519,24 @@ class StaticIconListMenu : ExtendedListMenu
 	}
 }
 
+class SkillMenu : StaticIconListMenu
+{
+	override void Init(Menu parent, ListMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+
+		if (g_sod) { lookupbase = "S" .. lookupbase; }
+	}
+
+	override void Drawer()
+	{
+		Super.Drawer();
+	}
+}
+
 class ExtendedLoadMenu : LoadMenu
 {
-	TextureID controls;
+	TextureID controls, bkg;
 	double yoffset;
 
 	int fadetarget;
@@ -506,12 +554,13 @@ class ExtendedLoadMenu : LoadMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = 0x880000;
+		fadecolor = (g_sod ? 0x000088 : 0x880000);
 	}
 
 	void SetYOffsets(double yoffset)
@@ -537,7 +586,8 @@ class ExtendedLoadMenu : LoadMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim(0x880000, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (g_sod && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -602,7 +652,7 @@ class ExtendedLoadMenu : LoadMenu
 
 class ExtendedSaveMenu : SaveMenu
 {
-	TextureID controls;
+	TextureID controls, bkg;
 	double yoffset;
 
 	int fadetarget;
@@ -620,12 +670,13 @@ class ExtendedSaveMenu : SaveMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = 0x880000;
+		fadecolor = (g_sod ? 0x000088 : 0x880000);
 	}
 
 	void SetYOffsets(double yoffset)
@@ -651,7 +702,8 @@ class ExtendedSaveMenu : SaveMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim(0x880000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (g_sod && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -728,12 +780,12 @@ class ExtendedPlayerMenu : PlayerMenu
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = 0x880000;
+		fadecolor = (g_sod ? 0x000088 : 0x880000);
 	}
 
 	override void Drawer()
 	{
-		screen.Dim(0x880000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		ListMenu.Drawer();
 
@@ -756,6 +808,7 @@ class ListMenuItemBox : ListMenuItem
 	TextureID top, bottom, left, right;
 	TextureID topleft, topright, bottomleft, bottomright;
 	int x, y, w, h, yoffset, inputw, inputh;
+	String borderprefix;
 
 	void Init(ListMenuDescriptor desc, int width, int height, int offset, string prefix = "M_BOR")
 	{
@@ -765,6 +818,13 @@ class ListMenuItemBox : ListMenuItem
 		inputh = height;
 		yoffset = offset;
 
+		SetBorder(prefix);
+	}
+
+	void SetBorder(String prefix = "M_BOR")
+	{
+		if (borderprefix == prefix) { return; }
+
 		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
 		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
 		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
@@ -773,17 +833,22 @@ class ListMenuItemBox : ListMenuItem
 		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
 		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
 		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
+
+		borderprefix = prefix;
 	}
 	
 	override void Drawer(bool selected)
 	{
 		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return; }
 
+		if (g_sod) { SetBorder("M_SBOR"); }
+
 		w = int(inputw * CleanXfac);
 		h = int(inputh * CleanYfac);
 		x = Screen.GetWidth() / 2 - w / 2;
 		y = Screen.GetHeight() / 2 - 103 * CleanYfac + int((mYpos + yoffset) * CleanYfac);
 
+		if (g_sod) { screen.Dim(0x000088, 1.0, x, y, w, h); }
 		screen.Dim(0x000000, 0.35, x, y, w, h);
 
 		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
@@ -822,17 +887,29 @@ class ListMenuItemTopStrip : ListMenuItem
 class ListMenuItemStripTitle : ListMenuItemStaticPatch
 {
 	double xoffset, yoffset;
+	String patchname;
 
-	void Init(ListMenuDescriptor desc,double x_offs, double y_offs, TextureID patch)
+	void Init(ListMenuDescriptor desc, double x_offs, double y_offs, String patch)
 	{
 		xoffset = x_offs;
 		yoffset = y_offs;
 
-		Super.Init(desc, xoffset, yoffset, patch, true);
+		patchname = patch;
+
+		Super.Init(desc, xoffset, yoffset, TexMan.CheckForTexture(patchname, TexMan.Type_Any), true);
 	}
 
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{
+		String patch = patchname;
+		if (g_sod)
+		{
+			patch = patch.left(2) .. "S" .. patch.mid(2);
+			patch = patch.left(8);
+		}
+
+		mTexture = TexMan.CheckForTexture(patch, TexMan.Type_Any);
+
 		if (!mTexture.Exists()) { return; }
 
 		Vector2 size = TexMan.GetScaledSize(mTexture);

@@ -16,7 +16,7 @@ class KeyHandler : EventHandler
 			switch (e.KeyScan)
 			{
 				case InputEvent.Key_F1:
-					if (goobers) { Menu.SetMenu("Startup"); }
+					if (goobers) { Menu.SetMenu("BossScreen"); }
 					else { Menu.SetMenu("HelpMenu"); }
 					return true;
 					break;

@@ -56,7 +56,7 @@ ListMenu "MainMenu"
 ListMenu "EpisodeMenu"
 {
 	NetgameMessage "$NETGAME"
-	Linespacing 26
+	Linespacing 5 //26
 	Selector "M_SEL1", -88, 0
 
 	Font "BigFont", "WolfMenuYellowBright"
@@ -68,7 +68,7 @@ ListMenu "EpisodeMenu"
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	Class "IconListMenu"
+	Class "EpisodeMenu"
 }
 
 ListMenu "SkillMenu"
@@ -82,7 +82,7 @@ ListMenu "SkillMenu"
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	Class "StaticIconListMenu"
+	Class "SkillMenu"
 }
 
 ListMenu "LoadGameMenu"

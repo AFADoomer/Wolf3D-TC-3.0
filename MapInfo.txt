@@ -3,8 +3,6 @@ gameinfo
 	playerclasses = "WolfPlayer"
 	quitmessages = "$QUITMSG1", "$QUITMSG2", "$QUITMSG3", "$QUITMSG4", "$QUITMSG5", "$QUITMSG6", "$QUITMSG7", "$QUITMSG8", "$QUITMSG9"
 	endoom = "EndWolf"
-	dimcolor = "80 00 00" // This is only needed because of the menus that can't be assigned a new class...
-	dimamount = 1.0
 	cursorpic = "W_CURSOR"
 	borderflat = "GREEN"
 	border = 3, 3, "M_BORTR", "M_BORT", "M_BORTL", "M_BORR", "M_BORL", "M_BORBR", "M_BORB", "M_BORBL"
@@ -121,6 +119,10 @@ episode E6L1
 	name = "$EP_6"
 	key = "c"
 }
+
+episode SOD01 {}
+episode SD201 {}
+episode SD301 {}
 
 // Episode 1
 

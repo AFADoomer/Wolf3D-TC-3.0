@@ -1,6 +1,6 @@
 class ExtendedOptionMenu : GenericOptionMenu
 {
-	TextureID title, generictitle;
+	TextureID title, generictitle, bkg;
 	TextureID controls;
 	TextureID top, bottom, left, right;
 	TextureID topleft, topright, bottomleft, bottomright;
@@ -22,11 +22,20 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		Super.Init(parent, desc);
 
-		String prefix = "M_BOR";
+		String prefix = (g_sod ? "M_BORS" : "M_BOR");
 
-		title = TexMan.CheckForTexture(mDesc.mTitle, TexMan.Type_Any);
-		generictitle = TexMan.CheckForTexture("M_CUSTOM", TexMan.Type_Any);
-		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		String titlestring = mDesc.mTitle;
+		if (g_sod)
+		{
+			titlestring = titlestring.left(2) .. "S" .. titlestring.mid(2);
+			titlestring = titlestring.left(8);
+
+			bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		}
+
+		title = TexMan.CheckForTexture(titlestring, TexMan.Type_Any);
+		generictitle = TexMan.CheckForTexture((g_sod ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
 		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
 		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
@@ -36,18 +45,18 @@ class ExtendedOptionMenu : GenericOptionMenu
 		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
 		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
 
-		select0 = TexMan.CheckForTexture("M_SELCT0", TexMan.Type_Any);
-		select1 = TexMan.CheckForTexture("M_SELCT1", TexMan.Type_Any);
+		select0 = TexMan.CheckForTexture((g_sod ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
+		select1 = TexMan.CheckForTexture((g_sod ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
 
-		cursor0 = TexMan.CheckForTexture("M_SEL1", TexMan.Type_Any);
-		cursor1 = TexMan.CheckForTexture("M_SEL2", TexMan.Type_Any);
+		cursor0 = TexMan.CheckForTexture((g_sod ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		cursor1 = TexMan.CheckForTexture((g_sod ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
 
 		fadetime = 12;
 		fadetarget = gametic;
 //		alpha = 0.0;
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = 0x880000; }
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod ? 0x000088 : 0x880000); }
 
 		nodim = true;
 		DontDim = true;
@@ -245,7 +254,9 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
 	{
-		screen.Dim(0x880000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+		if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		if (controls)
 		{
@@ -355,6 +366,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (yoffset < 0) { y = -yOffset; }
 		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
 
+		if (g_sod) { screen.Dim(0x000088, alpha, x, y, w, h); }
 		screen.Dim(0x000000, 0.35 * alpha, x, y, w, h);
 
 		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
@@ -579,6 +591,12 @@ class OptionMenuItemStripTitle : OptionMenuItem
 	{
 		xoffset = x_offs;
 		yoffset = y_offs;
+
+		if (g_sod)
+		{
+			patch = patch.left(2) .. "S" .. patch.mid(2);
+			patch = patch.left(8);
+		}
 
 		mTexture = TexMan.CheckForTexture(patch, TexMan.Type_Any);
 

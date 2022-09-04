@@ -4,7 +4,9 @@
 int	polyinfo[255];
 int	PushWalls[255];
 int	intPushWallMoveDist = 128.0;
+str Ceilings[21] = {"98", "1d", "2d", "2e", "4d", "4e", "4f", "6f", "7d", "7f", "8d", "9d", "9e", "ae", "bf", "d7", "dc", "dd", "de", "df", "e1"};
 str WolfCeilings[60] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
+str SoDCeilings[21] = {"6f", "4f", "1d", "de", "df", "2e", "7f", "9e", "ae", "7f", "1d", "de", "df", "de", "df", "de", "e1", "dc", "2e", "1d", "dc"};
 global int 18:SecretMarkers[];
 
 Function int WolfCoord(int intCoord)
@@ -42,16 +44,7 @@ Script "Initialize" ENTER
 		}
 		else
 		{
-			if (justdied) // New pistol start after losing a life
-			{
-				ResetWeapons();
-			}
-			else if (lives == 0) // First entry in new game
-			{
-				ResetWeapons();
-
-				ScriptCall("LifeHandler", "SetLives", 3);
-			}
+			ResetWeapons();
 
 			if (!GetCVar("g_nointro")) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
 		}
@@ -60,8 +53,16 @@ Script "Initialize" ENTER
 
 Function void ResetWeapons(void)
 {
-	GiveInventory("WolfKnife", 1);
-	GiveInventory("WolfPistol", 1);
+	if (GetCVar("g_sod") < 2)
+	{
+		GiveInventory("WolfKnife", 1);
+		GiveInventory("WolfPistol", 1);
+	}
+	else
+	{
+		GiveInventory("WolfKnifeLost", 1);
+		GiveInventory("WolfPistolLost", 1);
+	}
 }
 
 Script 1 (int po, int dir, int lock)
@@ -398,11 +399,23 @@ Script "W_SetCeilingColor" (int index)
 
 	If (!index)
 	{
-		int num = GetLevelInfo(LEVELINFO_LEVELNUM);
-		index = (num / 100 - 1) * 10 + num % 100 - 1;
+		int num = GetLevelInfo(LEVELINFO_LEVELNUM);	
+		if (GetCVar("g_sod"))
+		{
+			index = num % 100;
+			Color = SoDCeilings[index % 60];
+		}
+		else
+		{
+			index = (num / 100 - 1) * 10 + num % 100 - 1;
+			Color = WolfCeilings[index % 21];
+		}
+	}
+	else
+	{
+		Color = Ceilings[index % 21];
 	}
 
-	Color = WolfCeilings[index % 60];
 
 	ChangeCeiling(0, Color);
 	ChangeCeiling(800, Color);

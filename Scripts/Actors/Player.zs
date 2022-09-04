@@ -27,8 +27,7 @@ class WolfPlayer : DoomPlayer
 		Player.ForwardMove 1.3, 1.3;
 		Player.MaxHealth 100;
 		Player.SideMove 1.3, 1.3;
-		Player.StartItem "WolfPistol";
-		Player.StartItem "WolfKnife";
+		Player.StartItem "WolfClip", 8;
 		Player.ViewBob 0;
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";

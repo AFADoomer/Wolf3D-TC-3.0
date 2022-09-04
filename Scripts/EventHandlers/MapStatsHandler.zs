@@ -154,7 +154,7 @@ class MapStatsHandler : StaticEventHandler
 		{
 			int index = Levels.Size() - 1;
 
-			if (index > -1 && !(levels[index].mapname ~== "TITLEMAP"))
+			if (index > -1 && !(levels[index].mapname ~== "TITLEMAP") && level.totaltime > 0)
 			{
 				let l = levels[index];
 

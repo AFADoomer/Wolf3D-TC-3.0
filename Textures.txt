@@ -1236,6 +1236,30 @@ Texture EPISODE4, 48, 24 {Patch WVGA0033, 0, 0}
 Texture EPISODE5, 48, 24 {Patch WVGA0034, 0, 0}
 Texture EPISODE6, 48, 24 {Patch WVGA0035, 0, 0}
 
+Texture Optional EPISODE7, 48, 24
+{
+	Graphic WVGA1035, -64, -12 {Blend "Black", 0.7}
+	Graphic WSPR1324, -15, -22 {Translation Gold Alpha 0.4 Style Translucent}
+	Graphic WSPR1053, -26, -8 {Blend "Black", 0.5}
+	Graphic WSPR1381, 0, -40 {FlipX Blend "Black", 0.7 Alpha 0.1 Style Translucent}
+}
+
+Texture Optional EPISODE8, 48, 24
+{
+	Graphic WALL2096, 0, -28 {Blend "Black", 0.6}
+	Graphic WSPR2324, 21, -20 {Translation Gold Alpha 0.3 Style Translucent}
+	Graphic WSPR2053, 10, -8 {Blend "Black", 0.5}
+	Graphic WSPR2012, -28, -38 {FlipX Blend "Black", 0.5}
+	Graphic WSPR2012, -28, -38 {FlipX Translation Gold Alpha 0.2 Style Translucent}
+}
+
+Texture Optional EPISODE9, 48, 24
+{
+	Graphic WALL2026, -10, -32 {Blend "Black", 0.7}
+	Graphic WSPR2053, 10, -8 {Blend "Black", 0.5}
+	Graphic WSPR2358, -26, -6 {Blend "Black", 0.4}
+}
+
 // High Score screen images
 Texture M_LEVEL, 32, 8 { Patch WVGA0038, 0, 0}
 Texture M_NAME, 32, 8 { Patch WVGA0039, 0, 0}
@@ -1705,8 +1729,8 @@ Texture Optional WLF2055B, 64, 64 {Graphic WALL2041, 0, 0}
 // Spear of Destiny VGA Graphics
 // Menu components
 Texture Optional M_SMENU, 152, 48 { Patch WVGA1016, 0, 0 }
-Texture Optional M_SSEL1, 24, 16 {Patch WVGA1005, 0, 0}
-Texture Optional M_SSEL2, 24, 16 {Patch WVGA1006, 0, 0}
+Texture Optional M_SSEL1, 24, 16 { Offset 0, 3 Patch WVGA1005, 0, 0}
+Texture Optional M_SSEL2, 24, 16 { Offset 0, 3 Patch WVGA1006, 0, 0}
 Texture Optional M_SCNTRL, 104, 16 { Patch WVGA1004, 0, 0 }
 Texture Optional M_SCONTR, 152, 48 { Patch WVGA1015, 0, 0 }
 Texture Optional M_SCUSTO, 152, 48 { Patch WVGA1009, 0, 0 }

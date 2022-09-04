@@ -1,5 +1,4 @@
-
-class Startup : GenericMenu
+class BossScreen : GenericMenu
 {
 	int ticcount;
 
@@ -20,10 +19,10 @@ class Startup : GenericMenu
 	override void Drawer()
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-
+		screen.DrawText(NewSmallFont, Font.CR_GRAY, 0, 0, String.Format("%s%s", "C:\\>", ((ticcount % 40 < 20) ? "_" : "")));
 	}	
 }
-/*
+
 class DOSItem
 {
 	String title;
@@ -120,12 +119,12 @@ class Startup : GenericMenu
 		Clear();
 
 		Print(prompt, nobreak:true);
-sodmenu = true;
+		sodmenu = true;
 	}
 
 	override void Ticker()
 	{
-//		Boot();
+		Boot();
 		ticcount++;
 
 		Super.Ticker();
@@ -206,10 +205,10 @@ sodmenu = true;
 		charwidth = charwidth * width / 640;
 		lineheight = lineheight * height / 400;
 
-		int xoffset = width / 4;
-		int yoffset = height / 4;
-		width += xoffset * 2;
-		height += yoffset * 2;
+		int xoffset = 0;//width / 4;
+		int yoffset = 0;//height / 4;
+//		width += xoffset * 2;
+//		height += yoffset * 2;
 
 		double cratio = Screen.GetHeight() / height;
 		int cwidth = int(charwidth * cratio);
@@ -439,16 +438,24 @@ sodmenu = true;
 
 			if (sodmenu)
 			{
-				if (key == "0")
+				Close();
+
+				CVar sodvar = CVar.FindCVar("g_sod");
+
+				int selection = ev.KeyChar - 0x30;
+
+				if (selection < 0 || selection > 4) { return false; }
+
+				if (sodvar && selection > 0 && selection < 5)
 				{
-					sodmenu = false;
-					Clear();
-					Print(prompt, nobreak:true);
+					if (sodvar) { sodvar.SetInt(selection); }
+
+					SetMenu("IntroSlideShowSoD", -1);
+					return true;
 				}
-				else
-				{
-					console.printf("TODO: Option " .. key);
-				}
+
+				SetMenu("IntroSlideShow", -1);
+				return true;
 			}
 			else if (!noinput)
 			{
@@ -1124,4 +1131,3 @@ sodmenu = true;
 		return output;
 	}
 }
-*/

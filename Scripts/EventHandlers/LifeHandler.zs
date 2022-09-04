@@ -113,4 +113,15 @@ class LifeHandler : StaticEventHandler
 			}
 		}
 	}
+
+	override void NewGame()
+	{
+		if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			lives[i] = 3;
+			if (persistent) { persistent.lives[i] = 3; }
+		}
+	}
 }
