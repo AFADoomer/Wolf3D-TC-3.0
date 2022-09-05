@@ -337,6 +337,7 @@ class IntroSlideshow : GenericMenu
 	int fadetarget;
 	int fadetime;
 	double fadealpha;
+	int sodversion;
 
 	int advancetime;
 
@@ -350,44 +351,57 @@ class IntroSlideshow : GenericMenu
 
 		GenericMenu.Init(parent);
 
-		curscreen = 0;
+		curscreen = -1;
 		fadetime = 12;
 		fadetarget = 0;
 		advancetime = 15;
 
-		startup = TexMan.CheckForTexture("STARTUP", TexMan.Type_Any);
-		startup2 = TexMan.CheckForTexture("STARTUP2", TexMan.Type_Any);
-		warning = TexMan.CheckForTexture("WARNING", TexMan.Type_Any);
-		title = TexMan.CheckForTexture("TITLEPIC", TexMan.Type_Any);
-		credits = TexMan.CheckForTexture("CREDIT", TexMan.Type_Any);
-		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
-
-		current = startup;
+		sodversion = -1;
+		SetGraphics();
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 	}
 
+	void SetGraphics()
+	{
+		if (sodversion == g_sod) { return; }
+
+		startup = TexMan.CheckForTexture((g_sod ? "SSTARTUP" : "STARTUP"), TexMan.Type_Any);
+		startup2 = TexMan.CheckForTexture((g_sod ? "SSTARTU2" : "STARTUP2"), TexMan.Type_Any);
+		warning = TexMan.CheckForTexture("WARNING", TexMan.Type_Any);
+		title = TexMan.CheckForTexture((g_sod ? "STITLEPI" : "TITLEPIC"), TexMan.Type_Any);
+		credits = TexMan.CheckForTexture((g_sod ? "SCREDIT" : "CREDIT"), TexMan.Type_Any);
+		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
+
+		sodversion = g_sod;
+	}
+
 	override void Drawer()
 	{
-		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		SetGraphics();
+
+		screen.Dim(0x000000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		if (current == startup2)
 		{
 			screen.DrawTexture(current, false, 0, 0, DTA_320x200, true);
 
-			screen.Dim(0x880000, 1.0, screen.GetWidth() / 2 - 60 * CleanXfac, Screen.GetHeight() - 11 * CleanYfac, 120 * CleanXfac, 11 * CleanYfac);
+			if (!g_sod)
+			{
+				screen.Dim(0x880000, 1.0, screen.GetWidth() / 2 - 60 * CleanXfac, Screen.GetHeight() - 11 * CleanYfac, 120 * CleanXfac, 11 * CleanYfac);
 
-			if (curscreen == 2)
-			{
-				String press = "Press a key";
-				int w = SmallFont.StringWidth(press);
-				screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupYellow"), 160 - w / 2, 190, press, DTA_320x200, true);
-			}
-			else
-			{
-				String press = "Working...";
-				int w = SmallFont.StringWidth(press);
-				screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupGreen"), 160 - w / 2, 190, press, DTA_320x200, true);
+				if (curscreen == 2)
+				{
+					String press = "Press a key";
+					int w = SmallFont.StringWidth(press);
+					screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupYellow"), 160 - w / 2, 190, press, DTA_320x200, true);
+				}
+				else
+				{
+					String press = "Working...";
+					int w = SmallFont.StringWidth(press);
+					screen.DrawText(SmallFont, Font.FindFontColor("WolfStartupGreen"), 160 - w / 2, 190, press, DTA_320x200, true);
+				}
 			}
 
 			if (use_mouse) { screen.DrawTexture(selected, false, 164, 82, DTA_320x200, true); }
@@ -399,7 +413,7 @@ class IntroSlideshow : GenericMenu
 
 			screen.DrawTexture(current, false, 216, 110, DTA_320x200, true);
 		}
-		else
+		else if (current)
 		{
 			screen.DrawTexture(current, false, 0, 0, DTA_320x200, true);
 		}
@@ -420,18 +434,22 @@ class IntroSlideshow : GenericMenu
 		{
 			switch (curscreen)
 			{
+				case 0: // Blank black screen
+					advancetime = gametic + 20;
+					break;
 				case 1: // Initial load screen
+					current = startup;
 					advancetime = gametic + 20;
 					break;
 				case 2: // Press a key
 					current = startup2;
-					advancetime = 0;
+					advancetime = (g_sod ? gametic + 35 * 2 : 0);
 					break;
 				case 3: // Working...
 					advancetime = 5;
 					break;
 				case 4: // Start demo loop
-					S_ChangeMusic(level.music);
+					S_ChangeMusic(g_sod ? "XTOWER2" : "NAZI_NOR");
 					next = warning;
 					fadetarget = gametic + fadetime;
 					advancetime = gametic + 35 * 7;
@@ -560,7 +578,7 @@ class HighScores : GenericMenu
 		fadealpha = 1.0;
 		fadecolor = 0x880000;
 
-		title = TexMan.CheckForTexture("SCORES", TexMan.Type_Any);
+		title = TexMan.CheckForTexture((g_sod ? "SSCORES" : "SCORES"), TexMan.Type_Any);
 		nametitle = TexMan.CheckForTexture("M_NAME", TexMan.Type_Any);
 		scoretitle = TexMan.CheckForTexture("M_SCORE", TexMan.Type_Any);
 		leveltitle = TexMan.CheckForTexture("M_LEVEL", TexMan.Type_Any);
@@ -629,9 +647,12 @@ class HighScores : GenericMenu
 
 		if (title) { screen.DrawTexture(title, false, 48, 0, DTA_320x200, true); }
 
-		if (nametitle) { screen.DrawTexture(nametitle, false, 32, 68, DTA_320x200, true); }
-		if (leveltitle) { screen.DrawTexture(leveltitle, false, 160, 68, DTA_320x200, true); }
-		if (scoretitle) { screen.DrawTexture(scoretitle, false, 228, 68, DTA_320x200, true); }
+		if (!g_sod)
+		{
+			if (nametitle) { screen.DrawTexture(nametitle, false, 32, 68, DTA_320x200, true); }
+			if (leveltitle) { screen.DrawTexture(leveltitle, false, 160, 68, DTA_320x200, true); }
+			if (scoretitle) { screen.DrawTexture(scoretitle, false, 228, 68, DTA_320x200, true); }
+		}
 
 		for (int s = 0; s < 7; s++)
 		{

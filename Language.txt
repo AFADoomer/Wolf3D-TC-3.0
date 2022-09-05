@@ -59,6 +59,7 @@ DEATHCAM = "Let's see that again!";
 // Menu Strings
 M_EPIS = "Which episode to play?";
 M_SKILL = "How tough are you?";
+M_GAME = "What game to play?";
 
 // Border style choices
 BORD_DEFAULT = "Traditional";
@@ -72,9 +73,12 @@ EP_3 = "[Optional]Episode 3\nDie, Fuhrer, Die!";
 EP_4 = "[Optional]Episode 4\nA Dark Secret";
 EP_5 = "[Optional]Episode 5\nTrail of the Madman";
 EP_6 = "[Optional]Episode 6\nConfrontation";
-EP_SOD = "Spear of Destiny\n";
-EP_SD2 = "[Optional]Spear of Destiny:\nReturn to Danger";
-EP_SD3 = "[Optional]Spear of Destiny:\nUltimate Challenge";
+
+// Game/mapset names
+EP_WOLF = "Wolfenstein 3D";
+EP_SOD = "Spear of Destiny";
+EP_SD2 = "Spear of Destiny:\nReturn to Danger";
+EP_SD3 = "Spear of Destiny:\nUltimate Challenge";
 
 // Skill Names
 SK_1 = "Can I play, Daddy?";

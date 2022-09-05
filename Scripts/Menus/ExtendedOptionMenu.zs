@@ -2,8 +2,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 {
 	TextureID title, generictitle, bkg;
 	TextureID controls;
-	TextureID top, bottom, left, right;
-	TextureID topleft, topright, bottomleft, bottomright;
 	TextureID select0, select1;
 	TextureID cursor0, cursor1;
 
@@ -22,8 +20,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		Super.Init(parent, desc);
 
-		String prefix = (g_sod ? "M_BORS" : "M_BOR");
-
 		String titlestring = mDesc.mTitle;
 		if (g_sod)
 		{
@@ -36,14 +32,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 		title = TexMan.CheckForTexture(titlestring, TexMan.Type_Any);
 		generictitle = TexMan.CheckForTexture((g_sod ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
 		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
-		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
-		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
-		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
-		right = TexMan.CheckForTexture(prefix .. "R", TexMan.Type_Any);
-		topleft = TexMan.CheckForTexture(prefix .. "TL", TexMan.Type_Any);
-		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
-		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
-		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
 
 		select0 = TexMan.CheckForTexture((g_sod ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
 		select1 = TexMan.CheckForTexture((g_sod ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
@@ -358,26 +346,29 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	int DrawFrame(int w, int h, int yoffset = 0)
 	{
-		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return 0; }
-
 		int x = Screen.GetWidth() / 2 - w / 2;
 		int y;
 		
 		if (yoffset < 0) { y = -yOffset; }
 		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
 
-		if (g_sod) { screen.Dim(0x000088, alpha, x, y, w, h); }
+		color clrt = 0x700000;
+		color clrb = 0xD40000;
+
+		if (g_sod)
+		{
+			clrt = 0x000070;
+			clrb = 0x0000D4;
+			screen.Dim(0x000088, alpha, x, y, w, h);
+		}
+
 		screen.Dim(0x000000, 0.35 * alpha, x, y, w, h);
 
-		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
-		screen.DrawTexture(bottom, true, x, y + h, DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
-		screen.DrawTexture(left, true, x - int(3 * CleanXfac), y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h, DTA_Alpha, alpha);
-		screen.DrawTexture(right, true, x + w, y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h, DTA_Alpha, alpha);
-
-		screen.DrawTexture(topleft, true, x - int(3 * CleanXfac), y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
-		screen.DrawTexture(topright, true, x + w, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
-		screen.DrawTexture(bottomleft, true, x - int(3 * CleanXfac), y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
-		screen.DrawTexture(bottomright, true, x + w, y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac), DTA_Alpha, alpha);
+		int t = int(CleanYfac);
+		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
+		screen.DrawThickLine(x - t / 2, y, x - t / 2, y + h, t, clrt);
+		screen.DrawThickLine(x - t, y + h + t / 2, x + w + t, y + h + t / 2, t, clrb);
+		screen.DrawThickLine(x + w + t / 2, y - t, x + w + t / 2, y + h, t, clrb);
 
 		return x;
 	}
@@ -504,8 +495,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 class OptionMenuItemBox : OptionMenuItem
 {
-	TextureID top, bottom, left, right;
-	TextureID topleft, topright, bottomleft, bottomright;
 	int x, y, w, h, yoffset, inputw, inputh;
 
 	OptionMenuItemBox Init(int width, int height, int offset, string prefix = "M_BOR")
@@ -516,38 +505,33 @@ class OptionMenuItemBox : OptionMenuItem
 		inputh = height;
 		yoffset = offset;
 
-		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
-		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
-		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
-		right = TexMan.CheckForTexture(prefix .. "R", TexMan.Type_Any);
-		topleft = TexMan.CheckForTexture(prefix .. "TL", TexMan.Type_Any);
-		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
-		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
-		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
-
 		return self;
 	}
 	
 	override int Draw(OptionMenuDescriptor desc, int ypos, int indent, bool selected)
 	{
-		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return indent; }
-
 		w = int(inputw * CleanXfac);
 		h = int(inputh * CleanYfac);
 		x = Screen.GetWidth() / 2 - w / 2;
 		y = Screen.GetHeight() / 2 - 103 * CleanYfac + int(yoffset * CleanYfac);
 
+		color clrt = 0x700000;
+		color clrb = 0xD40000;
+
+		if (g_sod)
+		{
+			clrt = 0x000070;
+			clrb = 0x0000D4;
+			screen.Dim(0x000088, 1.0, x, y, w, h);
+		}
+
 		screen.Dim(0x000000, 0.35, x, y, w, h);
 
-		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottom, true, x, y + h, DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(left, true, x - int(3 * CleanXfac), y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
-		screen.DrawTexture(right, true, x + w, y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
-
-		screen.DrawTexture(topleft, true, x - int(3 * CleanXfac), y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(topright, true, x + w, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottomleft, true, x - int(3 * CleanXfac), y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottomright, true, x + w, y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		int t = int(CleanYfac);
+		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
+		screen.DrawThickLine(x - t / 2, y, x - t / 2, y + h, t, clrt);
+		screen.DrawThickLine(x - t, y + h + t / 2, x + w + t, y + h + t / 2, t, clrb);
+		screen.DrawThickLine(x + w + t / 2, y - t, x + w + t / 2, y + h, t, clrb);
 
 		return indent;
 	}

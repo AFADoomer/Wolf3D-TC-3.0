@@ -12,6 +12,28 @@ DefaultOptionMenu
 	Class "ExtendedOptionMenu"
 }
 
+ListMenu "GameMenu"
+{
+	Linespacing 38
+	Selector "Selector", 0, -2
+
+	Font "BigFont", "TrueWhite"
+	StaticTextCentered 160, 0, "$M_GAME"
+
+	Position 72, 32
+
+	Box 308, 162, -8
+
+	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
+
+	TextItem "$EP_WOLF", "w", ""
+	TextItem "$EP_SOD", "s", ""
+	TextItem "$EP_SD2", "r", ""
+	TextItem "$EP_SD3", "u", ""
+
+	Class "GameMenu"
+}
+
 ListMenu "MainMenu"
 {
 	TopStrip 10

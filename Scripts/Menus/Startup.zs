@@ -51,7 +51,7 @@ class Startup : GenericMenu
 
 	int ticcount, curstate, cursortimeout, typestart;
 
-	bool SoDMenu;
+	bool gamemenu;
 
 	Array<String> history;
 	int historyindex;
@@ -117,9 +117,6 @@ class Startup : GenericMenu
 		prompt = String.Format("%s>", GetPath(curdir));
 
 		Clear();
-
-		Print(prompt, nobreak:true);
-		sodmenu = true;
 	}
 
 	override void Ticker()
@@ -134,7 +131,7 @@ class Startup : GenericMenu
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		if (sodmenu) { DrawSoDMenu(); }
+		if (gamemenu) { DrawGameMenu(); }
 		else
 		{
 			DrawBuffer();
@@ -318,22 +315,21 @@ class Startup : GenericMenu
 		cursortimeout = max(0, cursortimeout - 1);
 	}
 
-	void DrawSoDMenu()
+	void DrawGameMenu()
 	{
 		Clear();
 
-		screen.Dim(0x0000AA, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+		screen.Dim(0x000000, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
 
-		DrawTextSpan(15, 3, 48, 1, "�", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(15, 4, 1, 13, "�", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(62, 4, 1, 13, "�", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(15, 17, 48, 1, "�", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(15, 3, 48, 1, "▒", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(15, 4, 1, 13, "▒", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(62, 4, 1, 13, "▒", clr:Font.FindFontColor("StartupBlue"));
+		DrawTextSpan(15, 17, 48, 1, "▒", clr:Font.FindFontColor("StartupBlue"));
 
-		DrawText(20, 6, "1 - Spear of Destiny (original mission)", clr:Font.FindFontColor("TrueWhite"));
-		DrawText(20, 8, "2 - Mission 2: Return to Danger", clr:Font.FindFontColor("TrueWhite"));
-		DrawText(20, 10, "3 - Mission 3: Ultimate Challenge", clr:Font.FindFontColor("TrueWhite"));
-
-		DrawText(20, 14, "0 - Exit to DOS", clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 6, "1 - " .. StringTable.Localize("$EP_WOLF"), clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 8, "2 - " .. StringTable.Localize("$EP_SOD"), clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 10, "3 - " .. StringTable.Localize("$EP_SD2"), clr:Font.FindFontColor("TrueWhite"));
+		DrawText(20, 12, "4 - " .. StringTable.Localize("$EP_SD3"), clr:Font.FindFontColor("TrueWhite"));
 	}
 
 	void Boot()
@@ -344,7 +340,6 @@ class Startup : GenericMenu
 		{
 			case 0:
 				noinput = true;
-
 				Print(String.Format("%4i KB OK", clamp((ticcount - 70) * 20, 0, 1024)), 0, 1, true);
 				if (ticcount >= 140) { ticcount = 0; curstate++; }
 				break;
@@ -365,9 +360,22 @@ class Startup : GenericMenu
 				if (ticcount > 70) { ticcount = 0; curstate++; }
 				break;
 			case 5:
-				if (ticcount == 1) { Print(prompt, nobreak:true); prompty = cursory; }
-				noinput = false;
+				if (ticcount == 2)
+				{
+					Print(prompt, nobreak:true);
+					Print("launcher.exe");
+					prompty = cursory;
+				}
+				if (ticcount == 20) { curstate++; }
+				break;
+			case 6:
+				Close();
+				SetMenu("GameMenu", -1);
+				//gamemenu = true;
+				curstate++;
+				break;
 			default:
+				noinput = false;
 				break;
 		}
 	}
@@ -436,23 +444,13 @@ class Startup : GenericMenu
 		{
 			String key = String.Format("%c", ev.KeyChar);
 
-			if (sodmenu)
+			if (gamemenu)
 			{
-				Close();
+				int selection = ev.KeyChar - 0x31; // Change selection to integer
+				if (selection < 0 || selection > 3) { return true; }
 
 				CVar sodvar = CVar.FindCVar("g_sod");
-
-				int selection = ev.KeyChar - 0x30;
-
-				if (selection < 0 || selection > 4) { return false; }
-
-				if (sodvar && selection > 0 && selection < 5)
-				{
-					if (sodvar) { sodvar.SetInt(selection); }
-
-					SetMenu("IntroSlideShowSoD", -1);
-					return true;
-				}
+				if (sodvar) { sodvar.SetInt(selection); }
 
 				SetMenu("IntroSlideShow", -1);
 				return true;
@@ -947,7 +945,7 @@ class Startup : GenericMenu
 		}
 		else if (cmd ~== "SOD")
 		{
-			sodmenu = true;
+			gamemenu = true;
 			return true;
 		}
 

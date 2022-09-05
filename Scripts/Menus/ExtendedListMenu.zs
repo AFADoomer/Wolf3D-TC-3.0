@@ -435,6 +435,93 @@ class EpisodeMenu : IconListMenu
 	}
 }
 
+class GameMenu : IconListMenu
+{
+	override void Init(Menu parent, ListMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+
+		CVar sodvar = CVar.FindCVar("g_sod");
+		if (sodvar) { sodvar.SetInt(-1); }
+
+		S_ChangeMusic("SALUTE");
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0x282828, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+		double ratio = screen.GetAspectRatio();
+
+		// Calculate width and height to keep the image at the same relative size, regardless of aspect ratio
+		double width = ratio > 1.25 ? 200 * ratio : 320;
+		double height = ratio < 1.25 ? 320 / ratio : 200;
+
+		// if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_FullscreenEx, 2); }
+
+		if (controls)
+		{
+			Vector2 size = TexMan.GetScaledSize(controls);
+			screen.DrawTexture(controls, true, screen.GetWidth() / 2 - size.x * CleanXfac / 2, screen.GetHeight() - size.y * CleanyFac, DTA_CleanNoMove, true, DTA_DestWidth, int(size.x * CleanXfac), DTA_DestHeight, int(size.y * CleanYfac), DTA_Alpha, 1.0, DTA_Desaturate, 255);
+		}
+
+		ListMenu.Drawer();
+
+		DrawItemIcon(mDesc.mSelectedItem);
+
+		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void DrawItemIcon(int index, double x, double y, double alpha)
+	{
+		double fontheight = mDesc.mFont.GetHeight();
+		double drawx = x;
+		double drawy = y;
+		int itemindex = 0;
+
+		for (int i = 0; i < mDesc.mItems.Size(); i++)
+		{
+			if (mDesc.mItems[i].Selectable() && mDesc.mItems[i].GetAction() == '')
+			{
+				itemindex++;
+
+				// Again, semi-hard-coded, unfortunately - Icons must be named [Menu name]1, [Menu name]2, etc.
+				TextureID tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+				if (tex.IsValid())
+				{
+					Vector2 texsize = TexMan.GetScaledSize(tex);
+
+					// Default to Wolf3D-style positioning, roughly vertically centered on the episode name
+					if (x == -1) { drawx = mDesc.mItems[i].GetX() - texsize.x / 2 - 10; }
+					if (y == -1) { drawy = mDesc.mItems[i].GetY() + fontheight; }
+
+					// Use the center of the image for positioning
+					drawx -= texsize.x / 2;
+					drawy -= texsize.y / 2; 
+
+					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, 1.0);
+				}
+			}
+		}
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		switch (mkey)
+		{
+			case MKEY_Enter:
+				CVar sodvar = CVar.FindCVar("g_sod");
+				if (sodvar) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
+
+				SetMenu("IntroSlideShow", -1);
+				return true;
+		}
+
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+}
+
 // For an icon that swaps out in place, like the Wolf3D skill menu
 class StaticIconListMenu : ExtendedListMenu
 {
@@ -805,61 +892,47 @@ class ExtendedPlayerMenu : PlayerMenu
 
 class ListMenuItemBox : ListMenuItem
 {
-	TextureID top, bottom, left, right;
-	TextureID topleft, topright, bottomleft, bottomright;
 	int x, y, w, h, yoffset, inputw, inputh;
-	String borderprefix;
 
-	void Init(ListMenuDescriptor desc, int width, int height, int offset, string prefix = "M_BOR")
+	void Init(ListMenuDescriptor desc, int width, int height, int offset)
 	{
 		Super.Init(desc.mXpos, desc.mYpos);
 
 		inputw = width;
 		inputh = height;
 		yoffset = offset;
-
-		SetBorder(prefix);
-	}
-
-	void SetBorder(String prefix = "M_BOR")
-	{
-		if (borderprefix == prefix) { return; }
-
-		top = TexMan.CheckForTexture(prefix .. "T", TexMan.Type_Any);
-		bottom = TexMan.CheckForTexture(prefix .. "B", TexMan.Type_Any);
-		left = TexMan.CheckForTexture(prefix .. "L", TexMan.Type_Any);
-		right = TexMan.CheckForTexture(prefix .. "R", TexMan.Type_Any);
-		topleft = TexMan.CheckForTexture(prefix .. "TL", TexMan.Type_Any);
-		topright = TexMan.CheckForTexture(prefix .. "TR", TexMan.Type_Any);
-		bottomleft = TexMan.CheckForTexture(prefix .. "BL", TexMan.Type_Any);
-		bottomright = TexMan.CheckForTexture(prefix .. "BR", TexMan.Type_Any);
-
-		borderprefix = prefix;
 	}
 	
 	override void Drawer(bool selected)
 	{
-		if (!top || !bottom || !left || !right || !topleft || !topright || !bottomleft || !bottomright) { return; }
-
-		if (g_sod) { SetBorder("M_SBOR"); }
-
 		w = int(inputw * CleanXfac);
 		h = int(inputh * CleanYfac);
 		x = Screen.GetWidth() / 2 - w / 2;
 		y = Screen.GetHeight() / 2 - 103 * CleanYfac + int((mYpos + yoffset) * CleanYfac);
 
-		if (g_sod) { screen.Dim(0x000088, 1.0, x, y, w, h); }
+		color clrt = 0x700000;
+		color clrb = 0xD40000;
+
+		if (g_sod < 0)
+		{
+			clrt = 0x0F0F0F;
+			clrb = 0x5C5C5C;
+			screen.Dim(0x282828, 1.0, x, y, w, h);
+		}
+		else if (g_sod)
+		{
+			clrt = 0x000070;
+			clrb = 0x0000D4;
+			screen.Dim(0x000088, 1.0, x, y, w, h);
+		}
+
 		screen.Dim(0x000000, 0.35, x, y, w, h);
 
-		screen.DrawTexture(top, true, x, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottom, true, x, y + h, DTA_CleanNoMove, true, DTA_DestWidth, w, DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(left, true, x - int(3 * CleanXfac), y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
-		screen.DrawTexture(right, true, x + w, y, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, h);
-
-		screen.DrawTexture(topleft, true, x - int(3 * CleanXfac), y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(topright, true, x + w, y - int(3 * CleanYfac), DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottomleft, true, x - int(3 * CleanXfac), y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
-		screen.DrawTexture(bottomright, true, x + w, y + h, DTA_CleanNoMove, true, DTA_DestWidth, int(3 * CleanXfac), DTA_DestHeight, int(3 * CleanYfac));
+		int t = int(CleanYfac);
+		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
+		screen.DrawThickLine(x - t / 2, y, x - t / 2, y + h, t, clrt);
+		screen.DrawThickLine(x - t, y + h + t / 2, x + w + t, y + h + t / 2, t, clrb);
+		screen.DrawThickLine(x + w + t / 2, y - t, x + w + t / 2, y + h, t, clrb);
 	}
 }
 
