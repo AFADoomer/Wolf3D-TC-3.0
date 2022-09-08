@@ -6,6 +6,112 @@ class WolfMenu : GenericMenu
 
 		Menu.SetMenu(mnu, param);
 	}
+
+	// Strip color codes out of a string
+	static String StripColorCodes(String input)
+	{
+		int place = 0;
+		int len = input.length();
+		String output;
+
+		while (place < len)
+		{
+			if (!(input.Mid(place, 1) == String.Format("%c", 0x1C)))
+			{
+				output = output .. input.Mid(place, 1);
+				place++;
+			}
+			else if (input.Mid(place + 1, 1) == "[")
+			{
+				place += 2;
+				while (place < len - 1 && !(input.Mid(place, 1) == "]")) { place++; }
+				if (input.Mid(place, 1) == "]") { place++; }
+			}
+			else
+			{
+				if (place + 1 < len - 1) { place += 2; }
+				else break;
+			}
+		}
+
+		return output;
+	}
+
+	static bool CheckControl(Menu thismenu, UIEvent ev, String control, int type = 0)
+	{
+		if (ev.type < UIEvent.Type_FirstMouseEvent && !ev.keychar) { return false; }
+
+		Array<int> keycodes;
+		bool ret = true;
+
+		// Look up key binds for the passed-in command
+		Bindings.GetAllKeysForCommand(keycodes, control);
+
+		if (!keycodes.Size()) { return false; }
+
+		// Get the key names for each bound key, and parse them into a lookup array
+		String keynames = Bindings.NameAllKeys(keycodes);
+		keynames = StripColorCodes(keynames);
+
+		Array<String> keys;
+		keynames.Split(keys, ", ");
+
+		String keychar = String.Format("%c", ev.keychar);
+		keychar = keychar.MakeUpper();
+
+		bool pressed = false;
+
+		for (int i = 0; i < keys.Size(); i++)
+		{
+			if (keys[i].Length() > 1)
+			{
+				if (
+					(ev.type == UIEvent.Type_LButtonDown && keys[i] == "Mouse1") ||
+					(ev.type == UIEvent.Type_RButtonDown && keys[i] == "Mouse2") ||
+					(ev.type == UIEvent.Type_MButtonDown && keys[i] == "Mouse3") ||
+					(ev.type == UIEvent.Type_WheelUp && keys[i] == "MWheelUp") || 
+					(ev.type == UIEvent.Type_WheelDown && keys[i] == "MWheelDown") || 
+					(ev.type == UIEvent.Type_WheelLeft && keys[i] == "MWheelLeft") || 
+					(ev.type == UIEvent.Type_WheelRight && keys[i] == "MWheelRight") ||
+					(ev.keychar == UIEvent.Key_PgDn && keys[i] == "PgDn") ||
+					(ev.keychar == UIEvent.Key_PgUp && keys[i] == "PgUp") ||
+					(ev.keychar == UIEvent.Key_Home && keys[i] == "Home") ||
+					(ev.keychar == UIEvent.Key_End && keys[i] == "End") ||
+					(ev.keychar == UIEvent.Key_Left && keys[i] == "LeftArrow") ||
+					(ev.keychar == UIEvent.Key_Right && keys[i] == "RightArrow") ||
+					(ev.keychar == UIEvent.Key_Backspace && keys[i] == "Backspace") ||
+					(ev.keychar == UIEvent.Key_Tab && keys[i] == "Tab") ||
+					(ev.keychar == UIEvent.Key_Down && keys[i] == "DownArrow") ||
+					(ev.keychar == UIEvent.Key_Up && keys[i] == "UpArrow") ||
+					(ev.keychar == UIEvent.Key_Return && keys[i] == "Enter") ||
+					(ev.keychar == UIEvent.Key_F1 && keys[i] == "F1") ||
+					(ev.keychar == UIEvent.Key_F2 && keys[i] == "F2") ||
+					(ev.keychar == UIEvent.Key_F3 && keys[i] == "F3") ||
+					(ev.keychar == UIEvent.Key_F4 && keys[i] == "F4") ||
+					(ev.keychar == UIEvent.Key_F5 && keys[i] == "F5") ||
+					(ev.keychar == UIEvent.Key_F6 && keys[i] == "F6") ||
+					(ev.keychar == UIEvent.Key_F7 && keys[i] == "F7") ||
+					(ev.keychar == UIEvent.Key_F8 && keys[i] == "F8") ||
+					(ev.keychar == UIEvent.Key_F9 && keys[i] == "F9") ||
+					(ev.keychar == UIEvent.Key_F10 && keys[i] == "F10") ||
+					(ev.keychar == UIEvent.Key_F11 && keys[i] == "F11") ||
+					(ev.keychar == UIEvent.Key_F12 && keys[i] == "F12") ||
+					(ev.keychar == UIEvent.Key_Del && keys[i] == "Del") ||
+					(ev.keychar == UIEvent.Key_Escape && keys[i] == "Escape")
+				)
+				{ pressed = true; }
+			}
+			else if (keys[i].ByteAt(0) == keychar.ByteAt(0)) { pressed = true; }
+
+			if (pressed)
+			{
+				if (type) { thismenu.MenuEvent(type, false); }
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 class GetPsyched : WolfMenu

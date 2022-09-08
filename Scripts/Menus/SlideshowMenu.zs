@@ -8,6 +8,7 @@ class HelpMenu : ReadThisMenu
 	int fontheight;
 	bool sharewareremap;
 	bool allowexit;
+	bool allowinput;
 
 	override void Init(Menu parent)
 	{
@@ -33,6 +34,7 @@ class HelpMenu : ReadThisMenu
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
 		fontheight = 10;
+		allowinput = true;
 	}
 
 	override void Drawer()
@@ -57,8 +59,8 @@ class HelpMenu : ReadThisMenu
 			}
 			else
 			{
-				if (gamestate == GS_FINALE) { SetMenu("HighScores", -1); }
-				else { SetMenu("MainMenu", -1); }
+				if (gamestate == GS_FINALE) { Menu.SetMenu("HighScores", -1); }
+				else { Menu.SetMenu("MainMenu", -1); }
 			}
 
 			if (gamestate != GS_FINALE)
@@ -70,7 +72,10 @@ class HelpMenu : ReadThisMenu
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
 			return true;
 		}
-		else if (mkey == MKEY_Enter || mkey == MKEY_Right)
+
+		if (!allowinput) { return false; }
+
+		if (mkey == MKEY_Enter || mkey == MKEY_Right)
 		{
 			mScreen = min(pages.Size() - 1, mScreen + 1);
 			mInfoTic = gametic;
@@ -329,7 +334,210 @@ class Episode6End : HelpMenu
 	}
 }
 
-class IntroSlideshow : GenericMenu
+class SoDEnd : HelpMenu
+{
+	TextureID page, nextpage;
+
+	int tickcount;
+	int inputtic;
+	int fadetarget;
+	int fadetime;
+	double fadealpha;
+	int advancetime;
+	color fadecolor;
+	bool initial;
+
+	static const String SoDPages[] = {"SODEND1", "SODEND2", "SODEND3", "SODEND4", "SODEND5", "SODEND6", "SODEND6", "SODEND7", "SODEND8", "SODEND9", "SODEND10", "SODEND11", "SODEND12", "SODEND13" };
+
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		mScreen = -1;
+
+		allowinput = false;
+
+		fadetime = 12;
+		fadetarget = 0;
+		advancetime = 0;
+		initial = true;
+
+		DontDim = true;
+		allowexit = false;
+
+		fadecolor = 0x004040;
+
+		for (int p = 0; p < SoDPages.Size(); p++)
+		{
+			pages.Push(SodPages[p]);
+		}
+	}
+
+	override void Drawer()
+	{
+		if (mScreen > -1 || tickcount > 150)
+		{
+			screen.Dim(0x004040, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+			if (page.isValid()) { screen.DrawTexture(page, false, 160, 100, DTA_CenterOffset, true, DTA_320x200, true); }
+
+			if (page == nextpage)
+			{
+				switch (mScreen)
+				{
+					case 5:
+						BrokenLines lines = SmallFont.BreakLines(StringTable.Localize("$SODEND1"), 320);
+						for (int l = 0; l < lines.Count(); l++)
+						{
+							screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 160 - lines.StringWidth(l) / 2, 180 + SmallFont.GetHeight() * l, lines.StringAt(l), DTA_320x200, true);
+						}
+						break;
+					case 6:
+						BrokenLines lines2 = SmallFont.BreakLines(StringTable.Localize("$SODEND2"), 320);
+						for (int l = 0; l < lines2.Count(); l++)
+						{
+							screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 160 - lines2.StringWidth(l) / 2, 180 + SmallFont.GetHeight() * l, lines2.StringAt(l), DTA_320x200, true);
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	override void Ticker()
+	{
+		tickcount++;
+
+		if (mScreen == -1 && tickcount <= 150)
+		{
+			S_ChangeMusic("");
+			fadealpha = tickcount / 150.0;
+			advancetime = gametic;
+
+			return;
+		}
+
+		if (advancetime > 0 && advancetime <= gametic)
+		{
+			inputtic = gametic;
+			mScreen = clamp(mScreen + 1, 0, pages.Size());
+			advancetime = 0;
+		}
+
+		if (mScreen == 4 && !initial)
+		{
+			if (fadealpha == 1.0)
+			{
+				Close();
+				return;
+			}
+		}
+
+		if (inputtic == gametic)
+		{
+			nextpage = TexMan.CheckForTexture(pages[mScreen]);
+
+			switch (mScreen)
+			{
+				case 0:
+					initial = false;
+					fadetarget = gametic + fadetime;
+					S_ChangeMusic("XTHEEND");
+					advancetime = gametic + 35 * 2;
+					break;
+				case 1:
+				case 2:
+					S_ChangeMusic("XTHEEND");
+					page = nextpage;
+					advancetime = gametic + 52;
+					break;
+				case 3:
+					S_ChangeMusic("XTHEEND");
+					page = nextpage;
+					advancetime = gametic + 35 * 3;
+					break;
+				case 4:
+					S_ChangeMusic("URAHERO");
+					fadecolor = 0x00000;
+					fadetarget = gametic + fadetime;
+					allowinput = true;
+					break;
+				case 5:
+					S_ChangeMusic("URAHERO");
+					fadetarget = gametic + fadetime;
+					advancetime = gametic + 35 * 10;
+					break;
+				case 6:
+					S_ChangeMusic("URAHERO");
+					advancetime = gametic + 35 * 10;
+					break;
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+				case 12:
+				case 13:
+				case 14:
+					S_ChangeMusic("URAHERO");
+					if (page != nextpage) { fadetarget = gametic + fadetime; }
+					advancetime = 0;
+				default:
+					break;
+			}
+		}
+
+		fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+		if (fadealpha == 1.0) { page = nextpage; }
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		if (mkey == MKEY_Back)
+		{
+			if (allowexit)
+			{
+				Close();
+			}
+			else
+			{
+				Menu.SetMenu("HighScores", -1);
+			}
+
+			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
+			return true;
+		}
+
+		if (!allowinput) { return false; }
+
+		if (mkey)
+		{
+			mScreen = min(pages.Size() - 1, mScreen + 1);
+			mInfoTic = gametic;
+			inputtic = gametic;
+
+			return true;
+		}
+
+		return false;
+	}
+}
+
+class SoDFinale : SodEnd
+{
+	override void Init(Menu parent)
+	{
+		Super.Init(parent);
+		mScreen = 3;
+		advancetime = gametic;
+	}
+}
+
+class IntroSlideshow : WolfMenu
 {
 	int curscreen;
 	int inputtic;
@@ -521,6 +729,12 @@ class IntroSlideshow : GenericMenu
 	{
 		if (ev.type == UIEvent.Type_KeyDown)
 		{
+			if (CheckControl(self, ev, "toggleconsole"))
+			{
+				
+				return true;
+			}
+			
 			return MenuEvent(MKEY_Enter, true);
 		}
 
@@ -538,7 +752,7 @@ class IntroSlideShowLoop : IntroSlideShow
 		current = title;
 		advancetime = gametic + 35 * 10;
 
-		S_ChangeMusic("NAZI_NOR");
+		S_ChangeMusic(g_sod ? "XTOWER2" : "NAZI_NOR");
 	}
 }
 
@@ -549,10 +763,10 @@ class ScoreEntry
 	String s;
 }
 
-class HighScores : GenericMenu
+class HighScores : WolfMenu
 {
 	Vector2 dimcoords, dimsize;
-	TextureID title, nametitle, scoretitle, leveltitle;
+	TextureID title, nametitle, scoretitle, leveltitle, bkg;
 	int currentline, fontheight;
 	Array<ScoreEntry> scores;
 
@@ -582,6 +796,7 @@ class HighScores : GenericMenu
 		nametitle = TexMan.CheckForTexture("M_NAME", TexMan.Type_Any);
 		scoretitle = TexMan.CheckForTexture("M_SCORE", TexMan.Type_Any);
 		leveltitle = TexMan.CheckForTexture("M_LEVEL", TexMan.Type_Any);
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
@@ -637,7 +852,7 @@ class HighScores : GenericMenu
 	override void Drawer()
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-		screen.Dim(0x880000, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
 
 		double ratio = screen.GetHeight() / 200.;
 
@@ -645,7 +860,9 @@ class HighScores : GenericMenu
 		screen.Dim(0x000000, 0.3, 0, int(32 * ratio), screen.GetWidth(), int(1 * ratio));
 		screen.Dim(0x000000, 1.0, 0, int(33 * ratio), screen.GetWidth(), int(1 * ratio));
 
-		if (title) { screen.DrawTexture(title, false, 48, 0, DTA_320x200, true); }
+		if (g_sod && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+
+		if (title) { screen.DrawTexture(title, false, (g_sod ? 0 : 48), (g_sod ? 0 : -0.25), DTA_320x200, true, DTA_LeftOffset, 0, DTA_TopOffset, 0); }
 
 		if (!g_sod)
 		{
@@ -695,8 +912,12 @@ class HighScores : GenericMenu
 
 			if (exittimeout >= fadetime)
 			{
-				if (mParentMenu || finale) { S_ChangeMusic("WONDERIN"); SetMenu("MainMenu", -1); }
-				else { SetMenu("CloseMenu", -1); }
+				if (mParentMenu || finale)
+				{
+					S_ChangeMusic("WONDERIN");
+					Menu.SetMenu("MainMenu", -1);
+				}
+				else { Menu.SetMenu("CloseMenu", -1); }
 			}
 		}
 

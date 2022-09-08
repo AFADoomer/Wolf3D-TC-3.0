@@ -36,6 +36,8 @@ class ClassicStats : DoomStatusScreen
 		cnt_pause = Thinker.TICRATE;
 		cnt_bonus[0] = 0;
 
+		if (gamestate == GS_FINALE) { S_ChangeMusic("URAHERO"); }
+
 		switch (style)
 		{
 			case secret:
@@ -56,8 +58,6 @@ class ClassicStats : DoomStatusScreen
 				sp_state = 1;
 				break;
 		}
-
-		if (gamestate == GS_FINALE) { S_ChangeMusic("URAHERO"); }
 	}
 
 	LevelData GetTotals() // Pull the total stats from the map stats event handler - it saves stats for *all* maps, not just main chapters
@@ -178,8 +178,8 @@ class ClassicStats : DoomStatusScreen
 			{
 				if (style == finale)
 				{
-					int episode = level.levelnum / 100;
-					Menu.SetMenu("Episode" .. episode .. "End", -1);
+					if (g_sod || level.levelnum > 700) { Menu.SetMenu("SoDFinale", -1); }
+					else { Menu.SetMenu("Episode" .. level.levelnum / 100 .. "End", -1); }
 				}
 
 				if (gametic > fadetarget) { fadetarget = gametic + fadetime; }
@@ -615,6 +615,7 @@ class ClassicStats : DoomStatusScreen
 			default:
 				break;
 		}
+
 		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 	}
 }

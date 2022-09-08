@@ -1,6 +1,6 @@
 [enu default]
 
-//Wolf Exit Messages
+// Wolf Exit Messages
 QUITMSG1 = "Dost thou wish to\nleave with such hasty\nabandon?";
 QUITMSG2 = "Chickening out...\nalready?";
 QUITMSG3 = "Press N for more carnage.\nPress Y to be a weenie.";
@@ -10,6 +10,17 @@ QUITMSG6 = "Press N if you are brave.\nPress Y to cower in shame.\n";
 QUITMSG7 = "Heroes, press N.\nWimps, press Y.";
 QUITMSG8 = "You are at an intersection.\nA sign says, 'Press Y to quit.'\n>";
 QUITMSG9 = "For guns and glory, press N.\nFor work and worry, press Y.";
+
+// SoD Exit Messages
+QUITMSG10 = "Heroes don't quit, but\ngo ahead and press Y\nif you aren't one.";
+QUITMSG11 = " Press Y to quit,\n or press N to enjoy\n more violent diversion.";
+QUITMSG12 = "Depressing the Y key means\nyou must return to the\nhumdrum workday world.";
+QUITMSG13 = "Hey, quit or play,\nY or N:\nit's your choice.";
+QUITMSG14 = "Sure you don't want to\nwaste a few more\nproductive hours?";
+QUITMSG15 = "I think you had better\nplay some more. Please\npress N...please?";
+QUITMSG16 = "If you are tough, press N.\nIf not, press Y daintily.";
+QUITMSG17 = "I'm thinkin' that\nyou might wanna press N\nto play more. You do it.";
+QUITMSG18 = "Sure. Fine. Quit.\nSee if we care.\nGet it over with.\nPress Y.";
 
 // Engine strings, adjusted for standard capitalization and to remove prompts
 ENDGAME = "Are you sure you want \nto end the game you \nare playing? (Y or N):";
@@ -187,3 +198,7 @@ SD318 = "The Robot: Floor 18";
 SD319 = "Secret 1: Floor 19";
 SD320 = "Secret 2: Floor 20";
 SD321 = "The Future Threat: Floor 18";
+
+// SoD Finale Strings
+SODEND1 = "We owe you a great debt, Mr. Blazkowicz.\nYou have served your country well.";
+SODEND2 = "With the spear gone, the Allies will finally\nbe able to destroy Hitler...";
