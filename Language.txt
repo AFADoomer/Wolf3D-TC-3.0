@@ -202,3 +202,5 @@ SD321 = "The Future Threat: Floor 18";
 // SoD Finale Strings
 SODEND1 = "We owe you a great debt, Mr. Blazkowicz.\nYou have served your country well.";
 SODEND2 = "With the spear gone, the Allies will finally\nbe able to destroy Hitler...";
+
+VERSION = "\c[White]Wolfenstein 3-D Total Conversion \c[Gold]v3.0";
