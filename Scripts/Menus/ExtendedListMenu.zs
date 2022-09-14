@@ -445,6 +445,9 @@ class GameMenu : IconListMenu
 		CVar sodvar = CVar.FindCVar("g_sod");
 		if (sodvar) { sodvar.SetInt(-1); }
 
+		fadetarget = 35 + gametic;
+		fadealpha = 1.0;
+
 		S_ChangeMusic("SALUTE");
 	}
 
@@ -466,7 +469,17 @@ class GameMenu : IconListMenu
 			screen.DrawTexture(controls, true, screen.GetWidth() / 2 - size.x * CleanXfac / 2, screen.GetHeight() - size.y * CleanyFac, DTA_CleanNoMove, true, DTA_DestWidth, int(size.x * CleanXfac), DTA_DestHeight, int(size.y * CleanYfac), DTA_Alpha, 1.0, DTA_Desaturate, 255);
 		}
 
-		ListMenu.Drawer();
+		for(int i=0;i<mDesc.mItems.Size(); i++)
+		{
+			if (mDesc.mSelectedItem == i)
+			{
+				if (!menuDelegate.DrawSelector(mDesc))
+					mDesc.mItems[mDesc.mSelectedItem].DrawSelector(mDesc.mSelectOfsX, mDesc.mSelectOfsY, mDesc.mSelector, mDesc);
+			}
+
+			if (mDesc.mItems[i].mEnabled) mDesc.mItems[i].Draw(mDesc.mSelectedItem == i, mDesc);
+		}
+		Menu.Drawer();
 
 		DrawItemIcon(mDesc.mSelectedItem);
 
@@ -519,6 +532,28 @@ class GameMenu : IconListMenu
 		}
 
 		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override void Ticker()
+	{
+		Super.Ticker();
+
+		if (gametic <= 35) { fadealpha = 1.0; }
+	}
+}
+
+class ListMenuItemGameSelection : ListMenuItemTextItem
+{
+	override void Draw(bool selected, ListMenuDescriptor desc)
+	{
+		let fnt = menuDelegate.PickFont(mFont);
+		String title = StringTable.Localize(mText);
+
+		BrokenLines lines = fnt.BreakLines(title, CleanWidth_1);
+
+		int offset = fnt.GetHeight() / 2 - ((lines.count() - 1) * fnt.GetHeight()) / 2;
+
+		DrawText(desc, fnt, selected ? mColorSelected : mColor, mXpos, mYpos + offset, title);
 	}
 }
 

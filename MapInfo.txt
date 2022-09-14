@@ -21,7 +21,7 @@ gameinfo
 
 	maparrow = "maparrows/knife.txt"
 
-	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler"
+	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler"
 	statusbarclass = "ClassicStatusBar"
 
 	StatScreen_Single = "ClassicStats"

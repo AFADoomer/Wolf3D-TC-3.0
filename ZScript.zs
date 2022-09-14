@@ -19,6 +19,7 @@ version "4.6.0"
 #include "Scripts/EventHandlers/LifeHandler.zs"
 #include "Scripts/EventHandlers/DeathCamHandler.zs"
 #include "Scripts/EventHandlers/KeyHandler.zs"
+#include "Scripts/EventHandlers/ConsoleHandler.zs"
 
 // Status Bar
 #include "Scripts/ClassicStatusBar.zs"

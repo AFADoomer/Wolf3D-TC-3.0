@@ -1239,7 +1239,7 @@ Texture EPISODE6, 48, 24 {Patch WVGA0035, 0, 0}
 Texture GAME1, 48, 24
 {
 	Patch WVGA0004, -46, 0
-	Patch WSPR0349, -24, -12
+	Patch WSPR0349, -24, -12 {Blend "Black", 0.4}
 	Graphic Frame, 0, 0
 }
 

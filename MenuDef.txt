@@ -15,7 +15,7 @@ DefaultOptionMenu
 ListMenu "GameMenu"
 {
 	Linespacing 38
-	Selector "Selector", 0, -2
+	Selector "Selector", -10, -6
 
 	Font "BigFont", "TrueWhite"
 	StaticTextCentered 160, 0, "$M_GAME"
@@ -26,10 +26,10 @@ ListMenu "GameMenu"
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	TextItem "$EP_WOLF", "w", ""
-	TextItem "$EP_SOD", "s", ""
-	TextItem "$EP_SD2", "r", ""
-	TextItem "$EP_SD3", "u", ""
+	GameSelection "$EP_WOLF", "w", ""
+	GameSelection "$EP_SOD", "s", ""
+	GameSelection "$EP_SD2", "r", ""
+	GameSelection "$EP_SD3", "u", ""
 
 	Class "GameMenu"
 }
