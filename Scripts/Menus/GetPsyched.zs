@@ -206,7 +206,7 @@ class GetPsyched : WolfMenu
 	{
 		DrawImage(x, y, Bar, center, bottom);
 		DrawText(x - 44, y - 22, String.Format("%i", lives), ClassicFont, align:center);
-		DrawText(x - 128, y - 22, levelnum, ClassicFont, align:right);
+		DrawText(x - 128, y - 22, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), ClassicFont, align:right);
 		DrawText(x - 65, y - 22, String.Format("%i", points % 1000000), ClassicFont, align:right);
 		DrawText(x + 31, y - 22, String.Format("%i", health), ClassicFont, align:right);
 		DrawImage(x - 24, y - 34, Face);

@@ -1785,3 +1785,4 @@ Texture Optional SODEND5, 320, 200 { Patch WVGA1081, 0, 0 }
 Texture Optional SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }
 
 Texture CONBACK, 800, 500 {}
+Texture g_sod, 1, 1 {}

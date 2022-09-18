@@ -158,7 +158,7 @@ class ClassicStatusBar : BaseStatusBar
 		String levelnum = String.Format("%i", level.levelnum % 100);
 
 		if (levelnum == "0") { levelnum = "10"; }
-		DrawString(ClassicFont, levelnum, (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
 		DrawString(ClassicFont, FormatNumber(GetAmount("Score") % 1000000), (95, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);

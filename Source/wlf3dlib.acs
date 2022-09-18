@@ -27,12 +27,15 @@ Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
 	HudMessage (s:"A"; 3, 0, -1, 160.0, 100.0, holdTime, inTime, outTime);
 }
 
-Script "Initialize" ENTER
+Script "InitializeLevel" OPEN
+{
+	ACS_NamedExecute("W_SetCeilingColor", 0, 0);
+}
+
+Script "InitializePlayer" ENTER
 {
 	if (GameType() != GAME_TITLE_MAP)
 	{
-		ACS_NamedExecute("W_SetCeilingColor", 0, 0);
-
 		int lives = ScriptCall("LifeHandler", "GetLives");
 		int justdied = ScriptCall("LifeHandler", "JustDied");
 
@@ -46,7 +49,8 @@ Script "Initialize" ENTER
 		{
 			ResetWeapons();
 
-			if (!GetCVar("g_nointro")) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
+			int num = GetLevelInfo(LEVELINFO_LEVELNUM);	
+			if (!GetCVar("g_nointro") && !(GetCVar("g_sod") && num % 100 == 21)) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
 		}
 	}
 }
@@ -79,27 +83,23 @@ Script 4 (int type)
 {
 	if (GameType() == GAME_NET_DEATHMATCH) { Terminate; }
 
-	if (type == 1)
-	{
-		ACS_NamedExecuteWait("W_VictorySetup", 0, 0, 0, 64);
-		
-		Delay(1);
-
-		SetActorProperty(ActivatorTID(), APROP_RenderStyle, 0);
-		Thing_Activate (2);
-		ChangeCamera(2,1,0);
-		Delay(35);
-		SetActorProperty(1, APROP_RenderStyle, 1);
-		Thing_Activate (1);
-		Delay(200);
-	}
-	else if (type == 2)
+	if (type == 2)
 	{
 		ScriptCall("Menu", "SetMenu", "SoDEnd");
-		Exit_Normal(0);
-
 		Terminate;
 	}
+
+	ACS_NamedExecuteWait("W_VictorySetup", 0, 0, 0, 64);
+		
+	Delay(1);
+
+	SetActorProperty(ActivatorTID(), APROP_RenderStyle, 0);
+	Thing_Activate (2);
+	ChangeCamera(2,1,0);
+	Delay(35);
+	SetActorProperty(1, APROP_RenderStyle, 1);
+	Thing_Activate (1);
+	Delay(200);
 
 	FadeToBlack(5.0, 0.5, 0.0, 0);
 
@@ -409,7 +409,7 @@ Script "W_SetCeilingColor" (int index)
 		int num = GetLevelInfo(LEVELINFO_LEVELNUM);	
 		if (GetCVar("g_sod"))
 		{
-			index = num % 100;
+			index = num % 100 - 1;
 			Color = SoDCeilings[index % 60];
 		}
 		else

@@ -7,6 +7,7 @@ class LevelData
 	int levelnum;
 	int timebonusamt;
 	String mapname, levelname;
+	Vector3 pos[MAXPLAYERS];
 }
 
 class PersistentMapStatsHandler : EventHandler
@@ -90,6 +91,11 @@ class MapStatsHandler : StaticEventHandler
 		l.totalsecrets = level.total_secrets;
 		l.secretcount = level.found_secrets;
 		l.leveltime = level.maptime;
+
+		if (players[consoleplayer].mo)
+		{
+			l.pos[consoleplayer] = players[consoleplayer].mo.pos;
+		}
 		
 		if (l.levelnum % 100 == 10) { l.timebonusamt = 30; }
 		else { l.timebonusamt = level.partime > 0 ? max(level.partime - Thinker.Tics2Seconds(level.maptime), 0) : 0;}
@@ -172,6 +178,19 @@ class MapStatsHandler : StaticEventHandler
 
 		chapter = level.mapname.Mid(1, 1).ToInt();
 
+		if (Game.IsSoD() && level.levelnum % 100 == 21)
+		{
+			int l = FindLevelNumber(level.levelnum - 3);
+			if (l < Levels.Size())
+			{
+				LevelData previous = Levels[l];
+				if (previous && level.IsPointInLevel(previous.pos[consoleplayer]))
+				{
+					players[consoleplayer].mo.SetOrigin(previous.pos[consoleplayer], false);
+				}
+			}
+		}
+	
 		SaveLevelData();
 	}
 

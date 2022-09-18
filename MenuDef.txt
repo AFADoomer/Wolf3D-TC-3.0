@@ -1,7 +1,7 @@
 DefaultListMenu
 {
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-	Selector "M_SEL1", -26, -2
+	Selector "M_SEL1", -26, -1
 	Linespacing 13
 
 	Class "ExtendedListMenu"
@@ -49,7 +49,7 @@ ListMenu "MainMenu"
 	TextItem "Control", "c", "TCOptions"
 	TextItem "Load Game", "l", "LoadGameMenu"
 
-	Font "BigFont", "WolfMenuRed"
+	Font "BigFont", "TrueBlack"
 	TextNotInGame "Save Game"
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 	TextItemInGame "Save Game", "s", "SaveGameMenu"
@@ -59,9 +59,9 @@ ListMenu "MainMenu"
 	IfOption(ReadThis)
 	{
 		Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-		TextItemNotInGame "Read This!", "r", "HelpMenu"
+		TextItemNotInGameSoD "Read This!", "r", "HelpMenu"
 		Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-		TextItemInGame "Read This!", "r", "HelpMenu"
+		TextItemInGameSoD "Read This!", "r", "HelpMenu"
 	}
 
 	TextItemNotInGame "View Scores", "v", "HighScores"

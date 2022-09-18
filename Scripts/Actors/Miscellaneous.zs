@@ -295,3 +295,14 @@ class BJ : Actor
 			Stop;
 	}
 }
+
+class Game
+{
+	static bool isSoD()
+	{
+		if (g_sod > 0) { return true; }
+		if (level && level.levelnum > 700) { return true; }
+
+		return false;
+	}
+}

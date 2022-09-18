@@ -969,13 +969,13 @@ class Truck : ClassicDecoration
 	}
 }
 
-class SpearofDestiny : CustomInventory
+class SpearofDestiny : Inventory
 {
+	int actiontime;
+
 	Default
 	{
-		+Inventory.AUTOACTIVATE
 		Inventory.Amount 1;
-		Inventory.MaxAmount 0;
 		Inventory.PickupSound "spear/pickup";
 		Inventory.PickupMessage "";
 	}
@@ -985,9 +985,21 @@ class SpearofDestiny : CustomInventory
 		Spawn:
 			SOFD A -1;
 			Loop;
-		Pickup:
-			SOFD A 0 { if (level.levelnum % 100 == 18) { level.ExitLevel(0, true); } }
-			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (owner)
+		{
+			if (!actiontime && Game.isSOD() && level.levelnum % 100 == 18)
+			{
+				actiontime = level.time + 70;
+				InterHubAmount = 0;
+			}
+			if (level.time == actiontime) { level.ExitLevel(0, true); }
+		}
 	}
 }
 
@@ -1086,7 +1098,7 @@ class SkeletonLost : Skeleton
 	States
 	{
 		Spawn:
-			BONE A -1;
+			BONE B -1;
 			Stop;
 	}
 } 
@@ -1301,7 +1313,7 @@ class BombLost : Crown
 	States
 	{
 		Spawn:
-			TREC F -1;
+			TREA F -1;
 			Stop;
 	}
 }
@@ -1396,7 +1408,7 @@ class Bones2Lost : CrushedBones1
 	States
 	{
 		Spawn:
-			POB7 C -1;
+			POB7 A -1;
 			Stop;
 	}
 } 

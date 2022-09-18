@@ -178,7 +178,7 @@ class ClassicStats : DoomStatusScreen
 			{
 				if (style == finale)
 				{
-					if (g_sod || level.levelnum > 700) { Menu.SetMenu("SoDFinale", -1); }
+					if (Game.isSoD()) { Menu.SetMenu("SoDFinale", -1); }
 					else { Menu.SetMenu("Episode" .. level.levelnum / 100 .. "End", -1); }
 				}
 
@@ -310,7 +310,7 @@ class ClassicStats : DoomStatusScreen
 	{
 		DrawImage(x, y, Bar, center, bottom);
 		DrawText(x - 44, y - 22, String.Format("%i", lives), ClassicFont, align:center);
-		DrawText(x - 128, y - 22, levelnum, ClassicFont, align:right);
+		DrawText(x - 128, y - 22, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), ClassicFont, align:right);
 		DrawText(x - 65, y - 22, String.Format("%i", points % 1000000), ClassicFont, align:right);
 		DrawText(x + 31, y - 22, String.Format("%i", health), ClassicFont, align:right);
 		DrawImage(x - 23, y - 34, Face);
@@ -588,7 +588,8 @@ class ClassicStats : DoomStatusScreen
 				break;
 		}
 
-		if (gametic > 35)
+		if (Game.IsSoD() && level.levelnum % 100 == 21) { fadealpha = 0.0; }
+		else if (gametic > 35)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}
@@ -610,7 +611,6 @@ class ClassicStats : DoomStatusScreen
 				Screen.Dim(0x004040, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 				DrawStats();
 				break;
-	
 			case LeavingIntermission:
 			default:
 				break;

@@ -1363,7 +1363,7 @@ Automap
 	FloorDiffWallColor = "66 66 66"
 	CeilingDiffWallColor = "66 66 66"
 	ExtraFloorWallColor = "66 66 66"
-	ThingColor = "88 88 88"			//Decorations
+	ThingColor = "88 88 88"				//Decorations
 	ThingColor_Item = "20 9C FC"		//Weapons and Ammo
 	ThingColor_CountItem = "FC F4 20"	//Treasure (usually)
 	ThingColor_Monster = "FC 00 00"

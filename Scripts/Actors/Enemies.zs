@@ -574,7 +574,7 @@ class BatLost : Mutant
 	{
 		//$Category Wolfenstein 3D/Enemies/Lost Episodes
 		//$Title Bat
-		//$Sprite "WBATE2"
+		//$Sprite "WBATE0"
 		DropItem "WolfClipLost";
 
 		SeeSound "";

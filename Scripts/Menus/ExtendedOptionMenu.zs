@@ -21,7 +21,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		Super.Init(parent, desc);
 
 		String titlestring = mDesc.mTitle;
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			titlestring = titlestring.left(2) .. "S" .. titlestring.mid(2);
 			titlestring = titlestring.left(8);
@@ -30,21 +30,21 @@ class ExtendedOptionMenu : GenericOptionMenu
 		}
 
 		title = TexMan.CheckForTexture(titlestring, TexMan.Type_Any);
-		generictitle = TexMan.CheckForTexture((g_sod ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
-		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		generictitle = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 
-		select0 = TexMan.CheckForTexture((g_sod ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
-		select1 = TexMan.CheckForTexture((g_sod ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
+		select0 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
+		select1 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
 
-		cursor0 = TexMan.CheckForTexture((g_sod ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
-		cursor1 = TexMan.CheckForTexture((g_sod ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
+		cursor0 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		cursor1 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
 
 		fadetime = 12;
 		fadetarget = gametic;
 //		alpha = 0.0;
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod ? 0x000088 : 0x880000); }
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
 
 		nodim = true;
 		DontDim = true;
@@ -242,7 +242,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
 	{
-		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
@@ -355,7 +355,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		color clrt = 0x700000;
 		color clrb = 0xD40000;
 
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			clrt = 0x000070;
 			clrb = 0x0000D4;
@@ -518,7 +518,7 @@ class OptionMenuItemBox : OptionMenuItem
 		color clrt = 0x700000;
 		color clrb = 0xD40000;
 
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			clrt = 0x000070;
 			clrb = 0x0000D4;
@@ -576,7 +576,7 @@ class OptionMenuItemStripTitle : OptionMenuItem
 		xoffset = x_offs;
 		yoffset = y_offs;
 
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			patch = patch.left(2) .. "S" .. patch.mid(2);
 			patch = patch.left(8);

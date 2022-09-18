@@ -118,7 +118,7 @@ class ExtendedListMenu : ListMenu
 
 		lookupBase = MenuName;
 
-		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
@@ -128,7 +128,7 @@ class ExtendedListMenu : ListMenu
 		fadealpha = 1.0;
 		initialalpha = 1.0;
 
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod ? 0x000088 : 0x880000); }
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
 		else if (!mParentMenu) { initialalpha = 0; fadealpha = 0; fadetarget = gametic + fadetime; }
 
 		nodim = false;
@@ -145,12 +145,16 @@ class ExtendedListMenu : ListMenu
 			return;
 		}
 
-		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
-		mDesc.mSelector = TexMan.CheckForTexture((g_sod ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
-		if (g_sod)
+		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		mDesc.mSelector = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		if (Game.IsSoD())
 		{
 			if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 			mDesc.mSelectOfsY = 1;
+		}
+		else
+		{
+			mDesc.mSelectOfsY = -1;
 		}
 
 		double ratio = screen.GetAspectRatio();
@@ -203,6 +207,12 @@ class ExtendedListMenu : ListMenu
 				activated = null;
  				RestorePlaceholderMarkers();
 			}
+		}
+
+		if (mDesc.mSelectedItem < 0 || !mDesc.mItems[mDesc.mSelectedItem].mEnabled)
+		{
+			mDesc.mSelectedItem = 0;
+			while (!mDesc.mItems[mDesc.mSelectedItem].Selectable()) { mDesc.mSelectedItem++; }
 		}
 	}
 
@@ -270,7 +280,7 @@ class ExtendedListMenu : ListMenu
 							}
 							else
 							{
-								fadecolor = (g_sod ? 0x000088 : 0x880000);
+								fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 							}
 							fadetarget = gametic + fadetime;
 							activated = mDesc.mItems[mDesc.mSelectedItem];
@@ -294,7 +304,7 @@ class ExtendedListMenu : ListMenu
 		}
 		initialalpha = 1.0;
 		nodim = false;
-		fadecolor = (g_sod ? 0x000088 : 0x880000);
+		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 	}
 
 	void GetPlaceholders()
@@ -420,10 +430,10 @@ class EpisodeMenu : IconListMenu
 
 		Super.Drawer();
 
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			Close();
-			Menu.SetMenu("SkillMenu", 5 + g_sod);
+			Menu.SetMenu("SkillMenu", 5 + Game.IsSoD());
 		}
 		else
 		{
@@ -445,7 +455,7 @@ class GameMenu : IconListMenu
 		CVar sodvar = CVar.FindCVar("g_sod");
 		if (sodvar) { sodvar.SetInt(-1); }
 
-		fadetarget = 35 + gametic;
+		fadetarget = gametic;
 		fadealpha = 1.0;
 
 		S_ChangeMusic("SALUTE");
@@ -647,7 +657,7 @@ class SkillMenu : StaticIconListMenu
 	{
 		Super.Init(parent, desc);
 
-		if (g_sod) { lookupbase = "S" .. lookupbase; }
+		if (Game.IsSoD()) { lookupbase = "S" .. lookupbase; }
 	}
 
 	override void Drawer()
@@ -676,13 +686,13 @@ class ExtendedLoadMenu : LoadMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (g_sod ? 0x000088 : 0x880000);
+		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 	}
 
 	void SetYOffsets(double yoffset)
@@ -693,11 +703,9 @@ class ExtendedLoadMenu : LoadMenu
 		int listboxHeight1 = screen.GetHeight() - listboxTop - 10 * CleanYfac;
 		listboxRows = (listboxHeight1 - 1) / rowHeight;
 		listboxHeight = listboxRows * rowHeight + 1;
-//		listboxBottom = listboxTop + listboxHeight;
 
 		commentTop = savepicTop + savepicHeight + 16;
 		commentHeight = listboxHeight - savepicHeight - 16;
-//		commentBottom = commentTop + commentHeight;
 	}
 
 	override void Drawer()
@@ -708,8 +716,8 @@ class ExtendedLoadMenu : LoadMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
-		if (g_sod && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -792,13 +800,13 @@ class ExtendedSaveMenu : SaveMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture((g_sod ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (g_sod ? 0x000088 : 0x880000);
+		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 	}
 
 	void SetYOffsets(double yoffset)
@@ -809,11 +817,9 @@ class ExtendedSaveMenu : SaveMenu
 		int listboxHeight1 = screen.GetHeight() - listboxTop - 10 * CleanYfac;
 		listboxRows = (listboxHeight1 - 1) / rowHeight;
 		listboxHeight = listboxRows * rowHeight + 1;
-//		listboxBottom = listboxTop + listboxHeight;
 
 		commentTop = savepicTop + savepicHeight + 16;
 		commentHeight = listboxHeight - savepicHeight - 16;
-//		commentBottom = commentTop + commentHeight;
 	}
 
 	override void Drawer()
@@ -824,8 +830,8 @@ class ExtendedSaveMenu : SaveMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-		if (g_sod && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -902,12 +908,12 @@ class ExtendedPlayerMenu : PlayerMenu
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (g_sod ? 0x000088 : 0x880000);
+		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 	}
 
 	override void Drawer()
 	{
-		screen.Dim((g_sod ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		ListMenu.Drawer();
 
@@ -954,8 +960,10 @@ class ListMenuItemBox : ListMenuItem
 			clrb = 0x5C5C5C;
 			screen.Dim(0x282828, 1.0, x, y, w, h);
 		}
-		else if (g_sod)
+		else if (Game.IsSoD())
 		{
+			h -= 13 * CleanYfac; 
+
 			clrt = 0x000070;
 			clrb = 0x0000D4;
 			screen.Dim(0x000088, 1.0, x, y, w, h);
@@ -1010,7 +1018,7 @@ class ListMenuItemStripTitle : ListMenuItemStaticPatch
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{
 		String patch = patchname;
-		if (g_sod)
+		if (Game.IsSoD())
 		{
 			patch = patch.left(2) .. "S" .. patch.mid(2);
 			patch = patch.left(8);
@@ -1039,6 +1047,7 @@ class ListMenuItemTextItemInGame : ListMenuItem
 	int mColor;
 	int mColorSelected;
 	ListMenuDescriptor descriptor;
+	double alpha;
 
 	void Init(ListMenuDescriptor desc, String text, String hotkey, Name child, int param = 0)
 	{
@@ -1051,6 +1060,8 @@ class ListMenuItemTextItemInGame : ListMenuItem
 		mColorSelected = desc.mFontcolor2;
 		mHotkey = hotkey.ByteAt(0);
 		descriptor = desc;
+
+		alpha = 1.0;
 	}
 
 	override bool CheckCoordinate(int x, int y)
@@ -1094,7 +1105,7 @@ class ListMenuItemTextItemInGame : ListMenuItem
 
 	override void Drawer(bool selected)
 	{
-		screen.DrawText(mFont, selected ? mColorSelected : mColor, mXpos, mYpos, mText, DTA_Clean, true);
+		screen.DrawText(mFont, selected ? mColorSelected : mColor, mXpos, mYpos, mText, DTA_Clean, true, DTA_Alpha, alpha);
 	}
 	
 	override int GetWidth()
@@ -1155,6 +1166,8 @@ class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame
 		mColor = desc.mFontColor;
 		mColorSelected = desc.mFontcolor2;
 		descriptor = desc;
+
+		alpha = 0.25;
 	}
 
 	override void OnMenuCreated()
@@ -1167,5 +1180,35 @@ class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame
 	override bool Selectable()
 	{
 		return false;
+	}
+}
+
+class ListMenuItemTextItemInGameSoD : ListMenuItemTextItemInGame
+{
+	override void OnMenuCreated()
+	{
+		if (game.IsSoD())
+		{
+			mEnabled = false;
+			AllocateSpace();
+			return;
+		}
+
+		Super.OnMenuCreated();
+	}
+}
+
+class ListMenuItemTextItemNotInGameSoD : ListMenuItemTextItemNotInGame
+{
+	override void OnMenuCreated()
+	{
+		if (game.IsSoD())
+		{
+			mEnabled = false;
+			AllocateSpace();
+			return;
+		}
+
+		Super.OnMenuCreated();
 	}
 }

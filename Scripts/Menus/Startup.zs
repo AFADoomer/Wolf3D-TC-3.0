@@ -131,7 +131,11 @@ class Startup : GenericMenu
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		if (gamemenu) { DrawGameMenu(); }
+		if (gamemenu)
+		{
+			Close();
+			Menu.SetMenu("GameMenu");
+		}
 		else
 		{
 			DrawBuffer();
@@ -315,23 +319,6 @@ class Startup : GenericMenu
 		cursortimeout = max(0, cursortimeout - 1);
 	}
 
-	void DrawGameMenu()
-	{
-		Clear();
-
-		screen.Dim(0x000000, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
-
-		DrawTextSpan(15, 3, 48, 1, "▒", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(15, 4, 1, 13, "▒", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(62, 4, 1, 13, "▒", clr:Font.FindFontColor("StartupBlue"));
-		DrawTextSpan(15, 17, 48, 1, "▒", clr:Font.FindFontColor("StartupBlue"));
-
-		DrawText(20, 6, "1 - " .. StringTable.Localize("$EP_WOLF"), clr:Font.FindFontColor("TrueWhite"));
-		DrawText(20, 8, "2 - " .. StringTable.Localize("$EP_SOD"), clr:Font.FindFontColor("TrueWhite"));
-		DrawText(20, 10, "3 - " .. StringTable.Localize("$EP_SD2"), clr:Font.FindFontColor("TrueWhite"));
-		DrawText(20, 12, "4 - " .. StringTable.Localize("$EP_SD3"), clr:Font.FindFontColor("TrueWhite"));
-	}
-
 	void Boot()
 	{
 		ticcount++;
@@ -364,6 +351,8 @@ class Startup : GenericMenu
 				{
 					Print(prompt, nobreak:true);
 					Print("launcher.exe");
+					Print();
+					Print("Powered by GZDoom.");
 					prompty = cursory;
 				}
 				if (ticcount == 20) { curstate++; }
