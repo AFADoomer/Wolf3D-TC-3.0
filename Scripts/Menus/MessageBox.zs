@@ -21,10 +21,24 @@ class ClassicMessageBox : MessageBoxMenu
 
 		message = msg;
 
+		// Remove the hard-coded additional prompt message components
 		message.Replace("\n\n" .. Stringtable.Localize("$DOSY"), "");
 		message.Replace("\n\n" .. Stringtable.Localize("$PRESSKEY"), "");
 		message.Replace("\n\n" .. Stringtable.Localize("$PRESSYN"), "");
 		message.Replace(Stringtable.Localize("$PRESSYN"), ""); // For the save deletion prompt
+
+		// Adjust quit messages to select SoD variants as appropriate
+		if (Game.IsSod())
+		{
+			for (int m = 1; m <= 9; m++)
+			{
+				if (message ~== StringTable.Localize("QUITMSG" .. m, false))
+				{
+					message = StringTable.Localize("QUITMSG" .. m + 9, false);
+					break;
+				}
+			}
+		}
 
 		if (!prefix.Length()) { prefix = "BG_"; fillcolor = 0x8c8c8c; }
 		if (!fnt) { fnt = BigFont; }

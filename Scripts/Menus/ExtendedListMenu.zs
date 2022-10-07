@@ -964,7 +964,17 @@ class ListMenuItemBox : ListMenuItem
 		{
 			// HACK: SoD has no "Read This" entry, so adjust box height for main menu
 			Menu current = Menu.GetCurrentMenu();
-			if (!current.mParentMenu || current.mParentMenu is "IntroSlideshow") { h -= 13 * CleanYfac; }
+			if (
+				(
+					ListMenu(current) &&
+					ListMenu(current).mDesc.mMenuName == "Mainmenu"
+				) || 
+				(
+					current is "MessageBoxMenu" &&
+					ListMenu(current.mParentMenu) && 
+					ListMenu(current.mParentMenu).mDesc.mMenuName == "Mainmenu"
+				)
+			) { h -= 13 * CleanYfac; }
 
 			clrt = 0x000070;
 			clrb = 0x0000D4;

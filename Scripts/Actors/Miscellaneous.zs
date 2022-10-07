@@ -305,7 +305,7 @@ class Game
 		if (g_sod > 0) { ret = true; }
 		if (level && level.levelnum > 700) { ret = true; }
 
-		if (g_sod < 0) // Set the value if it hasn't been set already by the startup menu
+		if (g_sod < 0 && level.levelnum > 0) // Set the value if we are in a game and it hasn't been set already by the startup menu
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
 			if (sodvar) { sodvar.SetInt(ret ? 1 : 0); }
