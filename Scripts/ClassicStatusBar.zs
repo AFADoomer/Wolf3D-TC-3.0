@@ -419,10 +419,10 @@ class ClassicStatusBar : BaseStatusBar
 	override void DrawAutomapHUD(double ticFrac)
 	{
 		int crdefault = Font.CR_GRAY;
-		int highlight = Font.FindFontColor("LightGray");
-		font fnt = Font.FindFont("BigFont");
+		int highlight = Font.FindFontColor("WolfMenuYellowBright");
 
 		let scale = GetUIScale(hud_scale);
+		let titlefont = Font.FindFont("BigFont");
 		let font = generic_ui ? NewSmallFont : SmallFont;
 		let font2 = font;
 		let vwidth = screen.GetWidth() / scale;
@@ -451,8 +451,8 @@ class ClassicStatusBar : BaseStatusBar
 		// Draw the text
 		for (int i = 0; i < numlines; i++)
 		{
-			screen.DrawText(fnt, highlight, textdist, y, lines.StringAt(i), DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
-			y += fnt.GetHeight();
+			screen.DrawText(titlefont, highlight, textdist, y, lines.StringAt(i), DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
+			y += titlefont.GetHeight();
 		}
 
 		y+= int(fheight / 2);
@@ -525,7 +525,7 @@ class ClassicStatusBar : BaseStatusBar
 				screen.DrawText(font2, crdefault, textdist, y, secrets, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
 
 				textbuffer = textbuffer.Format("%d/%d", level.found_secrets, level.total_secrets);
-				screen.DrawText(font2, Font.CR_GOLD, textdist + labelwidth, y, textbuffer, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
+				screen.DrawText(font2, Font.CR_SAPPHIRE, textdist + labelwidth, y, textbuffer, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
 
 				y += fheight;
 			}
@@ -536,10 +536,30 @@ class ClassicStatusBar : BaseStatusBar
 				screen.DrawText(font2, crdefault, textdist, y, items, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
 
 				textbuffer = textbuffer.Format("%d/%d", level.found_items, level.total_items);
-				screen.DrawText(font2, Font.CR_YELLOW, textdist + labelwidth, y, textbuffer, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
+				screen.DrawText(font2, Font.CR_GOLD, textdist + labelwidth, y, textbuffer, DTA_KeepRatio, true, DTA_VirtualWidth, vwidth, DTA_VirtualHeight, vheight);
 
 				y += fheight;
 			}
 		}
+	}
+
+	override bool DrawPaused(int player)
+	{
+		TextureID pause = TexMan.CheckForTexture("W_PAUSE"); // gameinfo.PauseSign is not exposed to ZScript
+		Vector2 size = TexMan.GetScaledSize(pause);
+
+		double x = Screen.GetWidth() / 2;
+		double y = Screen.GetHeight() / 2;
+
+		Screen.DrawTexture(pause, true, x, y, DTA_CleanNoMove, true, DTA_CenterOffset, true);
+
+		if (paused && multiplayer)
+		{
+			String pstring = StringTable.Localize("$TXT_PAUSEDBY");
+			pstring.Substitute("%s", players[paused - 1].GetUserName());
+			Screen.DrawText(SmallFont, Font.CR_WHITE, x - SmallFont.StringWidth(pstring) * CleanXfac_1 / 2, y + size.y * CleanYfac_1, pstring, DTA_CleanNoMove_1, true);
+		}
+
+		return true;
 	}
 }

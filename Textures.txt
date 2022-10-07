@@ -1202,7 +1202,6 @@ Texture CREDIT, 320, 200 { Patch WVGA0089, 0, 0 }
 //Pause Image
 Texture W_PAUSE, 64, 32
 {
-	//Centers correctly on 320x200 and similar resolutions...  Doesn't really matter on others, anyway.
 	Offset 0, 0
 	Patch WVGA0133, 0, 0
 }
