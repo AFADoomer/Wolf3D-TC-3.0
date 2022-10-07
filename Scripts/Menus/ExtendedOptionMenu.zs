@@ -121,7 +121,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			{
 				++mDesc.mSelectedItem;
 				if (!source) { source = self; }
-				console.printf("%i / %i", mDesc.mSelectedItem, source.VisBottom);
+
 				if (source.CanScrollDown && mDesc.mSelectedItem >= source.VisBottom)
 				{
 					mDesc.mScrollPos++;

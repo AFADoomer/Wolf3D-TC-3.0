@@ -436,7 +436,10 @@ class ClassicStats : DoomStatusScreen
 		ammo = GetAmmo();
 
 		// Use the local level structure which can be overridden by hubs
-		lnametexts[0] = Level.levelname;
+		Array<String> levelname;
+		Level.levelname.Split(levelname, ": "); // Use the portion of the name after the colon, if there is one.
+
+		lnametexts[0] = levelname[levelname.Size() - 1];
 		lnametexts[1] = wbstartstruct.nextname;
 
 		if (wbs.next == "") { style = finale; }
