@@ -124,7 +124,7 @@ class GenericOptionMenu : OptionMenu
 		mDesc.mDrawTop = y;
 
 		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
-		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - ytop;
+		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
 
 		int indent = x + spacing;
 		

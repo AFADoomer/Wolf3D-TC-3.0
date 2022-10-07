@@ -95,12 +95,12 @@ class ExtendedOptionMenu : GenericOptionMenu
 				if (mDesc.mSelectedItem < 0) 
 				{
 					// Figure out how many lines of text fit on the menu
-					int y = mDesc.mDrawTop;
+					int y = mDesc.mDrawTop * CleanYfac_1;
 
 					int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 							
 					int ytop = y + mDesc.mScrollTop * fontheight;
-					int lastrow = screen.GetHeight() - fontheight - y;
+					int lastrow = screen.GetHeight() - fontheight * 2;
 
 					int maxitems = (lastrow - ytop) / fontheight;// - mDesc.mScrollTop;
 
@@ -121,6 +121,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			{
 				++mDesc.mSelectedItem;
 				if (!source) { source = self; }
+				console.printf("%i / %i", mDesc.mSelectedItem, source.VisBottom);
 				if (source.CanScrollDown && mDesc.mSelectedItem >= source.VisBottom)
 				{
 					mDesc.mScrollPos++;
@@ -240,7 +241,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
-		Draw(self, "ExtendedOptionMenu", scrollheight:screen.GetHeight() - fontheight * 3 - mDesc.mPosition * CleanYfac_1);
+		Draw(self, "ExtendedOptionMenu");
 	}
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
@@ -290,7 +291,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 //		int ytop = y;
 //		int lastrow = screen.GetHeight() - fontheight;
 		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
-		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
+		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - fontheight * 2;
 
 
 //		int framewidth = MenuHandler.ItemsWidth(handler.Items) + 48; // Has calculation issues...
