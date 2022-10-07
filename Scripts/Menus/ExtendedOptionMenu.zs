@@ -297,7 +297,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		int framewidth = max(620, Screen.GetWidth() * 2 / 3);
 
 		int x = left + DrawFrame(framewidth, lastrow - y, -y);
-		x += 32;
+		x += 32 * CleanXfac_1;
 
 		screen.Dim(fadecolor, 1.0 - alpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 
@@ -424,7 +424,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			String label = Stringtable.Localize(this.mLabel);
 			height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, this.isGrayed(), 1.0, breakwidth);
 
-			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1 * CleanYfac_1, DTA_DestHeight, fontheight, DTA_DestWidth, 3 * fontheight, DTA_Alpha, alpha);
+			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha);
 
 			info.valueleft = x + spacing;
 			info.width = OptionWidth(label, fnt) + spacing + 3 * fontheight;
@@ -482,8 +482,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 	override void DrawCursor(int x, int y)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawTexture(cursor0, true, x - 16, y, DTA_Alpha, alpha);
-		screen.DrawTexture(cursor1, true, x - 16, y, DTA_Alpha, alpha * cursoralpha);
+		screen.DrawTexture(cursor0, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha, DTA_CleanNoMove_1, true);
+		screen.DrawTexture(cursor1, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha * cursoralpha, DTA_CleanNoMove_1, true);
 	}
 
 	override void DrawScrollArrows(int x, int ytop, int ybottom)

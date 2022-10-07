@@ -159,7 +159,7 @@ class GenericOptionMenu : OptionMenu
 			{
 				if (isSelected && item.Selectable())
 				{
-					DrawCursor(x - 12, y);
+					DrawCursor(x - 12 * CleanXfac_1, y);
 				}
 
 				if (item is "OptionMenuItemControlBase")
@@ -304,8 +304,9 @@ class GenericOptionMenu : OptionMenu
 	{
 		if (fnt == null) { fnt = SmallFont; }
 		if (breakwidth == -1) { breakwidth = CleanWidth_1 / 2; }
+		else { breakwidth /= CleanXfac_1; }
 
-		int fontheight = fnt.GetHeight();
+		int fontheight = (fnt.GetHeight() - 2) * CleanYfac_1;
 		
 		int height = 0;
 		int overlay = grayed ? Color(128, 64, 64, 64) : 0;
@@ -315,9 +316,10 @@ class GenericOptionMenu : OptionMenu
 
 		for (int i = 0; i < lines.count(); i++)
 		{
-			screen.DrawText(fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1);
-			height += fontheight;
+			screen.DrawText (fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_CleanNoMove_1, true);
 		}
+
+		height += lines.Count() * fontheight + 6 * CleanYfac_1;
 
 		if (lines.count() > 1) { height += OptionMenuSettings.mLinespacing - fontheight; }
 
@@ -331,7 +333,15 @@ class GenericOptionMenu : OptionMenu
 
 	int DrawSliderElements(OptionMenuSliderBase this, int x, int y, int spacing, Font fnt, double min, double max, double cur, int fracdigits, Vector2 size = (16, 16), Vector2 handlesize = (-1, -1))
 	{
+		size.x *= CleanXfac_1;
+		size.y *= CleanYfac_1;
+
 		if (handlesize == (-1, -1)) { handlesize = size; }
+		else
+		{
+			handlesize.x *= CleanXfac_1;
+			handlesize.y *= CleanYfac_1;
+		}
 		
 		x += int(spacing + size.x / 2);
 
@@ -374,7 +384,7 @@ class GenericOptionMenu : OptionMenu
 		if (fracdigits >= 0 && right + maxlen <= screen.GetWidth())
 		{
 			textbuf = String.format(formater, cur);
-			DrawOptionText(textbuf, right + 4, y, fnt, OptionMenuSettings.mFontColorHighlight);
+			DrawOptionText(textbuf, right + 4 * CleanXfac_1, y, fnt, OptionMenuSettings.mFontColorHighlight);
 		}
 
 		return right;
@@ -387,7 +397,7 @@ class GenericOptionMenu : OptionMenu
 		if (tex.isValid())
 		{
 			x -= size.x / 2;
-			y += OptionMenuSettings.mLinespacing / 2 - size.y / 2;
+			y += OptionMenuSettings.mLinespacing * CleanYfac_1 / 2 - size.y / 2;
 			screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_Alpha, alpha);
 			if (clr > 0) { screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_FillColor, clr, DTA_Alpha, 0.5 * alpha); }
 		}
@@ -730,7 +740,7 @@ class GenericOptionMenu : OptionMenu
 	virtual void DrawCursor(int x, int y)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawText(NewSmallFont, OptionMenuSettings.mFontColorSelection, x, y, "►", DTA_Alpha, cursoralpha * alpha);
+		screen.DrawText(NewSmallFont, OptionMenuSettings.mFontColorSelection, x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true);
 	}
 
 	virtual void DrawScrollArrows(int x, int ytop, int ybottom)
