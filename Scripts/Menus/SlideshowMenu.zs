@@ -59,11 +59,11 @@ class HelpMenu : ReadThisMenu
 			}
 			else
 			{
-				if (gamestate == GS_FINALE) { Menu.SetMenu("HighScores", -1); }
+				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
 				else { Menu.SetMenu("MainMenu", -1); }
 			}
 
-			if (gamestate != GS_FINALE)
+			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
 				if (!mParentMenu) { S_ChangeMusic(level.music); }
 				else { S_ChangeMusic("WONDERIN"); }
@@ -760,13 +760,16 @@ class IntroSlideShowLoop : IntroSlideShow
 
 class LoadScreen : IntroSlideShow
 {
-	int nextscreen;
+	int nextscreen, actiontick, tickcount;
+	double speed;
 	double assetalpha;
-	TextureID bkg, gametitle, gzdoom, thirtyyears;
+	TextureID bkg, bkg1, bkg2, gametitle, gzdoom, thirtyyears;
 
 	override void SetGraphics()
 	{
-		bkg = TexMan.CheckForTexture("Graphics/Title/bkg.png", TexMan.Type_Any);
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		bkg1 = TexMan.CheckForTexture("Graphics/Title/bkg1.png", TexMan.Type_Any);
+		bkg2 = TexMan.CheckForTexture("Graphics/Title/bkg2.png", TexMan.Type_Any);
 		gametitle = TexMan.CheckForTexture("Graphics/Wolf3D.png", TexMan.Type_Any);
 		gzdoom = TexMan.CheckForTexture("Graphics/Title/gzdoom.png", TexMan.Type_Any);
 		thirtyyears = TexMan.CheckForTexture("Graphics/Title/30years.png", TexMan.Type_Any);
@@ -778,25 +781,29 @@ class LoadScreen : IntroSlideShow
 
 		screen.Dim(0x000000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		switch (curscreen)
+		int step = int(actiontick * speed);
+
+		if (curscreen == 4)
 		{
-			case 1:
-				screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill);
-				break;
-			case 2:
-				screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill);
+			screen.DrawTexture(thirtyyears, false, 320, 240, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_CenterOffset, true);
+		}
+		else if (curscreen > 0 && curscreen < 4)
+		{
+			screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255);
+			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
+			screen.DrawTexture(bkg1, false, CleanWidth_1 - 320 - step, 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
+			screen.DrawTexture(bkg2, false, -320 + step, 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
+			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
+
+			if (curscreen == 2)
+			{
 				screen.DrawTexture(gametitle, false, 0, 32, DTA_VirtualWidth, 480, DTA_VirtualHeight, 360, DTA_Alpha, assetalpha);
-				break;
-			case 3:
-				screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill);
+			}
+			else if (curscreen == 3)
+			{
 				screen.DrawTexture(gametitle, false, 0, 32, DTA_VirtualWidth, 480, DTA_VirtualHeight, 360);
 				screen.DrawTexture(gzdoom, false, 480, 320, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_Alpha, assetalpha);
-				break;
-			case 4:
-				screen.DrawTexture(thirtyyears, false, 320, 240, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_CenterOffset, true);
-				break;
-			default:
-				break;
+			}
 		}
 
 		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
@@ -804,6 +811,8 @@ class LoadScreen : IntroSlideShow
 
 	override void Ticker()
 	{
+		tickcount++;
+
 		if (advancetime > 0 && advancetime <= gametic)
 		{
 			inputtic = gametic;
@@ -811,28 +820,36 @@ class LoadScreen : IntroSlideShow
 			advancetime = 0;
 		}
 
+		speed = 1.0 * CleanWidth_1 / 960;
+
+		if (curscreen > 1 && curscreen < 4)
+		{
+			actiontick++;
+		}
+	
 		if (inputtic == gametic)
 		{
 			switch (curscreen)
 			{
 				case 0: // Blank black screen
-					advancetime = gametic + 35 * 3;
+					advancetime = gametic + 35;
 					fadetarget = gametic + fadetime;
 					break;
 				case 1: // Background only
-					advancetime = gametic + 35;
-					fadetarget = -1;
-					break;
-				case 2: // Game Title
+					S_StartSound("introsplash", CHAN_VOICE, CHANF_UI, 0.85);
 					advancetime = gametic + 35 * 4;
 					fadetarget = -1;
 					break;
+				case 2: // Game Title
+					advancetime = gametic + 35 * 5;
+					fadetarget = -1;
+					break;
 				case 3: // Powered by GZDoom
-					advancetime = gametic + 35 * 2;
+					advancetime = gametic + 35 * 6;
 					fadetarget = gametic + fadetime;
 					break;
 				case 4: // 30 Years
-					advancetime = gametic + 35 * 2;
+					advancetime = gametic + 35;
 					fadetarget = gametic + fadetime;
 					break;
 				case 5:
@@ -866,6 +883,7 @@ class LoadScreen : IntroSlideShow
 	{
 		if (mkey && fadetarget < gametic)
 		{
+			System.StopAllSounds();
 			Menu.SetMenu("GameMenu", -1);
 			return true;
 		}
@@ -884,7 +902,7 @@ class ScoreEntry
 class HighScores : WolfMenu
 {
 	Vector2 dimcoords, dimsize;
-	TextureID title, nametitle, scoretitle, leveltitle, bkg;
+	TextureID title, nametitle, scoretitle, leveltitle, bkg, icon;
 	int currentline, fontheight;
 	Array<ScoreEntry> scores;
 
@@ -915,6 +933,7 @@ class HighScores : WolfMenu
 		scoretitle = TexMan.CheckForTexture("M_SCORE", TexMan.Type_Any);
 		leveltitle = TexMan.CheckForTexture("M_LEVEL", TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		icon = TexMan.CheckForTexture("SODICON", TexMan.Type_Any);
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
@@ -946,7 +965,7 @@ class HighScores : WolfMenu
 
 		let p = players[consoleplayer].mo;
 
-		finale = (gamestate == GS_FINALE || LifeHandler.GetLives(p) < 0);
+		finale = (gamestate == GS_FINALE || gamestate == GS_CUTSCENE || LifeHandler.GetLives(p) < 0);
 		inputindex = -1;
 
 		if (finale && (!mParentMenu || !ListMenu(mParentMenu) || (!ListMenu(mParentMenu).mDesc || ListMenu(mParentMenu).mDesc.mMenuName != "MainMenu")))
@@ -995,6 +1014,11 @@ class HighScores : WolfMenu
 
 			screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 32, y, scores[s].n, DTA_320x200, true);
 			screen.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 163, y, scores[s].l, DTA_320x200, true);
+
+			if (icon && scores[s].l.Left(5) == "   21")
+			{
+				screen.DrawTexture(icon, false, 160, y - 1, DTA_320x200, true);
+			}
 
 			for (int t = scores[s].s.Length(); t > 0; t--)
 			{
@@ -1051,7 +1075,7 @@ class HighScores : WolfMenu
 		{
 			exitmenu = true;
 
-			if (gamestate == GS_FINALE) { fadecolor = 0x000000; }
+			if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { fadecolor = 0x000000; }
 			MenuSound (GetCurrentMenu() != null ? "menu/backup" : "menu/clear");
 			return true;
 		}
@@ -1086,6 +1110,18 @@ class HighScores : WolfMenu
 		{
 			levelname = levelname.Mid(0, 2) .. "/" .. levelname.Mid(2, 2);
 			levelname = levelname.MakeUpper();
+		}
+		else if (levelname.length() == 5 && levelname.mid(0, 3) ~== "SOD")
+		{
+			levelname = "   " .. levelname.Mid(3, 2);
+		}
+		else if (levelname.length() == 5 && levelname.mid(0, 3) ~== "SD2")
+		{
+			levelname = "   " .. levelname.Mid(3, 2) .. " RTD";
+		}
+		else if (levelname.length() == 5 && levelname.mid(0, 3) ~== "SD3")
+		{
+			levelname = "   " .. levelname.Mid(3, 2) .. " TUC";
 		}
 
 		return levelname;

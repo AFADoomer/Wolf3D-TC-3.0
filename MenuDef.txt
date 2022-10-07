@@ -113,7 +113,7 @@ ListMenu "LoadGameMenu"
 
 	TopStrip 10
 	StripTitle 0, 0, "M_LoadGm"
-	Position 80, 55
+	Position 80, 65
 
 	Class "ExtendedLoadMenu"
 }
@@ -122,14 +122,14 @@ ListMenu "SaveGameMenu"
 {
 	TopStrip 10
 	StripTitle 0, 0, "M_SaveGm"
-	Position 80, 55
+	Position 80, 65
 
 	Class "ExtendedSaveMenu"
 }
 
 OptionMenu "TCOptions"
 {
-	Title "M_CONTRL"
+	Title "Control"
 
 	SubMenu "Game Engine Options",				"OptionsMenu"
 	StaticText ""

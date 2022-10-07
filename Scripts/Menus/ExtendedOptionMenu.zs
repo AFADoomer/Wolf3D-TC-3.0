@@ -97,15 +97,14 @@ class ExtendedOptionMenu : GenericOptionMenu
 					// Figure out how many lines of text fit on the menu
 					int y = mDesc.mDrawTop;
 
-					// int rowheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
 					int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 							
-					int ytop = y + mDesc.mScrollTop * OptionHeight() * CleanYfac_1;
-					int lastrow = screen.GetHeight() - fontheight - OptionHeight() * CleanYfac_1;
+					int ytop = y + mDesc.mScrollTop * fontheight;
+					int lastrow = screen.GetHeight() - fontheight - y;
 
-					int maxitems = (lastrow - ytop) / fontheight - mDesc.mScrollTop;
+					int maxitems = (lastrow - ytop) / fontheight;// - mDesc.mScrollTop;
 
-					mDesc.mScrollPos = max(0, mDesc.mItems.Size() - maxitems + mDesc.mScrollTop);
+					mDesc.mScrollPos = max(0, mDesc.mItems.Size() - maxitems);// + mDesc.mScrollTop);
 					mDesc.mSelectedItem = mDesc.mItems.Size() - 1;
 				}
 			}
@@ -121,11 +120,11 @@ class ExtendedOptionMenu : GenericOptionMenu
 			do
 			{
 				++mDesc.mSelectedItem;
-				
-				if (CanScrollDown && mDesc.mSelectedItem == VisBottom)
+				if (!source) { source = self; }
+				if (source.CanScrollDown && mDesc.mSelectedItem >= source.VisBottom)
 				{
 					mDesc.mScrollPos++;
-					VisBottom++;
+					source.VisBottom++;
 				}
 				if (mDesc.mSelectedItem >= mDesc.mItems.Size()) 
 				{
@@ -148,7 +147,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 		case MKEY_PageUp:
 			if (mDesc.mScrollPos > 0)
 			{
-				mDesc.mScrollPos -= VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
+				if (!source) { source = self; }
+				mDesc.mScrollPos -= source.VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
 				if (mDesc.mScrollPos < 0)
 				{
 					mDesc.mScrollPos = 0;
@@ -172,9 +172,10 @@ class ExtendedOptionMenu : GenericOptionMenu
 			break;
 
 		case MKEY_PageDown:
-			if (CanScrollDown)
+			if (!source) { source = self; }
+			if (source.CanScrollDown)
 			{
-				int pagesize = VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
+				int pagesize = source.VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
 				mDesc.mScrollPos += pagesize;
 				if (mDesc.mScrollPos + mDesc.mScrollTop + pagesize > mDesc.mItems.Size())
 				{
@@ -206,7 +207,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 					if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemSafeCommand")
 					{
 						nodim = true;
-						return mDesc.mItems[mDesc.mSelectedItem].Activate();
+						return Super.MenuEvent(Menu.MKEY_Enter, false);
 					}
 
 					fadecolor = 0x880000;
@@ -237,7 +238,9 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void Drawer()
 	{
-		Draw(self, "ExtendedOptionMenu");
+		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
+
+		Draw(self, "ExtendedOptionMenu", scrollheight:screen.GetHeight() - fontheight * 3 - mDesc.mPosition * CleanYfac_1);
 	}
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
@@ -284,18 +287,21 @@ class ExtendedOptionMenu : GenericOptionMenu
 		
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
-		int ytop = y;
-		int lastrow = screen.GetHeight() - fontheight - OptionHeight() * CleanYfac;
+//		int ytop = y;
+//		int lastrow = screen.GetHeight() - fontheight;
+		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
+		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
+
 
 //		int framewidth = MenuHandler.ItemsWidth(handler.Items) + 48; // Has calculation issues...
 		int framewidth = max(620, Screen.GetWidth() * 2 / 3);
 
-		int x = left + DrawFrame(framewidth, lastrow - y + fontheight, -y);
+		int x = left + DrawFrame(framewidth, lastrow - y, -y);
 		x += 32;
 
-		screen.Dim(fadecolor, handler.Items.Size() ? 1.0 - alpha : 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(fadecolor, 1.0 - alpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		Super.DrawMenu(x, 100, Font.GetFont("BigFont"), ytop, lastrow);
+		Super.DrawMenu(x, 100, Font.GetFont("BigFont"), ytop, lastrow - fontheight);
 	}
 
 	override void Ticker()
@@ -482,11 +488,12 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void DrawScrollArrows(int x, int ytop, int ybottom)
 	{
-		if (CanScrollUp)
+		if (!source) { source = self; }
+		if (source.CanScrollUp)
 		{
 			screen.DrawText(NewSmallFont, Font.FindFontColor("WolfMenuYellowBright"), x - 16, ytop, "▲", DTA_Alpha, alpha);
 		}
-		if (CanScrollDown)
+		if (source.CanScrollDown)
 		{
 			screen.DrawText(NewSmallFont, Font.FindFontColor("WolfMenuYellowBright"), x - 16, ybottom, "▼", DTA_Alpha, alpha);
 		}

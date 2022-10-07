@@ -407,7 +407,7 @@ Script "W_SetCeilingColor" (int index)
 	If (!index)
 	{
 		int num = GetLevelInfo(LEVELINFO_LEVELNUM);	
-		if (GetCVar("g_sod"))
+		if (ScriptCall("Game", "IsSod"))
 		{
 			index = num % 100 - 1;
 			Color = SoDCeilings[index % 60];

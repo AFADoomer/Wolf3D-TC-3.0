@@ -300,9 +300,17 @@ class Game
 {
 	static bool isSoD()
 	{
-		if (g_sod > 0) { return true; }
-		if (level && level.levelnum > 700) { return true; }
+		bool ret = false;
 
-		return false;
+		if (g_sod > 0) { ret = true; }
+		if (level && level.levelnum > 700) { ret = true; }
+
+		if (g_sod < 0) // Set the value if it hasn't been set already by the startup menu
+		{
+			CVar sodvar = CVar.FindCVar("g_sod");
+			if (sodvar) { sodvar.SetInt(ret ? 1 : 0); }
+		}
+
+		return ret;
 	}
 }

@@ -59,6 +59,7 @@ class GenericOptionMenu : OptionMenu
 	int columnwidth, columnspacing;
 	String menuprefix;
 	MenuHandler handler;
+	OptionMenu source;
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
@@ -83,9 +84,11 @@ class GenericOptionMenu : OptionMenu
 	static void Draw(OptionMenu current, String cls = "GenericOptionMenu", int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
 	{
 		let generic = GenericOptionMenu(New(cls));
-			if (!generic) { return; }
+		if (!generic) { return; }
 
 		generic.Init(current.mParentMenu, current.mDesc);
+		generic.source = current;
+
 		generic.DrawMenu(left, spacing, fnt, scrolltop, scrollheight);
 	}
 
@@ -120,8 +123,8 @@ class GenericOptionMenu : OptionMenu
 
 		mDesc.mDrawTop = y;
 
-		int ytop = y;// + mDesc.mScrollTop * OptionMenuSettings.mLinespacing;
-		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
+		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
+		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - ytop;
 
 		int indent = x + spacing;
 		
@@ -207,9 +210,9 @@ class GenericOptionMenu : OptionMenu
 			}
 		}
 
-		CanScrollUp = !!(mDesc.mScrollPos > 0);
-		CanScrollDown = !!(i < mDesc.mItems.Size());
-		VisBottom = i - 1;
+		source.CanScrollUp = !!(mDesc.mScrollPos > 0);
+		source.CanScrollDown = !!(i < mDesc.mItems.Size());
+		source.VisBottom = i - 1;
 
 		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 14 * CleanYfac_1);
 	}

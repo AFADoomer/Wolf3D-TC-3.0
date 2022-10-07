@@ -42,7 +42,7 @@ class CloseMenu : GenericMenu
 			{
 				if (gamestate != GS_LEVEL && gamestate != GS_INTERMISSION) { Menu.SetMenu("IntroSlideshowLoop"); }
 				else if (players[consoleplayer].mo && LifeHandler.GetLives(players[consoleplayer].mo) == -1) { Menu.SetMenu("HighScores"); }
-				else if (gamestate != GS_FINALE) { S_ChangeMusic(level.music); }
+				else if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE) { S_ChangeMusic(level.music); }
 			}
 		}
 	}

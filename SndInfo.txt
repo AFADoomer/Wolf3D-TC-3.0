@@ -255,3 +255,6 @@ wilhelm/death			SSND0032
 // Professor Quarkblitz
 quarkblitz/sight		LSND0031
 quarkblitz/death		LSND0032
+
+// TC Intro Screen
+introsplash		INTRO
