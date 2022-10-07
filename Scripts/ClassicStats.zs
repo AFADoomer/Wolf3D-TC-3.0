@@ -541,6 +541,14 @@ class ClassicStats : DoomStatusScreen
 		if (index == 3) { index = 1; }
 
 		String mugshot = players[me].mo.face .. "ST" .. level .. index;
+		
+		if (Game.IsSod())
+		{
+			if (players[me].cheats & (CF_GODMODE | CF_GODMODE2))
+			{
+				mugshot = players[me].mo.face .. "GOD" .. index;
+			}
+		}
 
 		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
 	}

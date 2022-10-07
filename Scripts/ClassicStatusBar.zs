@@ -3,7 +3,8 @@ class ClassicStatusBar : BaseStatusBar
 	HUDFont ClassicFont, BigFont;
 	TextureID mugshot;
 
-	int mugshottimer;
+	int mugshottimer, idleframe;
+	Vector3 playerpos[MAXPLAYERS];
 
 	TextureID pixel;
 	int fizzleindex;
@@ -89,6 +90,14 @@ class ClassicStatusBar : BaseStatusBar
 
 		ClassicStatusBar(StatusBar).staticmugshot = 2;
 		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 35;
+	}
+
+	play static void DoScream(Actor caller)
+	{
+		if (players[consoleplayer].mo != caller) { return; }
+
+		ClassicStatusBar(StatusBar).staticmugshot = 3;
+		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 30;
 	}
 
 	protected void DrawClassicBar()
@@ -213,11 +222,13 @@ class ClassicStatusBar : BaseStatusBar
 		if (staticmugshot && staticmugshottimer >= gametic)
 		{
 			mugshot = GetMugShot(5, type:staticmugshot);
+			mugshottimer = 0;
 		}
-		else if (!mugshot || mugshottimer > Random[mugshot](0, 255))
+		else if (!mugshot || mugshottimer > min(35, Random[mugshot](0, 255)))
 		{
 			mugshot = GetMugShot(5);
 			mugshottimer = 0;
+			idleframe = Random(1, 2);
 		}
 
 		Vector2 texsize = TexMan.GetScaledSize(mugshot);
@@ -257,17 +268,33 @@ class ClassicStatusBar : BaseStatusBar
 			int index = Random[mugshot](0, 255) >> 6;
 			if (index == 3) { index = 1; }
 
-			switch (type)
+			// SoD-specific god face
+			if (Game.IsSod())
 			{
-				default:
-					mugshot = face .. "ST" .. level .. index;
-					break;
-				case 1: // Grin
-					mugshot = face .. "EVL";
-					break;
-				case 2: // Idle
-					mugshot = face .. "STT" .. Random(1, 2);
-					break;
+				if (players[consoleplayer].cheats & (CF_GODMODE | CF_GODMODE2))
+				{
+					mugshot = face .. "GOD" .. index;
+				}
+			}
+	
+			if (!mugshot.length())
+			{
+				switch (type)
+				{
+					default:
+						mugshot = face .. "ST" .. level .. index;
+						break;
+					case 1: // Grin
+						mugshot = face .. "EVL";
+						break;
+					case 2: // Idle
+						mugshot = face .. "STT" .. idleframe;
+						break;
+					case 3: // Scream
+						mugshot = face .. "SCRM";
+						break;
+
+				}
 			}
 		}
 		else

@@ -3,7 +3,8 @@ class WolfPlayer : DoomPlayer
 {
 	bool goobers;
 	bool mutated;
-	int deathtick;
+	int deathtick, idletick;
+	Vector3 lastpos;
 
 	Default
 	{
@@ -87,6 +88,24 @@ class WolfPlayer : DoomPlayer
 			Speed = Default.Speed * 8;
 		}
 		else { Speed = Default.Speed; }
+
+		// SoD-specific idle and ouch face mugshots
+		if (Game.IsSod())
+		{
+			if (player && player.damagecount > 30 && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoScream(self); } 
+
+			if (pos == lastpos)
+			{
+				if (idletick++ > 30 * 35 && ClassicStatusBar(StatusBar))
+				{
+					ClassicStatusBar(StatusBar).DoIdleFace(self);
+					idletick = 0;
+				}
+			}
+			else { idletick = 0; }
+
+			lastpos = pos;
+		}
 	}
 
 	override color GetPainFlash()

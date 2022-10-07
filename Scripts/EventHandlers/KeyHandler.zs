@@ -48,7 +48,7 @@ class KeyHandler : EventHandler
 					if (tabdown)
 					{
 						String text;
-						if (players[consoleplayer].cheats & CF_GODMODE2) { text = StringTable.Localize("$CHEAT_GOD_OFF"); }
+						if (players[consoleplayer].cheats & CF_GODMODE2 || players[consoleplayer].cheats & CF_GODMODE) { text = StringTable.Localize("$CHEAT_GOD_OFF"); }
 						else { text = StringTable.Localize("$CHEAT_GOD_ON"); }
 
 						msg = ClassicMessageBox.PrintMessage(text, width:12, height:2, align:2);
