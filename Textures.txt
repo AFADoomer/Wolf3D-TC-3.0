@@ -10,7 +10,10 @@ Graphic M_SKILL, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_NEWG, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_RDTHIS, 1, 1 { Patch BLACK, 0, 0 }
 
-//Classic Walls
+// Silence the weird bug that keeps trying to treat the first ACS string as an image
+Texture g_sod, 1, 1 {}
+
+// Classic Walls
 Texture WLF0000A, 64, 64 {Patch BLACK, 0, 0}
 Texture WLF0001A, 64, 64 {Patch WALL0000, 0, 0}
 Texture WLF0001B, 64, 64 {Patch WALL0001, 0, 0}
@@ -448,7 +451,7 @@ Texture Optional WLF3JMBB, 64, 64 {Graphic WALL2129, 0, 0}
 Texture Optional WLF3LK1A, 64, 64 {Graphic WALL2132, 0, 0 {FlipX}}
 Texture Optional WLF3LK1B, 64, 64 {Graphic WALL2133, 0, 0}
 
-//Alternate Locked Doors
+// Alternate Locked Doors
 Texture Optional WLF0LK2A, 64, 64 {Graphic WALL0104, 0, 0 {FlipX}}
 Texture Optional WLF0LK2B, 64, 64 {Graphic WALL0105, 0, 0}
 Texture Optional WLF1LK2A, 64, 64 {Graphic WALL0104, 0, 0 {FlipX}}
@@ -458,7 +461,7 @@ Texture Optional WLF2LK2B, 64, 64 {Graphic WALL2133, 0, 0}
 Texture Optional WLF3LK2A, 64, 64 {Graphic WALL2132, 0, 0 {FlipX}}
 Texture Optional WLF3LK2B, 64, 64 {Graphic WALL2133, 0, 0}
 
-//Flipped Walls
+// Flipped Walls
 Texture Optional WLF0DORC, 64, 64 {Graphic WALL0098, 0, 0}
 Texture Optional WLF0DORD, 64, 64 {Graphic WALL0099, 0, 0 {FlipX}}
 Texture Optional WLF0ELEC, 64, 64 {Graphic WALL0102, 0, 0}
@@ -1017,7 +1020,7 @@ Sprite GHO3B0, 64, 64 {Offset 32, 64 Patch WSPR0293, 0, 0}
 Sprite GHO0A0, 64, 64 {Offset 32, 64 Patch WSPR0294, 0, 0}
 Sprite GHO0B0, 64, 64 {Offset 32, 64 Patch WSPR0295, 0, 0}
 
-//Running BJ
+// Running BJ
 Sprite BJJUA0, 64, 64 {Offset 32, 64 Patch WSPR0408, 0, 0}
 Sprite BJJUB0, 64, 64 {Offset 32, 64 Patch WSPR0409, 0, 0}
 Sprite BJJUC0, 64, 64 {Offset 32, 64 Patch WSPR0410, 0, 0}
@@ -1105,7 +1108,7 @@ Texture FONT055, 8, 16 {Patch WVGA0106, 0, 0}
 Texture FONT056, 8, 16 {Patch WVGA0107, 0, 0}
 Texture FONT057, 8, 16 {Patch WVGA0108, 0, 0}
 
-//Status Bar Face
+// Status Bar Face
 Texture WLFST00, 24, 32 {Patch WVGA0109, 0, 0}
 Texture WLFST01, 24, 32 {Patch WVGA0110, 0, 0}
 Texture WLFST02, 24, 32 {Patch WVGA0111, 0, 0}
@@ -1199,14 +1202,14 @@ Texture TITLEPIC, 320, 200 { Patch WVGA0087, 0, 0 }
 Texture WARNING, 320, 200 { Patch WVGA0088, 0, 0 }
 Texture CREDIT, 320, 200 { Patch WVGA0089, 0, 0 }
 
-//Pause Image
+// Pause Image
 Texture W_PAUSE, 64, 32
 {
 	Offset 0, 0
 	Patch WVGA0133, 0, 0
 }
 
-//Get Psyched Bar
+// Get Psyched Bar
 Texture PSYCH, 224, 48 { Patch WVGA0134, 0, 0 }
 
 // Help and Episode End Screens
@@ -1227,7 +1230,7 @@ Texture SKILL2, 24, 32 {Patch WVGA0020, 0, 0}
 Texture SKILL3, 24, 32 {Patch WVGA0021, 0, 0}
 Texture SKILL4, 24, 32 {Patch WVGA0022, 0, 0}
 
-//Episode images
+// Episode images
 Texture EPISODE1, 48, 24 {Patch WVGA0030, 0, 0}
 Texture EPISODE2, 48, 24 {Patch WVGA0031, 0, 0}
 Texture EPISODE3, 48, 24 {Patch WVGA0032, 0, 0}
@@ -1297,7 +1300,7 @@ Sprite CCGUC0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0433, 0, 0}
 Sprite CCGUD0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0434, 0, 0}
 Sprite CCGUE0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0435, 0, 0}
 
-//Lost Episodes
+// Lost Episodes
 Sprite Optional KNILA0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Graphic WSPR2401, 0, 0}
 Sprite Optional KNILB0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Graphic WSPR2402, 0, 0}
 Sprite Optional KNILC0, 64, 64 {Offset -32, 6 XScale 0.4 YScale 0.4 Graphic WSPR2403, 0, 0}
@@ -1559,7 +1562,7 @@ Sprite Optional WWH2G0, 64, 64 {Offset 32, 64 Graphic WSPR2289, 0, 0}
 Sprite Optional WWH2H0, 64, 64 {Offset 32, 64 Graphic WSPR2290, 0, 0}
 Sprite Optional WWH2I0, 64, 64 {Offset 32, 64 Graphic WSPR2291, 0, 0}
 
-//SoD Bosses
+// SoD Bosses
 Sprite Optional WBO2A0, 64, 64 {Offset 32, 64 Graphic WSPR1326, 0, 0}
 Sprite Optional WBO2B0, 64, 64 {Offset 32, 64 Graphic WSPR1327, 0, 0}
 Sprite Optional WBO2C0, 64, 64 {Offset 32, 64 Graphic WSPR1328, 0, 0}
@@ -1641,7 +1644,7 @@ Sprite Optional WB10P0, 64, 64 {Offset 32, 64 Graphic WSPR1398, 0, 0}
 Sprite Optional WB10Q0, 64, 64 {Offset 32, 64 Graphic WSPR1399, 0, 0}
 Sprite Optional WB10R0, 64, 64 {Offset 32, 64 Graphic WSPR1400, 0, 0}
 
-//Lost Episodes Bosses
+// Lost Episodes Bosses
 Sprite Optional LBO2A0, 64, 64 {Offset 32, 64 Graphic WSPR2326, 0, 0}
 Sprite Optional LBO2B0, 64, 64 {Offset 32, 64 Graphic WSPR2327, 0, 0}
 Sprite Optional LBO2C0, 64, 64 {Offset 32, 64 Graphic WSPR2328, 0, 0}
@@ -1758,14 +1761,14 @@ Texture Optional SSKILL2, 24, 32 { Patch WVGA1022, 0, 0 }
 Texture Optional SSKILL3, 24, 32 { Patch WVGA1023, 0, 0 }
 Texture Optional SSKILL4, 24, 32 { Patch WVGA1024, 0, 0 }
 
-//Credits Screen
+// Credits Screen
 Texture Optional SCREDIT, 320, 200 { Patch WVGA1092, 0, 0 }
 
-//High Scores Screen
+// High Scores Screen
 Texture Optional SSCORES, 320, 72 { Patch WVGA1029, 0, 0 }
 Texture Optional SODICON, 16, 16 { Patch WVGA1030, 0, 0 }
 
-//Status Bar Face
+// Status Bar Face
 Texture Optional WLFGOD0, 24, 32 { Patch WVGA1142, 0, 0}
 Texture Optional WLFGOD1, 24, 32 { Patch WVGA1143, 0, 0}
 Texture Optional WLFGOD2, 24, 32 { Patch WVGA1144, 0, 0}
@@ -1775,7 +1778,7 @@ Texture Optional WLFSTT2, 24, 32 { Patch WVGA1146, 0, 0}
 
 Texture Optional WLFSCRM, 24, 32 { Patch WVGA1147, 0, 0}
 
-//Finale
+// Finale
 Texture Optional SODEND1, 72, 72 { Patch WVGA1031, 0, 0 }
 Texture Optional SODEND2, 72, 72 { Patch WVGA1032, 0, 0 }
 Texture Optional SODEND3, 72, 72 { Patch WVGA1033, 0, 0 }
@@ -1783,5 +1786,15 @@ Texture Optional SODEND4, 72, 72 { Patch WVGA1034, 0, 0 }
 Texture Optional SODEND5, 320, 200 { Patch WVGA1081, 0, 0 }
 Texture Optional SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }
 
+// Console background canvas
 Texture CONBACK, 800, 500 {}
-Texture g_sod, 1, 1 {}
+
+// Frame borders
+Texture M_BORTL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, 0 }
+Texture M_BORT, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, 0 }
+Texture M_BORTR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -6, 0 }
+Texture M_BORL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, -3 }
+Texture M_BORR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -3 }
+Texture M_BORBL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, -6 }
+Texture M_BORB, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -6 }
+Texture M_BORBR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -6, -6 }
