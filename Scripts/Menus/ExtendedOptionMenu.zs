@@ -204,7 +204,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			{
 				if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemSubmenu")
 				{
-					if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemSafeCommand")
+					if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemCommand")
 					{
 						nodim = true;
 						return Super.MenuEvent(Menu.MKEY_Enter, false);
