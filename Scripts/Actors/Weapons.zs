@@ -224,8 +224,7 @@ class WolfKnife : ClassicWeapon
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
-} 
-
+}
 
 class WolfPistol : ClassicWeapon
 {
@@ -253,7 +252,7 @@ class WolfPistol : ClassicWeapon
 			Goto Super::Select;
 		Fire:
 			"####" B 2;
-			"####" C 3 BRIGHT A_FireGun(2.0);
+			"####" C 3 Bright A_FireGun(2.0);
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
@@ -288,7 +287,7 @@ class WolfMachineGun : ClassicWeapon
 			"####" B 2;
 		Hold:
 			"####" W 0;
-			"####" C 3 BRIGHT A_FireGun(3.0);
+			"####" C 3 Bright A_FireGun(3.0);
 			"####" D 3;
 			"####" D 0 A_ReFire;
 			"####" E 3;
@@ -323,7 +322,7 @@ class WolfChaingun : ClassicWeapon
 		Fire:
 			"####" AB 2;
 		Hold:
-			"####" CD 3 BRIGHT A_FireGun(4.0);
+			"####" CD 3 Bright A_FireGun(4.0);
 			"####" A 0 A_ReFire;
 			"####" E 2;
 			"####" A 0 A_Jump(256, "Ready");
@@ -342,6 +341,7 @@ class WolfChaingunSoD : WolfChaingun
 	Default
 	{
 		Inventory.PickupSound "pickups/cgunsod";
+		+Weapon.CHEATNOTWEAPON
 	}
 }
 
@@ -350,6 +350,7 @@ class WolfKnifeLost : WolfKnife
 	Default
 	{
 		Weapon.SlotPriority 2;
+		+Weapon.CHEATNOTWEAPON
 	}
 
 	States
@@ -366,6 +367,7 @@ class WolfPistolLost : WolfPistol
 	{
 		AttackSound "weapons/wpistol2";
 		Weapon.SlotPriority 2;
+		+Weapon.CHEATNOTWEAPON
 	}
 
 	States
@@ -382,6 +384,7 @@ class WolfMachineGunLost : WolfMachineGun
 	{
 		AttackSound "weapons/wmachinegun2";
 		Weapon.SlotPriority 2;
+		+Weapon.CHEATNOTWEAPON
 	}
 
 	States
@@ -402,6 +405,7 @@ class WolfChaingunLost : WolfChaingun
 		Inventory.PickupSound "pickups/cgunlost";
 		AttackSound "weapons/wchaingun2";
 		Weapon.SlotPriority 2;
+		+Weapon.CHEATNOTWEAPON
 	}
 
 	States
@@ -412,5 +416,137 @@ class WolfChaingunLost : WolfChaingun
 		Ready:
 			CGUL A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
+	}
+}
+
+class WolfGas : Ammo
+{
+	Default
+	{
+		Mass 10000;
+		Inventory.Amount 14;
+		Inventory.Icon "WGASA0";
+		Inventory.MaxAmount 99;
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickups/ammo";
+		Ammo.BackpackAmount 2;
+		Ammo.BackpackMaxAmount 99;
+	}
+
+	States
+	{
+		Spawn:
+			WGAS A -1;
+			Loop;
+	}
+}
+
+class WolfFlameThrower : ClassicWeapon
+{
+	Default
+	{
+		Scale 0.2;
+		Inventory.Icon "FTHR";
+		Inventory.PickupSound "pickups/ammo";
+		Weapon.AmmoType "WolfGas";
+		Weapon.AmmoGive 6;
+		Weapon.AmmoUse 1;
+		Weapon.SelectionOrder 1;
+		Weapon.SlotNumber 5;
+		Weapon.YAdjust 17;
+		+Weapon.CHEATNOTWEAPON
+	}
+
+	States
+	{
+		Spawn:
+			FLAM P -1;
+			Loop;
+		Ready:
+			WFLM A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Select:
+			"####" A 0;
+			Goto Super::Select;
+		Fire:
+			WFLM B 2;
+		Hold:
+			WFLM CD 3 Bright A_FireProjectile("WolfFlame", 0, 1, 0, -8);
+			WFLM # 0 A_ReFire;
+			Goto Ready;
+	}
+} 
+
+class WolfRocketPickup : Ammo
+{
+	Default
+	{
+		Mass 10000;
+		Inventory.Amount 1;
+		Inventory.Icon "WRKTA0";
+		Inventory.MaxAmount 99;
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickups/ammo";
+		Ammo.BackpackAmount 5;
+		Ammo.BackpackMaxAmount 99;
+	}
+
+	States
+	{
+		Spawn:
+			WRKT A -1;
+			Loop;
+	}
+}
+
+class WolfRocketCrate : WolfRocketPickup
+{
+	Default
+	{
+		Inventory.Amount 5;
+	}
+
+	States
+	{
+		Spawn:
+			WRKT B -1;
+			Loop;
+	}
+}
+
+class WolfRocketLauncher : ClassicWeapon
+{
+	Default
+	{
+		AttackSound "flame/fire";
+		Scale 0.2;
+		Inventory.Icon "ROCK";
+		Inventory.PickupSound "pickups/ammo";
+		Weapon.AmmoType "WolfRocketPickup";
+		Weapon.AmmoGive 6;
+		Weapon.AmmoUse 1;
+		Weapon.YAdjust 17;
+		Weapon.SelectionOrder 5;
+		Weapon.SlotNumber 6;
+		+Weapon.CHEATNOTWEAPON
+		+WEAPON.EXPLOSIVE
+	}
+
+	States
+	{
+		Spawn:
+			WROC P -1;
+			Loop;
+		Ready:
+			WROC A 1 A_WeaponReady(WRF_NOBOB);
+			Loop;
+		Fire:
+			WROC B 3;
+		Hold:
+			WROC B 2 Bright A_FireProjectile("WolfRocketPlayer", 0, 1, 0, -8);
+			WROC C 10;
+			WROC D 25;
+			WROC D 5 A_ReFire;
+			Goto Ready;
 	}
 }

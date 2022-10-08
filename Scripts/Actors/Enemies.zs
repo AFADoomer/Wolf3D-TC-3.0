@@ -1286,6 +1286,10 @@ class TheAxe : UberMutant
 
 class DeathKnight : ClassicBoss
 {
+	Class<Actor> projectile;
+
+	Property Projectile:projectile;
+
 	Default
 	{
 		//$Title Death Knight
@@ -1299,6 +1303,8 @@ class DeathKnight : ClassicBoss
 		ClassicBase.BaseSprite "WBO7";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 1250, 1350, 1450, 1600;
+
+		DeathKnight.Projectile "WolfRocketSoD";
 	}
 
 	States
@@ -1313,10 +1319,10 @@ class DeathKnight : ClassicBoss
 			Loop;
 		Missile:
 			"####" F 15 A_FaceTarget;
-			"####" G 5 BRIGHT A_SpawnProjectile("WolfRocketSoD", 48, 15, 0);
+			"####" G 5 BRIGHT A_SpawnProjectile(projectile, 48, 15, 0);
 			"####" I 5 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
 			"####" I 0 A_FaceTarget;
-			"####" H 5 BRIGHT A_SpawnProjectile("WolfRocketSoD", 48, -15, 0);
+			"####" H 5 BRIGHT A_SpawnProjectile(projectile, 48, -15, 0);
 			"####" I 5 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
@@ -1345,6 +1351,8 @@ class RobotDroid : DeathKnight
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LBO7";
+
+		DeathKnight.Projectile "WolfRocketLost";
 	}
 }
 

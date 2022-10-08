@@ -52,7 +52,7 @@ class WolfPlayer : DoomPlayer
 			PLAY E 12;
 			Goto Spawn;
 		Melee:
-			PLAY F 6 BRIGHT;
+			PLAY F 6 Bright;
 			Goto Missile;
 		Pain:
 			PLAY G 4;

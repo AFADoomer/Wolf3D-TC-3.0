@@ -1253,6 +1253,11 @@ DoomEdNums
 	21068=Stove
 	21069=SpearRack
 	21070=HangingVines
+	21075=WolfRocketPickup
+	21076=WolfRocketCrate
+	21078=WolfGas
+	21080=WolfFlameThrower
+	21081=WolfRocketLauncher
 	21124=DeadGuard
 
 	// SoD

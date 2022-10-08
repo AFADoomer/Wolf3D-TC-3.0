@@ -98,7 +98,7 @@ class FloorLamp : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT1 A -1 BRIGHT;
+			LIT1 A -1 Bright;
 			Stop;
 	}
 } 
@@ -116,7 +116,7 @@ class HangingChandelier : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT3 A -1 BRIGHT;
+			LIT3 A -1 Bright;
 			Stop;
 	}
 } 
@@ -279,7 +279,7 @@ class GreenCeilingLight : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT5 A -1 BRIGHT;
+			LIT5 A -1 Bright;
 			Stop;
 	}
 }
@@ -1038,7 +1038,7 @@ class FloorLampLost : FloorLamp
 	States
 	{
 		Spawn:
-			LIT2 A -1 BRIGHT;
+			LIT2 A -1 Bright;
 			Stop;
 	}
 } 
@@ -1048,7 +1048,7 @@ class HangingChandelierLost : HangingChandelier
 	States
 	{
 		Spawn:
-			LIT4 A -1 BRIGHT;
+			LIT4 A -1 Bright;
 			Stop;
 	}
 } 
@@ -1148,7 +1148,7 @@ class GreenCeilingLightLost : GreenCeilingLight
 	States
 	{
 		Spawn:
-			LIT6 A -1 BRIGHT;
+			LIT6 A -1 Bright;
 			Stop;
 	}
 }
@@ -1398,7 +1398,7 @@ class RedCeilingLightLost : AardwolfSign
 	States
 	{
 		Spawn:
-			LIT7 A -1 BRIGHT;
+			LIT7 A -1 Bright;
 			Stop;
 	}
 }

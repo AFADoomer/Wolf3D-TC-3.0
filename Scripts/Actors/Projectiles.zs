@@ -3,6 +3,10 @@
 // Wolf3D Rocket
 class WolfRocketBase : Actor
 {
+	Class<Actor> smoke;
+
+	Property smoke:smoke;
+
 	Default
 	{
 		Projectile;
@@ -10,13 +14,15 @@ class WolfRocketBase : Actor
 		Speed 14;
 		SeeSound "missile/fire";
 		DeathSound "missile/hit";
+
+		WolfRocketBase.Smoke "WolfRocketSmoke";
 	}
 
 	States
 	{
 		Spawn:
 			MISL A 1 Bright;
-			MISL A 1 Bright A_SpawnItemEx("WolfRocketSmoke", 0, 0, 0);
+			MISL A 1 Bright A_SpawnItemEx(smoke, 0, 0, 0);
 			Loop;
 		Death:
 			BAL3 CDE 4 Bright A_Explode(16, 32, 1);
@@ -40,6 +46,31 @@ class WolfRocketSOD : WolfRocket
 	}
 }
 
+class WolfRocketLost : WolfRocketSoD
+{
+	Default
+	{
+		WolfRocketBase.Smoke "WolfRocketSmokeLost";
+	}
+}
+
+class WolfRocketPlayer : WolfRocketBase
+{
+	Default
+	{
+		Speed 20;
+		Damage 20;
+		+RANDOMIZE
+	}
+
+	States
+	{
+		Death:
+			BAL3 CDE 4 Bright A_Explode();
+			Stop;
+	}
+}
+
 class WolfRocketSmoke : Actor
 {
 	Default
@@ -60,6 +91,19 @@ class WolfRocketSmoke : Actor
 			RTRL ABC 2;
 		Death:
 			RTRL D 2;
+			Stop;
+	}
+}
+
+class WolfRocketSmokeLost : WolfRocketSmoke
+{
+	States
+	{
+		Spawn:
+			TNT1 A 3;
+			RTRL EFG 2;
+		Death:
+			RTRL H 2;
 			Stop;
 	}
 }
@@ -108,7 +152,7 @@ class GhostFireBallBase : Actor
 			BAL3 AB 4 Bright;
 			Loop;
 		Death:
-			BAL3 A 0 Bright A_Explode (16, 16, 1);
+			BAL3 A 0 Bright A_Explode(16, 16, 1);
 			Stop;
 	}
 }
@@ -134,6 +178,24 @@ class FastGhostFireBall : GhostFireball
 	}
 }
 
+class WolfFlame : GhostFireballBase
+{
+	Default
+	{
+		Speed 25;
+		Damage 5;
+		-MTHRUSPECIES
+	}
+
+	States
+	{
+		Death:
+			BAL3 CDE 4 Bright;
+			Stop;
+	}
+}
+
+
 class SoDFireballBase : Actor
 {
 	Default
@@ -150,10 +212,10 @@ class SoDFireballBase : Actor
 		Spawn:
 			TNT1 A 0;
 		Fly:
-			"####" ABCD 3 BRIGHT;
+			"####" ABCD 3 Bright;
 			Loop;
 		Death:
-			"####" ABCD 1 BRIGHT A_Explode(20, 16, 1);
+			"####" ABCD 1 Bright A_Explode(20, 16, 1);
 			Stop;
 	}
 }
