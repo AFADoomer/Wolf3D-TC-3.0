@@ -6,6 +6,7 @@ server int g_momentum = 0;
 server int g_maxpushwallmove = 2;
 server int g_fastfireballs = 1;
 server int g_noblood = 1;
+server int g_defaultmenus = 0;
 
 user int g_borderstyle = 0;
 

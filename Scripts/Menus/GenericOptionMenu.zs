@@ -78,6 +78,12 @@ class GenericOptionMenu : OptionMenu
 
 	override void Drawer()
 	{
+		if (g_defaultmenus)
+		{
+			OptionMenu.Drawer();
+			return;
+		}
+
 		DrawMenu(20, 20);
 	}
 
@@ -219,6 +225,11 @@ class GenericOptionMenu : OptionMenu
 
 	override bool MouseEvent(int type, int x, int y)
 	{
+		if (g_defaultmenus)
+		{
+			return OptionMenu.MouseEvent(type, x, y);
+		}
+
 		y /= CleanYfac_1;
 		x /= CleanXfac_1;
 
@@ -384,7 +395,7 @@ class GenericOptionMenu : OptionMenu
 		if (fracdigits >= 0 && right + maxlen <= screen.GetWidth())
 		{
 			textbuf = String.format(formater, cur);
-			DrawOptionText(textbuf, right + 4 * CleanXfac_1, y, fnt, OptionMenuSettings.mFontColorHighlight);
+			DrawOptionText(textbuf, right + 4 * CleanXfac_1, y, fnt, HighlightColor());
 		}
 
 		return right;
@@ -423,12 +434,12 @@ class GenericOptionMenu : OptionMenu
 		text = StringTable.Localize("$" .. lookup);
 		if (text == lookup) { return 0; }
 
-		return DrawOptionText(text, x, y, fnt, OptionMenuSettings.mFontColor, false, captionalpha * alpha, breakwidth);
+		return DrawOptionText(text, x, y, fnt, TextColor(), false, captionalpha * alpha, breakwidth);
 	}
 
 	virtual void DrawPath(String title, int x, int y, Font fnt = null)
 	{
-		DrawOptionText(title, x + 10, 20, fnt, OptionMenuSettings.mTitleColor);
+		DrawOptionText(title, x + 10, 20, fnt, TitleColor());
 	}
 
 	virtual ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1)
@@ -439,7 +450,7 @@ class GenericOptionMenu : OptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? OptionMenuSettings.mFontColorHighlight : (isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor), false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), false, 1.0, breakwidth);
 
 		String Description;
 		int Key1, Key2;
@@ -453,7 +464,7 @@ class GenericOptionMenu : OptionMenu
 		info.width = spacing + OptionWidth(description, fnt);
 		info.valueright = x + info.width;
 
-		height = max(DrawValue(description, x, y, spacing, fnt, OptionMenuSettings.mFontColorHighlight), height);
+		height = max(DrawValue(description, x, y, spacing, fnt, HighlightColor()), height);
 
 		info.height = height;
 
@@ -468,7 +479,7 @@ class GenericOptionMenu : OptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, this.isGrayed(), 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
 
 		int Selection = this.GetSelection();
 		String text = StringTable.Localize(OptionValues.GetText(this.mValues, Selection));
@@ -480,11 +491,11 @@ class GenericOptionMenu : OptionMenu
 
 		if (this is "os_AnyOrAllOption")
 		{
-			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, OptionMenuSettings.mFontColorValue, this.isGrayed()), height);	
+			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, ValueColor(), this.isGrayed()), height);	
 		}
 		else
 		{
-			height = max(DrawValue(text, x, y, spacing, fnt, OptionMenuSettings.mFontColorValue, this.isGrayed()), height);
+			height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), this.isGrayed()), height);
 		}
 
 		info.height = height;
@@ -500,7 +511,7 @@ class GenericOptionMenu : OptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
 
 		info.valueleft = x + spacing;
 
@@ -514,7 +525,7 @@ class GenericOptionMenu : OptionMenu
 				info.width = OptionWidth(text, fnt);
 				info.valueright = info.valueleft + info.width;
 
-				height = max(DrawValue(text, x, y, spacing, fnt, OptionMenuSettings.mFontColorValue), height);
+				height = max(DrawValue(text, x, y, spacing, fnt, ValueColor()), height);
 			}
 			else
 			{
@@ -548,7 +559,7 @@ class GenericOptionMenu : OptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mLabel);
-		info.height = DrawOptionText(label, x, y, fnt, OptionMenuSettings.mTitleColor);
+		info.height = DrawOptionText(label, x, y, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 		
@@ -562,7 +573,7 @@ class GenericOptionMenu : OptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, x, y, fnt, Font.FindFontColor("WolfMenuYellowBright"));
+		info.height = DrawOptionText(label, x, y, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -580,7 +591,7 @@ class GenericOptionMenu : OptionMenu
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
 
-		height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
 
 		if (this.mCVar != null)
 		{
@@ -619,7 +630,7 @@ class GenericOptionMenu : OptionMenu
 		info.y = y;
 
 		String label = Stringtable.Localize(item.mLabel);
-		info.height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, false, 1.0, breakwidth);
+		info.height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -641,7 +652,7 @@ class GenericOptionMenu : OptionMenu
 		String label = Stringtable.Localize(item.mLabel);
 		bool grayed = item.mGrayCheck && !item.mGrayCheck.GetInt();
 
-		height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, grayed);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), grayed);
 
 		info.valueleft = x + spacing;
 
@@ -661,12 +672,12 @@ class GenericOptionMenu : OptionMenu
 
 			if (item is "os_SearchField")
 			{
-				height = max(DrawValue(text, fnt.StringWidth(label), y, spacing, fnt, OptionMenuSettings.mFontColorValue, grayed), height);
+				height = max(DrawValue(text, fnt.StringWidth(label), y, spacing, fnt, ValueColor(), grayed), height);
 			}
 			else
 			{
 //				spacing = max(spacing, CleanWidth_1 - tlen - 10);
-				height = max(DrawValue(text, x, y, spacing, fnt, OptionMenuSettings.mFontColorValue, grayed), height);
+				height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), grayed), height);
 			}
 		}
 		else
@@ -676,7 +687,7 @@ class GenericOptionMenu : OptionMenu
 			info.width = OptionWidth(text, fnt);
 			info.valueright = info.valueleft + info.width;
 
-			height = max(DrawValue(text, x, y, spacing, fnt, OptionMenuSettings.mFontColorValue, grayed), height);
+			height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), grayed), height);
 		}
 
 		info.height = height;
@@ -693,7 +704,7 @@ class GenericOptionMenu : OptionMenu
 		int height = DrawCaption(item, x, y, spacing, fnt, 0.6, Screen.GetWidth() - 20 - spacing);
 
 		String label = Stringtable.Localize(item.mLabel);
-		height = max(DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, false, 1.0, breakwidth), height);
+		height = max(DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth), height);
 
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
@@ -740,19 +751,45 @@ class GenericOptionMenu : OptionMenu
 	virtual void DrawCursor(int x, int y)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawText(NewSmallFont, OptionMenuSettings.mFontColorSelection, x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true);
+		screen.DrawText(NewSmallFont, SelectionColor(true), x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true);
 	}
 
 	virtual void DrawScrollArrows(int x, int ytop, int ybottom)
 	{
 		if (CanScrollUp)
 		{
-			screen.DrawText(NewSmallFont, OptionMenuSettings.mFontColorSelection, x, ytop, "▲", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, SelectionColor(true), x, ytop, "▲", DTA_Alpha, alpha);
 		}
 		if (CanScrollDown)
 		{
-			screen.DrawText(NewSmallFont, OptionMenuSettings.mFontColorSelection, x, ybottom, "▼", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, SelectionColor(true), x, ybottom, "▼", DTA_Alpha, alpha);
 		}
+	}
+
+	virtual int TextColor()
+	{
+		return OptionMenuSettings.mFontColor;
+	}
+
+	virtual int ValueColor()
+	{
+		return OptionMenuSettings.mFontColorValue;
+	}
+
+	virtual int SelectionColor(bool selected = false)
+	{
+		if (selected) { return OptionMenuSettings.mFontColorSelection; }
+		return OptionMenuSettings.mFontColor;
+	}
+
+	virtual int TitleColor()
+	{
+		return OptionMenuSettings.mTitleColor;
+	}
+
+	virtual int HighlightColor()
+	{
+		return OptionMenuSettings.mFontColorHighlight;
 	}
 }
 

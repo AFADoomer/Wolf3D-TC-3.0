@@ -129,7 +129,7 @@ ListMenu "SaveGameMenu"
 
 OptionMenu "TCOptions"
 {
-	Title "Control"
+	Title "CONTROL"
 
 	SubMenu "Game Engine Options",				"OptionsMenu"
 	StaticText ""

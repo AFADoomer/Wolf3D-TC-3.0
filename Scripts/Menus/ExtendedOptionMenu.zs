@@ -63,6 +63,11 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
+		if (g_defaultmenus)
+		{
+			return OptionMenu.MenuEvent(mkey, fromcontroller);
+		}
+
 		if (alpha != 1.0) { return false; }
 
 		int startedAt = mDesc.mSelectedItem;
@@ -239,6 +244,12 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void Drawer()
 	{
+		if (g_defaultmenus)
+		{
+			OptionMenu.Drawer();
+			return;
+		}
+
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
 		Draw(self, "ExtendedOptionMenu");
@@ -271,7 +282,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 				let tt = Stringtable.Localize(mDesc.mTitle);
 				tt = tt.MakeUpper();
-				screen.DrawText (BigFont, OptionMenuSettings.mTitleColor,
+				screen.DrawText (BigFont, TitleColor(),
 					(screen.GetWidth() - BigFont.StringWidth(tt) * CleanXfac_1) / 2, y,
 					tt, DTA_CleanNoMove_1, true);
 
@@ -423,7 +434,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 			int height = 0;
 			String label = Stringtable.Localize(this.mLabel);
-			height = DrawOptionText(label, x, y, fnt, isSelected ? OptionMenuSettings.mFontColorSelection : OptionMenuSettings.mFontColor, this.isGrayed(), 1.0, breakwidth);
+			height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
 
 			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha);
 
@@ -454,7 +465,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			if (i < mDesc.mScrollTop) { return null; }
 		}
 
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y, fnt, OptionMenuSettings.mTitleColor);
+		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -468,7 +479,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y - 16, fnt, Font.FindFontColor("WolfMenuYellowBright"));
+		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y - 16, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -492,12 +503,52 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (!source) { source = self; }
 		if (source.CanScrollUp)
 		{
-			screen.DrawText(NewSmallFont, Font.FindFontColor("WolfMenuYellowBright"), x - 16, ytop, "▲", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 16, ytop, "▲", DTA_Alpha, alpha);
 		}
 		if (source.CanScrollDown)
 		{
-			screen.DrawText(NewSmallFont, Font.FindFontColor("WolfMenuYellowBright"), x - 16, ybottom, "▼", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 16, ybottom, "▼", DTA_Alpha, alpha);
 		}
+	}
+
+	override int TextColor()
+	{
+		if (g_defaultmenus) { return Super.TextColor(); }
+
+		return Font.FindFontColor("TrueWhite");
+	}
+
+	override int ValueColor()
+	{
+		if (g_defaultmenus) { return Super.ValueColor(); }
+
+		return Font.FindFontColor("TrueWhite");
+	}
+
+	override int SelectionColor(bool selected)
+	{
+		if (g_defaultmenus)
+		{
+			return Super.SelectionColor(selected);
+		}
+
+		if (selected) { return Font.FindFontColor("WolfMenuLightGray"); }
+
+		return Font.FindFontColor("WolfMenuGray");
+	}
+
+	override int TitleColor()
+	{
+		if (g_defaultmenus) { return Super.TitleColor(); }
+
+		return Font.FindFontColor("WolfMenuYellow");
+	}
+
+	override int HighlightColor()
+	{
+		if (g_defaultmenus) { return Super.HighlightColor(); }
+
+		return Font.FindFontColor("WolfMenuWhite");
 	}
 }
 
