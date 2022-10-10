@@ -195,6 +195,7 @@ class WolfKnife : ClassicWeapon
 	{
 		+Weapon.NoAlert
 		AttackSound "";
+		Tag "$WPN_KNIFE";
 		Inventory.Icon "KNIFE";
 		Weapon.AmmoUse 0;
 		Weapon.SelectionOrder 4;
@@ -231,6 +232,7 @@ class WolfPistol : ClassicWeapon
 	Default
 	{
 		AttackSound "weapons/wpistol";
+		Tag "$WPN_PISTOL";
 		Inventory.Icon "LUGER";
 		Inventory.PickupSound "pickups/ammo";
 		Weapon.AmmoType "WolfClip";
@@ -263,6 +265,7 @@ class WolfMachineGun : ClassicWeapon
 	Default
 	{
 		AttackSound "weapons/wmachinegun";
+		Tag "$WPN_MGUN";
 		Inventory.Icon "MGUN";
 		Inventory.PickupSound "pickups/MGUN";
 		Weapon.AmmoType "WolfClip";
@@ -300,6 +303,7 @@ class WolfChaingun : ClassicWeapon
 	Default
 	{
 		AttackSound "weapons/wchaingun";
+		Tag "$WPN_CGUN";
 		Inventory.Icon "CGUN";
 		Inventory.PickupSound "pickups/CGUN";
 		Weapon.AmmoType "WolfClip";
@@ -446,6 +450,7 @@ class WolfFlameThrower : ClassicWeapon
 	Default
 	{
 		Scale 0.2;
+		Tag "$WPN_FTHR";
 		Inventory.Icon "FTHR";
 		Inventory.PickupSound "pickups/ammo";
 		Weapon.AmmoType "WolfGas";
@@ -520,6 +525,7 @@ class WolfRocketLauncher : ClassicWeapon
 	{
 		AttackSound "flame/fire";
 		Scale 0.2;
+		Tag "$WPN_ROCK";
 		Inventory.Icon "ROCK";
 		Inventory.PickupSound "pickups/ammo";
 		Weapon.AmmoType "WolfRocketPickup";
