@@ -1,12 +1,21 @@
 gameinfo
 {
 	playerclasses = "WolfPlayer"
+
 	quitmessages = "$QUITMSG1", "$QUITMSG2", "$QUITMSG3", "$QUITMSG4", "$QUITMSG5", "$QUITMSG6", "$QUITMSG7", "$QUITMSG8", "$QUITMSG9"
+
 	endoom = "EndWolf"
+
 	cursorpic = "W_CURSOR"
+	pausesign = "W_PAUSE"
+
 	borderflat = "GREEN"
 	border = 3, 3, "M_BORTR", "M_BORT", "M_BORTL", "M_BORR", "M_BORL", "M_BORBR", "M_BORB", "M_BORBL"
+
 	dimamount = 0.0
+
+	// These colors are used for fallback default menus;  internal menu code 
+	// assigns colors in code that are used for Wolf3D-style menu screens
 	menufontcolor_title = "WolfMenuYellow"
 	menufontcolor_label = "DarkGray"
 	menufontcolor_value = "White"
@@ -14,17 +23,16 @@ gameinfo
 	menufontcolor_header = "Ice"
 	menufontcolor_highlight = "White"
 	menufontcolor_selection = "Gray"
+
 	menuslidercolor = "WolfMenuYellowBright"
 	menubackbutton = "M_BACK_W"
-	pausesign = "W_PAUSE"
-	skyflatname = "CEILING" 
-	drawreadthis = true
 
+	drawreadthis = true
 	maparrow = "maparrows/knife.txt"
 
 	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler"
-	statusbarclass = "ClassicStatusBar"
 
+	statusbarclass = "ClassicStatusBar"
 	StatScreen_Single = "ClassicStats"
 	MessageboxClass = "ClassicMessageBox"
 }
@@ -73,7 +81,6 @@ defaultmap
 	NoFreeLook
 	No_Grinding_Polyobj
 	InterMusic = ENDLEVEL
-	Sky1 = "Ceiling"
 	Cluster = 1
 }
 
@@ -120,6 +127,8 @@ episode E6L1
 	key = "c"
 }
 
+// These are hidden in code, but are used to set up the "episodes" in internal code so
+// that that the "Game selection" screen can be used to select/launch each level set
 episode SOD01 {}
 episode SD201 {}
 episode SD301 {}
@@ -1140,6 +1149,9 @@ map SD321 "$SD321"
 
 DoomEdNums
 {
+	// Compatibility
+	20000=CompatibilityPlaceholder
+
 	// Enemies
 	20002=Guard
 	22002=GreenGuard

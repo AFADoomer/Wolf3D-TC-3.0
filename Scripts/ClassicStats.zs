@@ -427,8 +427,12 @@ class ClassicStats : DoomStatusScreen
 
 		[Weapon, classicweapon] =  WeaponIcon();
 
-		levelnum = String.Format("%i", level.levelnum % 100);
-		if (levelnum == "0") { levelnum = "10"; }
+		levelnum = String.Format("%i", level.levelnum);
+		if (level.levelnum > 100)
+		{
+			levelnum = String.Format("%i", level.levelnum % 100);
+			if (levelnum == "0") { levelnum = "10"; }
+		}
 
 		points = GetScore();
 		lives = LifeHandler.GetLives(players[me].mo);

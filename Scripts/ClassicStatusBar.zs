@@ -164,9 +164,13 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(ClassicFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
 
 		//Level
-		String levelnum = String.Format("%i", level.levelnum % 100);
+		String levelnum = String.Format("%i", level.levelnum);
+		if (level.levelnum > 100)
+		{
+			levelnum = String.Format("%i", level.levelnum % 100);
+			if (levelnum == "0") { levelnum = "10"; }
+		}
 
-		if (levelnum == "0") { levelnum = "10"; }
 		DrawString(ClassicFont, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
@@ -258,18 +262,18 @@ class ClassicStatusBar : BaseStatusBar
 
 		if (CPlayer.health > 0)
 		{
-			int level = 0;
+			int hlevel = 0;
 
 			int maxhealth = CPlayer.mo.mugshotmaxhealth > 0 ? CPlayer.mo.mugshotmaxhealth : CPlayer.mo.maxhealth;
 			if (maxhealth <= 0) { maxhealth = 100; }
 
-			while (CPlayer.health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
+			while (CPlayer.health < (accuracy - 1 - hlevel) * (maxhealth / accuracy)) { hlevel++; }
 
 			int index = Random[mugshot](0, 255) >> 6;
 			if (index == 3) { index = 1; }
 
 			// SoD-specific god face
-			if (Game.IsSod())
+			if (Game.IsSod() || level.levelnum < 101)
 			{
 				if (players[consoleplayer].cheats & (CF_GODMODE | CF_GODMODE2))
 				{
@@ -282,7 +286,7 @@ class ClassicStatusBar : BaseStatusBar
 				switch (type)
 				{
 					default:
-						mugshot = face .. "ST" .. level .. index;
+						mugshot = face .. "ST" .. hlevel .. index;
 						break;
 					case 1: // Grin
 						mugshot = face .. "EVL";

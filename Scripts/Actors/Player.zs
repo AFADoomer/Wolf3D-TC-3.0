@@ -90,7 +90,7 @@ class WolfPlayer : DoomPlayer
 		else { Speed = Default.Speed; }
 
 		// SoD-specific idle and ouch face mugshots
-		if (Game.IsSod())
+		if (Game.IsSod() || level.levelnum < 101)
 		{
 			if (player && player.damagecount > 30 && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoScream(self); } 
 

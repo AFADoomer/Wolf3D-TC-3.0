@@ -29,7 +29,7 @@ Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
 
 Script "InitializeLevel" OPEN
 {
-	ACS_NamedExecute("W_SetCeilingColor", 0, 0);
+	if (GetLevelInfo(LEVELINFO_LEVELNUM) > 100) { ACS_NamedExecute("W_SetCeilingColor", 0, 0); }
 }
 
 Script "InitializePlayer" ENTER
