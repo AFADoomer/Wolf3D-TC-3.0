@@ -78,7 +78,7 @@ ListMenu "MainMenu"
 ListMenu "EpisodeMenu"
 {
 	NetgameMessage "$NETGAME"
-	Linespacing 5 //26
+	Linespacing 5
 	Selector "M_SEL1", -88, 0
 
 	Font "BigFont", "WolfMenuYellowBright"
@@ -131,18 +131,18 @@ OptionMenu "TCOptions"
 {
 	Title "CONTROL"
 
-	SubMenu "Game Engine Options",				"OptionsMenu"
+	SubMenu "$M_ENGINEOPTIONS",				"OptionsMenu"
 	StaticText ""
-	StaticText "Gameplay Options", 1
-	Option "Disable Wolf3D-style movement",		"g_momentum", "YesNo"
-	Option "Allow mouse free look",				"freelook", "YesNo"
-	Option "Use fast fireballs",				"g_fastfireballs", "YesNo"
-	Option "Enable Wolf3D-style cheats",		"goobers", "YesNo"
+	StaticText "$M_GAMEPLAYOPTIONS", 1
+	Option "$M_OPTIONMOVEMENT",				"g_momentum", "YesNo"
+	Option "$M_OPTIONFREELOOK",				"freelook", "YesNo"
+	Option "$M_OPTIONFIREBALLS",			"g_fastfireballs", "YesNo"
+	Option "$M_OPTIONCHEATS",				"goobers", "YesNo"
 	StaticText ""
-	StaticText "Cosmetic Options", 1
-	Option "Skip 'Get Psyched' screen",			"g_nointro", "YesNo"
-	Option "Don't show blood or bullet puffs",	"g_noblood", "YesNo"
-	Option "Screen border style",				"g_borderstyle", "BorderStyle"
+	StaticText "$M_COSMETICOPTIONS", 1
+	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"
+	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
+	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
 }
 
 OptionMenu "WolfColorPickerMenu" protected
@@ -185,7 +185,7 @@ OptionMenu "WolfGameplayOptions" protected
 {
 	Position -35
 	Title 	"$GMPLYMNU_TITLE"
-	//Indent 222
+
 	Submenu "$GMPLYMNU_DEATHMATCH",				"DeathmatchOptions"
 	Submenu "$GMPLYMNU_COOPERATIVE",			"CoopOptions"
 	StaticText " "
