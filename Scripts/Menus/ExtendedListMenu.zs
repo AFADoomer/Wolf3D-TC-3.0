@@ -693,6 +693,8 @@ class ExtendedLoadMenu : LoadMenu
 		fadetarget = gametic;
 		fadealpha = 1.0;
 		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+
+		S_ChangeMusic("WONDERIN");
 	}
 
 	void SetYOffsets(double yoffset)
@@ -778,6 +780,13 @@ class ExtendedLoadMenu : LoadMenu
 		}
 		return Super.OnUIEvent(ev);
 	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (!mParentMenu && mkey == MKEY_Back) { S_ChangeMusic(level.music); }
+
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
 }
 
 class ExtendedSaveMenu : SaveMenu
@@ -807,6 +816,8 @@ class ExtendedSaveMenu : SaveMenu
 		fadetarget = gametic;
 		fadealpha = 1.0;
 		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+		
+		S_ChangeMusic("WONDERIN");
 	}
 
 	void SetYOffsets(double yoffset)
@@ -891,6 +902,18 @@ class ExtendedSaveMenu : SaveMenu
 			return true;
 		}
 		return Super.OnUIEvent(ev);
+	}
+	
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (Super.MenuEvent(mkey, fromcontroller))
+		{
+			if (mkey == MKEY_Back && !mParentMenu) { S_ChangeMusic(level.music); }
+			return true;
+		}
+
+		if (mkey == MKEY_Input) { S_ChangeMusic(level.music); }
+		return false;
 	}
 }
 
