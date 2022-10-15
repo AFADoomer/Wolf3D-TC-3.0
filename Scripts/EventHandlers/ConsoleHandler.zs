@@ -1,5 +1,7 @@
 class ConsoleHandler : StaticEventHandler
 {
+	String hash;
+
 	override void OnRegister()
 	{
 		CVar sodvar = CVar.FindCVar("g_sod");
@@ -28,10 +30,33 @@ class ConsoleHandler : StaticEventHandler
 				conbackcanvas.DrawTexture(logo, true, 800 - size.x, 500 - size.y - 8, DTA_KeepRatio, true);
 			}
 
-			conbackcanvas.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 5 * CleanXfac_1, 500 - SmallFont.GetHeight() - 5 * CleanYfac_1, StringTable.Localize("$VERSION"));
+			conbackcanvas.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 5 * CleanXfac_1, 500 - SmallFont.GetHeight() - 5 * CleanYfac_1, StringTable.Localize("$VERSION") .. hash);
 
 			conbackcanvas.DrawThickLine(0, 498, 800, 498, size, Game.IsSoD() ? 0xDDDD00 : 0xDD0000);
 			conbackcanvas.DrawLine(0, 499, 800, 499, 0x000000, 128);
 		}
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		// Show the last commit's hash if this is a beta release
+		if (StringTable.Localize("$VERSION").IndexOf("beta") > -1)
+		{
+			hash = ReadFrom("GitHash.txt");
+			hash = " \c[Dark Gray]" .. hash.Left(7);
+		}
+
+		Super.WorldLoaded(e);
+	}
+
+	String ReadFrom(String path)
+	{
+		int lump = -1;
+
+		lump = Wads.CheckNumForFullName(path);
+
+		if (lump > -1) { return Wads.ReadLump(lump); }
+
+		return "";
 	}
 }
