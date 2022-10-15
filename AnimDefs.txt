@@ -12,4 +12,4 @@ texture optional M_SSEL1
 pic M_SSEL1 tics 35
 pic M_SSEL2 tics 4
 
-canvastexture "CONBACK" 800 500
+canvastexture "CONBACK" 1024 768

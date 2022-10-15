@@ -1786,7 +1786,7 @@ Texture Optional SODEND5, 320, 200 { Patch WVGA1081, 0, 0 }
 Texture Optional SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }
 
 // Console background canvas
-Texture CONBACK, 800, 500 {}
+Texture CONBACK, 1024, 768 {}
 
 // Frame borders
 Texture M_BORTL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, 0 }
