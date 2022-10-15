@@ -135,6 +135,7 @@ OptionMenu "TCOptions"
 	StaticText ""
 	StaticText "Gameplay Options", 1
 	Option "Disable Wolf3D-style movement",		"g_momentum", "YesNo"
+	Option "Allow mouse free look",				"freelook", "YesNo"
 	Option "Use fast fireballs",				"g_fastfireballs", "YesNo"
 	Option "Enable Wolf3D-style cheats",		"goobers", "YesNo"
 	StaticText ""
@@ -144,47 +145,6 @@ OptionMenu "TCOptions"
 	Option "Screen border style",				"g_borderstyle", "BorderStyle"
 }
 
-/*
-ListMenu "WolfNewPlayerMenu"
-{
-	Linespacing 14
-
-	TopStrip 10
-	StripTitle 0, 0, "M_Menu"
-
-	Font "BigFont", "WolfMenuYellowBright"
-	StaticTextCentered 160, 55, "$MNU_PLAYERSETUP"
-	Font "SmallFont", "WolfMenuGray", "WolfMenuLightGray"
-
-	Position 48, 80
-
-	Box 300, 136, 0
-
-	Position 48, 85
-
-	PlayerNameBox "Name", -2, "Playerbox"
-	Selector "-", -16, -1
-
-	MouseWindow 0, 220
-	PlayerDisplay 220, 105, "20 00 00", "80 40 00", 1, "PlayerDisplay"
-	
-	ValueText "$PLYRMNU_TEAM", "Team"
-	ValueText "$PLYRMNU_PLAYERCOLOR", "Color"
-	Linespacing 10
-	Slider "$PLYRMNU_RED", "Red", 0, 255, 16
-	Slider "$PLYRMNU_GREEN", "Green", 0, 255, 16
-	Linespacing 14
-	Slider "$PLYRMNU_BLUE", "Blue", 0, 255, 16
-//	ValueText "$PLYRMNU_PLAYERCLASS", "Class"
-//	ValueText "$PLYRMNU_PLAYERSKIN", "Skin"
-//	ValueText "$PLYRMNU_PLAYERGENDER", "Gender", "Gender"
-	Slider "$PLYRMNU_AUTOAIM", "Autoaim", 0, 35, 1
-	ValueText "$PLYRMNU_SWITCHONPICKUP", "Switch", "OffOn"
-	ValueText "$PLYRMNU_ALWAYSRUN", "AlwaysRun", "OnOff"
-
-	Class "WolfNewPlayerMenu"
-}
-*/
 OptionMenu "WolfColorPickerMenu" protected
 {
 	Title "$MNU_COLORPICKER"
@@ -198,10 +158,12 @@ OptionMenu "WolfNewPlayerMenu" protected
 	Title "$MNU_PLAYERSETUP"
 	PlayerNameField "$PLYRMNU_NAME"
 	PlayerTeamItem "$PLYRMNU_TEAM", "PlayerTeam"
+	StaticText ""
 	PlayerColorItem "$PLYRMNU_PLAYERCOLOR", "PlayerColors"
 	PlayerColorSlider "$PLYRMNU_RED", 0
 	PlayerColorSlider "$PLYRMNU_GREEN", 1
 	PlayerColorSlider "$PLYRMNU_BLUE", 2
+	StaticText ""
 	PlayerClassItem "$PLYRMNU_PLAYERCLASS", "PlayerClass"
 	PlayerSkinItem "$PLYRMNU_PLAYERSKIN", "PlayerSkin"
 	PlayerGenderItem "$PLYRMNU_PLAYERGENDER", "Gender"

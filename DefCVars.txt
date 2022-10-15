@@ -1,2 +1,3 @@
 version 223
 set wipetype 0
+set freelook 0

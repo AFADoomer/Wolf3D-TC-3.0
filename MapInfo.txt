@@ -78,7 +78,6 @@ defaultmap
 {
 	NoCrouch
 	NoJump
-	NoFreeLook
 	No_Grinding_Polyobj
 	InterMusic = ENDLEVEL
 	Cluster = 1
