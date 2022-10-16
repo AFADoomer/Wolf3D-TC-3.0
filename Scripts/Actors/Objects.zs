@@ -370,6 +370,7 @@ class YellowKey : Key
 {
 	Default
 	{
+		Inventory.AltHUDIcon "I_YKEY";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
 	}
@@ -386,6 +387,7 @@ class BlueKey : Key
 {
 	Default
 	{
+		Inventory.AltHUDIcon "I_BKEY";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
 	}
