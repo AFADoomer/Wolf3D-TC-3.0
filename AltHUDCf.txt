@@ -1,4 +1,5 @@
-Health "HLTHE0"
+Health "I_HEALTH"
+Berserk "I_BERSERK"
 Armor ""
 GreenArmor ""
 BlueArmor ""

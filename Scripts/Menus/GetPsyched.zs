@@ -124,16 +124,7 @@ class GetPsyched : WolfMenu
 	double fadealpha;
 	int fadecolor;
 
-	int drawy;
-
-	TextureID Bar, YellowKey, BlueKey, Weapon, Face;
-	int points, lives, health, ammo;
-	String levelnum;
-	bool classicweapon;
-	Font ClassicFont;
-
 	int curstate;
-	int mugshottimer;
 
 	override void Init(Menu parent)
 	{
@@ -150,27 +141,7 @@ class GetPsyched : WolfMenu
 
 		starttic = gametic;
 
-		ClassicFont = Font.GetFont("WOLFNUM");
-
-		Bar =  TexMan.CheckForTexture("BAR", TexMan.Type_Any);
-		if (players[consoleplayer].mo.FindInventory("YellowKey")) { YellowKey =  TexMan.CheckForTexture("YKEY", TexMan.Type_Any); }
-		if (players[consoleplayer].mo.FindInventory("BlueKey")) { BlueKey =  TexMan.CheckForTexture("BKEY", TexMan.Type_Any); }
-
 		DontDim = true;
-
-		[Weapon, classicweapon] =  WeaponIcon();
-
-		levelnum = String.Format("%i", level.levelnum);
-		if (level.levelnum > 100)
-		{
-			levelnum = String.Format("%i", level.levelnum % 100);
-			if (levelnum == "0") { levelnum = "10"; }
-		}
-
-		points = GetScore();
-		lives = LifeHandler.GetLives(players[consoleplayer].mo);
-		health = players[consoleplayer].mo.health;
-		ammo = GetAmmo();
 	}
 
 	override void Drawer()
@@ -200,24 +171,10 @@ class GetPsyched : WolfMenu
 				}
 			}
 
-			DrawStatusBar(160, 198);
+			if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawClassicBar(false); }
 		}
 
 		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
-	}
-
-	void DrawStatusBar(int x, int y)
-	{
-		DrawImage(x, y, Bar, center, bottom);
-		DrawText(x - 44, y - 22, String.Format("%i", lives), ClassicFont, align:center);
-		DrawText(x - 128, y - 22, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), ClassicFont, align:right);
-		DrawText(x - 65, y - 22, String.Format("%i", points % 1000000), ClassicFont, align:right);
-		DrawText(x + 31, y - 22, String.Format("%i", health), ClassicFont, align:right);
-		DrawImage(x - 24, y - 34, Face);
-		if (YellowKey) { DrawImage(x + 84, y - 26, YellowKey, center, middle); }
-		if (BlueKey) { DrawImage(x + 84, y - 10, BlueKey, center, middle); }
-		DrawImage(x + 120, y - 19, weapon, center, middle, 48, 24, classicweapon ? -1 : 0x000000);
-		DrawText(x + 71, y - 22, String.Format("%i", ammo), ClassicFont, align:right);
 	}
 
 	enum align
@@ -233,145 +190,6 @@ class GetPsyched : WolfMenu
 		bottom,
 		middle,
 	};
-
-	void DrawImage(int x, int y, TextureID img, int align = left, int valign = top, int w = 0, int h = 0, color shade = -1, double alpha = 1.0)
-	{
-		if (!img) { return; }
-
-		Vector2 size = TexMan.GetScaledSize(img);
-
-		Vector2 scalexy = (1.0, 1.0);
-
-		if (w && size.x > w) { scalexy.x = double(w) / size.x; }
-		if (h && size.y > h) { scalexy.y = double(h) / size.y; }
-
-		double scale = min(scalexy.x, scalexy.y);
-
-		size *= scale;
-
-		if (align == right) { x = int(x - size.x); }
-		else if (align == center) { x = int(x - size.x / 2); }
-
-		if (valign == bottom) { y = int(y - size.y); }
-		else if (valign == middle) { y = int(y - size.y / 2); }
-
-		bool alphachannel;
-
-		if (shade > 0) { alphachannel = true; }
-
-		screen.DrawTexture(img, true, x, y, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_Alpha, alpha, DTA_AlphaChannel, alphachannel, DTA_FillColor, shade);
-	}
-
-	void DrawText(int x, int y, String text, Font fnt = null, color clr = Font.CR_UNTRANSLATED, int align = left)
-	{
-		x += 1;
-
-		if (!fnt) { fnt = IntermissionFont; }
-
-		text = StringTable.Localize(text);
-
-		if (align == right) { x -= fnt.StringWidth(text); }
-		else if (align == center) { x -= fnt.StringWidth(text) / 2; }
-
-		screen.DrawText(fnt, clr, x, y, text, DTA_320x200, true);
-	}
-
-	int GetScore()
-	{
-		let score = players[consoleplayer].mo.FindInventory("Score");
-		if (score) { return score.Amount; }
-
-		return 0;
-	}
-
-	int GetAmmo()
-	{
-		Inventory ammo1, ammo2;
-		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
-		if (ammo2) { ammocount += ammocount2; }
-		if (ammo1) { ammocount += ammocount1; } 
-
-		if (ammocount == 0 && level.totaltime < 210) { ammocount = 8; }
-
-		return ammocount;
-	}
-
-	Inventory, Inventory, int, int GetClassicDisplayAmmo()
-	{
-		Inventory ammo1, ammo2;
-
-		if (players[consoleplayer].ReadyWeapon)
-		{
-			ammo1 = players[consoleplayer].ReadyWeapon.Ammo1;
-			ammo2 = players[consoleplayer].ReadyWeapon.Ammo2;
-			if (!ammo1)
-			{
-				ammo1 = ammo2;
-				ammo2 = null;
-			}
-		}
-		else
-		{
-			ammo1 = ammo2 = null;
-		}
-
-		if (!ammo1 && !ammo2)
-		{
-			ammo2 = Ammo(players[consoleplayer].mo.FindInventory("WolfClip"));
-		}
-
-		let ammocount1 = ammo1 ? ammo1.Amount : 0;
-		let ammocount2 = ammo2 ? ammo2.Amount : 0;
-
-		return ammo1, ammo2, ammocount1, ammocount2;
-	}
-
-	TextureID GetMugShot()
-	{
-		int level = 0;
-		int accuracy = 5;
-
-		int maxhealth = players[consoleplayer].mo.mugshotmaxhealth > 0 ? players[consoleplayer].mo.mugshotmaxhealth : players[consoleplayer].mo.maxhealth;
-		if (maxhealth <= 0) { maxhealth = 100; }
-
-		while (players[consoleplayer].health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
-
-		int index = Random[mugshot](0, 255) >> 6;
-		if (index == 3) { index = 1; }
-
-		String mugshot = players[consoleplayer].mo.face .. "ST" .. level .. index;
-		
-		if (Game.IsSod())
-		{
-			if (players[consoleplayer].cheats & (CF_GODMODE | CF_GODMODE2))
-			{
-				mugshot = players[consoleplayer].mo.face .. "GOD" .. index;
-			}
-		}
-
-		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
-	}
-
-	TextureID, bool WeaponIcon()
-	{
-		TextureID icontex;
-		bool classic;
-
-		let weapon = players[consoleplayer].ReadyWeapon;
-		if (weapon)
-		{
-			String classname = weapon.GetClassName();
-
-			icontex = Inventory(weapon).Icon;
-
-			if (!icontex && weapon.SpawnState) { icontex = weapon.SpawnState.GetSpriteTexture(0); }
-
-			if (weapon is "ClassicWeapon") { classic = true; }
-		}
-
-		return icontex, classic;
-	}
 
 	override void Ticker()
 	{
@@ -407,14 +225,6 @@ class GetPsyched : WolfMenu
 		if (fadetarget || (fadetarget == 0 && starttic == 0))
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
-		}
-
-		mugshottimer++;
-
-		if (!Face || mugshottimer > Random[mugshot](0, 255))
-		{
-			Face = GetMugShot();
-			mugshottimer = 0;
 		}
 
 		Super.Ticker();
@@ -469,7 +279,7 @@ class DeathCamMessage : GetPsyched
 				break;
 		}
 
-		DrawStatusBar(160, 198);
+		if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawClassicBar(false); }
 	}
 
 	override void Ticker()

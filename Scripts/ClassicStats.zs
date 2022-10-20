@@ -6,10 +6,8 @@ class ClassicStats : DoomStatusScreen
 {
 	int intermissioncounter;
 	int bonus, cnt_bonus[MAXPLAYERS], breathestate, breathetime, killcount, secretcount, itemcount;
-	TextureID Breathe[2], BJFinal, Bar, YellowKey, BlueKey, Weapon, Face;
-	int points, lives, health, ammo;
-	String levelnum;
-	bool classicweapon;
+	TextureID Breathe[2], BJFinal;
+	int points, lives;
 	int style;
 	Font ClassicFont;
 	LevelData totals;
@@ -17,8 +15,6 @@ class ClassicStats : DoomStatusScreen
 	int fadetarget;
 	int fadetime;
 	double fadealpha;
-
-	int mugshottimer;
 
 	enum styles
 	{
@@ -227,7 +223,7 @@ class ClassicStats : DoomStatusScreen
 
 	override void DrawStats (void)
 	{
-		DrawStatusBar(160, 198);
+		if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawClassicBar(false, points, lives); }
 
 		switch (style)
 		{
@@ -304,20 +300,6 @@ class ClassicStats : DoomStatusScreen
 		}
 
 		DrawImage(x, y, Breathe[breathestate]);
-	}
-
-	void DrawStatusBar(int x, int y)
-	{
-		DrawImage(x, y, Bar, center, bottom);
-		DrawText(x - 44, y - 22, String.Format("%i", lives), ClassicFont, align:center);
-		DrawText(x - 128, y - 22, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), ClassicFont, align:right);
-		DrawText(x - 65, y - 22, String.Format("%i", points % 1000000), ClassicFont, align:right);
-		DrawText(x + 31, y - 22, String.Format("%i", health), ClassicFont, align:right);
-		DrawImage(x - 23, y - 34, Face);
-		if (YellowKey) { DrawImage(x + 84, y - 26, YellowKey, center, middle); }
-		if (BlueKey) { DrawImage(x + 84, y - 10, BlueKey, center, middle); }
-		DrawImage(x + 120, y - 19, weapon, center, middle, 48, 24, classicweapon ? -1 : 0x000000);
-		DrawText(x + 71, y - 22, String.Format("%i", ammo), ClassicFont, align:right);
 	}
 
 	enum align
@@ -420,24 +402,9 @@ class ClassicStats : DoomStatusScreen
 		Breathe[0] = TexMan.CheckForTexture("BREATHE0", TexMan.Type_Any);
 		Breathe[1] = TexMan.CheckForTexture("BREATHE1", TexMan.Type_Any); 
 		BJFinal =  TexMan.CheckForTexture("BJFinal", TexMan.Type_Any); 
-		Bar =  TexMan.CheckForTexture("BAR", TexMan.Type_Any); 
-
-		if (players[me].mo.FindInventory("YellowKey")) { YellowKey = TexMan.CheckForTexture("YKEY", TexMan.Type_Any); }
-		if (players[me].mo.FindInventory("BlueKey")) { BlueKey = TexMan.CheckForTexture("BKEY", TexMan.Type_Any); }
-
-		[Weapon, classicweapon] =  WeaponIcon();
-
-		levelnum = String.Format("%i", level.levelnum);
-		if (level.levelnum > 100)
-		{
-			levelnum = String.Format("%i", level.levelnum % 100);
-			if (levelnum == "0") { levelnum = "10"; }
-		}
 
 		points = GetScore();
 		lives = LifeHandler.GetLives(players[me].mo);
-		health = players[me].mo.health;
-		ammo = GetAmmo();
 
 		// Use the local level structure which can be overridden by hubs
 		Array<String> levelname;
@@ -446,8 +413,14 @@ class ClassicStats : DoomStatusScreen
 		lnametexts[0] = levelname[levelname.Size() - 1];
 		lnametexts[1] = wbstartstruct.nextname;
 
+		int levelnum = level.levelnum % 100;
+
 		if (wbs.next == "") { style = finale; }
-		else if (levelnum == "10") { style = secret; }
+		else if 
+		(
+			(Game.IsSoD() && levelnum > 18) ||
+			(level.levelnum > 100 && levelnum == 10)
+		) { style = secret; }
 		else { style = normal; }
 
 		fadealpha = 1.0;
@@ -490,93 +463,6 @@ class ClassicStats : DoomStatusScreen
 		}
 	}
 
-	int GetAmmo()
-	{
-		Inventory ammo1, ammo2;
-		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
-		if (ammo2) { ammocount += ammocount2; }
-		if (ammo1) { ammocount += ammocount1; } 
-
-		return ammocount;
-	}
-
-	Inventory, Inventory, int, int GetClassicDisplayAmmo()
-	{
-		Inventory ammo1, ammo2;
-
-		if (players[me].ReadyWeapon)
-		{
-			ammo1 = players[me].ReadyWeapon.Ammo1;
-			ammo2 = players[me].ReadyWeapon.Ammo2;
-			if (!ammo1)
-			{
-				ammo1 = ammo2;
-				ammo2 = null;
-			}
-		}
-		else
-		{
-			ammo1 = ammo2 = null;
-		}
-
-		if (!ammo1 && !ammo2)
-		{
-			ammo2 = Ammo(players[me].mo.FindInventory("WolfClip"));
-		}
-
-		let ammocount1 = ammo1 ? ammo1.Amount : 0;
-		let ammocount2 = ammo2 ? ammo2.Amount : 0;
-
-		return ammo1, ammo2, ammocount1, ammocount2;
-	}
-
-	TextureID GetMugShot()
-	{
-		int level = 0;
-		int accuracy = 5;
-
-		int maxhealth = players[me].mo.mugshotmaxhealth > 0 ? players[me].mo.mugshotmaxhealth : players[me].mo.maxhealth;
-		if (maxhealth <= 0) { maxhealth = 100; }
-
-		while (players[me].health < (accuracy - 1 - level) * (maxhealth / accuracy)) { level++; }
-
-		int index = Random[mugshot](0, 255) >> 6;
-		if (index == 3) { index = 1; }
-
-		String mugshot = players[me].mo.face .. "ST" .. level .. index;
-		
-		if (Game.IsSod())
-		{
-			if (players[me].cheats & (CF_GODMODE | CF_GODMODE2))
-			{
-				mugshot = players[me].mo.face .. "GOD" .. index;
-			}
-		}
-
-		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
-	}
-
-	TextureID, bool WeaponIcon()
-	{
-		TextureID icontex;
-		bool classic;
-
-		let weapon = players[me].ReadyWeapon;
-		if (weapon)
-		{
-			String classname = weapon.GetClassName();
-
-			icontex = Inventory(weapon).Icon;
-
-			if (!icontex && weapon.SpawnState) { icontex = weapon.SpawnState.GetSpriteTexture(0); }
-
-			if (weapon is "ClassicWeapon") { classic = true; }
-		}
-
-		return icontex, classic;
-	}
-
 	override void Ticker(void)
 	{
 		// counter for general background animation
@@ -607,14 +493,6 @@ class ClassicStats : DoomStatusScreen
 		else if (gametic > 35)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
-		}
-
-		mugshottimer++;
-
-		if (!Face || mugshottimer > Random[mugshot](0, 255))
-		{
-			Face = GetMugShot();
-			mugshottimer = 0;
 		}
 	}
 

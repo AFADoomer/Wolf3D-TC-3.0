@@ -143,6 +143,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
+	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
 }
 
 OptionMenu "WolfColorPickerMenu" protected

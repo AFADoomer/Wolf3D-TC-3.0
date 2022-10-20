@@ -9,8 +9,13 @@ IntermissionFont
 	SpaceWidth 16
 }
 
-// Used by the Alt HUD
+// Used by the default Alt HUD
 HUDFONT_DOOM
 {
 	Template STCFN%03d
+}
+
+JAGFONT
+{
+	Template JAG_%03d
 }

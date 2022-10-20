@@ -32,7 +32,8 @@ gameinfo
 
 	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler"
 
-	statusbarclass = "ClassicStatusBar"
+	StatusbarClass = "ClassicStatusBar"
+	AltHUDClass = "JaguarHUD"
 	StatScreen_Single = "ClassicStats"
 	MessageboxClass = "ClassicMessageBox"
 }

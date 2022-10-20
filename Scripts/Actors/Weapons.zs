@@ -118,6 +118,7 @@ class WolfClip : Ammo
 		Mass 10000;
 		Inventory.Amount 8;
 		Inventory.Icon "CCLIA0";
+		Inventory.AltHUDIcon "I_CLIP";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/ammo";
@@ -430,6 +431,7 @@ class WolfGas : Ammo
 		Mass 10000;
 		Inventory.Amount 14;
 		Inventory.Icon "WGASA0";
+		Inventory.AltHUDIcon "I_GAS";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/ammo";
@@ -489,6 +491,7 @@ class WolfRocketPickup : Ammo
 		Mass 10000;
 		Inventory.Amount 1;
 		Inventory.Icon "WRKTA0";
+		Inventory.AltHUDIcon "I_ROCKET";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/ammo";

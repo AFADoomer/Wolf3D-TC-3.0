@@ -100,68 +100,72 @@ class ClassicStatusBar : BaseStatusBar
 		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 30;
 	}
 
-	protected void DrawClassicBar()
+	void DrawClassicBar(bool drawborder = true, int points = -1, int lives = -1)
 	{
-		Vector2 window, windowsize, screensize, viewportsize, viewport;
-
-		screensize = (Screen.GetWidth(), Screen.GetHeight());
-
-		int blocks = automapactive ? 10 : clamp(screenblocks, 3, 10);
-
-		double yoffset = (200 - RelTop);
-
-		CVar borderstylevar = CVar.GetCVar("g_borderstyle", CPlayer);
-		int borderstyle = borderstylevar ? borderstylevar.GetInt() : 0;
-
-		if (borderstyle > 0)
+		if (drawborder)
 		{
-			double width = 200 * screensize.x / screensize.y;
-			viewportsize.x = (blocks * (width - 16)) / 8.35;
-		}
-		else
-		{
-			viewportsize.x = (blocks * (320 - 16)) / 10;
-		}
+			Vector2 window, windowsize, screensize, viewportsize, viewport;
 
-		viewportsize.y = (blocks * yoffset) / 10 - 2;
+			screensize = (Screen.GetWidth(), Screen.GetHeight());
 
-		viewport.x = (320 - viewportsize.x) / 2;
-		viewport.y = (yoffset - viewportsize.y) / 2;
+			int blocks = automapactive ? 10 : clamp(screenblocks, 3, 10);
 
-		[window, windowsize] = DrawToHud.TranslatetoHUDCoordinates(viewport, viewportsize, checkfullscreen:true);
+			double yoffset = (200 - RelTop);
 
-		if (screenblocks < 11 && !automapactive && (borderstyle != 2 || screenblocks < 10))
-		{
-			// Fill outside of boundaries with green
-			Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
-			Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x), 0, int(screensize.x - window.x - windowsize.x), int(screensize.y));
-			Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 2), int(window.y));
-			Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 2), int(screensize.y - window.y - windowsize.y));
+			CVar borderstylevar = CVar.GetCVar("g_borderstyle", CPlayer);
+			int borderstyle = borderstylevar ? borderstylevar.GetInt() : 0;
 
-			// Draw border
-			DrawImage("WBRD_T", (viewport.x, viewport.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
-			DrawImage("WBRD_B", (viewport.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
-			DrawImage("WBRD_L", (viewport.x - 3, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
-			DrawImage("WBRD_R", (viewport.x + viewportsize.x, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
+			if (borderstyle > 0)
+			{
+				double width = 200 * screensize.x / screensize.y;
+				viewportsize.x = (blocks * (width - 16)) / 8.35;
+			}
+			else
+			{
+				viewportsize.x = (blocks * (320 - 16)) / 10;
+			}
 
-			DrawImage("WBRD_TL", (viewport.x - 3, viewport.y - 1), DI_ITEM_LEFT_TOP);
-			DrawImage("WBRD_TR", (viewport.x + viewportsize.x, viewport.y - 1), DI_ITEM_LEFT_TOP);
-			DrawImage("WBRD_BL", (viewport.x - 3, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
-			DrawImage("WBRD_BR", (viewport.x + viewportsize.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
-		}
-		else if (automapactive || (screenblocks == 10 && borderstyle == 2))
-		{
-			Vector2 coords, size;
-			[coords, size] = DrawToHud.TranslatetoHUDCoordinates((0, 200 - RelTop), (320, RelTop), checkfullscreen:true);
+			viewportsize.y = (blocks * yoffset) / 10 - 2;
 
-			Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
-			DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x / 4, 1.0));
+			viewport.x = (320 - viewportsize.x) / 2;
+			viewport.y = (yoffset - viewportsize.y) / 2;
+
+			[window, windowsize] = DrawToHud.TranslatetoHUDCoordinates(viewport, viewportsize, checkfullscreen:true);
+
+			if (screenblocks < 11 && !automapactive && (borderstyle != 2 || screenblocks < 10))
+			{
+				// Fill outside of boundaries with green
+				Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
+				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x), 0, int(screensize.x - window.x - windowsize.x), int(screensize.y));
+				Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 2), int(window.y));
+				Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 2), int(screensize.y - window.y - windowsize.y));
+
+				// Draw border
+				DrawImage("WBRD_T", (viewport.x, viewport.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
+				DrawImage("WBRD_B", (viewport.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
+				DrawImage("WBRD_L", (viewport.x - 3, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
+				DrawImage("WBRD_R", (viewport.x + viewportsize.x, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
+
+				DrawImage("WBRD_TL", (viewport.x - 3, viewport.y - 1), DI_ITEM_LEFT_TOP);
+				DrawImage("WBRD_TR", (viewport.x + viewportsize.x, viewport.y - 1), DI_ITEM_LEFT_TOP);
+				DrawImage("WBRD_BL", (viewport.x - 3, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
+				DrawImage("WBRD_BR", (viewport.x + viewportsize.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
+			}
+			else if (automapactive || (screenblocks == 10 && borderstyle == 2))
+			{
+				Vector2 coords, size;
+				[coords, size] = DrawToHud.TranslatetoHUDCoordinates((0, 200 - RelTop), (320, RelTop), checkfullscreen:true);
+
+				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
+				DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x / 4, 1.0));
+			}
 		}
 
 		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM);
 
 		//Lives
-		DrawString(ClassicFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
+		if (lives < 0) { lives = LifeHandler.GetLives(CPlayer.mo); }
+		DrawString(ClassicFont, FormatNumber(max(lives, 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
 
 		//Level
 		String levelnum = String.Format("%i", level.levelnum);
@@ -174,7 +178,8 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(ClassicFont, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
-		DrawString(ClassicFont, FormatNumber(GetAmount("Score") % 1000000), (95, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		if (points < 0) { points = GetAmount("Score"); }
+		DrawString(ClassicFont, FormatNumber(points % 1000000), (95, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Health
 		DrawString(ClassicFont, FormatNumber(CPlayer.health), (191, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
@@ -190,6 +195,7 @@ class ClassicStatusBar : BaseStatusBar
 		String icon = "";
 		double scale = 1.0;
 		let weapon = CPlayer.ReadyWeapon;
+
 		if (weapon)
 		{
 			String classname = weapon.GetClassName();
@@ -197,25 +203,30 @@ class ClassicStatusBar : BaseStatusBar
 			icontex = GetInventoryIcon(weapon, 0);
 
 			if (!icontex && weapon.SpawnState) { icontex = weapon.SpawnState.GetSpriteTexture(0); }
-	
-			if (icontex)
-			{
-				Vector2 size = TexMan.GetScaledSize(icontex);
-				Vector2 scalexy = (1.0, 1.0);
-
-				if (size.x > 48) { scalexy.x = 48. / size.x; }
-				if (size.y > 24) { scalexy.y = 24. / size.y; }
-
-				scale = min(scalexy.x, scalexy.y);
-
-				DrawToHUD.DrawTexture(icontex, (280, 179), 1.0, scale, weapon is "ClassicWeapon" ? -1 : 0x000000, DrawToHUD.center, DrawToHUD.bottom, true);
-			}
 		}
+		else
+		{
+			icontex = TexMan.CheckForTexture("LUGER", TexMan.Type_Any);
+		}
+
+		if (icontex)
+		{
+			Vector2 size = TexMan.GetScaledSize(icontex);
+			Vector2 scalexy = (1.0, 1.0);
+
+			if (size.x > 48) { scalexy.x = 48. / size.x; }
+			if (size.y > 24) { scalexy.y = 24. / size.y; }
+
+			scale = min(scalexy.x, scalexy.y);
+
+			DrawToHUD.DrawTexture(icontex, (280, 179), 1.0, scale, (!weapon || weapon is "ClassicWeapon") ? -1 : 0x000000, DrawToHUD.center, DrawToHUD.bottom, true);
+		}
+
 
 		//Ammo
 		Ammo ammo1, ammo2;
 		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
+		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo(CPlayer);
 		if (ammo2) { ammocount += ammocount2; }
 		if (ammo1) { ammocount += ammocount1; } 
 		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
@@ -269,7 +280,7 @@ class ClassicStatusBar : BaseStatusBar
 
 			while (CPlayer.health < (accuracy - 1 - hlevel) * (maxhealth / accuracy)) { hlevel++; }
 
-			int index = Random[mugshot](0, 255) >> 6;
+			int index = (gamestate == GS_CUTSCENE || level.time < 5) ? 0 : Random[mugshot](0, 255) >> 6;
 			if (index == 3) { index = 1; }
 
 			// SoD-specific god face
@@ -326,18 +337,18 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(BigFont, FormatNumber(GetAmount("Score")), (-2, baseline - 16), DI_TEXT_ALIGN_RIGHT, Font.FindFontColor("TrueWhite"));
 
 		//Lives
-		TextureID life = TexMan.CheckForTexture("LIFEA0", TexMan.Type_Any);
+		TextureID life = TexMan.CheckForTexture("I_LIFE", TexMan.Type_Any);
 		if (life) { DrawTexture(life, (19, -26), DI_ITEM_CENTER); }
 		DrawString(BigFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (35, baseline), 0, Font.FindFontColor("TrueWhite"));
 
 		//Keys
-		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("I_YKEY", (-8, 0), DI_ITEM_LEFT_TOP); }
-		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("I_BKEY", (-8, 14), DI_ITEM_LEFT_TOP); }
+		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("I_YKEY_T", (-8, 0), DI_ITEM_LEFT_TOP); }
+		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("I_BKEY_T", (-8, 14), DI_ITEM_LEFT_TOP); }
 
 		//Ammo
 		Ammo ammo1, ammo2;
 		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo();
+		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo(CPlayer);
 
 		TextureID ammoicon;
 		if (ammo2) { ammocount += ammocount2; ammoicon = ammo2.Icon; }
@@ -347,12 +358,13 @@ class ClassicStatusBar : BaseStatusBar
 		DrawString(BigFont, FormatNumber(ammocount), (-95, baseline), 0, Font.FindFontColor("TrueWhite"));
 
 		//Health
-		TextureID health = TexMan.CheckForTexture("HLTHE0", TexMan.Type_Any);
+		bool haveBerserk = hud_berserk_health && CPlayer.mo.FindInventory('PowerStrength');
+		TextureID health = TexMan.CheckForTexture(haveBerserk ? "I_BERSERK" : "I_HEALTH", TexMan.Type_Any);
 		if (health) { DrawTexture(health, (-50, -1), DI_ITEM_CENTER_BOTTOM); }
 		DrawString(BigFont, FormatNumber(CPlayer.health), (-2, baseline), DI_TEXT_ALIGN_RIGHT, Font.FindFontColor("TrueWhite"));
 	}
 
-	Ammo, Ammo, int, int GetClassicDisplayAmmo()
+	Ammo, Ammo, int, int GetClassicDisplayAmmo(PlayerInfo CPlayer)
 	{
 		Ammo ammo1, ammo2;
 
@@ -592,5 +604,73 @@ class ClassicStatusBar : BaseStatusBar
 		}
 
 		return true;
+	}
+}
+
+class JaguarHUD : AltHUD
+{
+	override void Init()
+	{
+		Super.Init();
+
+		HudFont = Font.FindFont("JAGFONT");
+		if (HudFont == NULL) { HudFont = SmallFont; }
+	}
+
+	override void DrawHealth(PlayerInfo CPlayer, int x, int y)
+	{
+		int health = CPlayer.health;
+
+		DrawImageToBox(StatusBar.GetMugShot(7, MugShot.ANIMATEDGODMODE | MugShot.DISABLERAMPAGE | MugShot.DISABLEOUCH, "WLF"), x, y - 9, 32, 32, 1.0);
+		DrawHudNumber(HudFont, -1, health, x + 84 - HudFont.StringWidth(String.Format("%i", health)), y + 17);
+	}
+
+	override int DrawAmmo(PlayerInfo CPlayer, int x, int y)
+	{
+		//Ammo
+		Ammo ammo1, ammo2;
+		int ammocount = 0, ammocount1, ammocount2;
+		[ammo1, ammo2, ammocount1, ammocount2] = ClassicStatusBar(StatusBar).GetClassicDisplayAmmo(CPlayer);
+
+		TextureID ammoicon;
+		if (ammo2) { ammocount += ammocount2; ammoicon = ammo2.AltHudIcon; }
+		if (ammo1) { ammocount += ammocount1; ammoicon = ammo1.AltHudIcon; }
+
+		DrawHUDNumber(HudFont, -1, ammocount, x - HudFont.StringWidth(String.Format("%i", ammocount)), y + HudFont.GetHeight(), 1.0);
+		if (ammoicon) { DrawImageToBox(ammoicon, x, y - 9, 32, 32, 1.0); }
+
+		return 0;
+	}
+
+	override void DrawInGame(PlayerInfo CPlayer)
+	{
+		if (gamestate == GS_TITLELEVEL || !CPlayer) return;
+
+		DrawHealth(CPlayer, 6, hudheight - 32);
+		DrawAmmo(CPlayer, hudwidth - 42, hudheight - 32);
+
+		int c = 0;
+
+		Inventory bkey = CPlayer.mo.FindInventory("BlueKey");
+		if (!bkey) { bkey = CPlayer.mo.FindInventory("BlueKeyLost"); }
+		if (bkey)
+		{
+			DrawImageToBox(bkey.AltHudIcon, 86, hudheight - 39, 24, 24, 1.0);
+		}
+
+		Inventory ykey = CPlayer.mo.FindInventory("YellowKey");
+		if (!ykey) { ykey = CPlayer.mo.FindInventory("YellowKeyLost"); }
+		if (ykey)
+		{
+			DrawImageToBox(ykey.AltHudIcon, hudwidth - 108, hudheight - 39, 24, 24, 1.0);
+		}
+	}
+
+	override void DrawAutomap(PlayerInfo CPlayer)
+	{
+		if (gamestate == GS_TITLELEVEL || !CPlayer) return;
+
+		// Use the game's standard automap overlay
+		StatusBar.DrawAutomapHUD(0);
 	}
 }

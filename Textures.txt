@@ -1798,3 +1798,63 @@ Texture M_BORR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -3 }
 Texture M_BORBL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, -6 }
 Texture M_BORB, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -6 }
 Texture M_BORBR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -6, -6 }
+
+// HUD Icons
+Texture I_LIFE, 48, 48 { Offset 24, 48 Patch WSPR0035, -8, -8 }
+Texture I_HEALTH, 48, 24 { Offset 24, 24 Patch WSPR0027, -8, -40 }
+Texture I_BERSERK, 48, 24 { Offset 24, 24 Patch WSTRA0, -8, -40 }
+
+//Jag Status Bar Face
+Texture Optional WLFST00, 24, 32 {Offset 0, -1 Graphic FACE3, 0, 0}
+Texture Optional WLFST01, 24, 32 {Offset 0, -1 Graphic FACE4, 0, 0}
+Texture Optional WLFST02, 24, 32 {Offset 0, -1 Graphic FACE5, 0, 0}
+Texture Optional WLFST10, 24, 32 {Offset 0, -1 Graphic FACE6, 0, 0}
+Texture Optional WLFST11, 24, 32 {Offset 0, -1 Graphic FACE7, 0, 0}
+Texture Optional WLFST12, 24, 32 {Offset 0, -1 Graphic FACE8, 0, 0}
+Texture Optional WLFST20, 24, 32 {Offset 0, -1 Graphic FACE9, 0, 0}
+Texture Optional WLFST21, 24, 32 {Offset 0, -1 Graphic FACE10, 0, 0}
+Texture Optional WLFST22, 24, 32 {Offset 0, -1 Graphic FACE11, 0, 0}
+Texture Optional WLFST30, 24, 32 {Offset 0, -1 Graphic FACE12, 0, 0}
+Texture Optional WLFST31, 24, 32 {Offset 0, -1 Graphic FACE13, 0, 0}
+Texture Optional WLFST32, 24, 32 {Offset 0, -1 Graphic FACE14, 0, 0}
+Texture Optional WLFST40, 24, 32 {Offset 0, -1 Graphic FACE15, 0, 0}
+Texture Optional WLFST41, 24, 32 {Offset 0, -1 Graphic FACE16, 0, 0}
+Texture Optional WLFST42, 24, 32 {Offset 0, -1 Graphic FACE17, 0, 0}
+Texture Optional WLFST50, 24, 32 {Offset 0, -1 Graphic FACE18, 0, 0}
+Texture Optional WLFST51, 24, 32 {Offset 0, -1 Graphic FACE19, 0, 0}
+Texture Optional WLFST52, 24, 32 {Offset 0, -1 Graphic FACE20, 0, 0}
+Texture Optional WLFST60, 24, 32 {Offset 0, -1 Graphic FACE21, 0, 0}
+Texture Optional WLFST61, 24, 32 {Offset 0, -1 Graphic FACE22, 0, 0}
+Texture Optional WLFST62, 24, 32 {Offset 0, -1 Graphic FACE23, 0, 0}
+Texture Optional WLFEVL0, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL1, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL2, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL3, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL4, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL5, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFEVL6, 24, 32 {Offset 0, -1 Graphic FACE24, 0, 0}
+Texture Optional WLFDEAD, 24, 32 {Offset 0, -1 Graphic FACE25, 0, 0}
+Texture Optional WLFTL00, 24, 32 {Offset 0, -1 Graphic FACEL1, 0, 0}
+Texture Optional WLFTR00, 24, 32 {Offset 0, -1 Graphic FACER1, 0, 0}
+Texture Optional WLFTL10, 24, 32 {Offset 0, -1 Graphic FACEL2, 0, 0}
+Texture Optional WLFTR10, 24, 32 {Offset 0, -1 Graphic FACER2, 0, 0}
+Texture Optional WLFTL20, 24, 32 {Offset 0, -1 Graphic FACEL3, 0, 0}
+Texture Optional WLFTR20, 24, 32 {Offset 0, -1 Graphic FACER3, 0, 0}
+Texture Optional WLFTL30, 24, 32 {Offset 0, -1 Graphic FACEL4, 0, 0}
+Texture Optional WLFTR30, 24, 32 {Offset 0, -1 Graphic FACER4, 0, 0}
+Texture Optional WLFTL40, 24, 32 {Offset 0, -1 Graphic FACEL5, 0, 0}
+Texture Optional WLFTR40, 24, 32 {Offset 0, -1 Graphic FACER5, 0, 0}
+Texture Optional WLFTL50, 24, 32 {Offset 0, -1 Graphic FACEL6, 0, 0}
+Texture Optional WLFTR50, 24, 32 {Offset 0, -1 Graphic FACER6, 0, 0}
+Texture Optional WLFTL60, 24, 32 {Offset 0, -1 Graphic FACE21, 0, 0}
+Texture Optional WLFTR60, 24, 32 {Offset 0, -1 Graphic FACE21, 0, 0}
+Texture Optional WLFGOD0, 24, 32 {Offset 0, -1 Graphic FIRSTFAC, 0, 0}
+Texture Optional WLFGOD1, 24, 32 {Offset 0, -1 Graphic FACE1, 0, 0}
+Texture Optional WLFGOD2, 24, 32 {Offset 0, -1 Graphic FACE2, 0, 0}
+Texture Optional WLFKILL0, 24, 32 {Offset 0, -1 Graphic FACE3, 0, 0}
+Texture Optional WLFKILL1, 24, 32 {Offset 0, -1 Graphic FACE6, 0, 0}
+Texture Optional WLFKILL2, 24, 32 {Offset 0, -1 Graphic FACE9, 0, 0}
+Texture Optional WLFKILL3, 24, 32 {Offset 0, -1 Graphic FACE12, 0, 0}
+Texture Optional WLFKILL4, 24, 32 {Offset 0, -1 Graphic FACE15, 0, 0}
+Texture Optional WLFKILL5, 24, 32 {Offset 0, -1 Graphic FACE18, 0, 0}
+Texture Optional WLFKILL6, 24, 32 {Offset 0, -1 Graphic FACE21, 0, 0}
