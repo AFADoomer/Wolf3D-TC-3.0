@@ -476,6 +476,29 @@ class FirstAidKit : Health
 	}
 }
 
+class NaziBerserk : Berserk
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Health
+		//$Color 1
+		//$NotAngled
+
+		+Inventory.AUTOACTIVATE
+		Inventory.Amount 25;
+		Inventory.MaxAmount 100;
+		Inventory.PickupSound "pickups/medkit";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			WSTR A -1;
+			Loop;
+	}	
+}
+
 class JeweledCross : Score
 {
 	Default
