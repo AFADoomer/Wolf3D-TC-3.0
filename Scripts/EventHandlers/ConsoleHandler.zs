@@ -54,7 +54,7 @@ class ConsoleHandler : StaticEventHandler
 		// Show the last commit's hash if this is a beta release
 		if (StringTable.Localize("$VERSION").IndexOf("beta") > -1)
 		{
-			hash = ReadFrom("GitHash.txt");
+			hash = ReadFrom("Data/GitHash.txt");
 			hash = " \c[Dark Gray]" .. hash.Left(7);
 		}
 

@@ -257,10 +257,7 @@ class ClassicNazi : ClassicBase
 			}
 			"####" K 7 A_SetTics(deathtics - 1);
 			"####" L 8 A_SetTics(deathtics);
-			"####" M 7 {
-				A_SetTics(deathtics - 1);
-				A_GiveToTarget("Score", scoreamt);
-			}
+			"####" M 7 A_SetTics(deathtics - 1);
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
 		Dead:
 			"####" N -1 { if (bLongDeath) { frame = 14; } }
@@ -352,8 +349,7 @@ class Dog : ClassicNazi
 			Goto Chase;
 		Death:
 			"####" A 0 A_Scream;
-			"####" HI 5;
-			"####" J 5 A_GiveToTarget("Score", scoreamt);
+			"####" HIJ 5;
 		Dead:
 			"####" K -1;
 			Stop;
@@ -725,7 +721,7 @@ class HansGrosse : ClassicBoss
 			Goto Walk;
 		Death:
 			"####" H 3 A_DeathDrop();
-			"####" H 4 A_GiveToTarget("Score", scoreamt);
+			"####" H 4;
 			"####" I 8 A_Scream;
 			"####" J 7 A_BossDeath;
 		Dead:
@@ -833,8 +829,7 @@ class HitlerGhost : ClassicNazi
 		Death:
 			WHGT F 5 A_DeathDrop();
 			WHGT G 5 A_Scream;
-			WHGT HI 5;
-			WHGT J 5 A_GiveToTarget("Score", scoreamt);
+			WHGT HIJ 5;
 		Dead:
 			WHGT K -1;
 			Stop;
@@ -875,8 +870,7 @@ class HitlerMech : ClassicBoss
 			Goto Chase;
 		Death:
 			"####" H 5 A_Scream;
-			"####" I 5;
-			"####" J 5 A_GiveToTarget("Score", scoreamt);
+			"####" IJ 5;
 			"####" K 0 A_SpawnItemEx("Hitler");
 			"####" K 1 A_BossDeath;
 			"####" K -1;
@@ -916,8 +910,7 @@ class Hitler : ClassicBoss
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
-			"####" J 5 A_Pain;
-			"####" K 5 A_GiveToTarget("Score", scoreamt);
+			"####" JK 5 A_Pain;
 			"####" LMNO 5;
 			"####" P 5 A_BossDeath;
 		Dead:
@@ -967,8 +960,7 @@ class Giftmacher : ClassicBoss
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
-			"####" GH 5;
-			"####" I 5 A_GiveToTarget("Score", scoreamt);
+			"####" GHI 5;
 			"####" J 1 A_BossDeath;
 		Dead:
 			"####" J -1;
@@ -1036,7 +1028,7 @@ class Fettgesicht : ClassicBoss
 		Death:
 			"####" A 70 A_Scream;
 			"####" JK 5;
-			"####" L 1 A_GiveToTarget("Score", scoreamt);
+			"####" L 1;
 			"####" L 4 A_BossDeath;
 		Dead:
 			"####" M -1;
@@ -1175,7 +1167,7 @@ class TransGrosse : HansGrosse
 		Death:
 			"####" A 0 A_DeathDrop();
 			"####" A 53 A_Scream;
-			"####" H 7 A_GiveToTarget("Score", scoreamt);
+			"####" H 7;
 			"####" I 8;
 			"####" J 7 A_BossDeath;
 			"####" K -1;
@@ -1205,7 +1197,7 @@ class SubmarineWilly : HansGrosse
 		Death:
 			"####" A 0 A_DeathDrop();
 			"####" A 53 A_Scream;
-			"####" H 7 A_GiveToTarget("Score", scoreamt);
+			"####" H 7;
 			"####" I 8;
 			"####" J 7 A_BossDeath;
 			"####" K -1 ;
@@ -1257,7 +1249,7 @@ class UberMutant : ClassicBoss
 		Death:
 			"####" A 36 A_Scream;
 			"####" I 4 A_DeathDrop();
-			"####" I 3 A_GiveToTarget("Score", scoreamt);
+			"####" I 3;
 			"####" J 8;
 			"####" K 7;
 			"####" L 8 A_BossDeath;
@@ -1328,8 +1320,7 @@ class DeathKnight : ClassicBoss
 		Death:
 			"####" A 53 A_Scream;
 			"####" K 5 A_DeathDrop();
-			"####" L 5 A_GiveToTarget("Score", scoreamt);
-			"####" MNO 5;
+			"####" LMNO 5;
 			"####" P 5 A_BossDeath;
 		Dead:
 			"####" Q -1;
@@ -1411,7 +1402,6 @@ class AngelofDeath : ClassicBoss
 			"####" I 0 A_Pain;
 			Goto Chase;
 		Death:
-			"####" A 1 A_GiveToTarget("Score", scoreamt);
 			"####" A 52 A_Scream;
 			"####" K 5;
 			"####" L 5 A_StartSound("slurpie");
@@ -1461,7 +1451,7 @@ class BarnacleWilhelm : Fettgesicht
 		Death:
 			"####" A 35 A_Scream;
 			"####" J 5 A_DeathDrop();
-			"####" K 5 A_GiveToTarget("Score", scoreamt);
+			"####" K 5;
 			"####" L 5 A_BossDeath;
 		Dead:
 			"####" M -1;
@@ -1527,8 +1517,7 @@ class WolfSpectre : ClassicNazi
 		Pain:
 			"####" A 0 A_UnSetSolid;
 			"####" A 0 A_UnSetShootable;
-			"####" E 5;
-			"####" FG 5 A_GiveToTarget("Score", scoreamt);
+			"####" EFG 5;
 			"####" H 160;
 			"####" A 0 A_SetSolid;
 			"####" A 0 A_SetShootable;

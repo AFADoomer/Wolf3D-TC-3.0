@@ -124,4 +124,14 @@ class LifeHandler : StaticEventHandler
 			if (persistent) { persistent.lives[i] = 3; }
 		}
 	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		int amt;
+
+		if (e.thing is "ClassicBase") { amt = ClassicBase(e.thing).scoreamt; }
+		else { amt = e.thing.SpawnHealth() * 10; }
+
+		e.thing.A_GiveToTarget("Score", amt);
+	}
 }
