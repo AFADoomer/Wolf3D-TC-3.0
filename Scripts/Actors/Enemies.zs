@@ -282,10 +282,11 @@ class ClassicBoss : ClassicBase
 		+JUSTHIT
 		+AMBUSH
 		+LOOKALLAROUND
-		+NORADIUSDMG
 
 		MaxTargetRange 256;
 		Painchance 0;
+		DamageFactor "Rocket", 2.0;
+		DamageFactor "Fire", 2.0;
 	}
 
 	States
@@ -793,7 +794,6 @@ class HitlerGhost : ClassicNazi
 		+JUSTHIT
 		+AMBUSH
 		+LOOKALLAROUND
-		+NORADIUSDMG
 
 		Speed 4;
 		Painchance 0;
@@ -820,11 +820,7 @@ class HitlerGhost : ClassicNazi
 			Loop;
 		Missile:
 			WHGT E 4 A_FaceTarget;
-			WHGT E 0 A_JumpIf(g_fastfireballs, "Missile.Fast");
-			WHGT EEEEEEEE 4 Bright A_SpawnProjectile("GhostFireBall", 30, 0, 0);
-			Goto Chase;
-		Missile.Fast:
-			WHGT EEEEEEEE 4 Bright A_SpawnProjectile("FastGhostFireBall", 30, 0, 0);
+			WHGT EEEEEEEE 4 Bright A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
 			WHGT F 5 A_DeathDrop();

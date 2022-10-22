@@ -1,7 +1,6 @@
 // Wolf3D Projectiles and Puffs
 
-// Wolf3D Rocket
-class WolfRocketBase : Actor
+class WolfProjectile : Actor
 {
 	Class<Actor> smoke;
 
@@ -12,29 +11,47 @@ class WolfRocketBase : Actor
 		Projectile;
 		Radius 4;
 		Speed 14;
+		DamageType "WolfNazi";
+	}
+
+	virtual void SpawnSmoke()
+	{
+		if (smoke) { Spawn(smoke, pos); }
+	}
+
+	virtual int WolfExplode(int additional = 0, bool damage = true, int flags = XF_HURTSOURCE, int blastradius = 0)
+	{
+		int amt = (Random(0, 256) >> 3) +additional;
+
+		if (blastradius <= 0) { blastradius = int(blastradius * 4); }
+
+		if (damage) { A_Explode(amt, blastradius, flags); }
+
+		return amt;
+	}
+}
+
+// Wolf3D Rocket
+class WolfRocket : WolfProjectile
+{
+	Default
+	{
 		SeeSound "missile/fire";
 		DeathSound "missile/hit";
 
-		WolfRocketBase.Smoke "WolfRocketSmoke";
+		WolfProjectile.Smoke "WolfRocketSmoke";
 	}
 
 	States
 	{
 		Spawn:
 			MISL A 1 Bright;
-			MISL A 1 Bright A_SpawnItemEx(smoke, 0, 0, 0);
+			MISL A 1 Bright SpawnSmoke();
 			Loop;
 		Death:
-			BAL3 CDE 4 Bright A_Explode(16, 32, 1);
+			BAL3 C 4 Bright WolfExplode(30);
+			BAL3 DE 4 Bright;
 			Stop;
-	}
-}
-
-class WolfRocket : WolfRocketBase
-{
-	Default
-	{
-		DamageType "WolfNazi";
 	}
 }
 
@@ -50,23 +67,24 @@ class WolfRocketLost : WolfRocketSoD
 {
 	Default
 	{
-		WolfRocketBase.Smoke "WolfRocketSmokeLost";
+		WolfProjectile.Smoke "WolfRocketSmokeLost";
 	}
 }
 
-class WolfRocketPlayer : WolfRocketBase
+class WolfRocketPlayer : WolfRocket
 {
 	Default
 	{
-		Speed 20;
-		Damage 20;
 		+RANDOMIZE
+		Speed 20;
+		DamageType "Rocket";
 	}
 
 	States
 	{
 		Death:
-			BAL3 CDE 4 Bright A_Explode();
+			BAL3 C 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
+			BAL3 DE 4 Bright;
 			Stop;
 	}
 }
@@ -109,15 +127,10 @@ class WolfRocketSmokeLost : WolfRocketSmoke
 }
 
 // Schabbs Syringe
-class Syringe : Actor
+class Syringe : WolfProjectile
 {
 	Default
 	{
-		Projectile;
-		Speed 14;
-		Damage 6;
-		ExplosionDamage 6;
-		ExplosionRadius 10;
 		SeeSound "syringe/throw";
 		DamageType "WolfNaziSyringe";
 	}
@@ -128,21 +141,18 @@ class Syringe : Actor
 			WB3P ABCD 3;
 			Loop;
 		Death:
-			TNT1 AAA 4 A_Explode;
+			TNT1 A 4 WolfExplode(20);
 			Stop;
 	}
 }
 
 // Hitler Ghost Fireballs 
-class GhostFireBallBase : Actor
+class GhostFireBall : WolfProjectile
 {
 	Default
 	{
-		Projectile;
 		+MTHRUSPECIES
-		Radius 4;
 		Speed 2;
-		DamageType "Fire";
 		SeeSound "flame/fire";
 	}
 
@@ -152,16 +162,8 @@ class GhostFireBallBase : Actor
 			BAL3 AB 4 Bright;
 			Loop;
 		Death:
-			BAL3 A 0 Bright A_Explode(16, 16, 1);
+			BAL3 A 0 Bright WolfExplode(0, flags:0);
 			Stop;
-	}
-}
-
-class GhostFireball : GhostFireballBase
-{
-	Default
-	{
-		DamageType "WolfNazi";
 	}
 }
 
@@ -178,33 +180,20 @@ class FastGhostFireBall : GhostFireball
 	}
 }
 
-class WolfFlame : GhostFireballBase
+class WolfFlame : GhostFireball
 {
 	Default
 	{
+		DamageType "Fire";
 		Speed 25;
-		Damage 5;
-		-MTHRUSPECIES
-	}
-
-	States
-	{
-		Death:
-			BAL3 CDE 4 Bright;
-			Stop;
 	}
 }
 
-
-class SoDFireballBase : Actor
+class SoDFireballBase : WolfProjectile
 {
 	Default
 	{
-		Projectile;
 		+MTHRUSPECIES
-		Radius 4;
-		Speed 14;
-		DamageType "WolfNazi";
 	}
 
 	States
@@ -215,7 +204,7 @@ class SoDFireballBase : Actor
 			"####" ABCD 3 Bright;
 			Loop;
 		Death:
-			"####" ABCD 1 Bright A_Explode(20, 16, 1);
+			"####" ABCD 1 Bright WolfExplode(30);
 			Stop;
 	}
 }
