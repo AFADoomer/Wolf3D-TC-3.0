@@ -621,7 +621,7 @@ class JaguarHUD : AltHUD
 	{
 		int health = CPlayer.health;
 
-		DrawImageToBox(StatusBar.GetMugShot(7, MugShot.ANIMATEDGODMODE | MugShot.DISABLERAMPAGE | MugShot.DISABLEOUCH, "WLF"), x, y - 9, 32, 32, 1.0);
+		DrawImageToBox(StatusBar.GetMugShot(7, MugShot.ANIMATEDGODMODE | MugShot.DISABLERAMPAGE | MugShot.DISABLEOUCH | MugShot.CUSTOM, "WLJ"), x, y - 9, 32, 32, 1.0);
 		DrawHudNumber(HudFont, -1, health, x + 84 - HudFont.StringWidth(String.Format("%i", health)), y + 17);
 	}
 

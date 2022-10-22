@@ -62,6 +62,7 @@ class ReplacementHandler : StaticEventHandler
 		switch (e.replacement.GetClassName())
 		{
 			// Enemies
+			case 'Dog': e.replacee = "Demon"; break;
 			case 'Guard': e.replacee = "Zombieman"; break;
 			case 'SS': e.replacee = "ShotgunGuy"; break;
 			case 'Mutant': e.replacee = "DoomImp"; break;
