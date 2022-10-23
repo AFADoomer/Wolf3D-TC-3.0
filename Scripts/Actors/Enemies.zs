@@ -1175,7 +1175,7 @@ class SubmarineWilly : HansGrosse
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Enemies/Lost Episodes/Bosses
+		//$Category Wolfenstein 3D/Enemies/Bosses/Lost Episodes
 		//$Title Submarine Willy
 
 		SeeSound "willy/sight";
@@ -1259,7 +1259,7 @@ class TheAxe : UberMutant
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Enemies/Lost Episodes/Bosses
+		//$Category Wolfenstein 3D/Enemies/Bosses/Lost Episodes
 		//$Title The Axe
 
 		SeeSound "theaxe/sight";
@@ -1328,7 +1328,7 @@ class RobotDroid : DeathKnight
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Enemies/Lost Episodes/Bosses
+		//$Category Wolfenstein 3D/Enemies/Bosses/Lost Episodes
 		//$Title Robot Droid
 
 		SeeSound "robot/sight";
@@ -1413,7 +1413,7 @@ class DevilIncarnate : AngelOfDeath
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Enemies/Lost Episodes/Bosses
+		//$Category Wolfenstein 3D/Enemies/Bosses/Lost Episodes
 		//$Title Devil Incarnate
 
 		SeeSound "devil/sight";
@@ -1459,7 +1459,7 @@ class ProfessorQuarkblitz : BarnacleWilhelm
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Enemies/Lost Episodes/Bosses
+		//$Category Wolfenstein 3D/Enemies/Bosses/Lost Episodes
 		//$Title Professor Quarkblitz
 
 		SeeSound "quarkblitz/sight";
@@ -1529,6 +1529,7 @@ class WolfGhost : WolfSpectre
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Enemies/Lost Episodes/
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LSPE";
 	}

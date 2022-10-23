@@ -142,4 +142,197 @@ class WolfPlayer : DoomPlayer
 
 		Super.DeathThink();
 	}
+
+	// Give health with 'give all' cheat, don't give backpack unless
+	// the 'give everything' cheat is used, and never give armor
+	override void CheatGive (String name, int amount)
+	{
+		int i;
+		Class<Inventory> type;
+		let player = self.player;
+
+		if (player.mo == NULL || player.health <= 0)
+		{
+			return;
+		}
+
+		int giveall = ALL_NO;
+		if (name ~== "all")
+		{
+			giveall = ALL_YES;
+		}
+		else if (name ~== "everything")
+		{
+			giveall = ALL_YESYES;
+		}
+
+		if (giveall || name ~== "health")
+		{
+			if (amount > 0)
+			{
+				health += amount;
+				player.health = health;
+			}
+			else
+			{
+				player.health = health = GetMaxHealth(true);
+			}
+		}
+
+		if (giveall == ALL_YESYES || name ~== "backpack")
+		{
+			// Select the correct type of backpack based on the game
+			type = (class<Inventory>)(gameinfo.backpacktype);
+			if (type != NULL)
+			{
+				GiveInventory(type, 1, true);
+			}
+
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "ammo")
+		{
+			// Find every unique type of ammo. Give it to the player if
+			// he doesn't have it already, and set each to its maximum.
+			for (i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				let ammotype = (class<Ammo>)(AllActorClasses[i]);
+
+				if (ammotype && GetDefaultByType(ammotype).GetParentAmmo() == ammotype)
+				{
+					let ammoitem = FindInventory(ammotype);
+					if (ammoitem == NULL)
+					{
+						ammoitem = Inventory(Spawn (ammotype));
+						ammoitem.AttachToOwner (self);
+						ammoitem.Amount = ammoitem.MaxAmount;
+					}
+					else if (ammoitem.Amount < ammoitem.MaxAmount)
+					{
+						ammoitem.Amount = ammoitem.MaxAmount;
+					}
+				}
+			}
+
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "keys")
+		{
+			for (int i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				if (AllActorClasses[i] is "Key")
+				{
+					let keyitem = GetDefaultByType (AllActorClasses[i]);
+					if (keyitem.special1 != 0)
+					{
+						let item = Inventory(Spawn(AllActorClasses[i]));
+						if (!item.CallTryPickup (self))
+						{
+							item.Destroy ();
+						}
+					}
+				}
+			}
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "weapons")
+		{
+			let savedpending = player.PendingWeapon;
+			for (i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				let type = (class<Weapon>)(AllActorClasses[i]);
+				if (type != null && type != "Weapon" && !type.isAbstract())
+				{
+					// Don't give replaced weapons unless the replacement was done by Dehacked.
+					let rep = GetReplacement(type);
+					if (rep == type || rep is "DehackedPickup")
+					{
+						// Give the weapon only if it is set in a weapon slot.
+						if (player.weapons.LocateWeapon(type))
+						{
+							readonly<Weapon> def = GetDefaultByType (type);
+							if (giveall == ALL_YESYES || !def.bCheatNotWeapon)
+							{
+								GiveInventory(type, 1, true);
+							}
+						}
+					}
+				}
+			}
+			player.PendingWeapon = savedpending;
+
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "artifacts")
+		{
+			for (i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				type = (class<Inventory>)(AllActorClasses[i]);
+				if (type!= null)
+				{
+					let def = GetDefaultByType (type);
+					if (def.Icon.isValid() && (def.MaxAmount > 1 || def.bAutoActivate == false) && CheckArtifact(type))
+					{
+						// Do not give replaced items unless using "give everything"
+						if (giveall == ALL_YESYES || GetReplacement(type) == type)
+						{
+							GiveInventory(type, amount <= 0 ? def.MaxAmount : amount, true);
+						}
+					}
+				}
+			}
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "puzzlepieces")
+		{
+			for (i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				let type = (class<PuzzleItem>)(AllActorClasses[i]);
+				if (type != null)
+				{
+					let def = GetDefaultByType (type);
+					if (def.Icon.isValid())
+					{
+						// Do not give replaced items unless using "give everything"
+						if (giveall == ALL_YESYES || GetReplacement(type) == type)
+						{
+							GiveInventory(type, amount <= 0 ? def.MaxAmount : amount, true);
+						}
+					}
+				}
+			}
+			if (!giveall)
+				return;
+		}
+
+		if (giveall)
+			return;
+
+		type = name;
+		if (type == NULL)
+		{
+			if (PlayerNumber() == consoleplayer)
+				A_Log(String.Format("Unknown item \"%s\"\n", name));
+		}
+		else
+		{
+			GiveInventory(type, amount, true);
+		}
+		return;
+	}
+
+	private bool CheckArtifact(class<Actor> type)
+	{
+		return !(type is "PuzzleItem") && !(type is "Powerup") && !(type is "Ammo") &&	!(type is "Armor") && !(type is "Key") && !(type is "Weapon");
+	}
 }

@@ -35,7 +35,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'MediKit': e.replacement = "FirstAidKit"; break;
 			case 'SoulSphere':
 			case 'MegaSphere': e.replacement = "Life"; break;
-			case 'Berserk': e.replacement = "NaziBerserk"; break;
+			case 'Berserk': e.replacement = "WolfBerserk"; break;
 
 			// Enemies
 			case 'Demon':
@@ -54,6 +54,9 @@ class ReplacementHandler : StaticEventHandler
 			case 'Revenant': e.replacement = "FettGesicht"; break;
 			case 'CyberDemon': e.replacement = Random(0, 1) ? "AngelofDeath" : "DeathKnight"; break;
 			case 'SpiderMastermind': e.replacement = "HitlerMech"; break;
+
+			// Other
+			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
 		}
 	}
 

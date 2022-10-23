@@ -3,7 +3,7 @@ class ClassicWeapon : Weapon
 {
 	Default
 	{
-		//$Category Classic Wolf3D/Weapons
+		//$Category Wolfenstein 3D/Items/Weapons
 		//$Color 3
 
 		Mass 10000;
@@ -112,7 +112,8 @@ class WolfClip : Ammo
 {
 	Default
 	{
-		//$Category Classic Wolf3D/Weapons
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Title Bullets (8)
 		//$Color 3
 
 		Mass 10000;
@@ -122,7 +123,8 @@ class WolfClip : Ammo
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/ammo";
-		Ammo.BackpackMaxAmount 0;
+		Ammo.BackpackAmount 20;
+		Ammo.BackpackMaxAmount 199;
 	}
 
 	States
@@ -137,6 +139,8 @@ class WolfClipLost : WolfClip
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Ammo/Lost Episodes
+		//$Title Bullets (8, Lost)
 		Inventory.Icon "WCLIB0";
 	}
 
@@ -168,6 +172,8 @@ class WolfClipBox : WolfClip
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Title Bullets (25)
 		Inventory.Amount 25;
 		Inventory.Pickupsound "pickups/ammobox";
 	}
@@ -182,6 +188,12 @@ class WolfClipBox : WolfClip
 
 class WolfClipBoxLost : WolfClipBox
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Ammo/Lost Episodes
+		//$Title Bullets (25, Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -194,6 +206,7 @@ class WolfKnife : ClassicWeapon
 {
 	Default
 	{
+		//$Title Knife
 		+Weapon.NoAlert
 		AttackSound "";
 		Tag "$WPN_KNIFE";
@@ -232,6 +245,7 @@ class WolfPistol : ClassicWeapon
 {
 	Default
 	{
+		//$Title Pistol
 		AttackSound "weapons/wpistol";
 		Tag "$WPN_PISTOL";
 		Inventory.Icon "LUGER";
@@ -265,6 +279,7 @@ class WolfMachineGun : ClassicWeapon
 {
 	Default
 	{
+		//$Title Machine Gun
 		AttackSound "weapons/wmachinegun";
 		Tag "$WPN_MGUN";
 		Inventory.Icon "MGUN";
@@ -303,6 +318,7 @@ class WolfChaingun : ClassicWeapon
 {
 	Default
 	{
+		//$Title Chain Gun
 		AttackSound "weapons/wchaingun";
 		Tag "$WPN_CGUN";
 		Inventory.Icon "CGUN";
@@ -345,6 +361,7 @@ class WolfChaingunSoD : WolfChaingun
 {
 	Default
 	{
+		//$Title Chain Gun (Spear of Destiny)
 		Inventory.PickupSound "pickups/cgunsod";
 		+Weapon.CHEATNOTWEAPON
 	}
@@ -354,6 +371,8 @@ class WolfKnifeLost : WolfKnife
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Weapons/Lost Episodes
+		//$Title Knife (Lost)
 		Weapon.SlotPriority 2;
 		+Weapon.CHEATNOTWEAPON
 	}
@@ -370,6 +389,8 @@ class WolfPistolLost : WolfPistol
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Weapons/Lost Episodes
+		//$Title Pistol (Lost)
 		AttackSound "weapons/wpistol2";
 		Weapon.SlotPriority 2;
 		+Weapon.CHEATNOTWEAPON
@@ -387,6 +408,8 @@ class WolfMachineGunLost : WolfMachineGun
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Weapons/Lost Episodes
+		//$Title Machine Gun (Lost)
 		AttackSound "weapons/wmachinegun2";
 		Weapon.SlotPriority 2;
 		+Weapon.CHEATNOTWEAPON
@@ -407,6 +430,8 @@ class WolfChaingunLost : WolfChaingun
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Weapons/Lost Episodes
+		//$Title Chain Gun (Lost)
 		Inventory.PickupSound "pickups/cgunlost";
 		AttackSound "weapons/wchaingun2";
 		Weapon.SlotPriority 2;
@@ -428,6 +453,8 @@ class WolfGas : Ammo
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Title Flamethrower Ammo (14)
 		Mass 10000;
 		Inventory.Amount 14;
 		Inventory.Icon "WGASA0";
@@ -436,7 +463,7 @@ class WolfGas : Ammo
 		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/ammo";
 		Ammo.BackpackAmount 2;
-		Ammo.BackpackMaxAmount 99;
+		Ammo.BackpackMaxAmount 199;
 	}
 
 	States
@@ -451,6 +478,7 @@ class WolfFlameThrower : ClassicWeapon
 {
 	Default
 	{
+		//$Title Flame Thrower
 		Scale 0.2;
 		Tag "$WPN_FTHR";
 		Inventory.Icon "FTHR";
@@ -488,6 +516,8 @@ class WolfRocketPickup : Ammo
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Title Rocket (1)
 		Mass 10000;
 		Inventory.Amount 1;
 		Inventory.Icon "WRKTA0";
@@ -511,6 +541,8 @@ class WolfRocketCrate : WolfRocketPickup
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Title Rockets (3)
 		Inventory.Amount 5;
 	}
 
@@ -526,6 +558,7 @@ class WolfRocketLauncher : ClassicWeapon
 {
 	Default
 	{
+		//$Title Rocket Launcher
 		AttackSound "flame/fire";
 		Scale 0.2;
 		Tag "$WPN_ROCK";

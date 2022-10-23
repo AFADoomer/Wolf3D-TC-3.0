@@ -162,7 +162,7 @@ class GhostFireBall : WolfProjectile
 			BAL3 AB 4 Bright;
 			Loop;
 		Death:
-			BAL3 A 0 Bright WolfExplode(0, flags:0);
+			BAL3 A 4 Bright WolfExplode(0, flags:0);
 			Stop;
 	}
 }

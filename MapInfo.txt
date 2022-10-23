@@ -82,6 +82,7 @@ defaultmap
 	No_Grinding_Polyobj
 	InterMusic = ENDLEVEL
 	Cluster = 1
+	sky1 = "CEILING"
 }
 
 map TITLEMAP "Wolfenstein 3D"
@@ -1268,14 +1269,17 @@ DoomEdNums
 	21070=HangingVines
 	21075=WolfRocketPickup
 	21076=WolfRocketCrate
+	21077=WolfRocketLauncher
 	21078=WolfGas
 	21080=WolfFlameThrower
-	21081=WolfRocketLauncher
+	21081=WolfKnife
+	21082=WolfPistol
+	21083=WolfBerserk
+	21086=BreakableColumn
+	21087=ExplosiveOilDrum
 	21124=DeadGuard
 
 	// SoD
-	21072=WolfClipBox
-	21074=SpearofDestiny
 	21133=SkullsonStick
 	21138=BloodyCage
 	21145=CageofSkulls

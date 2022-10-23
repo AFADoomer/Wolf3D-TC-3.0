@@ -47,6 +47,7 @@ class PoolofWater : ClassicDecoration
 {
 	Default
 	{
+		//$Title Pool of Water
 		-SOLID
 	}
 
@@ -62,6 +63,7 @@ class OilDrum : ClassicDecoration
 {
 	Default
 	{
+		//$Title Barrel (Oil Drum)
 		Height 30;
 	}
 
@@ -71,12 +73,41 @@ class OilDrum : ClassicDecoration
 			BARL C -1;
 			Stop;
 	}
-} 
+}
+
+class ExplosiveOilDrum : ExplosiveBarrel
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items
+		//$NotAngled
+		//$Title Barrel (Oil Drum, Explosive)
+
+		Height 50;
+		DeathSound "missile/hit";
+		Obituary "";
+	}
+
+	States
+	{
+		Spawn:
+			WBXP A -1;
+			Stop;
+		Death:
+			WBXP B 5 Bright A_Scream();
+			WBXP C 5 Bright A_Explode();
+			WBXP D 10 Bright;
+			TNT1 A 1050 Bright A_BarrelDestroy();
+			TNT1 A 5 A_Respawn();
+			Wait;
+	}
+}
 
 class TableandChairs : ClassicDecoration
 {
 	Default
 	{
+		//$Title Table and Chairs
 		Height 32;
 	}
 
@@ -92,6 +123,7 @@ class FloorLamp : ClassicDecoration
 {
 	Default
 	{
+		//$Title Floor Lamp
 		Height 32;
 	}
 
@@ -107,6 +139,7 @@ class HangingChandelier : ClassicDecoration
 {
 	Default
 	{
+		//$Title Hanging Chandelier
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
@@ -125,6 +158,7 @@ class HangingSkeleton : ClassicDecoration
 {
 	Default
 	{
+		//$Title Hanging Skeleton
 		+SPAWNCEILING
 		+NOGRAVITY
 		Height 64;
@@ -142,7 +176,8 @@ class DogFood : Health
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title Dog Food
 		//$Color 1
 		//$NotAngled
 
@@ -165,6 +200,7 @@ class StoneColumn : ClassicDecoration
 {
 	Default
 	{
+		//$Title Column (Stone)
 		Height 64;
 	}
 
@@ -172,6 +208,33 @@ class StoneColumn : ClassicDecoration
 	{
 		Spawn:
 			COLW A -1;
+			Stop;
+	}
+}
+
+Class BreakableColumn : StoneColumn
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items
+		//$Title Column (Stone, Breakable)
+		Health 75;
+		+SHOOTABLE
+		+NOBLOOD
+		DamageFactor "WolfNazi", 0.0;
+		DamageFactor "Fire", 0.0;
+	}
+
+	States
+	{
+		Spawn:
+			COLW A 1;
+			Wait;
+		Death:
+			COLB B 10 A_StartSound("missile/hit");
+			COLB C 5 A_UnSetSolid();
+			COLB D 3 A_UnSetShootable();
+			COLB E -1;
 			Stop;
 	}
 }
@@ -225,6 +288,7 @@ class PlantinVase : ClassicDecoration
 {
 	Default
 	{
+		//$Title Vase (with plant)
 		Height 50;
 	}
 
@@ -270,6 +334,7 @@ class GreenCeilingLight : ClassicDecoration
 {
 	Default
 	{
+		//$Title Ceiling Light (Green)
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
@@ -288,6 +353,7 @@ class KitchenUtensils : ClassicDecoration
 {
 	Default
 	{
+		//$Title Kitchen Utensils
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
@@ -306,6 +372,7 @@ class SuitofArmor : ClassicDecoration
 {
 	Default
 	{
+		//$Title Suit of Armor
 		Height 64;
 	}
 
@@ -321,6 +388,7 @@ class EmptyCage : ClassicDecoration
 {
 	Default
 	{
+		//$Title Cage (Empty)
 		+SPAWNCEILING
 		+NOGRAVITY
 		Height 64;
@@ -338,6 +406,7 @@ class Cage : ClassicDecoration
 {
 	Default
 	{
+		//$Title Cage (with skeleton)
 		+SPAWNCEILING
 		+NOGRAVITY
 		Height 64;
@@ -355,6 +424,7 @@ class Bones : ClassicDecoration
 {
 	Default
 	{
+		//$Title Pile of Bones
 		-SOLID
 	}
 
@@ -370,6 +440,8 @@ class YellowKey : Key
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Keys
+		//$Title Key (Gold)
 		Inventory.AltHUDIcon "I_YKEY";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
@@ -387,6 +459,8 @@ class BlueKey : Key
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Keys
+		//$Title Key (Silver)
 		Inventory.AltHUDIcon "I_BKEY";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
@@ -434,7 +508,8 @@ class PlateofFood : Health
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title Plate of Food
 		//$Color 1
 		//$NotAngled
 
@@ -457,7 +532,8 @@ class FirstAidKit : Health
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title First Aid Kit
 		//$Color 1
 		//$NotAngled
 
@@ -476,11 +552,12 @@ class FirstAidKit : Health
 	}
 }
 
-class NaziBerserk : Berserk
+class WolfBerserk : Berserk
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title Berserk Pack
 		//$Color 1
 		//$NotAngled
 
@@ -503,7 +580,8 @@ class JeweledCross : Score
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Treasure
+		//$Category Wolfenstein 3D/Items/Treasure
+		//$Title Jeweled Cross
 		//$Color 14
 		//$NotAngled
 
@@ -525,7 +603,7 @@ class Chalice : Score
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Treasure
+		//$Category Wolfenstein 3D/Items/Treasure
 		//$Color 14
 		//$NotAngled
 
@@ -547,7 +625,7 @@ class Chest : Score
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Treasure
+		//$Category Wolfenstein 3D/Items/Treasure
 		//$Color 14
 		//$NotAngled
 
@@ -569,7 +647,7 @@ class Crown : Score
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Treasure
+		//$Category Wolfenstein 3D/Items/Treasure
 		//$Color 14
 		//$NotAngled
 
@@ -591,7 +669,7 @@ class Life : CustomInventory
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
 		//$Color 1
 		//$NotAngled
 
@@ -625,7 +703,8 @@ class BoneswithBlood : Health
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Health
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title Pool of Blood (with bones)
 		//$Color 1
 		//$NotAngled
 
@@ -647,6 +726,7 @@ class WoodBarrel : ClassicDecoration
 {
 	Default
 	{
+		//$Title Barrel (Wooden)
 		Height 30;
 	}
 
@@ -662,6 +742,7 @@ class WellwithWater : ClassicDecoration
 {
 	Default
 	{
+		//$Title Well (with water)
 		Height 30;
 	}
 
@@ -677,6 +758,7 @@ class DryWell : ClassicDecoration
 {
 	Default
 	{
+		//$Title Well (dry)
 		Height 30;
 	}
 
@@ -690,6 +772,11 @@ class DryWell : ClassicDecoration
 
 class PoolofBlood : BonesWithBlood
 {
+	Default
+	{
+		//$Title Pool of Blood
+	}
+
 	States
 	{
 		Spawn:
@@ -702,6 +789,7 @@ class NaziFlag : ClassicDecoration
 {
 	Default
 	{
+		//$Title Flag (Nazi)
 		Height 64;
 	}
 
@@ -717,6 +805,7 @@ class AardwolfSign : ClassicDecoration
 {
 	Default
 	{
+		//$Title Sign (Aardwolf)
 		Height 64;
 	}
 
@@ -732,6 +821,7 @@ class CrushedBones1 : ClassicDecoration
 {
 	Default
 	{
+		//$Title Crushed Bones 1
 		-SOLID
 	}
 
@@ -747,6 +837,7 @@ class CrushedBones2 : ClassicDecoration
 {
 	Default
 	{
+		//$Title Crushed Bones 2
 		-SOLID
 	}
 
@@ -762,6 +853,7 @@ class CrushedBody : ClassicDecoration
 {
 	Default
 	{
+		//$Title Crushed Bones 3
 		-SOLID
 	}
 
@@ -777,6 +869,7 @@ class HangingUtensils : ClassicDecoration
 {
 	Default
 	{
+		//$Title Hanging Pots and Pans
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
@@ -810,6 +903,7 @@ class SpearRack : ClassicDecoration
 {
 	Default
 	{
+		//$Title Spear Rack
 		Height 64;
 	}
 
@@ -825,6 +919,7 @@ class HangingVines : ClassicDecoration
 {
 	Default
 	{
+		//$Title Hanging Vines
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
@@ -842,6 +937,7 @@ class DeadGuard : ClassicDecoration
 {
 	Default
 	{
+		//$Title Dead Guard
 		Scale 1.0;
 	}
 
@@ -857,6 +953,7 @@ class SkullsonStick : ClassicDecoration
 {
 	Default
 	{
+		//$Title Stick (with skulls)
 		Height 64;
 	}
 
@@ -872,6 +969,7 @@ class BloodyCage : ClassicDecoration
 {
 	Default
 	{
+		//$Title Cage (Bloody)
 		Height 64;
 	}
 
@@ -887,6 +985,7 @@ class CageofSkulls : ClassicDecoration
 {
 	Default
 	{
+		//$Title Cage (with skulls)
 		Height 64;
 	}
 
@@ -902,6 +1001,7 @@ class RedCeilingLight : ClassicDecoration
 {
 	Default
 	{
+		//$Title Ceiling Light (Red)
 		-SOLID
 	}
 
@@ -917,6 +1017,7 @@ class BullHeadonStick : ClassicDecoration
 {
 	Default
 	{
+		//$Title Stick (with bull head)
 		Height 64;
 	}
 
@@ -932,6 +1033,7 @@ class BloodyWell : ClassicDecoration
 {
 	Default
 	{
+		//$Title Well (bloody)
 		Height 64;
 	}
 
@@ -947,6 +1049,7 @@ class AngelofDeathStatue : ClassicDecoration
 {
 	Default
 	{
+		//$Title Statue (Angel of Death)
 		Height 64;
 	}
 
@@ -962,6 +1065,7 @@ class BrownColumn : ClassicDecoration
 {
 	Default
 	{
+		//$Title Column (Brown)
 		Height 64;
 	}
 
@@ -1000,6 +1104,8 @@ class SpearofDestiny : Inventory
 
 	Default
 	{
+		//$Category Wolfenstein 3D/Items
+		//$Title Spear of Destiny
 		Inventory.Amount 1;
 		Inventory.PickupSound "spear/pickup";
 		Inventory.PickupMessage "";
@@ -1030,6 +1136,12 @@ class SpearofDestiny : Inventory
 
 class PoolofWaterLost : PoolofWater
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Pool of Water (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1040,6 +1152,12 @@ class PoolofWaterLost : PoolofWater
 
 class OilDrumLost : OilDrum
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Barrel (Oil Drum, Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1050,6 +1168,12 @@ class OilDrumLost : OilDrum
 
 class TableandChairsLost : TableandChairs
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Table and Chairs (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1060,6 +1184,12 @@ class TableandChairsLost : TableandChairs
 
 class FloorLampLost : FloorLamp
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Floor Lamp (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1070,6 +1200,12 @@ class FloorLampLost : FloorLamp
 
 class HangingChandelierLost : HangingChandelier
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Hanging Chandelier (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1080,6 +1216,12 @@ class HangingChandelierLost : HangingChandelier
 
 class HangingSkeletonLost : HangingSkeleton
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Hanging Skeleton (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1090,6 +1232,12 @@ class HangingSkeletonLost : HangingSkeleton
 
 class DogFoodLost : DogFood
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Dog Food (Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1100,6 +1248,12 @@ class DogFoodLost : DogFood
 
 class StoneColumnLost : StoneColumn
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Column (Stone, Lost)
+	}
+
 	States
 	{
 		Spawn:
@@ -1110,6 +1264,12 @@ class StoneColumnLost : StoneColumn
 
 class PlantLost : Plant
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Plant (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1120,6 +1280,12 @@ class PlantLost : Plant
 
 class SkeletonLost : Skeleton
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Skeleton (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1130,6 +1296,12 @@ class SkeletonLost : Skeleton
 
 class PileofSkullsLost : Sink
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Gore (Pile of Skulls, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1140,6 +1312,12 @@ class PileofSkullsLost : Sink
 
 class BrownPlantLost : PlantinVase
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Plant (Brown, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1150,6 +1328,12 @@ class BrownPlantLost : PlantinVase
 
 class VaseLost : Vase
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Vase (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1160,6 +1344,12 @@ class VaseLost : Vase
 
 class TableLost : Table
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Table (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1170,6 +1360,12 @@ class TableLost : Table
 
 class GreenCeilingLightLost : GreenCeilingLight
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Ceiling Light (Green, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1180,6 +1376,12 @@ class GreenCeilingLightLost : GreenCeilingLight
 
 class CagewithBloodLost : ClassicDecoration
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Cage (Blood, Lost)
+	}
+	
 	Default
 	{
 		+SPAWNCEILING
@@ -1197,6 +1399,12 @@ class CagewithBloodLost : ClassicDecoration
 
 class SuitofArmorLost : SuitofArmor
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Suit of Armor (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1207,6 +1415,12 @@ class SuitofArmorLost : SuitofArmor
 
 class EmptyCageLost : EmptyCage
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Cage (Empty, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1217,6 +1431,12 @@ class EmptyCageLost : EmptyCage
 
 class BrokenCageLost : Cage
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Cage (Broken, Lost)
+	}
+	
 	Default
 	{
 		+SPAWNCEILING
@@ -1234,6 +1454,12 @@ class BrokenCageLost : Cage
 
 class Bones1Lost : Bones
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Crushed Bones 4 (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1244,6 +1470,12 @@ class Bones1Lost : Bones
 
 class YellowKeyLost : YellowKey
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Keys/Lost Episodes
+		//$Title Key (Gold, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1254,6 +1486,12 @@ class YellowKeyLost : YellowKey
 
 class BlueKeyLost : BlueKey
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Keys/Lost Episodes
+		//$Title Key (Silver, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1264,6 +1502,12 @@ class BlueKeyLost : BlueKey
 
 class CageWithSkullsLost : Bed
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Cage (with skulls, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1274,6 +1518,12 @@ class CageWithSkullsLost : Bed
 
 class DeadRatLost : Basket
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Dead Rat (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1284,6 +1534,12 @@ class DeadRatLost : Basket
 
 class PlateofFoodLost : PlateOfFood
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
+		//$Title Plate of Food (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1294,6 +1550,12 @@ class PlateofFoodLost : PlateOfFood
 
 class FirstAidKitLost : FirstAidKit
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
+		//$Title First Aid Kit (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1304,6 +1566,12 @@ class FirstAidKitLost : FirstAidKit
 
 class RadioLost : JeweledCross
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
+		//$Title Radio (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1314,6 +1582,12 @@ class RadioLost : JeweledCross
 
 class ShellLost : Chalice
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
+		//$Title Shell (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1324,6 +1598,12 @@ class ShellLost : Chalice
 
 class TimerLost : Chest
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
+		//$Title Timer (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1334,7 +1614,12 @@ class TimerLost : Chest
 
 class BombLost : Crown
 {
-
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
+		//$Title Bomb (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1345,6 +1630,12 @@ class BombLost : Crown
 
 class LifeLost : Life
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
+		//$Title Life (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1355,6 +1646,12 @@ class LifeLost : Life
 
 class BoneswithBloodLost : BoneswithBlood
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
+		//$Title Pool of Blood (with bones, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1365,6 +1662,12 @@ class BoneswithBloodLost : BoneswithBlood
 
 class WoodBarrelLost : WoodBarrel
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Barrel (Wooden, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1375,6 +1678,12 @@ class WoodBarrelLost : WoodBarrel
 
 class WellwithWaterLost : WellwithWater
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Well (with water, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1385,6 +1694,12 @@ class WellwithWaterLost : WellwithWater
 
 class DryWellLost : DryWell
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Well (dry, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1395,6 +1710,12 @@ class DryWellLost : DryWell
 
 class PoolofBloodLost : PoolofBlood
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
+		//$Title Pool of Blood (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1405,6 +1726,12 @@ class PoolofBloodLost : PoolofBlood
 
 class ElectrofieldLost : NaziFlag
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Electro-Field (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1415,6 +1742,12 @@ class ElectrofieldLost : NaziFlag
 
 class RedCeilingLightLost : AardwolfSign
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Ceiling Light (Red, Lost)
+	}
+	
 	Default
 	{
 		-SOLID
@@ -1430,6 +1763,12 @@ class RedCeilingLightLost : AardwolfSign
 
 class Bones2Lost : CrushedBones1
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Crushed Bones 1 (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1440,6 +1779,12 @@ class Bones2Lost : CrushedBones1
 
 class LightBulbLost : CrushedBones2
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Lightbulb (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1450,6 +1795,12 @@ class LightBulbLost : CrushedBones2
 
 class SlimeLost : CrushedBody
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Pool of Slime (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1460,6 +1811,12 @@ class SlimeLost : CrushedBody
 
 class HLabTableLost : HangingUtensils
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Lab Table (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1470,6 +1827,12 @@ class HLabTableLost : HangingUtensils
 
 class RadioactiveBarrelLost  : Stove
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Barrel (Radioactive, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1480,6 +1843,12 @@ class RadioactiveBarrelLost  : Stove
 
 class PipeLost : SpearRack
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Pip (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1490,6 +1859,12 @@ class PipeLost : SpearRack
 
 class BubblesLost : HangingVines
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Bubbles (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1500,6 +1875,12 @@ class BubblesLost : HangingVines
 
 class DeadGuardLost : DeadGuard
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Dead Guard (Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1509,7 +1890,13 @@ class DeadGuardLost : DeadGuard
 }
 
 class DemonStatueLost: BrownColumn
-{ 
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Statue (Demon, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1520,6 +1907,12 @@ class DemonStatueLost: BrownColumn
 
 class BJWasHereLost : Truck
 {
+	Default
+	{
+		//$Category Wolfenstein 3D/Decorations/Lost Episodes
+		//$Title Sign (BJ was here, Lost)
+	}
+	
 	States
 	{
 		Spawn:
@@ -1532,6 +1925,8 @@ class SpearofDestinyLost : SpearofDestiny
 {
 	Default
 	{
+		//$Category Wolfenstein 3D/Items/Lost Episodes
+		//$Title Spear of Destiny (Lost)
 		Inventory.PickupSound "spear/pickup2";
 	}
 
