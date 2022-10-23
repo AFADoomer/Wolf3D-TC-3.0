@@ -509,6 +509,7 @@ Texture WLF3LK2D, 64, 64 {Graphic WALL2133, 0, 0 {FlipX} }
 
 // Alternate Ceilings
 Texture F_SKY1, 8, 8 { Patch Ceiling, 0, 0 }
+Texture SKY1, 8, 8 { Patch Ceiling, 0, 0 }
 Texture 1D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[38,38,38]:[38,38,38]"} }
 Texture 2D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[88,0,0]:[88,0,0]"} }
 Texture 2E, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[76,0,0]:[76,0,0]"} }
@@ -1107,6 +1108,7 @@ Texture FONT054, 8, 16 { Patch WVGA0105, 0, 0 }
 Texture FONT055, 8, 16 { Patch WVGA0106, 0, 0 }
 Texture FONT056, 8, 16 { Patch WVGA0107, 0, 0 }
 Texture FONT057, 8, 16 { Patch WVGA0108, 0, 0 }
+Texture FONT063, 8, 16 { Patch QM, 0, 0 }
 
 // Status Bar Face
 Texture WLFST00, 24, 32 { Patch WVGA0109, 0, 0 }

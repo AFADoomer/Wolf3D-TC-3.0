@@ -175,6 +175,8 @@ class ClassicStatusBar : BaseStatusBar
 			if (levelnum == "0") { levelnum = "10"; }
 		}
 
+		if (levelnum == "0") { levelnum = "?"; }
+
 		DrawString(ClassicFont, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
