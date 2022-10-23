@@ -219,6 +219,7 @@ Class BreakableColumn : StoneColumn
 		//$Category Wolfenstein 3D/Items
 		//$Title Column (Stone, Breakable)
 		Health 75;
+		+DONTTHRUST
 		+SHOOTABLE
 		+NOBLOOD
 		DamageFactor "WolfNazi", 0.0;
@@ -228,7 +229,7 @@ Class BreakableColumn : StoneColumn
 	States
 	{
 		Spawn:
-			COLW A 1;
+			COLB A 1;
 			Wait;
 		Death:
 			COLB B 10 A_StartSound("missile/hit");

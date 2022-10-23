@@ -1,0 +1,4 @@
+Lock 500
+{
+	Any { YellowKey BlueKey YellowKeyLost BlueKeyLost }
+}

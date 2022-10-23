@@ -134,7 +134,7 @@ class Startup : GenericMenu
 		if (gamemenu)
 		{
 			Close();
-			Menu.SetMenu("GameMenu");
+			Menu.SetMenu("LoadScreen");
 		}
 		else
 		{
@@ -359,7 +359,7 @@ class Startup : GenericMenu
 				break;
 			case 6:
 				Close();
-				SetMenu("GameMenu", -1);
+				SetMenu("LoadScreen", -1);
 				//gamemenu = true;
 				curstate++;
 				break;
