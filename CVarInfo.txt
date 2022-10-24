@@ -7,6 +7,7 @@ server int g_maxpushwallmove = 2;
 server int g_fastfireballs = 1;
 server int g_noblood = 1;
 server int g_defaultmenus = 0;
+server int g_replacenativeactors = 1; // 0 = Off, 1 = All, 2 = Items only
 
 user int g_borderstyle = 0;
 

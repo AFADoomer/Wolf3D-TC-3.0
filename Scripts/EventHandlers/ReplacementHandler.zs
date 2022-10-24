@@ -2,6 +2,8 @@ class ReplacementHandler : StaticEventHandler
 {
 	override void CheckReplacement(ReplaceEvent e)
 	{
+		if (g_replacenativeactors == 0) { return; }
+
 		switch (e.replacee.GetClassName())
 		{
 			// Weapons
@@ -36,7 +38,17 @@ class ReplacementHandler : StaticEventHandler
 			case 'SoulSphere':
 			case 'MegaSphere': e.replacement = "Life"; break;
 			case 'Berserk': e.replacement = "WolfBerserk"; break;
+			
+			// Other
+			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
+		}
 
+		if (e.replacement) { e.IsFinal = true; }
+
+		if (g_replacenativeactors == 2) { return; }
+
+		switch (e.replacee.GetClassName())
+		{
 			// Enemies
 			case 'Demon':
 			case 'Spectre':
@@ -44,24 +56,24 @@ class ReplacementHandler : StaticEventHandler
 			case 'Zombieman': e.replacement = "Guard"; break;
 			case 'ShotgunGuy': e.replacement = "SS"; break;
 			case 'DoomImp': e.replacement = "Mutant"; break;
-			case 'BaronofHell': e.replacement = Random(0, 2) ? Random(0, 1) ? "HansGrosse" : "GretelGrosse" : "TransGrosse"; break;
+			case 'BaronofHell': e.replacement = "GretelGrosse"; break;
 			case 'Cacodemon':
 			case 'PainElemental': e.replacement = "HitlerGhost"; break;
 			case 'ChaingunGuy': e.replacement = "Officer"; break;
-			case 'HellKnight': e.replacement = "DrSchabbs"; break;
-			case 'Arachnotron': e.replacement = "Giftmacher"; break;
-			case 'Fatso': e.replacement = "UberMutant"; break;
-			case 'Revenant': e.replacement = "FettGesicht"; break;
-			case 'CyberDemon': e.replacement = Random(0, 1) ? "AngelofDeath" : "DeathKnight"; break;
-			case 'SpiderMastermind': e.replacement = "HitlerMech"; break;
-
-			// Other
-			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
+			case 'HellKnight': e.replacement = "HansGrosse"; break;
+			case 'Arachnotron': e.replacement = "TransGrosse"; break;
+			case 'Fatso': e.replacement = "Giftmacher"; break;
+			case 'Revenant': e.replacement = "DrSchabbs"; break;
+			case 'SpiderMastermind': e.replacement = "Hitler"; break;
+			case 'CyberDemon': e.replacement = "HitlerMech"; break;
+			case 'Archvile': e.replacement = "FettGesicht"; break;
 		}
 	}
 
 	override void CheckReplacee(ReplacedEvent e)
 	{
+		if (g_replacenativeactors != 1) { return; }
+
 		switch (e.replacement.GetClassName())
 		{
 			// Enemies
@@ -69,19 +81,16 @@ class ReplacementHandler : StaticEventHandler
 			case 'Guard': e.replacee = "Zombieman"; break;
 			case 'SS': e.replacee = "ShotgunGuy"; break;
 			case 'Mutant': e.replacee = "DoomImp"; break;
-			case 'HansGrosse':
-			case 'GretelGrosse': 
-			case 'TransGrosse': e.replacee = "BaronofHell"; break;
+			case 'GretelGrosse': e.replacee = "BaronofHell"; break;
 			case 'HitlerGhost': e.replacee = "Cacodemon"; break;
 			case 'Officer': e.replacee = "ChaingunGuy"; break;
-			case 'DrSchabbs': e.replacee = "HellKnight"; break;
-			case 'GiftMacher': e.replacee = "Arachnotron"; break;
-			case 'UberMutant': e.replacee = "Fatso"; break;
-			case 'FettGesicht': e.replacee = "Revenant"; break;
-			case 'AngelofDeath':
-			case 'DeathKnight': e.replacee = "CyberDemon"; break;
-			case 'HitlerMech': 
+			case 'HansGrosse': e.replacee = "HellKnight"; break;
+			case 'TransGrosse': e.replacee = "Arachnotron"; break;
+			case 'GiftMacher': e.replacee = "Fatso"; break;
+			case 'DrSchabbs': e.replacee = "Revenant"; break;
 			case 'Hitler': e.replacee = "SpiderMastermind"; break;
+			case 'HitlerMech': e.replacee = "CyberDemon"; break;
+			case 'FettGesicht': e.replacee = "Archvile"; break;
 		}
 	}
 }
