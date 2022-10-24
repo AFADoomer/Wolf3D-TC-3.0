@@ -433,7 +433,7 @@ class EpisodeMenu : IconListMenu
 		if (Game.IsSoD())
 		{
 			Close();
-			Menu.SetMenu("SkillMenu", 5 + Game.IsSoD());
+			Menu.SetMenu("SkillMenu", 5 + g_sod);
 		}
 		else
 		{
@@ -447,12 +447,14 @@ class EpisodeMenu : IconListMenu
 
 class GameMenu : IconListMenu
 {
+	CVar sodvar;
+
 	override void Init(Menu parent, ListMenuDescriptor desc)
 	{
 		Super.Init(parent, desc);
 		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
 
-		CVar sodvar = CVar.FindCVar("g_sod");
+		sodvar = CVar.FindCVar("g_sod");
 		if (sodvar) { sodvar.SetInt(-1); }
 
 		fadetarget = gametic;
@@ -534,9 +536,8 @@ class GameMenu : IconListMenu
 		switch (mkey)
 		{
 			case MKEY_Enter:
-				CVar sodvar = CVar.FindCVar("g_sod");
 				if (sodvar) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
-
+				
 				SetMenu("IntroSlideShow", -1);
 				return true;
 		}

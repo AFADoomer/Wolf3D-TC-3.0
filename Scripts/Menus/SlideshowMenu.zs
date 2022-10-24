@@ -579,7 +579,7 @@ class IntroSlideshow : WolfMenu
 		credits = TexMan.CheckForTexture((Game.IsSoD() ? "SCREDIT" : "CREDIT"), TexMan.Type_Any);
 		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
 
-		sodversion = g_sod;
+		sodversion = !!(g_sod > 0);
 	}
 
 	override void Drawer()
