@@ -491,6 +491,30 @@ class ExtendedOptionMenu : GenericOptionMenu
 		return Super.DrawSlider(this, x, y, spacing, fnt, isSelected, (16, 8), (8, 14), breakwidth);
 	}
 
+	override ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing, Font fnt, bool isSelected, int breakwidth)
+	{
+		ItemInfo info = MenuHandler.FindItem(this);
+		info.x = x;
+		info.y = y;
+
+		int height = 0;
+		String label = Stringtable.Localize(this.mLabel);
+		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), false, 1.0, breakwidth);
+
+		KeyBindings binds;
+		if (this is "OptionMenuItemMapControl") { binds = AutomapBindings; }
+
+		info.valueleft = x + spacing;
+		info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft * CleanXfac_1, y + (OptionMenu.OptionHeight() * CleanYfac_1 / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
+		info.valueright = x + info.width;
+
+		height = 16.0;
+
+		info.height = height;
+
+		return info;
+	}
+
 	override void DrawCursor(int x, int y)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;

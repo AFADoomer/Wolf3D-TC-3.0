@@ -1792,14 +1792,59 @@ Texture SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }
 Texture CONBACK, 1024, 768 {}
 
 // Frame borders
-Texture M_BORTL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, 0 }
-Texture M_BORT, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, 0 }
-Texture M_BORTR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -6, 0 }
-Texture M_BORL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, -3 }
-Texture M_BORR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -3 }
-Texture M_BORBL, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", 0, -6 }
-Texture M_BORB, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -3, -6 }
-Texture M_BORBR, 3, 3 { Patch "Graphics/Menu/Borders/FrameBorder.png", -6, -6 }
+Texture M_BORTL, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", 0, 0 }
+Texture M_BORT, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -3, 0 }
+Texture M_BORTR, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -6, 0 }
+Texture M_BORL, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", 0, -3 }
+Texture M_BORR, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -6, -3 }
+Texture M_BORBL, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", 0, -6 }
+Texture M_BORB, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -3, -6 }
+Texture M_BORBR, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -6, -6 }
+
+Texture B_TL, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", 0, 0 }
+Texture B_T, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", -8, 0 }
+Texture B_TR, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", -16, 0 }
+Texture B_L, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", 0, -8 }
+Texture B_R, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", -16, -8 }
+Texture B_BL, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", 0, -16 }
+Texture B_B, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", -8, -16 }
+Texture B_BR, 8, 8 { Patch "Graphics/Borders/BlueBorder.png", -16, -16 }
+
+Texture BG_TL, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", 0, 0 }
+Texture BG_T, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", -8, 0 }
+Texture BG_TR, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", -16, 0 }
+Texture BG_L, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", 0, -8 }
+Texture BG_R, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", -16, -8 }
+Texture BG_BL, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", 0, -16 }
+Texture BG_B, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", -8, -16 }
+Texture BG_BR, 8, 8 { Patch "Graphics/Borders/GrayBorder.png", -16, -16 }
+
+Texture BU_TL, 10, 10 { Patch "Graphics/Borders/GrayKey.png", 0, 0 }
+Texture BU_T, 10, 10 { Patch "Graphics/Borders/GrayKey.png", -10, 0 }
+Texture BU_TR, 10, 10 { Patch "Graphics/Borders/GrayKey.png", -20, 0 }
+Texture BU_L, 10, 10 { Patch "Graphics/Borders/GrayKey.png", 0, -10 }
+Texture BU_R, 10, 10 { Patch "Graphics/Borders/GrayKey.png", -20, -10 }
+Texture BU_BL, 10, 10 { Patch "Graphics/Borders/GrayKey.png", 0, -20 }
+Texture BU_B, 10, 10 { Patch "Graphics/Borders/GrayKey.png", -10, -20 }
+Texture BU_BR, 10, 10 { Patch "Graphics/Borders/GrayKey.png", -20, -20 }
+
+Texture BU_R_TL, 10, 10 { Patch "Graphics/Borders/RedKey.png", 0, 0 }
+Texture BU_R_T, 10, 10 { Patch "Graphics/Borders/RedKey.png", -10, 0 }
+Texture BU_R_TR, 10, 10 { Patch "Graphics/Borders/RedKey.png", -20, 0 }
+Texture BU_R_L, 10, 10 { Patch "Graphics/Borders/RedKey.png", 0, -10 }
+Texture BU_R_R, 10, 10 { Patch "Graphics/Borders/RedKey.png", -20, -10 }
+Texture BU_R_BL, 10, 10 { Patch "Graphics/Borders/RedKey.png", 0, -20 }
+Texture BU_R_B, 10, 10 { Patch "Graphics/Borders/RedKey.png", -10, -20 }
+Texture BU_R_BR, 10, 10 { Patch "Graphics/Borders/RedKey.png", -20, -20 }
+
+Texture BU_D_TL, 6, 6 { Patch "Graphics/Borders/TagBorder.png", 0, 0 }
+Texture BU_D_T, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -6, 0 }
+Texture BU_D_TR, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -12, 0 }
+Texture BU_D_L, 6, 6 { Patch "Graphics/Borders/TagBorder.png", 0, -6 }
+Texture BU_D_R, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -12, -6 }
+Texture BU_D_BL, 6, 6 { Patch "Graphics/Borders/TagBorder.png", 0, -12 }
+Texture BU_D_B, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -6, -12 }
+Texture BU_D_BR, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -12, -12 }
 
 // HUD Icons
 Texture I_LIFE, 48, 48 { Offset 24, 48 Patch WSPR0035, -8, -8 }

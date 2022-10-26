@@ -130,7 +130,7 @@ class ClassicStatusBar : BaseStatusBar
 			viewport.x = (320 - viewportsize.x) / 2;
 			viewport.y = (yoffset - viewportsize.y) / 2;
 
-			[window, windowsize] = DrawToHud.TranslatetoHUDCoordinates(viewport, viewportsize, checkfullscreen:true);
+			[window.x, window.y, windowsize.x, windowsize.y] = Statusbar.StatusbarToRealCoords(viewport.x, viewport.y, viewportsize.x, viewportsize.y);
 
 			if (screenblocks < 11 && !automapactive && (borderstyle != 2 || screenblocks < 10))
 			{
@@ -154,7 +154,7 @@ class ClassicStatusBar : BaseStatusBar
 			else if (automapactive || (screenblocks == 10 && borderstyle == 2))
 			{
 				Vector2 coords, size;
-				[coords, size] = DrawToHud.TranslatetoHUDCoordinates((0, 200 - RelTop), (320, RelTop), checkfullscreen:true);
+				[coords.x, coords.y, size.x, size.y] = Statusbar.StatusbarToRealCoords(0, 200 - RelTop, 320, RelTop);
 
 				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
 				DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x / 4, 1.0));
@@ -221,7 +221,7 @@ class ClassicStatusBar : BaseStatusBar
 
 			scale = min(scalexy.x, scalexy.y);
 
-			DrawToHUD.DrawTexture(icontex, (280, 179), 1.0, scale, (!weapon || weapon is "ClassicWeapon") ? -1 : 0x000000, DrawToHUD.center, DrawToHUD.bottom, true);
+			DrawTexture(icontex, (280, 179), DI_ITEM_CENTER, 1.0, (48, 24), (scale, scale), (!weapon || weapon is "ClassicWeapon") ? STYLE_Translucent : STYLE_Stencil, (!weapon || weapon is "ClassicWeapon") ? 0xFFFFFFFFF : 0xFF0000000);
 		}
 
 
