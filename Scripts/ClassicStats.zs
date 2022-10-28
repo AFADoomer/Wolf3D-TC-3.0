@@ -174,7 +174,7 @@ class ClassicStats : DoomStatusScreen
 			{
 				if (style == finale)
 				{
-					if (Game.isSoD()) { Menu.SetMenu("SoDFinale", -1); }
+					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
 					else { Menu.SetMenu("Episode" .. level.levelnum / 100 .. "End", -1); }
 				}
 

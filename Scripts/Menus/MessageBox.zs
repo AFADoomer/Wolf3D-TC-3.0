@@ -28,7 +28,7 @@ class ClassicMessageBox : MessageBoxMenu
 		message.Replace(Stringtable.Localize("$PRESSYN"), ""); // For the save deletion prompt
 
 		// Adjust quit messages to select SoD variants as appropriate
-		if (Game.IsSod())
+		if (Game.IsSoD())
 		{
 			for (int m = 1; m <= 9; m++)
 			{

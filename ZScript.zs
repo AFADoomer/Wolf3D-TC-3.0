@@ -4,6 +4,7 @@ version "4.6.0"
 #include "Scripts/Libraries/DrawToHUD.zs" 		// Drawing and coordinate translation to match HUD element scaling and positioning
 #include "Scripts/Libraries/mk_rotation.zs"		// On-screen texture rotation helper functions by Marisa Kirisame
 #include "Scripts/Libraries/zstools.zs"			// Helper scripts for string manipulation
+#include "Scripts/Libraries/MD5.zs"				// 3saster's MD5 hashing algorithm
 
 // Menu Components
 #include "Scripts/Menus/ExtendedListMenu.zs"	// New menu with background and skill/episode icons
@@ -22,6 +23,7 @@ version "4.6.0"
 #include "Scripts/EventHandlers/KeyHandler.zs"
 #include "Scripts/EventHandlers/ConsoleHandler.zs"
 #include "Scripts/EventHandlers/ReplacementHandler.zs"
+#include "Scripts/EventHandlers/GameHandler.zs"
 
 // Status Bar
 #include "Scripts/ClassicStatusBar.zs"

@@ -86,6 +86,7 @@ class ExtendedListMenu : ListMenu
 	int itemCount;
 	String overlaytext;
 	Array<int> placeholders;
+	Array<String> filechecks;
 
 	TextureID controls, bkg;
 
@@ -312,17 +313,33 @@ class ExtendedListMenu : ListMenu
 		int index = 0;
 
 		placeholders.Clear();
+		filechecks.Clear();
 
 		for (int i = 0; i < mDesc.mItems.Size(); i++)
 		{
-			if (mDesc.mItems[i] is "ListMenuItemTextItem" && mDesc.mItems[i].GetAction() == "SkillMenu")
+			if (
+				mDesc.mItems[i] is "ListMenuItemTextItem" && 
+				(
+					mDesc.mItems[i].GetAction() == "SkillMenu" ||
+					"" .. mDesc.mItems[i].GetAction() == ""
+				)
+			)
 			{
 				index++;
 
 				String temp = StringTable.Localize(ListMenuItemTextItem(mDesc.mItems[i]).mText);
 				String temp2 = temp;
 
-				temp.Replace("[Optional]", "");
+				int s, e;
+				String filecheck;
+				s = temp.IndexOf("[Optional");
+				if (s > -1)
+				{
+					e = temp.IndexOf("]", s);
+					filecheck = temp.Mid(e - 3, 3);
+
+					temp = temp.Mid(e + 1);
+				}
 
 				// If the replacement string wasn't there, then this one is good
 				if (temp == temp2) { continue; }
@@ -330,20 +347,21 @@ class ExtendedListMenu : ListMenu
 				// Fix the text string...
 				ListMenuItemTextItem(mDesc.mItems[i]).mText = temp;
 
-				// Check to see if the map lump is present
-				// Need access to native AllEpisodes array to do this properly...
-				String map = "Maps/E" .. index .. "L1.wad";
-
-				// If it's there, continue...
-				if (Wads.CheckNumForFullName(map) > -1) { continue; }
+				if (GameHandler.GameFilePresent(filecheck)) { continue; }
 
 				// Otherwise, recolor it, and add it to the list of known placeholders
-				ListMenuItemTextItem(mDesc.mItems[i]).mColor = Font.FindFontColor("WolfMenuGreen");
-				ListMenuItemTextItem(mDesc.mItems[i]).mColorSelected = Font.FindFontColor("WolfMenuGreenBright");
+				ListMenuItemTextItem(mDesc.mItems[i]).mColor = DisabledColor();
+				ListMenuItemTextItem(mDesc.mItems[i]).mColorSelected = DisabledColor();
 
 				placeholders.Push(i);
+				filechecks.Push(filecheck);
 			}
 		}
+	}
+
+	virtual int DisabledColor()
+	{
+		return Font.FindFontColor("WolfMenuGreen");
 	}
 
 	void RestorePlaceholderMarkers()
@@ -353,7 +371,7 @@ class ExtendedListMenu : ListMenu
 		{
 			for (int p = 0; p < placeholders.Size(); p++)
 			{
-				ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText = "[Optional]" .. ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText;
+				ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText = "[Optional" .. filechecks[p] .. "]" .. ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText;
 			}
 		}
 	}
@@ -515,6 +533,15 @@ class GameMenu : IconListMenu
 				TextureID tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
 				if (tex.IsValid())
 				{
+					double alpha = i == mDesc.mSelectedItem ? 0.9 : 0.6;
+
+					bool disabled = false;
+					if (placeholders.Find(i) != placeholders.Size())
+					{
+						disabled = true;
+						alpha = 0.3;
+					}
+
 					Vector2 texsize = TexMan.GetScaledSize(tex);
 
 					// Default to Wolf3D-style positioning, roughly vertically centered on the episode name
@@ -523,9 +550,9 @@ class GameMenu : IconListMenu
 
 					// Use the center of the image for positioning
 					drawx -= texsize.x / 2;
-					drawy -= texsize.y / 2; 
+					drawy -= texsize.y / 2;
 
-					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, 1.0);
+					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, alpha, DTA_Desaturate, disabled ? 255 : 0);
 				}
 			}
 		}
@@ -536,6 +563,25 @@ class GameMenu : IconListMenu
 		switch (mkey)
 		{
 			case MKEY_Enter:
+				int i = placeholders.Find(mDesc.mSelectedItem);
+				if (i != placeholders.Size())
+				{
+					overlaytext = StringTable.Localize("$" .. lookupBase .. mDesc.mSelectedItem .. "MESSAGE");
+					if (overlaytext == lookupBase .. mDesc.mSelectedItem .. "MESSAGE") // Message wasn't found
+					{
+						overlaytext = StringTable.Localize("$GAMEMAPSSTRING");
+						if (overlaytext == "GAMEMAPSSTRING") { overlaytext = ""; return false; } // Default wasn't found either
+					}
+
+					overlaytext.Replace("%s", filechecks[i]);
+
+					MenuSound("menu/alert");
+					StartMessage(overlaytext, 1);
+					return false;
+				}
+
+				RestorePlaceholderMarkers();
+
 				if (sodvar) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
 				
 				SetMenu("IntroSlideShow", -1);
@@ -551,6 +597,12 @@ class GameMenu : IconListMenu
 
 		if (gametic <= 35) { fadealpha = 1.0; }
 	}
+
+	override int DisabledColor()
+	{
+		return Font.FindFontColor("DarkGray");
+	}
+
 }
 
 class ListMenuItemGameSelection : ListMenuItemTextItem
@@ -1223,7 +1275,7 @@ class ListMenuItemTextItemInGameSoD : ListMenuItemTextItemInGame
 {
 	override void OnMenuCreated()
 	{
-		if (game.IsSoD())
+		if (Game.IsSoD())
 		{
 			mEnabled = false;
 			AllocateSpace();
@@ -1238,7 +1290,7 @@ class ListMenuItemTextItemNotInGameSoD : ListMenuItemTextItemNotInGame
 {
 	override void OnMenuCreated()
 	{
-		if (game.IsSoD())
+		if (Game.IsSoD())
 		{
 			mEnabled = false;
 			AllocateSpace();

@@ -1125,7 +1125,7 @@ class SpearofDestiny : Inventory
 
 		if (owner)
 		{
-			if (!actiontime && Game.isSOD() && level.levelnum % 100 == 18)
+			if (!actiontime && Game.IsSoD() && level.levelnum % 100 == 18)
 			{
 				actiontime = level.time + 70;
 				InterHubAmount = 0;

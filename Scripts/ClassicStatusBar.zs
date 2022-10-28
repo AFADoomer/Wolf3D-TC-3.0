@@ -286,7 +286,7 @@ class ClassicStatusBar : BaseStatusBar
 			if (index == 3) { index = 1; }
 
 			// SoD-specific god face
-			if (Game.IsSod() || level.levelnum < 101)
+			if (Game.IsSoD() || level.levelnum < 101)
 			{
 				if (players[consoleplayer].cheats & (CF_GODMODE | CF_GODMODE2))
 				{

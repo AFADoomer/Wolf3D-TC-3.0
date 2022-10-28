@@ -5,4 +5,5 @@ IWad
 	Game = "Doom"
 	Config = "Wolf3d"
 	BannerColors = "FC F4 00", "CC 00 00"
+	Load = "GAMEMAPS.WL6", "GAMEMAPS.SOD", "GAMEMAPS.SD2", "GAMEMAPS.SD3"
 }

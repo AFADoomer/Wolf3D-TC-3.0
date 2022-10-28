@@ -30,7 +30,7 @@ gameinfo
 	drawreadthis = true
 	maparrow = "maparrows/knife.txt"
 
-	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler", "ReplacementHandler"
+	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler", "ReplacementHandler", "GameHandler"
 
 	StatusbarClass = "ClassicStatusBar"
 	AltHUDClass = "JaguarHUD"

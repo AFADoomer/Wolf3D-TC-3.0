@@ -1243,34 +1243,34 @@ Texture EPISODE6, 48, 24 { Patch WVGA0035, 0, 0 }
 Texture GAME1, 48, 24
 {
 	Patch WVGA0004, -46, 0
-	Patch WSPR0349, -24, -12 {Blend "Black", 0.4}
+	Patch WSPR0349, -24, -12
 	Graphic Frame, 0, 0
 }
 
 Texture GAME2, 48, 24
 {
-	Graphic WVGA1035, -64, -12 {Blend "Black", 0.7}
-	Graphic WSPR1324, -15, -22 {Translation Gold Alpha 0.4 Style Translucent}
-	Graphic WSPR1053, -26, -8 {Blend "Black", 0.5}
-	Graphic WSPR1381, 0, -40 {FlipX Blend "Black", 0.7 Alpha 0.1 Style Translucent}
+	Graphic WVGA1035, -64, -12
+	Graphic WSPR1324, -15, -22 {Translation Gold Alpha 0.4 Style Translucent }
+	Graphic WSPR1053, -26, -8
+	Graphic WSPR1381, 0, -40 { FlipX Alpha 0.1 Style Translucent }
 	Graphic Frame, 0, 0
 }
 
 Texture GAME3, 48, 24
 {
-	Graphic WALL2096, 0, -28 {Blend "Black", 0.6}
-	Graphic WSPR2324, 21, -20 {Translation Gold Alpha 0.3 Style Translucent}
-	Graphic WSPR2053, 10, -8 {Blend "Black", 0.5}
-	Graphic WSPR2012, -28, -38 {FlipX Blend "Black", 0.5}
-	Graphic WSPR2012, -28, -38 {FlipX Translation Gold Alpha 0.2 Style Translucent}
+	Graphic WALL2096, 0, -28
+	Graphic WSPR2324, 21, -20 { Translation Gold Alpha 0.3 Style Translucent }
+	Graphic WSPR2053, 10, -8
+	Graphic WSPR2012, -28, -38 { FlipX }
+	Graphic WSPR2012, -28, -38 { FlipX Translation Gold Alpha 0.2 Style Translucent }
 	Graphic Frame, 0, 0
 }
 
 Texture GAME4, 48, 24
 {
-	Graphic WALL2026, -10, -32 {Blend "Black", 0.7}
-	Graphic WSPR2053, 10, -8 {Blend "Black", 0.5}
-	Graphic WSPR2358, -26, -6 {Blend "Black", 0.4}
+	Graphic WALL2026, -10, -32
+	Graphic WSPR2053, 10, -8
+	Graphic WSPR2358, -26, -6
 	Graphic Frame, 0, 0
 }
 

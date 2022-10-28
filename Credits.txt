@@ -1,0 +1,7 @@
+Wolfenstein 3D Assets - id Software
+Spear of Destiny Assets - id Software
+Spear of Destiny Mission Pack Assets - FormGen
+
+ZScript MD5 Hash Library - 3saster (https://forum.zdoom.org/viewtopic.php?p=1178935)
+MiniFont - Ripped for Blade of Agony by Talon1024
+KeyPrompt Icons - Modified by AFADoomer from Input Prompts by Kenney (http://www.kenney.nl)

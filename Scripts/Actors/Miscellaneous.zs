@@ -295,22 +295,3 @@ class BJ : Actor
 			Stop;
 	}
 }
-
-class Game
-{
-	static bool isSoD()
-	{
-		bool ret = false;
-
-		if (g_sod > 0) { ret = true; }
-		if (level && level.levelnum > 700) { ret = true; }
-
-		if (g_sod < 0 && gamestate == GS_LEVEL) // Set the value if we are in a game and it hasn't been set already by the startup menu
-		{
-			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(ret ? 1 : 0); }
-		}
-
-		return ret;
-	}
-}
