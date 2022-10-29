@@ -3,7 +3,7 @@ IWad
 	Name = "Wolfenstein 3D TC"
 	Autoname = "Wolf3D"
 	Game = "Doom"
-	Config = "Wolf3d"
+	Config = "Wolf3D"
 	BannerColors = "FC F4 00", "CC 00 00"
-	Load = "GAMEMAPS.WL6", "GAMEMAPS.SOD", "GAMEMAPS.SD2", "GAMEMAPS.SD3"
+	Load = "GAMEMAPS.WL6", "GAMEMAPS.SDM", "GAMEMAPS.SOD", "GAMEMAPS.SD2", "GAMEMAPS.SD3"
 }

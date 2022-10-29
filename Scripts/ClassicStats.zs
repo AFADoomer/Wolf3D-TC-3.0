@@ -172,6 +172,16 @@ class ClassicStats : DoomStatusScreen
 		{
 			if (acceleratestage)
 			{
+				if (Game.IsSod() && level.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD", false))
+				{
+					PlaySound("pickups/life");
+					Menu.StartMessage(StringTable.Localize("$DEMOSTRING"), 1);
+
+					sp_state++;
+
+					return;
+				}
+
 				if (style == finale)
 				{
 					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }

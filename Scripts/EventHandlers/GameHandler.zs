@@ -6,15 +6,20 @@ class GameHandler : StaticEventHandler
 	{
 		// Check to see if a Wolf3D data file is present
 		GameHandler.CheckGameFile("GAMEMAPS.WL6", gamefiles);
+		GameHandler.CheckGameFile("GAMEMAPS.SDM", gamefiles);
 		GameHandler.CheckGameFile("GAMEMAPS.SOD", gamefiles);
 		GameHandler.CheckGameFile("GAMEMAPS.SD2", gamefiles);
 		GameHandler.CheckGameFile("GAMEMAPS.SD3", gamefiles);
 	}
 
-	ui static bool GameFilePresent(String extension)
+	ui static bool GameFilePresent(String extension, bool allowdemos = true)
 	{
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
-		if (this && this.gamefiles.Find(extension) < this.gamefiles.Size()) { return true; }
+		if (this)
+		{
+			if (this.gamefiles.Find(extension) < this.gamefiles.Size()) { return true; }
+			if (allowdemos && extension ~== "SOD") { return GameFilePresent("SDM"); }
+		}
 
 		return false;
 	}
@@ -32,12 +37,17 @@ class GameHandler : StaticEventHandler
 			String hash = MD5.hash(Wads.ReadLump(g));
 
 			if (
-				hash == "a4e73706e100dc0cadfb02d23de46481" ||
-				hash == "54723e85ddaa37ab3df1386b83cb88ad" // I don't know why mine is different, but it is...  Probably accidental edits, since the file was modified in 2006.
+				hash == "a4e73706e100dc0cadfb02d23de46481" || // v1.4g / GoG / Steam
+				hash == "a15b04941937b7e136419a1e74e57e2f" // v1.1
 			)
 			{
 				gamefiles.Push("WL6");
 				message.Replace("%s", "Wolfenstein 3D");
+			}
+			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
+			{
+				gamefiles.Push("SDM");
+				message.Replace("%s", "Spear of Destiny Demo");
 			}
 			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
 			{
@@ -64,6 +74,25 @@ class GameHandler : StaticEventHandler
 			console.printf(message);
 		}
 	}
+
+	// This is unreliable and causes crashes if it gets called before 
+	// video initializes properly (e.g., with +map command line)
+/*
+	override void PlayerSpawned(PlayerEvent e)
+	{
+			if (g_nointro) { return; }
+			if (g_sod && level.levelnum % 100 == 21) { return; }
+
+			if (e.playernumber == consoleplayer) { Menu.SetMenu("GetPsyched", -1); }
+	}
+
+	override void PlayerRespawned(PlayerEvent e)
+	{
+			if (g_nointro) { return; }
+
+			if (e.playernumber == consoleplayer) { Menu.SetMenu("GetPsyched", -1); }
+	}
+*/
 }
 
 class Game

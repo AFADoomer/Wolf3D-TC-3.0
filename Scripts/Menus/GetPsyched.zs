@@ -7,36 +7,6 @@ class WolfMenu : GenericMenu
 		Menu.SetMenu(mnu, param);
 	}
 
-	// Strip color codes out of a string
-	static String StripColorCodes(String input)
-	{
-		int place = 0;
-		int len = input.length();
-		String output;
-
-		while (place < len)
-		{
-			if (!(input.Mid(place, 1) == String.Format("%c", 0x1C)))
-			{
-				output = output .. input.Mid(place, 1);
-				place++;
-			}
-			else if (input.Mid(place + 1, 1) == "[")
-			{
-				place += 2;
-				while (place < len - 1 && !(input.Mid(place, 1) == "]")) { place++; }
-				if (input.Mid(place, 1) == "]") { place++; }
-			}
-			else
-			{
-				if (place + 1 < len - 1) { place += 2; }
-				else break;
-			}
-		}
-
-		return output;
-	}
-
 	static bool CheckControl(Menu thismenu, UIEvent ev, String control, int type = 0)
 	{
 		if (ev.type < UIEvent.Type_FirstMouseEvent && !ev.keychar) { return false; }
@@ -51,7 +21,7 @@ class WolfMenu : GenericMenu
 
 		// Get the key names for each bound key, and parse them into a lookup array
 		String keynames = Bindings.NameAllKeys(keycodes);
-		keynames = StripColorCodes(keynames);
+		keynames = ZScriptTools.StripColorCodes(keynames);
 
 		Array<String> keys;
 		keynames.Split(keys, ", ");
