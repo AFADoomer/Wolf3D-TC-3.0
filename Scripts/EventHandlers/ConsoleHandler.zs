@@ -8,7 +8,7 @@ class ConsoleHandler : StaticEventHandler
 		if (sodvar) { sodvar.SetInt(-2); }
 	}
 
-	override void UITick()
+	void UpdateCanvas()
 	{
 		Canvas conbackcanvas = TexMan.GetCanvas("CONBACK");
 		if (conbackcanvas)
@@ -25,7 +25,7 @@ class ConsoleHandler : StaticEventHandler
 			int vw = int(Screen.GetAspectRatio() * vh);
 			vw = int(vw / fontwidth) * fontwidth;
 
-			conbackcanvas.Clear(0, 0, h, w, 0x000000);
+			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
 			int size = 3;
 			int steps = 64;
@@ -57,6 +57,8 @@ class ConsoleHandler : StaticEventHandler
 			hash = ReadFrom("Data/GitHash.txt");
 			hash = " \c[Dark Gray]" .. hash.Left(7);
 		}
+
+		UpdateCanvas();
 
 		Super.WorldLoaded(e);
 	}
