@@ -37,7 +37,7 @@ class GameHandler : StaticEventHandler
 			String hash = MD5.hash(Wads.ReadLump(g));
 
 			if (
-				hash == "a4e73706e100dc0cadfb02d23de46481" || // v1.4g / GoG / Steam
+				hash == "a4e73706e100dc0cadfb02d23de46481" || // v1.4 / GoG / Steam
 				hash == "a15b04941937b7e136419a1e74e57e2f" // v1.1
 			)
 			{

@@ -32,7 +32,7 @@ class ConsoleHandler : StaticEventHandler
 			for (int g = 0; g < steps; g ++)
 			{
 				int y = h - 2 - g * size;
-				conbackcanvas.DrawThickLine(0, y, h, y, size, Game.IsSoD() ? 0x0000DD : 0xDD0000, 64 - (g * 64 / steps));
+				conbackcanvas.DrawThickLine(0, y, w, y, size, Game.IsSoD() ? 0x0000DD : 0xDD0000, 64 - (g * 64 / steps));
 			}
 
 			TextureID logo = TexMan.CheckForTexture((Game.IsSoD() ? "Graphics/SoD.png" : "Graphics/Wolf3D.png"), TexMan.Type_Any);

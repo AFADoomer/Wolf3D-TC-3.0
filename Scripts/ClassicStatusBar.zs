@@ -54,7 +54,8 @@ class ClassicStatusBar : BaseStatusBar
 
 		if (state == HUD_StatusBar)
 		{
-			BeginStatusBar(screenblocks < 11);
+			if (st_scale) { BeginStatusBar(screenblocks < 11); }
+
 			DrawClassicBar();
 		}
 		else if (state == HUD_Fullscreen)
@@ -132,7 +133,7 @@ class ClassicStatusBar : BaseStatusBar
 
 			[window.x, window.y, windowsize.x, windowsize.y] = Statusbar.StatusbarToRealCoords(viewport.x, viewport.y, viewportsize.x, viewportsize.y);
 
-			if (screenblocks < 11 && !automapactive && (borderstyle != 2 || screenblocks < 10))
+			if (screenblocks < 11 && st_scale && !automapactive && (borderstyle != 2 || screenblocks < 10))
 			{
 				// Fill outside of boundaries with green
 				Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
@@ -151,13 +152,16 @@ class ClassicStatusBar : BaseStatusBar
 				DrawImage("WBRD_BL", (viewport.x - 3, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
 				DrawImage("WBRD_BR", (viewport.x + viewportsize.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
 			}
-			else if (automapactive || (screenblocks == 10 && borderstyle == 2))
+			else if (!st_scale || automapactive || (screenblocks == 10 && borderstyle == 2))
 			{
 				Vector2 coords, size;
 				[coords.x, coords.y, size.x, size.y] = Statusbar.StatusbarToRealCoords(0, 200 - RelTop, 320, RelTop);
 
 				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
-				DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x / 4, 1.0));
+				if ((!st_scale && screenblocks == 10) || automapactive)
+				{
+					DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x, 1.0));
+				}
 			}
 		}
 

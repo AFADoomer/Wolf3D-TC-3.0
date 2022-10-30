@@ -535,7 +535,7 @@ Texture E1, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,100,100]:[0,100,10
 // Screen Sprites
 Graphic DEMO, 64, 64 { Patch WSPR0000, 0, 0 }
 Graphic DEATHCAM, 64, 64 { Patch WSPR0001, 0, 0 }
-Graphic DEMOOVERLAY, 64, 24 {
+Graphic DEMOOVERLAY, 64, 24 { // Half-scale, used to tag SoD Demo Menu Icon
 	XScale 2.0
 	YScale 2.0
 	Patch WSPR0000, 0, 0
