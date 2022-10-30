@@ -575,7 +575,7 @@ class IntroSlideshow : WolfMenu
 		startup = TexMan.CheckForTexture((Game.IsSoD() ? "SSTARTUP" : "STARTUP"), TexMan.Type_Any);
 		startup2 = TexMan.CheckForTexture((Game.IsSoD() ? "SSTARTU2" : "STARTUP2"), TexMan.Type_Any);
 		warning = TexMan.CheckForTexture("WARNING", TexMan.Type_Any);
-		title = TexMan.CheckForTexture((Game.IsSoD() ? "STITLEPI" : "TITLEPIC"), TexMan.Type_Any);
+		title = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD", false) ? "STITLEPI" : "SDTITLEP" : "TITLEPIC"), TexMan.Type_Any);
 		credits = TexMan.CheckForTexture((Game.IsSoD() ? "SCREDIT" : "CREDIT"), TexMan.Type_Any);
 		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
 

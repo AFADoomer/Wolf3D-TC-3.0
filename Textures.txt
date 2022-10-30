@@ -535,6 +535,11 @@ Texture E1, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,100,100]:[0,100,10
 // Screen Sprites
 Graphic DEMO, 64, 64 { Patch WSPR0000, 0, 0 }
 Graphic DEATHCAM, 64, 64 { Patch WSPR0001, 0, 0 }
+Graphic DEMOOVERLAY, 64, 24 {
+	XScale 2.0
+	YScale 2.0
+	Patch WSPR0000, 0, 0
+}
 
 // Objects and Items
 Sprite POL1A0, 64, 64 { Offset 32, 64 Patch WSPR0002, 0, 0 }
@@ -1201,6 +1206,13 @@ Texture M_SELCT1, 24, 8 { Patch WVGA0014, 0, 0 }
 
 // Title Sequence
 Texture TITLEPIC, 320, 200 { Patch WVGA0087, 0, 0 }
+Texture STITLEPI, 320, 200 { Graphic "Graphics/Title/SpearTitle.png", 0, 0 }
+Texture SDTITLEP, 320, 200 
+{
+	Graphic "Graphics/Title/SpearTitle.png", 0, 0 
+	Patch "Patches/Title/SoDDemoTitle.png", 0, 0
+}
+
 Texture WARNING, 320, 200 { Patch WVGA0088, 0, 0 }
 Texture CREDIT, 320, 200 { Patch WVGA0089, 0, 0 }
 

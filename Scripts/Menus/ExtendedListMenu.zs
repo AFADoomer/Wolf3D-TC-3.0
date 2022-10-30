@@ -315,8 +315,12 @@ class ExtendedListMenu : ListMenu
 		placeholders.Clear();
 		filechecks.Clear();
 
+		String filecheck;
+
 		for (int i = 0; i < mDesc.mItems.Size(); i++)
 		{
+			filecheck = "";
+
 			if (
 				mDesc.mItems[i] is "ListMenuItemTextItem" && 
 				(
@@ -331,7 +335,6 @@ class ExtendedListMenu : ListMenu
 				String temp2 = temp;
 
 				int s, e;
-				String filecheck;
 				s = temp.IndexOf("[Optional");
 				if (s > -1)
 				{
@@ -340,6 +343,8 @@ class ExtendedListMenu : ListMenu
 
 					temp = temp.Mid(e + 1);
 				}
+
+				filechecks.Push(filecheck);
 
 				// If the replacement string wasn't there, then this one is good
 				if (temp == temp2) { continue; }
@@ -354,8 +359,8 @@ class ExtendedListMenu : ListMenu
 				ListMenuItemTextItem(mDesc.mItems[i]).mColorSelected = DisabledColor();
 
 				placeholders.Push(i);
-				filechecks.Push(filecheck);
 			}
+			else { filechecks.Push(filecheck); }
 		}
 	}
 
@@ -367,11 +372,11 @@ class ExtendedListMenu : ListMenu
 	void RestorePlaceholderMarkers()
 	{
 		// Restore the placeholder marker for popup message menus so that they will be treated correctly next time the menu is opened
-		if (placeholders.Size())
+		for (int f = 0; f < filechecks.Size(); f++)
 		{
-			for (int p = 0; p < placeholders.Size(); p++)
+			if (filechecks[f].length())
 			{
-				ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText = "[Optional" .. filechecks[p] .. "]" .. ListMenuItemTextItem(mDesc.mItems[placeholders[p]]).mText;
+				ListMenuItemTextItem(mDesc.mItems[f]).mText = "[Optional" .. filechecks[f] .. "]" .. ListMenuItemTextItem(mDesc.mItems[f]).mText;
 			}
 		}
 	}
@@ -466,11 +471,13 @@ class EpisodeMenu : IconListMenu
 class GameMenu : IconListMenu
 {
 	CVar sodvar;
+	TextureID demo;
 
 	override void Init(Menu parent, ListMenuDescriptor desc)
 	{
 		Super.Init(parent, desc);
 		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		demo = TexMan.CheckForTexture("DEMOOVERLAY", TexMan.Type_Any);
 
 		sodvar = CVar.FindCVar("g_sod");
 		if (sodvar) { sodvar.SetInt(-1); }
@@ -536,7 +543,8 @@ class GameMenu : IconListMenu
 					double alpha = i == mDesc.mSelectedItem ? 0.9 : 0.6;
 
 					bool disabled = false;
-					if (placeholders.Find(i) != placeholders.Size())
+					int p = placeholders.Find(i);
+					if (p != placeholders.Size())
 					{
 						disabled = true;
 						alpha = 0.3;
@@ -553,6 +561,11 @@ class GameMenu : IconListMenu
 					drawy -= texsize.y / 2;
 
 					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, alpha, DTA_Desaturate, disabled ? 255 : 0);
+
+					if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD", false) && GameHandler.GameFilePresent("SDM", false))
+					{
+						screen.DrawTexture(demo, false, drawx, drawy, DTA_Alpha, alpha, DTA_TopOffset, -11, DTA_LeftOffset, -17, DTA_Clean, true, DTA_ScaleX, 0.5, DTA_ScaleY, 0.5);
+					}
 				}
 			}
 		}
@@ -573,7 +586,7 @@ class GameMenu : IconListMenu
 						if (overlaytext == "GAMEMAPSSTRING") { overlaytext = ""; return false; } // Default wasn't found either
 					}
 
-					overlaytext.Replace("%s", filechecks[i]);
+					overlaytext.Replace("%s", filechecks[mDesc.mSelectedItem]);
 
 					MenuSound("menu/alert");
 					StartMessage(overlaytext, 1);
@@ -602,7 +615,6 @@ class GameMenu : IconListMenu
 	{
 		return Font.FindFontColor("DarkGray");
 	}
-
 }
 
 class ListMenuItemGameSelection : ListMenuItemTextItem
