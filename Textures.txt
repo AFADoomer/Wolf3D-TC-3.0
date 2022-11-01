@@ -1829,6 +1829,15 @@ Texture SODEND13, 320, 200 { Patch WVGA1082, 0, 0 }
 Texture CONBACK, 1024, 768 {}
 
 // Frame borders
+Texture WBRD_TL, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", 0, 0 }
+Texture WBRD_T, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", -3, 0 }
+Texture WBRD_TR, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", -6, 0 }
+Texture WBRD_L, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", 0, -3 }
+Texture WBRD_R, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", -6, -3 }
+Texture WBRD_BL, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", 0, -6 }
+Texture WBRD_B, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", -3, -6 }
+Texture WBRD_BR, 3, 3 { Patch "Graphics/Borders/HUDBorder.png", -6, -6 }
+
 Texture M_BORTL, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", 0, 0 }
 Texture M_BORT, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -3, 0 }
 Texture M_BORTR, 3, 3 { Patch "Graphics/Borders/FrameBorder.png", -6, 0 }

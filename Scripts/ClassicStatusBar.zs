@@ -126,10 +126,10 @@ class ClassicStatusBar : BaseStatusBar
 				viewportsize.x = (blocks * (320 - 16)) / 10;
 			}
 
-			viewportsize.y = (blocks * yoffset) / 10 - 2;
+			viewportsize.y = (blocks * yoffset) / 10 - 4;
 
 			viewport.x = (320 - viewportsize.x) / 2;
-			viewport.y = (yoffset - viewportsize.y) / 2;
+			viewport.y = (yoffset - viewportsize.y) / 2 + 2;
 
 			[window.x, window.y, windowsize.x, windowsize.y] = Statusbar.StatusbarToRealCoords(viewport.x, viewport.y, viewportsize.x, viewportsize.y);
 
@@ -137,18 +137,18 @@ class ClassicStatusBar : BaseStatusBar
 			{
 				// Fill outside of boundaries with green
 				Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
-				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x), 0, int(screensize.x - window.x - windowsize.x), int(screensize.y));
+				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y));
 				Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 2), int(window.y));
 				Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 2), int(screensize.y - window.y - windowsize.y));
 
 				// Draw border
-				DrawImage("WBRD_T", (viewport.x, viewport.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
-				DrawImage("WBRD_B", (viewport.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 8, 1.0));
-				DrawImage("WBRD_L", (viewport.x - 3, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
-				DrawImage("WBRD_R", (viewport.x + viewportsize.x, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 8));
+				DrawImage("WBRD_T", (viewport.x, viewport.y - 3), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 3, 1.0));
+				DrawImage("WBRD_B", (viewport.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 3, 1.0));
+				DrawImage("WBRD_L", (viewport.x - 3, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 3));
+				DrawImage("WBRD_R", (viewport.x + viewportsize.x, viewport.y), DI_ITEM_LEFT_TOP, scale:(1.0, viewportsize.y / 3));
 
-				DrawImage("WBRD_TL", (viewport.x - 3, viewport.y - 1), DI_ITEM_LEFT_TOP);
-				DrawImage("WBRD_TR", (viewport.x + viewportsize.x, viewport.y - 1), DI_ITEM_LEFT_TOP);
+				DrawImage("WBRD_TL", (viewport.x - 3, viewport.y - 3), DI_ITEM_LEFT_TOP);
+				DrawImage("WBRD_TR", (viewport.x + viewportsize.x, viewport.y - 3), DI_ITEM_LEFT_TOP);
 				DrawImage("WBRD_BL", (viewport.x - 3, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
 				DrawImage("WBRD_BR", (viewport.x + viewportsize.x, viewport.y + viewportsize.y - 1), DI_ITEM_LEFT_TOP);
 			}

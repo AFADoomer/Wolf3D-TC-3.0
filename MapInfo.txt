@@ -10,7 +10,7 @@ gameinfo
 	pausesign = "W_PAUSE"
 
 	borderflat = "GREEN"
-	border = 3, 3, "M_BORTR", "M_BORT", "M_BORTL", "M_BORR", "M_BORL", "M_BORBR", "M_BORB", "M_BORBL"
+	border = 3, 3, "WBRD_TR", "WBRD_T", "WBRD_TL", "WBRD_R", "WBRD_L", "WBRD_BR", "WBRD_B", "WBRD_BL"
 
 	dimamount = 0.0
 
