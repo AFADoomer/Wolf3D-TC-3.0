@@ -1,4 +1,11 @@
-Lock 500
+
+Lock 130
 {
-	Any { YellowKey BlueKey YellowKeyLost BlueKeyLost }
+	Any { BlueKey BlueKeyLost BlueCard BlueSkull KeyBlue }
+	MapColor 32 176 176
+}
+Lock 131
+{
+	Any { YellowCard YellowSkull KeyYellow }
+	MapColor 228 216 0
 }
