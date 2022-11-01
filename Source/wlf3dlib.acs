@@ -34,6 +34,12 @@ Script "InitializeLevel" OPEN
 
 Script "InitializePlayer" ENTER
 {
+	if (!ScriptCall("GameHandler", "CheckEpisode", ""))
+	{
+		ScriptCall("WolfMenu", "SetMenu", "GameMenu");
+		Terminate;
+	}
+
 	if (GameType() != GAME_TITLE_MAP)
 	{
 		int lives = ScriptCall("LifeHandler", "GetLives");

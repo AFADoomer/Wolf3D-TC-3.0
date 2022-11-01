@@ -2,6 +2,10 @@ Wolfenstein 3D Assets - id Software
 Spear of Destiny Assets - id Software
 Spear of Destiny Mission Pack Assets - FormGen
 
-ZScript MD5 Hash Library - 3saster (https://forum.zdoom.org/viewtopic.php?p=1178935)
+Broken Column Sprites - Modified by AFADoomer from Areyep - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
+Exploding Barrel Sprites - Modified by AFADoomer from UnTrustable (https://forum.zdoom.org/viewtopic.php?p=884629#p884629)
+BJ Rotation Sprites - Mason (http://mmimageworld.dugtrio17.com/cgi-bin/index.cgi?author=mason&page=1)
 MiniFont - Ripped for Blade of Agony by Talon1024
 KeyPrompt Icons - Modified by AFADoomer from Input Prompts by Kenney (http://www.kenney.nl)
+
+ZScript MD5 Hash Library - 3saster (https://forum.zdoom.org/viewtopic.php?p=1178935)

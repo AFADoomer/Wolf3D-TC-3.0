@@ -471,13 +471,15 @@ class EpisodeMenu : IconListMenu
 class GameMenu : IconListMenu
 {
 	CVar sodvar;
-	TextureID demo;
+	TextureID demo, shareware, registered;
 
 	override void Init(Menu parent, ListMenuDescriptor desc)
 	{
 		Super.Init(parent, desc);
 		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
 		demo = TexMan.CheckForTexture("DEMOOVERLAY", TexMan.Type_Any);
+		shareware = TexMan.CheckForTexture("SHAREWAREOVERLAY", TexMan.Type_Any);
+		registered = TexMan.CheckForTexture("REGISTEREDOVERLAY", TexMan.Type_Any);
 
 		sodvar = CVar.FindCVar("g_sod");
 		if (sodvar) { sodvar.SetInt(-1); }
@@ -562,9 +564,29 @@ class GameMenu : IconListMenu
 
 					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, alpha, DTA_Desaturate, disabled ? 255 : 0);
 
-					if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD", false) && GameHandler.GameFilePresent("SDM", false))
+					TextureID overlay;
+
+					if (filechecks[i] == "")
 					{
-						screen.DrawTexture(demo, false, drawx, drawy, DTA_Alpha, alpha, DTA_TopOffset, -11, DTA_LeftOffset, -17, DTA_Clean, true, DTA_ScaleX, 0.5, DTA_ScaleY, 0.5);
+						if (GameHandler.GameFilePresent("WL6", false)) { continue; }
+						if (GameHandler.GameFilePresent("WL3", false))
+						{
+							overlay = registered;
+						}
+						else
+						{
+							overlay = shareware;
+						}
+
+					}
+					else if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD", false))
+					{
+						overlay = demo;
+					}
+
+					if (overlay.IsValid())
+					{
+						screen.DrawTexture(overlay, false, drawx, drawy, DTA_Alpha, alpha, DTA_TopOffset, -11, DTA_LeftOffset, -17, DTA_Clean, true);
 					}
 				}
 			}
@@ -1266,13 +1288,12 @@ class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame
 		mColor = desc.mFontColor;
 		mColorSelected = desc.mFontcolor2;
 		descriptor = desc;
-
-		alpha = 0.25;
 	}
 
 	override void OnMenuCreated()
 	{
 		mEnabled = gamestate != GS_LEVEL;
+		mColor = Game.IsSoD() ? Font.FindFontColor("SpearMenuDisable") : Font.FindFontColor("WolfMenuDisable");
 
 		AllocateSpace();
 	}
@@ -1283,11 +1304,11 @@ class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame
 	}
 }
 
-class ListMenuItemTextItemInGameSoD : ListMenuItemTextItemInGame
+class ListMenuItemTextItemNotRegisteredInGame : ListMenuItemTextItemInGame
 {
 	override void OnMenuCreated()
 	{
-		if (Game.IsSoD())
+		if (Game.IsSoD() || GameHandler.GameFilePresent("WL6"))
 		{
 			mEnabled = false;
 			AllocateSpace();
@@ -1298,11 +1319,11 @@ class ListMenuItemTextItemInGameSoD : ListMenuItemTextItemInGame
 	}
 }
 
-class ListMenuItemTextItemNotInGameSoD : ListMenuItemTextItemNotInGame
+class ListMenuItemTextItemNotRegisteredNotInGame : ListMenuItemTextItemNotInGame
 {
 	override void OnMenuCreated()
 	{
-		if (Game.IsSoD())
+		if (Game.IsSoD() || GameHandler.GameFilePresent("WL6"))
 		{
 			mEnabled = false;
 			AllocateSpace();

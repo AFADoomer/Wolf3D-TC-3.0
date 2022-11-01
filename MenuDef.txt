@@ -59,9 +59,9 @@ ListMenu "MainMenu"
 	IfOption(ReadThis)
 	{
 		Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-		TextItemNotInGameSoD "Read This!", "r", "HelpMenu"
+		TextItemNotRegisteredNotInGame "Read This!", "r", "HelpMenu"
 		Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-		TextItemInGameSoD "Read This!", "r", "HelpMenu"
+		TextItemNotRegisteredInGame "Read This!", "r", "HelpMenu"
 	}
 
 	TextItemNotInGame "View Scores", "v", "HighScores"

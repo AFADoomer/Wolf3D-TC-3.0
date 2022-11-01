@@ -153,3 +153,6 @@ DOSLightCyan 	{ #55FFFF #55FFFF Console: #55FFFF #55FFFF 0 256 }
 DOSLightRed 	{ #FF5555 #FF5555 Console: #FF5555 #FF5555 0 256 }
 DOSLightMagenta	{ #FF55FF #FF55FF Console: #FF55FF #FF55FF 0 256 }
 DOSYellow 	{ #FFFF55 #FFFF55 Console: #FFFF55 #FFFF55 0 256 }
+
+WolfMenuDisable { #700000 #700000 }
+SpearMenuDisable { #00006b #00006b }

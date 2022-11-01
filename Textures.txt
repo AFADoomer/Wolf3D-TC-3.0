@@ -535,10 +535,23 @@ Texture E1, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,100,100]:[0,100,10
 // Screen Sprites
 Graphic DEMO, 64, 64 { Patch WSPR0000, 0, 0 }
 Graphic DEATHCAM, 64, 64 { Patch WSPR0001, 0, 0 }
-Graphic DEMOOVERLAY, 64, 24 { // Half-scale, used to tag SoD Demo Menu Icon
+
+Graphic DEMOOVERLAY, 64, 24 { // Half-scale, used to tag SoD Demo menu icon
 	XScale 2.0
 	YScale 2.0
-	Patch WSPR0000, 0, 0
+	Patch "Patches/Menu/Demo.png", 0, 0
+}
+
+Graphic REGISTEREDOVERLAY, 64, 24 { // Half-scale, used to tag Wolf3D episodes 1-3 only menu icon
+	XScale 2.0
+	YScale 2.0
+	Patch "Patches/Menu/Registered.png", 0, 0
+}
+
+Graphic SHAREWAREOVERLAY, 64, 24 { // Half-scale, used to tag Wolf3D Shareware menu Icon
+	XScale 2.0
+	YScale 2.0
+	Patch "Patches/Menu/Shareware.png", 0, 0
 }
 
 // Objects and Items
@@ -1211,6 +1224,18 @@ Texture SDTITLEP, 320, 200
 {
 	Graphic "Graphics/Title/SpearTitle.png", 0, 0 
 	Patch "Patches/Title/SoDDemoTitle.png", 0, 0
+}
+
+Texture SDSTARTU, 320, 200
+{
+	Graphic "Graphics/Title/SStartup.png", 0, 0
+	Graphic "Graphics/Title/SpearDemoStartup.png", 0, 0
+}
+
+Texture SDSTART2, 320, 200
+{
+	Graphic "Graphics/Title/SStartu2.png", 0, 0
+	Graphic "Graphics/Title/SpearDemoStartup.png", 0, 0
 }
 
 Texture WARNING, 320, 200 { Patch WVGA0088, 0, 0 }
