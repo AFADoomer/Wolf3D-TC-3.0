@@ -1318,48 +1318,48 @@ Texture M_SCORE, 32, 8 { Patch WVGA0040, 0, 0 }
 Texture SCORES, 224, 56 { Patch WVGA0090, 0, 0 }
 
 //Weapon HUD Sprites
-Sprite CKNIA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0416, 0, 0 }
-Sprite CKNIB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0417, 0, 0 }
-Sprite CKNIC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0418, 0, 0 }
-Sprite CKNID0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0419, 0, 0 }
-Sprite CKNIE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0420, 0, 0 }
-Sprite CLUGA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0421, 0, 0 }
-Sprite CLUGB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0422, 0, 0 }
-Sprite CLUGC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0423, 0, 0 }
-Sprite CLUGD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0424, 0, 0 }
-Sprite CLUGE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0425, 0, 0 }
-Sprite CMGUB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0426, 0, 0 }
-Sprite CMGUC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0427, 0, 0 }
-Sprite CMGUD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0428, 0, 0 }
-Sprite CMGUE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0429, 0, 0 }
-Sprite CMGUW0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0430, 0, 0 }
-Sprite CCGUA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0431, 0, 0 }
-Sprite CCGUB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0432, 0, 0 }
-Sprite CCGUC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0433, 0, 0 }
-Sprite CCGUD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0434, 0, 0 }
-Sprite CCGUE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR0435, 0, 0 }
+Sprite CKNIA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0416, 0, 0 }
+Sprite CKNIB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0417, 0, 0 }
+Sprite CKNIC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0418, 0, 0 }
+Sprite CKNID0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0419, 0, 0 }
+Sprite CKNIE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0420, 0, 0 }
+Sprite CLUGA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0421, 0, 0 }
+Sprite CLUGB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0422, 0, 0 }
+Sprite CLUGC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0423, 0, 0 }
+Sprite CLUGD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0424, 0, 0 }
+Sprite CLUGE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0425, 0, 0 }
+Sprite CMGUB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0426, 0, 0 }
+Sprite CMGUC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0427, 0, 0 }
+Sprite CMGUD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0428, 0, 0 }
+Sprite CMGUE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0429, 0, 0 }
+Sprite CMGUW0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0430, 0, 0 }
+Sprite CCGUA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0431, 0, 0 }
+Sprite CCGUB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0432, 0, 0 }
+Sprite CCGUC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0433, 0, 0 }
+Sprite CCGUD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0434, 0, 0 }
+Sprite CCGUE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR0435, 0, 0 }
 
 // Lost Episodes
-Sprite KNILA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2401, 0, 0 }
-Sprite KNILB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2402, 0, 0 }
-Sprite KNILC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2403, 0, 0 }
-Sprite KNILD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2404, 0, 0 }
-Sprite KNILE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2405, 0, 0 }
-Sprite LUGLA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2406, 0, 0 }
-Sprite LUGLB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2407, 0, 0 }
-Sprite LUGLC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2408, 0, 0 }
-Sprite LUGLD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2409, 0, 0 }
-Sprite LUGLE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2410, 0, 0 }
-Sprite MGULB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2411, 0, 0 }
-Sprite MGULC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2412, 0, 0 }
-Sprite MGULD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2413, 0, 0 }
-Sprite MGULE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2414, 0, 0 }
-Sprite MGULW0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2415, 0, 0 }
-Sprite CGULA0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2416, 0, 0 }
-Sprite CGULB0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2417, 0, 0 }
-Sprite CGULC0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2418, 0, 0 }
-Sprite CGULD0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2419, 0, 0 }
-Sprite CGULE0, 64, 64 { Offset -32, 6 XScale 0.4 YScale 0.4 Patch WSPR2420, 0, 0 }
+Sprite KNILA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2401, 0, 0 }
+Sprite KNILB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2402, 0, 0 }
+Sprite KNILC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2403, 0, 0 }
+Sprite KNILD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2404, 0, 0 }
+Sprite KNILE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2405, 0, 0 }
+Sprite LUGLA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2406, 0, 0 }
+Sprite LUGLB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2407, 0, 0 }
+Sprite LUGLC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2408, 0, 0 }
+Sprite LUGLD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2409, 0, 0 }
+Sprite LUGLE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2410, 0, 0 }
+Sprite MGULB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2411, 0, 0 }
+Sprite MGULC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2412, 0, 0 }
+Sprite MGULD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2413, 0, 0 }
+Sprite MGULE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2414, 0, 0 }
+Sprite MGULW0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2415, 0, 0 }
+Sprite CGULA0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2416, 0, 0 }
+Sprite CGULB0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2417, 0, 0 }
+Sprite CGULC0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2418, 0, 0 }
+Sprite CGULD0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2419, 0, 0 }
+Sprite CGULE0, 64, 64 { Offset -32, 5 XScale 0.4 YScale 0.4 Patch WSPR2420, 0, 0 }
 
 // Lost Episodes Enemies
 Sprite WGRNE1, 64, 64 { Offset 32, 64 Patch WSPR2054, 0, 0 }

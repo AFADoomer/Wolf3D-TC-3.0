@@ -9,7 +9,7 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.YAdjust 32;
+		Weapon.YAdjust 20;
 	}
 
 	States
@@ -488,7 +488,7 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1;
 		Weapon.SlotNumber 5;
-		Weapon.YAdjust 17;
+		Weapon.YAdjust 21;
 		+Weapon.CHEATNOTWEAPON
 	}
 
@@ -567,11 +567,11 @@ class WolfRocketLauncher : ClassicWeapon
 		Weapon.AmmoType "WolfRocketPickup";
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
-		Weapon.YAdjust 17;
+		Weapon.YAdjust 21;
 		Weapon.SelectionOrder 5;
 		Weapon.SlotNumber 6;
 		+Weapon.CHEATNOTWEAPON
-		+WEAPON.EXPLOSIVE
+		+Weapon.EXPLOSIVE
 	}
 
 	States
