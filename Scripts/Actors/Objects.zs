@@ -444,6 +444,7 @@ class YellowKey : Key
 		//$Category Wolfenstein 3D/Items/Keys
 		//$Title Key (Gold)
 		Inventory.AltHUDIcon "I_YKEY";
+		Inventory.Icon "I_YKEY_T";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
 	}
@@ -463,6 +464,7 @@ class BlueKey : Key
 		//$Category Wolfenstein 3D/Items/Keys
 		//$Title Key (Silver)
 		Inventory.AltHUDIcon "I_BKEY";
+		Inventory.Icon "I_BKEY_T";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
 	}

@@ -6,6 +6,6 @@ Lock 130
 }
 Lock 131
 {
-	Any { YellowCard YellowSkull KeyYellow }
+	Any { YellowKey YellowKeyLost YellowCard YellowSkull KeyYellow }
 	MapColor 228 216 0
 }

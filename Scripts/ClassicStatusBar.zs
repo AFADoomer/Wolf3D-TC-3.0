@@ -54,13 +54,18 @@ class ClassicStatusBar : BaseStatusBar
 
 		if (state == HUD_StatusBar)
 		{
-			if (st_scale) { BeginStatusBar(screenblocks < 11); }
-
 			DrawClassicBar();
 		}
 		else if (state == HUD_Fullscreen)
 		{
 			DrawHUD();
+		}
+
+		if (screenblocks < 12 || automapactive)
+		{
+			BeginHUD();
+			DrawKeyBar();
+			BeginStatusBar(st_scale);
 		}
 	}
 
@@ -347,9 +352,7 @@ class ClassicStatusBar : BaseStatusBar
 		if (life) { DrawTexture(life, (19, -26), DI_ITEM_CENTER); }
 		DrawString(BigFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (35, baseline), 0, Font.FindFontColor("TrueWhite"));
 
-		//Keys
-		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("I_YKEY_T", (-8, 0), DI_ITEM_LEFT_TOP); }
-		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("I_BKEY_T", (-8, 14), DI_ITEM_LEFT_TOP); }
+		// Fullscreen HUD keys are drawn by the DrawKeyBar() call inside the Draw function
 
 		//Ammo
 		Ammo ammo1, ammo2;
@@ -611,6 +614,31 @@ class ClassicStatusBar : BaseStatusBar
 
 		return true;
 	}
+
+	void DrawKeyBar(double x = -10, double y = 2)
+	{
+		Vector2 keypos = (x, y);
+		int rowc = 0;
+		double roww = 0;
+		for(let i = CPlayer.mo.Inv; i != null; i = i.Inv)
+		{
+			if ((screenblocks < 11 || automapactive) && (i is "YellowKey" || i is "BlueKey")) { continue; }
+			if (i is "Key" && i.Icon.IsValid())
+			{
+				DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP|DI_ITEM_LEFT_TOP);
+				Vector2 size = TexMan.GetScaledSize(i.Icon);
+				keypos.Y += size.Y + 2;
+				roww = max(roww, size.X);
+				if (++rowc == 3 || keypos.Y > y + 32)
+				{
+					keypos.Y = 2;
+					keypos.X -= roww + 2;
+					roww = 0;
+					rowc = 0;
+				}
+			}
+		}
+	}
 }
 
 class JaguarHUD : AltHUD
@@ -678,5 +706,6 @@ class JaguarHUD : AltHUD
 
 		// Use the game's standard automap overlay
 		StatusBar.DrawAutomapHUD(0);
+		if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawKeyBar(); }
 	}
 }

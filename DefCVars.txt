@@ -1,4 +1,6 @@
 version 223
 set wipetype 0
 set freelook 0
-set st_scale 1
+set st_scale -1
+set hud_althudscale -1
+set hud_scale -1

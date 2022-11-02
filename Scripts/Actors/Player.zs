@@ -226,6 +226,7 @@ class WolfPlayer : DoomPlayer
 			{
 				if (AllActorClasses[i] is "Key")
 				{
+					if (AllActorClasses[i] is "YellowKeyLost" || AllActorClasses[i] is "BlueKeyLost") { continue; }
 					let keyitem = GetDefaultByType (AllActorClasses[i]);
 					if (keyitem.special1 != 0)
 					{
