@@ -188,6 +188,23 @@ class ClassicBase : Actor
 		}
 
 	}
+
+	void A_DeathScream()
+	{
+		int num = level.levelnum % 100;
+
+		if (
+			!Random(0, 128) &&
+			(
+				(Game.IsSoD() && (num == 19 || num == 20)) ||
+				(!Game.IsSoD() && num == 10)
+			)
+		)
+		{
+			A_StartSound(level.levelnum > 800 ? "nazi/die2" : "nazi/die", CHAN_VOICE, CHANF_DEFAULT, 1, bBoss ? ATTN_NONE : ATTN_NORM);
+		}
+		else { A_Scream(); }
+	}
 }
 
 class ClassicNazi : ClassicBase
@@ -252,7 +269,7 @@ class ClassicNazi : ClassicBase
 			"####" A 0 A_Jump(256, "Chase");
 		Death:
 			"####" A 0 {
-				A_Scream();
+				A_DeathScream();
 				A_DeathDrop();
 			}
 			"####" K 7 A_SetTics(deathtics - 1);
@@ -349,7 +366,7 @@ class Dog : ClassicNazi
 			"####" EA 5;
 			Goto Chase;
 		Death:
-			"####" A 0 A_Scream;
+			"####" A 0 A_DeathScream;
 			"####" HIJ 5;
 		Dead:
 			"####" K -1;
@@ -763,7 +780,7 @@ class DrSchabbs : ClassicBoss
 		Death:
 			"####" A 75 A_Scream;
 			"####" H 5;
-			"####" I 5 A_GiveToTarget("Score", 5000);
+			"####" I 5;
 			"####" J 5;
 			"####" K 5 A_BossDeath;
 		Dead:

@@ -61,7 +61,7 @@ class WolfPlayer : DoomPlayer
 		Death.WolfNaziSyringe:
 			PLAY H 0 { mutated = true; }
 		Death:
-			PLAY H 10 A_GiveToTarget("Score", 2500);
+			PLAY H 10;
 			PLAY I 10 A_PlayerScream;
 			PLAY JKLM 10;
 			PLAY N 1 A_CheckPlayerDone;

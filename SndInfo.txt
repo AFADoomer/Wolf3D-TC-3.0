@@ -124,6 +124,10 @@ slurpie2			LSND0018
 goobers				S_GOOB
 
 /* Enemy Sounds */
+// Easter Egg
+nazi/die			WSND0039
+nazi/die2			LSND0015
+
 // Dog
 dog/sight			WSND0001
 dog/attack			WSND0029
@@ -138,26 +142,24 @@ brown/die1			WSND0012
 brown/die2			WSND0013
 brown/die4			WSND0034
 brown/die5			WSND0035
-brown/die6			WSND0039
-brown/die7			WSND0040
-brown/die8			WSND0041
-brown/die9			WSND0042
+brown/die6			WSND0040
+brown/die7			WSND0041
+brown/die8			WSND0042
 $random brown/die3 		{ brown/die2 brown/die4 }
 brown/sight			WSND0000
-$random brown/death		{ brown/die1 brown/die2 brown/die3 brown/die4 brown/die5 brown/die7 brown/die8 brown/die9 }
+$random brown/death		{ brown/die1 brown/die2 brown/die3 brown/die4 brown/die5 brown/die6 brown/die7 brown/die8 }
 
 green/die1			LSND0010
 green/die2			LSND0011
 green/die3			LSND0023
 green/die4			LSND0023
 green/die5			LSND0024
-green/die6			LSND0015
 green/die7			LSND0026
 green/die8			LSND0027
 green/die9			LSND0028
 
 green/sight			LSND0000
-$random green/death		{ green/die1 green/die2 green/die3 green/die4 green/die5 green/die7 green/die7 green/die8 }
+$random green/death		{ green/die1 green/die2 green/die3 green/die4 green/die5 green/die6 green/die7 green/die8 }
 
 // SS Guard
 blue/sight			WSND0007

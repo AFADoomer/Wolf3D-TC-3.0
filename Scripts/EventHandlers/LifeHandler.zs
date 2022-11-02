@@ -130,6 +130,7 @@ class LifeHandler : StaticEventHandler
 		int amt;
 
 		if (e.thing is "ClassicBase") { amt = ClassicBase(e.thing).scoreamt; }
+		else if (e.thing is "PlayerPawn") { amt = 2500; }
 		else { amt = e.thing.SpawnHealth() * 10; }
 
 		e.thing.A_GiveToTarget("Score", amt);
