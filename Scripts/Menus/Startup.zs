@@ -206,10 +206,8 @@ class Startup : GenericMenu
 		charwidth = charwidth * width / 640;
 		lineheight = lineheight * height / 400;
 
-		int xoffset = 0;//width / 4;
-		int yoffset = 0;//height / 4;
-//		width += xoffset * 2;
-//		height += yoffset * 2;
+		int xoffset = (Screen.GetWidth() - width) / 2;
+		int yoffset = (Screen.GetHeight() - height) / 2;
 
 		double cratio = Screen.GetHeight() / height;
 		int cwidth = int(charwidth * cratio);
@@ -221,10 +219,10 @@ class Startup : GenericMenu
 			{
 				if (!(backgroundbuffer[r][c] ~== "\c[TrueBlack]�"))
 				{
-					screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), xoffset + c * charwidth - 1, yoffset + r * lineheight - 2, backgroundbuffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth + int(2 * cratio), DTA_CellY, int(cheight + 5 * cratio));
+					screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), xoffset + c * charwidth - 1, yoffset + r * lineheight - 2, backgroundbuffer[r][c], DTA_CellX, cwidth + int(2 * cratio), DTA_CellY, int(cheight + 5 * cratio));
 				}
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, buffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, cursorbuffer[r][c], DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, buffer[r][c]);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, cursorbuffer[r][c]);
 			}
 		}
 	}
@@ -349,18 +347,13 @@ class Startup : GenericMenu
 			case 5:
 				if (ticcount == 2)
 				{
-					Print(prompt, nobreak:true);
-					Print("launcher.exe");
-					Print();
-					Print("Powered by GZDoom.");
+					NewLine();
 					prompty = cursory;
 				}
 				if (ticcount == 20) { curstate++; }
 				break;
 			case 6:
-				Close();
-				SetMenu("LoadScreen", -1);
-				//gamemenu = true;
+				Print(prompt, nobreak:true);
 				curstate++;
 				break;
 			default:
@@ -377,10 +370,6 @@ class Startup : GenericMenu
 
 		int linecount = 0;
 
-		double cratio = Screen.GetHeight() / height;
-		int cwidth = int(charwidth * cratio);
-		int cheight = int(lineheight * cratio);
-
 		for (int c = 0; c < text.Length(); c++)
 		{
 			if (text.Mid(c, 1) == "\n" || x + c > 79)
@@ -391,7 +380,7 @@ class Startup : GenericMenu
 				linecount++;
 			}
 
-			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.Mid(c, 1), DTA_VirtualWidth, width, DTA_VirtualHeight, height, DTA_CellX, cwidth, DTA_CellY, cheight);
+			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.Mid(c, 1));
 		}
 	}
 

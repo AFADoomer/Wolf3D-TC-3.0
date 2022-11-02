@@ -103,8 +103,7 @@ class GameHandler : StaticEventHandler
 			if (e.playernumber == consoleplayer) { Menu.SetMenu("GetPsyched", -1); }
 	}
 */
-
-	static bool CheckEpisode(String episode = "")
+	ui static bool CheckEpisode(String episode = "", bool allowunfiltered = true)
 	{
 		if (level.levelnum > 100 && episode == "") { episode = Level.GetEpisodeName(); }
 
@@ -123,8 +122,11 @@ class GameHandler : StaticEventHandler
 			temp = temp.Mid(e + 1);
 		}
 
+		// Treat episodes with no filter as if they were the shareware version
+		if (!allowunfiltered && !extension.length()) { extension = "WL6"; }
+
 		// If the replacement string wasn't there, then this one is good
-		if (temp == episode || !extension.length()) { return true; }
+		if (allowunfiltered && (temp == episode || !extension.length())) { return true; }
 
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)
