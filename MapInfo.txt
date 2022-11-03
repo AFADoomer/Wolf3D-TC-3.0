@@ -1070,7 +1070,7 @@ map SD312 "$SD312"
 	par = 270
 	next = SD313
 	levelnum = 912
-	secretnext = RTD20
+	secretnext = SD320
 }
 
 map SD313 "$SD313"
@@ -1126,8 +1126,8 @@ map SD319 "$SD319"
 {
 	music = XJAZNAZI
 	par = 0
-	next = RTD05
-	secretnext = RTD05
+	next = SD305
+	secretnext = SD305
 	levelnum = 919
 }
 

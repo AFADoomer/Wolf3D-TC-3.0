@@ -14,15 +14,6 @@ class WolfPlayer : DoomPlayer
 		Height 56;
 		Mass 10000;
 
-		Player.ColorRange 0x60, 0x6F;
-		Player.ColorSet 0, "Green",	0x60, 0x6F, 0x62;
-		Player.ColorSet 1, "Gray",	0x10, 0x1F, 0x14;
-		Player.ColorSet 2, "Brown",	0xD0, 0xDF, 0xD2;
-		Player.ColorSet 3, "Red",	0x20, 0x2F, 0x22;
-		Player.ColorSet 4, "Yellow",	0x40, 0x4F, 0x44;
-		Player.ColorSet 5, "Tan",	0xC0, 0xCF, 0xCA;
-		Player.ColorSet 6, "Purple",	0xB0, 0xBF, 0xB2;
-		Player.ColorSet 7, "Teal",	0x70, 0x7F, 0x7A;
 		Player.DisplayName "BJ";
 		Player.Face "WLF";
 		Player.ForwardMove 1.3, 1.3;
@@ -34,7 +25,7 @@ class WolfPlayer : DoomPlayer
 		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";
 		Player.WeaponSlot 2, "WolfPistol", "WolfPistolLost";
 		Player.WeaponSlot 3, "WolfMachinegun", "WolfMachinegunLost";
-		Player.WeaponSlot 4, "WolfChaingun", "WolfChaingunSoD", "WolfChaingunLost";
+		Player.WeaponSlot 4, "WolfChaingun", "WolfChaingunLost";
 		Player.WeaponSlot 5, "";
 		Player.WeaponSlot 6, "";
 		Player.WeaponSlot 7, "";

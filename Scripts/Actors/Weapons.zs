@@ -94,7 +94,7 @@ class ClassicWeapon : Weapon
 			}
 		}
 
-		A_FireBullets (spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM | FBF_USEAMMO);
+		A_FireBullets(spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM | FBF_USEAMMO);
 	}
 }
 
@@ -199,11 +199,13 @@ class WolfClipBoxLost : WolfClipBox
 		Spawn:
 			WAMM B -1;
 			Loop;
-	}	
+	}
 }
 
 class WolfKnife : ClassicWeapon
 {
+	bool adrenaline;
+
 	Default
 	{
 		//$Title Knife
@@ -223,21 +225,19 @@ class WolfKnife : ClassicWeapon
 		Ready:
 			CKNI A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
-		Select:
-			"####" A 0;
-			Goto Super::Select;
 		Fire:
 			"####" B 3;
-			"####" A 0 A_JumpIfInventory ("PowerStrength", 1, "Fire.Adrenaline");
-			"####" C 3 A_CustomPunch (invoker.WolfRandom() >> 4, 1, 0, "WolfPuff");
-			"####" A 0 A_Jump(256, "Fire.Resume");
-		Fire.Adrenaline:
-			"####" C 3 A_CustomPunch (invoker.WolfRandom() >> 1, 1, 0, "WolfPuff");
-			"####" A 0 A_Jump(256, "Fire.Resume");
-		Fire.Resume:
-			"####" A 0 A_StartSound("weapons/wknife", CHAN_WEAPON);
+			"####" C 3 A_CustomPunch(invoker.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
+	}
+
+	override void DoEffect()
+	{
+		if (owner && owner.player && owner.player.ReadyWeapon == self)
+		{
+			adrenaline = !!owner.FindInventory("PowerStrength", true);
+		}
 	}
 }
 
@@ -264,11 +264,8 @@ class WolfPistol : ClassicWeapon
 		Ready:
 			CLUG A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
-		Select:
-			"####" A 0;
-			Goto Super::Select;
 		Fire:
-			"####" B 2;
+			"####" B 3;
 			"####" C 3 Bright A_FireGun(2.0);
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
@@ -296,20 +293,14 @@ class WolfMachineGun : ClassicWeapon
 			CMGU P -1;
 			Loop;
 		Ready:
-			CMGU W 1 A_WeaponReady(WRF_NOBOB);
+			CMGU A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
-		Select:
-			"####" A 0;
-			Goto Super::Select;
 		Fire:
-			"####" W 2;
-			"####" B 2;
+			"####" B 3;
 		Hold:
-			"####" W 0;
 			"####" C 3 Bright A_FireGun(3.0);
 			"####" D 3;
-			"####" D 0 A_ReFire;
-			"####" E 3;
+			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
 	}
 } 
@@ -337,15 +328,11 @@ class WolfChaingun : ClassicWeapon
 		Ready:
 			CCGU A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
-		Select:
-			"####" A 0;
-			Goto Super::Select;
 		Fire:
-			"####" AB 2;
+			"####" B 3;
 		Hold:
 			"####" CD 3 Bright A_FireGun(4.0);
-			"####" A 0 A_ReFire;
-			"####" E 2;
+			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
 	}
 
@@ -357,13 +344,21 @@ class WolfChaingun : ClassicWeapon
 	}
 }
 
-class WolfChaingunSoD : WolfChaingun
+class WolfChaingunSoD : WeaponGiver
 {
 	Default
 	{
 		//$Title Chain Gun (Spear of Destiny)
+		Inventory.PickupMessage "";
 		Inventory.PickupSound "pickups/cgunsod";
-		+Weapon.CHEATNOTWEAPON
+		DropItem "WolfChaingun";
+	}
+
+	States
+	{
+		Spawn:
+			CCGU P -1;
+			Loop;
 	}
 }
 
@@ -421,7 +416,7 @@ class WolfMachineGunLost : WolfMachineGun
 			MGUN U -1;
 			Loop;
 		Ready:
-			MGUL W 1 A_WeaponReady(WRF_NOBOB);
+			MGUL A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
 	}
 }
@@ -500,9 +495,6 @@ class WolfFlameThrower : ClassicWeapon
 		Ready:
 			WFLM A 1 A_WeaponReady(WRF_NOBOB);
 			Loop;
-		Select:
-			"####" A 0;
-			Goto Super::Select;
 		Fire:
 			WFLM B 2;
 		Hold:
