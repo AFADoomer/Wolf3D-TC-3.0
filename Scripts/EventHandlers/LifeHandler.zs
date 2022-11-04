@@ -114,12 +114,21 @@ class LifeHandler : StaticEventHandler
 		}
 	}
 
+	override void PlayerEntered(PlayerEvent e)
+	{
+		// This *must* be done so that if a player has autosave disabled, the 
+		// NewGame call doesn't get called every time the player respawns
+		Level.MakeAutoSave();
+	}
+
 	override void NewGame()
 	{
 		if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
 
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
+			if (died[i]) { continue; }
+
 			lives[i] = 3;
 			if (persistent) { persistent.lives[i] = 3; }
 		}
