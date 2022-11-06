@@ -242,7 +242,9 @@ class ExtendedListMenu : ListMenu
 					}
 					else
 					{
-						SetMenu("QuitMenu");
+						CVar backstyle = CVar.FindCVar("g_menubackstyle");
+						if (backstyle && backstyle.GetInt()) { exitmenu = true; }
+						else { SetMenu("QuitMenu"); }
 					}
 				}
 				return false;

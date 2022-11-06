@@ -44,35 +44,35 @@ ListMenu "MainMenu"
 
 	Box 178, 136, 0
 
-	TextItem "New Game", "n", "PlayerclassMenu"
-	TextItem "Sound", "s", "SoundOptions"
-	TextItem "Control", "c", "TCOptions"
-	TextItem "Load Game", "l", "LoadGameMenu"
+	TextItem "$M_NEW", "n", "PlayerclassMenu"
+	TextItem "$M_SOUND", "s", "SoundOptions"
+	TextItem "$M_OPTIONS", "c", "TCOptions"
+	TextItem "$M_LOAD", "l", "LoadGameMenu"
 
 	Font "BigFont", "TrueBlack"
-	TextNotInGame "Save Game"
+	TextNotInGame "$M_SAVE"
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-	TextItemInGame "Save Game", "s", "SaveGameMenu"
+	TextItemInGame "$M_SAVE", "s", "SaveGameMenu"
 
-	TextItem "Change View", "w", "VideoModeMenu"
+	TextItem "$M_VIDEOOPTIONS", "w", "VideoModeMenu"
 
 	IfOption(ReadThis)
 	{
 		Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-		TextItemNotRegisteredNotInGame "Read This!", "r", "HelpMenu"
+		TextItemNotRegisteredNotInGame "$M_READTHIS", "r", "HelpMenu"
 		Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-		TextItemNotRegisteredInGame "Read This!", "r", "HelpMenu"
+		TextItemNotRegisteredInGame "$M_READTHIS", "r", "HelpMenu"
 	}
 
-	TextItemNotInGame "View Scores", "v", "HighScores"
-	TextItemInGame "End Game", "e", "EndGameMenu"
+	TextItemNotInGame "$M_HIGHSCORES", "v", "HighScores"
+	TextItemInGame "$M_ENDGAME", "e", "EndGameMenu"
 
-	TextItemNotInGame "Back to Demo", "b", "CloseMenu"
+	TextItemNotInGame "$M_BACKTODEMO", "b", "CloseMenu"
 	Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-	TextItemInGame "Back to Game", "b", "CloseMenu"
+	TextItemInGame "$M_BACKTOGAME", "b", "CloseMenu"
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	TextItem "Quit", "q", "QuitMenu"
+	TextItem "$M_QUIT", "q", "QuitMenu"
 }
 
 ListMenu "EpisodeMenu"
@@ -129,7 +129,7 @@ ListMenu "SaveGameMenu"
 
 OptionMenu "TCOptions"
 {
-	Title "CONTROL"
+	Title "$M_OPTIONS"
 
 	SubMenu "$M_ENGINEOPTIONS",				"OptionsMenu"
 	StaticText ""
@@ -142,8 +142,9 @@ OptionMenu "TCOptions"
 	StaticText "$M_COSMETICOPTIONS", 1
 	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
-	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
 	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
+	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
+	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
 }
 
 OptionMenu "WolfColorPickerMenu" protected
@@ -429,10 +430,15 @@ OptionMenu "os_Menu"
 	Title "$OS_TITLE"
 }
 
-
 OptionValue "BorderStyle"
 {
 	0, "$BORD_DEFAULT"
 	1, "$BORD_FIT"
 	2, "$BORD_MINIMAL"
+}
+
+OptionValue "BackStyle"
+{
+	0, "$BACK_QUIT"
+	1, "$BACK_RETURN"
 }
