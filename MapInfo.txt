@@ -1280,7 +1280,7 @@ DoomEdNums
 	21086=BreakableColumn
 	21087=ExplosiveOilDrum
 	//21088= Invisibility
-	//21089= Dual Cahingun
+	//21089= Dual Chaingun
 	21090=MoldyCheese
 	21124=DeadGuard
 
