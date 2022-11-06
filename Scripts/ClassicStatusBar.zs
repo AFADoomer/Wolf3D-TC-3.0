@@ -934,6 +934,11 @@ class ClassicStatusBar : WidgetStatusBar
 		return true;
 	}
 
+	override void FlushNotify()
+	{
+		Log.Clear("Notifications");
+	}
+
 	override bool DrawChat(String txt)
 	{
 		Font fnt = SmallFont;
