@@ -220,6 +220,11 @@ class Widget ui
 			xpos = int(xpos / (GetConScale(con_scale) * hudscale.x));
 			ypos = int(ypos / (GetConScale(con_scale) * hudscale.y));
 		}
+		else if (screenblocks < 11)
+		{
+ 			xpos = 8;
+			ypos = 2;
+		}
 
 		// If this wasn't offset at all, assume it's the first in the stack, and apply edge-of-screen offsets as necessary
 		if (relpos.y == 0)
@@ -234,7 +239,7 @@ class Widget ui
 				}
 			}
 
-			if (anchor & WDG_BOTTOM && screenblocks < 11) { relpos.y += 32;	}
+			if (anchor & WDG_BOTTOM && screenblocks < 11) { relpos.y += st_scale ? 55 : 22;	}
 			else { relpos.y += ypos; }
 			
 			pos.y = setpos.y + relpos.y;
@@ -247,7 +252,7 @@ class Widget ui
 			int widthoffset = 0;
 			if (WidgetStatusBar(StatusBar) && !(anchor & WDG_CENTER))
 			{
-				widthoffset = WidgetStatusBar(StatusBar).widthoffset + xpos + (screenblocks < 11 ? 8 : 0);
+				widthoffset = WidgetStatusBar(StatusBar).widthoffset + xpos;
 			}
 
 			pos.x = setpos.x + widthoffset;
@@ -274,7 +279,7 @@ class Widget ui
 		pos = (0, 0);
 
 		SetMargins();
-		CalcRelPos(pos, index, !size.length());
+		CalcRelPos(pos, index);
 
 		Vector2 hudscale = StatusBar.GetHudScale();
 
@@ -532,7 +537,7 @@ class LifeWidget : Widget
 
 	override Vector2 Draw()
 	{
-		size = (45, 22);
+		size = (40, 22);
 
 		Super.Draw();
 
@@ -547,12 +552,17 @@ class KeyWidget : Widget
 {
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
-		KeyWidget wdg = KeyWidget(Widget.Init("KeyWidget", widgetname, anchor, WDG_DRAWINWINDOW, priority, pos, zindex));
+		KeyWidget wdg = KeyWidget(Widget.Init("KeyWidget", widgetname, anchor, 0, priority, pos, zindex));
+
+		if (wdg)
+		{
+			wdg.margin[0] = 2;
+		}
 	}
 
 	override Vector2 Draw()
 	{
-		size = (0, 21);
+		size = (0, 0);
 
 		double y = 0;
 		int rowc = 0;
@@ -570,6 +580,7 @@ class KeyWidget : Widget
 				roww = max(roww, int(texsize.x));
 				if (++rowc == 3 || y > 32)
 				{
+					size.y = max(y, size.y);
 					y = 0;
 					rowc = 0;
 
@@ -580,7 +591,7 @@ class KeyWidget : Widget
 		}
 
 		size.x += roww + 2;
-		if (!size.x) { return (0, 0); }
+		if (size.x <= 2) { return (0, 0); }
 
 		Super.Draw();
 
@@ -594,7 +605,7 @@ class KeyWidget : Widget
 			{
 				[texscale, texsize] = ZScriptTools.ScaleTextureTo(i.icon, iconsize);
 
-				DrawToHud.DrawTexture(i.icon, keypos, alpha, desttexsize:texsize, flags:DrawToHUD.TEX_DEFAULT);
+				DrawToHud.DrawTexture(i.icon, keypos - (texsize.x, 0), alpha, desttexsize:texsize, flags:DrawToHUD.TEX_DEFAULT);
 				keypos.y += texsize.y + 2;
 				roww = max(roww, int(texsize.x));
 				if (++rowc == 3 || keypos.y > pos.y + 32)
@@ -626,6 +637,11 @@ class ScoreWidget : Widget
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
 		ScoreWidget wdg = ScoreWidget(Widget.Init("ScoreWidget", widgetname, anchor, 0, priority, pos, zindex));
+		
+		if (wdg)
+		{
+			wdg.margin[2] = 3;
+		}
 	}
 
 	override Vector2 Draw()
@@ -672,7 +688,7 @@ class InventoryWidget : Widget
 
 	override Vector2 Draw()
 	{
-		if (level.NoInventoryBar) { return (0, 0); }
+		if (level.NoInventoryBar || !player.mo.InvSel) { return (0, 0); }
 
 		int iconsize = 24;
 		int spacing = 16;
@@ -762,7 +778,7 @@ class InventoryWidget : Widget
 		if (screenblocks < 11 || automapactive)
 		{
 			anchor = WDG_RIGHT;
-			flags = WDG_DRAWINWINDOW;
+			flags = 0;
 			priority = 0;
 		}
 		else
@@ -896,6 +912,8 @@ class PuzzleItemWidget : Widget
 
 	override Vector2 Draw()
 	{
+		if (!player.mo.InvSel) { return (0, 0); }
+
 		Super.Draw();
 
 		[cols, rows] = WidgetStatusBar(StatusBar).DrawPuzzleItems(int(pos.x + (cols - 1) * (iconsize + 2) + 1), int(pos.y + 1), iconsize, maxrows, -1, false, StatusBar.DI_ITEM_LEFT_TOP, alpha);
@@ -1064,32 +1082,23 @@ class PositionWidget : Widget
 	{
 		fnt = HUDFont;
 
-		if (screenblocks > 10)
-		{
-			anchor = WDG_RIGHT;
-		}
-		else
-		{
-			anchor = WDG_BOTTOM | WDG_RIGHT;
-		}
-
 		Super.DoTick(index);
 	}
 
 	override Vector2 Draw()
 	{
-		int headercolor = fontcolor;
-		int infocolor = Font.FindFontColor("LightGray");
+		double scale = 0.5;
 
-		int height = fnt.GetHeight();
-		int width = fnt.StringWidth("X: -00000.00");
+		int headercolor = fontcolor;
+		int infocolor = Font.CR_GOLD;
+
+		int height = int(fnt.GetHeight() * scale);
+		int width = int(fnt.StringWidth("X:-00000.00") * scale);
 
 		int x = int(pos.x);
 		int y = int(pos.y);
 
-		double scale = 0.5;
-
-		size = (width, height * 7) * scale;
+		size = (width, height * 4);
 		Super.Draw();
 
 		// Draw coordinates
@@ -1109,22 +1118,8 @@ class PositionWidget : Widget
 			value = String.Format("%5.2f", v);
 
 			DrawToHud.DrawText(header, (x, y), fnt, alpha, scale, shade:headercolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-			DrawToHud.DrawText(value, (x + width - fnt.StringWidth(value), y), fnt, alpha, scale, shade:infocolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
+			DrawToHud.DrawText(value, (x + width - fnt.StringWidth(value) * scale, y), fnt, alpha, scale, shade:infocolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
 		}
-
-		y += height;
-
-		// Draw player angle
-		DrawToHud.DrawText("A:", (x, y), fnt, alpha, scale, shade:headercolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-		value = String.Format("%0.2f", player.mo.angle);
-		DrawToHud.DrawText(value, (x + width - fnt.StringWidth(value), y), fnt, alpha, scale, shade:infocolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-
-		y += height;
-
-		// Draw player pitch
-		DrawToHud.DrawText("P:", (x, y), fnt, alpha, scale, shade:headercolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-		value = String.Format("%0.2f", player.mo.pitch);
-		DrawToHud.DrawText(value, (x + width - fnt.StringWidth(value), y), fnt, alpha, scale, shade:infocolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
 
 		return size;
 	}
@@ -1378,7 +1373,7 @@ class LogWidget : Widget
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0, int maxlines = 0, bool collapseduplicates = true, int textflags = ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT)
 	{
-		LogWidget wdg = LogWidget(Widget.Init("LogWidget", widgetname, anchor, WDG_DRAWINWINDOW, priority, pos, zindex));
+		LogWidget wdg = LogWidget(Widget.Init("LogWidget", widgetname, anchor, 0, priority, pos, zindex));
 
 		if (wdg)
 		{
@@ -1652,7 +1647,7 @@ class ActiveEffectWidget : Widget
 		if (screenblocks < 11 || automapactive)
 		{
 			anchor = WDG_RIGHT;
-			flags = WDG_DRAWINWINDOW;
+			flags = 0;
 			priority = 0;
 			margin[0] = margin[2] = 0;
 			margin[1] = margin[3] = 4;
@@ -1689,9 +1684,9 @@ class ActiveEffectWidget : Widget
 		if (player.mo.poisondurationreceived) { count++; }
 
 		if (count) { size = (count * (iconsize + 2), iconsize + 1); }
-		Super.Draw();
+		else { return (0, 0); }
 
-		if (!count) { return size; }
+		Super.Draw();
 
 		double drawposx = int(pos.x + iconsize / 2);
 		double drawposy = int(pos.y + iconsize / 2);
@@ -1778,6 +1773,7 @@ class AutomapWidget : Widget
 		{
 			wdg.titleheight = BigFont.GetHeight();
 			wdg.lineheight = SmallFont.GetHeight();
+			wdg.margin[3] = 4;
 		}
 	}
 

@@ -304,6 +304,9 @@ class ClassicStatusBar : WidgetStatusBar
 	play int staticmugshot;
 	play int staticmugshottimer;
 
+	int savetimer;
+	int savetimertime;
+
 	override void Init()
 	{
 		Super.Init();
@@ -321,21 +324,27 @@ class ClassicStatusBar : WidgetStatusBar
 
 		fizzleeffect = false;
 
+		savetimertime = 70;
+
 		Vector2 hudscale = Statusbar.GetHudScale();
 
 		AutomapWidget.Init("Automap", Widget.WDG_TOP | Widget.WDG_LEFT, 0);
 		LogWidget.Init("Notifications", Widget.WDG_TOP | Widget.WDG_LEFT, 0, zindex:100);
 		SingleLogWidget.Init("MidPrint", Widget.WDG_MIDDLE | Widget.WDG_CENTER, -1, (0, -0.125 * Screen.GetHeight() / hudscale.y), 99);
-		KeyWidget.Init("Keys", Widget.WDG_RIGHT, 0, (6, 0));
-		PositionWidget.Init("Position", Widget.WDG_RIGHT, 0);
-		PuzzleItemWidget.Init("Puzzle Items", Widget.WDG_RIGHT, 2, (16, 0));
+
+		KeyWidget.Init("Keys", Widget.WDG_RIGHT, 0);
+		PuzzleItemWidget.Init("Puzzle Items", Widget.WDG_RIGHT, 1, (0, 0));
+
 		LifeWidget.Init("Lives", Widget.WDG_BOTTOM, 0);
 		InventoryWidget.Init("Selected Inventory", Widget.WDG_BOTTOM, 0);
-		ActiveEffectWidget.Init("Active Effects", Widget.WDG_BOTTOM, 1);
 		LogWidget.Init("Chat", Widget.WDG_BOTTOM, 0, zindex:99);
+		ActiveEffectWidget.Init("Active Effects", Widget.WDG_BOTTOM, 1);
+
 		AmmoHealthWidget.Init("Ammo and Health", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 0);
-		AmmoWidget.Init("Ammo Summary", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 2);
 		ScoreWidget.Init("Score", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 1);
+		AmmoWidget.Init("Ammo Summary", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 2);
+
+		PositionWidget.Init("Position", Widget.WDG_RIGHT, 0);
 	}
 
 	override void Draw(int state, double TicFrac)
@@ -354,6 +363,8 @@ class ClassicStatusBar : WidgetStatusBar
 		Widget.DrawWidgets();
 
 		if (fizzlelayer == 1) { DrawFizzle(); }
+
+		DrawSaveIcon();
 
 		BeginStatusBar(st_scale);
 	}
@@ -377,7 +388,9 @@ class ClassicStatusBar : WidgetStatusBar
 
 	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
 	{
-		if (ClassicStatusBar(StatusBar).CPlayer.mo != caller) { return; }
+		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return; }
+
+		if (StatusBar.CPlayer.mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
@@ -686,6 +699,8 @@ class ClassicStatusBar : WidgetStatusBar
 		mugshottimer++;
 
 		Super.Tick();
+
+		savetimer = max(0, savetimer - 1);
 	}
 
 	// Adapted from here: http://fabiensanglard.net/fizzlefade/index.php
@@ -716,6 +731,25 @@ class ClassicStatusBar : WidgetStatusBar
 		} while (fizzleval != 1)
 
 		fizzleindex = 0;
+	}
+
+	virtual void DrawSaveIcon()
+	{
+		if (savetimer)
+		{
+			TextureID save = TexMan.CheckForTexture("I_DISK0", TexMan.Type_Any);
+
+			if (save)
+			{
+				double savealpha = 1.0;
+
+				if (savetimer > (savetimertime - 5)) { savealpha = (savetimertime - savetimer) / 5.0; }
+				else if (savetimer <= 5) { savealpha = savetimer / 5.0; }
+
+				int width = int(400 * Screen.GetAspectRatio());
+				screen.DrawTexture(save, true, width - 20, 20, DTA_CenterOffset, true, DTA_KeepRatio, true, DTA_VirtualWidth, width, DTA_VirtualHeight, 400, DTA_Alpha, savealpha);
+			}
+		}
 	}
 
 	// Original code from shared_sbar.cpp
@@ -870,14 +904,15 @@ class ClassicStatusBar : WidgetStatusBar
 	{
 		bool processed = false;
 
-		// if (gameaction == ga_savegame || gameaction == ga_autosave)
-		// {
-		// 	// Don't print save messages
-		// 	savetimer = savetimertime;
-		// 	processed = true;
-		// }
+		if (gameaction == ga_savegame || gameaction == ga_autosave)
+		{
+			// Don't print save messages
+			savetimer = savetimertime;
+			processed = true;
+		}
 
-		// if (boa_defaultprint) { return false; }
+		CVar logstyle = CVar.FindCVar("g_defaultlog");
+		if (logstyle && logstyle.GetInt()) { return false; }
 
 		Font fnt = SmallFont;
 
