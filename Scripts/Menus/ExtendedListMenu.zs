@@ -196,6 +196,7 @@ class ExtendedListMenu : ListMenu
 
 			if (exittimeout >= fadetime)
 			{
+				RestorePlaceholderMarkers();
 				S_ChangeMusic(level.music);
 				Close();
 			}
@@ -243,7 +244,14 @@ class ExtendedListMenu : ListMenu
 					else
 					{
 						CVar backstyle = CVar.FindCVar("g_menubackstyle");
-						if (backstyle && backstyle.GetInt()) { exitmenu = true; }
+						if (backstyle && backstyle.GetInt() && gamestate == GS_LEVEL && GameHandler.CheckEpisode())
+						{
+							if (!mParentMenu) { SetMenu("CloseMenu"); }
+
+							fadecolor = 0x000000;
+							fadetarget = gametic + fadetime;
+							exitmenu = true;
+						}
 						else { SetMenu("QuitMenu"); }
 					}
 				}
@@ -1239,7 +1247,7 @@ class ListMenuItemTextItemInGame : ListMenuItem
 
 	override void OnMenuCreated()
 	{
-		mEnabled = gamestate == GS_LEVEL;
+		mEnabled = (gamestate == GS_LEVEL && GameHandler.CheckEpisode());
 
 		AllocateSpace();
 	}
@@ -1272,7 +1280,7 @@ class ListMenuItemTextItemNotInGame : ListMenuItemTextItemInGame
 {
 	override void OnMenuCreated()
 	{
-		mEnabled = gamestate != GS_LEVEL;
+		mEnabled = (gamestate != GS_LEVEL || !GameHandler.CheckEpisode());
 
 		AllocateSpace();
 	}
@@ -1294,7 +1302,7 @@ class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame
 
 	override void OnMenuCreated()
 	{
-		mEnabled = gamestate != GS_LEVEL;
+		mEnabled = (gamestate != GS_LEVEL || !GameHandler.CheckEpisode());
 		mColor = Game.IsSoD() ? Font.FindFontColor("SpearMenuDisable") : Font.FindFontColor("WolfMenuDisable");
 
 		AllocateSpace();

@@ -130,9 +130,9 @@ episode E6L1
 
 // These are hidden in code, but are used to set up the "episodes" in internal code so
 // that that the "Game selection" screen can be used to select/launch each level set
-episode SOD01 {}
-episode SD201 {}
-episode SD301 {}
+episode SOD01 { name = "$EP_SOD" }
+episode SD201 { name = "$EP_SD2" }
+episode SD301 { name = "$EP_SD3" }
 
 // Episode 1
 

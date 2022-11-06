@@ -2,12 +2,6 @@ class ConsoleHandler : StaticEventHandler
 {
 	String hash;
 
-	override void OnRegister()
-	{
-		CVar sodvar = CVar.FindCVar("g_sod");
-		if (sodvar) { sodvar.SetInt(-2); }
-	}
-
 	void UpdateCanvas()
 	{
 		Canvas conbackcanvas = TexMan.GetCanvas("CONBACK");

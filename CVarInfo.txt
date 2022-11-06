@@ -1,4 +1,4 @@
-server noarchive int g_sod = 0;
+server noarchive int g_sod = -2;
 server noarchive cheat int goobers = 0;
 
 server int g_nointro = 0;

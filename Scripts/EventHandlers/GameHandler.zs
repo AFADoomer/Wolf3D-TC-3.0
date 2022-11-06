@@ -105,21 +105,43 @@ class GameHandler : StaticEventHandler
 */
 	ui static bool CheckEpisode(String episode = "", bool allowunfiltered = true)
 	{
+		String extension = "";
+
 		if (level.levelnum > 100 && episode == "") { episode = Level.GetEpisodeName(); }
+
+		// Map lump name parsing because episode name checks are unreliable
+		if (!episode.length())
+		{
+			String ext = level.mapname.Left(3);
+
+			if (ext ~== "SOD" || ext ~== "SD2" || ext ~== "SD3") { extension = ext; }
+			else if (ext.left(1) ~== "E" && ext.mid(2) ~== "L")
+			{
+				int ep = ext.mid(1, 1).ToInt();
+
+				if (ep == 1) { return true; }
+				else if (ep <= 3) { extension = "WL3"; }
+				else if (ep <= 6) { extension = "WL6"; }
+			}
+
+			episode = extension;
+		}
 
 		if (!episode.length()) { return true; }
 
-		String temp = episode;
-		String extension = "";
-
-		int s, e;
-		s = temp.IndexOf("[Optional");
-		if (s > -1)
+		String temp;
+		if (!extension.length())
 		{
-			e = temp.IndexOf("]", s);
-			extension = temp.Mid(e - 3, 3);
+			temp = episode;
+			int s, e;
+			s = temp.IndexOf("[Optional");
+			if (s > -1)
+			{
+				e = temp.IndexOf("]", s);
+				extension = temp.Mid(e - 3, 3);
 
-			temp = temp.Mid(e + 1);
+				temp = temp.Mid(e + 1);
+			}
 		}
 
 		// Treat episodes with no filter as if they were the shareware version
@@ -149,7 +171,7 @@ class Game
 		if (g_sod > 0) { ret = true; }
 		if (level && level.levelnum > 700) { ret = true; }
 
-		if (g_sod < 0 && gamestate == GS_LEVEL) // Set the value if we are in a game and it hasn't been set already by the startup menu
+		if (g_sod < -1 && gamestate == GS_LEVEL && level.time > 1) // Set the value if we are in a game and it hasn't been set already by the startup menu
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
 			if (sodvar) { sodvar.SetInt(ret ? 1 : 0); }

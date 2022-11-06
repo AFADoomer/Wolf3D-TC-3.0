@@ -40,7 +40,7 @@ class CloseMenu : GenericMenu
 			}
 			else if (exittimeout >= fadetime)
 			{
-				if (gamestate != GS_LEVEL && gamestate != GS_INTERMISSION) { Menu.SetMenu("IntroSlideshowLoop"); }
+				if ((gamestate != GS_LEVEL && gamestate != GS_INTERMISSION) || !GameHandler.CheckEpisode()) { Menu.SetMenu("IntroSlideshowLoop"); }
 				else if (players[consoleplayer].mo && LifeHandler.GetLives(players[consoleplayer].mo) == -1) { Menu.SetMenu("HighScores"); }
 				else if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE) { S_ChangeMusic(level.music); }
 			}

@@ -36,7 +36,7 @@ Script "InitializePlayer" ENTER
 {
 	if (!ScriptCall("GameHandler", "CheckEpisode", ""))
 	{
-		ScriptCall("WolfMenu", "SetMenu", "GameMenu");
+		ScriptCall("WolfMenu", "SetMenu", "IntroSlideShow");
 		Terminate;
 	}
 
