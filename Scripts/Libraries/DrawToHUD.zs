@@ -100,7 +100,16 @@ class DrawToHUD
 
 		scale *= textscale;
 
-		double textw = fnt.StringWidth(ZScriptTools.StripControlCodes(text));
+		double textw;
+		int charwidth = 0;
+		int mono = Mono_Off;
+		if (flags & ZScriptTools.STR_FIXEDWIDTH)
+		{
+			mono = Mono_CellCenter;
+			charwidth = fnt.StringWidth("0");
+			textw = ZScriptTools.StripControlCodes(text).length() * charwidth;
+		}
+		else { textw = fnt.StringWidth(ZScriptTools.StripControlCodes(text)); }
 		double texth = fnt.GetHeight();
 
 		if (text.IndexOf("[[") > -1 && text.IndexOf("]]") > -1)
@@ -127,13 +136,13 @@ class DrawToHUD
 						text.Replace("[[" .. cmd .. "]]", "[[" .. cmd .. "]] " .. keystring);
 					}
 
-					totalwidth += int(SmallFont.StringWidth(line.left(buttonstart) .. keystring) + buttonwidth);
+					totalwidth += int(fnt.StringWidth(line.left(buttonstart) .. keystring) + buttonwidth);
 
 					line = line.mid(buttonend + 2);
 				}
 				else
 				{
-					totalwidth += SmallFont.StringWidth(line);
+					totalwidth += fnt.StringWidth(line);
 					line = "";
 				}
 			}
@@ -177,24 +186,24 @@ class DrawToHUD
 				if (buttonend > -1 && buttonstart > -1)
 				{
 					String segment = line.left(buttonstart);
-					screen.DrawText(fnt, shade, int(screenpos.x + lineoffset * scale.x), int(screenpos.y), segment, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y);
-					lineoffset += SmallFont.StringWidth(segment);
+					screen.DrawText(fnt, shade, int(screenpos.x + lineoffset * scale.x), int(screenpos.y), segment, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y, DTA_Monospace, mono, DTA_Spacing, charwidth);
+					lineoffset += fnt.StringWidth(segment);
 
 					String cmd = line.Mid(buttonstart + 2, buttonend - buttonstart - 2);
-					lineoffset += DrawCommandButtons((pos.x + lineoffset, pos.y + SmallFont.GetHeight() / 2), cmd, alpha, destsize, textscale, Button.BTN_MIDDLE | (fullscreen ? 0 : Button.BTN_FIXED) | (flags & ZScriptTools.STR_NOSCALE ? Button.BTN_NOSCALE : 0));
+					lineoffset += DrawCommandButtons((pos.x + lineoffset, pos.y + fnt.GetHeight() / 2), cmd, alpha, destsize, textscale, Button.BTN_MIDDLE | (fullscreen ? 0 : Button.BTN_FIXED) | (flags & ZScriptTools.STR_NOSCALE ? Button.BTN_NOSCALE : 0));
 
 					line = line.mid(buttonend + 2);
 				}
 				else
 				{
-					screen.DrawText(fnt, shade, int(screenpos.x + lineoffset * scale.x), int(screenpos.y), line, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y);
+					screen.DrawText(fnt, shade, int(screenpos.x + lineoffset * scale.x), int(screenpos.y), line, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y, DTA_Monospace, mono, DTA_Spacing, charwidth);
 					line = "";
 				}
 			}
 		}
 		else
 		{
-			screen.DrawText(fnt, shade, int(screenpos.x), int(screenpos.y), text, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y);
+			screen.DrawText(fnt, shade, int(screenpos.x), int(screenpos.y), text, DTA_KeepRatio, true, DTA_Alpha, alpha, DTA_ScaleX, scale.x, DTA_ScaleY, scale.y, DTA_Monospace, mono, DTA_Spacing, charwidth);
 		}
 	}
 

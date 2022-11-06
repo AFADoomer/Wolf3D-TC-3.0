@@ -245,7 +245,7 @@ class DeathCamMessage : GetPsyched
 				break;
 			case 2:
 			default:
-				screen.Dim(0x004040, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+				screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 				break;
 		}
 

@@ -59,6 +59,8 @@ Script "InitializePlayer" ENTER
 			if (!GetCVar("g_nointro") && !(GetCVar("g_sod") && num % 100 == 21)) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
 		}
 	}
+
+	ScriptCall("ClassicStatusBar", "ClearFizzle");
 }
 
 Function void ResetWeapons(void)

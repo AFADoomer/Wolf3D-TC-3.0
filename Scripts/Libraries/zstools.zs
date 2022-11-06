@@ -33,6 +33,7 @@ class ZScriptTools
 		STR_FIXED = 32, // Print directly on screen, not in hud coordinate space
 		STR_MENU = 64, // Print in menu coordinate space (only implemented for key buttons)
 		STR_NOSCALE = 128, // Don't recalculate coordinates
+		STR_FIXEDWIDTH = 256, // Print all characters at the width of the font's "0" character
 	};
 
 	// Strip color codes out of a string
@@ -243,5 +244,23 @@ class ZScriptTools
 		if (output.left(prefix.length() - 1) ~== prefix.Mid(1)) { output = rawactionname; }
 
 		return output;
+	}
+
+	// Returns the scale necessary to cleanly resize an image to fit into a box of a specific size
+	static Vector2, Vector2 ScaleTextureTo(TextureID tex, int size = 16)
+	{
+		Vector2 texsize = TexMan.GetScaledSize(tex);
+		Vector2 imagesize = texsize;
+		double ratio = 1.0;
+
+		if (texsize.x > size || texsize.y > size)
+		{
+			if (texsize.y > texsize.x) { ratio = size / texsize.y; }
+			else { ratio = size / texsize.x; }
+
+			imagesize *= ratio;
+		}
+
+		return (ratio, ratio), imagesize;
 	}
 }

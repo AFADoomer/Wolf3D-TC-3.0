@@ -5,6 +5,7 @@ version "4.6.0"
 #include "Scripts/Libraries/mk_rotation.zs"		// On-screen texture rotation helper functions by Marisa Kirisame
 #include "Scripts/Libraries/zstools.zs"			// Helper scripts for string manipulation
 #include "Scripts/Libraries/MD5.zs"				// 3saster's MD5 hashing algorithm
+#include "Scripts/Libraries/BreakString.zs"		// Unicode-aware string/line splitting
 
 // Menu Components
 #include "Scripts/Menus/ExtendedListMenu.zs"	// New menu with background and skill/episode icons
@@ -27,6 +28,7 @@ version "4.6.0"
 
 // Status Bar
 #include "Scripts/ClassicStatusBar.zs"
+#include "Scripts/ClassicWidgets.zs"
 
 // Stats Screen
 #include "Scripts/ClassicStats.zs"

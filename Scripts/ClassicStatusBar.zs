@@ -1,4 +1,290 @@
-class ClassicStatusBar : BaseStatusBar
+/*
+ * Copyright (c) 2022 AFADoomer
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+**/
+
+class WidgetStatusBar : BaseStatusBar
+{
+	Array<widget> widgets;
+	int widthoffset;
+	int barstate;
+
+	HUDFont mHUDFont;
+
+	override void Init()
+	{
+		Super.Init();
+		CalcOffsets();
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+		Widget.TickWidgets();
+	}
+
+	override void Draw (int state, double TicFrac)
+	{
+		CalcOffsets();
+		Super.Draw(state, TicFrac);
+
+		barstate = state;
+
+		Widget.DrawWidgets();
+	}
+
+	virtual void CalcOffsets()
+	{
+		CVar hudratio = CVar.FindCVar("g_hudratio");
+
+		int boa_hudratio = hudratio.GetInt();
+		double ratio;
+		
+		switch (boa_hudratio)
+		{
+			// These match the built-in ratios currently defined in the ForceRatios option value
+			case 1:
+				ratio = 16.0 / 9;
+				break;
+			case 2:
+				ratio = 16.0 / 10;
+				break;
+			case 3:
+				ratio = 4.0 / 3;
+				break;
+			case 4:
+				ratio = 5.0 / 4;
+				break;
+			case 5:
+				ratio = 17.0 / 10;
+				break;
+			case 6:
+				ratio = 21.0 / 9;
+				break;
+			default:
+				widthoffset = 0;
+				return;
+		}
+
+		// If the ratio selected is wider than the current screen, don't do any offsetting
+		if (ratio >= Screen.GetAspectRatio())
+		{
+			widthoffset = 0;
+			return;
+		}
+
+		// Account for hud scaling, both automatic and manual
+		Vector2 scale = Statusbar.GetHUDScale();
+		double h = Screen.GetHeight() / scale.y;
+		double w = h * ratio;
+
+		widthoffset = int((Screen.GetWidth() / scale.x - w) / 2);
+	}
+
+	virtual Ammo, Ammo, int, int GetWeaponAmmo()
+	{
+		Ammo ammo1, ammo2;
+
+		if (CPlayer.ReadyWeapon)
+		{
+			ammo1 = CPlayer.ReadyWeapon.Ammo1;
+			ammo2 = CPlayer.ReadyWeapon.Ammo2;
+
+			if (!ammo1)
+			{
+				ammo1 = ammo2;
+				ammo2 = null;
+			}
+		}
+		else
+		{
+			ammo1 = ammo2 = null;
+		}
+
+		let ammocount1 = !!ammo1 ? ammo1.Amount : 0;
+		let ammocount2 = !!ammo2 ? ammo2.Amount : 0;
+
+		return ammo1, ammo2, ammocount1, ammocount2;
+	}
+
+	virtual void DrawIcon(Inventory item, int x, int y, int size, int flags = DI_ITEM_CENTER, double alpha = 1.0, bool amounts = true, int style = STYLE_Translucent, color clr = 0xFFFFFFFF)
+	{
+		Vector2 texsize, iconsize;
+		[texsize, iconsize] = ZScriptTools.ScaleTextureTo(item.icon, size);
+		Vector2 textpos = (x, y + 3);
+
+		if (flags & DI_ITEM_LEFT)
+		{
+			x += int((size - iconsize.x) / 2); // Center the icon in the size-defined cell
+			textpos.x += size - 2;
+		}
+		else if (flags & DI_ITEM_RIGHT) {}
+		else
+		{
+			textpos.x += size / 2 - 2;
+		}
+
+		if (flags & DI_ITEM_VCENTER)
+		{
+			textpos.y += size / 2 - 2;
+		}
+		else if (flags & DI_ITEM_TOP)
+		{
+			y += int((size - iconsize.y) / 2); // Center the icon in the size-defined cell
+			textpos.y += size - 2;
+		}
+
+		DrawInventoryIcon(item, (x, y), flags, item.alpha * alpha, scale:texsize, style:style, clr:clr);
+
+		if (!amounts) { return; }
+
+		if (item is "BasicArmor")
+		{
+			let armor = BasicArmor(CPlayer.mo.FindInventory("BasicArmor"));
+			if (!armor) { return; }
+
+			String value = FormatNumber(int(armor.SavePercent * 100)) .. "%";
+			DrawString(mHUDFont, value, (textpos.x, textpos.y - mHUDFont.mFont.GetHeight() / 2), DI_TEXT_ALIGN_CENTER, Font.CR_GRAY);
+		}
+		else if (item.Amount > 1)
+		{
+			DrawString(mHUDFont, FormatNumber(item.Amount), (int(textpos.x), int(textpos.y - mHUDFont.mFont.GetHeight())), DI_TEXT_ALIGN_CENTER, Font.CR_GRAY, alpha);
+		}
+	}
+
+	// Modified version of the internal function
+	void DrawInventoryIcon(Inventory item, Vector2 pos, int flags = 0, double alpha = 1.0, Vector2 boxsize = (-1, -1), Vector2 scale = (1.,1.), int style = STYLE_Translucent, Color clr = 0xFFFFFFFF)
+	{
+		TextureID texture;
+		Vector2 applyscale;
+		[texture, applyscale] = GetIcon(item, flags, false);
+		
+		if (texture.IsValid())
+		{
+			if ((flags & DI_DIMDEPLETED) && item.Amount <= 0) flags |= DI_DIM;
+			applyscale.X *= scale.X;
+			applyscale.Y *= scale.Y;
+
+			if (clr.a == 0) { clr += 0xFF000000; } // Make sure the color's alpha value is set
+
+			DrawTexture(texture, pos, flags, alpha, boxsize, applyscale, style, clr);
+		}
+	}
+
+	int CountPuzzleItems(int maxrows = 0, int col = 1)
+	{
+		int count = 0;
+		Inventory nextinv = CPlayer.mo.Inv;
+
+		while (nextinv)
+		{
+			if (!nextinv.bInvBar && nextinv is "PuzzleItem" && nextinv.icon)
+			{
+				count++;
+			}
+
+			if (maxrows > 0 && count == maxrows)
+			{
+				if (--col == 0) { break; }
+				else { count = 0; }
+			}
+
+			nextinv = nextinv.Inv;
+		}
+
+		return count;
+	}
+
+	virtual int, int DrawPuzzleItems(int x, int y, int size = 32, int maxrows = 6, int maxcols = 0, bool vcenter = false, int flags = 0, double alpha = 1.0)
+	{
+		if (!CPlayer.mo.Inv) { return 0, 0; }
+
+		int starty = y;
+		int rows = 1;
+		int rowcount = 1;
+		int cols = 1;
+
+		Inventory nextinv = CPlayer.mo.Inv;
+
+		if (vcenter) { y -= int((size + 2) * CountPuzzleItems(maxrows) / 2.0); }
+
+		nextinv = CPlayer.mo.Inv;
+
+		while (nextinv)
+		{
+			// Draw puzzle items that are not already in the inventory bar
+			if (!nextinv.bInvBar && nextinv is "PuzzleItem" && nextinv.icon)
+			{
+				DrawIcon(nextinv, x, y, size, flags, alpha);
+
+				// Move down a block
+				if (maxrows <= 0 || rows < maxrows)
+				{
+					y += size + 2;
+					rows++;
+					rowcount = max(rowcount, rows);
+				}
+				else if (maxcols <= 0 || cols <= maxcols) // Wrap to the next column if we're too long
+				{
+					y = vcenter ? starty - int((size + 2) * CountPuzzleItems(maxrows, cols + 1) / 2.0) : starty;
+					rows = 1;
+
+					x -= size + 2;
+					cols++;
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			nextinv = nextinv.Inv;
+		}
+
+		return cols, rowcount;
+	}
+
+	// From v_draw.cpp
+	static int GetUIScale(int altval = 0)
+	{
+		int scaleval;
+
+		if (altval > 0) { scaleval = altval; }
+		else if (uiscale == 0)
+		{
+			// Default should try to scale to 640x400
+			int vscale = screen.GetHeight() / 400;
+			int hscale = screen.GetWidth() / 640;
+			scaleval = clamp(vscale, 1, hscale);
+		}
+		else { scaleval = uiscale; }
+
+		// block scales that result in something larger than the current screen.
+		int vmax = screen.GetHeight() / 200;
+		int hmax = screen.GetWidth() / 320;
+		int max = MAX(vmax, hmax);
+		return MAX(1,MIN(scaleval, max));
+	}
+}
+
+class ClassicStatusBar : WidgetStatusBar
 {
 	HUDFont ClassicFont, BigFont;
 	TextureID mugshot;
@@ -12,6 +298,8 @@ class ClassicStatusBar : BaseStatusBar
 
 	bool fizzleeffect;
 	Color fizzlecolor;
+	int fizzlelayer; // 0 = under hud, 1 = on top
+	int fizzlespeed;
 
 	play int staticmugshot;
 	play int staticmugshottimer;
@@ -24,6 +312,7 @@ class ClassicStatusBar : BaseStatusBar
 
 		ClassicFont = HUDFont.Create("WOLFNUM", 0);
 		BigFont = HUDFont.Create("BIGFONT", 0);
+		mHUDFont = HUDFont.Create("SmallFont", 0);
 
 		pixel = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 
@@ -31,50 +320,69 @@ class ClassicStatusBar : BaseStatusBar
 		SetFizzleFadeSteps();
 
 		fizzleeffect = false;
+
+		Vector2 hudscale = Statusbar.GetHudScale();
+
+		AutomapWidget.Init("Automap", Widget.WDG_TOP | Widget.WDG_LEFT, 0);
+		LogWidget.Init("Notifications", Widget.WDG_TOP | Widget.WDG_LEFT, 0, zindex:100);
+		SingleLogWidget.Init("MidPrint", Widget.WDG_MIDDLE | Widget.WDG_CENTER, -1, (0, -0.125 * Screen.GetHeight() / hudscale.y), 99);
+		KeyWidget.Init("Keys", Widget.WDG_RIGHT, 0, (6, 0));
+		PositionWidget.Init("Position", Widget.WDG_RIGHT, 0);
+		PuzzleItemWidget.Init("Puzzle Items", Widget.WDG_RIGHT, 2, (16, 0));
+		LifeWidget.Init("Lives", Widget.WDG_BOTTOM, 0);
+		InventoryWidget.Init("Selected Inventory", Widget.WDG_BOTTOM, 0);
+		ActiveEffectWidget.Init("Active Effects", Widget.WDG_BOTTOM, 1);
+		LogWidget.Init("Chat", Widget.WDG_BOTTOM, 0, zindex:99);
+		AmmoHealthWidget.Init("Ammo and Health", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 0);
+		AmmoWidget.Init("Ammo Summary", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 2);
+		ScoreWidget.Init("Score", Widget.WDG_BOTTOM | Widget.WDG_RIGHT, 1);
 	}
 
 	override void Draw(int state, double TicFrac)
 	{
-		Super.Draw(state, TicFrac);
+		BeginStatusBar(st_scale);
 
-		if (pixel && fizzleeffect)
-		{
-			for (int f = 0; f <= fizzleindex; f++)
-			{
-				Vector2 fizzle = fizzlepoints[f];
-
-				screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-				screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-			}
-
-			fizzleindex += 1920; // Draw a chunk of pixels at a time...
-
-			if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
-		}
+		if (fizzlelayer == 0) { DrawFizzle(); }
 
 		if (state == HUD_StatusBar)
 		{
 			DrawClassicBar();
 		}
-		else if (state == HUD_Fullscreen)
-		{
-			DrawHUD();
-		}
 
-		if (screenblocks < 12 || automapactive)
-		{
-			BeginHUD();
-			DrawKeyBar();
-			BeginStatusBar(st_scale);
-		}
+		CalcOffsets();
+		barstate = state;
+		Widget.DrawWidgets();
+
+		if (fizzlelayer == 1) { DrawFizzle(); }
+
+		BeginStatusBar(st_scale);
 	}
 
-	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false)
+	void DrawFizzle()
+	{
+		if (!pixel || !fizzleeffect) { return; }
+
+		for (int f = 0; f <= fizzleindex; f++)
+		{
+			Vector2 fizzle = fizzlepoints[f];
+
+			screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+			screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+		}
+
+		fizzleindex += fizzlespeed; // Draw a chunk of pixels at a time...
+
+		if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
+	}
+
+	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
 	{
 		if (ClassicStatusBar(StatusBar).CPlayer.mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
+		ClassicStatusBar(StatusBar).fizzlelayer = layer;
+		ClassicStatusBar(StatusBar).fizzlespeed = speed;
 	}
 
 	static void ClearFizzle(Actor caller)
@@ -237,7 +545,7 @@ class ClassicStatusBar : BaseStatusBar
 		//Ammo
 		Ammo ammo1, ammo2;
 		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo(CPlayer);
+		[ammo1, ammo2, ammocount1, ammocount2] = GetWeaponAmmo();
 		if (ammo2) { ammocount += ammocount2; }
 		if (ammo1) { ammocount += ammocount1; } 
 		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
@@ -338,42 +646,7 @@ class ClassicStatusBar : BaseStatusBar
 		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
 	}
 
-	protected void DrawHUD()
-	{
-		fullscreenOffsets = true;
-
-		int baseline = -14;
-
-		//Score
-		DrawString(BigFont, FormatNumber(GetAmount("Score")), (-2, baseline - 16), DI_TEXT_ALIGN_RIGHT, Font.FindFontColor("TrueWhite"));
-
-		//Lives
-		TextureID life = TexMan.CheckForTexture("I_LIFE", TexMan.Type_Any);
-		if (life) { DrawTexture(life, (19, -26), DI_ITEM_CENTER); }
-		DrawString(BigFont, FormatNumber(max(LifeHandler.GetLives(CPlayer.mo), 0)), (35, baseline), 0, Font.FindFontColor("TrueWhite"));
-
-		// Fullscreen HUD keys are drawn by the DrawKeyBar() call inside the Draw function
-
-		//Ammo
-		Ammo ammo1, ammo2;
-		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = GetClassicDisplayAmmo(CPlayer);
-
-		TextureID ammoicon;
-		if (ammo2) { ammocount += ammocount2; ammoicon = ammo2.Icon; }
-		if (ammo1) { ammocount += ammocount1; ammoicon = ammo1.Icon; }
-
-		if (ammoicon) { DrawTexture(ammoicon, (-110, -1), DI_ITEM_CENTER_BOTTOM ); }
-		DrawString(BigFont, FormatNumber(ammocount), (-95, baseline), 0, Font.FindFontColor("TrueWhite"));
-
-		//Health
-		bool haveBerserk = hud_berserk_health && CPlayer.mo.FindInventory('PowerStrength');
-		TextureID health = TexMan.CheckForTexture(haveBerserk ? "I_BERSERK" : "I_HEALTH", TexMan.Type_Any);
-		if (health) { DrawTexture(health, (-50, -1), DI_ITEM_CENTER_BOTTOM); }
-		DrawString(BigFont, FormatNumber(CPlayer.health), (-2, baseline), DI_TEXT_ALIGN_RIGHT, Font.FindFontColor("TrueWhite"));
-	}
-
-	Ammo, Ammo, int, int GetClassicDisplayAmmo(PlayerInfo CPlayer)
+	override Ammo, Ammo, int, int GetWeaponAmmo()
 	{
 		Ammo ammo1, ammo2;
 
@@ -443,28 +716,6 @@ class ClassicStatusBar : BaseStatusBar
 		} while (fizzleval != 1)
 
 		fizzleindex = 0;
-	}
-
-	// From v_draw.cpp
-	static int GetUIScale(int altval = 0)
-	{
-		int scaleval;
-
-		if (altval > 0) { scaleval = altval; }
-		else if (uiscale == 0)
-		{
-			// Default should try to scale to 640x400
-			int vscale = screen.GetHeight() / 400;
-			int hscale = screen.GetWidth() / 640;
-			scaleval = clamp(vscale, 1, hscale);
-		}
-		else { scaleval = uiscale; }
-
-		// block scales that result in something larger than the current screen.
-		int vmax = screen.GetHeight() / 200;
-		int hmax = screen.GetWidth() / 320;
-		int max = MAX(vmax, hmax);
-		return MAX(1,MIN(scaleval, max));
 	}
 
 	// Original code from shared_sbar.cpp
@@ -615,29 +866,44 @@ class ClassicStatusBar : BaseStatusBar
 		return true;
 	}
 
-	void DrawKeyBar(double x = -10, double y = 2)
+	override bool ProcessNotify(EPrintLevel printlevel, String outline)
 	{
-		Vector2 keypos = (x, y);
-		int rowc = 0;
-		double roww = 0;
-		for(let i = CPlayer.mo.Inv; i != null; i = i.Inv)
+		bool processed = false;
+
+		// if (gameaction == ga_savegame || gameaction == ga_autosave)
+		// {
+		// 	// Don't print save messages
+		// 	savetimer = savetimertime;
+		// 	processed = true;
+		// }
+
+		// if (boa_defaultprint) { return false; }
+
+		Font fnt = SmallFont;
+
+		if (!processed && printlevel & PRINT_TYPES <= PRINT_TEAMCHAT)
 		{
-			if ((screenblocks < 11 || automapactive) && (i is "YellowKey" || i is "BlueKey")) { continue; }
-			if (i is "Key" && i.Icon.IsValid())
-			{
-				DrawTexture(i.Icon, keypos, DI_SCREEN_RIGHT_TOP|DI_ITEM_LEFT_TOP);
-				Vector2 size = TexMan.GetScaledSize(i.Icon);
-				keypos.Y += size.Y + 2;
-				roww = max(roww, size.X);
-				if (++rowc == 3 || keypos.Y > y + 32)
-				{
-					keypos.Y = 2;
-					keypos.X -= roww + 2;
-					roww = 0;
-					rowc = 0;
-				}
-			}
+			if (printlevel <= PRINT_HIGH) { Log.Add(CPlayer, outline, "Notifications", printlevel, fnt); }
+			else { Log.Add(CPlayer, outline, "Chat", printlevel, fnt); }
+
+			processed = true; 
 		}
+
+		return processed;
+	}
+
+	override bool ProcessMidPrint(Font fnt, String msg, bool bold)
+	{
+		Log.Add(CPlayer, msg .. "\r", "MidPrint", PRINT_BOLD, fnt);
+
+		return true;
+	}
+
+	override bool DrawChat(String txt)
+	{
+		Font fnt = SmallFont;
+
+		return Log.DrawPrompt(txt .. " ", "Chat", fnt);
 	}
 }
 
@@ -664,7 +930,7 @@ class JaguarHUD : AltHUD
 		//Ammo
 		Ammo ammo1, ammo2;
 		int ammocount = 0, ammocount1, ammocount2;
-		[ammo1, ammo2, ammocount1, ammocount2] = ClassicStatusBar(StatusBar).GetClassicDisplayAmmo(CPlayer);
+		[ammo1, ammo2, ammocount1, ammocount2] = ClassicStatusBar(StatusBar).GetWeaponAmmo();
 
 		TextureID ammoicon;
 		if (ammo2) { ammocount += ammocount2; ammoicon = ammo2.AltHudIcon; }
@@ -702,10 +968,6 @@ class JaguarHUD : AltHUD
 
 	override void DrawAutomap(PlayerInfo CPlayer)
 	{
-		if (gamestate == GS_TITLELEVEL || !CPlayer) return;
-
-		// Use the game's standard automap overlay
-		StatusBar.DrawAutomapHUD(0);
-		if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawKeyBar(); }
+		return;
 	}
 }
