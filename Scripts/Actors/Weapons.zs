@@ -9,7 +9,7 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.YAdjust 20;
+		Weapon.YAdjust 21;
 	}
 
 	States
@@ -474,7 +474,6 @@ class WolfFlameThrower : ClassicWeapon
 	Default
 	{
 		//$Title Flame Thrower
-		Scale 0.2;
 		Tag "$WPN_FTHR";
 		Inventory.Icon "FTHR";
 		Inventory.PickupSound "pickups/ammo";
@@ -483,7 +482,6 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1;
 		Weapon.SlotNumber 5;
-		Weapon.YAdjust 21;
 		+Weapon.CHEATNOTWEAPON
 	}
 
@@ -552,14 +550,12 @@ class WolfRocketLauncher : ClassicWeapon
 	{
 		//$Title Rocket Launcher
 		AttackSound "flame/fire";
-		Scale 0.2;
 		Tag "$WPN_ROCK";
 		Inventory.Icon "ROCK";
 		Inventory.PickupSound "pickups/ammo";
 		Weapon.AmmoType "WolfRocketPickup";
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
-		Weapon.YAdjust 21;
 		Weapon.SelectionOrder 5;
 		Weapon.SlotNumber 6;
 		+Weapon.CHEATNOTWEAPON
@@ -582,5 +578,23 @@ class WolfRocketLauncher : ClassicWeapon
 			WROC D 25;
 			WROC D 5 A_ReFire;
 			Goto Ready;
+	}
+}
+
+class WolfBackpack : Backpack
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Ammo
+		//$Color 3
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickups/ammo";
+	}
+
+	States
+	{
+		Spawn:
+			WPAK A -1;
+			Stop;
 	}
 }

@@ -32,7 +32,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'BlueArmor': e.replacement = "Crown"; break;
 
 			// Health
-			case 'HealthBonus': e.replacement = "DogFood"; break;
+			case 'HealthBonus': e.replacement = Random(0, 1) ? "DogFood" : "MoldyCheese"; break;
 			case 'StimPack': e.replacement = "PlateOfFood"; break;
 			case 'MediKit': e.replacement = "FirstAidKit"; break;
 			case 'SoulSphere':
@@ -41,6 +41,7 @@ class ReplacementHandler : StaticEventHandler
 			
 			// Other
 			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
+			case 'Backpack': e.replacement = "WolfBackpack"; break;
 		}
 
 		if (e.replacement) { e.IsFinal = true; }

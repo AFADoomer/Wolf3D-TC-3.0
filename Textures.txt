@@ -1896,9 +1896,9 @@ Texture BU_D_BR, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -12, -12 }
 Texture I_LIFE, 48, 48 { Offset 24, 48 Patch WSPR0035, -8, -8 }
 Texture I_HEALTH, 48, 24 { Offset 24, 24 Patch WSPR0027, -8, -40 }
 Texture "I_BERSERK", 48, 24 { Offset 24, 24 Patch WSTRA0, -8, -40 }
-Texture I_CLIP_O, 14, 14 { Offset 7, 14 Patch WSPR0028, -27, -50 }
-Texture I_GAS_O, 20, 20 { Offset 10, 20 Patch WGASA0, -22, -44 }
-Texture "I_ROCKET_O", 20, 20 { Offset 10, 20 Patch WRKTA0, 3, 1 }
+Texture I_CLIP_O, 16, 14 { Offset 8, 14 Patch WSPR0028, -24, -50 }
+Texture I_GAS_O, 36, 26 { Offset 18, 26 Patch WGASA0, -14, -38 }
+Texture "I_ROCKET_O", 18, 23 { Offset 9, 23 Patch WRKTA0, -23, -41 }
 
 //Jag Status Bar Face
 Texture WLJST00, 24, 32 { Offset 0, -1 Graphic FACE3, 0, 0 }

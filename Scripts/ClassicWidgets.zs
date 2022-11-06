@@ -488,7 +488,7 @@ class AmmoHealthWidget : Widget
 		if (armor != null && armor.Amount > 0)
 		{
 			[texscale, texsize] = ZScriptTools.ScaleTextureTo(armor.icon, iconsize);	
-			DrawToHud.DrawTexture(armor.icon, (pos.x + 73, yoffset + 6), alpha, desttexsize:texsize);
+			DrawToHud.DrawTexture(armor.icon, (pos.x + 73, yoffset + iconsize / 2 - 1), alpha, desttexsize:texsize);
 			DrawToHud.DrawText(String.Format("%3i", StatusBar.GetArmorAmount()), (pos.x + size.x, yoffset), BigFont, alpha, shade:fontcolor, ZScriptTools.STR_RIGHT | ZScriptTools.STR_FIXEDWIDTH);
 		}
 
@@ -496,7 +496,7 @@ class AmmoHealthWidget : Widget
 		if (ammo2 && ammo2 != ammo1)
 		{
 			[texscale, texsize] = ZScriptTools.ScaleTextureTo(ammo2.icon, iconsize);
-			DrawToHud.DrawTexture(ammo2.icon, (pos.x + 14, yoffset + 12 - iconsize / 2), alpha, desttexsize:texsize);
+			DrawToHud.DrawTexture(ammo2.icon, (pos.x + 14, yoffset + iconsize / 2 - 1), alpha, desttexsize:texsize);
 			DrawToHud.DrawText(String.Format("%3i", ammocount2), (pos.x + 54, yoffset), BigFont, alpha, shade:fontcolor, flags:ZScriptTools.STR_RIGHT | ZScriptTools.STR_FIXEDWIDTH);
 		}
 
@@ -505,7 +505,7 @@ class AmmoHealthWidget : Widget
 		if (ammo1)
 		{
 			[texscale, texsize] = ZScriptTools.ScaleTextureTo(ammo1.icon, iconsize);
-			DrawToHud.DrawTexture(ammo1.icon, (pos.x + 14, yoffset + 12 - iconsize / 2), alpha, desttexsize:texsize);
+			DrawToHud.DrawTexture(ammo1.icon, (pos.x + 14, yoffset + iconsize / 2 - 1), alpha, desttexsize:texsize);
 			DrawToHud.DrawText(String.Format("%3i", ammocount1), (pos.x + 54, yoffset), BigFont, alpha, shade:fontcolor, flags:ZScriptTools.STR_RIGHT | ZScriptTools.STR_FIXEDWIDTH);
 		}
 
@@ -1015,7 +1015,7 @@ class AmmoWidget : Widget
 				Vector2 iconsize = TexMan.GetScaledSize(ammotypes[t].icon);
 				double ratio = iconsize.y / iconsize.x;
 
-				DrawToHud.DrawTexture(ammotypes[t].icon, (drawpos.x, drawpos.y + typeheight / 2), alpha, desttexsize:(typeheight / ratio, typeheight));
+				DrawToHud.DrawTexture(ammotypes[t].icon, (drawpos.x, drawpos.y + typeheight / 2), alpha, desttexsize:((typeheight - 2) / ratio, (typeheight - 2)));
 				DrawToHud.DrawText(String.Format("%i", ammotypes[t].GetAmount()), (drawpos.x + typewidth, drawpos.y), HUDFont, alpha, shade:Font.CR_WHITE, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_RIGHT);
 			}
 		}

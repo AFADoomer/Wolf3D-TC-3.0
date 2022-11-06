@@ -1951,3 +1951,27 @@ class CompatibilityPlaceholder : Actor
 			Stop;
 	}		
 }
+
+class MoldyCheese : Health
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Health
+		//$Title Moldy Cheese
+		//$Color 1
+		//$NotAngled
+
+		+Inventory.AUTOACTIVATE
+		Inventory.Amount 4;
+		Inventory.MaxAmount 100;
+		Inventory.PickupSound "pickups/food";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			HLTH K -1;
+			Loop;
+	}
+}
