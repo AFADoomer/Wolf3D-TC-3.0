@@ -11,6 +11,7 @@ class ClassicBase : Actor
 	Property BaseSprite:basesprite;
 
 	FlagDef Lost:baseflags, 0;
+	FlagDef NerfWhenReplaced:baseflags, 1;
 
 	Default
 	{
@@ -134,6 +135,12 @@ class ClassicBase : Actor
 		}
 
 		if (!Default.bNoBlood) { bNoBlood = g_noblood; }
+
+		if (bNerfWhenReplaced)
+		{
+			// Nerf certain enemies if they're not in a Wolf3D map
+			if (level.levelnum < 100 && floorpic != TexMan.CheckForTexture("FLOOR", TexMan.Type_Any)) { health /= 3; }
+		}
 
 		Super.PostBeginPlay();
 	}
@@ -299,6 +306,7 @@ class ClassicBoss : ClassicBase
 		+JUSTHIT
 		+AMBUSH
 		+LOOKALLAROUND
+		+ClassicBase.NerfWhenReplaced
 
 		MaxTargetRange 256;
 		Painchance 0;
@@ -811,6 +819,7 @@ class HitlerGhost : ClassicNazi
 		+JUSTHIT
 		+AMBUSH
 		+LOOKALLAROUND
+		+ClassicBase.NerfWhenReplaced
 
 		Speed 4;
 		Painchance 0;
@@ -863,7 +872,7 @@ class HitlerMech : ClassicBoss
 
 		ClassicBase.BaseSprite "WHR1";
 		ClassicBase.ScoreAmount 5000;
-		ClassicBase.SkillHealth 400, 475, 525, 600;
+		ClassicBase.SkillHealth 800, 950, 1050, 1200;
 	}
 
 	States
@@ -903,7 +912,7 @@ class Hitler : ClassicBoss
 
 		ClassicBase.BaseSprite "WHR2";
 		ClassicBase.ScoreAmount 5000;
-		ClassicBase.SkillHealth 400, 475, 525, 600;
+		ClassicBase.SkillHealth 500, 700, 800, 900;
 	}
 
 	States
@@ -1001,7 +1010,7 @@ class GretelGrosse : HansGrosse
 		DeathSound "gretel/death";
 
 		ClassicBase.BaseSprite "WBO4";
-		ClassicBase.SkillHealth 850, 950, 1550, 2400;
+		ClassicBase.SkillHealth 850, 950, 1050, 1200;
 	}
 }
 
@@ -1378,7 +1387,7 @@ class AngelofDeath : ClassicBoss
 
 		ClassicBase.BaseSprite "WB10";
 		ClassicBase.ScoreAmount 5000;
-		ClassicBase.SkillHealth 1250, 1350, 1450, 1600;
+		ClassicBase.SkillHealth 1450, 1550, 1650, 2000;
 		AngelOfDeath.BallClass "GreenBall";
 	}
 
@@ -1513,6 +1522,7 @@ class WolfSpectre : ClassicNazi
 
 		ClassicBase.ScoreAmount 200;
 		ClassicBase.BaseSprite "WSPE";
+		ClassicBase.SkillHealth 5, 10, 15, 25;
 	}
 
 	States
