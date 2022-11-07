@@ -9,7 +9,7 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.YAdjust 21;
+		Weapon.YAdjust 19;
 	}
 
 	States

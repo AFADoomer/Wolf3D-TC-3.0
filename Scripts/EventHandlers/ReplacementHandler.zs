@@ -68,6 +68,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'SpiderMastermind': e.replacement = "Hitler"; break;
 			case 'CyberDemon': e.replacement = "HitlerMech"; break;
 			case 'Archvile': e.replacement = "FettGesicht"; break;
+			case 'WolfensteinSS': e.replacement = "Guard"; break;
 		}
 	}
 
@@ -92,6 +93,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'Hitler': e.replacee = "SpiderMastermind"; break;
 			case 'HitlerMech': e.replacee = "CyberDemon"; break;
 			case 'FettGesicht': e.replacee = "Archvile"; break;
+			case 'Guard': e.replacee = "WolfensteinSS"; break;
 		}
 	}
 }

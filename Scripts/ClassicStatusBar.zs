@@ -680,7 +680,7 @@ class ClassicStatusBar : WidgetStatusBar
 
 		if (!ammo1 && !ammo2)
 		{
-			ammo2 = Ammo(CPlayer.mo.FindInventory("WolfClip"));
+			ammo1 = Ammo(CPlayer.mo.FindInventory("WolfClip"));
 		}
 
 		let ammocount1 = ammo1 ? ammo1.Amount : 0;
