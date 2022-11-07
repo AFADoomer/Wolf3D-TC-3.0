@@ -1,8 +1,7 @@
-version "4.6.0"
+version "4.8.0"
 
 // Classes/Libraries
 #include "Scripts/Libraries/DrawToHUD.zs" 		// Drawing and coordinate translation to match HUD element scaling and positioning
-#include "Scripts/Libraries/mk_rotation.zs"		// On-screen texture rotation helper functions by Marisa Kirisame
 #include "Scripts/Libraries/zstools.zs"			// Helper scripts for string manipulation
 #include "Scripts/Libraries/MD5.zs"				// 3saster's MD5 hashing algorithm
 #include "Scripts/Libraries/BreakString.zs"		// Unicode-aware string/line splitting

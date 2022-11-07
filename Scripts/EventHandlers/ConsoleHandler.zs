@@ -2,22 +2,37 @@ class ConsoleHandler : StaticEventHandler
 {
 	String hash;
 
-	void UpdateCanvas()
+	ui void UpdateCanvas()
 	{
 		Canvas conbackcanvas = TexMan.GetCanvas("CONBACK");
 		if (conbackcanvas)
 		{
 			int h = 768;
 			int w = 1024;
+			double scale = 0.5;
 
-			int fontheight = SmallFont.GetHeight();
-			int fontwidth = SmallFont.StringWidth("M");
+			Font fnt = SmallFont;
+
+			int fontheight = fnt.GetHeight();
+			int fontwidth = fnt.StringWidth("0");
 			String gametitle = StringTable.Localize("$VERSION") .. hash;
 
-			int vh = int(h * Screen.GetHeight() / 960);
-			vh = int(vh / fontheight) * fontheight;
-			int vw = int(Screen.GetAspectRatio() * vh);
-			vw = int(vw / fontwidth) * fontwidth;
+			double ratio = Screen.GetAspectRatio();
+			int vh, vw;
+
+			if (h >= w)
+			{
+				vh = int(w / ratio);
+				vw = w;
+			}
+			else
+			{
+				vw = int(h * ratio);
+				vh = h;
+			}
+
+			vw = int(vw * scale);
+			vh = int(vh * scale);
 
 			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
@@ -36,7 +51,7 @@ class ConsoleHandler : StaticEventHandler
 				conbackcanvas.DrawTexture(logo, true, vw - size.x, vh - size.y - 8, DTA_VirtualWidth, vw, DTA_VirtualHeight, vh);
 			}
 
-			conbackcanvas.DrawText(SmallFont, Font.FindFontColor("TrueWhite"), 3, vh - fontheight - 3, gametitle, DTA_VirtualWidth, vw, DTA_VirtualHeight, vh);
+			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, vh - fontheight - 3, gametitle, DTA_VirtualWidth, vw, DTA_VirtualHeight, vh);
 
 			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, Game.IsSoD() ? 0xDDDD00 : 0xDD0000);
 			conbackcanvas.DrawLine(0, h - 1, w, h - 1, 0x000000, 128);
@@ -52,9 +67,12 @@ class ConsoleHandler : StaticEventHandler
 			hash = " \c[Dark Gray]" .. hash.Left(7);
 		}
 
-		UpdateCanvas();
-
 		Super.WorldLoaded(e);
+	}
+
+	override void UITick()
+	{
+		if (consolestate != c_up) { UpdateCanvas(); }
 	}
 
 	String ReadFrom(String path)

@@ -482,9 +482,7 @@ class ClassicStats : DoomStatusScreen
 		{
 			StartMusic();
 		}
-	
-		checkForAccelerate();
-	
+
 		switch (CurState)
 		{
 			case StatCount:

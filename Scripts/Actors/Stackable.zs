@@ -3,14 +3,11 @@
   Base class that allows you to set up Inventory items of different classes that add their
   amounts up in a single inventory item, just like ammunition.  
 
-  Used for Soul items.
-
   Lots of code derived from existing code in the Ammo class...  So much so that it's almost not
   worth it.  All you have to do to emulate this behavior is to inherit from Ammo instead of 
-  Inventory and add "Ammo.BackpackAmount 0;" and "+INVENTORY.IGNORESKILL" to your base class 
-  (i.e., "Soul") definitions.  That's how the CoinItem is done.
-
+  Inventory and add "Ammo.BackpackAmount 0;" and "+INVENTORY.IGNORESKILL" to your base class.
 */
+
 class StackableInventory : Inventory
 {
 	Class<Inventory> GetParentInventoryClass ()
