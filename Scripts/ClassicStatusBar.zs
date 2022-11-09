@@ -373,12 +373,20 @@ class ClassicStatusBar : WidgetStatusBar
 	{
 		if (!pixel || !fizzleeffect) { return; }
 
-		for (int f = 0; f <= fizzleindex; f++)
+		CVar fadestyle = CVar.GetCVar("g_fadestyle", CPlayer);
+		if (fadestyle && fadestyle.GetInt()) // Just use a normal fade
 		{
-			Vector2 fizzle = fizzlepoints[f];
+			Screen.Dim(fizzlecolor, double(fizzleindex) / (fizzlepoints.Size() - 1), 0, 0, Screen.GetWidth(), Screen.GetHeight());
+		}
+		else // Run the resource hog
+		{
+			for (int f = 0; f <= fizzleindex; f++)
+			{
+				Vector2 fizzle = fizzlepoints[f];
 
-			screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-			screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+			}
 		}
 
 		fizzleindex += fizzlespeed; // Draw a chunk of pixels at a time...
