@@ -20,7 +20,6 @@ class WolfPlayer : DoomPlayer
 		Player.MaxHealth 100;
 		Player.SideMove 1.3, 1.3;
 		Player.StartItem "WolfClip", 8;
-		Player.ViewBob 0;
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";
 		Player.WeaponSlot 2, "WolfPistol", "WolfPistolLost";
@@ -69,13 +68,22 @@ class WolfPlayer : DoomPlayer
 
 	override void Tick()
 	{
-		Super.Tick();
-
 		CVar momentum = CVar.FindCVar("g_momentum");
+		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
 
 		if ((!momentum || !momentum.GetInt()) && pos.z == floorz)
 		{
+			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
+			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
+		}
+
+		Super.Tick();
+
+		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
+		{
 			vel *= 0;
+			player.mo.PlayIdle();
+
 			Speed = Default.Speed * 8;
 		}
 		else { Speed = Default.Speed; }

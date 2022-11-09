@@ -245,7 +245,7 @@ class GenericOptionMenu : OptionMenu
 			{
 				if (type == MOUSE_Release)
 				{
-					if (item is "OptionMenuSliderBase")
+					if (item.item is "OptionMenuSliderBase")
 					{
 						ReleaseFocus();
 					}
@@ -356,7 +356,14 @@ class GenericOptionMenu : OptionMenu
 		
 		x += int(spacing + size.x / 2);
 
-		String formater = String.format("%%.%df", fracdigits);	// The format function cannot do the '%.*f' syntax.
+		String formater;
+		if (fracdigits >= 0) { formater = String.format("%%.%df", fracdigits); } // The format function cannot do the '%.*f' syntax.
+		else
+		{
+			formater = "%i%%";
+			fracdigits = 1;
+		}
+
 		String textbuf;
 		double range;
 		int maxlen = 0;
@@ -529,7 +536,14 @@ class GenericOptionMenu : OptionMenu
 			}
 			else
 			{
-				info.valueright = DrawSliderElements(this, x, y, spacing, fnt, this.mMin, this.mMax, this.GetSliderValue(), this.mShowValue, size, handlesize);
+				if (OptionMenuItemScaleSlider(this).TextZero ~== "$TXT_DISABLED")
+				{
+					info.valueright = DrawSliderElements(this, x, y, spacing, fnt, 0.0, 100.0, this.GetSliderValue() * 100 / (this.mMax - this.mMin), -1, size, handlesize);
+				}
+				else
+				{
+					info.valueright = DrawSliderElements(this, x, y, spacing, fnt, this.mMin, this.mMax, this.GetSliderValue(), this.mShowValue, size, handlesize);
+				}
 				info.width = info.valueright - x;
 			}
 		}

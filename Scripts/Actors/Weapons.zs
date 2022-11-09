@@ -25,7 +25,7 @@ class ClassicWeapon : Weapon
 			Loop;
 		Ready:
 			"####" "#" 1;
-			"####" "#" 0 A_WeaponReady(WRF_NOBOB);
+			"####" "#" 0 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" "#" 1;
@@ -95,6 +95,19 @@ class ClassicWeapon : Weapon
 		}
 
 		A_FireBullets(spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM | FBF_USEAMMO);
+	}
+
+	override void DoEffect()
+	{
+		if (owner && owner.player && owner.player.ReadyWeapon == self)
+		{
+			CVar bobscale = CVar.GetCVar("g_viewbobscale", owner.player);
+			if (bobscale)
+			{
+				bobrangex = Default.bobrangex * bobscale.GetFloat();
+				bobrangey = Default.bobrangey * bobscale.GetFloat();
+			}
+		}
 	}
 }
 
@@ -223,7 +236,7 @@ class WolfKnife : ClassicWeapon
 			CKNI P -1;
 			Loop;
 		Ready:
-			CKNI A 1 A_WeaponReady(WRF_NOBOB);
+			CKNI A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" B 3;
@@ -234,6 +247,8 @@ class WolfKnife : ClassicWeapon
 
 	override void DoEffect()
 	{
+		Super.DoEffect();
+
 		if (owner && owner.player && owner.player.ReadyWeapon == self)
 		{
 			adrenaline = !!owner.FindInventory("PowerStrength", true);
@@ -262,7 +277,7 @@ class WolfPistol : ClassicWeapon
 			CLUG P -1;
 			Loop;
 		Ready:
-			CLUG A 1 A_WeaponReady(WRF_NOBOB);
+			CLUG A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" B 3;
@@ -293,7 +308,7 @@ class WolfMachineGun : ClassicWeapon
 			CMGU P -1;
 			Loop;
 		Ready:
-			CMGU A 1 A_WeaponReady(WRF_NOBOB);
+			CMGU A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" B 3;
@@ -326,7 +341,7 @@ class WolfChaingun : ClassicWeapon
 			CCGU P -1;
 			Loop;
 		Ready:
-			CCGU A 1 A_WeaponReady(WRF_NOBOB);
+			CCGU A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" B 3;
@@ -375,7 +390,7 @@ class WolfKnifeLost : WolfKnife
 	States
 	{
 		Ready:
-			KNIL A 1 A_WeaponReady(WRF_NOBOB);
+			KNIL A 1 A_WeaponReady();
 			Loop;
 	}
 }
@@ -394,7 +409,7 @@ class WolfPistolLost : WolfPistol
 	States
 	{
 		Ready:
-			LUGL A 1 A_WeaponReady(WRF_NOBOB);
+			LUGL A 1 A_WeaponReady();
 			Loop;
 	}
 }
@@ -416,7 +431,7 @@ class WolfMachineGunLost : WolfMachineGun
 			MGUN U -1;
 			Loop;
 		Ready:
-			MGUL A 1 A_WeaponReady(WRF_NOBOB);
+			MGUL A 1 A_WeaponReady();
 			Loop;
 	}
 }
@@ -439,7 +454,7 @@ class WolfChaingunLost : WolfChaingun
 			CGUN U -1;
 			Loop;
 		Ready:
-			CGUL A 1 A_WeaponReady(WRF_NOBOB);
+			CGUL A 1 A_WeaponReady();
 			Loop;
 	}
 }
@@ -491,7 +506,7 @@ class WolfFlameThrower : ClassicWeapon
 			FLAM P -1;
 			Loop;
 		Ready:
-			WFLM A 1 A_WeaponReady(WRF_NOBOB);
+			WFLM A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			WFLM B 2;
@@ -568,7 +583,7 @@ class WolfRocketLauncher : ClassicWeapon
 			WROC P -1;
 			Loop;
 		Ready:
-			WROC A 1 A_WeaponReady(WRF_NOBOB);
+			WROC A 1 A_WeaponReady();
 			Loop;
 		Fire:
 			WROC B 3;
