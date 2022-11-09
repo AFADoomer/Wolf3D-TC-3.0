@@ -107,6 +107,10 @@ class ClassicWeapon : Weapon
 				bobrangex = Default.bobrangex * bobscale.GetFloat();
 				bobrangey = Default.bobrangey * bobscale.GetFloat();
 			}
+
+			// Hack: Compenstate for weird y offset change when using the software renderer
+			if (vid_rendermode < 4) { yadjust = Default.yadjust - 12; }
+			else { yadjust = Default.yadjust; }
 		}
 	}
 }
