@@ -113,6 +113,7 @@ class GameHandler : StaticEventHandler
 		if (!episode.length())
 		{
 			String ext = level.mapname.Left(3);
+			ext = ext.MakeUpper();
 
 			if (ext ~== "SOD" || ext ~== "SD2" || ext ~== "SD3") { extension = ext; }
 			else if (ext.left(1) ~== "E" && ext.mid(2) ~== "L")
@@ -139,6 +140,7 @@ class GameHandler : StaticEventHandler
 			{
 				e = temp.IndexOf("]", s);
 				extension = temp.Mid(e - 3, 3);
+				extension = extension.MakeUpper();
 
 				temp = temp.Mid(e + 1);
 			}

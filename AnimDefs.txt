@@ -3,6 +3,10 @@ switch doom 1 WLF0015B
 on sound switches/elevator
 pic WLF0016B tics 0
 
+switch doom 1 WLF2015B
+on sound switches/elevator2
+pic WLF2016B tics 0
+
 // Menu cursor
 texture M_SEL1
 pic M_SEL1 tics 4

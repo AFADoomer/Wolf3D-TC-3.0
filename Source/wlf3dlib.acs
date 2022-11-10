@@ -1,7 +1,7 @@
 #library "WLF3DLIB"
 #include "zcommon.acs"
 
-int	polyinfo[255];
+int polydoors[255][5];
 int	PushWalls[255];
 int	intPushWallMoveDist = 128.0;
 str Ceilings[21] = {"98", "1d", "2d", "2e", "4d", "4e", "4f", "6f", "7d", "7f", "8d", "9d", "9e", "ae", "bf", "d7", "dc", "dd", "de", "df", "e1"};
@@ -139,82 +139,126 @@ Script 27 (void)
 Script 601 (void)
 {}
 
+#define DOOR_CLOSED 0
+#define DOOR_FIRSTOPENING 1
+#define DOOR_OPENED 2
+#define DOOR_CLOSING 3
+#define DOOR_OPENING 4
+
+#define START_X 0
+#define START_Y 1
+#define END_X 2
+#define END_Y 3
+#define DOOR_STATE 4
+
 //Polyobject Doors
 Script "W_DoSlidingDoor" (int po, int dir, int lock)
 {
 	int index = po - 1;
-	int dirStart, dirEnd, bAccess = 0;
+	bool bAccess = false;
 
-	if(dir == 1)
+	if (polydoors[index][START_X] == 0 && polydoors[index][START_Y] == 0)
 	{
-		dirStart = 192;
-		dirEnd = 64;
-	}
-	else if(dir == 2)
-	{
-		dirStart = 0;
-		dirEnd = 128;
-	}
+		polydoors[index][START_X] = GetPolyObjX(po) >> 16;
+		polydoors[index][END_X] = polydoors[index][START_X];
+		polydoors[index][START_Y] = GetPolyObjY(po) >> 16;
+		polydoors[index][END_Y] = polydoors[index][START_Y];
 
-	if(lock == 1)
-	{
-		If (CheckInventory("BlueKey") || CheckInventory("BlueKeyLost"))
-			bAccess = 1;
-		Else
+		if (dir == 1)
 		{
-			activatorsound("*usefail", 127);
-			bAccess = 0;
+			polydoors[index][END_Y] -= 64;
+		}
+		else if (dir == 2)
+		{
+			polydoors[index][END_X] += 64;
 		}
 	}
-	else if(lock == 2)
+
+	switch (lock)
 	{
-		If (CheckInventory("YellowKey") || CheckInventory("YellowKeyLost"))
-			bAccess = 1;
-		Else
-		{
-			activatorsound("*usefail", 127);
-			bAccess = 0;
-		}
+		case 1:
+			bAccess = CheckInventory("BlueKey") || CheckInventory("BlueKeyLost");
+			break;
+		case 2:
+			bAccess = CheckInventory("YellowKey") || CheckInventory("YellowKeyLost");
+			break;
+		case 5:
+			bAccess = !!(PlayerNumber() < 0);
+			break;
+		default:
+			bAccess = true;
+			break;
 	}
-	else if (lock == 5)
+
+	if (!bAccess)
 	{
-		If (PlayerNumber() < 0)
-		{
-				bAccess = 1;
-		}
-		Else
-			bAccess = 0;
+		if (lock != 5) { ActivatorSound("*usefail", 127); }
+		Terminate;
 	}
-	else
-		bAccess = 1;
 
-	if (bAccess == 1)
+	int d = 0;
+
+	if (polydoors[index][DOOR_STATE] == DOOR_CLOSED || polydoors[index][DOOR_STATE] == DOOR_CLOSING)
 	{
-		if (polyinfo[index] == 0)
+		if (GetCVar("g_sod") > 1) { ActivatorSound("door/open2", 127); }
+		else { ActivatorSound("door/classic/open", 127); }
+
+		if (polydoors[index][DOOR_STATE] == DOOR_CLOSED) { polydoors[index][DOOR_STATE] = DOOR_FIRSTOPENING; }
+		else { polydoors[index][DOOR_STATE] = DOOR_OPENING; }
+
+		if (lock == 5 && !ActivatorTID()) { Thing_Deactivate(0); }
+
+		PolyObj_Stop(po);
+		Polyobj_MoveTo(po, 16, polydoors[index][END_X], polydoors[index][END_Y]);
+
+		d = 0;
+		while (d <= 30 && (polydoors[index][DOOR_STATE] == DOOR_OPENING || polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING))
 		{
-			If (lock==5 && !ActivatorTID()) Thing_Deactivate(0);
-			polyinfo[index] = 1;
-
-			activatorsound("door/classic/open",127);
-
-			Polyobj_OR_Move(po,16,dirStart,64);
-			delay(30);
-			If (lock==5 && !ActivatorTID()) Thing_Activate(0);
-			delay(120);
-			if (polyinfo[index] == 1)
-			{
-				activatorsound("door/classic/close",127);
-
-				Polyobj_OR_Move(po,16,dirEnd,64);
-				polyinfo[index] = 0;
-			}
+			Delay(1);
+			d++;
 		}
-		else if (polyinfo[index] == 1 && lock != 5)
-		{
-			activatorsound("door/classic/close",127);
 
-			Polyobj_OR_Move(po,16,dirEnd,64);
-			polyinfo[index] = 0;
+		if (
+			(polydoors[index][DOOR_STATE] == DOOR_OPENING || polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING) &&
+			GetPolyObjX(po) >> 16 == polydoors[index][END_X] && GetPolyObjY(po) >> 16 == polydoors[index][END_Y]
+		)
+		{
+			polydoors[index][DOOR_STATE] = DOOR_OPENED;
+		}
+		else { Terminate; }
+
+		if (lock == 5 && !ActivatorTID()) { Thing_Activate(0); }
+
+		d = 0;
+		while (d <= 120 && polydoors[index][DOOR_STATE] == DOOR_OPENED)
+		{
+			Delay(1);
+			d++;
+		}
+
+		if (polydoors[index][DOOR_STATE] != DOOR_OPENED) { Terminate; }
+	}
+
+	if (polydoors[index][DOOR_STATE] == DOOR_OPENED || polydoors[index][DOOR_STATE] == DOOR_OPENING)
+	{
+		if (GetCVar("g_sod") > 1) { ActivatorSound("door/close2", 127); }
+		else { ActivatorSound("door/classic/close", 127); }
+
+		polydoors[index][DOOR_STATE] = DOOR_CLOSING;
+
+		PolyObj_Stop(po);
+		Polyobj_MoveTo(po, 16, polydoors[index][START_X], polydoors[index][START_Y]);
+
+		d = 0;
+		while (d <= 30 && polydoors[index][DOOR_STATE] == DOOR_CLOSING)
+		{
+			Delay(1);
+			d++;
+		}
+
+		if (polydoors[index][DOOR_STATE] == DOOR_CLOSING && GetPolyObjX(po) >> 16 == polydoors[index][START_X] && GetPolyObjY(po) >> 16 == polydoors[index][START_Y])
+		{
+			polydoors[index][DOOR_STATE] = DOOR_CLOSED;
 		}
 	}
 }
@@ -281,7 +325,8 @@ Script "W_DoSecretDoor" (int po, int Angle)
 
 			PolyObj_Move(po, 8, Angle, intMoveDist/1.0);
 
-			AmbientSound("door/classic/secret",127);
+			if (GetCVar("g_sod") > 1) { ActivatorSound("door/secret2", 127); }
+			else { AmbientSound("door/classic/secret",127); }
 
 			PolyX = GetPolyObjX(po) + 24.0;
 			PolyY = GetPolyObjY(po);
