@@ -517,10 +517,10 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (this is "OptionMenuItemMapControl") { binds = AutomapBindings; }
 
 		info.valueleft = x + spacing;
-		info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft * CleanXfac_1, y + (OptionMenu.OptionHeight() * CleanYfac_1 / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
+		info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft, y + (OptionMenu.OptionHeight() / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
 		info.valueright = x + info.width;
 
-		height = 16.0;
+		height = max(int(16 * CleanYfac_1), height);
 
 		info.height = height;
 

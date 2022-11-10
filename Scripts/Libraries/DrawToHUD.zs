@@ -757,7 +757,7 @@ class DrawToHUD
 				// Make the space bar wide so that it closer matches actual space bar width
 				if (b && keys[k] == "Space")
 				{
-					b.width = max(int(96 * buttonscale), b.width);
+					b.width = max(int(96 * buttonscale * CleanXfac_1), b.width);
 					b.labeloffset = b.width / 2;
 				}
 			}
@@ -789,22 +789,22 @@ class DrawToHUD
 
 			b.Draw(pos, alpha, destsize, flags);
 
-			pos.x += b.width + int(6 * b.scale.x);
+			pos.x += b.width + int(6 * b.scale.x * CleanXfac_1);
 
 			int textflags = ZScriptTools.STR_MIDDLE | ZScriptTools.STR_CENTERED | (flags & Button.BTN_FIXED ? ZScriptTools.STR_FIXED : 0) | (flags & Button.BTN_MENU ? ZScriptTools.STR_MENU : 0);
 
 			// Use "," to separate all but the final button, then use "or" for the last one
 			if (i < buttons.Size() - 2) // ","
 			{
-				pos.x += int((commasize / 2 - 6) * b.scale.x);
-				DrawToHUD.DrawText(comma, pos, SmallFont, alpha, b.scale.x, destsize, Font.CR_GRAY, textflags);
-				pos.x += int((commasize / 2 + 6) * b.scale.x);
+				pos.x += int((commasize / 2 - 6) * b.scale.x * CleanXfac_1);
+				DrawToHUD.DrawText(comma, pos, SmallFont, alpha, b.scale.x * CleanXfac_1, destsize, Font.CR_GRAY, textflags);
+				pos.x += int((commasize / 2 + 6) * b.scale.x * CleanXfac_1);
 			}
 			else if (i == buttons.Size() - 2) // "or"
 			{
-				pos.x += int((orsize / 2) * b.scale.x);
-				DrawToHUD.DrawText(or, pos, SmallFont, alpha, b.scale.x, destsize, Font.CR_GRAY, textflags);
-				pos.x += int((orsize / 2 + 6) * b.scale.x);
+				pos.x += int((orsize / 2) * b.scale.x * CleanXfac_1);
+				DrawToHUD.DrawText(or, pos, SmallFont, alpha, b.scale.x * CleanXfac_1, destsize, Font.CR_GRAY, textflags);
+				pos.x += int((orsize / 2 + 6) * b.scale.x * CleanXfac_1);
 			}
 		}
 
@@ -923,8 +923,6 @@ class Button
 
 			width = int(width * screenscale.x);
 			height = int(height * screenscale.y);
-			scale.x *= screenscale.x;
-			scale.y *= screenscale.y;
 			labeloffset = int(labeloffset * screenscale.x);
 			iconoffset = int(iconoffset * screenscale.x);
 		}
@@ -945,6 +943,6 @@ class Button
 			DrawToHUD.DrawFrame(bkg, int(pos.x - sizeoffset.x), int(pos.y - sizeoffset.y), int(width + sizeoffset.x * 2), int(height + sizeoffset.y * 2), fillcolor, bkgalpha, bkgfillalpha, destsize, (flags & BTN_FIXED ? DrawToHUD.TEX_FIXED : 0) | (flags & BTN_MENU ? DrawToHUD.TEX_MENU : 0) | (flags & BTN_NOSCALE ? DrawToHUD.TEX_NOSCALE : 0), scale.y);
 		}
 		if (icon && icon.IsValid()) { DrawToHud.DrawTexture(icon, (pos.x + iconoffset, pos.y + height / 2), alpha, 0.5 * scale.x, -1, (-1, -1), DrawToHUD.TEX_CENTERED | (flags & BTN_FIXED ? DrawToHUD.TEX_FIXED : 0) | (flags & BTN_MENU ? DrawToHUD.TEX_MENU : 0) | (flags & BTN_NOSCALE ? DrawToHUD.TEX_NOSCALE : 0), destsize); }
-		DrawToHUD.DrawText(label, (pos.x + labeloffset, pos.y + height / 2), fnt, alpha, scale.x, destsize, fntcolor, ZScriptTools.STR_MIDDLE | ZScriptTools.STR_CENTERED | (flags & BTN_FIXED ? ZScriptTools.STR_FIXED : 0) | (flags & BTN_MENU ? ZScriptTools.STR_MENU : 0) | (flags & BTN_NOSCALE ? ZScriptTools.STR_NOSCALE : 0));
+		DrawToHUD.DrawText(label, (pos.x + labeloffset, pos.y + height / 2), fnt, alpha, scale.x * CleanXfac_1, destsize, fntcolor, ZScriptTools.STR_MIDDLE | ZScriptTools.STR_CENTERED | (flags & BTN_FIXED ? ZScriptTools.STR_FIXED : 0) | (flags & BTN_MENU ? ZScriptTools.STR_MENU : 0) | (flags & BTN_NOSCALE ? ZScriptTools.STR_NOSCALE : 0));
 	}
 }
