@@ -185,6 +185,8 @@ class ExtendedListMenu : ListMenu
 		if (gametic > 1)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
+			if (fadealpha > 0.9) { fadealpha = 1.0; } // Fudge the numbers in case the game 1.0 for some reason
+													  // This could happen with a dead player repeatedly spamming 'Esc'
 		}
 
 		if (exitmenu)
