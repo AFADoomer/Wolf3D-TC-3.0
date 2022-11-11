@@ -50,17 +50,20 @@ Script "InitializePlayer" ENTER
 			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 			ScriptCall("WolfMenu", "SetMenu", "HighScores");
 			SetMusic("HITLWLTZ");
+			ScriptCall("ClassicStatusBar", "ClearFizzle");
 		}
 		else
 		{
 			ResetWeapons();
 
-			int num = GetLevelInfo(LEVELINFO_LEVELNUM);	
-			if (!GetCVar("g_nointro") && !(GetCVar("g_sod") && num % 100 == 21)) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
+			if (justdied) { ScriptCall("ClassicStatusBar", "ReverseFizzle"); }
+			else if (!GetCVar("g_nointro"))
+			{
+				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
+				ScriptCall("ClassicStatusBar", "ClearFizzle");
+			}
 		}
 	}
-
-	ScriptCall("ClassicStatusBar", "ClearFizzle");
 }
 
 Function void ResetWeapons(void)

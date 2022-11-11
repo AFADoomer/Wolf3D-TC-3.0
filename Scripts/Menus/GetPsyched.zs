@@ -103,11 +103,20 @@ class GetPsyched : WolfMenu
 		back = TexMan.CheckForTexture("PSYCH", TexMan.Type_Any);
 		statbar = TexMan.CheckForTexture("PSYCHBAR", TexMan.Type_Any);
 
-		curstate = 0;
-		fadealpha = 1.0;
-		fadetime = 12;
-		fadetarget = gametic;
-		fadecolor = 0x000000;
+		if (Game.IsSoD() && level.levelnum % 100 == 21)
+		{
+			curstate = 6;
+			fadealpha = 0.0;
+			fadetarget = 0.0;
+		}
+		else
+		{
+			curstate = 0;
+			fadealpha = 1.0;
+			fadetime = 12;
+			fadetarget = gametic;
+			fadecolor = 0x000000;
+		}
 
 		starttic = gametic;
 
@@ -188,11 +197,16 @@ class GetPsyched : WolfMenu
 			case 4:
 				if (gametic == fadetarget + fadetime) { Close(); }
 				break;
+			case 5:
+				if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).ReverseFizzle(players[consoleplayer].mo); }
+				Close();
+				break;
 			default:
+				Close();
 				break;
 		}
 
-		if (fadetarget || (fadetarget == 0 && starttic == 0))
+		if (fadetime > 0 && (fadetarget || (fadetarget == 0 && starttic == 0)))
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}

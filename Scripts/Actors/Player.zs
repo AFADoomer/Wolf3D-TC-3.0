@@ -1,9 +1,8 @@
 // Wolf3D Player Class
 class WolfPlayer : DoomPlayer
 {
-	bool goobers;
-	bool mutated;
-	int deathtick, idletick;
+	bool goobers, mutated, respawn, justdied;
+	int deathtick, respawntick, idletick;
 	Vector3 lastpos;
 
 	Default
@@ -116,30 +115,28 @@ class WolfPlayer : DoomPlayer
 
 	override void DeathThink()
 	{
-		if (!deathtick && (player.cmd.buttons & BT_USE ||
-			((multiplayer || alwaysapplydmflags) && sv_forcerespawn)) && !sv_norespawn)
-		{
-			if (Level.maptime >= player.respawn_time || ((player.cmd.buttons & BT_USE) && player.Bot == NULL))
-			{
-				if (players[consoleplayer] == player) { Menu.SetMenu("Fader"); }
-				deathtick++;
-			}
-		}
+		player.Uncrouch();
+		TickPSprites();
 
-		if (deathtick)
+		if (sv_norespawn) { return; }
+		
+		if (
+			respawntick++ >= 50 ||
+			(player.cmd.buttons & BT_USE && player.Bot != null)
+		)
+		{ respawn = true; }
+
+		if (respawn)
 		{
-			if (deathtick < 12) { deathtick++; }
-			else
+			deathtick++;
+
+			if (deathtick >= 12)
 			{
 				player.cls = NULL; // Force a new class if the player is using a random class
-				player.playerstate = (multiplayer || level.AllowRespawn || sv_singleplayerrespawn || G_SkillPropertyInt(SKILLP_PlayerRespawn)) ? PST_REBORN : PST_ENTER;
+				player.playerstate = PST_REBORN;
 				if (special1 > 2) { special1 = 0; }
 			}
-
-			return;
 		}
-
-		Super.DeathThink();
 	}
 
 	// Give health with 'give all' cheat, don't give backpack unless
@@ -186,6 +183,14 @@ class WolfPlayer : DoomPlayer
 			{
 				GiveInventory(type, 1, true);
 			}
+
+			if (!giveall)
+				return;
+		}
+
+		if (giveall || name ~== "lives")
+		{
+			LifeHandler.SetLives(self, 9);
 
 			if (!giveall)
 				return;

@@ -380,18 +380,36 @@ class ClassicStatusBar : WidgetStatusBar
 		}
 		else // Run the resource hog
 		{
-			for (int f = 0; f <= fizzleindex; f++)
+			if (fizzlespeed > 0)
 			{
-				Vector2 fizzle = fizzlepoints[f];
+				for (int f = 0; f <= fizzleindex; f++)
+				{
+					Vector2 fizzle = fizzlepoints[f];
 
-				screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
-				screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+					screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+					screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				}
+			}
+			else
+			{
+				for (int f = fizzleindex; f >= 0; f--)
+				{
+					Vector2 fizzle = fizzlepoints[f];
+
+					screen.DrawTexture(pixel, false, fizzle.x, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+					screen.DrawTexture(pixel, false, fizzle.x > 160 ? fizzle.x - 320 : fizzle.x + 320, fizzle.y, DTA_320x200, true, DTA_DestWidth, 1, DTA_DestHeight, 1, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_FillColor, fizzlecolor);
+				}
 			}
 		}
 
 		fizzleindex += fizzlespeed; // Draw a chunk of pixels at a time...
 
 		if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
+		if (fizzleindex <= 0)
+		{
+			fizzleindex = 0;
+			fizzleeffect = false;
+		}
 	}
 
 	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
@@ -404,6 +422,12 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
 		ClassicStatusBar(StatusBar).fizzlelayer = layer;
 		ClassicStatusBar(StatusBar).fizzlespeed = speed;
+	}
+
+	static void ReverseFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
+	{
+		ClassicStatusBar(StatusBar).fizzleindex = ClassicStatusBar(StatusBar).fizzlepoints.Size() - 1;
+		DoFizzle(caller, clr, Off, layer, -speed);
 	}
 
 	static void ClearFizzle(Actor caller)
