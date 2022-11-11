@@ -458,25 +458,29 @@ class EpisodeMenu : IconListMenu
 {
 	override void Drawer()
 	{
-		for (int i = 3; i < mDesc.mItems.Size(); i++)
-		{
-			mDesc.mItems[i].SetY(mDesc.mItems[i - 1].GetY() + 26);
-		}
-
-		Super.Drawer();
-
 		if (Game.IsSoD())
 		{
 			Close();
 			Menu.SetMenu("SkillMenu", 5 + g_sod);
+
+			return;
 		}
-		else
+
+		int count = 0;
+		for (int i = 1; i < mDesc.mItems.Size(); i++)
 		{
-			for (int i = 8; i < mDesc.mItems.Size(); i++)
+			let item = ListMenuItemSelectable(mDesc.mItems[i]);
+			if (item && item.mEnabled)
 			{
-				mDesc.mItems[i].mEnabled = false;
+				count++;
+
+				if (count > 6) { item.mEnabled = false; } // Hide SoD entries from the episode menu
+				else if (count > 1) { item.SetY(mDesc.mItems[i - 1].GetY() + 26); } // Offset y position for each remaining entry after the first one
+				item.mHeight = 30; // Increase height of all entries
 			}
 		}
+
+		Super.Drawer();
 	}
 }
 
@@ -589,7 +593,6 @@ class GameMenu : IconListMenu
 						{
 							overlay = shareware;
 						}
-
 					}
 					else if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD", false))
 					{

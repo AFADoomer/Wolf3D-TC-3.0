@@ -78,7 +78,7 @@ ListMenu "MainMenu"
 ListMenu "EpisodeMenu"
 {
 	NetgameMessage "$NETGAME"
-	Linespacing 5
+	Linespacing 5 // This is low in order to keep the menu from failing back to an option menu.
 	Selector "M_SEL1", -88, 0
 
 	Font "BigFont", "WolfMenuYellowBright"
@@ -90,7 +90,7 @@ ListMenu "EpisodeMenu"
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	Class "EpisodeMenu"
+	Class "EpisodeMenu" // Code internally handles only showing the 6 Wolf3D episodes and fixing spacing/height
 }
 
 ListMenu "SkillMenu"
