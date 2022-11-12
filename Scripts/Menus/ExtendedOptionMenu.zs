@@ -488,7 +488,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y - 16, fnt, TitleColor());
+		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) * CleanXfac_1 / 2 : x, y - 16, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 

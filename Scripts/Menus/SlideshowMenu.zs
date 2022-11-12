@@ -596,6 +596,12 @@ class IntroSlideshow : WolfMenu
 			{
 				screen.Dim(0x880000, 1.0, screen.GetWidth() / 2 - 60 * CleanXfac, Screen.GetHeight() - 11 * CleanYfac, 120 * CleanXfac, 11 * CleanYfac);
 
+				// if (curscreen == 1)
+				// {
+				// 	String press = "One moment...";
+				// 	int w = SmallFont.StringWidth(press);
+				// 	screen.DrawText(SmallFont, Font.FindFontColor("TrueBlack"), 160 - w / 2, 190, press, DTA_320x200, true);
+				// }
 				if (curscreen == 2)
 				{
 					String press = "Press a key";
