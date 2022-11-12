@@ -124,13 +124,26 @@ class ExtendedListMenu : ListMenu
 
 		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
 
-		fadetime = 12;
-		fadetarget = gametic;
-		fadealpha = 1.0;
 		initialalpha = 1.0;
+		fadealpha = 1.0;
+		fadetarget = gametic;
+		fadetime = 12;
 
 		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
-		else if (!mParentMenu) { initialalpha = 0; fadealpha = 0; fadetarget = gametic + fadetime; }
+		else if (!mParentMenu)
+		{
+			if (
+				players[consoleplayer].playerstate == PST_LIVE ||
+				(
+					ClassicStatusBar(StatusBar) &&
+					!ClassicStatusBar(StatusBar).fizzleeffect
+				)
+			)
+			{
+				initialalpha = fadealpha = 0.0;
+				fadetarget = gametic + fadetime;
+			}
+		}
 
 		nodim = false;
 		DontDim = true;
@@ -185,8 +198,6 @@ class ExtendedListMenu : ListMenu
 		if (gametic > 1)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
-			if (fadealpha > 0.9) { fadealpha = 1.0; } // Fudge the numbers in case the game 1.0 for some reason
-													  // This could happen with a dead player repeatedly spamming 'Esc'
 		}
 
 		if (exitmenu)
