@@ -1,7 +1,7 @@
 class KeyHandler : EventHandler
 {
 	ui int gooberscount;
-	ui int ilmcount;
+	ui int ilmcount, batcount;
 	ui bool tabdown;
 	ui ClassicMessageBox msg;
 
@@ -37,6 +37,10 @@ class KeyHandler : EventHandler
 
 			switch (e.KeyChar)
 			{
+				case 97: // A
+				case 98: // B
+					batcount++;
+					break;
 				case 101: // E
 					if (tabdown)
 					{
@@ -78,6 +82,9 @@ class KeyHandler : EventHandler
 						return true;
 					}
 					break;
+				case 116: // T
+					batcount++;
+					break;
 				default:
 					break;
 			}
@@ -99,6 +106,11 @@ class KeyHandler : EventHandler
 
 			switch (e.KeyChar)
 			{
+				case 97:
+				case 98:
+				case 116:
+					batcount--;
+					break;
 				case 105:
 				case 108:
 				case 109:
@@ -125,6 +137,14 @@ class KeyHandler : EventHandler
 			msg = ClassicMessageBox.PrintMessage(text, "BG_", 0x8c8c8c, 1);
 
 			SendNetworkEvent("ilm");
+
+			return true;
+		}
+
+		if (batcount == 3)
+		{
+			String text = StringTable.Localize("$CHEAT_BAT");
+			msg = ClassicMessageBox.PrintMessage(text, "BG_", 0x8c8c8c, 1);
 
 			return true;
 		}
