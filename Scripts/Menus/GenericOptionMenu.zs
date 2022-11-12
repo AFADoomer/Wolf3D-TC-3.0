@@ -231,8 +231,8 @@ class GenericOptionMenu : OptionMenu
 			return OptionMenu.MouseEvent(type, x, y);
 		}
 
-		y /= CleanYfac_1;
-		x /= CleanXfac_1;
+//		y /= CleanYfac_1;
+//		x /= CleanXfac_1;
 
 		if (mFocusControl)
 		{
