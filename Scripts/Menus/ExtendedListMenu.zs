@@ -133,11 +133,8 @@ class ExtendedListMenu : ListMenu
 		else if (!mParentMenu)
 		{
 			if (
-				players[consoleplayer].playerstate == PST_LIVE ||
-				(
-					ClassicStatusBar(StatusBar) &&
-					!ClassicStatusBar(StatusBar).fizzleeffect
-				)
+				!ClassicStatusBar(StatusBar) ||
+				!ClassicStatusBar(StatusBar).fizzleeffect
 			)
 			{
 				initialalpha = fadealpha = 0.0;
