@@ -48,7 +48,7 @@ class SecretMarker : Actor
 	{
 		Spawn:
 		Active:
-			UNKN D -1;
+			PUSH A -1;
 			Stop;
 		Inactive:
 			TNT1 A -1;
@@ -144,6 +144,8 @@ class Turn : SwitchableDecoration
 			TNT1 A 35 {
 				if (target && ClassicBase(target) && !ClassicBase(target).active)
 				{
+					if (target.health <= 0) { return;}
+					
 					target.SetStateLabel("Spawn.Stand");
 					target.vel *= 0;
 					target.angle = ang;
