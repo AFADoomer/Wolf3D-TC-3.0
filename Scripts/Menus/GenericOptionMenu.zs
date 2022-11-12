@@ -56,7 +56,7 @@ class ItemInfo
 class GenericOptionMenu : OptionMenu
 {
 	double alpha;
-	int columnwidth, columnspacing;
+	int columnwidth, columnspacing, bottomclip;
 	String menuprefix;
 	MenuHandler handler;
 	OptionMenu source;
@@ -131,6 +131,7 @@ class GenericOptionMenu : OptionMenu
 
 		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
 		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
+		bottomclip = lastrow + (BigFont.GetHeight() + 1) * CleanYfac_1;
 
 		int indent = x + spacing;
 		
@@ -327,7 +328,7 @@ class GenericOptionMenu : OptionMenu
 
 		for (int i = 0; i < lines.count(); i++)
 		{
-			screen.DrawText (fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_CleanNoMove_1, true);
+			screen.DrawText (fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_CleanNoMove_1, true, DTA_ClipBottom, bottomclip);
 		}
 
 		height += lines.Count() * fontheight + 6 * CleanYfac_1;
@@ -416,8 +417,8 @@ class GenericOptionMenu : OptionMenu
 		{
 			x -= size.x / 2;
 			y += OptionMenuSettings.mLinespacing * CleanYfac_1 / 2 - size.y / 2;
-			screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_Alpha, alpha);
-			if (clr > 0) { screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_FillColor, clr, DTA_Alpha, 0.5 * alpha); }
+			screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
+			if (clr > 0) { screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_FillColor, clr, DTA_Alpha, 0.5 * alpha, DTA_ClipBottom, bottomclip); }
 		}
 	}
 
@@ -690,7 +691,6 @@ class GenericOptionMenu : OptionMenu
 			}
 			else
 			{
-//				spacing = max(spacing, CleanWidth_1 - tlen - 10);
 				height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), grayed), height);
 			}
 		}
@@ -765,7 +765,7 @@ class GenericOptionMenu : OptionMenu
 	virtual void DrawCursor(int x, int y)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawText(NewSmallFont, SelectionColor(true), x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true);
+		screen.DrawText(NewSmallFont, SelectionColor(true), x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true, DTA_ClipBottom, bottomclip);
 	}
 
 	virtual void DrawScrollArrows(int x, int ytop, int ybottom)

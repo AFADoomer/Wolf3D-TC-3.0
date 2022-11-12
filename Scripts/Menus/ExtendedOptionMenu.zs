@@ -43,7 +43,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		fadetime = 12;
 		fadetarget = gametic;
-//		alpha = 0.0;
+
 		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
 
 		nodim = true;
@@ -311,11 +311,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 		
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
-//		int ytop = y;
-//		int lastrow = screen.GetHeight() - fontheight;
 		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
 		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - fontheight * 2;
-
 
 //		int framewidth = MenuHandler.ItemsWidth(handler.Items) + 48; // Has calculation issues...
 		int framewidth = max(620, Screen.GetWidth() * 2 / 3);
@@ -448,7 +445,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 			String label = Stringtable.Localize(this.mLabel);
 			height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
 
-			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha);
+			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
 
 			info.valueleft = x + spacing;
 			info.width = OptionWidth(label, fnt) + spacing + 3 * fontheight;
