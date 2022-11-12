@@ -295,6 +295,11 @@ class ExtendedListMenu : ListMenu
 							)
 						)
 						{
+							if (itemaction == "StartGame" || itemaction == "StartGameConfirm")
+							{
+								EventHandler.SendNetworkEvent("resetdeaths");
+							}
+
 							if (itemaction == "StartGame" || itemaction == "StartGameConfirm" || itemaction == "HelpMenu")
 							{
 								fadecolor = 0x000000;

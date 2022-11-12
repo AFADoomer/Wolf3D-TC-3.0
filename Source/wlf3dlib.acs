@@ -347,8 +347,6 @@ Script "W_PlayerDeath" DEATH //501
 	If (PlayerCount() == 1) { SetMusic(""); }
 
 	ScriptCall("ClassicStatusBar", "DoFizzle", 0xFF0000);
-
-	ScriptCall("LifeHandler", "TakeLife", 1);
 }
 
 Script "W_DeathCam" (void)

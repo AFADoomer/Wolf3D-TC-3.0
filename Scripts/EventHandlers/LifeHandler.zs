@@ -24,19 +24,17 @@ class LifeHandler : StaticEventHandler
 
 	static bool JustDied(Actor p)
 	{
-		if (!p) { return 0; }
+		if (!p) { return false; }
 
 		int playernum = p.PlayerNumber();
-		if (playernum < 0) { return 0; }
+		if (playernum < 0) { return false; }
 
 		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
-		if (!this) { return 0; }
-
-		bool died = this.died[playernum];
+		if (!this || !this.died[playernum]) { return false; }
 
 		this.died[playernum] = false;
 
-		return died;
+		return true;
 	}
 
 	static void TakeLife(Actor p, int count = 1)
@@ -50,7 +48,6 @@ class LifeHandler : StaticEventHandler
 		if (!this) { return; }
 
 		this.lives[playernum] = max(this.lives[playernum] - count, -1);
-		this.died[playernum] = true;
 
 		this.SaveLifeData();
 	}
@@ -116,26 +113,31 @@ class LifeHandler : StaticEventHandler
 
 	override void PlayerEntered(PlayerEvent e)
 	{
-		// This *must* be done so that if a player has autosave disabled, the 
-		// NewGame call doesn't get called every time the player respawns
 		Level.MakeAutoSave();
+	}
+
+	override void PlayerDied(PlayerEvent e)
+	{
+		died[e.playernumber] = true;
+		TakeLife(players[e.playernumber].mo, 1);
 	}
 
 	override void NewGame()
 	{
-		if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
-
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
-			if (died[i]) { continue; }
+			if (died[i]) { continue; } // Don't reset lives if we just died
 
 			lives[i] = 3;
-			if (persistent) { persistent.lives[i] = 3; }
 		}
+
+		SaveLifeData();
 	}
 
 	override void WorldThingDied(WorldEvent e)
 	{
+		if (!e.thing.target || e.thing.target == e.thing) { return;} // Don't give points if you kill yourself
+
 		int amt;
 
 		if (e.thing is "ClassicBase") { amt = ClassicBase(e.thing).scoreamt; }
@@ -143,5 +145,20 @@ class LifeHandler : StaticEventHandler
 		else { amt = e.thing.SpawnHealth() * 10; }
 
 		e.thing.A_GiveToTarget("Score", amt);
+	}
+	
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name == "resetdeaths")
+		{
+			LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
+			if (this)
+			{
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					this.died[i] = false;
+				}
+			}
+		}
 	}
 }
