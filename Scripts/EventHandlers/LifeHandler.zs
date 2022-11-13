@@ -117,7 +117,6 @@ class LifeHandler : StaticEventHandler
 		if (died[e.playernumber])
 		{
 			players[e.playernumber].mo.ClearInventory();
-			
 			ResetWeapons(e.playernumber);
 		}
 	}
