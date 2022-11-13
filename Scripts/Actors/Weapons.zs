@@ -21,8 +21,7 @@ class ClassicWeapon : Weapon
 			"####" "#" 1 A_Lower();
 			Loop;
 		Select:
-			"####" "#" 1 A_Raise();
-			Loop;
+			"####" "#" 0 A_QuickRaise();
 		Ready:
 			"####" "#" 1;
 			"####" "#" 0 A_WeaponReady();
@@ -39,6 +38,16 @@ class ClassicWeapon : Weapon
 			"####" "#" 0 A_Jump (256, "Refire");
 		Hold.Automatic:
 			"####" "#" 0 A_Jump (256, "Fire");
+	}
+
+	// Raise the weapon sprite immediately to the ready position
+	action void A_QuickRaise()
+	{
+		let psp = player.GetPSprite(PSP_WEAPON);
+		if (!psp) { return; }
+
+		psp.y = WEAPONTOP;
+		psp.SetState(player.ReadyWeapon.GetReadyState());
 	}
 
 	action int WolfRandom()
