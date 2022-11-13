@@ -1,3 +1,4 @@
+
 class PersistentLifeHandler : EventHandler
 {
 	int lives[MAXPLAYERS];
@@ -84,14 +85,28 @@ class LifeHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (e.IsSaveGame) // If loading a save, check for saved stats and copy them over if found
+		if (e.IsSaveGame)
 		{
-			if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
-			if (persistent)
+			if (level.time > 1) // If loading a save, check for saved stats and copy them over if found
+			{
+				if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
+				if (persistent)
+				{
+					for (int i = 0; i < MAXPLAYERS; i++)
+					{
+						lives[i] = persistent.lives[i];
+					}
+				}
+			}
+			else
 			{
 				for (int i = 0; i < MAXPLAYERS; i++)
 				{
-					lives[i] = persistent.lives[i];
+					if (playeringame[i] && players[i].mo)
+					{
+						players[i].mo.ClearInventory();
+						players[i].mo.GiveDefaultInventory();
+					}
 				}
 			}
 		}
@@ -111,8 +126,20 @@ class LifeHandler : StaticEventHandler
 		}
 	}
 
+	override void PlayerRespawned(PlayerEvent e)
+	{
+		players[e.playernumber].mo.ClearInventory();
+		players[e.playernumber].mo.GiveDefaultInventory();
+	}
+
 	override void PlayerEntered(PlayerEvent e)
 	{
+		if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
+		if (persistent)
+		{
+			persistent.lives[e.playernumber] = lives[e.playernumber];
+		}
+
 		Level.MakeAutoSave();
 	}
 

@@ -4,4 +4,4 @@ set freelook 0
 set st_scale -1
 set hud_althudscale -1
 set hud_scale -1
-set disableautosave 1
+disableautosave 0

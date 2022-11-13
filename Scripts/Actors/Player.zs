@@ -69,6 +69,8 @@ class WolfPlayer : DoomPlayer
 
 	override void Tick()
 	{
+		if (!player) { return; }
+
 		CVar momentum = CVar.FindCVar("g_momentum");
 		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
 
