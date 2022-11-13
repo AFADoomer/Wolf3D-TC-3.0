@@ -18,6 +18,8 @@ class WolfPlayer : DoomPlayer
 		Player.ForwardMove 1.3, 1.3;
 		Player.MaxHealth 100;
 		Player.SideMove 1.3, 1.3;
+		Player.StartItem "WolfPistol";
+		Player.StartItem "WolfKnife";
 		Player.StartItem "WolfClip", 8;
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";
@@ -339,5 +341,102 @@ class WolfPlayer : DoomPlayer
 	private bool CheckArtifact(class<Actor> type)
 	{
 		return !(type is "PuzzleItem") && !(type is "Powerup") && !(type is "Ammo") &&	!(type is "Armor") && !(type is "Key") && !(type is "Weapon");
+	}
+
+	override void GiveDefaultInventory ()
+	{
+		let player = self.player;
+		if (player == NULL) return;
+
+		// HexenArmor must always be the first item in the inventory because
+		// it provides player class based protection that should not affect
+		// any other protection item.
+		let myclass = GetClass();
+		GiveInventoryType('HexenArmor');
+		let harmor = HexenArmor(FindInventory('HexenArmor'));
+
+		harmor.Slots[4] = self.HexenArmor[0];
+		for (int i = 0; i < 4; ++i)
+		{
+			harmor.SlotsIncrement[i] = self.HexenArmor[i + 1];
+		}
+
+		// BasicArmor must come right after that. It should not affect any
+		// other protection item as well but needs to process the damage
+		// before the HexenArmor does.
+		GiveInventoryType('BasicArmor');
+
+		// Now add the items from the DECORATE definition
+		let di = GetDropItems();
+
+		while (di)
+		{
+			String classname = di.Name;
+
+			if (
+				Game.IsSoD() > 1 &&
+				(
+					classname ~== "WolfKnife" || 
+					classname ~== "WolfPistol" || 
+					classname ~== "WolfMachineGun" || 
+					classname ~== "WolfChaingun"
+				)
+			)
+			{
+				classname.AppendFormat("%s", "Lost");
+			}
+
+			Class<Actor> ti = classname;
+			if (ti)
+			{
+				let tinv = (class<Inventory>)(ti);
+				if (!tinv)
+				{
+					Console.Printf(TEXTCOLOR_ORANGE .. "%s is not an inventory item and cannot be given to a player as start item.\n", di.Name);
+				}
+				else
+				{
+					let item = FindInventory(tinv);
+					if (item != NULL)
+					{
+						item.Amount = clamp(
+							item.Amount + (di.Amount ? di.Amount : item.default.Amount), 0, item.MaxAmount);
+					}
+					else
+					{
+						item = Inventory(Spawn(ti));
+						item.bIgnoreSkill = true;	// no skill multipliers here
+						item.Amount = di.Amount;
+						let weap = Weapon(item);
+						if (weap)
+						{
+							// To allow better control any weapon is emptied of
+							// ammo before being given to the player.
+							weap.AmmoGive1 = weap.AmmoGive2 = 0;
+						}
+						bool res;
+						Actor check;
+						[res, check] = item.CallTryPickup(self);
+						if (!res)
+						{
+							item.Destroy();
+							item = NULL;
+						}
+						else if (check != self)
+						{
+							// Player was morphed. This is illegal at game start.
+							// This problem is only detectable when it's too late to do something about it...
+							ThrowAbortException("Cannot give morph item '%s' when starting a game!", di.Name);
+						}
+					}
+					let weap = Weapon(item);
+					if (weap != NULL && weap.CheckAmmo(Weapon.EitherFire, false))
+					{
+						player.ReadyWeapon = player.PendingWeapon = weap;
+					}
+				}
+			}
+			di = di.Next;
+		}
 	}
 }

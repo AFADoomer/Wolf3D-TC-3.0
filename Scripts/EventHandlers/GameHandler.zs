@@ -166,17 +166,26 @@ class GameHandler : StaticEventHandler
 
 class Game
 {
-	static bool IsSoD()
+	static int IsSoD()
 	{
-		bool ret = false;
+		int ret = max(0, g_sod);
 
-		if (g_sod > 0) { ret = true; }
-		if (level && level.levelnum > 700) { ret = true; }
+		if (level && level.levelnum > 700)
+		{
+			String ext = level.mapname.Left(3);
+			if (ext ~== "SOD") { ret = 1; }
+			else if (ext ~== "SD2") { ret = 2; }
+			else if (ext ~== "SD3") { ret = 3; }
+		}
+		else
+		{
+			ret = 0;
+		}
 
-		if (g_sod < -1 && gamestate == GS_LEVEL && level.time > 1) // Set the value if we are in a game and it hasn't been set already by the startup menu
+		if (g_sod != ret && gamestate == GS_LEVEL && level.time > 1) // Set the value if we are in a game and it hasn't been set already by the startup menu
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(ret ? 1 : 0); }
+			if (sodvar) { sodvar.SetInt(ret); }
 		}
 
 		return ret;

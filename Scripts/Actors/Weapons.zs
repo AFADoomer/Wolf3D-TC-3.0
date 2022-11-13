@@ -21,8 +21,7 @@ class ClassicWeapon : Weapon
 			"####" "#" 1 A_Lower();
 			Loop;
 		Select:
-			"####" "#" 1 A_Raise();
-			Loop;
+			"####" "#" 0 A_Jump (256, "Ready");
 		Ready:
 			"####" "#" 1;
 			"####" "#" 0 A_WeaponReady();

@@ -54,9 +54,10 @@ Script "InitializePlayer" ENTER
 		}
 		else
 		{
-			ScriptCall("LifeHandler", "ResetWeapons", PlayerNumber());
-
-			if (justdied) { ScriptCall("ClassicStatusBar", "ReverseFizzle"); }
+			if (justdied)
+			{
+				ScriptCall("ClassicStatusBar", "ReverseFizzle");
+			}
 			else if (!GetCVar("g_nointro"))
 			{
 				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
