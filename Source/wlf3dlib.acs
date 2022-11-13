@@ -32,7 +32,12 @@ Script "InitializeLevel" OPEN
 	if (GetLevelInfo(LEVELINFO_LEVELNUM) > 100) { ACS_NamedExecute("W_SetCeilingColor", 0, 0); }
 }
 
-Script "InitializePlayer" ENTER
+Script "RespawnPlayer" RESPAWN
+{
+	ACS_NamedExecute("InitializePlayer", 0);
+}
+
+Script "InitializePlayer" (int playernum)
 {
 	if (!ScriptCall("GameHandler", "CheckEpisode", ""))
 	{
@@ -43,7 +48,7 @@ Script "InitializePlayer" ENTER
 	if (GameType() != GAME_TITLE_MAP)
 	{
 		int lives = ScriptCall("LifeHandler", "GetLives");
-		int justdied = ScriptCall("LifeHandler", "JustDied");
+		int justdied = ScriptCall("LifeHandler", "JustDied", playernum);
 
 		if (lives == -1 && justdied)
 		{

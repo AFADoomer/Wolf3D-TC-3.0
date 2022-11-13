@@ -2,6 +2,7 @@
 class PersistentLifeHandler : EventHandler
 {
 	int lives[MAXPLAYERS];
+	bool died[MAXPLAYERS];
 }
 
 class LifeHandler : StaticEventHandler
@@ -23,34 +24,17 @@ class LifeHandler : StaticEventHandler
 		return this.lives[playernum];
 	}
 
-	static bool JustDied(Actor p)
+	static bool JustDied(Actor p, int playernum)
 	{
-		if (!p) { return false; }
-
-		int playernum = p.PlayerNumber();
 		if (playernum < 0) { return false; }
 
 		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
 		if (!this || !this.died[playernum]) { return false; }
 
 		this.died[playernum] = false;
+		this.SaveLifeData();
 
 		return true;
-	}
-
-	static void TakeLife(Actor p, int count = 1)
-	{
-		if (!p) { return; }
-
-		int playernum = p.PlayerNumber();
-		if (playernum < 0) { return; }
-
-		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
-		if (!this) { return; }
-
-		this.lives[playernum] = max(this.lives[playernum] - count, -1);
-
-		this.SaveLifeData();
 	}
 
 	static void SetLives(Actor p, int count = 1)
@@ -85,27 +69,40 @@ class LifeHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (e.IsSaveGame)
+		bool firstlevel = !!(level.levelnum % 100 == 1);
+
+		if (e.IsSaveGame || firstlevel)
 		{
-			if (level.time > 1) // If loading a save, check for saved stats and copy them over if found
+			if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
+
+			if (level.time > 35) // If loading a save that (likely) wasn't an autosave, check for saved stats and copy them over if found
 			{
-				if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
 				if (persistent)
 				{
 					for (int i = 0; i < MAXPLAYERS; i++)
 					{
 						lives[i] = persistent.lives[i];
+						died[i] = persistent.died[i];
+
+						if (playeringame[i] && players[i].mo)
+						{
+							players[i].mo.ACS_NamedExecuteAlways("InitializePlayer", 0, i);
+						}
 					}
 				}
 			}
-			else
+			else // Otherwise this is an autosave, so treat as if the player died and respawned
 			{
 				for (int i = 0; i < MAXPLAYERS; i++)
 				{
+					died[i] = died[i] || e.IsSaveGame;
+
 					if (playeringame[i] && players[i].mo)
 					{
 						players[i].mo.ClearInventory();
 						players[i].mo.GiveDefaultInventory();
+
+						players[i].mo.ACS_NamedExecuteAlways("InitializePlayer", 0, i);
 					}
 				}
 			}
@@ -121,7 +118,11 @@ class LifeHandler : StaticEventHandler
 		{
 			for (int i = 0; i < MAXPLAYERS; i++)
 			{
-				persistent.lives[i] = lives[i];
+				if (playeringame[i])
+				{
+					persistent.lives[i] = lives[i];
+					persistent.died[i] = died[i];
+				}
 			}
 		}
 	}
@@ -145,8 +146,10 @@ class LifeHandler : StaticEventHandler
 
 	override void PlayerDied(PlayerEvent e)
 	{
+		lives[e.playernumber] = max(lives[e.playernumber] - 1, -1);
 		died[e.playernumber] = true;
-		TakeLife(players[e.playernumber].mo, 1);
+
+		SaveLifeData();
 	}
 
 	override void NewGame()
@@ -185,6 +188,8 @@ class LifeHandler : StaticEventHandler
 				{
 					this.died[i] = false;
 				}
+
+				this.SaveLifeData();
 			}
 		}
 	}

@@ -27,6 +27,7 @@ class Score : StackableInventory
 
 	Default
 	{
+		+Inventory.UNCLEARABLE
 		Inventory.MaxAmount 0x7FFFFFFF;
 		Score.LifeAmount 40000;
 	}
