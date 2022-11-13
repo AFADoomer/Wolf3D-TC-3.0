@@ -265,6 +265,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
 		Draw(self, "ExtendedOptionMenu");
+
+		Menu.Drawer(); // Make sure to draw the back button
 	}
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
