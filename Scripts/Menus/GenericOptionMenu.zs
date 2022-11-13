@@ -294,7 +294,32 @@ class GenericOptionMenu : OptionMenu
 			}
 		}
 
-		return true;
+		y = (y / CleanYfac_1) - mDesc.mDrawTop;
+
+		if (mFocusControl)
+		{
+			mFocusControl.MouseEvent(type, x, y);
+			return true;
+		}
+		else
+		{
+			int yline = (y / OptionMenuSettings.mLinespacing);
+			if (yline >= mDesc.mScrollTop)
+			{
+				yline += mDesc.mScrollPos;
+			}
+			if (yline >= 0 && yline < mDesc.mItems.Size() && mDesc.mItems[yline].Selectable())
+			{
+				if (yline != mDesc.mSelectedItem)
+				{
+					mDesc.mSelectedItem = yline;
+				}
+				mDesc.mItems[yline].MouseEvent(type, x, y);
+				return true;
+			}
+		}
+
+		return Menu.MouseEvent(type, x, y);
 	}
 
 	void SetSlider(ItemInfo item, int x)
