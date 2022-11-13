@@ -69,9 +69,9 @@ class LifeHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		bool firstlevel = !!(level.levelnum % 100 == 1);
+		int i = 0;
 
-		if (e.IsSaveGame || firstlevel)
+		if (e.IsSaveGame)
 		{
 			if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
 
@@ -79,21 +79,16 @@ class LifeHandler : StaticEventHandler
 			{
 				if (persistent)
 				{
-					for (int i = 0; i < MAXPLAYERS; i++)
+					for (i = 0; i < MAXPLAYERS; i++)
 					{
 						lives[i] = persistent.lives[i];
 						died[i] = persistent.died[i];
-
-						if (playeringame[i] && players[i].mo)
-						{
-							players[i].mo.ACS_NamedExecuteAlways("InitializePlayer", 0, i);
-						}
 					}
 				}
 			}
-			else // Otherwise this is an autosave, so treat as if the player died and respawned
+			else // Otherwise this is an autosave or a new game, so treat as if the player just (re)spawned
 			{
-				for (int i = 0; i < MAXPLAYERS; i++)
+				for (i = 0; i < MAXPLAYERS; i++)
 				{
 					died[i] = died[i] || e.IsSaveGame;
 
@@ -101,10 +96,16 @@ class LifeHandler : StaticEventHandler
 					{
 						players[i].mo.ClearInventory();
 						players[i].mo.GiveDefaultInventory();
-
-						players[i].mo.ACS_NamedExecuteAlways("InitializePlayer", 0, i);
 					}
 				}
+			}
+		}
+
+		for (i = 0; i < MAXPLAYERS; i++)
+		{
+			if (playeringame[i] && players[i].mo)
+			{
+				players[i].mo.ACS_NamedExecuteAlways("InitializePlayer", 0, i);
 			}
 		}
 
