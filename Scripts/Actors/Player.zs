@@ -84,8 +84,8 @@ class WolfPlayer : DoomPlayer
 
 		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
 		{
+			if (!vel.xy.length()) { player.mo.PlayIdle(); }
 			vel *= 0;
-			player.mo.PlayIdle();
 
 			Speed = Default.Speed * 8;
 		}
