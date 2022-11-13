@@ -54,7 +54,7 @@ Script "InitializePlayer" ENTER
 		}
 		else
 		{
-			ResetWeapons();
+			ScriptCall("LifeHandler", "ResetWeapons", PlayerNumber());
 
 			if (justdied) { ScriptCall("ClassicStatusBar", "ReverseFizzle"); }
 			else if (!GetCVar("g_nointro"))
@@ -63,20 +63,6 @@ Script "InitializePlayer" ENTER
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
 			}
 		}
-	}
-}
-
-Function void ResetWeapons(void)
-{
-	if (GetCVar("g_sod") < 2)
-	{
-		GiveInventory("WolfKnife", 1);
-		GiveInventory("WolfPistol", 1);
-	}
-	else
-	{
-		GiveInventory("WolfKnifeLost", 1);
-		GiveInventory("WolfPistolLost", 1);
 	}
 }
 

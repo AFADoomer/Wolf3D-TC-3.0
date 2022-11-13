@@ -114,6 +114,26 @@ class LifeHandler : StaticEventHandler
 	override void PlayerEntered(PlayerEvent e)
 	{
 		Level.MakeAutoSave();
+		if (died[e.playernumber])
+		{
+			players[e.playernumber].mo.ClearInventory();
+			
+			ResetWeapons(e.playernumber);
+		}
+	}
+
+	static void ResetWeapons(int p)
+	{
+		if (g_sod < 2)
+		{
+			players[p].mo.GiveInventory("WolfKnife", 1);
+			players[p].mo.GiveInventory("WolfPistol", 1);
+		}
+		else
+		{
+			players[p].mo.GiveInventory("WolfKnifeLost", 1);
+			players[p].mo.GiveInventory("WolfPistolLost", 1);
+		}
 	}
 
 	override void PlayerDied(PlayerEvent e)
