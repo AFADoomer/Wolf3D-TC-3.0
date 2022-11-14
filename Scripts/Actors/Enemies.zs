@@ -1,9 +1,10 @@
 class ClassicBase : Actor
 {
-	bool active;
 	int scoreamt;
 	int skillhealth0, skillhealth1, skillhealth2, skillhealth3;
+	int dodgedir;
 	String basesprite;
+
 	int baseflags;
 
 	Property ScoreAmount:scoreamt;
@@ -12,6 +13,8 @@ class ClassicBase : Actor
 
 	FlagDef Lost:baseflags, 0;
 	FlagDef NerfWhenReplaced:baseflags, 1;
+	FlagDef Active:baseflags, 2;
+	FlagDef Run:baseflags, 3;
 
 	Default
 	{
@@ -40,7 +43,7 @@ class ClassicBase : Actor
 			Loop;
 		See:
 			"####" A 1 {
-				if (!active)
+				if (!bActive)
 				{
 					if (tid)
 					{
@@ -56,8 +59,8 @@ class ClassicBase : Actor
 
 							if (ClassicBase(mo))
 							{
-								if (ClassicBase(mo).active) { continue; }
-								else { ClassicBase(mo).active = true; }
+								if (ClassicBase(mo).bActive) { continue; }
+								else { ClassicBase(mo).bActive = true; }
 							}
 
 							mo.target = target;
@@ -65,7 +68,7 @@ class ClassicBase : Actor
 						}
 					}
 
-					active = true;
+					bActive = true;
 				}
 
 				SetStateLabel("Chase");
@@ -148,12 +151,205 @@ class ClassicBase : Actor
 	override void Tick()
 	{
 		Super.Tick();
+	}
 
-		if (active && health > 0 && bJustAttacked && target)
+	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int flags = 0, int chance = 0)
+	{
+		StateLabel curmelee = null;
+		StateLabel curmissile = null;
+
+		if (target)
 		{
-			int dist = int(max(abs(target.pos.x - pos.x) / 64, abs(target.pos.y - pos.y) / 64));
-			if (dist <= 1) { bJustAttacked = false; } // Within one 64x64 map chunk
+			Vector2 delta = Vec2To(target);
+			int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
+
+			if (
+				(Random() < chance) ||
+				(
+					!chance &&
+					(
+						(dist < 1) || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
+						(!chance && dist > 0 && Random() < (128 / dist)) // or randomly, based on distance
+					)
+				)
+			)
+			{
+				bJustAttacked = false;
+				reactiontime = 0;
+				curmelee = melee;
+				curmissile = missile;
+			}
+			else
+			{
+				reactiontime = Default.reactiontime;
+				curmelee = null;
+				curmissile = null;
+			}
+
+			movecount = 0;
+
+			if (bJustAttacked || movedir == MoveDirToTarget())
+			{
+				if (bRun && dist < 4) { movedir = GetRunDir(); }
+				else { movedir = GetDodgeDir(); }
+			}
+			
+			A_Chase(curmelee, curmissile, flags | CHF_NORANDOMTURN | CHF_NOPOSTATTACKTURN);
+
+			return;
 		}
+		
+		A_Chase(melee, missile, flags);
+	}
+
+	int GetDodgeDir()
+	{
+		if (!CheckSight(target)) { return movedir; }
+
+		int dir = movedir;
+		int targetdir = MoveDirToTarget();
+
+		static const dirtype_t opposite[] = { DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR };
+		static const dirtype_t diags[] = { DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST };
+
+		int d[2];
+		Vector2 delta;
+		int turnaround, temp, olddir;
+
+		olddir = dir;
+		turnaround = opposite[dir];
+
+		[delta, d[0], d[1]] = GetDirections();
+
+		dir = diags[((delta.y < 0) << 1) + (delta.x > 0)];
+		if (TryWalk()) { return dir; }
+
+		Vector2 absdelta;
+		absdelta.x = abs(delta.x);
+		absdelta.y = abs(delta.y);
+	
+		if (absdelta.x > absdelta.y)
+		{
+			temp = d[0];
+			d[0] = d[1];
+			d[1] = temp;
+		}
+
+		if (Random() < 128)
+		{
+			temp = d[0];
+			d[0] = d[1];
+			d[1] = temp;
+		}
+
+		if (d[0] == turnaround || d[0] == targetdir) { d[0] = DI_NODIR; }
+		if (d[1] == turnaround || d[0] == targetdir) { d[1] = DI_NODIR; }
+
+		if (d[0] != DI_NODIR)
+		{
+			dir = d[0];
+			if (TryWalk()) { return dir; }
+		}
+
+		if (d[0] != DI_NODIR)
+		{
+			dir = d[1];
+			if (TryWalk()) { return dir; }
+		}
+
+		if (turnaround != DI_NODIR)
+		{
+			dir = turnaround;
+			if (TryWalk()) { return dir; }
+		}
+
+		dir = olddir;
+		return dir;
+	}
+
+	int GetRunDir()
+	{
+		int dir = movedir;
+
+		int d[2];
+		Vector2 delta;
+		int temp;
+
+		[delta, d[0], d[1]] = GetDirections();
+		if (d[0] == DI_EAST) { d[0] = DI_WEST; }
+		else if (d[0] == DI_WEST) { d[0] = DI_EAST; }
+
+		if (d[1] == DI_SOUTH) { d[1] = DI_NORTH; }
+		else if (d[1] == DI_NORTH) { d[1] = DI_SOUTH; }
+
+		Vector2 absdelta;
+		absdelta.x = abs(delta.x);
+		absdelta.y = abs(delta.y);
+
+		if (absdelta.x > absdelta.y)
+		{
+			temp = d[0];
+			d[0] = d[1];
+			d[1] = temp;
+		}
+
+		if (d[0] != DI_NODIR)
+		{
+			dir = d[0];
+			if (TryWalk()) { return dir; }
+		}
+
+		if (d[0] != DI_NODIR)
+		{
+			dir = d[1];
+			if (TryWalk()) { return dir; }
+		}
+
+		RandomChaseDir();
+
+		return movedir;
+	}
+
+	int MoveDirToTarget()
+	{
+		if (!target) { return DI_NODIR; }
+
+		static const dirtype_t diags[] = { DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST };
+
+		int d[2];
+		Vector2 delta;
+		
+		[delta, d[0], d[1]] = GetDirections();
+
+		if (d[0] != DI_NODIR && d[1] != DI_NODIR)
+		{
+			return diags[((delta.y < 0) << 1) + (delta.x > 0)];
+		}
+
+		if (d[0] != DI_NODIR) { return d[0]; }
+
+		return d[1];
+	}
+
+	Vector2, int, int GetDirections()
+	{
+		if (!target) return (0, 0), 0, 0;
+
+		int d[2];
+
+		Vector2 delta = Vec2To(target);
+		delta.x = int(delta.x / 64);
+		delta.y = int(delta.y / 64);
+
+		if (delta.x < 0) { d[0] = DI_EAST; }
+		else if (delta.x > 0) { d[0] = DI_WEST; }
+		else { d[0] = DI_NODIR; }
+
+		if (delta.y < 0) { d[1] = DI_SOUTH; }
+		else if (delta.y > 0) { d[1] = DI_NORTH; }
+		else { d[1] = DI_NODIR; }
+
+		return delta, d[0], d[1];
 	}
 
 	void A_DeathDrop()
@@ -271,12 +467,12 @@ class ClassicNazi : ClassicBase
 			Loop;
 		Chase:
 			"####" A 0 { if (health <= 0) { SetStateLabel("Dead"); } }  // Just in case...
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase();
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase();
+			"####" CCCCC 1 A_NaziChase();
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase();
 			Loop;
 		Pain:
 			"####" A 0 A_JumpIf(health % 1, "Pain.Alt");
@@ -736,19 +932,19 @@ class HansGrosse : ClassicBoss
 	States
 	{
 		Walk:
-			"####" AAAAA 1 A_Chase (null, null);
+			"####" AAAAA 1 A_NaziChase(null, null);
 			"####" A 1;
-			"####" BBBB 1 A_Chase (null, null);
-			"####" CCCCC 1 A_Chase (null, null);
+			"####" BBBB 1 A_NaziChase(null, null);
+			"####" CCCCC 1 A_NaziChase(null, null);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase (null, null);
+			"####" DDDD 1 A_NaziChase(null, null);
 		Chase:
-			"####" AAAAA 1 A_Chase (null, "Missile");
+			"####" AAAAA 1 A_NaziChase(null, "Missile");
 			"####" A 1;
-			"####" BBBB 1 A_Chase (null, "Missile");
-			"####" CCCCC 1 A_Chase (null, "Missile");
+			"####" BBBB 1 A_NaziChase(null, "Missile");
+			"####" CCCCC 1 A_NaziChase(null, "Missile");
 			"####" CC 1;
-			"####" DDDD 1 A_Chase (null, "Missile");
+			"####" DDDD 1 A_NaziChase(null, "Missile");
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -773,6 +969,8 @@ class DrSchabbs : ClassicBoss
 	{
 		//$Title Dr. Schabbs
 
+		+ClassicBase.RUN
+
 		Speed 4;
 		SeeSound "schabbs/sight";
 		DeathSound "schabbs/death";
@@ -785,12 +983,12 @@ class DrSchabbs : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase(chance:16);
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase(chance:16);
+			"####" CCCCC 1 A_NaziChase(chance:16);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -848,12 +1046,12 @@ class HitlerGhost : ClassicNazi
 			WHGT A 0;
 			Goto Spawn.Stand;
 		Chase:
-			WHGT AAAAA 1 A_Chase;
+			WHGT AAAAA 1 A_NaziChase(chance:4);
 			WHGT A 1;
-			WHGT BBBB 1 A_Chase;
-			WHGT CCCCC 1 A_Chase;
+			WHGT BBBB 1 A_NaziChase(chance:4);
+			WHGT CCCCC 1 A_NaziChase(chance:4);
 			WHGT CC 1;
-			WHGT DDDD 1 A_Chase;
+			WHGT DDDD 1 A_NaziChase(chance:4);
 			Loop;
 		Missile:
 			WHGT E 4 A_FaceTarget;
@@ -889,12 +1087,12 @@ class HitlerMech : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase();
 			"####" AAA 1 A_Pain;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase();
+			"####" CCCCC 1 A_NaziChase();
 			"####" CCC 1 A_Pain;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase();
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -916,6 +1114,8 @@ class Hitler : ClassicBoss
 {
 	Default
 	{
+		-AMBUSH
+
 		Speed 4;
 		AttackSound "boss/attack";
 		PainSound "slurpie";
@@ -929,12 +1129,12 @@ class Hitler : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAA 1 A_Chase;
+			"####" AAA 1 A_NaziChase();
 			"####" AA 1;
-			"####" B 1 A_Chase;
-			"####" CCC 1 A_Chase;
+			"####" B 1 A_NaziChase();
+			"####" CCC 1 A_NaziChase();
 			"####" CC 1;
-			"####" D 1 A_Chase;
+			"####" D 1 A_NaziChase();
 			Loop;
 		Missile:
 			"####" G 15 A_FaceTarget;
@@ -968,6 +1168,8 @@ class Giftmacher : ClassicBoss
 	{
 		//$Title Giftmacher
 
+		+ClassicBase.RUN
+
 		Speed 3;
 		SeeSound "gift/sight";
 		DeathSound "gift/death";
@@ -980,12 +1182,12 @@ class Giftmacher : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase(chance:16);
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase(chance:16);
+			"####" CCCCC 1 A_NaziChase(chance:16);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -1031,6 +1233,8 @@ class Fettgesicht : ClassicBoss
 	{
 		//$Title FettGesicht
 
+		+ClassicBase.RUN
+
 		Speed 4;
 		SeeSound "fatface/sight";
 		AttackSound "boss/attack";
@@ -1044,12 +1248,12 @@ class Fettgesicht : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase(chance:16);
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase(chance:16);
+			"####" CCCCC 1 A_NaziChase(chance:16);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -1086,6 +1290,7 @@ class PacManGhost : ClassicBase
 		//$Category Wolfenstein 3D/Enemies/Pacman
 
 		MONSTER;
+		+AMBUSH
 		+FLOAT
 		+LOWGRAVITY
 		+SPAWNFLOAT
@@ -1111,7 +1316,7 @@ class PacManGhost : ClassicBase
 			"####" AAAAABBBBB 1 A_Look;
 			Loop;
 		Chase:
-			"####" AAAAABBBBB 1 A_Chase;
+			"####" AAAAABBBBB 1 A_NaziChase();
 			Loop;
 		Melee:
 			"####" A 0 A_FaceTarget;
@@ -1259,12 +1464,12 @@ class UberMutant : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase();
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase();
+			"####" CCCCC 1 A_NaziChase();
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase();
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
@@ -1319,6 +1524,8 @@ class DeathKnight : ClassicBoss
 	{
 		//$Title Death Knight
 
+		+ClassicBase.RUN
+
 		Speed 4;
 		SeeSound "dk/sight";
 		AttackSound "boss/attack";
@@ -1335,12 +1542,12 @@ class DeathKnight : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase(chance:16);
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase(chance:16);
+			"####" CCCCC 1 A_NaziChase(chance:16);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
 			"####" F 15 A_FaceTarget;
@@ -1390,6 +1597,8 @@ class AngelofDeath : ClassicBoss
 	{
 		//$Title Angel of Death
 
+		+ClassicBase.RUN
+
 		Painchance 0;
 		Speed 4;
 		SeeSound "aod/sight";
@@ -1405,12 +1614,12 @@ class AngelofDeath : ClassicBoss
 	States
 	{
 		Chase:
-			"####" AAAAA 1 A_Chase;
+			"####" AAAAA 1 A_NaziChase(chance:16);
 			"####" A 1;
-			"####" BBBB 1 A_Chase;
-			"####" CCCCC 1 A_Chase;
+			"####" BBBB 1 A_NaziChase(chance:16);
+			"####" CCCCC 1 A_NaziChase(chance:16);
 			"####" CC 1;
-			"####" DDDD 1 A_Chase;
+			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
 			"####" G 5 A_FaceTarget;
@@ -1467,7 +1676,7 @@ class BarnacleWilhelm : Fettgesicht
 {
 	Default
 	{
-		//$Title Trans Grosse
+		//$Title Barnacle Wilhelm
 
 		SeeSound "wilhelm/sight";
 		AttackSound "shots/single";
@@ -1512,6 +1721,8 @@ class WolfSpectre : ClassicNazi
 {
 	Default
 	{
+		//$Title Spectre
+
 		Monster;
 		+FLOAT
 		+LOWGRAVITY
@@ -1542,7 +1753,7 @@ class WolfSpectre : ClassicNazi
 			"####" AAAABBBBCCCCDDDD 1 A_Look;
 			Loop;
 		Chase:
-			"####" AAAAABBBBBCCCCCDDDDD 1 A_Chase;
+			"####" AAAAABBBBBCCCCCDDDDD 1 A_NaziChase();
 			Loop;
 		Melee:
 			"####" A 0 A_FaceTarget;
@@ -1568,7 +1779,9 @@ class WolfGhost : WolfSpectre
 	Default
 	{
 		//$Category Wolfenstein 3D/Enemies/Lost Episodes/
+
 		+ClassicBase.Lost
+
 		ClassicBase.BaseSprite "LSPE";
 	}
 }
@@ -1577,7 +1790,10 @@ class RadioactiveMist : WolfGhost
 {
 	Default
 	{
+		//$Title Radioactive Mist
+
 		+ClassicBase.Lost
+
 		ClassicBase.BaseSprite "LSP2";
 	}
 }

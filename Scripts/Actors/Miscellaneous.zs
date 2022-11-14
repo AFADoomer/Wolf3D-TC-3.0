@@ -142,7 +142,7 @@ class Turn : SwitchableDecoration
 		Active:
 			TNT1 A 10;
 			TNT1 A 35 {
-				if (target && ClassicBase(target) && !ClassicBase(target).active)
+				if (target && ClassicBase(target) && !ClassicBase(target).bActive)
 				{
 					if (target.health <= 0) { return;}
 					
