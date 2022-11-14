@@ -164,9 +164,9 @@ class ClassicBase : Actor
 			int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
 
 			if (
-				(Random() < chance) ||
+				(Random() < chance) || // Some boss enemies and fake Hitler
 				(
-					!chance &&
+					!chance && // All other enemies
 					(
 						(dist < 1) || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
 						(!chance && dist > 0 && Random() < (128 / dist)) // or randomly, based on distance
@@ -188,11 +188,8 @@ class ClassicBase : Actor
 
 			movecount = 0;
 
-			if (bJustAttacked || movedir == MoveDirToTarget())
-			{
-				if (bRun && dist < 4) { movedir = GetRunDir(); }
-				else { movedir = GetDodgeDir(); }
-			}
+			if (bJustAttacked && (bRun && dist < 4)) { movedir = GetRunDir(); }
+			else if ((bJustAttacked || movedir == MoveDirToTarget()) && (!bRun || dist >= 4)) { movedir = GetDodgeDir(); }
 			
 			A_Chase(curmelee, curmissile, flags | CHF_NORANDOMTURN | CHF_NOPOSTATTACKTURN);
 
@@ -206,7 +203,6 @@ class ClassicBase : Actor
 	{
 		if (!CheckSight(target)) { return movedir; }
 
-		int dir = movedir;
 		int targetdir = MoveDirToTarget();
 
 		static const dirtype_t opposite[] = { DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR };
@@ -216,13 +212,13 @@ class ClassicBase : Actor
 		Vector2 delta;
 		int turnaround, temp, olddir;
 
-		olddir = dir;
-		turnaround = opposite[dir];
+		olddir = movedir;
+		turnaround = opposite[movedir];
 
 		[delta, d[0], d[1]] = GetDirections();
 
-		dir = diags[((delta.y < 0) << 1) + (delta.x > 0)];
-		if (TryWalk()) { return dir; }
+		movedir = diags[((delta.y < 0) << 1) + (delta.x > 0)];
+		if (TryWalk()) { return movedir; }
 
 		Vector2 absdelta;
 		absdelta.x = abs(delta.x);
@@ -247,35 +243,34 @@ class ClassicBase : Actor
 
 		if (d[0] != DI_NODIR)
 		{
-			dir = d[0];
-			if (TryWalk()) { return dir; }
+			movedir = d[0];
+			if (TryWalk()) { return movedir; }
 		}
 
-		if (d[0] != DI_NODIR)
+		if (d[1] != DI_NODIR)
 		{
-			dir = d[1];
-			if (TryWalk()) { return dir; }
+			movedir = d[1];
+			if (TryWalk()) { return movedir; }
 		}
 
 		if (turnaround != DI_NODIR)
 		{
-			dir = turnaround;
-			if (TryWalk()) { return dir; }
+			movedir = turnaround;
+			if (TryWalk()) { return movedir; }
 		}
 
-		dir = olddir;
-		return dir;
+		movedir = olddir;
+		return movedir;
 	}
 
 	int GetRunDir()
 	{
-		int dir = movedir;
-
 		int d[2];
 		Vector2 delta;
 		int temp;
 
 		[delta, d[0], d[1]] = GetDirections();
+
 		if (d[0] == DI_EAST) { d[0] = DI_WEST; }
 		else if (d[0] == DI_WEST) { d[0] = DI_EAST; }
 
@@ -286,7 +281,7 @@ class ClassicBase : Actor
 		absdelta.x = abs(delta.x);
 		absdelta.y = abs(delta.y);
 
-		if (absdelta.x > absdelta.y)
+		if (absdelta.y > absdelta.x)
 		{
 			temp = d[0];
 			d[0] = d[1];
@@ -295,17 +290,34 @@ class ClassicBase : Actor
 
 		if (d[0] != DI_NODIR)
 		{
-			dir = d[0];
-			if (TryWalk()) { return dir; }
+			movedir = d[0];
+			if (TryWalk()) { return movedir; }
 		}
 
-		if (d[0] != DI_NODIR)
+		if (d[1] != DI_NODIR)
 		{
-			dir = d[1];
-			if (TryWalk()) { return dir; }
+			movedir = d[1];
+			if (TryWalk()) { return movedir; }
 		}
 
-		RandomChaseDir();
+		if (Random() > 128)
+		{
+			for (temp = DI_NORTH; temp <= DI_WEST; temp++)
+			{
+				movedir = temp;
+				if (TryWalk()) { return movedir; }
+			}
+		}
+		else
+		{
+			for (temp = DI_WEST; temp >= DI_NORTH; temp--)
+			{
+				movedir = temp;
+				if (TryWalk()) { return movedir; }
+			}
+		}
+
+		movedir = DI_NODIR;		// can't move
 
 		return movedir;
 	}
