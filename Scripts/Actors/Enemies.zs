@@ -145,6 +145,17 @@ class ClassicBase : Actor
 		Super.PostBeginPlay();
 	}
 
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (active && health > 0 && bJustAttacked && target)
+		{
+			int dist = int(max(abs(target.pos.x - pos.x) / 64, abs(target.pos.y - pos.y) / 64));
+			if (dist <= 1) { bJustAttacked = false; } // Within one 64x64 map chunk
+		}
+	}
+
 	void A_DeathDrop()
 	{
 		DropItem drops = GetDropItems();
