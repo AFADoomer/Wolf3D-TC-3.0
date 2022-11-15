@@ -231,9 +231,6 @@ class GenericOptionMenu : OptionMenu
 			return OptionMenu.MouseEvent(type, x, y);
 		}
 
-//		y /= CleanYfac_1;
-//		x /= CleanXfac_1;
-
 		if (mFocusControl)
 		{
 			ItemInfo item = MenuHandler.FindItem(mFocusControl);
@@ -262,6 +259,8 @@ class GenericOptionMenu : OptionMenu
 				}
 
 				SetSlider(item, x);
+
+				return true;
 			}
 			else
 			{
@@ -294,28 +293,27 @@ class GenericOptionMenu : OptionMenu
 			}
 		}
 
-		y = (y / CleanYfac_1) - mDesc.mDrawTop;
-
 		if (mFocusControl)
 		{
+			y -= mDesc.mDrawTop;
 			mFocusControl.MouseEvent(type, x, y);
 			return true;
 		}
 		else
 		{
-			int yline = (y / OptionMenuSettings.mLinespacing);
-			if (yline >= mDesc.mScrollTop)
+			for (int i = 0; i < mDesc.mItems.Size(); i++)
 			{
-				yline += mDesc.mScrollPos;
-			}
-			if (yline >= 0 && yline < mDesc.mItems.Size() && mDesc.mItems[yline].Selectable())
-			{
-				if (yline != mDesc.mSelectedItem)
+				ItemInfo item = MenuHandler.FindItem(mDesc.mItems[i]);
+
+				if (
+					item &&
+					y >= item.y && y <= item.y + item.height
+				)
 				{
-					mDesc.mSelectedItem = yline;
+					mDesc.mSelectedItem = i;
+					mDesc.mItems[i].MouseEvent(type, x, y);
+					return true;
 				}
-				mDesc.mItems[yline].MouseEvent(type, x, y);
-				return true;
 			}
 		}
 
