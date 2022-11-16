@@ -100,7 +100,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 				if (mDesc.mSelectedItem < 0) 
 				{
 					// Figure out how many lines of text fit on the menu
-					int y = mDesc.mDrawTop * CleanYfac_1;
+					int y = mDesc.mDrawTop;
 
 					int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 							
@@ -108,7 +108,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 					int lastrow = screen.GetHeight() - fontheight * 2;
 					int maxheight = lastrow - ytop;
 
-					//HERE HERE HERE
 					int i = 0;
 					int totalheight = 0;
 					for (i = mDesc.mItems.Size() - 1; i > 0; i--)
@@ -125,9 +124,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 							else { nextheight = fontheight; }
 						}
 
-						console.printf("%i: %i / %i", i, totalheight, maxheight);
-
-						if (totalheight + nextheight >= maxheight) { break; }
+						if (totalheight + nextheight > maxheight) { break; }
 					}
 
 					mDesc.mScrollPos = clamp(i, 0, mDesc.mItems.Size() - 1);
