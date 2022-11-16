@@ -60,6 +60,7 @@ class GenericOptionMenu : OptionMenu
 	String menuprefix;
 	MenuHandler handler;
 	OptionMenu source;
+	int starttic;
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
@@ -68,6 +69,7 @@ class GenericOptionMenu : OptionMenu
 		alpha = 1.0;
 		columnwidth = -1;
 		columnspacing = 20;
+		starttic = gametic;
 
 		menuprefix = "Generic";
 
@@ -146,8 +148,8 @@ class GenericOptionMenu : OptionMenu
 
 		indent += columnspacing;
 
-		int i;
-		for (i = 0; i < mDesc.mItems.Size() && y <= lastrow; i++)
+		int i, r;
+		for (i = 0; i < mDesc.mItems.Size() && (y <= lastrow || gametic == starttic); i++)
 		{
 			// Don't scroll the uppermost items
 			if (i == mDesc.mScrollTop)
@@ -213,13 +215,14 @@ class GenericOptionMenu : OptionMenu
 				if (info)
 				{ 
 					y += info.height;
+					if (y <= lastrow) { r = i; }
 				}
 			}
 		}
 
 		source.CanScrollUp = !!(mDesc.mScrollPos > 0);
-		source.CanScrollDown = !!(i < mDesc.mItems.Size());
-		source.VisBottom = i - 1;
+		source.CanScrollDown = !!(r < mDesc.mItems.Size() - 1);
+		source.VisBottom = r;
 
 		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 14 * CleanYfac_1);
 	}

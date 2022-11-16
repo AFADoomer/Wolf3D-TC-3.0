@@ -106,10 +106,31 @@ class ExtendedOptionMenu : GenericOptionMenu
 							
 					int ytop = y + mDesc.mScrollTop * fontheight;
 					int lastrow = screen.GetHeight() - fontheight * 2;
+					int maxheight = lastrow - ytop;
 
-					int maxitems = (lastrow - ytop) / fontheight;// - mDesc.mScrollTop;
+					//HERE HERE HERE
+					int i = 0;
+					int totalheight = 0;
+					for (i = mDesc.mItems.Size() - 1; i > 0; i--)
+					{
+						ItemInfo info = MenuHandler.FindItem(mDesc.mItems[i]);
+						if (info) { totalheight += info.height; }
+						else { totalheight += fontheight; }
 
-					mDesc.mScrollPos = max(0, mDesc.mItems.Size() - maxitems);// + mDesc.mScrollTop);
+						int nextheight = 0;
+						if (i > 0)
+						{
+							ItemInfo nextinfo = MenuHandler.FindItem(mDesc.mItems[i - 1]);
+							if (nextinfo) { nextheight = info.height; }
+							else { nextheight = fontheight; }
+						}
+
+						console.printf("%i: %i / %i", i, totalheight, maxheight);
+
+						if (totalheight + nextheight >= maxheight) { break; }
+					}
+
+					mDesc.mScrollPos = clamp(i, 0, mDesc.mItems.Size() - 1);
 					mDesc.mSelectedItem = mDesc.mItems.Size() - 1;
 				}
 			}
@@ -511,16 +532,19 @@ class ExtendedOptionMenu : GenericOptionMenu
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
 		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), false, 1.0, breakwidth);
+		height = max(int(16 * CleanYfac_1), height);
 
 		KeyBindings binds;
 		if (this is "OptionMenuItemMapControl") { binds = AutomapBindings; }
 
 		info.valueleft = x + spacing;
-		info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft, y + (OptionMenu.OptionHeight() / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
+
+		if (y + height <= bottomclip + 1)
+		{
+			info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft, y + (OptionMenu.OptionHeight() / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
+		}
+
 		info.valueright = x + info.width;
-
-		height = max(int(16 * CleanYfac_1), height);
-
 		info.height = height;
 
 		return info;
