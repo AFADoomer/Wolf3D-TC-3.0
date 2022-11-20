@@ -769,13 +769,52 @@ class WolfNewPlayerMenu : NewPlayerMenu
 
 		return Super.MouseEvent(type, x, y);
 	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
+	}
 }
 
 class WolfJoystickConfigMenu : JoystickConfigMenu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
@@ -813,6 +852,13 @@ class WolfGameplayMenu : GameplayMenu
 
 		return Super.MouseEvent(type, x, y);
 	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
+	}
 }
 
 class WolfCompatibilityMenu : CompatibilityMenu
@@ -842,45 +888,190 @@ class WolfCompatibilityMenu : CompatibilityMenu
 		
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
+	}
 }
 
 class WolfGLTextureGLOptions : GLTextureGLOptions
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
 class WolfReverbEdit : ReverbEdit
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
 class WolfReverbSelect : ReverbSelect
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
 class WolfReverbSave : ReverbSave
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
 class WolfColorPickerMenu : ColorPickerMenu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		if (mCVar == null) return;
 		int y = (-mDesc.mPosition + BigFont.GetHeight() + mDesc.mItems.Size() * OptionMenuSettings.mLinespacing) * CleanYfac_1;
@@ -945,13 +1136,74 @@ class WolfColorPickerMenu : ColorPickerMenu
 
 		y += 49*CleanYfac_1;
 		screen.DrawText (SmallFont, Font.CR_GRAY, x+(48-SmallFont.StringWidth("---->")/2)*CleanXfac_1, y, "---->", DTA_CleanNoMove_1, true);
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
 
 class WolfOS_Menu : OS_Menu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
+
+		Menu.Drawer();
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (generic && generic.OnUIEvent(ev)) { return true; }
+
+		return Super.OnUIEvent(ev);
 	}
 }
