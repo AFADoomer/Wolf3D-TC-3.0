@@ -126,7 +126,7 @@ class WolfPlayer : DoomPlayer
 		if (sv_norespawn) { return; }
 		
 		if (
-			respawntick++ >= 50 ||
+			respawntick++ >= (LifeHandler.CheckLives(self) > -1 ? 70 : 105) ||
 			(player.cmd.buttons & BT_USE && player.Bot != null)
 		)
 		{ respawn = true; }

@@ -24,6 +24,19 @@ class LifeHandler : StaticEventHandler
 		return this.lives[playernum];
 	}
 
+	static int CheckLives(Actor p)
+	{
+		if (!p) { return 0; }
+
+		int playernum = p.PlayerNumber();
+		if (playernum < 0) { return 0; }
+
+		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
+		if (!this) { return 0; }
+
+		return this.lives[playernum];
+	}
+
 	static bool JustDied(Actor p, int playernum)
 	{
 		if (playernum < 0) { return false; }
