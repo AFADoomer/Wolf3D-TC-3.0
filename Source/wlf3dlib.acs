@@ -378,6 +378,7 @@ Script "W_DeathCam" (void)
 
 Script "W_PlayerRespawn" RESPAWN
 {
+	Delay(1);
 	ScriptCall("ClassicStatusBar", "ClearFizzle");
 }
 

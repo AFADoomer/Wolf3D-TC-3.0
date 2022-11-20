@@ -130,8 +130,13 @@ class ClassicBase : Actor
 	{
 		if (spr > -1 && sprite != spr) { sprite = spr; }
 
-		if (!multiplayer && target && target.player && target.health <= 0) { frame = AttackState.frame; }
-		else { Super.Tick(); }
+		if (!multiplayer && target && target.player && target.health <= 0)
+		{
+			frame = AttackState.frame;
+			tics = 105; // Make this friendly to the resurrect cheat and only freeze them for 3 seconds
+		}
+
+		Super.Tick();
 	}
 
 	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int flags = 0, int chance = 0)
