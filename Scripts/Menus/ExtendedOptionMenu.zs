@@ -272,6 +272,16 @@ class ExtendedOptionMenu : GenericOptionMenu
 		return true;
 	}
 
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_RButtonUp)
+		{
+			return MenuEvent(MKEY_Back, false);
+		}
+
+		return Super.OnUIEvent(ev);
+	}
+
 	override void Drawer()
 	{
 		if (g_defaultmenus)
@@ -719,9 +729,12 @@ class OptionMenuItemStripTitle : OptionMenuItem
 
 class WolfNewPlayerMenu : NewPlayerMenu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		mPlayerDisplay.Drawer(false);
 		
@@ -732,6 +745,29 @@ class WolfNewPlayerMenu : NewPlayerMenu
 		str = Stringtable.Localize(mRotation ? "$PLYRMNU_SEEFRONT" : "$PLYRMNU_SEEBACK");
 		y += SmallFont.GetHeight();
 		screen.DrawText (SmallFont, Font.CR_GOLD,x - SmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
+
+		Menu.Drawer();
+	}
+	
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+
+		Super.Ticker();
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic && generic.MenuEvent(mkey, fromcontroller)) { return true; }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
 	}
 }
 
@@ -754,6 +790,8 @@ class WolfGameplayMenu : GameplayMenu
 
 		String s = String.Format("dmflags = %d\ndmflags2 = %d", dmflags, dmflags2);
 		screen.DrawText (SmallFont, OptionMenuSettings.mFontColorValue, 40, screen.GetHeight() - SmallFont.GetHeight() * 2.5, s);
+
+		Menu.Drawer();
 	}
 
 	override void Ticker()
@@ -768,6 +806,13 @@ class WolfGameplayMenu : GameplayMenu
 		
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+
+		return Super.MouseEvent(type, x, y);
+	}
 }
 
 class WolfCompatibilityMenu : CompatibilityMenu
@@ -781,6 +826,8 @@ class WolfCompatibilityMenu : CompatibilityMenu
 
 		String s = String.Format("compatflags = %d\ncompatflags2 = %d", compatflags, compatflags2);
 		screen.DrawText (SmallFont, OptionMenuSettings.mFontColorValue, 40, screen.GetHeight() - SmallFont.GetHeight() * 2.5, s);
+
+		Menu.Drawer();
 	}
 
 	override void Ticker()

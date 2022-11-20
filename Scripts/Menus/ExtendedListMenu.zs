@@ -405,6 +405,16 @@ class ExtendedListMenu : ListMenu
 			}
 		}
 	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_RButtonUp)
+		{
+			return MenuEvent(MKEY_Back, false);
+		}
+
+		return Super.OnUIEvent(ev);
+	}
 }
 
 // For an icon beside the menu entry, like Wolf3D episode select
