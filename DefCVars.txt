@@ -1,4 +1,5 @@
 version 223
+set autoaim 0
 set wipetype 0
 set freelook 0
 set st_scale -1

@@ -32,6 +32,7 @@ class ClassicBase : Actor
 		Mass 10000;
 		DeathHeight 0;
 		Painchance 256;
+		FastSpeed 6; // Generic handling for supporting fast monsters 
 		BloodColor "FF 00 00";
 		DamageFactor "WolfNazi", 0.0;
 	}
@@ -164,12 +165,12 @@ class ClassicBase : Actor
 			int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
 
 			if (
-				(Random() < chance) || // Some boss enemies and fake Hitler
+				(Game.WolfRandom() < chance) || // Some boss enemies and fake Hitler
 				(
 					!chance && // All other enemies
 					(
 						(dist < 1) || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
-						(!chance && dist > 0 && Random() < (128 / dist)) // or randomly, based on distance
+						(!chance && dist > 0 && Game.WolfRandom() < (128 / dist)) // or randomly, based on distance
 					)
 				)
 			)
@@ -231,7 +232,7 @@ class ClassicBase : Actor
 			d[1] = temp;
 		}
 
-		if (Random() < 128)
+		if (Game.WolfRandom() < 128)
 		{
 			temp = d[0];
 			d[0] = d[1];
@@ -300,7 +301,7 @@ class ClassicBase : Actor
 			if (TryWalk()) { return movedir; }
 		}
 
-		if (Random() > 128)
+		if (Game.WolfRandom() > 128)
 		{
 			for (temp = DI_NORTH; temp <= DI_WEST; temp++)
 			{
@@ -420,7 +421,7 @@ class ClassicBase : Actor
 		int num = level.levelnum % 100;
 
 		if (
-			!Random(0, 128) &&
+			!Game.WolfRandom() &&
 			(
 				(Game.IsSoD() && (num == 19 || num == 20)) ||
 				(!Game.IsSoD() && num == 10)
@@ -589,7 +590,7 @@ class Dog : ClassicNazi
 		Melee:
 			"####" E 0 A_Stop;
 			"####" EF 5 A_FaceTarget;
-			"####" G 5 A_CustomMeleeAttack(random(1,15));
+			"####" G 5 A_CustomMeleeAttack(Random(1,15));
 			"####" EA 5;
 			Goto Chase;
 		Death:
@@ -640,7 +641,7 @@ class Guard : ClassicNazi
 		Missile:
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
-			"####" I 8 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" I 8 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 	}
 }
@@ -708,13 +709,13 @@ class SS : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(0, AttackSound, 0.666, 64, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(0, AttackSound, 0.666, 64, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(0, AttackSound, 0.666, 64, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(0, AttackSound, 0.666, 64, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
 			"####" A 0 {
@@ -801,9 +802,9 @@ class Mutant : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
-			"####" H 10 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" H 10 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" G 5 A_FaceTarget;
-			"####" I 10 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" I 10 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
 	}
@@ -877,7 +878,7 @@ class Officer : ClassicNazi
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 	}
 }
@@ -961,7 +962,7 @@ class HansGrosse : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
-			"####" GFGFGE 5 Bright A_WolfAttack(0, AttackSound, 0.666, 64, 64, 2, 4, 160.0);
+			"####" GFGFGE 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" A 0 A_JumpIfCloser(64, "Missile");
 			Goto Walk;
 		Death:
@@ -1109,7 +1110,7 @@ class HitlerMech : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
-			"####" GFGF 5 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" GFGF 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
 			"####" H 5 A_Scream;
@@ -1151,7 +1152,7 @@ class Hitler : ClassicBoss
 		Missile:
 			"####" G 15 A_FaceTarget;
 			"####" H 5 A_FaceTarget;
-			"####" IHIH 5 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" IHIH 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1272,7 +1273,7 @@ class Fettgesicht : ClassicBoss
 			"####" F 5 A_FaceTarget;
 			"####" G 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			"####" E 0 A_FaceTarget;
-			"####" HGH 5 Bright A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" HGH 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1485,15 +1486,15 @@ class UberMutant : ClassicBoss
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
-			"####" F 6 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" F 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" E 0 A_FaceTarget;
-			"####" G 6 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" G 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" E 0 A_FaceTarget;
-			"####" H 6 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" H 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" E 0 A_FaceTarget;
-			"####" G 6 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" G 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" E 0 A_FaceTarget;
-			"####" F 6 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" F 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" E 0 A_FaceTarget;
 			Goto Chase;
 		Death:
@@ -1563,11 +1564,11 @@ class DeathKnight : ClassicBoss
 			Loop;
 		Missile:
 			"####" F 15 A_FaceTarget;
-			"####" G 5 BRIGHT A_SpawnProjectile(projectile, 48, 15, 0);
-			"####" I 5 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" G 5 Bright A_SpawnProjectile(projectile, 48, 15, 0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			"####" I 0 A_FaceTarget;
-			"####" H 5 BRIGHT A_SpawnProjectile(projectile, 48, -15, 0);
-			"####" I 5 BRIGHT A_WolfAttack(0, AttackSound, 1.0, 64, 64, 2, 4, 160.0);
+			"####" H 5 Bright A_SpawnProjectile(projectile, 48, -15, 0);
+			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
 			Goto Chase;
 		Death:
 			"####" A 53 A_Scream;
@@ -1636,15 +1637,15 @@ class AngelofDeath : ClassicBoss
 		Missile:
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 BRIGHT A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 BRIGHT A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 BRIGHT A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
 		Tired:
 			"####" I 20;
 			"####" J 20 A_Pain;
