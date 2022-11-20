@@ -100,11 +100,29 @@ class ClassicWeapon : Weapon
 
 class WolfPuff : BulletPuff
 {
+	Default
+	{
+		+ROLLSPRITE
+		RenderStyle "Normal";
+	}
+
 	override void PostBeginPlay()
 	{
 		bInvisible = g_noblood;
 
 		Super.PostBeginPlay();
+
+		roll = Random(0, 3) * 90;
+	}
+
+	States
+	{
+		Spawn:
+			WPUF A 4 Bright;
+			WPUF B 4;// A_SetRenderStyle(0.5, STYLE_Translucent);
+		Melee:
+			WPUF CD 4;
+			Stop;
 	}
 }
 
