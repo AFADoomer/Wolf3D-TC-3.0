@@ -338,6 +338,8 @@ Script "W_PlayerDeath" DEATH //501
 {
 	If (PlayerCount() == 1) { SetMusic(""); }
 
+	Delay(35);
+
 	ScriptCall("ClassicStatusBar", "DoFizzle", 0xFF0000);
 }
 

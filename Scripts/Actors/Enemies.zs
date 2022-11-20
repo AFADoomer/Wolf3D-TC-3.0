@@ -4,6 +4,7 @@ class ClassicBase : Actor
 	int skillhealth0, skillhealth1, skillhealth2, skillhealth3;
 	int dodgedir;
 	String basesprite;
+	SpriteID spr;
 
 	int baseflags;
 
@@ -40,38 +41,11 @@ class ClassicBase : Actor
 	States
 	{
 		Spawn:
-			UNKN A 0;
+			UNKN A 1;
 			Loop;
 		See:
 			"####" A 1 {
-				if (!bActive)
-				{
-					if (tid)
-					{
-						int lookup = (tid > 500) ? tid - 500 : tid;
-
-						let it = level.CreateActorIterator(lookup, "Actor");
-						Actor mo;
-
-						while (mo = Actor(it.Next()))
-						{
-							if (mo == self) { continue; }
-							if (!mo.bIsMonster || mo.bDormant || !mo.bShootable || mo.health <= 0) { continue; }
-
-							if (ClassicBase(mo))
-							{
-								if (ClassicBase(mo).bActive) { continue; }
-								else { ClassicBase(mo).bActive = true; }
-							}
-
-							mo.target = target;
-							mo.SetState(SeeState);
-						}
-					}
-
-					bActive = true;
-				}
-
+				ActivatePeers();
 				SetStateLabel("Chase");
 			}
 		SpriteList:
@@ -111,7 +85,7 @@ class ClassicBase : Actor
 	{
 		if (basesprite.length())
 		{
-			int spr = GetSpriteIndex(Name(basesprite));
+			spr = GetSpriteIndex(Name(basesprite));
 
 			if (spr > -1) { sprite = spr; }
 		}
@@ -151,6 +125,7 @@ class ClassicBase : Actor
 
 	override void Tick()
 	{
+		if (spr > -1 && sprite != spr) { sprite = spr; }
 		Super.Tick();
 	}
 
@@ -471,6 +446,34 @@ class ClassicBase : Actor
 
 		S_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
 	}
+
+	void ActivatePeers()
+	{
+		if (bActive || !tid) { return; }
+
+		int lookup = (tid > 500) ? tid - 500 : tid;
+
+		let it = level.CreateActorIterator(lookup, "Actor");
+		Actor mo;
+
+		while (mo = Actor(it.Next()))
+		{
+			if (mo == self) { continue; }
+			if (!mo.bIsMonster || mo.bDormant || !mo.bShootable || mo.health <= 0) { continue; }
+
+			let c = ClassicBase(mo);
+			if (c)
+			{
+				if (c.bActive) { continue; }
+				else { c.bActive = true; }
+			}
+
+			mo.target = target;
+			mo.SetState(SeeState);
+		}
+
+		bActive = true;
+	}
 }
 
 class ClassicNazi : ClassicBase
@@ -577,7 +580,7 @@ class ClassicBoss : ClassicBase
 	{
 		Spawn:
 			UNKN A 0;
-		Stand:
+		Spawn.Stand:
 			"####" A 5 A_Look();
 			Loop;
 	}
@@ -586,7 +589,7 @@ class ClassicBoss : ClassicBase
 	{
 		Super.PostBeginPlay();
 
-		SetStateLabel("Stand");
+		SetStateLabel("Spawn.Stand");
 	}
 }
 

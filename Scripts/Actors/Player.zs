@@ -3,6 +3,7 @@ class WolfPlayer : DoomPlayer
 {
 	bool goobers, mutated, respawn, justdied;
 	int deathtick, respawntick, idletick;
+	double attackerangle;
 	Vector3 lastpos;
 
 	Default
@@ -129,6 +130,12 @@ class WolfPlayer : DoomPlayer
 			(player.cmd.buttons & BT_USE && player.Bot != null)
 		)
 		{ respawn = true; }
+
+		if (player.attacker && player.attacker != self)
+		{
+			if (!attackerangle) { attackerangle = deltaangle(angle, AngleTo(player.attacker)); }
+			A_Face(player.attacker, abs(attackerangle) / 20, 6, 0, 0, FAF_MIDDLE);
+		}
 
 		if (respawn)
 		{
