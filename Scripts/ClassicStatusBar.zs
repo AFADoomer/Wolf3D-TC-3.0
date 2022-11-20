@@ -476,8 +476,8 @@ class ClassicStatusBar : WidgetStatusBar
 
 			if (borderstyle > 0)
 			{
-				double width = 200 * screensize.x / screensize.y;
-				viewportsize.x = (blocks * (width - 16)) / 8.35;
+				double width = 200 * Screen.GetAspectRatio() + RelTop + 16;
+				viewportsize.x = (blocks * width) / 10;
 			}
 			else
 			{
@@ -495,9 +495,9 @@ class ClassicStatusBar : WidgetStatusBar
 			{
 				// Fill outside of boundaries with green
 				Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
-				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y));
-				Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 2), int(window.y));
-				Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 2), int(screensize.y - window.y - windowsize.y + 1));
+				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x + 1), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y));
+				Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 4), int(window.y));
+				Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 4), int(screensize.y - window.y - windowsize.y + 1));
 
 				// Draw border
 				DrawImage("WBRD_T", (viewport.x, viewport.y - 3), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 3, 1.0));
