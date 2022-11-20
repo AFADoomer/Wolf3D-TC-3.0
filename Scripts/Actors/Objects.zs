@@ -85,6 +85,7 @@ class ExplosiveOilDrum : ExplosiveBarrel
 		//$Title Barrel (Oil Drum, Explosive)
 
 		Height 50;
+		Radius 32;
 		DeathSound "missile/hit";
 		Obituary "";
 	}
@@ -444,6 +445,7 @@ class YellowKey : Key
 	{
 		//$Category Wolfenstein 3D/Items/Keys
 		//$Title Key (Gold)
+		//$Color 19
 		Inventory.AltHUDIcon "I_YKEY";
 		Inventory.Icon "I_YKEY_T";
 		Inventory.PickupSound "pickups/key";
@@ -464,6 +466,7 @@ class BlueKey : Key
 	{
 		//$Category Wolfenstein 3D/Items/Keys
 		//$Title Key (Silver)
+		//$Color 11
 		Inventory.AltHUDIcon "I_BKEY";
 		Inventory.Icon "I_BKEY_T";
 		Inventory.PickupSound "pickups/key";

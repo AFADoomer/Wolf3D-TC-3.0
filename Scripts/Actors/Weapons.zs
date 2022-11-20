@@ -452,6 +452,7 @@ class WolfGas : Ammo
 	{
 		//$Category Wolfenstein 3D/Items/Ammo
 		//$Title Flamethrower Ammo (14)
+		//$Color 3
 		Mass 10000;
 		Inventory.Amount 14;
 		Inventory.Icon "I_GAS_O";
@@ -510,6 +511,7 @@ class WolfRocketPickup : Ammo
 	{
 		//$Category Wolfenstein 3D/Items/Ammo
 		//$Title Rocket (1)
+		//$Color 3
 		Mass 10000;
 		Inventory.Amount 1;
 		Inventory.Icon "I_ROCKET_O";

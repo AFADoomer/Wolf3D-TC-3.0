@@ -5,6 +5,7 @@ class ClassicBase : Actor
 	int dodgedir;
 	String basesprite;
 	SpriteID spr;
+	State AttackState;
 
 	int baseflags;
 
@@ -120,13 +121,17 @@ class ClassicBase : Actor
 			if (level.levelnum < 100 && floorpic != TexMan.CheckForTexture("FLOOR", TexMan.Type_Any)) { health /= 3; }
 		}
 
+		AttackState = FindState("Attack");
+
 		Super.PostBeginPlay();
 	}
 
 	override void Tick()
 	{
 		if (spr > -1 && sprite != spr) { sprite = spr; }
-		Super.Tick();
+
+		if (!multiplayer && target && target.player && target.health <= 0) { frame = AttackState.frame; }
+		else { Super.Tick(); }
 	}
 
 	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int flags = 0, int chance = 0)
@@ -632,6 +637,7 @@ class Dog : ClassicNazi
 		Melee:
 			"####" E 0 A_Stop;
 			"####" EF 5 A_FaceTarget;
+		Attack:
 			"####" G 5 A_CustomMeleeAttack(Random(1,15));
 			"####" EA 5;
 			Goto Chase;
@@ -683,6 +689,7 @@ class Guard : ClassicNazi
 		Missile:
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
+		Attack:
 			"####" I 8 Bright A_NaziShoot();
 			Goto Chase;
 	}
@@ -751,6 +758,7 @@ class SS : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
+		Attack:
 			"####" I 5 Bright A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
 			"####" I 5 Bright A_NaziShoot(0.666);
@@ -844,6 +852,7 @@ class Mutant : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
+		Attack:
 			"####" H 10 Bright A_NaziShoot();
 			"####" G 5 A_FaceTarget;
 			"####" I 10 Bright A_NaziShoot();
@@ -920,6 +929,7 @@ class Officer : ClassicNazi
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
+		Attack:
 			"####" I 5 Bright A_NaziShoot();
 			Goto Chase;
 	}
@@ -1004,6 +1014,7 @@ class HansGrosse : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
+		Attack:
 			"####" GFGFGE 5 Bright A_NaziShoot(0.666);
 			"####" A 0 A_JumpIfCloser(64, "Missile");
 			Goto Walk;
@@ -1047,6 +1058,7 @@ class DrSchabbs : ClassicBoss
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
+		Attack:
 			"####" F 5 A_SpawnProjectile("Syringe", 30, 18, 0);
 			Goto Chase;
 		Death:
@@ -1110,6 +1122,7 @@ class HitlerGhost : ClassicNazi
 			Loop;
 		Missile:
 			WHGT E 4 A_FaceTarget;
+		Attack:
 			WHGT EEEEEEEE 4 Bright A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
@@ -1194,6 +1207,7 @@ class Hitler : ClassicBoss
 		Missile:
 			"####" G 15 A_FaceTarget;
 			"####" H 5 A_FaceTarget;
+		Attack:
 			"####" IHIH 5 Bright A_NaziShoot();
 			Goto Chase;
 		Death:
@@ -1246,6 +1260,7 @@ class Giftmacher : ClassicBoss
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
+		Attack:
 			"####" F 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			Goto Chase;
 		Death:
@@ -1313,6 +1328,7 @@ class Fettgesicht : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
+		Attack:
 			"####" G 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			"####" E 0 A_FaceTarget;
 			"####" HGH 5 Bright A_NaziShoot();
@@ -1528,6 +1544,7 @@ class UberMutant : ClassicBoss
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
+		Attack:
 			"####" F 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
 			"####" G 6 Bright A_NaziShoot();
@@ -1606,6 +1623,7 @@ class DeathKnight : ClassicBoss
 			Loop;
 		Missile:
 			"####" F 15 A_FaceTarget;
+		Attack:
 			"####" G 5 Bright A_SpawnProjectile(projectile, 48, 15, 0);
 			"####" I 5 Bright A_NaziShoot();
 			"####" I 0 A_FaceTarget;
@@ -1679,6 +1697,7 @@ class AngelofDeath : ClassicBoss
 		Missile:
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
+		Attack:
 			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
@@ -1812,6 +1831,7 @@ class WolfSpectre : ClassicNazi
 			Loop;
 		Melee:
 			"####" A 0 A_FaceTarget;
+		Attack:
 			"####" ABCD 2 A_CustomMeleeAttack(MeleeDamage, "", "", "WolfNazi", false);
 			Goto Chase;
 		Pain:

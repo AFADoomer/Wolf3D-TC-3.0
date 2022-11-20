@@ -134,7 +134,7 @@ class WolfPlayer : DoomPlayer
 		if (player.attacker && player.attacker != self)
 		{
 			if (!attackerangle) { attackerangle = deltaangle(angle, AngleTo(player.attacker)); }
-			A_Face(player.attacker, abs(attackerangle) / 20, 6, 0, 0, FAF_MIDDLE);
+			A_Face(player.attacker, abs(attackerangle) / 20, 6, 0, 0, FAF_BOTTOM);
 		}
 
 		if (respawn)
