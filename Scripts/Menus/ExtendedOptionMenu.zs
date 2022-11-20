@@ -127,7 +127,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 						if (totalheight + nextheight > maxheight) { break; }
 					}
 
-					mDesc.mScrollPos = clamp(i, 0, mDesc.mItems.Size() - 1);
+					mDesc.mScrollPos = i;
 					mDesc.mSelectedItem = mDesc.mItems.Size() - 1;
 				}
 			}
@@ -342,18 +342,14 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		screen.Dim(fadecolor, 1.0 - alpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		Super.DrawMenu(x, 100, Font.GetFont("BigFont"), ytop, lastrow - fontheight);
+		Super.DrawMenu(x, 120, Font.GetFont("BigFont"), ytop, lastrow - fontheight);
 	}
 
 	override void Ticker()
 	{
 		Super.Ticker();
 
-		if (!handler.Items.Size())
-		{
-			alpha = 0;
-		}
-		else if (gametic > 35)
+		if (gametic > 35)
 		{
 			alpha = abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}
@@ -732,10 +728,10 @@ class WolfNewPlayerMenu : NewPlayerMenu
 		int x = screen.GetWidth()/(CleanXfac_1*2) + PLAYERDISPLAY_X + PLAYERDISPLAY_W/2;
 		int y = PLAYERDISPLAY_Y + PLAYERDISPLAY_H + 5;
 		String str = Stringtable.Localize("$PLYRMNU_PRESSSPACE");
-		screen.DrawText (NewSmallFont, Font.CR_GOLD, x - NewSmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
+		screen.DrawText (SmallFont, Font.CR_GOLD, x - SmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
 		str = Stringtable.Localize(mRotation ? "$PLYRMNU_SEEFRONT" : "$PLYRMNU_SEEBACK");
-		y += NewSmallFont.GetHeight();
-		screen.DrawText (NewSmallFont, Font.CR_GOLD,x - NewSmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
+		y += SmallFont.GetHeight();
+		screen.DrawText (SmallFont, Font.CR_GOLD,x - SmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
 	}
 }
 
@@ -749,23 +745,55 @@ class WolfJoystickConfigMenu : JoystickConfigMenu
 
 class WolfGameplayMenu : GameplayMenu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		String s = String.Format("dmflags = %d\ndmflags2 = %d", dmflags, dmflags2);
 		screen.DrawText (SmallFont, OptionMenuSettings.mFontColorValue, 40, screen.GetHeight() - SmallFont.GetHeight() * 2.5, s);
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic && generic.MenuEvent(mkey, fromcontroller)) { return true; }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
 	}
 }
 
 class WolfCompatibilityMenu : CompatibilityMenu
 {
+	ExtendedOptionMenu generic;
+
 	override void Drawer()
 	{
-		GenericOptionMenu.Draw(self, "ExtendedOptionMenu");
+		if (generic) { generic.Drawer(); }
+		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		String s = String.Format("compatflags = %d\ncompatflags2 = %d", compatflags, compatflags2);
 		screen.DrawText (SmallFont, OptionMenuSettings.mFontColorValue, 40, screen.GetHeight() - SmallFont.GetHeight() * 2.5, s);
+	}
+
+	override void Ticker()
+	{
+		if (generic) { generic.Ticker(); }
+		else { Super.Ticker(); }
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+		
+		return Super.MenuEvent(mkey, fromcontroller);
 	}
 }
 

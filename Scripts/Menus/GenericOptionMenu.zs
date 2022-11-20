@@ -10,11 +10,10 @@ class MenuHandler : EventHandler
 	static ui ItemInfo FindItem(OptionMenuItem item)
 	{
 		MenuHandler handler = MenuHandler.Get();
-		OptionMenu current = OptionMenu(Menu.GetCurrentMenu());
 
 		for (int i = 0; i < handler.Items.Size(); i++)
 		{
-			if (handler.Items[i].item == item && handler.Items[i].menu == current)
+			if (handler.Items[i].item == item)
 			{
 				return handler.Items[i];
 			}
@@ -22,7 +21,6 @@ class MenuHandler : EventHandler
 
 		ItemInfo new = New("ItemInfo");
 		handler.Items.Push(new);
-		new.menu = current;
 		new.item = item;
 		new.width = 0;
 
@@ -60,7 +58,6 @@ class GenericOptionMenu : OptionMenu
 	String menuprefix;
 	MenuHandler handler;
 	OptionMenu source;
-	int starttic;
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
@@ -69,7 +66,6 @@ class GenericOptionMenu : OptionMenu
 		alpha = 1.0;
 		columnwidth = -1;
 		columnspacing = 20;
-		starttic = gametic;
 
 		menuprefix = "Generic";
 
@@ -89,15 +85,17 @@ class GenericOptionMenu : OptionMenu
 		DrawMenu(20, 20);
 	}
 
-	static void Draw(OptionMenu current, String cls = "GenericOptionMenu", int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
+	static GenericOptionMenu Draw(OptionMenu current, String cls = "GenericOptionMenu", int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
 	{
 		let generic = GenericOptionMenu(New(cls));
-		if (!generic) { return; }
+		if (!generic) { return null; }
 
 		generic.Init(current.mParentMenu, current.mDesc);
 		generic.source = current;
 
 		generic.DrawMenu(left, spacing, fnt, scrolltop, scrollheight);
+
+		return generic;
 	}
 
 	virtual void DrawMenu(int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
@@ -148,8 +146,19 @@ class GenericOptionMenu : OptionMenu
 
 		indent += columnspacing;
 
+		int enableditems;
+		for (int k = 0; k < mDesc.mItems.Size(); k++)
+		{
+			if (mDesc.mItems[k].mEnabled) { enableditems++; }
+		}
+
+		for (int l = 0; l < mDesc.mItems.Size(); l++)
+		{
+			ItemInfo i = DrawItemType(mDesc.mItems[l], -0x7FFFFFFF,  -0x7FFFFFFF, indent, fnt);
+		}
+
 		int i, r;
-		for (i = 0; i < mDesc.mItems.Size() && (y <= lastrow || gametic == starttic); i++)
+		for (i = 0; i < mDesc.mItems.Size() && y <= lastrow; i++)
 		{
 			// Don't scroll the uppermost items
 			if (i == mDesc.mScrollTop)
@@ -158,65 +167,12 @@ class GenericOptionMenu : OptionMenu
 				if (i >= mDesc.mItems.Size()) { break; } // skipped beyond end of menu 
 			}
 
-			bool isSelected = mDesc.mSelectedItem == i;
+			ItemInfo info = DrawItemType(mDesc.mItems[i], x, y, indent, fnt, mDesc.mSelectedItem == i);
 
-			let item = mDesc.mItems[i];
-
-			ItemInfo info;
-
-			if (item.mEnabled)
-			{
-				if (isSelected && item.Selectable())
-				{
-					DrawCursor(x - 12 * CleanXfac_1, y);
-				}
-
-				if (item is "OptionMenuItemControlBase")
-				{
-					info = DrawControl(OptionMenuItemControlBase(item), x, y, indent, fnt, isSelected, columnwidth);
-				}
-				else if (item is "OptionMenuItemOptionBase")
-				{
-					info = DrawOption(OptionMenuItemOptionBase(item), x, y, indent, fnt, isSelected, columnwidth);
-				}
-				else if (item is "OptionMenuSliderBase")
-				{
-					info = DrawSlider(OptionMenuSliderBase(item), x, y, indent, fnt, isSelected, breakwidth:columnwidth);
-				}
-				else if (item is "OptionMenuItemStaticTextSwitchable")
-				{
-					info = DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable(item), x, y, fnt);
-				}
-				else if (item is "OptionMenuItemColorPicker")
-				{
-					info = DrawColorPicker(mDesc.mItems[i], x, y, indent, fnt, isSelected, columnwidth);
-				}
-				else if (item is "OptionMenuItemStaticText")
-				{
-					info = DrawStaticText(OptionMenuItemStaticText(item), x, y, fnt);
-				}
-				else if (item is "OptionMenuFieldBase")
-				{
-					info = DrawField(OptionMenuFieldBase(item), x, y, indent, fnt, isSelected);
-				}
-				else if (item is "OptionMenuItemCommand")
-				{
-					info = DrawCommand(item, x, y, fnt, isSelected, columnwidth);
-				}
-				else if (item is "OptionMenuItemSubmenu")
-				{
-					info = DrawSubmenu(OptionMenuItemSubmenu(item), x, y, indent, fnt, isSelected, columnwidth);
-				}
-				else
-				{
-					info = DrawItem(item, x, y, fnt, isSelected, columnwidth);
-				}
-
-				if (info)
-				{ 
-					y += info.height;
-					if (y <= lastrow) { r = i; }
-				}
+			if (info)
+			{ 
+				y += info.height;
+				if (y <= lastrow) { r = i; }
 			}
 		}
 
@@ -225,6 +181,60 @@ class GenericOptionMenu : OptionMenu
 		source.VisBottom = r;
 
 		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 14 * CleanYfac_1);
+	}
+
+	virtual ItemInfo DrawItemType(OptionMenuItem item, int x, int y, int indent, Font fnt, bool isSelected = false)
+	{
+		if (item.mEnabled)
+		{
+			if (isSelected && item.Selectable())
+			{
+				DrawCursor(x - 12 * CleanXfac_1, y);
+			}
+
+			if (item is "OptionMenuItemControlBase")
+			{
+				return DrawControl(OptionMenuItemControlBase(item), x, y, indent, fnt, isSelected, columnwidth);
+			}
+			else if (item is "OptionMenuItemOptionBase")
+			{
+				return DrawOption(OptionMenuItemOptionBase(item), x, y, indent, fnt, isSelected, columnwidth);
+			}
+			else if (item is "OptionMenuSliderBase")
+			{
+				return DrawSlider(OptionMenuSliderBase(item), x, y, indent, fnt, isSelected, breakwidth:columnwidth);
+			}
+			else if (item is "OptionMenuItemStaticTextSwitchable")
+			{
+				return DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable(item), x, y, fnt);
+			}
+			else if (item is "OptionMenuItemColorPicker")
+			{
+				return DrawColorPicker(item, x, y, indent, fnt, isSelected, columnwidth);
+			}
+			else if (item is "OptionMenuItemStaticText")
+			{
+				return DrawStaticText(OptionMenuItemStaticText(item), x, y, fnt);
+			}
+			else if (item is "OptionMenuFieldBase")
+			{
+				return DrawField(OptionMenuFieldBase(item), x, y, indent, fnt, isSelected);
+			}
+			else if (item is "OptionMenuItemCommand")
+			{
+				return DrawCommand(item, x, y, fnt, isSelected, columnwidth);
+			}
+			else if (item is "OptionMenuItemSubmenu")
+			{
+				return DrawSubmenu(OptionMenuItemSubmenu(item), x, y, indent, fnt, isSelected, columnwidth);
+			}
+			else
+			{
+				return DrawItem(item, x, y, fnt, isSelected, columnwidth);
+			}
+		}
+
+		return null;
 	}
 
 	override bool MouseEvent(int type, int x, int y)

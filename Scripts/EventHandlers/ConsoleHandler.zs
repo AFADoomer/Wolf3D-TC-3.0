@@ -1,6 +1,22 @@
 class ConsoleHandler : StaticEventHandler
 {
-	String hash;
+	String gamestring;
+
+	override void OnRegister()
+	{
+		String hash = "";
+
+		// Show the last commit's hash if this is a beta release
+		if (StringTable.Localize("$VERSION").IndexOf("beta") > -1)
+		{
+			hash = ReadFrom("Data/GitHash.txt");
+			hash = " \c[Dark Gray]" .. hash.Left(7);
+		}
+
+		gamestring = String.Format("\c[True White]%s %s", StringTable.Localize("$VERSION"), hash);
+
+		console.printf(gamestring);
+	}
 
 	ui void UpdateCanvas()
 	{
@@ -9,30 +25,14 @@ class ConsoleHandler : StaticEventHandler
 		{
 			int h = 768;
 			int w = 1024;
-			double scale = 0.5;
+			double fontscale = 2.0;
 
 			Font fnt = SmallFont;
 
 			int fontheight = fnt.GetHeight();
 			int fontwidth = fnt.StringWidth("0");
-			String gametitle = StringTable.Localize("$VERSION") .. hash;
 
-			double ratio = Screen.GetAspectRatio();
-			int vh, vw;
-
-			if (h >= w)
-			{
-				vh = int(w / ratio);
-				vw = w;
-			}
-			else
-			{
-				vw = int(h * ratio);
-				vh = h;
-			}
-
-			vw = int(vw * scale);
-			vh = int(vh * scale);
+			double wscale = w / double(Screen.GetWidth());
 
 			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
@@ -48,26 +48,14 @@ class ConsoleHandler : StaticEventHandler
 			if (logo)
 			{
 				Vector2 size = TexMan.GetScaledSize(logo);
-				conbackcanvas.DrawTexture(logo, true, vw - size.x, vh - size.y - 8, DTA_VirtualWidth, vw, DTA_VirtualHeight, vh);
+				conbackcanvas.DrawTexture(logo, true, w - size.x * wscale, h - size.y - 8, DTA_ScaleX, wscale);
 			}
 
-			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, vh - fontheight - 3, gametitle, DTA_VirtualWidth, vw, DTA_VirtualHeight, vh);
+			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, h - fontheight * fontscale - 3, gamestring, DTA_ScaleX, wscale * fontscale, DTA_ScaleY, fontscale);
 
 			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, Game.IsSoD() ? 0xDDDD00 : 0xDD0000);
 			conbackcanvas.DrawLine(0, h - 1, w, h - 1, 0x000000, 128);
 		}
-	}
-
-	override void WorldLoaded(WorldEvent e)
-	{
-		// Show the last commit's hash if this is a beta release
-		if (StringTable.Localize("$VERSION").IndexOf("beta") > -1)
-		{
-			hash = ReadFrom("Data/GitHash.txt");
-			hash = " \c[Dark Gray]" .. hash.Left(7);
-		}
-
-		Super.WorldLoaded(e);
 	}
 
 	override void UITick()
