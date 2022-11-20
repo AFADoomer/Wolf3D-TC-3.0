@@ -134,7 +134,7 @@ class Startup : GenericMenu
 		if (gamemenu)
 		{
 			Close();
-			Menu.SetMenu("LoadScreen");
+			Menu.SetMenu("Notice");
 		}
 		else
 		{
@@ -1105,5 +1105,143 @@ class Startup : GenericMenu
 		}
 
 		return output;
+	}
+}
+
+class Notice : WolfMenu
+{
+	int tic, maxwidth, lineheight, w, h, delay;
+	double x, y;
+	double alpha, bgalpha;
+	String text;
+	BrokenString lines;
+	bool finished;
+
+	override void Init(Menu parent)
+	{
+		w = 640;
+		h = 400;
+
+		text = StringTable.Localize("$NOTICE");
+
+		maxwidth = 500;
+		lineheight = BigFont.GetHeight();
+		[text, lines] = BrokenString.BreakString(text, maxwidth, false, "L", BigFont);
+
+		alpha = 0.0;
+		bgalpha = 1.0;
+		x = w  / 2 - maxwidth / 2;
+		y = h / 2 - lineheight * (lines.Count() - 1) / 2;
+
+		delay = 35;
+
+		GenericMenu.Init(parent);
+
+		DontDim = true;
+		DontBlur = true;
+	}
+
+	override void Ticker()
+	{
+		if (delay) { delay--; }
+
+		if (delay == 0)
+		{
+			if (tic++ >= 350 ) { finished = true; }
+
+			if (finished)
+			{
+				alpha = max(0.0, alpha - 1.0 / 35); // Fade out
+				if (alpha == 0.0) { bgalpha -= 1.0 / 35; }
+				if (bgalpha < 1.0) { Menu.SetMenu("LoadScreen"); }
+				else if (bgalpha <= 0) { Close(); }
+			}
+			else if (alpha < 1.0)
+			{
+				alpha += 1.0 / 35; // Fade in
+			}
+		}
+
+		Super.Ticker();
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
+
+		PrintFullJustified(lines, maxwidth);
+	}
+
+	void PrintFullJustified(BrokenString lines, double width)
+	{
+		double spacing = 0;
+
+		for (int t = 0; t < lines.Count(); t++)
+		{
+			String line = lines.StringAt(t);
+			double textwidth = lines.StringWidth(t);
+
+			if ( // Don't full justify if a line is the end of a paragraph and it's less than 80% of the desired width
+				!(
+					(
+						t == lines.Count() - 1 ||
+						lines.StringAt(t + 1) == ""
+					) &&
+					textwidth < width * 0.8
+				)
+			)
+			{
+				int spaces = 0;
+				int start = 0;
+				while (start > -1)
+				{
+					start = line.IndexOf(" ", start + 1);
+					if (start > 0) { spaces++; }
+				}
+
+				spacing = spaces ? (width - textwidth) / spaces : 0;
+			}
+
+			if (spacing != 0)
+			{
+				String temp = "";
+				int c = -1;
+				int i = 0;
+				double textx = 0;
+				while (c != 0)
+				{
+					[c, i] = line.GetNextCodePoint(i);
+
+					if ( // Whitespace
+						ZScriptTools.IsWhiteSpace(c) ||
+						c == 0x0
+					)
+					{
+						screen.DrawText(BigFont, Font.FindFontColor("Light Gray"), x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+
+						if (c == 0x9) // Tab alignment
+						{
+							double tabwidth = w / 10;
+							int tabs = int(textx / tabwidth) + 1;
+							textx = tabs * tabwidth;
+						}
+						else // Normal printing
+						{
+							textx += BigFont.StringWidth(String.Format("%s%c", temp, c)) + spacing;
+						}
+
+						temp = "";
+					}
+					else
+					{
+						temp.AppendCharacter(c);
+					}
+				}
+			}
+			else
+			{	
+				screen.DrawText (BigFont, Font.FindFontColor("Light Gray"), x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+			}
+		}
 	}
 }
