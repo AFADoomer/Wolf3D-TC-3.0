@@ -80,6 +80,8 @@ class WolfPlayer : DoomPlayer
 			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
 		}
 
+		lastpos = pos;
+
 		Super.Tick();
 
 		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
@@ -105,8 +107,6 @@ class WolfPlayer : DoomPlayer
 				}
 			}
 			else { idletick = 0; }
-
-			lastpos = pos;
 		}
 	}
 

@@ -432,6 +432,45 @@ class ClassicBase : Actor
 		}
 		else { A_Scream(); }
 	}
+
+	// Custom implementation of Wolf-style firing logic
+	void A_NaziShoot(double rangemultiplier = 1.0)
+	{
+		if (!target || !CheckSight(target)) { return; }
+
+		int damage = Game.WolfRandom();
+
+		A_FaceTarget();
+
+		Vector2 vec = Vec2To(target);
+		double dx = abs(vec.x);
+		double dy = abs(vec.y);
+		int dist = int((dx > dy ? dx : dy) * rangemultiplier / 64.0);
+
+		double targetspeed = target.vel.length();
+
+		let w = WolfPlayer(target);
+		if (w && targetspeed == 0.0)
+		{
+			// Handle the fact that player movement velocity is nullified every tic
+			// by manually calculating movement speed here
+			targetspeed = (w.lastpos - w.pos).length();
+		}
+
+		int hitchance = targetspeed < 10.0 ? 256 : 160;
+		hitchance -= dist * 16;
+
+		if (Game.WolfRandom() < hitchance)
+		{
+			if (dist < 2) { damage = damage >> 2; }
+			else if (dist < 4) { damage = damage >> 3; }
+			else { damage = damage >> 4; }
+
+			target.DamageMobj(self, self, damage, "Bullet", DMG_THRUSTLESS);
+		}
+
+		S_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
+	}
 }
 
 class ClassicNazi : ClassicBase
@@ -641,7 +680,7 @@ class Guard : ClassicNazi
 		Missile:
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
-			"####" I 8 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 8 Bright A_NaziShoot();
 			Goto Chase;
 	}
 }
@@ -709,13 +748,13 @@ class SS : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot(0.666);
 			Goto Chase;
 		Death:
 			"####" A 0 {
@@ -802,9 +841,9 @@ class Mutant : ClassicNazi
 		Missile:
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
-			"####" H 10 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" H 10 Bright A_NaziShoot();
 			"####" G 5 A_FaceTarget;
-			"####" I 10 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 10 Bright A_NaziShoot();
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
 	}
@@ -878,7 +917,7 @@ class Officer : ClassicNazi
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot();
 			Goto Chase;
 	}
 }
@@ -962,7 +1001,7 @@ class HansGrosse : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
-			"####" GFGFGE 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 0.666, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" GFGFGE 5 Bright A_NaziShoot(0.666);
 			"####" A 0 A_JumpIfCloser(64, "Missile");
 			Goto Walk;
 		Death:
@@ -1110,7 +1149,7 @@ class HitlerMech : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
-			"####" GFGF 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" GFGF 5 Bright A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" H 5 A_Scream;
@@ -1152,7 +1191,7 @@ class Hitler : ClassicBoss
 		Missile:
 			"####" G 15 A_FaceTarget;
 			"####" H 5 A_FaceTarget;
-			"####" IHIH 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" IHIH 5 Bright A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1273,7 +1312,7 @@ class Fettgesicht : ClassicBoss
 			"####" F 5 A_FaceTarget;
 			"####" G 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			"####" E 0 A_FaceTarget;
-			"####" HGH 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" HGH 5 Bright A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1486,15 +1525,15 @@ class UberMutant : ClassicBoss
 			Loop;
 		Missile:
 			"####" E 15 A_FaceTarget;
-			"####" F 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" F 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" G 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" G 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" H 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" H 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" G 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" G 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" F 6 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" F 6 Bright A_NaziShoot();
 			"####" E 0 A_FaceTarget;
 			Goto Chase;
 		Death:
@@ -1565,10 +1604,10 @@ class DeathKnight : ClassicBoss
 		Missile:
 			"####" F 15 A_FaceTarget;
 			"####" G 5 Bright A_SpawnProjectile(projectile, 48, 15, 0);
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot();
 			"####" I 0 A_FaceTarget;
 			"####" H 5 Bright A_SpawnProjectile(projectile, 48, -15, 0);
-			"####" I 5 Bright A_WolfAttack(WAF_NORANDOM, AttackSound, 1.0, Game.WolfRandom() >> 2, 64, 2, 4, 160.0);
+			"####" I 5 Bright A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 53 A_Scream;

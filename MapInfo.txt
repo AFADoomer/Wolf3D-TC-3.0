@@ -1267,6 +1267,7 @@ DoomEdNums
 	21068=Stove
 	21069=SpearRack
 	21070=HangingVines
+	21072=WolfClipBox
 	21075=WolfRocketPickup
 	21076=WolfRocketCrate
 	21077=WolfRocketLauncher
@@ -1281,7 +1282,7 @@ DoomEdNums
 	21087=ExplosiveOilDrum
 	//21088= Invisibility
 	//21089= Dual Chaingun
-	21090=MoldyCheese
+	21079=MoldyCheese
 	21124=DeadGuard
 
 	// SoD
