@@ -1063,23 +1063,19 @@ Sprite BAL3A0, 64, 64 { Offset 32, 32 Patch WSPR0326, 0, 0 }
 Sprite BAL3B0, 64, 64 { Offset 32, 32 Patch WSPR0327, 0, 0 }
 
 // Rockets
-//Sprite MISLA1, 64, 64 { Offset 32, 32 Patch WSPR0370, 0, 0 }
-Sprite MISLA2, 64, 64 { Offset 32, 32 Patch WSPR0371, 0, 0 }
-Sprite MISLA3, 64, 64 { Offset 32, 32 Patch WSPR0372, 0, 0 }
-Sprite MISLA4, 64, 64 { Offset 32, 32 Patch WSPR0373, 0, 0 }
-//Sprite MISLA5, 64, 64 { Offset 32, 32 Patch WSPR0374, 0, 0 }
-Sprite MISLA8, 64, 64 { Offset 32, 32 Patch WSPR0375, 0, 0 }
-Sprite MISLA7, 64, 64 { Offset 32, 32 Patch WSPR0376, 0, 0 }
-Sprite MISLA6, 64, 64 { Offset 32, 32 Patch WSPR0377, 0, 0 }
+Sprite ROCKA2, 64, 64 { Offset 32, 32 Patch WSPR0371, 0, 0 }
+Sprite ROCKA3, 64, 64 { Offset 32, 32 Patch WSPR0372, 0, 0 }
+Sprite ROCKA4, 64, 64 { Offset 32, 32 Patch WSPR0373, 0, 0 }
+Sprite ROCKA8, 64, 64 { Offset 32, 32 Patch WSPR0375, 0, 0 }
+Sprite ROCKA7, 64, 64 { Offset 32, 32 Patch WSPR0376, 0, 0 }
+Sprite ROCKA6, 64, 64 { Offset 32, 32 Patch WSPR0377, 0, 0 }
 Sprite RTRLA0, 64, 64 { Offset 32, 32 Patch WSPR0378, 0, 0 }
 Sprite RTRLB0, 64, 64 { Offset 32, 32 Patch WSPR0379, 0, 0 }
 Sprite RTRLC0, 64, 64 { Offset 32, 32 Patch WSPR0380, 0, 0 }
 Sprite RTRLD0, 64, 64 { Offset 32, 32 Patch WSPR0381, 0, 0 }
-Sprite BAL3A0, 64, 64 { Offset 32, 32 Patch WSPR0326, 0, 0 }
-Sprite BAL3B0, 64, 64 { Offset 32, 32 Patch WSPR0327, 0, 0 }
-Sprite BAL3C0, 64, 64 { Offset 32, 32 Patch WSPR0382, 0, 0 }
-Sprite BAL3D0, 64, 64 { Offset 32, 32 Patch WSPR0383, 0, 0 }
-Sprite BAL3E0, 64, 64 { Offset 32, 32 Patch WSPR0384, 0, 0 }
+Sprite ROCPA0, 64, 64 { Offset 32, 32 Patch WSPR0382, 0, 0 }
+Sprite ROCPB0, 64, 64 { Offset 32, 32 Patch WSPR0383, 0, 0 }
+Sprite ROCPC0, 64, 64 { Offset 32, 32 Patch WSPR0384, 0, 0 }
 
 //Spear Projectiles
 Sprite ADBLA0, 64, 64 { Offset 32, 32 Patch WSPR1322, 0, 0 }
@@ -1092,14 +1088,12 @@ Sprite DIBLB0, 64, 64 { Offset 32, 32 Patch WSPR2323, 0, 0 }
 Sprite DIBLC0, 64, 64 { Offset 32, 32 Patch WSPR2324, 0, 0 }
 Sprite DIBLD0, 64, 64 { Offset 32, 32 Patch WSPR2325, 0, 0 }
 
-Sprite MISLB1, 64, 64 { Offset 32, 32 Patch WSPR2292, 0, 0 }
-Sprite MISLB2, 64, 64 { Offset 32, 32 Patch WSPR2293, 0, 0 }
-Sprite MISLB3, 64, 64 { Offset 32, 32 Patch WSPR2294, 0, 0 }
-Sprite MISLB4, 64, 64 { Offset 32, 32 Patch WSPR2295, 0, 0 }
-Sprite MISLB8, 64, 64 { Offset 32, 32 Patch WSPR2296, 0, 0 }
-Sprite MISLB6, 64, 64 { Offset 32, 32 Patch WSPR2297, 0, 0 }
-Sprite MISLB7, 64, 64 { Offset 32, 32 Patch WSPR2298, 0, 0 }
-Sprite MISLB5, 64, 64 { Offset 32, 32 Patch WSPR2299, 0, 0 }
+Sprite ROCKB2, 64, 64 { Offset 32, 32 Patch WSPR2293, 0, 0 }
+Sprite ROCKB3, 64, 64 { Offset 32, 32 Patch WSPR2294, 0, 0 }
+Sprite ROCKB4, 64, 64 { Offset 32, 32 Patch WSPR2295, 0, 0 }
+Sprite ROCKB8, 64, 64 { Offset 32, 32 Patch WSPR2296, 0, 0 }
+Sprite ROCKB7, 64, 64 { Offset 32, 32 Patch WSPR2297, 0, 0 }
+Sprite ROCKB6, 64, 64 { Offset 32, 32 Patch WSPR2298, 0, 0 }
 Sprite RTRLE0, 64, 64 { Offset 32, 32 Patch WSPR2300, 0, 0 }
 Sprite RTRLF0, 64, 64 { Offset 32, 32 Patch WSPR2301, 0, 0 }
 Sprite RTRLG0, 64, 64 { Offset 32, 32 Patch WSPR2302, 0, 0 }

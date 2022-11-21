@@ -45,12 +45,12 @@ class WolfRocket : WolfProjectile
 	States
 	{
 		Spawn:
-			MISL A 1 Bright;
-			MISL A 1 Bright SpawnSmoke();
+			ROCK A 1 Bright;
+			ROCK A 1 Bright SpawnSmoke();
 			Loop;
 		Death:
-			BAL3 C 4 Bright WolfExplode(30);
-			BAL3 DE 4 Bright;
+			ROCP A 4 Bright WolfExplode(30);
+			ROCP BC 4;
 			Stop;
 	}
 }
@@ -69,6 +69,19 @@ class WolfRocketLost : WolfRocketSoD
 	{
 		WolfProjectile.Smoke "WolfRocketSmokeLost";
 	}
+
+	States
+	{
+		Spawn:
+			ROCK B 1 Bright;
+			ROCK B 1 Bright SpawnSmoke();
+			Loop;
+		Death:
+			BAL4 A 4 Bright WolfExplode(30);
+			BAL4 BC 4;
+			Stop;
+	}
+
 }
 
 class WolfRocketPlayer : WolfRocket
@@ -83,8 +96,8 @@ class WolfRocketPlayer : WolfRocket
 	States
 	{
 		Death:
-			BAL3 C 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
-			BAL3 DE 4 Bright;
+			ROCP A 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
+			ROCP BC 4;
 			Stop;
 	}
 }
@@ -131,6 +144,7 @@ class Syringe : WolfProjectile
 {
 	Default
 	{
+		+ROLLSPRITE
 		SeeSound "syringe/throw";
 		DamageType "WolfNaziSyringe";
 	}
@@ -141,7 +155,12 @@ class Syringe : WolfProjectile
 			WB3P ABCD 3;
 			Loop;
 		Death:
-			TNT1 A 4 WolfExplode(20);
+			SYRP A 4 {
+				bInvisible = g_noblood;
+				roll = Random(0, 3) * 90;
+				WolfExplode(20);
+			}
+			SYRP BC 4;
 			Stop;
 	}
 }
@@ -151,6 +170,7 @@ class GhostFireBall : WolfProjectile
 {
 	Default
 	{
+		+ROLLSPRITE
 		+MTHRUSPECIES
 		Speed 2;
 		SeeSound "flame/fire";
@@ -162,7 +182,12 @@ class GhostFireBall : WolfProjectile
 			BAL3 AB 4 Bright;
 			Loop;
 		Death:
-			BAL3 A 4 Bright WolfExplode(0, flags:0);
+			BALP A 4 Bright {
+				bInvisible = g_noblood;
+				roll = Random(0, 3) * 90;
+				WolfExplode(0, flags:0);
+			}
+			BALP BC 4;
 			Stop;
 	}
 }

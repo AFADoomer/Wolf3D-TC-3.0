@@ -90,6 +90,7 @@ class ClassicBase : Actor
 
 			if (spr > -1) { sprite = spr; }
 		}
+		else { spr = -1; }
 
 		Super.BeginPlay();
 	}
@@ -128,12 +129,15 @@ class ClassicBase : Actor
 
 	override void Tick()
 	{
-		if (spr > -1 && sprite != spr) { sprite = spr; }
-
-		if (!multiplayer && target && target.player && target.health <= 0)
+		if (health > 0)
 		{
-			frame = AttackState.frame;
-			tics = 105; // Make this friendly to the resurrect cheat and only freeze them for 3 seconds
+			if (spr > -1 && sprite != spr) { sprite = spr; }
+
+			if (!multiplayer && target && target.player && target.health <= 0)
+			{
+				frame = AttackState.frame;
+				tics = 105; // Make this friendly to the resurrect cheat and only freeze them for 3 seconds
+			}
 		}
 
 		Super.Tick();
@@ -557,7 +561,16 @@ class ClassicNazi : ClassicBase
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
 		Dead:
 			"####" N -1 { if (bLongDeath) { frame = 14; } }
-		Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			BURN A 8 Bright {
+				A_DeathScream();
+				A_DeathDrop();
+			}
+			BURN BCD 8 Bright;
+			BURN EFG 8;
+			BURN H -1;
+			Stop;
 	}
 
 	override void PostBeginPlay()
@@ -651,6 +664,13 @@ class Dog : ClassicNazi
 			"####" HIJ 5;
 		Dead:
 			"####" K -1;
+			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			DBUR A 8 Bright A_DeathScream();
+			DBUR BCD 8 Bright;
+			DBUR EFG 8;
+			DBUR H -1;
 			Stop;
 	}
 }
@@ -1585,6 +1605,7 @@ class TheAxe : UberMutant
 		AttackSound "shots/single2";
 		DeathSound "theaxe/death";
 		DropItem "YellowKeyLost";
+		BloodColor "FC 00 FC";
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LBO6";
@@ -1657,6 +1678,7 @@ class RobotDroid : DeathKnight
 		AttackSound "shots/single2";
 		DeathSound "robot/death";
 		DropItem "YellowKeyLost";
+		BloodColor "00 00 00";
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LBO7";
@@ -1682,6 +1704,7 @@ class AngelofDeath : ClassicBoss
 		SeeSound "aod/sight";
 		PainSound "aod/breathe";
 		DeathSound "aod/death";
+		BloodColor "FF 00 FF";
 
 		ClassicBase.BaseSprite "WB10";
 		ClassicBase.ScoreAmount 5000;
@@ -1744,6 +1767,7 @@ class DevilIncarnate : AngelOfDeath
 		SeeSound "devil/sight";
 		PainSound "";
 		DeathSound "devil/death";
+		BloodColor "00 FC 00";
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LB10";

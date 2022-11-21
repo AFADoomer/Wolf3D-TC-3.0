@@ -7,6 +7,7 @@ Jaguar Wolf3D Sprites - id Software
 Broken Column Sprites - Modified by AFADoomer from Areyep - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
 Exploding Barrel Sprites - Modified by AFADoomer from UnTrustable (https://forum.zdoom.org/viewtopic.php?p=884629#p884629)
 Bullet hit sprite - Modified by AFADoomer from Wolf3D development screens (https://tcrf.net/Development:Wolfenstein_3D_(DOS))
+Projectile explosions and Burning sprites - Wolfenstein 3D 30th Anniversary Edition (https://www.moddb.com/mods/wolfenstein-3d-30th-anniversary-edition)
 BJ Rotation Sprites - Mason (http://mmimageworld.dugtrio17.com/cgi-bin/index.cgi?author=mason&page=1)
 MiniFont - Ripped for Blade of Agony by Talon1024
 KeyPrompt Icons - Modified by AFADoomer from Input Prompts by Kenney (http://www.kenney.nl)
