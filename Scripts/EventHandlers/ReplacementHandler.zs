@@ -116,17 +116,22 @@ class ReplacementHandler : StaticEventHandler
 		}
 	}
 
-	static void ChangeFlat(int tag, String texname, bool ceiling = true)
+	static void ChangeFlat(int tag, String texname)
 	{
 		int s = -1;
 		let it = level.CreateSectorTagIterator(tag);
-		let tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+
+		// Use the default colors for the map, but use a FLOORXX or CEILXX counterpart
+		// texture if it exists
+		let ceilingtex = TexMan.CheckForTexture("CEIL" .. texname, TexMan.Type_Any);
+		if (!ceilingtex.IsValid()) { ceilingtex = TexMan.CheckForTexture(texname, TexMan.Type_Any); }
+
+		let floortex = TexMan.CheckForTexture("FLOOR" .. texname, TexMan.Type_Any);
 
 		while ((s = it.Next()) >= 0)
 		{
-			int pos = ceiling ? Sector.ceiling : Sector.floor;
-			Level.sectors[s].SetTexture(pos, tex);
+			if (floortex.IsValid()) { Level.sectors[s].SetTexture(Sector.floor, floortex); }
+			if (ceilingtex.IsValid()) { Level.sectors[s].SetTexture(Sector.ceiling, ceilingtex); }
 		}
 	}
-
 }

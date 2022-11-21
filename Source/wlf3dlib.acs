@@ -26,6 +26,7 @@ Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
 
 Script "RespawnPlayer" RESPAWN
 {
+	Delay(1);
 	ACS_NamedExecute("InitializePlayer", 0);
 }
 
@@ -366,12 +367,6 @@ Script "W_DeathCam" (void)
 	Delay(6 * 35);
 
 	Exit_Normal(0);
-}
-
-Script "W_PlayerRespawn" RESPAWN
-{
-	Delay(1);
-	ScriptCall("ClassicStatusBar", "ClearFizzle");
 }
 
 Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
