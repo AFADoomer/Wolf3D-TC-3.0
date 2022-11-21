@@ -119,7 +119,7 @@ class WolfPuff : BulletPuff
 	{
 		Spawn:
 			WPUF A 4 Bright;
-			WPUF B 4;// A_SetRenderStyle(0.5, STYLE_Translucent);
+			WPUF B 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
 		Melee:
 			WPUF CD 4;
 			Stop;
@@ -521,7 +521,7 @@ class WolfFlameThrower : ClassicWeapon
 			WFLM # 0 A_ReFire;
 			Goto Ready;
 	}
-} 
+}
 
 class WolfRocketPickup : Ammo
 {

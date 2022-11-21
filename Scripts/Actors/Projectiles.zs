@@ -50,7 +50,7 @@ class WolfRocket : WolfProjectile
 			Loop;
 		Death:
 			ROCP A 4 Bright WolfExplode(30);
-			ROCP BC 4;
+			ROCP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
 			Stop;
 	}
 }
@@ -78,7 +78,7 @@ class WolfRocketLost : WolfRocketSoD
 			Loop;
 		Death:
 			BAL4 A 4 Bright WolfExplode(30);
-			BAL4 BC 4;
+			BAL4 BC 4; // A_SetRenderStyle(0.5, STYLE_Translucent);
 			Stop;
 	}
 
@@ -97,7 +97,7 @@ class WolfRocketPlayer : WolfRocket
 	{
 		Death:
 			ROCP A 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
-			ROCP BC 4;
+			ROCP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
 			Stop;
 	}
 }
@@ -187,7 +187,7 @@ class GhostFireBall : WolfProjectile
 				roll = Random(0, 3) * 90;
 				WolfExplode(0, flags:0);
 			}
-			BALP BC 4;
+			BALP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
 			Stop;
 	}
 }
