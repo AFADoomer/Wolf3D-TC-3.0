@@ -96,4 +96,37 @@ class ReplacementHandler : StaticEventHandler
 			case 'Guard': e.replacee = "WolfensteinSS"; break;
 		}
 	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		if (level.levelnum > 100)
+		{
+			static const String WolfCeilings[] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
+			static const String SoDCeilings[] = {"6f", "4f", "1d", "de", "df", "2e", "7f", "9e", "ae", "7f", "1d", "de", "df", "de", "df", "de", "e1", "dc", "2e", "1d", "dc"};
+
+			String texname = "";
+			if (g_sod > 0) { texname = SoDCeilings[level.levelnum % 100 - 1]; }
+			else { texname = WolfCeilings[level.levelnum % 100 - 1]; }
+
+			if (texname.length())
+			{
+				ChangeFlat(0, texname);
+				ChangeFlat(800, texname);
+			}
+		}
+	}
+
+	static void ChangeFlat(int tag, String texname, bool ceiling = true)
+	{
+		int s = -1;
+		let it = level.CreateSectorTagIterator(tag);
+		let tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+
+		while ((s = it.Next()) >= 0)
+		{
+			int pos = ceiling ? Sector.ceiling : Sector.floor;
+			Level.sectors[s].SetTexture(pos, tex);
+		}
+	}
+
 }
