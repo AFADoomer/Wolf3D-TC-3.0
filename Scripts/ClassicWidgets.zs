@@ -1106,9 +1106,9 @@ class PositionWidget : Widget
 		String header, value;
 
 		// Draw map name
-		DrawToHud.DrawText(level.mapname.MakeUpper(), (x, y), fnt, alpha, scale, shade:Font.CR_RED, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
+		DrawToHud.DrawText(level.mapname.MakeUpper(), (x, y), BigFont, alpha, scale, shade:Font.CR_RED, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
 
-		y += height;
+		y += int(BigFont.GetHeight() * scale);
 		
 		for (int i = 0; i < 3; y += height, ++i)
 		{
@@ -1789,6 +1789,8 @@ class AutomapWidget : Widget
 	// Original code from shared_sbar.cpp
 	override Vector2 Draw()
 	{
+		double scale = 0.5;
+
 		let fnt = SmallFont;
 		let titlefnt = BigFont;
 
@@ -1801,6 +1803,8 @@ class AutomapWidget : Widget
 
 		double height = titleheight + lineheight / 2 + (am_showtime || am_showtotaltime) * lineheight * 1.5 + !deathmatch * ((am_showmonsters && level.total_monsters > 0) + (am_showsecrets && level.total_secrets > 0) + (am_showitems && level.total_items > 0)) * lineheight;
 		double width = 0, labelwidth = 0;
+
+		height *= scale;
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -1820,7 +1824,7 @@ class AutomapWidget : Widget
 					break;
 			}
 
-			curwidth = fnt.StringWidth(label .. "000/000");
+			curwidth = int(fnt.StringWidth(label .. "000/000") * scale);
 
 			if (curwidth > labelwidth) { labelwidth = curwidth; }
 		}
@@ -1828,17 +1832,17 @@ class AutomapWidget : Widget
 		String levelname = level.LevelName;
 		if (idmypos) { levelname = levelname .. " (" .. level.mapname.MakeUpper() .. ")"; }
 
-		width = max(labelwidth, titlefnt.StringWidth(levelname));
+		width = max(labelwidth, titlefnt.StringWidth(levelname) * scale);
 
 		size = (width, height);
 		Super.Draw();
 
 		double y = pos.y;
 
-		DrawToHud.DrawText(levelname, pos, titlefnt, alpha, 1.0, shade:titleclr);
-		y += titleheight;
+		DrawToHud.DrawText(levelname, pos, titlefnt, alpha, scale, shade:titleclr);
+		y += titleheight * scale;
 
-		y += int(lineheight / 2);
+		y += int(lineheight * scale / 2);
 
 		String time;
 
@@ -1852,8 +1856,8 @@ class AutomapWidget : Widget
 
 		if (am_showtime || am_showtotaltime)
 		{
-			DrawToHud.DrawText(time, (pos.x, y), fnt, alpha, 1.0, shade:clr, flags:ZScriptTools.STR_FIXEDWIDTH);
-			y += int(lineheight * 3 / 2);
+			DrawToHud.DrawText(time, (pos.x, y), fnt, alpha, scale, shade:clr, flags:ZScriptTools.STR_FIXEDWIDTH);
+			y += int(lineheight * scale * 3 / 2);
 		}
 
 		if (!deathmatch)
@@ -1862,33 +1866,33 @@ class AutomapWidget : Widget
 
 			if (am_showmonsters && level.total_monsters > 0)
 			{
-				DrawToHud.DrawText(monsters, (pos.x, y), fnt, alpha, 1.0, shade:clr);
+				DrawToHud.DrawText(monsters, (pos.x, y), fnt, alpha, scale, shade:clr);
 
 				value = value.Format("%d/%d", level.killed_monsters, level.total_monsters);
-				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value), y), fnt, alpha, 1.0, shade:Font.CR_RED);
+				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value) * scale, y), fnt, alpha, scale, shade:Font.CR_RED);
 
-				y += lineheight;
+				y += lineheight * scale;
 			}
 
 			if (am_showsecrets && level.total_secrets > 0)
 			{
-				DrawToHud.DrawText(secrets, (pos.x, y), fnt, alpha, 1.0, shade:clr);
+				DrawToHud.DrawText(secrets, (pos.x, y), fnt, alpha, scale, shade:clr);
 
 				value = value.Format("%d/%d", level.found_secrets, level.total_secrets);
-				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value), y), fnt, alpha, 1.0, shade:Font.CR_SAPPHIRE);
+				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value) * scale, y), fnt, alpha, scale, shade:Font.CR_SAPPHIRE);
 
-				y += lineheight;
+				y += lineheight * scale;
 			}
 
 			// Draw item count
 			if (am_showitems && level.total_items > 0)
 			{
-				DrawToHud.DrawText(items, (pos.x, y), fnt, alpha, 1.0, shade:clr);
+				DrawToHud.DrawText(items, (pos.x, y), fnt, alpha, scale, shade:clr);
 
 				value = value.Format("%d/%d", level.found_items, level.total_items);
-				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value), y), fnt, alpha, 1.0, shade:Font.CR_GOLD);
+				DrawToHud.DrawText(value, (pos.x + labelwidth - fnt.StringWidth(value) * scale, y), fnt, alpha, scale, shade:Font.CR_GOLD);
 
-				y += lineheight;
+				y += lineheight * scale;
 			}
 		}
 

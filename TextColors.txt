@@ -1,6 +1,6 @@
 WolfMenuGrey WolfMenuGray "Wolf Menu Gray" "Wolf Menu Grey"
 {
-	#8C8C8C  #DDDDDD  
+	#8C8C8C  #8C8C8C
 Console:
 	#272727  #8B8B8B    0 127
 	#505050  #FFFFFF  128 256
@@ -8,14 +8,9 @@ Flat:
 	#8C8C8C
 }
 
-WolfMenuGray2
-{
-	 #404040 #8C8C8C
-}
-
 WolfMenuLightGrey WolfMenuLightGray "Wolf Menu Light Gray" "Wolf Menu Light Grey"
 {
-	#C0C0C0  #DDDDDD
+	#C0C0C0  #C0C0C0
 Console:
 	#272727  #8B8B8B    0 127
 	#505050  #FFFFFF  128 256
@@ -23,24 +18,9 @@ Flat:
 	#C0C0C0
 }
 
-WolfMenuLightGray2
-{
-	 #737373 #C0C0C0
-}
-
-WolfMenuRed
-{
-	#710000  #DDDDDD
-Console:
-	#270000  #8B0000    0 127
-	#500000  #710000  128 255
-Flat:
-	#710000 
-}
-
 WolfMenuYellow
 {
-	#B4AC00  #DDDDDD
+	#B4AC00  #B4AC00
 Console:
 	#272700  #8B8B00    0 127
 	#505000  #B4AC00  128 256
@@ -48,14 +28,9 @@ Flat:
 	#B4AC00
 }
 
-WolfMenuYellow2
-{
-	 #696300 #B4AC00
-}
-
 WolfMenuYellowBright
 {
-	#FCF400 #DDDDDD
+	#FCF400 #FCF400
 Console:
 	#000000 #B4AC00    0 127
 	#B4AC00 #FCF400  128 256
@@ -63,34 +38,14 @@ Flat:
 	#FCF400
 }
 
-WolfMenuYellowBright2
-{
-	#b0aa00 #FCF400
-}
-
 WolfMenuGreen
 {
-	#047000 #DDDDDD
-}
-
-WolfMenuGreenBright
-{
-	#04A400 #DDDDDD
-}
-
-WolfEndTitleGreen
-{
-	#005858 #005858
-Console:
-	#005858 #8B8B00    0 127
-	#005858 #005858  128 256
-Flat:
-	#005858
+	#047000 #047000
 }
 
 TrueBlack
 {
-	#000000  #333333
+	#000000  #000000
 Console:
 	#000000  #000000   0 256
 Flat:
@@ -99,7 +54,7 @@ Flat:
 
 TrueWhite
 {
-	#FFFFFF  #DDDDDD
+	#FFFFFF  #FFFFFF
 Console:
 	#FFFFFF  #FFFFFF 0 256
 }
@@ -129,15 +84,6 @@ Palette6E { #044C00 #044C00 }
 Palette6F { #044000 #044000 }
 Palette7C { #008484 #008484 }
 Palette7E { #005858 #005858 }
-
-StartupBlue
-{
-	#2e8ad6 #2e8ad6
-Console:
-	#2e8ad6 #2e8ad6   0 256
-Flat:
-	#2e8ad6
-}
 
 DOSBlue 	{ #0000AA #0000AA Console: #0000AA #0000AA 0 256 }
 DOSGreen 	{ #00AA00 #00AA00 Console: #00AA00 #00AA00 0 256 }

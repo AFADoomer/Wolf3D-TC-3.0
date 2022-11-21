@@ -610,7 +610,7 @@ class WolfBackpack : Backpack
 		//$Category Wolfenstein 3D/Items/Ammo
 		//$Color 3
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/ammobox";
 	}
 
 	States
