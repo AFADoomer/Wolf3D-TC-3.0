@@ -656,8 +656,9 @@ class GameMenu : IconListMenu
 				RestorePlaceholderMarkers();
 
 				if (sodvar) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
-				
+
 				SetMenu("IntroSlideShow", -1);
+
 				return true;
 		}
 

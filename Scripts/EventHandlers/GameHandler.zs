@@ -188,7 +188,7 @@ class Game
 			if (sodvar) { sodvar.SetInt(ret); }
 		}
 
-		return ret;
+		return g_sod;
 	}
 
 	static int WolfRandom()
