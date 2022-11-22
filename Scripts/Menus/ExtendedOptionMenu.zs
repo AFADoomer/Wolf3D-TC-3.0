@@ -274,9 +274,58 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override bool OnUIEvent(UIEvent ev)
 	{
+		if (!source) { source = self; }
+
 		if (ev.type == UIEvent.Type_RButtonUp)
 		{
 			return MenuEvent(MKEY_Back, false);
+		}
+		else if (ev.type == UIEvent.Type_WheelUp)
+		{
+			int scrollamt = MIN(2, mDesc.mScrollPos);
+			mDesc.mScrollPos -= scrollamt;
+			return true;
+		}
+		else if (ev.type == UIEvent.Type_WheelDown)
+		{
+			if (source.CanScrollDown)
+			{
+				if (source.VisBottom >= 0 && source.VisBottom < (mDesc.mItems.Size()-2))
+				{
+					mDesc.mScrollPos += 2;
+					source.VisBottom += 2;
+				}
+				else if (source.VisBottom < mDesc.mItems.Size()-1)
+				{
+					mDesc.mScrollPos++;
+					source.VisBottom++;
+				}
+			}
+			return true;
+		}
+		else if (ev.type == UIEvent.Type_Char)
+		{
+			int key = String.CharLower(ev.keyChar);
+			int itemsNumber = mDesc.mItems.Size();
+			int direction = ev.IsAlt ? -1 : 1;
+			for (int i = 0; i < itemsNumber; ++i)
+			{
+				int index = (mDesc.mSelectedItem + direction * (i + 1) + itemsNumber) % itemsNumber;
+				if (!mDesc.mItems[index].Selectable()) continue;
+				String label = StringTable.Localize(mDesc.mItems[index].mLabel);
+				int firstLabelCharacter = String.CharLower(label.GetNextCodePoint(0));
+				if (firstLabelCharacter == key)
+				{
+					mDesc.mSelectedItem = index;
+					break;
+				}
+			}
+			if (mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos
+				|| mDesc.mSelectedItem > source.VisBottom)
+			{
+				int pagesize = source.VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
+				mDesc.mScrollPos = clamp(mDesc.mSelectedItem - mDesc.mScrollTop - 1, 0, mDesc.mItems.size() - pagesize - 1);
+			}
 		}
 
 		return Super.OnUIEvent(ev);
@@ -292,7 +341,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
-		Draw(self, "ExtendedOptionMenu");
+		if (!source) { source = self; }
+		Draw(source, "ExtendedOptionMenu");
 
 		Menu.Drawer(); // Make sure to draw the back button
 	}
