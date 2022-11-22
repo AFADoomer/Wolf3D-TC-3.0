@@ -257,9 +257,7 @@ class DeathCamMessage : GetPsyched
 				screen.Dim(0x004040, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 				screen.DrawText(IntermissionFont, Font.CR_Untranslated, 160 - IntermissionFont.StringWidth(text) / 2, 56, text, DTA_320x200, true);
 				break;
-			case 2:
 			default:
-				screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 				break;
 		}
 
@@ -290,7 +288,6 @@ class DeathCamMessage : GetPsyched
 				break;
 			case 2:
 				exitmenu = true;
-				fadetarget = gametic;
 				curstate++;
 				break;
 			default:

@@ -339,30 +339,30 @@ Script "W_PlayerDeath" DEATH //501
 Script "W_DeathCam" (void)
 {
 	SetPlayerProperty(1, 2, PROP_INVULNERABILITY);
-
-	Delay(15);
-
-	ScriptCall("ClassicStatusBar", "DoFizzle", 0x000000);
-
-	Delay(45);
-
-	//Set Activator to Death Cam replay state
-	SetActorState (0, "Death.Cam", true);
-
-	ScriptCall("Menu", "SetMenu", "DeathCamMessage");
-
-	Delay(18);
-
-	ScriptCall("ClassicStatusBar", "DoFizzle", 0x000000, true);
-
-	SetActivatorToTarget(ActivatorTID());
-
 	SetPlayerProperty(1, 1, PROP_NOTARGET);
 	SetPlayerProperty (1, 1, PROP_TOTALLYFROZEN);
 
-	Delay(3 * 35);
+	Delay(15);
 
+	// Fade out full screen green
+	ScriptCall("ClassicStatusBar", "DoFizzle", 0x0004040, false, 1, 1920, true);
+
+	Delay(35);
+
+	ScriptCall("Menu", "SetMenu", "DeathCamMessage");
+
+	Delay(70);
+
+	// Set Activator to Death Cam replay state
+	SetActorState (0, "Death.Cam", true);
+
+	Delay(70);
+	
+	// But only fade back in framed black
 	ChangeCamera(999, 1, 0);
+	ScriptCall("ClassicStatusBar", "ReverseFizzle", 0x000000, false, 0, 1920, true);
+
+	Delay(35);
 
 	Delay(6 * 35);
 

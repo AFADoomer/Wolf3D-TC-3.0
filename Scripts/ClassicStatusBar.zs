@@ -362,9 +362,17 @@ class ClassicStatusBar : WidgetStatusBar
 		barstate = state;
 		Widget.DrawWidgets();
 
-		if (fizzlelayer == 1) { DrawFizzle(); }
-
 		DrawSaveIcon();
+
+		if (fizzlelayer == 1)
+		{
+			DrawFizzle();
+			if (state == HUD_StatusBar)
+			{
+				BeginStatusBar(st_scale);
+				DrawClassicBar(false);
+			}
+		}
 
 		BeginStatusBar(st_scale);
 	}
@@ -412,11 +420,11 @@ class ClassicStatusBar : WidgetStatusBar
 		}
 	}
 
-	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
+	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
 	{
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return; }
 
-		if (StatusBar.CPlayer.mo != caller) { return; }
+		if (!all && StatusBar.CPlayer.mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
@@ -424,10 +432,10 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicStatusBar(StatusBar).fizzlespeed = speed;
 	}
 
-	static void ReverseFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
+	static void ReverseFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
 	{
 		ClassicStatusBar(StatusBar).fizzleindex = ClassicStatusBar(StatusBar).fizzlepoints.Size() - 1;
-		DoFizzle(caller, clr, Off, layer, -speed);
+		DoFizzle(caller, clr, Off, layer, -speed, all);
 	}
 
 	static void ClearFizzle(Actor caller)

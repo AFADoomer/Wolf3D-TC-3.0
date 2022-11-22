@@ -24,7 +24,7 @@ class DeathCamHandler : EventHandler
 	{
 		if (active && deathcam && size != (0, 0) && tick <= 35)
 		{
-			screen.DrawTexture(deathcam, true, 160 - size.x / 2, 0, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0);
+			screen.DrawTexture(deathcam, true, 160 - size.x / 2, 4, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0);
 		}
 	}
 
