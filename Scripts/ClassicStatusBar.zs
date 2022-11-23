@@ -959,7 +959,7 @@ class ClassicStatusBar : WidgetStatusBar
 		if (!processed && printlevel & PRINT_TYPES <= PRINT_TEAMCHAT)
 		{
 			if (printlevel <= PRINT_HIGH) { Log.Add(CPlayer, outline, "Notifications", printlevel, fnt); }
-			else { Log.Add(CPlayer, outline, "Chat", printlevel, fnt); }
+			else { Log.Add(CPlayer, outline, "Chat", printlevel, fnt, "WolfMenuYellowBright"); }
 
 			processed = true; 
 		}
@@ -969,7 +969,7 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override bool ProcessMidPrint(Font fnt, String msg, bool bold)
 	{
-		Log.Add(CPlayer, msg .. "\r", "MidPrint", PRINT_BOLD, fnt);
+		Log.Add(CPlayer, msg .. "\r", "MidPrint", PRINT_BOLD, fnt, "White");
 
 		return true;
 	}

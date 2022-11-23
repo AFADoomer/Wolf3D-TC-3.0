@@ -1067,6 +1067,7 @@ class AmmoWidget : Widget
 class PositionWidget : Widget
 {
 	Font fnt;
+	double scale;
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
@@ -1080,6 +1081,9 @@ class PositionWidget : Widget
 
 	override void DoTick(int index)
 	{
+		// Match scaling with normal console output
+		scale = 0.5 * ClassicStatusBar(StatusBar).GetUIScale(con_scaletext);
+
 		fnt = HUDFont;
 
 		Super.DoTick(index);
@@ -1087,8 +1091,6 @@ class PositionWidget : Widget
 
 	override Vector2 Draw()
 	{
-		double scale = 0.5;
-
 		int headercolor = fontcolor;
 		int infocolor = Font.CR_GOLD;
 
@@ -1141,7 +1143,7 @@ class Log ui
 		REPLACELINE
 	}
 
-	void Print(double x, double y, double logalpha = 1.0, Font printfnt = null, int flags = ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT)
+	void Print(double x, double y, double logalpha = 1.0, Font printfnt = null, int flags = ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT, double scale = 1.0)
 	{
 		if (!printfnt) { printfnt = fnt; }
 		if (!printfnt) { printfnt = SmallFont; }
@@ -1154,14 +1156,14 @@ class Log ui
 
 				if (ZScriptTools.StripControlCodes(text).length())
 				{
-					DrawToHud.DrawText(text, (x, y), printfnt, alpha * logalpha, shade:Font.CR_GRAY, flags:flags);
-					y += printfnt.GetHeight();
+					DrawToHud.DrawText(text, (x, y), printfnt, alpha * logalpha, scale, shade:Font.CR_GRAY, flags:flags);
+					y += printfnt.GetHeight() * scale;
 				}
 			}
 		}
 		else
 		{
-			DrawToHud.DrawText(text, (x, y), printfnt, alpha * logalpha, shade:Font.CR_GRAY, flags:flags);
+			DrawToHud.DrawText(text, (x, y), printfnt, alpha * logalpha, scale, shade:Font.CR_GRAY, flags:flags);
 		}
 	}
 
@@ -1181,7 +1183,7 @@ class Log ui
 			String cursor = fnt.GetCursor();
 			if (level.time % 20 < 10) { cursor = ""; }
 
-			w.prompt = String.Format("\c%c>\cC%s%s", 65 + msg4color, txt.Left(txt.Length() - 1), cursor);
+			w.prompt = String.Format("\c[%s]>\cC%s%s", "WolfMenuYellowBright", txt.Left(txt.Length() - 1), cursor);
 			w.promptfnt = fnt;
 			return w.visible;
 		}
@@ -1189,7 +1191,7 @@ class Log ui
 		return false;
 	}
 
-	static bool Add(PlayerInfo player, String text, String logname = "Notifications", int printlevel = 0, Font fnt = null)
+	static bool Add(PlayerInfo player, String text, String logname = "Notifications", int printlevel = 0, Font fnt = null, String colorname = "")
 	{
 		LogWidget w = LogWidget(Widget.Find(logname));
 
@@ -1219,6 +1221,8 @@ class Log ui
 					break;
 			}
 
+			if (colorname == "") { colorname = String.Format("%c", clr); }
+
 			String fulltext;
 			BrokenString lines;
 			if (!fnt) { fnt = w.fnt; }
@@ -1230,7 +1234,7 @@ class Log ui
 			}
 			else
 			{
-				[fulltext, lines] = BrokenString.BreakString(text, int(w.size.x), false, String.Format("%c", clr), fnt);
+				[fulltext, lines] = BrokenString.BreakString(text, int(w.size.x), false, colorname, fnt);
 				if (w.addtype == APPENDLINE) { w.addtype = NEWLINE; }
 			}
 
@@ -1368,6 +1372,7 @@ class LogWidget : Widget
 	String prompt;
 	bool collapseduplicates, blocks;
 	int textflags;
+	double scale;
 
 	int lasttick;
 
@@ -1397,6 +1402,11 @@ class LogWidget : Widget
 
 	override void DoTick(int index)
 	{
+		if (!messages.Size()) { Super.DoTick(index); }
+
+		// Match scaling with normal console output
+		scale = 0.5 * ClassicStatusBar(StatusBar).GetUIScale(con_scaletext);
+
 		SetFont();
 		if (inputmaxlines < 1) { maxlines = con_notifylines; }
 		else { maxlines = inputmaxlines; }
@@ -1428,7 +1438,7 @@ class LogWidget : Widget
 					m.height = max(0, m.height - 1);
 					if (m.height == 0) { messages.Delete(i); continue; }
 				}
-				else { m.height = m.fnt.GetHeight(); }
+				else { m.height = m.fnt.GetHeight() * scale; }
 			}
 		}
 
@@ -1439,7 +1449,7 @@ class LogWidget : Widget
 	{
 		if (!messages.Size() && !prompt.length()) { return (0, 0); }
 
-		int lineheight = fnt.GetHeight();
+		int lineheight = int(fnt.GetHeight() * scale);
 
 		double rightoffset = 0;
 		if (!(flags & WDG_RIGHT) && !(flags & WDG_CENTER))
@@ -1461,7 +1471,7 @@ class LogWidget : Widget
 				if (messages[i].player != players[consoleplayer]) { continue; }
 				if (!ZScriptTools.StripControlCodes(messages[i].text).length()) { continue ; }
 
-				height += messages[i].height;
+				height += messages[i].height * scale;
 			}
 		}
 
@@ -1475,23 +1485,22 @@ class LogWidget : Widget
 
 		if (anchor & WDG_BOTTOM)
 		{
-			yoffset = -lineheight * 2;
+			yoffset = -lineheight * 3;
 			for (int i = min(maxlines, messages.Size() - 1); i >= 0; i--)
 			{
 				if (messages[i].player != players[consoleplayer]) { continue; }
 				if (!ZScriptTools.StripControlCodes(messages[i].text).length()) { continue ; }
 
-				messages[i].Print(pos.x + xpos, pos.y + height + yoffset + ypos, alpha, null, textflags);
+				messages[i].Print(pos.x + xpos, pos.y + height + yoffset + ypos, alpha, null, textflags, scale);
 
 				yoffset -= lineheight;
 			}
 
-			yoffset = height - lineheight;
+			yoffset = height - lineheight * 2;
 
 			if (prompt.length())
 			{
-				DrawToHud.Dim(0x0, 0.2 * alpha, int(pos.x - (margin[3] - 3) + xpos), int(pos.y + yoffset - 1 + ypos), int(size.x + (margin[3] + margin[1]) - 6), promptfnt.GetHeight() + 2);
-				DrawToHud.DrawText(prompt, (pos.x + xpos, pos.y + ypos + yoffset), promptfnt, alpha, shade:fontcolor, flags:textflags);
+				DrawToHud.DrawText(prompt, (pos.x + xpos, pos.y + ypos + yoffset), promptfnt, alpha, scale, shade:fontcolor, flags:textflags);
 				prompt = "";
 			}
 		}
@@ -1502,15 +1511,14 @@ class LogWidget : Widget
 				if (messages[i].player != players[consoleplayer]) { continue; }
 				if (!ZScriptTools.StripControlCodes(messages[i].text).length()) { continue ; }
 
-				messages[i].Print(pos.x + xpos, pos.y + yoffset + ypos, alpha, null, textflags);
+				messages[i].Print(pos.x + xpos, pos.y + yoffset + ypos, alpha, null, textflags, scale);
 
 				yoffset += messages[i].height;
 			}
 
 			if (prompt.length())
 			{
-				DrawToHud.Dim(0x0, 0.2 * alpha, int(pos.x - (margin[3] - 3) + xpos), int(pos.y + height - lineheight - 1 + ypos), int(size.x + (margin[3] + margin[1]) - 6), promptfnt.GetHeight() + 2);
-				DrawToHud.DrawText(prompt, (pos.x + xpos, pos.y + ypos + yoffset), promptfnt, alpha, shade:fontcolor, flags:textflags);
+				DrawToHud.DrawText(prompt, (pos.x + xpos, pos.y + ypos + yoffset), promptfnt, alpha, scale, shade:fontcolor, flags:textflags);
 				prompt = "";
 			}
 		}
@@ -1765,6 +1773,7 @@ class ActiveEffectWidget : Widget
 class AutomapWidget : Widget
 {
 	int titleheight, lineheight;
+	double scale;
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
@@ -1786,11 +1795,17 @@ class AutomapWidget : Widget
 		return false;
 	}
 
+	override void DoTick(int index)
+	{
+		// Match scaling with normal console output
+		scale = 0.5 * ClassicStatusBar(StatusBar).GetUIScale(con_scaletext);
+
+		Super.DoTick(index);
+	}
+
 	// Original code from shared_sbar.cpp
 	override Vector2 Draw()
 	{
-		double scale = 0.5;
-
 		let fnt = SmallFont;
 		let titlefnt = BigFont;
 
