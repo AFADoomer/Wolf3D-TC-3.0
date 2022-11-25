@@ -514,7 +514,7 @@ class ClassicNazi : ClassicBase
 			"####" EEEEEE 4 A_LookEx (0, 0, 0, 2048, 0, "See");
 			Loop;
 		Spawn.PatrolNoClip:
-			"####" A 0 A_JumpIf(angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles
+			"####" A 0 A_JumpIf(level.levelnum < 100 || angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles and in Wolf levels
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 45, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 90, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 0 A_Jump(256, "TurnAround");
@@ -1874,8 +1874,9 @@ class WolfSpectre : ClassicNazi
 			"####" A 0 A_SetShootable;
 			"####" A 0 A_Pain;
 			Goto Chase;
+		Death:
 		Dead:
-			"####" H -1;
+			TNT1 A 5;
 			Stop;
 	}
 }
