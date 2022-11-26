@@ -97,9 +97,11 @@ class ClassicWeapon : Weapon
 			}
 
 			// Hack: Compenstate for weird y offset change when using the software renderer
-
-			if (vid_rendermode < 4) { yadjust = Default.yadjust - 12; }
-			else { yadjust = Default.yadjust; }
+			if (bSWPositionAdjust)
+			{
+				if (vid_rendermode < 4) { yadjust = Default.yadjust - 12; }
+				else { yadjust = Default.yadjust; }
+			}
 		}
 	}
 }
