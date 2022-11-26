@@ -1,6 +1,10 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
+	int flags;
+
+	FlagDef SWPositionAdjust:flags, 0;
+
 	Default
 	{
 		//$Category Wolfenstein 3D/Items/Weapons
@@ -10,6 +14,7 @@ class ClassicWeapon : Weapon
 		Obituary "";
 		Inventory.PickupMessage "";
 		Weapon.YAdjust 19;
+		+ClassicWeapon.SWPOSITIONADJUST
 	}
 
 	States
@@ -92,6 +97,7 @@ class ClassicWeapon : Weapon
 			}
 
 			// Hack: Compenstate for weird y offset change when using the software renderer
+
 			if (vid_rendermode < 4) { yadjust = Default.yadjust - 12; }
 			else { yadjust = Default.yadjust; }
 		}
@@ -504,6 +510,7 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.SelectionOrder 1;
 		Weapon.SlotNumber 5;
 		+Weapon.CHEATNOTWEAPON
+		-ClassicWeapon.SWPOSITIONADJUST
 	}
 
 	States
@@ -582,6 +589,7 @@ class WolfRocketLauncher : ClassicWeapon
 		Weapon.SlotNumber 6;
 		+Weapon.CHEATNOTWEAPON
 		+Weapon.EXPLOSIVE
+		-ClassicWeapon.SWPOSITIONADJUST
 	}
 
 	States
