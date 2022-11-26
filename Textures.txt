@@ -1207,7 +1207,7 @@ Texture M_MENU, 152, 48 { Patch WVGA0010, 0, 0 }
 Texture M_SEL1, 24, 16 { Patch WVGA0011, 0, 0 }
 Texture M_SEL2, 24, 16 { Patch WVGA0012, 0, 0 }
 Texture M_CNTRLS, 104, 16 { Patch WVGA0018, 0, 0 }
-Texture M_CONTRL, 152, 48
+Texture "M_OPTIONS", 152, 48
 {
 	Patch WVGA0010, 0, 0 
 	Patch WVGA0026, 0, 0
@@ -1784,7 +1784,7 @@ Texture M_SMENU, 152, 48 { Patch WVGA1016, 0, 0 }
 Texture M_SSEL1, 24, 16 { Offset 0, 3 Patch WVGA1005, 0, 0 }
 Texture M_SSEL2, 24, 16 { Offset 0, 3 Patch WVGA1006, 0, 0 }
 Texture M_SCNTRL, 104, 16 { Patch WVGA1004, 0, 0 }
-Texture M_SCONTR, 152, 48 { Patch WVGA1015, 0, 0 }
+Texture "M_SOPTIONS", 152, 48 { Patch WVGA1015, 0, 0 }
 Texture M_SCUSTO, 152, 48 { Patch WVGA1009, 0, 0 }
 Texture M_SLOADG, 216, 48 { Patch WVGA1027, 0, 0 }
 Texture M_SSAVEG, 216, 48 { Patch WVGA1028, 0, 0 }

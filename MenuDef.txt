@@ -142,11 +142,14 @@ OptionMenu "TCOptions"
 	StaticText "$M_COSMETICOPTIONS", 1
 	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
-	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
-	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSFADESTYLE",			"g_fadestyle", "YesNo"
-	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
+	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
+	StaticText ""
+	StaticText "$M_HUDOPTIONS", 1
+	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
+	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
+	Option "$M_OPTIONSHUDRATIO",			"g_hudratio", "ForceRatios"
 }
 
 OptionMenu "WolfColorPickerMenu" protected

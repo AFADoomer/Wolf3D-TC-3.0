@@ -23,13 +23,15 @@ class ExtendedOptionMenu : GenericOptionMenu
 		String titlestring = mDesc.mTitle;
 		if (Game.IsSoD())
 		{
-			titlestring = titlestring.left(2) .. "S" .. titlestring.mid(2);
-			titlestring = titlestring.left(8);
+			titlestring = titlestring.left(3) .. "S" .. titlestring.mid(3);
+			title = TexMan.CheckForTexture(titlestring.Mid(1), TexMan.Type_Any);
+
+			if (!title.IsValid()) { titlestring = titlestring.left(9); }
 
 			bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 		}
 
-		title = TexMan.CheckForTexture(titlestring, TexMan.Type_Any);
+		if (!title.IsValid()) { title = TexMan.CheckForTexture(titlestring.Mid(1), TexMan.Type_Any); }
 		generictitle = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
 		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 
