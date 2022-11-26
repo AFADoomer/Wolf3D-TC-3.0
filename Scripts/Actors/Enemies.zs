@@ -37,8 +37,6 @@ class ClassicBase : Actor
 		FastSpeed 6; // Generic handling for supporting fast monsters 
 		BloodColor "FF 00 00";
 		DamageFactor "WolfNazi", 0.0;
-		RenderStyle "Translucent";
-		Alpha 0.999;
 	}
 
 	States
@@ -795,11 +793,17 @@ class SS : ClassicNazi
 			"####" I 5 Bright A_NaziShoot(0.666);
 			Goto Chase;
 		Death:
-			"####" A 0 {
-				if (target && target.CheckInventory(bLost ? "WolfMachinegunLost" : "WolfMachineGun", 1)) { A_SpawnItemEx(bLost ? "WolfCLipDropLost" : "WolfClipDrop"); }
-				else { A_SpawnItemEx(bLost ? "WolfMachinegunLost" : "WolfMachineGun"); }
-			}
+			"####" A 0 DoWeaponDrop();
 			Goto Super::Death;
+		Death.Fire:
+			"####" A 0 DoWeaponDrop();
+			Goto Super::Death.Fire;
+	}
+
+	void DoWeaponDrop()
+	{
+		if (target && target.CheckInventory(bLost ? "WolfMachinegunLost" : "WolfMachineGun", 1)) { A_SpawnItemEx(bLost ? "WolfCLipDropLost" : "WolfClipDrop"); }
+		else { A_SpawnItemEx(bLost ? "WolfMachinegunLost" : "WolfMachineGun"); }
 	}
 }
 
@@ -840,16 +844,6 @@ class MBlackSS : BlackSS
 
 		+JUSTHIT
 		+ClassicNazi.Patrolling
-	}
-
-	States
-	{
-		Death:
-			"####" A 0 {
-				if (target && target.CheckInventory("WolfMachineGunLost", 1)) { A_SpawnItemEx("WolfClipDrop"); }
-				else { A_SpawnItemEx("WolfMachineGunLost"); }
-			}
-			Goto ClassicNazi::Death;
 	}
 }
 
@@ -1153,6 +1147,7 @@ class HitlerGhost : ClassicNazi
 			WHGT EEEEEEEE 4 Bright A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
+		Death.Fire:
 			WHGT F 5 A_DeathDrop();
 			WHGT G 5 A_Scream;
 			WHGT HIJ 5;

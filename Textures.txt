@@ -1901,7 +1901,7 @@ Texture I_CLIP_O, 16, 14 { Offset 8, 14 Patch WSPR0028, -24, -50 }
 Texture I_GAS_O, 36, 26 { Offset 18, 26 Patch WGASA0, -14, -38 }
 Texture "I_ROCKET_O", 18, 23 { Offset 9, 23 Patch WRKTA0, -23, -41 }
 
-//Jag Status Bar Face
+// Jaguar Status Bar Face
 Texture WLJST00, 24, 32 { Offset 0, -1 Graphic FACE3, 0, 0 }
 Texture WLJST01, 24, 32 { Offset 0, -1 Graphic FACE4, 0, 0 }
 Texture WLJST02, 24, 32 { Offset 0, -1 Graphic FACE5, 0, 0 }
