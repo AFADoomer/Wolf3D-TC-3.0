@@ -261,7 +261,7 @@ class DeathCamMessage : GetPsyched
 				break;
 		}
 
-		if (StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawClassicBar(false); }
+		if (screenblocks < 11 && StatusBar is "ClassicStatusBar") { ClassicStatusBar(StatusBar).DrawClassicBar(false); }
 	}
 
 	override void Ticker()

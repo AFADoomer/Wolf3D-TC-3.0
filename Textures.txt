@@ -513,27 +513,49 @@ Texture SKY1, 64, 64 { YScale 0.5 Patch WALL0030, 0, 0 }
 Texture SKY2, 64, 64 { YScale 0.5 Patch WALL0031, 0, 0 }
 Texture SKY3, 64, 64 { YScale 0.5 Patch WALL1110, 0, 0 }
 Texture SKY4, 64, 64 { YScale 0.5 Patch WALL2110, 0, 0 }
-Texture 1D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[38,38,38]:[38,38,38]"} }
-Texture 2D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[88,0,0]:[88,0,0]"} }
-Texture 2E, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[76,0,0]:[76,0,0]"} }
-Texture 4D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[112,108,0]:[112,108,0]"} }
-Texture 4E, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[88,84,0]:[88,84,0]"} }
-Texture 4F, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[64,64,0]:[64,64,0]"} }
-Texture 6F, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[4,64,0]:[4,64,0]"} }
-Texture 7D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,112,112]:[0,112,112]"} }
-Texture 7F, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,64,64]:[0,64,64]"} }
-Texture 8D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[64,64,252]:[64,64,252]"} }
-Texture 98, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,0,152]:[0,0,152]"} }
-Texture 9D, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,0,88]:[0,0,88]"} }
-Texture 9E, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,0,76]:[0,0,76]"} }
-Texture AE, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[52,0,88]:[52,0,88]"} }
-Texture BF, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[64,0,64]:[64,0,64]"} }
-Texture D7, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[128,80,44]:[128,80,44]"} }
-Texture DC, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[72,56,24]:[72,56,24]"} }
-Texture DD, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[64,48,24]:[64,48,24]"} }
-Texture DE, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[64,44,20]:[64,44,20]"} }
-Texture DF, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[40,32,12]:[40,32,12]"} }
-Texture E1, 8, 8 { Patch Ceiling, 0, 0 {Translation "0:255=[0,100,100]:[0,100,100]"} }
+Texture 1D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[38,38,38]:[38,38,38]" } }
+Texture 2D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[88,0,0]:[88,0,0]" } }
+Texture 2E, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[76,0,0]:[76,0,0]" } }
+Texture 4D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[112,108,0]:[112,108,0]" } }
+Texture 4E, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[88,84,0]:[88,84,0]" } }
+Texture 4F, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[64,64,0]:[64,64,0]" } }
+Texture 6F, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[4,64,0]:[4,64,0]" } }
+Texture 7D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,112,112]:[0,112,112]" } }
+Texture 7F, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,64,64]:[0,64,64]" } }
+Texture 8D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[64,64,252]:[64,64,252]" } }
+Texture 98, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,0,152]:[0,0,152]" } }
+Texture 9D, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,0,88]:[0,0,88]" } }
+Texture 9E, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,0,76]:[0,0,76]" } }
+Texture AE, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[52,0,88]:[52,0,88]" } }
+Texture BF, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[64,0,64]:[64,0,64]" } }
+Texture D7, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[128,80,44]:[128,80,44]" } }
+Texture DC, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[72,56,24]:[72,56,24]" } }
+Texture DD, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[64,48,24]:[64,48,24]" } }
+Texture DE, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[64,44,20]:[64,44,20]" } }
+Texture DF, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[40,32,12]:[40,32,12]" } }
+Texture E1, 8, 8 { Patch Ceiling, 0, 0 { Translation "0:255=[0,100,100]:[0,100,100]" } }
+
+Texture CEIL1D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 38,38,38 } }
+Texture CEIL2D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 88,0,0 } }
+Texture CEIL2E, 64, 64 { Patch CEILBASE, 0, 0 { Blend 76,0,0 } }
+Texture CEIL4D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 112,108,0 } }
+Texture CEIL4E, 64, 64 { Patch CEILBASE, 0, 0 { Blend 88,84,0 } }
+Texture CEIL4F, 64, 64 { Patch CEILBASE, 0, 0 { Blend 64,64,0 } }
+Texture CEIL6F, 64, 64 { Patch CEILBASE, 0, 0 { Blend 4,64,0 } }
+Texture CEIL7D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,112,112 } }
+Texture CEIL7F, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,64,64 } }
+Texture CEIL8D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 64,64,252 } }
+Texture CEIL98, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,0,152 } }
+Texture CEIL9D, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,0,88 } }
+Texture CEIL9E, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,0,76 } }
+Texture CEILAE, 64, 64 { Patch CEILBASE, 0, 0 { Blend 52,0,88 } }
+Texture CEILBF, 64, 64 { Patch CEILBASE, 0, 0 { Blend 64,0,64 } }
+Texture CEILD7, 64, 64 { Patch CEILBASE, 0, 0 { Blend 128,80,44 } }
+Texture CEILDC, 64, 64 { Patch CEILBASE, 0, 0 { Blend 72,56,24 } }
+Texture CEILDD, 64, 64 { Patch CEILBASE, 0, 0 { Blend 64,48,24 } }
+Texture CEILDE, 64, 64 { Patch CEILBASE, 0, 0 { Blend 64,44,20 } }
+Texture CEILDF, 64, 64 { Patch CEILBASE, 0, 0 { Blend 40,32,12 } }
+Texture CEILE1, 64, 64 { Patch CEILBASE, 0, 0 { Blend 0,100,100 } }
 
 // Screen Sprites
 Graphic DEMO, 64, 64 { Patch WSPR0000, 0, 0 }
@@ -1288,7 +1310,7 @@ Texture GAME1, 48, 24
 Texture GAME2, 48, 24
 {
 	Graphic WVGA1035, -64, -12
-	Graphic WSPR1324, -15, -22 {Translation Gold Alpha 0.4 Style Translucent }
+	Graphic WSPR1324, -15, -22 { Translation Gold Alpha 0.4 Style Translucent }
 	Graphic WSPR1053, -26, -8
 	Graphic WSPR1381, 0, -40 { FlipX Alpha 0.1 Style Translucent }
 	Graphic Frame, 0, 0

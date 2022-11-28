@@ -263,7 +263,7 @@ HardwareShader Sprite "DBURG0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "HEL3A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
 HardwareShader Sprite "HEL4A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
 HardwareShader Sprite "HEL2A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
-HardwareShader Sprite "LITRA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
+HardwareShader Sprite "LITRA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/LIT3A0.png" }
 HardwareShader Sprite "HEL1A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
 HardwareShader Sprite "HEL5A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WEL1A0.png" }
 HardwareShader Sprite "ADTHA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/ADTHA0.png" }

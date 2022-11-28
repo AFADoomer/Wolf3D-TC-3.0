@@ -559,7 +559,6 @@ map E6L2 "$FLOOR_2"
 	music = NAZI_RAP
 	next = E6L3
 	par = 240
-	levelnum = 52
 }
 
 map E6L3 "$FLOOR_3"

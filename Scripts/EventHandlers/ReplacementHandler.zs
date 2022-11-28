@@ -1,5 +1,8 @@
 class ReplacementHandler : StaticEventHandler
 {
+	int useflatsval[MAXPLAYERS];
+	transient CVar useflats;
+
 	override void CheckReplacement(ReplaceEvent e)
 	{
 		if (g_replacenativeactors == 0) { return; }
@@ -101,37 +104,76 @@ class ReplacementHandler : StaticEventHandler
 	{
 		if (level.levelnum > 100)
 		{
-			static const String WolfCeilings[] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
-			static const String SoDCeilings[] = {"6f", "4f", "1d", "de", "df", "2e", "7f", "9e", "ae", "7f", "1d", "de", "df", "de", "df", "de", "e1", "dc", "2e", "1d", "dc"};
+			useflats = CVar.FindCVar("g_useflats");
+			useflatsval[consoleplayer] = useflats.GetInt();
 
-			String texname = "";
-			if (g_sod > 0) { texname = SoDCeilings[level.levelnum % 100 - 1]; }
-			else { texname = WolfCeilings[level.levelnum % 100 - 1]; }
-
-			if (texname.length())
-			{
-				ChangeFlat(0, texname);
-				ChangeFlat(800, texname);
-			}
+			if (useflatsval[consoleplayer]) { CheckFlats(); }
 		}
 	}
 
-	static void ChangeFlat(int tag, String texname)
+	override void WorldTick()
+	{
+		if (level.levelnum > 100 && !useflats || useflatsval[consoleplayer] != useflats.GetInt())
+		{
+			if (!useflats) { useflats = CVar.FindCVar("g_useflats"); }
+			useflatsval[consoleplayer] = useflats.GetInt();
+
+			CheckFlats();
+		}
+	}
+
+	void CheckFlats()
+	{
+		static const String WolfCeilings[] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
+		static const String SoDCeilings[] = {"6f", "4f", "1d", "de", "df", "2e", "7f", "9e", "ae", "7f", "1d", "de", "df", "de", "df", "de", "e1", "dc", "2e", "1d", "dc"};
+
+		String ceilname = "1d";
+		String floorname = "FLOOR";
+		if (g_sod > 0) { ceilname = SoDCeilings[clamp(level.levelnum % 100 - 1, 0, 20)]; }
+		else { ceilname = WolfCeilings[clamp((level.levelnum / 100 - 1) * 10 + level.levelnum % 100 - 1, 0, 59)]; }
+
+		TextureID floortex, ceiltex;
+
+		if (useflats && useflats.GetInt())
+		{
+			if (useflats.GetInt() == 3)
+			{
+				floorname = "FLOOR" .. (level.levelnum / 5) % 8;
+				ceilname = "CEIL" .. level.levelnum % 7;
+			}
+			else
+			{
+				if (useflats.GetInt() == 2)
+				{
+					floorname = "FLOOR" .. (level.levelnum / 5) % 8;
+				}
+				else
+				{
+					floorname = "FLOORDEF";
+				}
+				ceilname = "CEIL" .. ceilname;
+			}
+		}
+
+		ChangeFlat(0, ceilname);
+		ChangeFlat(800, ceilname);
+		ChangeFlat(0, floorname, sector.floor);
+		ChangeFlat(800, floorname, sector.floor);
+	}
+
+	static void ChangeFlat(int tag, String texname, int which = sector.ceiling)
 	{
 		int s = -1;
 		let it = level.CreateSectorTagIterator(tag);
 
-		// Use the default colors for the map, but use a FLOORXX or CEILXX counterpart
-		// texture if it exists
-		let ceilingtex = TexMan.CheckForTexture("CEIL" .. texname, TexMan.Type_Any);
-		if (!ceilingtex.IsValid()) { ceilingtex = TexMan.CheckForTexture(texname, TexMan.Type_Any); }
+		let tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
 
-		let floortex = TexMan.CheckForTexture("FLOOR" .. texname, TexMan.Type_Any);
-
-		while ((s = it.Next()) >= 0)
+		if (tex.IsValid())
 		{
-			if (floortex.IsValid()) { Level.sectors[s].SetTexture(Sector.floor, floortex); }
-			if (ceilingtex.IsValid()) { Level.sectors[s].SetTexture(Sector.ceiling, ceilingtex); }
+			while ((s = it.Next()) >= 0)
+			{
+				Level.sectors[s].SetTexture(which, tex);
+			}
 		}
 	}
 }

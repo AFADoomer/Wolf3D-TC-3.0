@@ -142,6 +142,7 @@ OptionMenu "TCOptions"
 	StaticText "$M_COSMETICOPTIONS", 1
 	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
+	Option "$M_OPTIONSUSEFLATS",			"g_useflats", "FlatStyle"
 	Option "$M_OPTIONSFADESTYLE",			"g_fadestyle", "YesNo"
 	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
@@ -446,4 +447,12 @@ OptionValue "BackStyle"
 {
 	0, "$BACK_QUIT"
 	1, "$BACK_RETURN"
+}
+
+OptionValue "FlatStyle"
+{
+	0, "$FLAT_NONE"
+	1, "$FLAT_MINIMAL"
+	2, "$FLAT_FLOORS"
+	3, "$FLAT_BOTH"
 }
