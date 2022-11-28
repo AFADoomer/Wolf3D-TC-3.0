@@ -155,12 +155,13 @@ class Syringe : WolfProjectile
 			WB3P ABCD 3;
 			Loop;
 		Death:
-			SYRP A 4 {
+			SYRP A 2 {
 				bInvisible = g_noblood;
-				roll = Random(0, 3) * 90;
+				roll = Random(0, 7) * 45;
+				scale.x *= RandomPick(-1, 1);
 				WolfExplode(20);
 			}
-			SYRP BC 4;
+			SYRP BCD 2;
 			Stop;
 	}
 }
