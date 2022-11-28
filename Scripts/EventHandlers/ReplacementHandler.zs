@@ -113,7 +113,7 @@ class ReplacementHandler : StaticEventHandler
 
 	override void WorldTick()
 	{
-		if (level.levelnum > 100 && !useflats || useflatsval[consoleplayer] != useflats.GetInt())
+		if (level.levelnum > 100 && (!useflats || useflatsval[consoleplayer] != useflats.GetInt()))
 		{
 			if (!useflats) { useflats = CVar.FindCVar("g_useflats"); }
 			useflatsval[consoleplayer] = useflats.GetInt();
