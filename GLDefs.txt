@@ -251,7 +251,7 @@ HardwareShader Sprite "CLUGP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "FLAMP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.93 }
 HardwareShader Sprite "WROCP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.93 }
 HardwareShader Sprite "WGASA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
-HardwareShader Sprite "WRKTA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
+HardwareShader Sprite "WRKTA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WRKTA0.png" }
 HardwareShader Sprite "WRKTB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
 HardwareShader Sprite "DBURA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/DBURN.png" }
 HardwareShader Sprite "DBURB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/DBURN.png" }
@@ -269,3 +269,9 @@ HardwareShader Sprite "HEL5A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "ADTHA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/ADTHA0.png" }
 HardwareShader Sprite "COL2A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
 HardwareShader Sprite "WTRKA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
+HardwareShader Texture "I_LIFE" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
+HardwareShader Texture "I_HEALTH" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
+HardwareShader Texture "I_BERSERK" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Shadows/I_BERSERK" Define CLIPHEIGHT = 0.5 }
+HardwareShader Texture "I_CLIP_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
+HardwareShader Texture "I_GAS_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
+HardwareShader Texture "I_ROCKET_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Shadows/I_ROCKET_O" Define CLIPHEIGHT = 0.5 }

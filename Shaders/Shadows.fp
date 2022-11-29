@@ -35,7 +35,7 @@ vec4 ProcessTexel()
 	{
 		// If blank shadow map is provided, fudge the shadow based on gray elements in
 		// the bottom of the sprite image - not perfect, but good for many sprites
-		if (vTexCoord.t > 0.875 && color.rgb != vec3(0.0) && color.r < maxshade && color.r == color.g && color.g == color.b)
+		if (vTexCoord.t > shadowclip && color.rgb != vec3(0.0) && color.r < maxshade && color.r == color.g && color.g == color.b)
 		{
 			shadowmap = color;
 		}
