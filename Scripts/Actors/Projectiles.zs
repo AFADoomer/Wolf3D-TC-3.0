@@ -12,6 +12,8 @@ class WolfProjectile : Actor
 		Radius 4;
 		Speed 14;
 		DamageType "WolfNazi";
+		RenderStyle "Translucent";
+		Alpha 1.0;
 	}
 
 	virtual void SpawnSmoke()
@@ -50,7 +52,7 @@ class WolfRocket : WolfProjectile
 			Loop;
 		Death:
 			ROCP A 4 Bright WolfExplode(30);
-			ROCP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
+			ROCP BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
 			Stop;
 	}
 }
@@ -78,7 +80,7 @@ class WolfRocketLost : WolfRocketSoD
 			Loop;
 		Death:
 			BAL4 A 4 Bright WolfExplode(30);
-			BAL4 BC 4; // A_SetRenderStyle(0.5, STYLE_Translucent);
+			BAL4 BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
 			Stop;
 	}
 
@@ -97,7 +99,7 @@ class WolfRocketPlayer : WolfRocket
 	{
 		Death:
 			ROCP A 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
-			ROCP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
+			ROCP BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
 			Stop;
 	}
 }
@@ -113,15 +115,17 @@ class WolfRocketSmoke : Actor
 		Height 5;
 		Radius 5;
 		Speed 0;
+		RenderStyle "Translucent";
+		Alpha 1.0;
 	}
 
 	States
 	{
 		Spawn:
 			TNT1 A 3;
-			RTRL ABC 2;
+			RTRL ABC 2 { if (!g_noblood) { A_FadeOut(0.2); } }
 		Death:
-			RTRL D 2;
+			RTRL D 2 { if (!g_noblood) { A_FadeOut(0.2); } }
 			Stop;
 	}
 }
@@ -185,10 +189,10 @@ class GhostFireBall : WolfProjectile
 		Death:
 			BALP A 4 Bright {
 				bInvisible = g_noblood;
-				roll = Random(0, 3) * 90;
+				roll = Random(0, 7) * 45;
 				WolfExplode(0, flags:0);
 			}
-			BALP BC 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
+			BALP BCD 4 Bright  { A_FadeOut(0.25); }
 			Stop;
 	}
 }

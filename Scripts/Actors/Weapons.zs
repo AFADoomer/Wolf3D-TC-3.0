@@ -111,7 +111,7 @@ class WolfPuff : BulletPuff
 	Default
 	{
 		+ROLLSPRITE
-		RenderStyle "Normal";
+		Alpha 1.0;
 	}
 
 	override void PostBeginPlay()
@@ -127,9 +127,9 @@ class WolfPuff : BulletPuff
 	{
 		Spawn:
 			WPUF A 4 Bright;
-			WPUF B 4 Bright; // A_SetRenderStyle(0.5, STYLE_Translucent);
+			WPUF B 4 Bright { if (!g_noblood) { A_FadeOut(0.25); } }
 		Melee:
-			WPUF CD 4;
+			WPUF CD 4 { if (!g_noblood) { A_FadeOut(0.2); } }
 			Stop;
 	}
 }
@@ -545,7 +545,7 @@ class WolfRocketPickup : Ammo
 		Inventory.AltHUDIcon "I_ROCKET";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/ammobox";
 		Ammo.BackpackAmount 5;
 		Ammo.BackpackMaxAmount 99;
 	}
@@ -583,7 +583,7 @@ class WolfRocketLauncher : ClassicWeapon
 		AttackSound "flame/fire";
 		Tag "$WPN_ROCK";
 		Inventory.Icon "ROCK";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/ammobox";
 		Weapon.AmmoType "WolfRocketPickup";
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;

@@ -129,7 +129,11 @@ class ReplacementHandler : StaticEventHandler
 
 		String ceilname = "1d";
 		String floorname = "FLOOR";
-		if (g_sod > 0) { ceilname = SoDCeilings[clamp(level.levelnum % 100 - 1, 0, 20)]; }
+
+		int h, gamemode;
+		[h, gamemode] = Game.IsSoD();
+
+		if (gamemode > 0) { ceilname = SoDCeilings[clamp(level.levelnum % 100 - 1, 0, 20)]; }
 		else { ceilname = WolfCeilings[clamp((level.levelnum / 100 - 1) * 10 + level.levelnum % 100 - 1, 0, 59)]; }
 
 		TextureID floortex, ceiltex;

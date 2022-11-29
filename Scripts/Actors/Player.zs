@@ -378,12 +378,15 @@ class WolfPlayer : DoomPlayer
 		// Now add the items from the DECORATE definition
 		let di = GetDropItems();
 
+		int h, gamemode;
+		[h, gamemode] = Game.IsSoD();
+
 		while (di)
 		{
 			String classname = di.Name;
 
 			if (
-				Game.IsSoD() > 1 &&
+				gamemode > 1 &&
 				(
 					classname ~== "WolfKnife" || 
 					classname ~== "WolfPistol" || 

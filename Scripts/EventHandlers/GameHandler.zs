@@ -166,7 +166,7 @@ class GameHandler : StaticEventHandler
 
 class Game
 {
-	static int IsSoD()
+	static int, int IsSoD()
 	{
 		int ret = max(0, g_sod);
 
@@ -188,7 +188,7 @@ class Game
 			if (sodvar) { sodvar.SetInt(ret); }
 		}
 
-		return g_sod;
+		return g_sod, ret;
 	}
 
 	static int WolfRandom()
