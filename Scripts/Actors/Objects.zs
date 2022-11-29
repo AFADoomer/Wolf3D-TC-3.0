@@ -86,7 +86,7 @@ class ExplosiveOilDrum : ExplosiveBarrel
 
 		Height 50;
 		Radius 32;
-		DeathSound "missile/hit";
+		DeathSound "barrel/explode";
 		Obituary "";
 	}
 
@@ -234,7 +234,7 @@ Class BreakableColumn : StoneColumn
 			COLB A 1;
 			Wait;
 		Death:
-			COLB B 10 A_StartSound("missile/hit");
+			COLB B 10 A_StartSound("column/break");
 			COLB C 5 A_UnSetSolid();
 			COLB D 3 A_UnSetShootable();
 			COLB E -1;
@@ -571,7 +571,7 @@ class WolfBerserk : Berserk
 		+Inventory.AUTOACTIVATE
 		Inventory.Amount 25;
 		Inventory.MaxAmount 100;
-		Inventory.PickupSound "pickups/medkit";
+		Inventory.PickupSound "pickups/berserk";
 		Inventory.PickupMessage "";
 	}
 
@@ -1968,7 +1968,7 @@ class MoldyCheese : Health
 		+Inventory.AUTOACTIVATE
 		Inventory.Amount 4;
 		Inventory.MaxAmount 100;
-		Inventory.PickupSound "pickups/food";
+		Inventory.PickupSound "pickups/cheese";
 		Inventory.PickupMessage "";
 	}
 

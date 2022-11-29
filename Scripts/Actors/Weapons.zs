@@ -239,6 +239,7 @@ class WolfKnife : ClassicWeapon
 		AttackSound "";
 		Tag "$WPN_KNIFE";
 		Inventory.Icon "KNIFE";
+		Inventory.PickupSound "pickups/knife";
 		Weapon.AmmoUse 0;
 		Weapon.SelectionOrder 4;
 	}
@@ -277,7 +278,7 @@ class WolfPistol : ClassicWeapon
 		AttackSound "weapons/wpistol";
 		Tag "$WPN_PISTOL";
 		Inventory.Icon "LUGER";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/pistol";
 		Weapon.AmmoType "WolfClip";
 		Weapon.AmmoGive 0;
 		Weapon.AmmoUse 1;
@@ -485,7 +486,7 @@ class WolfGas : Ammo
 		Inventory.AltHUDIcon "I_GAS";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/gas";
 		Ammo.BackpackAmount 2;
 		Ammo.BackpackMaxAmount 199;
 	}
@@ -505,7 +506,7 @@ class WolfFlameThrower : ClassicWeapon
 		//$Title Flame Thrower
 		Tag "$WPN_FTHR";
 		Inventory.Icon "FTHR";
-		Inventory.PickupSound "pickups/ammo";
+		Inventory.PickupSound "pickups/flamer";
 		Weapon.AmmoType "WolfGas";
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
@@ -545,7 +546,7 @@ class WolfRocketPickup : Ammo
 		Inventory.AltHUDIcon "I_ROCKET";
 		Inventory.MaxAmount 99;
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickups/ammobox";
+		Inventory.PickupSound "pickups/rocket";
 		Ammo.BackpackAmount 5;
 		Ammo.BackpackMaxAmount 99;
 	}
@@ -565,6 +566,7 @@ class WolfRocketCrate : WolfRocketPickup
 		//$Category Wolfenstein 3D/Items/Ammo
 		//$Title Rockets (3)
 		Inventory.Amount 5;
+		Inventory.PickupSound "pickups/rocketbox";
 	}
 
 	States
@@ -583,7 +585,7 @@ class WolfRocketLauncher : ClassicWeapon
 		AttackSound "flame/fire";
 		Tag "$WPN_ROCK";
 		Inventory.Icon "ROCK";
-		Inventory.PickupSound "pickups/ammobox";
+		Inventory.PickupSound "pickups/rocketlauncher";
 		Weapon.AmmoType "WolfRocketPickup";
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
@@ -620,7 +622,7 @@ class WolfBackpack : Backpack
 		//$Category Wolfenstein 3D/Items/Ammo
 		//$Color 3
 		Inventory.PickupMessage "";
-		Inventory.PickupSound "pickups/ammobox";
+		Inventory.PickupSound "pickups/backpack";
 	}
 
 	States

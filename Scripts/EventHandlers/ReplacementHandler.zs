@@ -102,18 +102,15 @@ class ReplacementHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (level.levelnum > 100)
-		{
-			useflats = CVar.FindCVar("g_useflats");
-			useflatsval[consoleplayer] = useflats.GetInt();
+		useflats = CVar.FindCVar("g_useflats");
+		useflatsval[consoleplayer] = useflats.GetInt();
 
-			if (useflatsval[consoleplayer]) { CheckFlats(); }
-		}
+		if (useflatsval[consoleplayer]) { CheckFlats(); }
 	}
 
 	override void WorldTick()
 	{
-		if (level.levelnum > 100 && (!useflats || useflatsval[consoleplayer] != useflats.GetInt()))
+		if (!useflats || useflatsval[consoleplayer] != useflats.GetInt())
 		{
 			if (!useflats) { useflats = CVar.FindCVar("g_useflats"); }
 			useflatsval[consoleplayer] = useflats.GetInt();
@@ -124,10 +121,12 @@ class ReplacementHandler : StaticEventHandler
 
 	void CheckFlats()
 	{
-		static const String WolfCeilings[] = {"1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "1d", "bf", "4e", "4e", "4e", "1d", "8d", "4e", "1d", "2d", "1d", "8d", "1d", "1d", "1d", "1d", "1d", "2d", "dd", "1d", "1d", "98", "1d", "9d", "2d", "dd", "dd", "9d", "2d", "4d", "1d", "dd", "7d", "1d", "2d", "2d", "dd", "d7", "1d", "1d", "1d", "2d", "1d", "1d", "1d", "1d", "dd", "dd", "7d", "dd", "dd", "dd"};
-		static const String SoDCeilings[] = {"6f", "4f", "1d", "de", "df", "2e", "7f", "9e", "ae", "7f", "1d", "de", "df", "de", "df", "de", "e1", "dc", "2e", "1d", "dc"};
+		if (useflatsval[consoleplayer] < 4 && level.levelnum <= 100) { return; }
 
-		String ceilname = "1d";
+		static const String WolfCeilings[] = {"1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "BF", "4E", "4E", "4E", "1D", "8D", "4E", "1D", "2D", "1D", "8D", "1D", "1D", "1D", "1D", "1D", "2D", "DD", "1D", "1D", "98", "1D", "9D", "2D", "DD", "DD", "9D", "2D", "4D", "1D", "DD", "7D", "1D", "2D", "2D", "DD", "D7", "1D", "1D", "1D", "2D", "1D", "1D", "1D", "1D", "DD", "DD", "7D", "DD", "DD", "DD"};
+		static const String SoDCeilings[] = {"6F", "4F", "1D", "DE", "DF", "2E", "7F", "9E", "AE", "7F", "1D", "DE", "DF", "DE", "DF", "DE", "E1", "DC", "2E", "1D", "DC"};
+
+		String ceilname = "1D";
 		String floorname = "FLOOR";
 
 		int h, gamemode;
@@ -135,19 +134,20 @@ class ReplacementHandler : StaticEventHandler
 
 		if (gamemode > 0) { ceilname = SoDCeilings[clamp(level.levelnum % 100 - 1, 0, 20)]; }
 		else { ceilname = WolfCeilings[clamp((level.levelnum / 100 - 1) * 10 + level.levelnum % 100 - 1, 0, 59)]; }
-
+ 
 		TextureID floortex, ceiltex;
 
 		if (useflats && useflats.GetInt())
 		{
-			if (useflats.GetInt() == 3)
+			int val = useflats.GetInt() % 4;
+			if (val == 3)
 			{
 				floorname = "FLOOR" .. (level.levelnum / 5) % 8;
 				ceilname = "CEIL" .. level.levelnum % 7;
 			}
 			else
 			{
-				if (useflats.GetInt() == 2)
+				if (val == 2)
 				{
 					floorname = "FLOOR" .. (level.levelnum / 5) % 8;
 				}
