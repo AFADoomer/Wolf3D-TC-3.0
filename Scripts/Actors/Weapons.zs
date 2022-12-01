@@ -1,10 +1,6 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
-	int flags;
-
-	FlagDef SWPositionAdjust:flags, 0;
-
 	Default
 	{
 		//$Category Wolfenstein 3D/Items/Weapons
@@ -13,8 +9,9 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.YAdjust 19;
-		+ClassicWeapon.SWPOSITIONADJUST
+		Weapon.WeaponScaleX 2.5;
+		Weapon.WeaponScaleY 3.0;
+		Weapon.YAdjust 2.0;
 	}
 
 	States
@@ -51,7 +48,8 @@ class ClassicWeapon : Weapon
 		let psp = player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		psp.y = WEAPONTOP;
+		ResetPSprite(psp);
+
 		psp.SetState(player.ReadyWeapon.GetReadyState());
 	}
 
@@ -96,13 +94,17 @@ class ClassicWeapon : Weapon
 				bobrangey = Default.bobrangey * bobscale.GetFloat();
 			}
 
-			// Hack: Compenstate for weird y offset change when using the software renderer
-			if (bSWPositionAdjust)
-			{
-				if (vid_rendermode < 4) { yadjust = Default.yadjust - 12; }
-				else { yadjust = Default.yadjust; }
-			}
+			SetYPosition();
 		}
+	}
+
+	virtual void SetYPosition()
+	{
+		let psp = owner.player.GetPSprite(PSP_WEAPON);
+		if (!psp) { return; }
+
+		if (screenblocks < 11) { psp.y = WEAPONTOP - 15.0 * st_Scale / WeaponScaleY; }
+		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
 	}
 }
 
@@ -512,8 +514,9 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1;
 		Weapon.SlotNumber 5;
+		Weapon.WeaponScaleX 1.0;
+		Weapon.WeaponScaleY 1.2;
 		+Weapon.CHEATNOTWEAPON
-		-ClassicWeapon.SWPOSITIONADJUST
 	}
 
 	States
@@ -591,9 +594,10 @@ class WolfRocketLauncher : ClassicWeapon
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 5;
 		Weapon.SlotNumber 6;
+		Weapon.WeaponScaleX 1.0;
+		Weapon.WeaponScaleY 1.2;
 		+Weapon.CHEATNOTWEAPON
 		+Weapon.EXPLOSIVE
-		-ClassicWeapon.SWPOSITIONADJUST
 	}
 
 	States

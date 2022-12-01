@@ -349,7 +349,7 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override void Draw(int state, double TicFrac)
 	{
-		BeginStatusBar(st_scale);
+		BeginStatusBar(st_scale, 320, 200, 42);
 
 		if (fizzlelayer == 0) { DrawFizzle(); }
 
