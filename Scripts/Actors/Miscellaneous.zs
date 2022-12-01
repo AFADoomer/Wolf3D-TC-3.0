@@ -297,3 +297,40 @@ class BJ : Actor
 			Stop;
 	}
 }
+
+class Fire : Actor
+{
+	Default
+	{
+		+BRIGHT
+		+NOGRAVITY
+		RenderStyle "Translucent";
+		Alpha 1.0;
+	}
+
+	States
+	{
+		Spawn:
+			FIRE # 4 Advance();
+			Loop;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+
+		frame = Random(0, 7);
+		vel.z = 0.5;
+	}
+
+	void Advance()
+	{
+		frame = (frame + 1) % 8;
+
+		if (GetAge() > 8)
+		{
+			alpha -= 0.2;
+			if (alpha <= 0) { Destroy(); }
+		}
+	}
+}

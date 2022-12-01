@@ -556,6 +556,7 @@ class ClassicNazi : ClassicBase
 				A_DeathDrop();
 			}
 			"####" K 7 A_SetTics(deathtics - 1);
+		Death.Resume:
 			"####" L 8 A_SetTics(deathtics);
 			"####" M 7 A_SetTics(deathtics - 1);
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
@@ -563,14 +564,16 @@ class ClassicNazi : ClassicBase
 			"####" N -1 { if (bLongDeath) { frame = 14; } }
 		Death.Fire:
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
-			BURN A 8 Bright {
+			"####" A 0 {
 				A_DeathScream();
 				A_DeathDrop();
+				SpawnFlames();
 			}
-			BURN BCD 8 Bright;
-			BURN EFG 8;
-			BURN H -1;
-			Stop;
+			"####" K 6 A_SetTranslation("Ash25");
+			"####" K 6 A_SetTranslation("Ash50");
+			"####" K 6 A_SetTranslation("Ash75");
+			"####" K 6 A_SetTranslation("Ash100");
+			Goto Death.Resume;
 	}
 
 	override void PostBeginPlay()
@@ -579,6 +582,15 @@ class ClassicNazi : ClassicBase
 
 		if (bPatrolling) { SetStateLabel("Spawn.Patrol"); }
 		else { SetStateLabel("Spawn.Stand"); }
+	}
+
+	virtual void SpawnFlames(double maxheight = 32)
+	{
+		for (int f = 0; f < 12; f++)
+		{
+			double rad = radius / 2;
+			Spawn("Fire", pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight)));
+		}
 	}
 }
 
@@ -661,17 +673,22 @@ class Dog : ClassicNazi
 			Goto Chase;
 		Death:
 			"####" A 0 A_DeathScream;
+		Death.Resume:
 			"####" HIJ 5;
 		Dead:
 			"####" K -1;
 			Stop;
 		Death.Fire:
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
-			DBUR A 8 Bright A_DeathScream();
-			DBUR BCD 8 Bright;
-			DBUR EFG 8;
-			DBUR H -1;
-			Stop;
+			"####" A 0 {
+				A_DeathScream();
+				SpawnFlames(16);
+			}
+			"####" H 6 A_SetTranslation("Ash25");
+			"####" H 6 A_SetTranslation("Ash50");
+			"####" H 6 A_SetTranslation("Ash75");
+			"####" H 6 A_SetTranslation("Ash100");
+			Goto Death.Resume;
 	}
 }
 
