@@ -320,17 +320,26 @@ class Fire : Actor
 		Super.PostBeginPlay();
 
 		frame = Random(0, 7);
-		vel.z = 0.5;
+		vel.z = FRandom(0.05, 0.5);
 	}
 
 	void Advance()
 	{
 		frame = (frame + 1) % 8;
 
-		if (GetAge() > 8)
+		if (GetAge() > 16)
 		{
-			alpha -= 0.2;
+			alpha -= 0.1;
 			if (alpha <= 0) { Destroy(); }
 		}
+	}
+}
+
+class SmallFire : Fire
+{
+	States
+	{
+		Spawn:
+			FLA2 # 2 Advance();
 	}
 }

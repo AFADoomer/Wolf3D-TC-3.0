@@ -488,6 +488,18 @@ class ClassicBase : Actor
 
 		bActive = true;
 	}
+
+	virtual void SpawnFlames(int count = 8, double maxheight = 32, double rad = -1)
+	{
+		for (int f = 0; f < count; f++)
+		{
+			if (rad == -1) { rad = radius / 2; }
+
+			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
+			Spawn("Fire", spawnpos);
+			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
+		}
+	}
 }
 
 class ClassicNazi : ClassicBase
@@ -583,15 +595,6 @@ class ClassicNazi : ClassicBase
 		if (bPatrolling) { SetStateLabel("Spawn.Patrol"); }
 		else { SetStateLabel("Spawn.Stand"); }
 	}
-
-	virtual void SpawnFlames(double maxheight = 32)
-	{
-		for (int f = 0; f < 12; f++)
-		{
-			double rad = radius / 2;
-			Spawn("Fire", pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight)));
-		}
-	}
 }
 
 class ClassicBoss : ClassicBase
@@ -681,8 +684,9 @@ class Dog : ClassicNazi
 		Death.Fire:
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
 			"####" A 0 {
+				vel.xy *= 0;
 				A_DeathScream();
-				SpawnFlames(16);
+				SpawnFlames(8, 16);
 			}
 			"####" H 6 A_SetTranslation("Ash25");
 			"####" H 6 A_SetTranslation("Ash50");
@@ -1064,6 +1068,17 @@ class HansGrosse : ClassicBoss
 		Dead:
 			"####" K -1;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" A 0 {
+				A_DeathScream();
+				SpawnFlames(16, 48, radius);
+			}
+			"####" H 6 A_SetTranslation("Ash25");
+			"####" H 6 A_SetTranslation("Ash50");
+			"####" H 6 A_SetTranslation("Ash75");
+			"####" H 6 A_SetTranslation("Ash100");
+			Goto Death;
 	}
 }
 
@@ -1164,13 +1179,20 @@ class HitlerGhost : ClassicNazi
 			WHGT EEEEEEEE 4 Bright A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
-		Death.Fire:
 			WHGT F 5 A_DeathDrop();
 			WHGT G 5 A_Scream;
 			WHGT HIJ 5;
 		Dead:
 			WHGT K -1;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" F 0 SpawnFlames(8, 48, 48);
+			"####" F 2 A_SetTranslation("Ash25");
+			"####" F 2 A_SetTranslation("Ash50");
+			"####" F 2 A_SetTranslation("Ash75");
+			"####" F 2 A_SetTranslation("Ash100");
+			Goto Death;
 	}
 }
 
@@ -1520,6 +1542,18 @@ class TransGrosse : HansGrosse
 			"####" J 7 A_BossDeath;
 			"####" K -1;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" A 10 {
+				A_DeathDrop();
+				A_Scream();
+				SpawnFlames(16, 48, radius);
+			}
+			"####" A 10 A_SetTranslation("Ash25");
+			"####" A 10 A_SetTranslation("Ash50");
+			"####" A 10 A_SetTranslation("Ash75");
+			"####" A 10 A_SetTranslation("Ash100");
+			Goto Death + 2;
 	}
 }
 
@@ -1550,6 +1584,18 @@ class SubmarineWilly : HansGrosse
 			"####" J 7 A_BossDeath;
 			"####" K -1 ;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" A 10 {
+				A_DeathDrop();
+				A_Scream();
+				SpawnFlames(16, 48, radius);
+			}
+			"####" A 10 A_SetTranslation("Ash25");
+			"####" A 10 A_SetTranslation("Ash50");
+			"####" A 10 A_SetTranslation("Ash75");
+			"####" A 10 A_SetTranslation("Ash100");
+			Goto Death + 2;
 	}
 }
 
@@ -1605,6 +1651,17 @@ class UberMutant : ClassicBoss
 		Dead:
 			"####" M -1;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" A 6 {
+				A_Scream();
+				SpawnFlames(16, 48, radius);
+			}
+			"####" A 6 A_SetTranslation("Ash25");
+			"####" A 6 A_SetTranslation("Ash50");
+			"####" A 6 A_SetTranslation("Ash75");
+			"####" A 6 A_SetTranslation("Ash100");
+			Goto Death + 1;
 	}
 }
 
@@ -1678,6 +1735,17 @@ class DeathKnight : ClassicBoss
 		Dead:
 			"####" Q -1;
 			Stop;
+		Death.Fire:
+			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
+			"####" A 6 {
+				A_Scream();
+				SpawnFlames(16, 48, radius);
+			}
+			"####" A 6 A_SetTranslation("Ash25");
+			"####" A 6 A_SetTranslation("Ash50");
+			"####" A 6 A_SetTranslation("Ash75");
+			"####" A 6 A_SetTranslation("Ash100");
+			Goto Death + 1;
 	}
 }
 
