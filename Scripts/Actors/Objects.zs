@@ -606,6 +606,29 @@ class JeweledCross : Score
 	}
 }
 
+class JeweledScepter : Score
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Treasure
+		//$Title Jeweled Scepter
+		//$Color 14
+		//$NotAngled
+
+		+COUNTITEM
+		Inventory.Amount 100;
+		Inventory.PickupSound "pickups/cross";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			TREC I -1;
+			Stop;
+	}
+}
+
 class Chalice : Score
 {
 	Default

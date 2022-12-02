@@ -30,8 +30,8 @@ class ReplacementHandler : StaticEventHandler
 			case 'CellPack': e.replacement = "WolfGas"; break;
 
 			// Armor
-			case 'ArmorBonus': e.replacement = Random(0, 1) ? "Chalice" : "JeweledCross"; break;
-			case 'GreenArmor': e.replacement = "Chest"; break;
+			case 'ArmorBonus': e.replacement = Random(0, 1) ? "JeweledScepter" : "JeweledCross"; break;
+			case 'GreenArmor': e.replacement = Random(0, 1) ? "Chest" : "Chalice"; break;
 			case 'BlueArmor': e.replacement = "Crown"; break;
 
 			// Health

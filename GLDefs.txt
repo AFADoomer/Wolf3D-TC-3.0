@@ -275,3 +275,4 @@ HardwareShader Texture "I_BERSERK" { Shader "Shaders/Shadows.fp" DisableAlphaTes
 HardwareShader Texture "I_CLIP_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
 HardwareShader Texture "I_GAS_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
 HardwareShader Texture "I_ROCKET_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Shadows/I_ROCKET_O" Define CLIPHEIGHT = 0.5 }
+HardwareShader Sprite "TRECI0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }

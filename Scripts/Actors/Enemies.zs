@@ -498,6 +498,7 @@ class ClassicBase : Actor
 			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
 			Spawn("Fire", spawnpos);
 			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
+			Spawn("Smoke", spawnpos + (FRandom(-32, 32), FRandom(-32, 32), FRandom(-16, 16)));
 		}
 	}
 }
@@ -577,6 +578,7 @@ class ClassicNazi : ClassicBase
 		Death.Fire:
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
 			"####" A 0 {
+				vel.xy *= 0;
 				A_DeathScream();
 				A_DeathDrop();
 				SpawnFlames();
@@ -1187,7 +1189,7 @@ class HitlerGhost : ClassicNazi
 			Stop;
 		Death.Fire:
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
-			"####" F 0 SpawnFlames(8, 48, 48);
+			"####" F 0 SpawnFlames();
 			"####" F 2 A_SetTranslation("Ash25");
 			"####" F 2 A_SetTranslation("Ash50");
 			"####" F 2 A_SetTranslation("Ash75");

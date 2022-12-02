@@ -1147,6 +1147,11 @@ map SD321 "$SD321"
 	specialaction = "DevilIncarnate", "ACS_ExecuteAlways", 4, 0, 2
 }
 
+map TestMap "Test Map"
+{
+	levelnum = 999
+}
+
 DoomEdNums
 {
 	// Compatibility
@@ -1271,6 +1276,7 @@ DoomEdNums
 	21076=WolfRocketCrate
 	21077=WolfRocketLauncher
 	21078=WolfGas
+	21079=MoldyCheese
 	21080=WolfFlameThrower
 	21081=WolfKnife
 	21082=WolfPistol
@@ -1280,8 +1286,7 @@ DoomEdNums
 	21086=BreakableColumn
 	21087=ExplosiveOilDrum
 	//21088= Invisibility
-	//21089= Dual Chaingun
-	21079=MoldyCheese
+	21089=JeweledScepter
 	21124=DeadGuard
 
 	// SoD

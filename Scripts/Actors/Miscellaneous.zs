@@ -343,3 +343,39 @@ class SmallFire : Fire
 			FLA2 # 2 Advance();
 	}
 }
+
+class Smoke : Actor
+{
+	Default
+	{
+		+NOGRAVITY;
+		+ROLLSPRITE;
+		RenderStyle "Translucent";
+		Alpha 0.72;
+	}
+
+	States
+	{
+		Spawn:
+			RTRL A 1 A_FadeOut(0.02);
+			Loop;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+
+		vel.z = FRandom(0.05, 0.5);
+		scale = FRandom(0.25, 0.75) * (1.0, 1.0);
+	}
+
+	override void Tick()
+	{
+		if (IsFrozen()) { return; }
+
+		Super.Tick();
+
+		roll += vel.z * 10.0;
+		scale *= 1.025;
+	}
+}
