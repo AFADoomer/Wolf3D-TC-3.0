@@ -23,7 +23,7 @@ class WolfProjectile : Actor
 
 	virtual int WolfExplode(int additional = 0, bool damage = true, int flags = XF_HURTSOURCE, int blastradius = 0)
 	{
-		int amt = (Game.WolfRandom() >> 3) + additional;
+		int amt = (GameHandler.WolfRandom() >> 3) + additional;
 
 		if (blastradius <= 0) { blastradius = int(blastradius * 4); }
 

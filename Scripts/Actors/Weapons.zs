@@ -61,7 +61,7 @@ class ClassicWeapon : Weapon
 
 		if (tgt)
 		{
-			dmg = Game.WolfRandom();
+			dmg = GameHandler.WolfRandom();
 
 			Vector2 offset = tgt.pos.xy - pos.xy;
 
@@ -75,7 +75,7 @@ class ClassicWeapon : Weapon
 			else if (dist < 4) { dmg /= 6; }
 			else
 			{
-				if ((Game.WolfRandom() / 12) < dist) { dmg = 0; }
+				if ((GameHandler.WolfRandom() / 12) < dist) { dmg = 0; }
 				else { dmg /= 6; }
 			}
 		}
@@ -256,7 +256,7 @@ class WolfKnife : ClassicWeapon
 			Loop;
 		Fire:
 			"####" B 3;
-			"####" C 3 A_CustomPunch(Game.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
+			"####" C 3 A_CustomPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}

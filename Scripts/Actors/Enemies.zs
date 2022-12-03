@@ -154,12 +154,12 @@ class ClassicBase : Actor
 			int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
 
 			if (
-				(Game.WolfRandom() < chance) || // Some boss enemies and fake Hitler
+				(GameHandler.WolfRandom() < chance) || // Some boss enemies and fake Hitler
 				(
 					!chance && // All other enemies
 					(
 						(dist < 1) || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
-						(!chance && dist > 0 && Game.WolfRandom() < (128 / dist)) // or randomly, based on distance
+						(!chance && dist > 0 && GameHandler.WolfRandom() < (128 / dist)) // or randomly, based on distance
 					)
 				)
 			)
@@ -221,7 +221,7 @@ class ClassicBase : Actor
 			d[1] = temp;
 		}
 
-		if (Game.WolfRandom() < 128)
+		if (GameHandler.WolfRandom() < 128)
 		{
 			temp = d[0];
 			d[0] = d[1];
@@ -290,7 +290,7 @@ class ClassicBase : Actor
 			if (TryWalk()) { return movedir; }
 		}
 
-		if (Game.WolfRandom() > 128)
+		if (GameHandler.WolfRandom() > 128)
 		{
 			for (temp = DI_NORTH; temp <= DI_WEST; temp++)
 			{
@@ -410,7 +410,7 @@ class ClassicBase : Actor
 		int num = level.levelnum % 100;
 
 		if (
-			!Game.WolfRandom() &&
+			!GameHandler.WolfRandom() &&
 			(
 				(Game.IsSoD() && (num == 19 || num == 20)) ||
 				(!Game.IsSoD() && num == 10)
@@ -427,7 +427,7 @@ class ClassicBase : Actor
 	{
 		if (!target || !CheckSight(target)) { return; }
 
-		int damage = Game.WolfRandom();
+		int damage = GameHandler.WolfRandom();
 
 		A_FaceTarget();
 
@@ -449,7 +449,7 @@ class ClassicBase : Actor
 		int hitchance = targetspeed < 10.0 ? 256 : 160;
 		hitchance -= dist * 16;
 
-		if (Game.WolfRandom() < hitchance)
+		if (GameHandler.WolfRandom() < hitchance)
 		{
 			if (dist < 2) { damage = damage >> 2; }
 			else if (dist < 4) { damage = damage >> 3; }
