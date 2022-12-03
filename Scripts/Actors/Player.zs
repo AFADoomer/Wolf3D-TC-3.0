@@ -111,13 +111,6 @@ class WolfPlayer : DoomPlayer
 		}
 	}
 
-	override color GetPainFlash()
-	{
-		if (health <= 0) { return 0; }
-
-		return Super.GetPainFlash();
-	}
-
 	override void DeathThink()
 	{
 		player.Uncrouch();
