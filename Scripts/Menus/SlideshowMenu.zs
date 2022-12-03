@@ -47,6 +47,8 @@ class HelpMenu : ReadThisMenu
 		if (border) { screen.DrawTexture(border, false, 0, 0, DTA_320x200, true); }
 
 		screen.DrawText(SmallFont, Font.FindFontColor("WolfDarkGold"), 213, 183, "pg " .. mScreen .. " of " .. pages.Size() - 1, DTA_320x200, true);
+
+		Menu.Drawer();
 	}
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
@@ -100,6 +102,17 @@ class HelpMenu : ReadThisMenu
 		}
 
 		return Super.MouseEvent(type, x, y);
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_RButtonUp)
+		{
+			if (mScreen == 1) { return MenuEvent(MKEY_Back, false); }
+			return MenuEvent(MKEY_Left, false);
+		}
+
+		return Super.OnUIEvent(ev);
 	}
 
 	ui void ParseFile(String filename)
