@@ -7,11 +7,11 @@ Jaguar Wolf3D Sprites - id Software
 Broken Column Sprites - Modified by AFADoomer from AReyeP - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
 Exploding Barrel Sprites - Modified by AFADoomer from UnTrustable (https://forum.zdoom.org/viewtopic.php?p=884629#p884629)
 Bullet hit sprite - Modified by AFADoomer from Wolf3D development screens (https://tcrf.net/Development:Wolfenstein_3D_(DOS))
-Burning death sprites - Wolfenstein 3D 30th Anniversary Edition (https://www.moddb.com/mods/wolfenstein-3d-30th-anniversary-edition)
 BJ Rotation Sprites - Mason (http://mmimageworld.dugtrio17.com/cgi-bin/index.cgi?author=mason&page=1)
 MiniFont - Ripped for Blade of Agony by Talon1024
 KeyPrompt Icons - Modified by AFADoomer from Input Prompts by Kenney (http://www.kenney.nl)
 Floor textures - Pulled from Laz Rojas's WolfenDoom (http://lazrojas.com/wolfendoom/original.zip) and from AReyeP's web site (http://www.areyep.com/RIPandMCS-TextureLibrary-Floorceilingtextures.html)
 Syringe explosion and fireball impact sprites - Modified by AFADoomer from sprites by DoomJedi (http://dhw.wolfenstein3d.com/viewtopic.php?t=7865) and original Wolf3D sprites
+Flame sprites - Modified by AFADoomer from Seamartini (https://www.alamy.com/fire-flame-pixel-art-animation-sprite-frames-8bit-game-cartoon-torch-motion-set-vector-graphic-explosion-or-burning-ignition-effect-for-videogame-i-image452235104.html)
 
 ZScript MD5 Hash Library - 3saster (https://forum.zdoom.org/viewtopic.php?p=1178935)
