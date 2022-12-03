@@ -36,6 +36,8 @@ gameinfo
 	AltHUDClass = "JaguarHUD"
 	StatScreen_Single = "ClassicStats"
 	MessageboxClass = "ClassicMessageBox"
+	
+	pickupcolor = "FF F8 00"
 }
 
 // Skill Definitions

@@ -118,7 +118,6 @@ class WolfPlayer : DoomPlayer
 		if (player.playerstate != PST_DEAD && !(player.cheats & CF_PREDICTING))
 		{
 			if (player.damagecount) { player.damagecount--; }
-			if (player.bonuscount) { player.bonuscount--; }
 		}
 	}
 
