@@ -42,34 +42,34 @@ ListMenu "MainMenu"
 
 	Position 100, 55
 
-	Box 178, 136, 0
+	Box 178, 150, 0 // Was 136 high; added height due to always showing 'End Game'
 
 	TextItem "$M_NEW", "n", "PlayerclassMenu"
 	TextItem "$M_SOUND", "s", "SoundOptions"
 	TextItem "$M_OPTIONS", "c", "TCOptions"
 	TextItem "$M_LOAD", "l", "LoadGameMenu"
 
-	Font "BigFont", "TrueBlack"
-	TextNotInGame "$M_SAVE"
+	WolfTextItemDisabled "$M_SAVE", "", "", 0
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-	TextItemInGame "$M_SAVE", "s", "SaveGameMenu"
+	WolfTextItem "$M_SAVE", "s", "SaveGameMenu", 1
 
 	TextItem "$M_VIDEOOPTIONS", "w", "VideoModeMenu"
 
 	IfOption(ReadThis)
 	{
 		Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-		TextItemNotRegisteredNotInGame "$M_READTHIS", "r", "HelpMenu"
+		WolfTextItem "$M_READTHIS", "r", "HelpMenu", 0, 0
 		Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
-		TextItemNotRegisteredInGame "$M_READTHIS", "r", "HelpMenu"
+		WolfTextItem "$M_READTHIS", "r", "HelpMenu", 1, 0
 	}
 
-	TextItemNotInGame "$M_HIGHSCORES", "v", "HighScores"
-	TextItemInGame "$M_ENDGAME", "e", "EndGameMenu"
+	WolfTextItem "$M_HIGHSCORES", "v", "HighScores", 0
+	//WolfTextItem "$M_ENDGAME", "e", "EndGameMenu", 1
+	TextItem "$M_ENDGAME", "e", "EndGameMenu" // Always show the 'End Game' entry so that we can return to game selection
 
-	TextItemNotInGame "$M_BACKTODEMO", "b", "CloseMenu"
+	WolfTextItem "$M_BACKTODEMO", "b", "CloseMenu", 0
 	Font "BigFont", "WolfMenuYellow", "WolfMenuYellowBright"
-	TextItemInGame "$M_BACKTOGAME", "b", "CloseMenu"
+	WolfTextItem "$M_BACKTOGAME", "b", "CloseMenu", 1
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
 	TextItem "$M_QUIT", "q", "QuitMenu"

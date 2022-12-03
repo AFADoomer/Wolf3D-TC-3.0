@@ -367,6 +367,7 @@ class Smoke : Actor
 
 		vel.z = FRandom(0.05, 0.5);
 		scale = FRandom(0.25, 0.75) * (1.0, 1.0);
+		roll = Random(0, 7) * 45;
 	}
 
 	override void Tick()
@@ -375,7 +376,6 @@ class Smoke : Actor
 
 		Super.Tick();
 
-		roll += vel.z * 10.0;
 		scale *= 1.025;
 	}
 }

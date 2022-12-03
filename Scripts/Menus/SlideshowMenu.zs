@@ -16,7 +16,7 @@ class HelpMenu : ReadThisMenu
 
 		sharewareremap = true;
 		allowexit = true;
-		ParseFile("data/help.txt");
+		ParseFile(GameHandler.GameFilePresent("WL3") ? "data/helpregistered.txt" : "data/help.txt");
 
 		if (gamestate != GS_FINALE)
 		{
@@ -261,6 +261,17 @@ class HelpMenu : ReadThisMenu
 	void PrintText(String text, int x, int y)
 	{
 		screen.DrawText(SmallFont, Font.FindFontColor("TrueBlack"), x, y, text, DTA_320x200, true);
+	}
+}
+
+class HelpMenuRegistered : HelpMenu
+{
+	override void Init(Menu parent)
+	{
+		Super.Init(parent);
+
+		pages.Clear();
+		ParseFile("data/helpregistered.txt");
 	}
 }
 

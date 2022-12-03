@@ -1198,7 +1198,14 @@ class ListMenuItemStripTitle : ListMenuItemStaticPatch
 	}
 }
 
-class ListMenuItemTextItemInGame : ListMenuItem
+// WolfTextItem menu item
+//  Parameters: text, hotkey, action, in game or not, in SoD or not, param
+//
+//  WolfTextItem "Test", "t", "HelpMenu", 0, 0
+//   Item named 'Test' with hotkey 't' that opens the Read This menu and
+//   only appears when no level is loaded and you aren't playing SoD
+
+class ListMenuItemWolfTextItem : ListMenuItem
 {
 	int mHotkey;
 	int mHeight;
@@ -1209,8 +1216,9 @@ class ListMenuItemTextItemInGame : ListMenuItem
 	int mColorSelected;
 	ListMenuDescriptor descriptor;
 	double alpha;
+	int mInGame, mSoD;
 
-	void Init(ListMenuDescriptor desc, String text, String hotkey, Name child, int param = 0)
+	void Init(ListMenuDescriptor desc, String text, String hotkey, Name child, int ingame = -1, int sod = -1, int param = 0)
 	{
 		Super.Init(desc.mXpos, desc.mYpos, child);
 		mHeight = desc.mLineSpacing;
@@ -1221,6 +1229,8 @@ class ListMenuItemTextItemInGame : ListMenuItem
 		mColorSelected = desc.mFontcolor2;
 		mHotkey = hotkey.ByteAt(0);
 		descriptor = desc;
+		mInGame = ingame;
+		mSoD = sod;
 
 		alpha = 1.0;
 	}
@@ -1276,8 +1286,18 @@ class ListMenuItemTextItemInGame : ListMenuItem
 
 	override void OnMenuCreated()
 	{
-		mEnabled = (gamestate == GS_LEVEL && GameHandler.CheckEpisode());
+		if (mInGame > -1)
+		{
+			mEnabled = 	(mInGame == 1 && gamestate == GS_LEVEL && GameHandler.CheckEpisode()) ||
+						(!mInGame && (gamestate != GS_LEVEL || !GameHandler.CheckEpisode()));
+		}
 
+		if (mEnabled && mSoD > -1)
+		{
+			mEnabled =	(mSoD == 1 && Game.IsSoD()) ||
+						(!mSoD && !Game.IsSoD());
+		}
+		
 		AllocateSpace();
 	}
 
@@ -1305,70 +1325,19 @@ class ListMenuItemTextItemInGame : ListMenuItem
 	}
 }
 
-class ListMenuItemTextItemNotInGame : ListMenuItemTextItemInGame 
+// Same as above, but with alternate 'disabled' color scheme
+
+class ListMenuItemWolfTextItemDisabled : ListMenuItemWolfTextItem
 {
 	override void OnMenuCreated()
 	{
-		mEnabled = (gamestate != GS_LEVEL || !GameHandler.CheckEpisode());
+		Super.OnMenuCreated();
 
-		AllocateSpace();
-	}
-}
-
-class ListMenuItemTextNotInGame : ListMenuItemTextItemInGame 
-{
-	void Init(ListMenuDescriptor desc, String text, int param = 0)
-	{
-		Super.Init(desc, text, "", 'None', param);
-		mHeight = desc.mLineSpacing;
-		mParam = param;
-		mText = text;
-		mFont = desc.mFont;
-		mColor = desc.mFontColor;
-		mColorSelected = desc.mFontcolor2;
-		descriptor = desc;
-	}
-
-	override void OnMenuCreated()
-	{
-		mEnabled = (gamestate != GS_LEVEL || !GameHandler.CheckEpisode());
 		mColor = Game.IsSoD() ? Font.FindFontColor("SpearMenuDisable") : Font.FindFontColor("WolfMenuDisable");
-
-		AllocateSpace();
 	}
 
 	override bool Selectable()
 	{
 		return false;
-	}
-}
-
-class ListMenuItemTextItemNotRegisteredInGame : ListMenuItemTextItemInGame
-{
-	override void OnMenuCreated()
-	{
-		if (Game.IsSoD() || GameHandler.GameFilePresent("WL6"))
-		{
-			mEnabled = false;
-			AllocateSpace();
-			return;
-		}
-
-		Super.OnMenuCreated();
-	}
-}
-
-class ListMenuItemTextItemNotRegisteredNotInGame : ListMenuItemTextItemNotInGame
-{
-	override void OnMenuCreated()
-	{
-		if (Game.IsSoD() || GameHandler.GameFilePresent("WL6"))
-		{
-			mEnabled = false;
-			AllocateSpace();
-			return;
-		}
-
-		Super.OnMenuCreated();
 	}
 }
