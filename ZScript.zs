@@ -25,6 +25,9 @@ version "4.8.0"
 #include "Scripts/EventHandlers/ReplacementHandler.zs"
 #include "Scripts/EventHandlers/GameHandler.zs"
 
+// Level Post-processing
+#include "Scripts/WolfPostProcessing.zs"
+
 // Status Bar
 #include "Scripts/ClassicStatusBar.zs"
 #include "Scripts/ClassicWidgets.zs"
