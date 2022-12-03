@@ -180,12 +180,12 @@ class GetPsyched : WolfMenu
 				break;
 			case 1:
 				ticcount++;
-				step = min(step + 8, 210);
+				step = min(step + 12, 210);
 				if (ticcount == 35) { ticcount = 0; curstate++; }
 				break;
 			case 2:
 				ticcount++;
-				if (ticcount == 35)
+				if (ticcount == 5)
 				{
 					fadetarget = gametic + fadetime;
 					curstate++;
