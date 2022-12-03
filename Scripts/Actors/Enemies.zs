@@ -498,7 +498,7 @@ class ClassicBase : Actor
 			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
 			Spawn("Fire", spawnpos);
 			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
-			Spawn("Smoke", spawnpos + (FRandom(-32, 32), FRandom(-32, 32), FRandom(-16, 16)));
+			Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16)));
 		}
 	}
 }
@@ -1074,7 +1074,7 @@ class HansGrosse : ClassicBoss
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
 			"####" A 0 {
 				A_DeathScream();
-				SpawnFlames(16, 48, radius);
+				SpawnFlames(16, 48, 24);
 			}
 			"####" H 6 A_SetTranslation("Ash25");
 			"####" H 6 A_SetTranslation("Ash50");
@@ -1549,7 +1549,7 @@ class TransGrosse : HansGrosse
 			"####" A 10 {
 				A_DeathDrop();
 				A_Scream();
-				SpawnFlames(16, 48, radius);
+				SpawnFlames(16, 48, 24);
 			}
 			"####" A 10 A_SetTranslation("Ash25");
 			"####" A 10 A_SetTranslation("Ash50");
@@ -1591,7 +1591,7 @@ class SubmarineWilly : HansGrosse
 			"####" A 10 {
 				A_DeathDrop();
 				A_Scream();
-				SpawnFlames(16, 48, radius);
+				SpawnFlames(16, 48, 24);
 			}
 			"####" A 10 A_SetTranslation("Ash25");
 			"####" A 10 A_SetTranslation("Ash50");
@@ -1657,7 +1657,7 @@ class UberMutant : ClassicBoss
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
 			"####" A 6 {
 				A_Scream();
-				SpawnFlames(16, 48, radius);
+				SpawnFlames(16, 48, 24);
 			}
 			"####" A 6 A_SetTranslation("Ash25");
 			"####" A 6 A_SetTranslation("Ash50");
@@ -1741,7 +1741,7 @@ class DeathKnight : ClassicBoss
 			"####" A 0 { if (g_noblood) { SetStateLabel("Death"); } }
 			"####" A 6 {
 				A_Scream();
-				SpawnFlames(16, 48, radius);
+				SpawnFlames(16, 48, 24);
 			}
 			"####" A 6 A_SetTranslation("Ash25");
 			"####" A 6 A_SetTranslation("Ash50");

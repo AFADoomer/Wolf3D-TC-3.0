@@ -304,6 +304,7 @@ class Fire : Actor
 	{
 		+BRIGHT
 		+NOGRAVITY
+		+NOINTERACTION
 		RenderStyle "Translucent";
 		Alpha 1.0;
 	}
@@ -348,8 +349,9 @@ class Smoke : Actor
 {
 	Default
 	{
-		+NOGRAVITY;
-		+ROLLSPRITE;
+		+NOGRAVITY
+		+NOINTERACTION
+		+ROLLSPRITE
 		RenderStyle "Translucent";
 		Alpha 0.72;
 	}
@@ -377,5 +379,31 @@ class Smoke : Actor
 		Super.Tick();
 
 		scale *= 1.025;
+	}
+}
+
+class SmokeSpawner : Actor
+{
+	int interval, counter;
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+
+		interval = Random(10, 35);
+	}
+
+	override void Tick()
+	{
+		if (IsFrozen()) { return; }
+
+		Super.Tick();
+
+		if (counter++ % interval == 0)
+		{
+			Spawn("Smoke", pos);
+		}
+
+		if (counter++ > 105) { Destroy(); }
 	}
 }
