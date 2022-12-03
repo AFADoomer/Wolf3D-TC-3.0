@@ -111,6 +111,16 @@ class WolfPlayer : DoomPlayer
 		}
 	}
 
+	override void PlayerThink()
+	{
+		Super.PlayerThink();
+
+		if (player.playerstate != PST_DEAD && !(player.cheats & CF_PREDICTING))
+		{
+			if (player.damagecount)	player.damagecount--;
+		}
+	}
+
 	override void DeathThink()
 	{
 		player.Uncrouch();
