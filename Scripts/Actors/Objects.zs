@@ -1876,7 +1876,7 @@ class PipeLost : SpearRack
 	Default
 	{
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
-		//$Title Pip (Lost)
+		//$Title Pipe (Lost)
 	}
 	
 	States

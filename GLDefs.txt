@@ -247,7 +247,7 @@ HardwareShader Sprite "COLBA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "COLBB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/COLWA0.png" }
 HardwareShader Sprite "COLBC0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/COLWA0.png" }
 HardwareShader Sprite "CKNIP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
-HardwareShader Sprite "CLUGP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }
+HardwareShader Sprite "CLUGP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.93 }
 HardwareShader Sprite "FLAMP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.93 }
 HardwareShader Sprite "WROCP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" Define CLIPHEIGHT = 0.93 }
 HardwareShader Sprite "WGASA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/Auto.png" }

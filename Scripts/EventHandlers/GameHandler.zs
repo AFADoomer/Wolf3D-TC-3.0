@@ -168,6 +168,8 @@ class Game
 {
 	static int, int IsSoD()
 	{
+		if (level.levelnum < 100 || level.levelnum >= 999) { return g_sod, g_sod; }
+
 		int ret = max(0, g_sod);
 
 		if (level && level.levelnum > 700)

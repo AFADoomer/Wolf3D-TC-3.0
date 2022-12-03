@@ -119,7 +119,7 @@ class ClassicBase : Actor
 		if (bNerfWhenReplaced)
 		{
 			// Nerf certain enemies if they're not in a Wolf3D map
-			if (level.levelnum < 100 && floorpic != TexMan.CheckForTexture("FLOOR", TexMan.Type_Any)) { health /= 3; }
+			if (level.levelnum < 100 && level.levelnum > 999 && floorpic != TexMan.CheckForTexture("FLOOR", TexMan.Type_Any)) { health /= 3; }
 		}
 
 		AttackState = FindState("Attack");
@@ -525,7 +525,7 @@ class ClassicNazi : ClassicBase
 			"####" EEEEEE 4 A_LookEx (0, 0, 0, 2048, 0, "See");
 			Loop;
 		Spawn.PatrolNoClip:
-			"####" A 0 A_JumpIf(level.levelnum < 100 || angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles and in Wolf levels
+			"####" A 0 A_JumpIf((level.levelnum < 100 || level.levelnum > 999) || angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles and in Wolf levels
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 45, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 90, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 0 A_Jump(256, "TurnAround");
