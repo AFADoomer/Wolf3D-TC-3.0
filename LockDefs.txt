@@ -4,6 +4,7 @@ Lock 130
 	Any { BlueKey BlueKeyLost BlueCard BlueSkull KeyBlue }
 	MapColor 32 176 176
 }
+
 Lock 131
 {
 	Any { YellowKey YellowKeyLost YellowCard YellowSkull KeyYellow }

@@ -151,6 +151,9 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
 	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
 	Option "$M_OPTIONSHUDRATIO",			"g_hudratio", "ForceRatios"
+	StaticText ""
+	SafeCommand	"$M_OPTIONSRESET",			"g_resetdefaults"
+	SafeCommand	"$M_OPTIONSSAVE",			"writeini"
 }
 
 OptionMenu "WolfColorPickerMenu" protected
