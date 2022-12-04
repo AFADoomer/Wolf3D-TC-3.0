@@ -2,10 +2,10 @@ class ClassicBase : Actor
 {
 	int scoreamt;
 	int skillhealth0, skillhealth1, skillhealth2, skillhealth3;
-	int dodgedir;
 	String basesprite;
 	SpriteID spr;
 	State AttackState;
+	Vector2 lastpos;
 
 	int baseflags;
 
@@ -143,64 +143,83 @@ class ClassicBase : Actor
 		Super.Tick();
 	}
 
-	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int flags = 0, int chance = 0)
+	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int chance = 0)
 	{
-		StateLabel curmelee = null;
-		StateLabel curmissile = null;
+		if (bDormant || !target) { return; }
 
-		if (target)
+		bool dodge = false;
+		State curmelee, curmissile;
+
+		Vector2 delta = Vec2To(target);
+		int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
+
+		if (melee != '_a_chase_default') { curmelee = FindState(melee); }
+		else { curmelee = MeleeState; }
+
+		if (missile != '_a_chase_default') { curmissile = FindState(missile); }
+		else { curmissile = MissileState; }
+
+		if (CheckSight(target))
 		{
-			Vector2 delta = Vec2To(target);
-			int dist = int(max(abs(delta.x) / 64, abs(delta.y) / 64));
-
-			if (
-				(GameHandler.WolfRandom() < chance) || // Some boss enemies and fake Hitler
+			if (curmelee && Distance2D(target) <= MeleeRange)
+			{
+				if (AttackSound) { A_StartSound(AttackSound, CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM); }
+				SetState(curmelee);
+				return;
+			}
+			else if (
+				curmissile && 
 				(
-					!chance && // All other enemies
+					GameHandler.WolfRandom() < chance || // Some boss enemies and fake Hitler
 					(
-						(dist < 1) || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
-						(!chance && dist > 0 && GameHandler.WolfRandom() < (128 / dist)) // or randomly, based on distance
+						!chance && // All other enemies
+						(
+							dist < 1 || // // Allow enemies to fire repeatedly without moving if they are within one 64x64 map chunk
+							GameHandler.WolfRandom() < (64 / dist) // or randomly, based on distance
+						)
 					)
 				)
 			)
 			{
-				bJustAttacked = false;
-				reactiontime = 0;
-				curmelee = melee;
-				curmissile = missile;
-			}
-			else
-			{
-				reactiontime = Default.reactiontime;
-				curmelee = null;
-				curmissile = null;
+				SetState(curmissile);
+				return;
 			}
 
-			movecount = 0;
-
-			if (bJustAttacked && (bRun && dist < 4)) { movedir = GetRunDir(); }
-			else if ((bJustAttacked || movedir == MoveDirToTarget()) && (!bRun || dist >= 4)) { movedir = GetDodgeDir(); }
-			
-			A_Chase(curmelee, curmissile, flags | CHF_NORANDOMTURN | CHF_NOPOSTATTACKTURN);
-
-			return;
+			dodge = true;
 		}
-		
-		A_Chase(melee, missile, flags);
+
+		if (movedir == DI_NODIR)
+		{
+			if (dodge) { movedir = GetDodgeDir(); }
+			else { movedir = GetChaseDir(); }
+
+			if (movedir == DI_NODIR) { return; }
+
+			lastpos = pos.xy;
+			angle = movedir * 45;
+		}
+
+		if (level.Vec2Diff(pos.xy, lastpos).length() < 32.0)
+		{
+			if (TryWalk()) { return; }
+		}
+
+		if (bRun && dist < 4) { movedir = GetRunDir(); }
+		else if (dodge) { movedir = GetDodgeDir(); }
+		else { movedir = GetChaseDir(); }
+
+		lastpos = pos.xy;
+		angle = movedir * 45;
 	}
+
+	static const dirtype_t opposite[] = { DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR };
+	static const dirtype_t diags[] = { DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST };
 
 	int GetDodgeDir()
 	{
-		if (!CheckSight(target)) { return movedir; }
-
-		int targetdir = MoveDirToTarget();
-
-		static const dirtype_t opposite[] = { DI_WEST, DI_SOUTHWEST, DI_SOUTH, DI_SOUTHEAST, DI_EAST, DI_NORTHEAST, DI_NORTH, DI_NORTHWEST, DI_NODIR };
-		static const dirtype_t diags[] = { DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST };
-
-		int d[2];
+		int d[4];
 		Vector2 delta;
-		int turnaround, temp, olddir;
+		int temp, olddir, turnaround;
 
 		olddir = movedir;
 		turnaround = opposite[movedir];
@@ -209,6 +228,12 @@ class ClassicBase : Actor
 
 		movedir = diags[((delta.y < 0) << 1) + (delta.x > 0)];
 		if (TryWalk()) { return movedir; }
+
+		if (d[0] == DI_NODIR) { d[0] = DI_WEST; }
+		d[2] = opposite[d[0]];
+
+		if (d[1] == DI_NODIR) { d[1] = DI_SOUTH; }
+		d[3] = opposite[d[1]];
 
 		Vector2 absdelta;
 		absdelta.x = abs(delta.x);
@@ -219,6 +244,10 @@ class ClassicBase : Actor
 			temp = d[0];
 			d[0] = d[1];
 			d[1] = temp;
+
+			temp = d[2];
+			d[2] = d[3];
+			d[3] = temp;
 		}
 
 		if (GameHandler.WolfRandom() < 128)
@@ -226,10 +255,54 @@ class ClassicBase : Actor
 			temp = d[0];
 			d[0] = d[1];
 			d[1] = temp;
+
+			temp = d[2];
+			d[2] = d[3];
+			d[3] = temp;
 		}
 
-		if (d[0] == turnaround || d[0] == targetdir) { d[0] = DI_NODIR; }
-		if (d[1] == turnaround || d[0] == targetdir) { d[1] = DI_NODIR; }
+		for (int i = 0; i < 4; i++)
+		{
+			if (d[i] == DI_NODIR || d[i] == turnaround) { continue; }
+
+			movedir = d[i];
+			if (TryWalk()) { return movedir; }
+		}
+
+		if (turnaround != DI_NODIR)
+		{
+			movedir = turnaround;
+			if (TryWalk()) { return movedir; }
+		}
+
+		movedir = DI_NODIR;
+
+		return movedir;
+	}
+
+	int GetChaseDir()
+	{
+		int d[2];
+		Vector2 delta;
+		int temp, olddir, turnaround;
+
+		olddir = movedir;
+		turnaround = opposite[movedir];
+		[delta, d[0], d[1]] = GetDirections();
+		
+		Vector2 absdelta;
+		absdelta.x = abs(delta.x);
+		absdelta.y = abs(delta.y);
+
+		if (absdelta.y > absdelta.x)
+		{
+			temp = d[0];
+			d[0] = d[1];
+			d[1] = temp;
+		}
+
+		if (d[0] == turnaround) { d[0] = DI_NODIR; }
+		if (d[1] == turnaround) { d[1] = DI_NODIR; }
 
 		if (d[0] != DI_NODIR)
 		{
@@ -243,13 +316,39 @@ class ClassicBase : Actor
 			if (TryWalk()) { return movedir; }
 		}
 
+		if (olddir != DI_NODIR)
+		{
+			movedir = olddir;
+			if (TryWalk()) { return movedir; }
+		}
+
+		if (GameHandler.WolfRandom() > 128)
+		{
+			for (temp = DI_EAST; temp <= DI_SOUTH; temp += 2)
+			{
+				if (temp == turnaround) { continue; }
+				movedir = temp;
+				if (TryWalk()) { return movedir; }
+			}
+		}
+		else
+		{
+			for (temp = DI_SOUTH; temp >= DI_EAST; temp -= 2)
+			{
+				if (temp == turnaround) { continue; }
+				movedir = temp;
+				if (TryWalk()) { return movedir; }
+			}
+		}
+
 		if (turnaround != DI_NODIR)
 		{
 			movedir = turnaround;
 			if (TryWalk()) { return movedir; }
 		}
 
-		movedir = olddir;
+		movedir = DI_NODIR;
+
 		return movedir;
 	}
 
@@ -261,11 +360,11 @@ class ClassicBase : Actor
 
 		[delta, d[0], d[1]] = GetDirections();
 
-		if (d[0] == DI_EAST) { d[0] = DI_WEST; }
-		else if (d[0] == DI_WEST) { d[0] = DI_EAST; }
+		d[0] = opposite[d[0]];
+		d[1] = opposite[d[1]];
 
-		if (d[1] == DI_SOUTH) { d[1] = DI_NORTH; }
-		else if (d[1] == DI_NORTH) { d[1] = DI_SOUTH; }
+		if (d[0] == DI_NODIR) { d[0] = DI_WEST; }
+		if (d[1] == DI_NODIR) { d[1] = DI_SOUTH; }
 
 		Vector2 absdelta;
 		absdelta.x = abs(delta.x);
@@ -278,21 +377,15 @@ class ClassicBase : Actor
 			d[1] = temp;
 		}
 
-		if (d[0] != DI_NODIR)
-		{
-			movedir = d[0];
-			if (TryWalk()) { return movedir; }
-		}
+		movedir = d[0];
+		if (TryWalk()) { return movedir; }
 
-		if (d[1] != DI_NODIR)
-		{
-			movedir = d[1];
-			if (TryWalk()) { return movedir; }
-		}
+		movedir = d[1];
+		if (TryWalk()) { return movedir; }
 
 		if (GameHandler.WolfRandom() > 128)
 		{
-			for (temp = DI_NORTH; temp <= DI_WEST; temp++)
+			for (temp = DI_EAST; temp <= DI_SOUTH; temp += 2)
 			{
 				movedir = temp;
 				if (TryWalk()) { return movedir; }
@@ -300,7 +393,7 @@ class ClassicBase : Actor
 		}
 		else
 		{
-			for (temp = DI_WEST; temp >= DI_NORTH; temp--)
+			for (temp = DI_SOUTH; temp >= DI_EAST; temp -= 2)
 			{
 				movedir = temp;
 				if (TryWalk()) { return movedir; }
@@ -315,8 +408,6 @@ class ClassicBase : Actor
 	int MoveDirToTarget()
 	{
 		if (!target) { return DI_NODIR; }
-
-		static const dirtype_t diags[] = { DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST };
 
 		int d[2];
 		Vector2 delta;
@@ -335,7 +426,7 @@ class ClassicBase : Actor
 
 	Vector2, int, int GetDirections()
 	{
-		if (!target) return (0, 0), 0, 0;
+		if (!target) return (0, 0), DI_NODIR, DI_NODIR;
 
 		int d[2];
 
@@ -343,13 +434,13 @@ class ClassicBase : Actor
 		delta.x = int(delta.x / 64);
 		delta.y = int(delta.y / 64);
 
-		if (delta.x < 0) { d[0] = DI_EAST; }
-		else if (delta.x > 0) { d[0] = DI_WEST; }
-		else { d[0] = DI_NODIR; }
+		if (delta.x > 0) { d[0] = DI_EAST; }
+		else if (delta.x < 0) { d[0] = DI_WEST; }
+		else { d[0] = RandomPick(DI_EAST, DI_WEST); }
 
 		if (delta.y < 0) { d[1] = DI_SOUTH; }
 		else if (delta.y > 0) { d[1] = DI_NORTH; }
-		else { d[1] = DI_NODIR; }
+		else { d[1] = RandomPick(DI_SOUTH, DI_NORTH); }
 
 		return delta, d[0], d[1];
 	}
@@ -501,6 +592,24 @@ class ClassicBase : Actor
 			Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16)));
 		}
 	}
+
+	override void Activate(Actor activator)
+	{
+		Super.Activate(activator);
+
+		bDormant = false;
+		if (target) { SetStateLabel("Chase"); }
+		else { SetStateLabel("Spawn.Patrol"); }
+	}
+
+	override void Deactivate(Actor activator)
+	{
+		if (target && (CheckSight(target) || Distance2D(target) < 256)) { return; }
+		Super.Deactivate(activator);
+
+		bDormant = true;
+		SetStateLabel("Spawn.Stand");
+	}
 }
 
 class ClassicNazi : ClassicBase
@@ -522,7 +631,10 @@ class ClassicNazi : ClassicBase
 		Spawn:
 			UNKN A 0;
 		Spawn.Stand:
-			"####" EEEEEE 4 A_LookEx (0, 0, 0, 2048, 0, "See");
+			"####" EEEEEE 4 {
+				if (bDormant) { return; }
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
 			Loop;
 		Spawn.PatrolNoClip:
 			"####" A 0 A_JumpIf((level.levelnum < 100 || level.levelnum > 999) || angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles and in Wolf levels
@@ -646,6 +758,7 @@ class Dog : ClassicNazi
 		Height 38;
 		Speed 5;
 		MeleeDamage 2;
+		MeleeRange 64;
 		SeeSound "dog/sight";
 		AttackSound "dog/attack";
 		DeathSound "dog/death";
@@ -695,6 +808,13 @@ class Dog : ClassicNazi
 			"####" H 6 A_SetTranslation("Ash75");
 			"####" H 6 A_SetTranslation("Ash100");
 			Goto Death.Resume;
+	}
+
+	override bool CanCollideWith(Actor other, bool passive)
+	{
+		if (other is "Dog" && other.InStateSequence(other.curState, other.MeleeState)) { return false; }
+		
+		return Super.CanCollideWith(other, passive);
 	}
 }
 

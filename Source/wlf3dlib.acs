@@ -194,7 +194,11 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 		if (polydoors[index][DOOR_STATE] == DOOR_CLOSED) { polydoors[index][DOOR_STATE] = DOOR_FIRSTOPENING; }
 		else { polydoors[index][DOOR_STATE] = DOOR_OPENING; }
 
-		if (lock == 5 && !ActivatorTID()) { Thing_Deactivate(0); }
+		if (lock == 5 && PlayerNumber() < 0)
+		{
+			if (polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING || polydoors[index][DOOR_STATE] == DOOR_OPENING) { Thing_Deactivate(0); }
+			else { Terminate; }
+		}
 
 		PolyObj_Stop(po);
 		Polyobj_MoveTo(po, 16, polydoors[index][END_X], polydoors[index][END_Y]);
@@ -213,9 +217,13 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 		{
 			polydoors[index][DOOR_STATE] = DOOR_OPENED;
 		}
-		else { Terminate; }
+		else
+		{ 
+			if (lock == 5 && PlayerNumber() < 0) { Thing_Activate(0); }
+			Terminate;
+		}
 
-		if (lock == 5 && !ActivatorTID()) { Thing_Activate(0); }
+		if (lock == 5 && PlayerNumber() < 0) { Thing_Activate(0); }
 
 		d = 0;
 		while (d <= 120 && polydoors[index][DOOR_STATE] == DOOR_OPENED)
