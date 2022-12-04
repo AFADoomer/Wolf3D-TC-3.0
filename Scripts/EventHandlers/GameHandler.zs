@@ -225,4 +225,20 @@ class Game
 
 		return g_sod, ret;
 	}
+
+	ui static bool InGame()
+	{
+		if (
+			gamestate == GS_CUTSCENE ||
+			gamestate == GS_INTERMISSION ||
+			gamestate == GS_FINALE ||
+			gamestate == GS_LEVEL
+		)
+		{
+			let p = players[consoleplayer].mo;
+			if (p && LifeHandler.GetLives(p) > -1) { return true; }
+		}
+
+		return false;
+	}
 }

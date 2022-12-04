@@ -940,6 +940,7 @@ class HighScores : WolfMenu
 	int fadetime;
 	double fadealpha;
 	int fadecolor;
+	int fadestart;
 
 	int exittimeout;
 	bool exitmenu;
@@ -953,8 +954,9 @@ class HighScores : WolfMenu
 	{
 		GenericMenu.Init(parent);
 
+		fadestart = gametic + !parent * 12;
 		fadetime = 12;
-		fadetarget = gametic;
+		fadetarget = fadestart;
 		fadealpha = 1.0;
 		fadecolor = (Game.IsSoD() ? 0x000000 : 0x880000);
 
@@ -995,7 +997,7 @@ class HighScores : WolfMenu
 
 		let p = players[consoleplayer].mo;
 
-		finale = (gamestate == GS_FINALE || gamestate == GS_CUTSCENE || LifeHandler.GetLives(p) < 0);
+		finale = (gamestate == GS_FINALE || !Game.InGame());
 		inputindex = -1;
 
 		if (finale && (!mParentMenu || !ListMenu(mParentMenu) || (!ListMenu(mParentMenu).mDesc || ListMenu(mParentMenu).mDesc.mMenuName != "MainMenu")))
@@ -1073,7 +1075,7 @@ class HighScores : WolfMenu
 	{
 		Super.Ticker();
 
-		if (gametic > 35)
+		if (gametic > fadestart)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}

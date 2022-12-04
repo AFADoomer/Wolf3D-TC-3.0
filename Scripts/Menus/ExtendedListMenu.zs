@@ -240,31 +240,29 @@ class ExtendedListMenu : ListMenu
 		switch (mkey)
 		{
 			case MKEY_Back:
-				if (gamestate != GS_FINALE)
+				if (mParentMenu && !(mParentMenu is "IntroSlideshow") && !(mParentMenu is "HighScores")) // Only allow backing out of submenus, not the root/main menu
 				{
-					if (mParentMenu && !(mParentMenu is "IntroSlideshow")) // Only allow backing out of submenus, not the root/main menu
+					fadecolor = 0x000000;
+					fadetarget = gametic + fadetime;
+					exitmenu = true;
+
+					RestorePlaceholderMarkers();
+					return Super.MenuEvent(mkey, fromcontroller);
+				}
+				else
+				{
+					CVar backstyle = CVar.FindCVar("g_menubackstyle");
+					if (backstyle && backstyle.GetInt() && Game.InGame() && GameHandler.CheckEpisode())
 					{
+						if (!mParentMenu) { SetMenu("CloseMenu"); }
+
 						fadecolor = 0x000000;
 						fadetarget = gametic + fadetime;
 						exitmenu = true;
-
-						RestorePlaceholderMarkers();
-						return Super.MenuEvent(mkey, fromcontroller);
 					}
-					else
-					{
-						CVar backstyle = CVar.FindCVar("g_menubackstyle");
-						if (backstyle && backstyle.GetInt() && gamestate == GS_LEVEL && GameHandler.CheckEpisode())
-						{
-							if (!mParentMenu) { SetMenu("CloseMenu"); }
-
-							fadecolor = 0x000000;
-							fadetarget = gametic + fadetime;
-							exitmenu = true;
-						}
-						else { SetMenu("QuitMenu"); }
-					}
+					else { SetMenu("QuitMenu"); }
 				}
+
 				return false;
 			case MKEY_Enter:
 				if (mDesc.mSelectedItem >= 0)
@@ -1288,8 +1286,8 @@ class ListMenuItemWolfTextItem : ListMenuItem
 	{
 		if (mInGame > -1)
 		{
-			mEnabled = 	(mInGame == 1 && gamestate == GS_LEVEL && GameHandler.CheckEpisode()) ||
-						(!mInGame && (gamestate != GS_LEVEL || !GameHandler.CheckEpisode()));
+			mEnabled = 	(mInGame == 1 && Game.InGame() && GameHandler.CheckEpisode()) ||
+						(!mInGame && (!Game.InGame() || !GameHandler.CheckEpisode()));
 		}
 
 		if (mEnabled && mSoD > -1)
