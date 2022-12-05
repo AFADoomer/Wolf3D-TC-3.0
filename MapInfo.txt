@@ -1370,6 +1370,10 @@ DoomEdNums
 	22095=Turn225
 	22096=Turn270
 	22097=Turn315
+	
+	23001=WallBars
+	23002=WallBarsOpening
+	23003=WallBarsDoor
 }
 
 Intermission EndEpisode

@@ -2002,3 +2002,69 @@ class MoldyCheese : Health
 			Loop;
 	}
 }
+
+class WolfWallSprite : Actor
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items/Wall Sprites
+		+SOLID
+		+WALLSPRITE
+		Radius 32;
+		Height 64;
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A -1;
+			Stop;
+	}
+}
+
+class WallBars : WolfWallSprite
+{
+	Default
+	{
+		//$Title Bars (Solid Wall)
+	}
+
+	States
+	{
+		Spawn:
+			BARS A -1;
+			Stop;
+	}
+}
+
+
+class WallBarsOpening : WolfWallSprite
+{
+	Default
+	{
+		//$Title Bars (Passable Opening)
+		-SOLID
+	}
+
+	States
+	{
+		Spawn:
+			BARS B -1;
+			Stop;
+	}
+}
+
+class WallBarsDoor : WolfWallSprite
+{
+	Default
+	{
+		//$Title Bars (Solid Wall with Locked Door)
+	}
+
+	States
+	{
+		Spawn:
+			BARS C -1;
+			Stop;
+	}
+}
