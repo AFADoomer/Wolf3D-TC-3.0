@@ -239,7 +239,7 @@ class Game
 			ret = 0;
 		}
 
-		if (g_sod != ret && gamestate == GS_LEVEL && level.time > 1) // Set the value if we are in a game and it hasn't been set already by the startup menu
+		if (g_sod != ret && gamestate == GS_LEVEL && level.time == 2) // Set the value if we are in a game and it hasn't been set already by the startup menu
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
 			if (sodvar) { sodvar.SetInt(ret); }

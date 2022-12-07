@@ -35,21 +35,26 @@ class WolfPostProcessor : LevelPostProcessor
 
 			if (e < 20000 || e > 22089 || (e >= 21075 && e <= 21089)) { continue; }
 
-			e = e % 1000;
+			uint f = e % 1000;
 
-			if (e > 22 && e < 75 || e == 124) // Objects
+			if (e > 21022 && e < 21075 || e > 21122 && e < 21175 || e > 21222 && e < 21275) // Objects
 			{
-				if (e == 51) { SetThingEdNum(i, 21000 + clamp(g_sod, 0, 2) * 100 + e); }
-				else { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + e); }
+				if (f == 124) { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + f); }
+				else
+				{
+					f = e % 100;
+					if (f == 51) { SetThingEdNum(i, 21000 + clamp(g_sod, 0, 2) * 100 + f); }
+					else { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + f); }
+				}
 			}
-			else if (e > 0 && e < 160 || e > 200 && e < 206) // Standard Enemies
+			else if (e > 20000 && e < 20006 || e > 21000 && e < 21006 || e > 20200 && e < 20206 || f == 106) // Standard Enemies
 			{
-				if (e == 106) { SetThingEdNum(i, 20000 + clamp(g_sod, 1, 3) * 1000 + e); }
-				else { SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 1000) + e); }
+				if (f == 106) { SetThingEdNum(i, 20000 + clamp(g_sod, 1, 3) * 1000 + f); }
+				else { SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 0) + f); }
 			}
-			else if (e >= 107 && e <= 161) // SoD Bosses
+			else if (f >= 107 && f <= 161) // SoD Bosses
 			{
-				SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 1000) + e);
+				SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 1000) + f);
 			}
 		}
 	}
