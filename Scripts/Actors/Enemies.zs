@@ -157,7 +157,7 @@ class ClassicBase : Actor
 
 			if (!multiplayer && target && target.player && target.health <= 0)
 			{
-				frame = AttackState.frame;
+				if (AttackState) { frame = AttackState.frame; }
 				tics = 105; // Make this friendly to the resurrect cheat and only freeze them for 3 seconds
 			}
 		}
@@ -654,7 +654,7 @@ class ClassicNazi : ClassicBase
 			UNKN A 0;
 		Spawn.Stand:
 			"####" EEEEEE 4 {
-				if (bDormant) { return; }
+				if (bDormant || level.time < 35) { return; }
 				A_LookEx (0, 0, 0, 2048, 0, "See");
 			}
 			Loop;
