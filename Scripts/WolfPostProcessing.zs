@@ -43,7 +43,15 @@ class WolfPostProcessor : LevelPostProcessor
 				else
 				{
 					f = e % 100;
-					if (f == 51) { SetThingEdNum(i, 21000 + clamp(g_sod, 0, 2) * 100 + f); }
+					if (
+						f == 33 ||
+						f == 38 ||
+						f == 45 ||
+						f == 51 ||
+						f == 63 ||
+						f >= 67 && f <= 69 ||
+						f >= 71 && f <= 74
+					) { SetThingEdNum(i, 21000 + clamp(g_sod, 0, 2) * 100 + f); }
 					else { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + f); }
 				}
 			}
