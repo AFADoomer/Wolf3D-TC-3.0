@@ -435,6 +435,58 @@ class ExtendedListMenu : ListMenu
 
 		return Super.OnUIEvent(ev);
 	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		int sel = -1;
+
+		int w = mDesc.DisplayWidth();
+		double sx, sy;
+		if (w == ListMenuDescriptor.CleanScale)
+		{
+			// convert x/y from screen to virtual coordinates, according to CleanX/Yfac use in DrawTexture
+			x = ((x - (screen.GetWidth() / 2)) / CleanXfac) + 160;
+			y = ((y - (screen.GetHeight() / 2)) / CleanYfac) + 100;
+		}
+		else
+		{
+			// for fullscreen scale, transform coordinates so that for the given rect the coordinates are within (0, 0, w, h)
+			int h = mDesc.DisplayHeight();
+			double fx, fy, fw, fh;
+			[fx, fy, fw, fh] = Screen.GetFullscreenRect(w, h, FSMode_ScaleToFit43);
+
+			x = int((x - fx) * w / fw);
+			y = int((y - fy) * h / fh);
+		}
+
+		if (mFocusControl != NULL)
+		{
+			mFocusControl.MouseEvent(type, x, y);
+			return true;
+		}
+		else
+		{
+			if ((mDesc.mWLeft <= 0 || x > mDesc.mWLeft) &&
+				(mDesc.mWRight <= 0 || x < mDesc.mWRight))
+			{
+				for(int i=0;i<mDesc.mItems.Size(); i++)
+				{
+					if (mDesc.mItems[i].Selectable() && mDesc.mItems[i].CheckCoordinate(x, y))
+					{
+						if (i != mDesc.mSelectedItem)
+						{
+							//MenuSound("menu/cursor");
+						}
+						mDesc.mSelectedItem = i;
+						mDesc.mItems[i].MouseEvent(type, x, y);
+						return true;
+					}
+				}
+			}
+		}
+
+		return Menu.MouseEvent(type, x, y);
+	}
 }
 
 // For an icon beside the menu entry, like Wolf3D episode select

@@ -843,8 +843,8 @@ class LoadScreen : IntroSlideShow
 		{
 			screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255);
 			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
-			screen.DrawTexture(bkg1, false, CleanWidth_1 - 320 - step, 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
-			screen.DrawTexture(bkg2, false, -320 + step, 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
+			screen.DrawTexture(bkg1, false, CleanWidth_1 - min(640, 320 + step), 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
+			screen.DrawTexture(bkg2, false, min(0, -320 + step), 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
 			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 			if (curscreen == 2)
