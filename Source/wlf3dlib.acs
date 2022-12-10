@@ -54,7 +54,12 @@ Script "InitializePlayer" (int playernum)
 		{
 			if (justdied)
 			{
+				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 				ScriptCall("ClassicStatusBar", "ReverseFizzle");
+
+				While (ScriptCall("ClassicStatusBar", "CheckFizzle")) { Delay(1); }
+
+				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			}
 			else if (!GetCVar("g_nointro"))
 			{

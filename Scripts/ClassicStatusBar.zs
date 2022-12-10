@@ -420,6 +420,13 @@ class ClassicStatusBar : WidgetStatusBar
 		}
 	}
 
+	static bool CheckFizzle()
+	{
+		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return false; }
+
+		return ClassicStatusBar(StatusBar).fizzleeffect;
+	}
+
 	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
 	{
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return; }
