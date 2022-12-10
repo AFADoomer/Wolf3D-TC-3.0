@@ -144,6 +144,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
 	Option "$M_OPTIONSUSEFLATS",			"g_useflats", "FlatStyle"
 	Option "$M_OPTIONSFADESTYLE",			"g_fadestyle", "YesNo"
+	Slider "$M_OPTIONSFADESPEED",			"g_fizzlespeed", 0.5, 4.0, 0.5, 1
 	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
 	StaticText ""

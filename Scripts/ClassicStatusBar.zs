@@ -436,6 +436,10 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
 		ClassicStatusBar(StatusBar).fizzlelayer = layer;
+
+		CVar speedmod = CVar.FindCVar("g_fizzlespeed");
+		if (speedmod) { speed = int(speed * max(0.5, speedmod.GetFloat())); }
+
 		ClassicStatusBar(StatusBar).fizzlespeed = speed;
 	}
 
