@@ -820,18 +820,24 @@ class WolfNewPlayerMenu : NewPlayerMenu
 {
 	ExtendedOptionMenu generic;
 
+	override void Init(Menu parent, OptionMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+
+		mPlayerDisplay.mBackdrop = TexMan.CheckForTexture("BACKDROP", TexMan.Type_Any);
+		mPlayerDisplay.mBaseColor = color(255, 255, 255);
+		mPlayerDisplay.mAddColor = color(0, 0, 0);		
+	}
+
 	override void Drawer()
 	{
 		if (generic) { generic.Drawer(); }
 		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		mPlayerDisplay.Drawer(false);
-		mPlayerDisplay.mBackdrop = TexMan.CheckForTexture("BACKDROP", TexMan.Type_Any);
-		mPlayerDisplay.mBaseColor = color(255, 255, 255);
-		mPlayerDisplay.mAddColor = color(0, 0, 0);
 		
 		int x = screen.GetWidth()/(CleanXfac_1*2) + PLAYERDISPLAY_X + PLAYERDISPLAY_W/2;
-		int y = PLAYERDISPLAY_Y + PLAYERDISPLAY_H + 5;
+		int y = PLAYERDISPLAY_Y + 5;
 		String str = Stringtable.Localize("$PLYRMNU_PRESSSPACE");
 		screen.DrawText (SmallFont, Font.CR_GOLD, x - SmallFont.StringWidth(str)/2, y, str, DTA_VirtualWidth, CleanWidth_1, DTA_VirtualHeight, CleanHeight_1, DTA_KeepRatio, true);
 		str = Stringtable.Localize(mRotation ? "$PLYRMNU_SEEFRONT" : "$PLYRMNU_SEEBACK");
