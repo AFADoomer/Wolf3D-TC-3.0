@@ -370,13 +370,13 @@ class GenericOptionMenu : OptionMenu
 		}
 	}
 
-	int DrawOptionText(String text, int x, int y, Font fnt = null, int color = 0, bool grayed = false, double textalpha = 1.0, int breakwidth = -1)
+	int DrawOptionText(String text, int x, int y, Font fnt = null, int color = 0, bool grayed = false, double textalpha = 1.0, int breakwidth = -1, Vector2 scale = (1.0, 1.0))
 	{
 		if (fnt == null) { fnt = SmallFont; }
-		if (breakwidth == -1) { breakwidth = CleanWidth_1 / 2; }
-		else { breakwidth /= CleanXfac_1; }
+		if (breakwidth == -1) { breakwidth = int(CleanWidth_1 * scale.x / 2); }
+		else { breakwidth = int(breakwidth / CleanXfac_1 * scale.x); }
 
-		int fontheight = (fnt.GetHeight() - 2) * CleanYfac_1;
+		int fontheight = int((fnt.GetHeight() - 2) * CleanYfac_1 * scale.y);
 		
 		int height = 0;
 		int overlay = grayed ? Color(128, 64, 64, 64) : 0;
@@ -386,7 +386,7 @@ class GenericOptionMenu : OptionMenu
 
 		for (int i = 0; i < lines.count(); i++)
 		{
-			screen.DrawText (fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_CleanNoMove_1, true, DTA_ClipBottom, bottomclip);
+			screen.DrawText(fnt, color, x, y + i * fontheight, lines.StringAt(i), DTA_Alpha, textalpha * alpha, DTA_ColorOverlay, overlay, DTA_ScaleX, scale.x * CleanXfac_1, DTA_ScaleY, scale.y * CleanYfac_1, DTA_ClipBottom, bottomclip);
 		}
 
 		height += lines.Count() * fontheight + 6 * CleanYfac_1;

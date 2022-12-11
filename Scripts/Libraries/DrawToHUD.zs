@@ -82,7 +82,7 @@ class DrawToHUD
 		return screenpos, screensize, scale;
 	}
 
-	static ui void DrawText(String text, Vector2 pos, Font fnt = null, double alpha = 1.0, double textscale = 1.0, Vector2 destsize = (640, 480), color shade = -1, int flags = ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT)
+	static ui void DrawText(String text, Vector2 pos, Font fnt = null, double alpha = 1.0, double textscale = 1.0, Vector2 destsize = (640, 480), color shade = -1, int flags = ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT, double textyscale = -1.0)
 	{
 		if (!fnt) { fnt = SmallFont; }
 
@@ -98,7 +98,9 @@ class DrawToHUD
 			[screenpos, screensize, scale] = TranslatetoHUDCoordinates(pos, destsize, fromsize);
 		}
 
-		scale *= textscale;
+		if (textyscale == -1) { textyscale = textscale; }
+		scale.x *= textscale;
+		scale.y *= textyscale;
 
 		double textw;
 		int charwidth = 0;
@@ -715,7 +717,7 @@ class DrawToHUD
 			if (keycodes[k] >= 0x100)
 			{
 				bkg = "BU_D_";
-				fillcolor = 0x8c8c8c;
+				fillcolor = 0xa8a8a8;
 				margin = int(2 * buttonscale);
 			}
 			else if (keycodes[k] == -1) // and for errors

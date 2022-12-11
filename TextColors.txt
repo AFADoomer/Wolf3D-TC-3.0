@@ -8,6 +8,11 @@ Flat:
 	#8C8C8C
 }
 
+WolfMenuDarkGray
+{
+	#545454  #545454
+}
+
 WolfMenuLightGrey WolfMenuLightGray "Wolf Menu Light Gray" "Wolf Menu Light Grey"
 {
 	#C0C0C0  #C0C0C0

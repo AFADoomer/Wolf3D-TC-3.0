@@ -563,10 +563,10 @@ class ExtendedOptionMenu : GenericOptionMenu
 	override ItemInfo DrawStaticText(OptionMenuItemStaticText this, int x, int y, Font fnt)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
-		info.x = x;
-		info.y = y;
 
 		String label = StringTable.Localize(this.mLabel);
+		label = label.MakeUpper();
+		label = ZScriptTools.StripColorCodes(label);
 
 		if (!label.length())
 		{
@@ -574,8 +574,23 @@ class ExtendedOptionMenu : GenericOptionMenu
 			if (i < mDesc.mScrollTop) { return null; }
 		}
 
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) / 2 : x, y, fnt, TitleColor());
 		info.width = OptionWidth(label, fnt);
+		info.x = this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x;
+		info.y = y;
+
+		if (this.mCentered && ZScriptTools.Trim(label).length())
+		{
+			info.width = max(OptionWidth(label, fnt) + 16, Game.IsSoD() ? 0 : 136) * CleanXfac_1;
+			info.x = this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x;
+
+			DrawToHUD.DrawFrame("BU_D_", info.x, info.y - 2 * CleanYfac_1, info.width, 14 * CleanYfac_1, 0xa8a8a8, 1.0, 1.0, (CleanWidth_1, CleanHeight_1), DrawToHUD.TEX_MENU, 1.0);
+			info.height = DrawOptionText(label, info.x + info.width / 2 - OptionWidth(label, fnt) * CleanXfac_1 / 2, info.y, fnt, Font.FindFontColor("WolfMenuDarkGray"), scale:(1.0, 0.75));
+		}
+		else
+		{
+			info.height = DrawOptionText(label, info.x, info.y, fnt, TitleColor());
+		}
+
 		info.valueleft = info.valueright = x + info.width;
 
 		return info;
@@ -993,7 +1008,7 @@ class WolfGLTextureGLOptions : GLTextureGLOptions
 	override void Ticker()
 	{
 		if (generic) { generic.Ticker(); }
-		else { Super.Ticker(); }
+		Super.Ticker();
 	}
 
 	override bool MenuEvent (int mkey, bool fromcontroller)

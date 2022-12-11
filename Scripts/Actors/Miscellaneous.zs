@@ -406,6 +406,12 @@ class Smoke : Actor
 
 class SmokeSpawner : Actor
 {
+	Default
+	{
+		+NOINTERACTION
+		+NOTONAUTOMAP
+	}
+
 	int interval, counter;
 
 	override void PostBeginPlay()
