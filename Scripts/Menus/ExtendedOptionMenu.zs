@@ -826,6 +826,9 @@ class WolfNewPlayerMenu : NewPlayerMenu
 		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		mPlayerDisplay.Drawer(false);
+		mPlayerDisplay.mBackdrop = TexMan.CheckForTexture("BACKDROP", TexMan.Type_Any);
+		mPlayerDisplay.mBaseColor = color(255, 255, 255);
+		mPlayerDisplay.mAddColor = color(0, 0, 0);
 		
 		int x = screen.GetWidth()/(CleanXfac_1*2) + PLAYERDISPLAY_X + PLAYERDISPLAY_W/2;
 		int y = PLAYERDISPLAY_Y + PLAYERDISPLAY_H + 5;

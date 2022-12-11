@@ -765,6 +765,23 @@ class ListMenuItemGameSelection : ListMenuItemTextItem
 	}
 }
 
+class ListMenuItemTitle : ListMenuItemStaticText
+{
+	void Init(ListMenuDescriptor desc, double x, double y, String text, int color = -1)
+	{
+		Super.Init(desc, x, y, text, color);
+		mCentered = true;
+	}
+
+	override void Draw(bool selected, ListMenuDescriptor desc)
+	{
+		TextureID tex = TexMan.CheckForTexture(mText.Mid(1), TexMan.Type_Any);
+
+		if (Game.IsSod() && tex.IsValid()) { DrawTexture(desc, tex, mXpos, mYpos); }
+		else { Super.Draw(selected, desc); }
+	}
+}
+
 // For an icon that swaps out in place, like the Wolf3D skill menu
 class StaticIconListMenu : ExtendedListMenu
 {

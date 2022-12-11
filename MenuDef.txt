@@ -82,7 +82,7 @@ ListMenu "EpisodeMenu"
 	Selector "M_SEL1", -88, 0
 
 	Font "BigFont", "WolfMenuYellowBright"
-	StaticTextCentered 160, 0, "$M_EPIS"
+	Title 160, 0, "$M_EPIS"
 
 	Position 72, 23
 
@@ -96,7 +96,7 @@ ListMenu "EpisodeMenu"
 ListMenu "SkillMenu"
 {
 	Font "BigFont", "WolfMenuYellowBright"
-	StaticTextCentered 160, 78, "$M_SKILL"
+	Title 160, 78, "$M_SKILL"
 
 	Position 75, 102
 

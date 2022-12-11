@@ -6,7 +6,6 @@ Graphic M_LOADG, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_SAVEG, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_QUITG, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_EPISOD, 1, 1 { Patch BLACK, 0, 0 }
-Graphic M_SKILL, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_NEWG, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_RDTHIS, 1, 1 { Patch BLACK, 0, 0 }
 
@@ -1840,7 +1839,7 @@ Texture M_SSELC1, 24, 8 { Patch WVGA1008, 0, 0 }
 Texture MENUBLUE, 320, 200 { Patch WVGA1003, 0, 0 }
 
 // Skill Graphics
-Texture M_SSKILL, 184, 16 { Patch WVGA1020, 0, 0 }
+Texture M_SKILL, 184, 16 { Offset 92, 0 Patch WVGA1020, 0, 0 }
 Texture SSKILL1, 24, 32 { Patch WVGA1021, 0, 0 }
 Texture SSKILL2, 24, 32 { Patch WVGA1022, 0, 0 }
 Texture SSKILL3, 24, 32 { Patch WVGA1023, 0, 0 }
