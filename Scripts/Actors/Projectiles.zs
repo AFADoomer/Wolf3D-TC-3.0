@@ -180,6 +180,9 @@ class Syringe : WolfProjectile
 		Spawn:
 			WB3P ABCD 3;
 			Loop;
+		XDeath:
+			TNT1 A 2 WolfExplode(20);
+			Stop;
 		Death:
 			SYRP A 2 {
 				bInvisible = g_noblood;
@@ -212,9 +215,10 @@ class GhostFireBall : WolfProjectile
 			BALP A 4 Bright {
 				bInvisible = g_noblood;
 				roll = Random(0, 7) * 45;
+				scale.x *= RandomPick(-1, 1);
 				WolfExplode(0, flags:0);
 			}
-			BALP BCD 4 Bright  { A_FadeOut(0.25); }
+			BALP BCD 4 Bright  { A_FadeOut(alpha / 2); }
 			Stop;
 	}
 }

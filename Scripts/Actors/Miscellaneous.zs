@@ -423,7 +423,8 @@ class SmokeSpawner : Actor
 
 		if (counter++ % interval == 0)
 		{
-			Spawn("Smoke", pos);
+			Actor s = Spawn("Smoke", pos);
+			if (s) { s.scale.x *= RandomPick(-1, 1); }
 		}
 
 		if (counter++ > 105) { Destroy(); }
