@@ -2090,3 +2090,38 @@ class WallBarsDoor : WolfWallSprite
 			Stop;
 	}
 }
+
+class WolfMap : MapRevealer
+{
+	Default
+	{
+		//$Category Wolfenstein 3D/Items
+		//$Title Map
+		//$Color 3
+		Inventory.PickupMessage "";
+		Inventory.PickupSound "pickups/map";
+	}
+
+	States
+	{
+		Spawn:
+			WMAP A -1;
+			Stop;
+	}
+
+	override bool TryPickup (in out Actor toucher)
+	{
+		level.allmap = true;
+
+		Powerup scanner = Powerup(toucher.FindInventory("PowerScanner"));
+		if (!scanner)
+		{
+			toucher.GiveInventory("PowerScanner", 1);
+			scanner = Powerup(toucher.FindInventory("PowerScanner"));
+			scanner.effecttics = 0x7FFFFFFF;
+		}
+
+		GoAwayAndDie ();
+		return true;
+	}
+}

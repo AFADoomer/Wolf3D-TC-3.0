@@ -274,3 +274,4 @@ $alias pickups/backpack		pickups/ammobox
 $alias pickups/cheese		pickups/food
 $alias column/break			missile/hit
 $alias barrel/explode		missile/hit
+$alias pickups/map			pickups/ammobox

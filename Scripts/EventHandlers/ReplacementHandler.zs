@@ -67,6 +67,7 @@ class ReplacementHandler : StaticEventHandler
 			// Other
 			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
 			case 'Backpack': e.replacement = "WolfBackpack"; break;
+			case 'AllMap': e.replacement = "WolfMap"; break;
 		}
 
 		if (e.replacement) { e.IsFinal = true; }
