@@ -997,7 +997,7 @@ class HighScores : WolfMenu
 
 		for (int s = 1; s <= 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. s);
+			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s);
 
 			if (scorevalue)
 			{
@@ -1263,7 +1263,7 @@ class HighScores : WolfMenu
 	{
 		for (int s = 0; s < 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. s + 1);
+			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s + 1);
 
 			if (scorevalue && scores[s])
 			{

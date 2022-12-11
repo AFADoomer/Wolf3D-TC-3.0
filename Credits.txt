@@ -1,7 +1,7 @@
 Wolfenstein 3D Assets - id Software
 Spear of Destiny Assets - id Software
 Spear of Destiny Mission Pack Assets - FormGen
-SNES Wolf3D Sprites - id Software/Imagineer, modified by AFADoomer, ripped by InsanityBringer (https://www.spriters-resource.com/snes/wolfenstein3d/sheet/102303/?source=genre)
+SNES Wolf3D Sprites - id Software/Imagineer, ripped by InsanityBringer (https://www.spriters-resource.com/snes/wolfenstein3d/sheet/102303/?source=genre), modified by AFADoomer
 Jaguar Wolf3D Sprites - id Software
 
 Broken Column Sprites - Modified by AFADoomer from AReyeP - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
