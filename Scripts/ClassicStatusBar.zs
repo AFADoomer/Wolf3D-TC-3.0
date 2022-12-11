@@ -379,7 +379,13 @@ class ClassicStatusBar : WidgetStatusBar
 
 	void DrawFizzle()
 	{
-		if (!pixel || !fizzleeffect) { return; }
+		if (!pixel || !fizzleeffect)
+		{
+			EventHandler.SendNetworkEvent("fizzle_off");
+			return;
+		}
+
+		EventHandler.SendNetworkEvent("fizzle_on");
 
 		CVar fadestyle = CVar.GetCVar("g_fadestyle", CPlayer);
 		if (fadestyle && fadestyle.GetInt()) // Just use a normal fade
