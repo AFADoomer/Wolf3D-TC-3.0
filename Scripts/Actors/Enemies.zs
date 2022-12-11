@@ -1040,8 +1040,8 @@ class Mutant : ClassicNazi
 			"####" G 3 A_FaceTarget;
 		Attack:
 			"####" H 10 Bright A_NaziShoot();
-			"####" G 5 A_FaceTarget;
-			"####" I 10 Bright A_NaziShoot();
+			"####" I 5 A_FaceTarget;
+			"####" J 10 Bright A_NaziShoot();
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
 	}

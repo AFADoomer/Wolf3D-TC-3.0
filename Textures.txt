@@ -893,7 +893,8 @@ Sprite WMUTN0, 64, 64 { Offset 32, 64 Patch WSPR0232, 0, 0 }
 Sprite WMUTO0, 64, 64 { Offset 32, 64 Patch WSPR0233, 0, 0 }
 Sprite WMUTG0, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
 Sprite WMUTH0, 64, 64 { Offset 32, 64 Patch WSPR0235, 0, 0 }
-Sprite WMUTI0, 64, 64 { Offset 32, 64 Patch WSPR0237, 0, 0 }
+Sprite WMUTI0, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
+Sprite WMUTJ0, 64, 64 { Offset 32, 64 Patch WSPR0237, 0, 0 }
 
 // Officer
 Sprite WWHTE1, 64, 64 { Offset 32, 64 Patch WSPR0238, 0, 0 }
@@ -1385,6 +1386,7 @@ Sprite CGULD0, 64, 64 { Offset -128, -100 Patch WSPR2419, 0, 0 }
 Sprite CGULE0, 64, 64 { Offset -128, -100 Patch WSPR2420, 0, 0 }
 
 // Lost Episodes Enemies
+// Green Guard
 Sprite WGRNE1, 64, 64 { Offset 32, 64 Patch WSPR2054, 0, 0 }
 Sprite WGRNE2, 64, 64 { Offset 32, 64 Patch WSPR2055, 0, 0 }
 Sprite WGRNE3, 64, 64 { Offset 32, 64 Patch WSPR2056, 0, 0 }
@@ -1434,6 +1436,8 @@ Sprite WGRNN0, 64, 64 { Offset 32, 64 Patch WSPR2099, 0, 0 }
 Sprite WGRNG0, 64, 64 { Offset 32, 64 Patch WSPR2100, 0, 0 }
 Sprite WGRNH0, 64, 64 { Offset 32, 64 Patch WSPR2101, 0, 0 }
 Sprite WGRNI0, 64, 64 { Offset 32, 64 Patch WSPR2102, 0, 0 }
+
+// Doberman
 Sprite WDOBA1, 64, 64 { Offset 32, 64 Patch WSPR2103, 0, 0 }
 Sprite WDOBA2, 64, 64 { Offset 32, 64 Patch WSPR2104, 0, 0 }
 Sprite WDOBA3, 64, 64 { Offset 32, 64 Patch WSPR2105, 0, 0 }
@@ -1473,6 +1477,8 @@ Sprite WDOBK0, 64, 64 { Offset 32, 64 Patch WSPR2138, 0, 0 }
 Sprite WDOBE0, 64, 64 { Offset 32, 64 Patch WSPR2139, 0, 0 }
 Sprite WDOBF0, 64, 64 { Offset 32, 64 Patch WSPR2140, 0, 0 }
 Sprite WDOBG0, 64, 64 { Offset 32, 64 Patch WSPR2141, 0, 0 }
+
+// Black SS
 Sprite WBLAE1, 64, 64 { Offset 32, 64 Patch WSPR2142, 0, 0 }
 Sprite WBLAE2, 64, 64 { Offset 32, 64 Patch WSPR2143, 0, 0 }
 Sprite WBLAE3, 64, 64 { Offset 32, 64 Patch WSPR2144, 0, 0 }
@@ -1522,14 +1528,16 @@ Sprite WBLAN0, 64, 64 { Offset 32, 64 Patch WSPR2187, 0, 0 }
 Sprite WBLAG0, 64, 64 { Offset 32, 64 Patch WSPR2188, 0, 0 }
 Sprite WBLAH0, 64, 64 { Offset 32, 64 Patch WSPR2189, 0, 0 }
 Sprite WBLAI0, 64, 64 { Offset 32, 64 Patch WSPR2190, 0, 0 }
-Sprite WBATZ1, 64, 64 { Offset 32, 64 Patch WSPR2191, 0, 0 }
-Sprite WBATZ2, 64, 64 { Offset 32, 64 Patch WSPR2192, 0, 0 }
-Sprite WBATZ3, 64, 64 { Offset 32, 64 Patch WSPR2193, 0, 0 }
-Sprite WBATZ4, 64, 64 { Offset 32, 64 Patch WSPR2194, 0, 0 }
-Sprite WBATZ5, 64, 64 { Offset 32, 64 Patch WSPR2195, 0, 0 }
-Sprite WBATZ6, 64, 64 { Offset 32, 64 Patch WSPR2196, 0, 0 }
-Sprite WBATZ7, 64, 64 { Offset 32, 64 Patch WSPR2197, 0, 0 }
-Sprite WBATZ8, 64, 64 { Offset 32, 64 Patch WSPR2198, 0, 0 }
+
+// Bat
+Sprite WBATE1, 64, 64 { Offset 32, 64 Patch WSPR2191, 0, 0 }
+Sprite WBATE2, 64, 64 { Offset 32, 64 Patch WSPR2192, 0, 0 }
+Sprite WBATE3, 64, 64 { Offset 32, 64 Patch WSPR2193, 0, 0 }
+Sprite WBATE4, 64, 64 { Offset 32, 64 Patch WSPR2194, 0, 0 }
+Sprite WBATE5, 64, 64 { Offset 32, 64 Patch WSPR2195, 0, 0 }
+Sprite WBATE6, 64, 64 { Offset 32, 64 Patch WSPR2196, 0, 0 }
+Sprite WBATE7, 64, 64 { Offset 32, 64 Patch WSPR2197, 0, 0 }
+Sprite WBATE8, 64, 64 { Offset 32, 64 Patch WSPR2198, 0, 0 }
 Sprite WBATA1, 64, 64 { Offset 32, 64 Patch WSPR2199, 0, 0 }
 Sprite WBATA2, 64, 64 { Offset 32, 64 Patch WSPR2200, 0, 0 }
 Sprite WBATA3, 64, 64 { Offset 32, 64 Patch WSPR2201, 0, 0 }
@@ -1566,21 +1574,23 @@ Sprite WBATJ0, 64, 64 { Offset 32, 64 Patch WSPR2231, 0, 0 }
 Sprite WBATK0, 64, 64 { Offset 32, 64 Patch WSPR2232, 0, 0 }
 Sprite WBATL0, 64, 64 { Offset 32, 64 Patch WSPR2233, 0, 0 }
 Sprite WBATM0, 64, 64 { Offset 32, 64 Patch WSPR2234, 0, 0 }
-Sprite WBATE0, 64, 64 { Offset 32, 64 Patch WSPR2235, 0, 0 }
+Sprite WBATF0, 64, 64 { Offset 32, 64 Patch WSPR2235, 0, 0 }
 Sprite WBATN0, 64, 64 { Offset 32, 64 Patch WSPR2236, 0, 0 }
 Sprite WBATO0, 64, 64 { Offset 32, 64 Patch WSPR2237, 0, 0 }
 Sprite WBATG0, 64, 64 { Offset 32, 64 Patch WSPR2238, 0, 0 }
 Sprite WBATH0, 64, 64 { Offset 32, 64 Patch WSPR2239, 0, 0 }
-Sprite WBATG0, 64, 64 { Offset 32, 64 Patch WSPR2240, 0, 0 }
-Sprite WBATI0, 64, 64 { Offset 32, 64 Patch WSPR2241, 0, 0 }
-Sprite WWH2Z1, 64, 64 { Offset 32, 64 Patch WSPR2242, 0, 0 }
-Sprite WWH2Z2, 64, 64 { Offset 32, 64 Patch WSPR2243, 0, 0 }
-Sprite WWH2Z3, 64, 64 { Offset 32, 64 Patch WSPR2244, 0, 0 }
-Sprite WWH2Z4, 64, 64 { Offset 32, 64 Patch WSPR2245, 0, 0 }
-Sprite WWH2Z5, 64, 64 { Offset 32, 64 Patch WSPR2246, 0, 0 }
-Sprite WWH2Z6, 64, 64 { Offset 32, 64 Patch WSPR2247, 0, 0 }
-Sprite WWH2Z7, 64, 64 { Offset 32, 64 Patch WSPR2248, 0, 0 }
-Sprite WWH2Z8, 64, 64 { Offset 32, 64 Patch WSPR2249, 0, 0 }
+Sprite WBATI0, 64, 64 { Offset 32, 64 Patch WSPR2240, 0, 0 }
+Sprite WBATJ0, 64, 64 { Offset 32, 64 Patch WSPR2241, 0, 0 }
+
+// Alternate Officer
+Sprite WWH2E1, 64, 64 { Offset 32, 64 Patch WSPR2242, 0, 0 }
+Sprite WWH2E2, 64, 64 { Offset 32, 64 Patch WSPR2243, 0, 0 }
+Sprite WWH2E3, 64, 64 { Offset 32, 64 Patch WSPR2244, 0, 0 }
+Sprite WWH2E4, 64, 64 { Offset 32, 64 Patch WSPR2245, 0, 0 }
+Sprite WWH2E5, 64, 64 { Offset 32, 64 Patch WSPR2246, 0, 0 }
+Sprite WWH2E6, 64, 64 { Offset 32, 64 Patch WSPR2247, 0, 0 }
+Sprite WWH2E7, 64, 64 { Offset 32, 64 Patch WSPR2248, 0, 0 }
+Sprite WWH2E8, 64, 64 { Offset 32, 64 Patch WSPR2249, 0, 0 }
 Sprite WWH2A1, 64, 64 { Offset 32, 64 Patch WSPR2250, 0, 0 }
 Sprite WWH2A2, 64, 64 { Offset 32, 64 Patch WSPR2251, 0, 0 }
 Sprite WWH2A3, 64, 64 { Offset 32, 64 Patch WSPR2252, 0, 0 }
@@ -1625,6 +1635,7 @@ Sprite WWH2H0, 64, 64 { Offset 32, 64 Patch WSPR2290, 0, 0 }
 Sprite WWH2I0, 64, 64 { Offset 32, 64 Patch WSPR2291, 0, 0 }
 
 // SoD Bosses
+// Trans Grosse
 Sprite WBO2A0, 64, 64 { Offset 32, 64 Patch WSPR1326, 0, 0 }
 Sprite WBO2B0, 64, 64 { Offset 32, 64 Patch WSPR1327, 0, 0 }
 Sprite WBO2C0, 64, 64 { Offset 32, 64 Patch WSPR1328, 0, 0 }
@@ -1637,6 +1648,7 @@ Sprite WBO2H0, 64, 64 { Offset 32, 64 Patch WSPR1334, 0, 0 }
 Sprite WBO2I0, 64, 64 { Offset 32, 64 Patch WSPR1335, 0, 0 }
 Sprite WBO2J0, 64, 64 { Offset 32, 64 Patch WSPR1336, 0, 0 }
 
+// Barnacle Wilhelm
 Sprite WBO9A0, 64, 64 { Offset 32, 64 Patch WSPR1337, 0, 0 }
 Sprite WBO9B0, 64, 64 { Offset 32, 64 Patch WSPR1338, 0, 0 }
 Sprite WBO9C0, 64, 64 { Offset 32, 64 Patch WSPR1339, 0, 0 }
@@ -1650,6 +1662,7 @@ Sprite WBO9K0, 64, 64 { Offset 32, 64 Patch WSPR1346, 0, 0 }
 Sprite WBO9L0, 64, 64 { Offset 32, 64 Patch WSPR1347, 0, 0 }
 Sprite WBO9M0, 64, 64 { Offset 32, 64 Patch WSPR1348, 0, 0 }
 
+// Ubermutant
 Sprite WBO6A0, 64, 64 { Offset 32, 64 Patch WSPR1349, 0, 0 }
 Sprite WBO6B0, 64, 64 { Offset 32, 64 Patch WSPR1350, 0, 0 }
 Sprite WBO6C0, 64, 64 { Offset 32, 64 Patch WSPR1351, 0, 0 }
@@ -1664,6 +1677,7 @@ Sprite WBO6K0, 64, 64 { Offset 32, 64 Patch WSPR1359, 0, 0 }
 Sprite WBO6L0, 64, 64 { Offset 32, 64 Patch WSPR1360, 0, 0 }
 Sprite WBO6M0, 64, 64 { Offset 32, 64 Patch WSPR1361, 0, 0 }
 
+// Death Knight
 Sprite WBO7A0, 64, 64 { Offset 32, 64 Patch WSPR1362, 0, 0 }
 Sprite WBO7B0, 64, 64 { Offset 32, 64 Patch WSPR1363, 0, 0 }
 Sprite WBO7C0, 64, 64 { Offset 32, 64 Patch WSPR1364, 0, 0 }
@@ -1680,6 +1694,7 @@ Sprite WBO7O0, 64, 64 { Offset 32, 64 Patch WSPR1374, 0, 0 }
 Sprite WBO7P0, 64, 64 { Offset 32, 64 Patch WSPR1375, 0, 0 }
 Sprite WBO7Q0, 64, 64 { Offset 32, 64 Patch WSPR1376, 0, 0 }
 
+// Spectre
 Sprite WSPEA0, 64, 64 { Offset 32, 64 Patch WSPR1377, 0, 0 }
 Sprite WSPEB0, 64, 64 { Offset 32, 64 Patch WSPR1378, 0, 0 }
 Sprite WSPEC0, 64, 64 { Offset 32, 64 Patch WSPR1379, 0, 0 }
@@ -1689,6 +1704,7 @@ Sprite WSPEF0, 64, 64 { Offset 32, 64 Patch WSPR1382, 0, 0 }
 Sprite WSPEG0, 64, 64 { Offset 32, 64 Patch WSPR1383, 0, 0 }
 Sprite WSPEH0, 64, 64 { Offset 32, 64 Patch WSPR1384, 0, 0 }
 
+// Angel of Death
 Sprite WB10A0, 64, 64 { Offset 32, 64 Patch WSPR1385, 0, 0 }
 Sprite WB10B0, 64, 64 { Offset 32, 64 Patch WSPR1386, 0, 0 }
 Sprite WB10C0, 64, 64 { Offset 32, 64 Patch WSPR1387, 0, 0 }
@@ -1707,6 +1723,7 @@ Sprite WB10Q0, 64, 64 { Offset 32, 64 Patch WSPR1399, 0, 0 }
 Sprite WB10R0, 64, 64 { Offset 32, 64 Patch WSPR1400, 0, 0 }
 
 // Lost Episodes Bosses
+// Submarine Willy
 Sprite LBO2A0, 64, 64 { Offset 32, 64 Patch WSPR2326, 0, 0 }
 Sprite LBO2B0, 64, 64 { Offset 32, 64 Patch WSPR2327, 0, 0 }
 Sprite LBO2C0, 64, 64 { Offset 32, 64 Patch WSPR2328, 0, 0 }
@@ -1719,6 +1736,7 @@ Sprite LBO2H0, 64, 64 { Offset 32, 64 Patch WSPR2334, 0, 0 }
 Sprite LBO2I0, 64, 64 { Offset 32, 64 Patch WSPR2335, 0, 0 }
 Sprite LBO2J0, 64, 64 { Offset 32, 64 Patch WSPR2336, 0, 0 }
 
+// Quarkblitz
 Sprite LBO9A0, 64, 64 { Offset 32, 64 Patch WSPR2337, 0, 0 }
 Sprite LBO9B0, 64, 64 { Offset 32, 64 Patch WSPR2338, 0, 0 }
 Sprite LBO9C0, 64, 64 { Offset 32, 64 Patch WSPR2339, 0, 0 }
@@ -1732,6 +1750,7 @@ Sprite LBO9K0, 64, 64 { Offset 32, 64 Patch WSPR2346, 0, 0 }
 Sprite LBO9L0, 64, 64 { Offset 32, 64 Patch WSPR2347, 0, 0 }
 Sprite LBO9M0, 64, 64 { Offset 32, 64 Patch WSPR2348, 0, 0 }
 
+// The Axe
 Sprite LBO6A0, 64, 64 { Offset 32, 64 Patch WSPR2349, 0, 0 }
 Sprite LBO6B0, 64, 64 { Offset 32, 64 Patch WSPR2350, 0, 0 }
 Sprite LBO6C0, 64, 64 { Offset 32, 64 Patch WSPR2351, 0, 0 }
@@ -1746,6 +1765,7 @@ Sprite LBO6K0, 64, 64 { Offset 32, 64 Patch WSPR2359, 0, 0 }
 Sprite LBO6L0, 64, 64 { Offset 32, 64 Patch WSPR2360, 0, 0 }
 Sprite LBO6M0, 64, 64 { Offset 32, 64 Patch WSPR2361, 0, 0 }
 
+// Robot Droid
 Sprite LBO7A0, 64, 64 { Offset 32, 64 Patch WSPR2362, 0, 0 }
 Sprite LBO7B0, 64, 64 { Offset 32, 64 Patch WSPR2363, 0, 0 }
 Sprite LBO7C0, 64, 64 { Offset 32, 64 Patch WSPR2364, 0, 0 }
@@ -1762,6 +1782,7 @@ Sprite LBO7O0, 64, 64 { Offset 32, 64 Patch WSPR2374, 0, 0 }
 Sprite LBO7P0, 64, 64 { Offset 32, 64 Patch WSPR2375, 0, 0 }
 Sprite LBO7Q0, 64, 64 { Offset 32, 64 Patch WSPR2376, 0, 0 }
 
+// Ghost
 Sprite LSPEA0, 64, 64 { Offset 32, 64 Patch WSPR2377, 0, 0 }
 Sprite LSPEB0, 64, 64 { Offset 32, 64 Patch WSPR2378, 0, 0 }
 Sprite LSPEC0, 64, 64 { Offset 32, 64 Patch WSPR2379, 0, 0 }
@@ -1771,6 +1792,7 @@ Sprite LSPEF0, 64, 64 { Offset 32, 64 Patch WSPR2382, 0, 0 }
 Sprite LSPEG0, 64, 64 { Offset 32, 64 Patch WSPR2383, 0, 0 }
 Sprite LSPEH0, 64, 64 { Offset 32, 64 Patch WSPR2384, 0, 0 }
 
+// Radioactive Mist
 Sprite LSP2A0, 64, 64 { Offset 32, 64 Patch WSPR3377, 0, 0 }
 Sprite LSP2B0, 64, 64 { Offset 32, 64 Patch WSPR3378, 0, 0 }
 Sprite LSP2C0, 64, 64 { Offset 32, 64 Patch WSPR3379, 0, 0 }
@@ -1780,6 +1802,7 @@ Sprite LSP2F0, 64, 64 { Offset 32, 64 Patch WSPR3382, 0, 0 }
 Sprite LSP2G0, 64, 64 { Offset 32, 64 Patch WSPR3383, 0, 0 }
 Sprite LSP2H0, 64, 64 { Offset 32, 64 Patch WSPR3384, 0, 0 }
 
+// Devil Incarnate
 Sprite LB10A0, 64, 64 { Offset 32, 64 Patch WSPR2385, 0, 0 }
 Sprite LB10B0, 64, 64 { Offset 32, 64 Patch WSPR2386, 0, 0 }
 Sprite LB10C0, 64, 64 { Offset 32, 64 Patch WSPR2387, 0, 0 }
