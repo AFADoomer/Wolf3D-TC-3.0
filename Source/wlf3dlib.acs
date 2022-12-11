@@ -176,7 +176,7 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 			bAccess = CheckInventory("YellowKey") || CheckInventory("YellowKeyLost");
 			break;
 		case 5:
-			bAccess = !!(PlayerNumber() < 0);
+			bAccess = !!(PlayerNumber() < 0 && polydoors[index][DOOR_STATE] == DOOR_CLOSED);
 			break;
 		default:
 			bAccess = true;
