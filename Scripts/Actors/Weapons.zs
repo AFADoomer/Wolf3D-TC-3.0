@@ -23,6 +23,10 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
+	int flags;
+
+	FlagDef DOGRIN:flags, 0;
+
 	Default
 	{
 		//$Category Wolfenstein 3D/Items/Weapons
@@ -127,6 +131,13 @@ class ClassicWeapon : Weapon
 
 		if (screenblocks < 11) { psp.y = WEAPONTOP - 15.0 * st_Scale / WeaponScaleY; }
 		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
+	}
+
+	override void Touch(Actor toucher)
+	{
+		if (bDoGrin && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
+
+		Super.Touch(toucher);
 	}
 }
 
@@ -259,13 +270,15 @@ class WolfKnife : ClassicWeapon
 	Default
 	{
 		//$Title Knife
-		+Weapon.NoAlert
 		AttackSound "";
 		Tag "$WPN_KNIFE";
 		Inventory.Icon "KNIFE";
 		Inventory.PickupSound "pickups/knife";
 		Weapon.AmmoUse 0;
 		Weapon.SelectionOrder 4;
+		+Weapon.NOALERT
+		+Weapon.MELEEWEAPON
+		+Weapon.WIMPY_WEAPON
 	}
 
 	States
@@ -307,6 +320,7 @@ class WolfPistol : ClassicWeapon
 		Weapon.AmmoGive 0;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 3;
+		+Weapon.WIMPY_WEAPON
 	}
 
 	States
@@ -371,6 +385,7 @@ class WolfChaingun : ClassicWeapon
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1;
+		+ClassicWeapon.DOGRIN
 	}
 
 	States
@@ -387,13 +402,6 @@ class WolfChaingun : ClassicWeapon
 			"####" CD 3 Bright A_FireGun(4.0);
 			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
-	}
-
-	override void Touch(Actor toucher)
-	{
-		if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
-
-		Super.Touch(toucher);
 	}
 }
 
@@ -412,6 +420,13 @@ class WolfChaingunSoD : WeaponGiver
 		Spawn:
 			CCGU P -1;
 			Loop;
+	}
+
+	override void Touch(Actor toucher)
+	{
+		if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
+
+		Super.Touch(toucher);
 	}
 }
 
@@ -539,6 +554,7 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.WeaponScaleX 1.0;
 		Weapon.WeaponScaleY 1.2;
 		+Weapon.CHEATNOTWEAPON
+		+ClassicWeapon.DOGRIN
 	}
 
 	States
@@ -620,6 +636,7 @@ class WolfRocketLauncher : ClassicWeapon
 		Weapon.WeaponScaleY 1.2;
 		+Weapon.CHEATNOTWEAPON
 		+Weapon.EXPLOSIVE
+		+ClassicWeapon.DOGRIN
 	}
 
 	States
