@@ -826,7 +826,6 @@ class WolfNewPlayerMenu : NewPlayerMenu
 
 		mPlayerDisplay.mBackdrop = TexMan.CheckForTexture("BACKDROP", TexMan.Type_Any);
 		mPlayerDisplay.mBaseColor = color(255, 255, 255);
-		mPlayerDisplay.mAddColor = color(0, 0, 0);		
 	}
 
 	override void Drawer()
