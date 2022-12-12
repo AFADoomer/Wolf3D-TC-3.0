@@ -23,7 +23,6 @@
 // Use an overlay texture to alpha mask an existing texture
 //  Used to transform Wolf3D sprite shadows into translucent pixels so that they 
 //  map onto any surface/floor texture, not just the original flat gray.  
-//  Written by AFADoomer
 
 // Mac shadow color approximation
 //const vec4 shadowcolor = vec4(0.23, 0.18, 0.09, 2.0);
@@ -78,11 +77,18 @@ vec4 ProcessTexel()
 	}
 	else
 	{
-		// Lighten the light spots
-		color.r = mix(minlight, lightcolor.r, 2.0 * shadowmap.r * lightcolor.r);
-		color.g = mix(minlight, lightcolor.g, 2.0 * shadowmap.g * lightcolor.g);
-		color.b = mix(minlight, lightcolor.b, 2.0 * shadowmap.b * lightcolor.b);
-		color.a = clamp(-alpha * lightcolor.a, 0.0, 1.0);
+		if (uLightFactor > 0.0)
+		{
+			color.a = 0.0;
+		}
+		else
+		{
+			// Lighten the light spots
+			color.r = mix(minlight, lightcolor.r, 2.0 * shadowmap.r * lightcolor.r);
+			color.g = mix(minlight, lightcolor.g, 2.0 * shadowmap.g * lightcolor.g);
+			color.b = mix(minlight, lightcolor.b, 2.0 * shadowmap.b * lightcolor.b);
+			color.a = clamp(-alpha * lightcolor.a, 0.0, 1.0);
+		}
 	}
 
 	return color;

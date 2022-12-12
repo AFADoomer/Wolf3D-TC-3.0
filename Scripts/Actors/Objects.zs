@@ -137,10 +137,20 @@ class ExplosiveOilDrum : ExplosiveBarrel
 			WBXP A -1;
 			Stop;
 		Death:
-			WBXP B 5 Bright A_Scream();
+			WBXP B 5 Bright {
+				A_Scream();
+				
+				if (CurSector.lightlevel < 230)
+				{
+					A_AttachLight("Light", DynamicLight.PointLight, "Yellow", 48.0, 48.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 24));
+				}
+			}
 			WBXP C 5 Bright A_Explode();
 			WBXP D 10 Bright;
-			TNT1 A 1050 Bright A_BarrelDestroy();
+			TNT1 A 1050 {
+				A_BarrelDestroy();
+				A_RemoveLight("Light");
+			}
 			TNT1 A 5 A_Respawn();
 			Wait;
 	}
@@ -176,6 +186,22 @@ class FloorLamp : ClassicDecoration
 			LIT1 A -1 Bright;
 			Stop;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (CurSector.lightlevel < 230)
+		{
+			A_AttachLight("Light", DynamicLight.PointLight, "White", 22.0, 22.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 36));
+			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 36), 0, 5, 25, 90);
+		}
+		else
+		{
+			A_RemoveLight("Light");
+			A_RemoveLight("Light2");
+		}
+	}
 } 
 
 class HangingChandelier : ClassicDecoration
@@ -194,6 +220,22 @@ class HangingChandelier : ClassicDecoration
 		Spawn:
 			LIT3 A -1 Bright;
 			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (CurSector.lightlevel < 230)
+		{
+			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
+			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
+		}
+		else
+		{
+			A_RemoveLight("Light");
+			A_RemoveLight("Light2");
+		}
 	}
 } 
 
@@ -390,6 +432,22 @@ class GreenCeilingLight : ClassicDecoration
 		Spawn:
 			LIT5 A -1 Bright;
 			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (CurSector.lightlevel < 230)
+		{
+			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
+			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
+		}
+		else
+		{
+			A_RemoveLight("Light");
+			A_RemoveLight("Light2");
+		}
 	}
 }
 
@@ -1079,8 +1137,24 @@ class RedCeilingLight : ClassicDecoration
 	States
 	{
 		Spawn:
-			LITR A -1;
+			LITR A -1 Bright;
 			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (CurSector.lightlevel < 230)
+		{
+			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
+			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
+		}
+		else
+		{
+			A_RemoveLight("Light");
+			A_RemoveLight("Light2");
+		}
 	}
 } 
 
@@ -1829,6 +1903,22 @@ class RedCeilingLightLost : AardwolfSign
 		Spawn:
 			LIT7 A -1 Bright;
 			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (CurSector.lightlevel < 230)
+		{
+			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
+			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
+		}
+		else
+		{
+			A_RemoveLight("Light");
+			A_RemoveLight("Light2");
+		}
 	}
 }
 

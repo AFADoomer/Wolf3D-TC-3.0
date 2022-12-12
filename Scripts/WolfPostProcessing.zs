@@ -27,6 +27,17 @@ class WolfPostProcessor : LevelPostProcessor
 {
 	protected void Apply(Name checksum, String mapname)
 	{
+		// Bare-bones compatibility with Relighting mod...  Darken the maps so that 
+		// the dynamic lights show up and the mod has some chance of working properly
+		int relighting = Wads.CheckNumForFullName("zscript/hd_relighting.zs");
+		if (relighting > -1)
+		{
+			for (int sec = 0; sec < level.sectors.Size(); sec++)
+			{
+				if (level.sectors[sec].lightlevel == 255) { level.sectors[sec].SetLightLevel(192); }
+			}
+		}
+
 		uint count = GetThingCount();
 	
 		for (uint i = 0; i < count; i++)
