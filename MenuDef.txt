@@ -147,6 +147,7 @@ OptionMenu "TCOptions"
 	Slider "$M_OPTIONSFADESPEED",			"g_fizzlespeed", 0.5, 4.0, 0.5, 1
 	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
+	Option "$M_OPTIONSDYNAMICLIGHTS", 		"g_dynamiclights", "YesNo"
 	StaticText ""
 	StaticText "$M_HUDOPTIONS", 1
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"

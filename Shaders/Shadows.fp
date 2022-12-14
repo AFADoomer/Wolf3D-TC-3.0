@@ -77,7 +77,7 @@ vec4 ProcessTexel()
 	}
 	else
 	{
-		if (uLightFactor > 0.0)
+		if (uLightFactor >= 1.0)
 		{
 			color.a = 0.0;
 		}

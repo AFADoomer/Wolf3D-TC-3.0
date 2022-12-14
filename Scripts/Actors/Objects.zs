@@ -191,16 +191,7 @@ class FloorLamp : ClassicDecoration
 	{
 		Super.Tick();
 
-		if (CurSector.lightlevel < 230)
-		{
-			A_AttachLight("Light", DynamicLight.PointLight, "White", 22.0, 22.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 36));
-			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 36), 0, 5, 25, 90);
-		}
-		else
-		{
-			A_RemoveLight("Light");
-			A_RemoveLight("Light2");
-		}
+		Game.AttachLight(self, 22.0, "White", (0, 0, 36), DYNAMICLIGHT.LF_SPOT, 2, 25, 90);
 	}
 } 
 
@@ -226,16 +217,7 @@ class HangingChandelier : ClassicDecoration
 	{
 		Super.Tick();
 
-		if (CurSector.lightlevel < 230)
-		{
-			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
-			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
-		}
-		else
-		{
-			A_RemoveLight("Light");
-			A_RemoveLight("Light2");
-		}
+		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 } 
 
@@ -438,16 +420,7 @@ class GreenCeilingLight : ClassicDecoration
 	{
 		Super.Tick();
 
-		if (CurSector.lightlevel < 230)
-		{
-			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
-			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
-		}
-		else
-		{
-			A_RemoveLight("Light");
-			A_RemoveLight("Light2");
-		}
+		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 }
 
@@ -1145,16 +1118,7 @@ class RedCeilingLight : ClassicDecoration
 	{
 		Super.Tick();
 
-		if (CurSector.lightlevel < 230)
-		{
-			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
-			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
-		}
-		else
-		{
-			A_RemoveLight("Light");
-			A_RemoveLight("Light2");
-		}
+		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 } 
 
@@ -1909,16 +1873,7 @@ class RedCeilingLightLost : AardwolfSign
 	{
 		Super.Tick();
 
-		if (CurSector.lightlevel < 230)
-		{
-			A_AttachLight("Light", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 55));
-			A_AttachLight("Light2", DynamicLight.PointLight, "White", 34.0, 34.0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_SPOT, (0, 0, 55), 0, 10, 35, 90);
-		}
-		else
-		{
-			A_RemoveLight("Light");
-			A_RemoveLight("Light2");
-		}
+		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 }
 

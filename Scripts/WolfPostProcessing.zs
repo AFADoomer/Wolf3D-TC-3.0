@@ -27,6 +27,8 @@ class WolfPostProcessor : LevelPostProcessor
 {
 	protected void Apply(Name checksum, String mapname)
 	{
+		CVar dynlights = CVar.FindCvar("g_dynamiclights");
+
 		// Bare-bones compatibility with Relighting mod...  Darken the maps so that 
 		// the dynamic lights show up and the mod has some chance of working properly
 		int relighting = Wads.CheckNumForFullName("zscript/hd_relighting.zs");
@@ -35,6 +37,13 @@ class WolfPostProcessor : LevelPostProcessor
 			for (int sec = 0; sec < level.sectors.Size(); sec++)
 			{
 				if (level.sectors[sec].lightlevel == 255) { level.sectors[sec].SetLightLevel(192); }
+			}
+		}
+		else if (dynlights && dynlights.GetInt())
+		{
+			for (int sec = 0; sec < level.sectors.Size(); sec++)
+			{
+				if (level.sectors[sec].lightlevel > 229) { level.sectors[sec].SetLightLevel(229); }
 			}
 		}
 

@@ -30,6 +30,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	int fadetarget;
 	int fadetime;
 	int fadecolor;
+	int leftedge;
 
 	bool exitmenu;
 	int exittimeout;
@@ -422,6 +423,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 		int framewidth = max(620, Screen.GetWidth() * 2 / 3);
 
 		int x = left + DrawFrame(framewidth, lastrow - y, -y);
+		leftedge = x;
+		
 		x += 32 * CleanXfac_1;
 
 		screen.Dim(fadecolor, 1.0 - alpha, 0, 0, screen.GetWidth(), screen.GetHeight());
@@ -700,6 +703,27 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (g_defaultmenus) { return Super.HighlightColor(); }
 
 		return Font.FindFontColor("WolfMenuWhite");
+	}
+
+	override int DrawCaption(OptionMenuItem this)
+	{
+		String text = this.mLabel;
+		text.Replace(" ", "");
+		text.Replace("$", "");
+
+		String lookupbase = mDesc.mTitle;
+		text.Replace(" ", "");
+		lookupbase.Replace("$", "");
+
+		String lookup = lookupBase .. "_" .. text;
+		text = lookup;
+		text = StringTable.Localize("$" .. lookup);
+		if (text == lookup) { return 0; }
+		
+		int lineheight = SmallFont.GetHeight();
+		screen.DrawText (SmallFont, Font.FindFontColor("WolfMenuYellowBright"), leftedge, screen.GetHeight() - lineheight * 2.5, text);
+
+		return lineheight;
 	}
 }
 

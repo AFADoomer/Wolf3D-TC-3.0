@@ -77,6 +77,13 @@ class WolfRocket : WolfProjectile
 			ROCP BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
 			Stop;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		Game.AttachLight(self, 8.0, 0x900000, (-12.0, 0, 0), DYNAMICLIGHT.LF_DONTLIGHTSELF);
+	}
 }
 
 class WolfRocketSOD : WolfRocket
@@ -221,6 +228,14 @@ class GhostFireBall : WolfProjectile
 			BALP BCD 4 Bright  { A_FadeOut(alpha / 2); }
 			Stop;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		Game.AttachLight(self, 24.0, 0xA40000);
+	}
+
 }
 
 //Used instead of GhostFireball when 'g_fastfireballs' cvar is true

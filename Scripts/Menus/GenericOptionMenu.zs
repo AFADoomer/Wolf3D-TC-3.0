@@ -212,6 +212,7 @@ class GenericOptionMenu : OptionMenu
 			if (isSelected && item.Selectable())
 			{
 				DrawCursor(x - 12 * CleanXfac_1, y);
+				DrawCaption(item);
 			}
 
 			if (item is "OptionMenuItemControlBase")
@@ -485,10 +486,10 @@ class GenericOptionMenu : OptionMenu
 		return fnt.StringWidth(s);
 	}
 
-	virtual int DrawCaption(OptionMenuItem this, int x = 0, int y = 0, int spacing = 20, Font fnt = null, double captionalpha = 0.6, int breakwidth = -1)
+	virtual int DrawCaption(OptionMenuItem this)
 	{
-		if (x < 0) { x += CleanWidth_1; }
-		if (y < 0) { y += CleanHeight_1; }
+		int x = 10;
+		int y = 10;
 
 		String text = StringTable.Localize(this.mLabel);
 		text.Replace(" ", "");
@@ -500,7 +501,7 @@ class GenericOptionMenu : OptionMenu
 		text = StringTable.Localize("$" .. lookup);
 		if (text == lookup) { return 0; }
 
-		return DrawOptionText(text, x, y, fnt, TextColor(), false, captionalpha * alpha, breakwidth);
+		return DrawOptionText(text, x, y, SmallFont, TextColor(), false, alpha, Screen.GetWidth() / 2);
 	}
 
 	virtual void DrawPath(String title, int x, int y, Font fnt = null)
@@ -773,8 +774,7 @@ class GenericOptionMenu : OptionMenu
 		info.x = x;
 		info.y = y;
 
-		int height = DrawCaption(item, x, y, spacing, fnt, 0.6, Screen.GetWidth() - 20 - spacing);
-
+		int height = 0;
 		String label = Stringtable.Localize(item.mLabel);
 		height = max(DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth), height);
 
