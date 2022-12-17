@@ -52,12 +52,12 @@ class WidgetStatusBar : BaseStatusBar
 
 	virtual void CalcOffsets()
 	{
-		CVar hudratio = CVar.FindCVar("g_hudratio");
+		CVar hudratiovar = CVar.FindCVar("g_hudratio");
 
-		int boa_hudratio = hudratio.GetInt();
+		int hudratio = hudratiovar.GetInt();
 		double ratio;
 		
-		switch (boa_hudratio)
+		switch (hudratio)
 		{
 			// These match the built-in ratios currently defined in the ForceRatios option value
 			case 1:
@@ -349,6 +349,8 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override void Draw(int state, double TicFrac)
 	{
+		BaseStatusBar.Draw(state, TicFrac);
+
 		BeginStatusBar(st_scale, 320, 200, 42);
 
 		if (fizzlelayer == 0) { DrawFizzle(); }
