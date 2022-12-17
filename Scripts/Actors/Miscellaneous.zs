@@ -327,6 +327,7 @@ class Fire : Actor
 		+BRIGHT
 		+NOGRAVITY
 		+NOINTERACTION
+		Radius 8;
 		RenderStyle "Translucent";
 		Alpha 1.0;
 	}
@@ -348,6 +349,8 @@ class Fire : Actor
 
 	void Advance()
 	{
+		Game.AttachLight(self, int(radius * 2), 0xA40000);
+
 		frame = (frame + 1) % 8;
 
 		if (GetAge() > 16)
@@ -360,6 +363,11 @@ class Fire : Actor
 
 class SmallFire : Fire
 {
+	Default
+	{
+		Radius 4;
+	}
+
 	States
 	{
 		Spawn:
@@ -406,10 +414,15 @@ class Smoke : Actor
 
 class SmokeSpawner : Actor
 {
+	int duration;
+
+	Property Duration:duration;
+
 	Default
 	{
 		+NOINTERACTION
 		+NOTONAUTOMAP
+		SmokeSpawner.Duration 105;
 	}
 
 	int interval, counter;
@@ -433,6 +446,6 @@ class SmokeSpawner : Actor
 			if (s) { s.scale.x *= RandomPick(-1, 1); }
 		}
 
-		if (counter++ > 105) { Destroy(); }
+		if (counter++ > duration) { Destroy(); }
 	}
 }

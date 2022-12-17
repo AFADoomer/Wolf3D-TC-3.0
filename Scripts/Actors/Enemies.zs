@@ -611,7 +611,8 @@ class ClassicBase : Actor
 			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
 			Spawn("Fire", spawnpos);
 			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
-			Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16)));
+			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16))));
+			if (ss) { ss.duration = Random(45, 105); }
 		}
 	}
 
