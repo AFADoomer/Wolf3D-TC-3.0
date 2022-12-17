@@ -42,7 +42,7 @@ class HelpMenu : ReadThisMenu
 
 		if (gamestate != GS_FINALE)
 		{
-			S_ChangeMusic("CORNER");
+			GameHandler.ChangeMusic("CORNER");
 		}
 	}
 
@@ -89,8 +89,8 @@ class HelpMenu : ReadThisMenu
 
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
-				if (!mParentMenu) { S_ChangeMusic(level.music); }
-				else { S_ChangeMusic("WONDERIN"); }
+				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
+				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
 
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
@@ -460,7 +460,7 @@ class SoDEnd : HelpMenu
 
 		if (mScreen == -1 && tickcount <= 150)
 		{
-			S_ChangeMusic("");
+			GameHandler.ChangeMusic("");
 			fadealpha = tickcount / 150.0;
 			advancetime = gametic;
 
@@ -490,33 +490,33 @@ class SoDEnd : HelpMenu
 				case 0:
 					initial = false;
 					fadetarget = gametic + fadetime;
-					S_ChangeMusic("XTHEEND");
+					GameHandler.ChangeMusic("XTHEEND");
 					advancetime = gametic + 35 * 2;
 					break;
 				case 1:
 				case 2:
-					S_ChangeMusic("XTHEEND");
+					GameHandler.ChangeMusic("XTHEEND");
 					page = nextpage;
 					advancetime = gametic + 52;
 					break;
 				case 3:
-					S_ChangeMusic("XTHEEND");
+					GameHandler.ChangeMusic("XTHEEND");
 					page = nextpage;
 					advancetime = gametic + 35 * 3;
 					break;
 				case 4:
-					S_ChangeMusic("URAHERO");
+					GameHandler.ChangeMusic("URAHERO");
 					fadecolor = 0x00000;
 					fadetarget = gametic + fadetime;
 					allowinput = true;
 					break;
 				case 5:
-					S_ChangeMusic("URAHERO");
+					GameHandler.ChangeMusic("URAHERO");
 					fadetarget = gametic + fadetime;
 					advancetime = gametic + 35 * 10;
 					break;
 				case 6:
-					S_ChangeMusic("URAHERO");
+					GameHandler.ChangeMusic("URAHERO");
 					advancetime = gametic + 35 * 10;
 					break;
 				case 7:
@@ -527,7 +527,7 @@ class SoDEnd : HelpMenu
 				case 12:
 				case 13:
 				case 14:
-					S_ChangeMusic("URAHERO");
+					GameHandler.ChangeMusic("URAHERO");
 					if (page != nextpage) { fadetarget = gametic + fadetime; }
 					advancetime = 0;
 				default:
@@ -599,7 +599,7 @@ class IntroSlideshow : WolfMenu
 
 	override void Init(Menu parent)
 	{
-		S_ChangeMusic("");
+		GameHandler.ChangeMusic("");
 
 		GenericMenu.Init(parent);
 
@@ -707,7 +707,7 @@ class IntroSlideshow : WolfMenu
 					advancetime = 5;
 					break;
 				case 4: // Start demo loop
-					S_ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
+					GameHandler.ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
 					next = warning;
 					fadetarget = gametic + fadetime;
 					advancetime = gametic + 35 * 7;
@@ -806,7 +806,7 @@ class IntroSlideShowLoop : IntroSlideShow
 		current = title;
 		advancetime = gametic + 35 * 10;
 
-		S_ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
+		GameHandler.ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
 	}
 }
 
@@ -993,7 +993,7 @@ class HighScores : WolfMenu
 
 		fontheight = 10;
 
-		S_ChangeMusic("ROSTER");
+		GameHandler.ChangeMusic("ROSTER");
 
 		for (int s = 1; s <= 7; s++)
 		{
@@ -1110,7 +1110,7 @@ class HighScores : WolfMenu
 			{
 				if (mParentMenu || finale)
 				{
-					S_ChangeMusic("WONDERIN");
+					GameHandler.ChangeMusic("WONDERIN");
 					Menu.SetMenu("MainMenu", -1);
 				}
 				else { Menu.SetMenu("CloseMenu", -1); }

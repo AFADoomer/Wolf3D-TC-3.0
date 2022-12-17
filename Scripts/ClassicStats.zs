@@ -54,7 +54,7 @@ class ClassicStats : DoomStatusScreen
 		cnt_pause = Thinker.TICRATE;
 		cnt_bonus[0] = 0;
 
-		if (gamestate == GS_FINALE) { S_ChangeMusic("URAHERO"); }
+		if (gamestate == GS_FINALE) { GameHandler.ChangeMusic("URAHERO"); }
 
 		switch (style)
 		{

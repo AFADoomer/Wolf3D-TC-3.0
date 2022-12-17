@@ -26,7 +26,7 @@ class BossScreen : GenericMenu
 
 	override void Init(Menu parent)
 	{
-		S_ChangeMusic("");
+		GameHandler.ChangeMusic("");
 
 		Super.Init(parent);
 	}
@@ -90,7 +90,7 @@ class Startup : GenericMenu
 
 	override void Init(Menu parent)
 	{
-		S_ChangeMusic("");
+		GameHandler.ChangeMusic("");
 
 		Super.Init(parent);
 
@@ -756,7 +756,7 @@ class Startup : GenericMenu
 		{
 			if (instances == 0)
 			{
-				S_ChangeMusic(level.music);
+				GameHandler.ChangeMusic(level.music);
 				Close();
 			}
 			else

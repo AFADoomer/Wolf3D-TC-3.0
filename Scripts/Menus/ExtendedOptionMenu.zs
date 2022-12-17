@@ -64,7 +64,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		cursor0 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
 		cursor1 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
 
-		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
+		if (gamestate != GS_FINALE) { GameHandler.ChangeMusic("WONDERIN"); }
 
 		fadetime = 12;
 		fadetarget = gametic;
@@ -449,7 +449,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 			if (exittimeout >= fadetime)
 			{
-				if (!mParentMenu || (mParentMenu is "IntroSlideshow")) { S_ChangeMusic(level.music); }
+				if (!mParentMenu || (mParentMenu is "IntroSlideshow")) { GameHandler.ChangeMusic(level.music); }
 				Close();
 			}
 		}

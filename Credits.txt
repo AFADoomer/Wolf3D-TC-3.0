@@ -1,4 +1,5 @@
 Wolfenstein 3D assets - id Software
+Wolfenstein 3D MIDI music - Bobby Prince
 Spear of Destiny assets - id Software
 Spear of Destiny Mission Pack assets - FormGen
 SNES Wolf3D sprites - id Software/Imagineer, ripped by InsanityBringer (https://www.spriters-resource.com/snes/wolfenstein3d/sheet/102303/?source=genre), modified by AFADoomer

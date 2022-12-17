@@ -24,6 +24,7 @@ class GameHandler : StaticEventHandler
 {
 	Array<String> gamefiles;
 	int randomcount;
+	Dictionary music;
 
 	override void OnRegister()
 	{
@@ -33,6 +34,8 @@ class GameHandler : StaticEventHandler
 		GameHandler.CheckGameFile("GAMEMAPS.SOD", gamefiles);
 		GameHandler.CheckGameFile("GAMEMAPS.SD2", gamefiles);
 		GameHandler.CheckGameFile("GAMEMAPS.SD3", gamefiles);
+
+		ParseMusicMapping();
 	}
 
 	ui static bool GameFilePresent(String extension, bool allowdemos = true)
@@ -217,6 +220,55 @@ class GameHandler : StaticEventHandler
 
 		return Random(0, 255);
 	}
+
+	void ParseMusicMapping()
+	{
+		music = Dictionary.Create();
+		Array<String> translations;
+
+		int lump = -1;
+		lump = Wads.CheckNumForFullName("Data/MIDIList.txt");
+
+		if (lump != -1)
+		{
+			String data = Wads.ReadLump(lump);
+			data.Split(translations, "\n");
+
+			for (int i = 0; i < translations.Size(); i++)
+			{
+				Array<String> entry;
+				translations[i].Split(entry, ",");
+				if (entry.size() > 1) { music.Insert(entry[0], entry[1]); }
+			}
+		}
+	}
+
+	ui static String GetMusic(String IMFname)
+	{
+		CVar stylevar = CVar.FindCVar("g_musicstyle");
+		if (stylevar && !stylevar.GetInt()) { return IMFname; }
+
+		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+		if (this)
+		{
+			String ret = this.music.At(IMFname);
+			if (ret.length()) { return ret; }
+		}
+
+		return IMFname;
+	}
+
+	ui static void ChangeMusic(String musicname, int order = 0, bool looping = true, bool force = false)
+	{
+		if (musicname == "*") { musicname = level.music; }
+		S_ChangeMusic(GameHandler.GetMusic(musicname), order, looping, force);
+	}
+}
+
+class MusicInfo
+{
+	String IMFname;
+	String MIDIname;
 }
 
 class Game

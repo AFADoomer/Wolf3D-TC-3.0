@@ -144,7 +144,7 @@ class ExtendedListMenu : ListMenu
 		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
 
-		if (gamestate != GS_FINALE) { S_ChangeMusic("WONDERIN"); }
+		if (gamestate != GS_FINALE) { GameHandler.ChangeMusic("WONDERIN"); }
 
 		initialalpha = 1.0;
 		fadealpha = 1.0;
@@ -229,7 +229,7 @@ class ExtendedListMenu : ListMenu
 			if (exittimeout >= fadetime)
 			{
 				RestorePlaceholderMarkers();
-				S_ChangeMusic(level.music);
+				GameHandler.ChangeMusic(level.music);
 				Close();
 			}
 		}
@@ -598,7 +598,7 @@ class GameMenu : IconListMenu
 		fadetarget = gametic;
 		fadealpha = 1.0;
 
-		S_ChangeMusic("SALUTE");
+		GameHandler.ChangeMusic("SALUTE");
 	}
 
 	override void Drawer()
@@ -909,7 +909,7 @@ class ExtendedLoadMenu : LoadMenu
 		fadealpha = 1.0;
 		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 
-		S_ChangeMusic("WONDERIN");
+		GameHandler.ChangeMusic("WONDERIN");
 	}
 
 	void SetYOffsets(double yoffset)
@@ -998,7 +998,7 @@ class ExtendedLoadMenu : LoadMenu
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
-		if (!mParentMenu && mkey == MKEY_Back) { S_ChangeMusic(level.music); }
+		if (!mParentMenu && mkey == MKEY_Back) { GameHandler.ChangeMusic(level.music); }
 
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
@@ -1032,7 +1032,7 @@ class ExtendedSaveMenu : SaveMenu
 		fadealpha = 1.0;
 		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
 		
-		S_ChangeMusic("WONDERIN");
+		GameHandler.ChangeMusic("WONDERIN");
 	}
 
 	void SetYOffsets(double yoffset)
@@ -1123,11 +1123,11 @@ class ExtendedSaveMenu : SaveMenu
 	{
 		if (Super.MenuEvent(mkey, fromcontroller))
 		{
-			if (mkey == MKEY_Back && !mParentMenu) { S_ChangeMusic(level.music); }
+			if (mkey == MKEY_Back && !mParentMenu) { GameHandler.ChangeMusic(level.music); }
 			return true;
 		}
 
-		if (mkey == MKEY_Input) { S_ChangeMusic(level.music); }
+		if (mkey == MKEY_Input) { GameHandler.ChangeMusic(level.music); }
 		return false;
 	}
 }

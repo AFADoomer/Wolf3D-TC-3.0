@@ -148,6 +148,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
 	Option "$M_OPTIONSDYNAMICLIGHTS", 		"g_dynamiclights", "YesNo"
+	Option "$M_OPTIONSMUSICSTYLE",			"g_musicstyle", "MusicStyle"
 	StaticText ""
 	StaticText "$M_HUDOPTIONS", 1
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
@@ -452,6 +453,12 @@ OptionValue "BackStyle"
 {
 	0, "$BACK_QUIT"
 	1, "$BACK_RETURN"
+}
+
+OptionValue "MusicStyle"
+{
+	0, "$MUSIC_NORMAL"
+	1, "$MUSIC_MIDI"
 }
 
 OptionValue "FlatStyle"

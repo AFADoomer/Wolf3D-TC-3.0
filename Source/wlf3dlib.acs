@@ -47,7 +47,7 @@ Script "InitializePlayer" (int playernum)
 		{
 			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 			ScriptCall("WolfMenu", "SetMenu", "HighScores");
-			SetMusic("HITLWLTZ");
+			ScriptCall("GameHandler", "ChangeMusic", "HITLWALTZ");
 			ScriptCall("ClassicStatusBar", "ClearFizzle");
 		}
 		else
@@ -66,6 +66,8 @@ Script "InitializePlayer" (int playernum)
 				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
 			}
+
+			ScriptCall("GameHandler", "ChangeMusic", "*");
 		}
 	}
 }
