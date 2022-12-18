@@ -82,7 +82,6 @@ defaultmap
 	NoCrouch
 	NoJump
 	No_Grinding_Polyobj
-	InterMusic = ENDLEVEL
 	Cluster = 1
 	sky1 = "CEILING"
 }

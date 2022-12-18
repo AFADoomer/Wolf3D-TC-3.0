@@ -502,7 +502,7 @@ class ClassicStats : DoomStatusScreen
 	
 		if (bcnt == 1)
 		{
-			StartMusic();
+			GameHandler.ChangeMusic("ENDLEVEL");
 		}
 
 		switch (CurState)
