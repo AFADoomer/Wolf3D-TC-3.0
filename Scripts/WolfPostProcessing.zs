@@ -21,7 +21,7 @@
  */
 
 // Handle swapping out items if a custom SoD or Lost Episodes map is loaded with Wolf3D, or vice versa.
-// Can be toggled by setting 'g_sod' CVar and restarting map - but won't work for default maps
+// Can be toggled by setting 'g_sod' CVar and restarting map
 
 class WolfPostProcessor : LevelPostProcessor
 {

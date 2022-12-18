@@ -265,12 +265,6 @@ class GameHandler : StaticEventHandler
 	}
 }
 
-class MusicInfo
-{
-	String IMFname;
-	String MIDIname;
-}
-
 class Game
 {
 	static int, int IsSoD()
