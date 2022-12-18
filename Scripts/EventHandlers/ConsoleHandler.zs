@@ -31,19 +31,21 @@ class ConsoleHandler : StaticEventHandler
 
 		gamestring = StringTable.Localize("$MODTITLE");
 
-		// Show the last commit's hash if this is a beta release
 		hash = ReadFrom("Data/GitHash.txt");
 		if (hash.length())
 		{
 			Array<String> lines;
 			hash.Split(lines, "\n");
 
+			// Pull the version number from the last git tag
 			if (lines.Size() > 1)
 			{
 				tag = String.Format("\c[Gold]%s", lines[1]);
 				tag.Replace("-", " ");
 				
 				gamestring.AppendFormat(" %s", tag);
+
+				// Show the last commit's hash if this is a beta release
 				if (tag.IndexOf("beta") > -1) { gamestring.AppendFormat(" \c[Yellow]%s", lines[0].Left(7)); }
 			}
 		}

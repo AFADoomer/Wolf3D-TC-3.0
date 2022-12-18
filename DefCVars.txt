@@ -9,3 +9,4 @@ set msg3color 9
 set msg4color 9
 set disableautosave 0
 set crosshairon 0
+set gl_lightmode 0
