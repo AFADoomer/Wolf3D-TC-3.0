@@ -28,12 +28,14 @@ class GameHandler : StaticEventHandler
 
 	override void OnRegister()
 	{
+		console.printf(StringTable.Localize("$TXT_CHECKFILE"));
+
 		// Check to see if a Wolf3D data file is present
-		GameHandler.CheckGameFile("GAMEMAPS.WL3", gamefiles);
-		GameHandler.CheckGameFile("GAMEMAPS.WL6", gamefiles);
-		GameHandler.CheckGameFile("GAMEMAPS.SOD", gamefiles);
-		GameHandler.CheckGameFile("GAMEMAPS.SD2", gamefiles);
-		GameHandler.CheckGameFile("GAMEMAPS.SD3", gamefiles);
+		GameHandler.CheckGameFile("GAMEMAPS.WL3", gamefiles, g_showhashes);
+		GameHandler.CheckGameFile("GAMEMAPS.WL6", gamefiles, g_showhashes);
+		GameHandler.CheckGameFile("GAMEMAPS.SOD", gamefiles, g_showhashes);
+		GameHandler.CheckGameFile("GAMEMAPS.SD2", gamefiles, g_showhashes);
+		GameHandler.CheckGameFile("GAMEMAPS.SD3", gamefiles, g_showhashes);
 
 		ParseMusicMapping();
 	}
@@ -58,21 +60,19 @@ class GameHandler : StaticEventHandler
 		// Check to see if a Wolf3D GAMEMAPS data file is present
 		int g =	Wads.CheckNumForFullName(filename);
 		String message = StringTable.Localize("$TXT_FOUNDFILE");
+		String hash;
 
 		if (g > -1)
 		{
-			String hash = MD5.hash(Wads.ReadLump(g));
-/*
+			hash = MD5.hash(Wads.ReadLump(g));
 			if (
-				hash == "" // I can't find the md5 of GAMEMAPS.WL3 anywhere, and don't own it, so...  unsupported.
+				hash == "???" // I can't find the md5 of GAMEMAPS.WL3 anywhere, and don't own it, so...  unsupported.
 			)
 			{
 				gamefiles.Push("WL3");
 				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
 			}
-			else 
-*/
-			if (
+			else if (
 				hash == "a4e73706e100dc0cadfb02d23de46481" || // v1.4 / GoG / Steam
 				hash == "a15b04941937b7e136419a1e74e57e2f" // v1.1
 			)
@@ -103,11 +103,18 @@ class GameHandler : StaticEventHandler
 				gamefiles.Push("SD3");
 				message.Replace("%s", "The Ultimate Challenge");
 			}
-		}
 
-		if (verbose && !(message == StringTable.Localize("$TXT_FOUNDFILE")))
-		{
-			console.printf(message);
+			if (!(message == StringTable.Localize("$TXT_FOUNDFILE")))
+			{
+				if (verbose) { console.printf(message); }
+			}
+			else
+			{
+				message = StringTable.Localize("$TXT_BADHASH");
+				message.replace("%s", filename);
+
+				console.printf(message .. hash);
+			}
 		}
 	}
 
