@@ -814,6 +814,9 @@ class ClassicStatusBar : WidgetStatusBar
 	// Original code from shared_sbar.cpp
 	override void DrawAutomapHUD(double ticFrac)
 	{
+		return;
+
+		// No longer used after Widget conversion
 		int crdefault = Font.CR_GRAY;
 		int highlight = Font.FindFontColor("WolfMenuYellowBright");
 
