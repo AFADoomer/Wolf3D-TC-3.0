@@ -27,18 +27,26 @@ class ConsoleHandler : StaticEventHandler
 	override void OnRegister()
 	{
 		String hash = "";
+		String tag = "";
+
+		gamestring = StringTable.Localize("$MODTITLE");
 
 		// Show the last commit's hash if this is a beta release
-		if (
-			StringTable.Localize("$VERSION").IndexOf("beta") > -1 ||
-			StringTable.Localize("$VERSION").IndexOf("pre-release") > -1
-		)
+		hash = ReadFrom("Data/GitHash.txt");
+		if (hash.length())
 		{
-			hash = ReadFrom("Data/GitHash.txt");
-			hash = String.Format("\c[Yellow]%s", hash.Left(7));
-		}
+			Array<String> lines;
+			hash.Split(lines, "\n");
 
-		gamestring = String.Format("%s %s", StringTable.Localize("$VERSION"), hash);
+			if (lines.Size() > 1)
+			{
+				tag = String.Format("\c[Gold]%s", lines[1]);
+				tag.Replace("-", " ");
+				
+				gamestring.AppendFormat(" %s", tag);
+				if (tag.IndexOf("beta") > -1) { gamestring.AppendFormat(" \c[Yellow]%s", lines[0].Left(7)); }
+			}
+		}
 
 		console.printf("\c[Gold]" .. gamestring);
 	}
