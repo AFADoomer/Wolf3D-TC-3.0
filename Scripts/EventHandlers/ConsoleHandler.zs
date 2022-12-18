@@ -29,15 +29,18 @@ class ConsoleHandler : StaticEventHandler
 		String hash = "";
 
 		// Show the last commit's hash if this is a beta release
-		if (StringTable.Localize("$VERSION").IndexOf("beta") > -1)
+		if (
+			StringTable.Localize("$VERSION").IndexOf("beta") > -1 ||
+			StringTable.Localize("$VERSION").IndexOf("pre-release") > -1
+		)
 		{
 			hash = ReadFrom("Data/GitHash.txt");
-			hash = " \c[Dark Gray]" .. hash.Left(7);
+			hash = String.Format("\c[Yellow]%s", hash.Left(7));
 		}
 
-		gamestring = String.Format("\c[True White]%s %s", StringTable.Localize("$VERSION"), hash);
+		gamestring = String.Format("%s %s", StringTable.Localize("$VERSION"), hash);
 
-		console.printf(gamestring);
+		console.printf("\c[Gold]" .. gamestring);
 	}
 
 	ui void UpdateCanvas()
