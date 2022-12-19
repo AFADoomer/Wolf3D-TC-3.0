@@ -39,6 +39,7 @@ class ClassicBase : Actor
 	FlagDef NerfWhenReplaced:baseflags, 1;
 	FlagDef Active:baseflags, 2;
 	FlagDef Run:baseflags, 3;
+	FlagDef OptionalRotations:baseflags, 4;
 
 	Default
 	{
@@ -163,6 +164,19 @@ class ClassicBase : Actor
 		}
 
 		Super.Tick();
+
+		if (
+			!multiplayer && 
+			(bOptionalRotations || InStateSequence(CurState, MissileState) || InStateSequence(CurState, ResolveState("Pain"))) &&
+			!g_userotations
+		)
+		{
+			spriterotation = deltaangle(angle, AngleTo(players[consoleplayer].mo));
+		}
+		else
+		{
+			spriterotation = 0;
+		}
 	}
 
 	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int chance = 0)
@@ -744,6 +758,7 @@ class ClassicBoss : ClassicBase
 		+AMBUSH
 		+LOOKALLAROUND
 		+ClassicBase.NerfWhenReplaced
+		+ClassicBase.OptionalRotations
 
 		MaxTargetRange 256;
 		Painchance 0;
@@ -1042,7 +1057,7 @@ class Mutant : ClassicNazi
 		Attack:
 			"####" H 10 Bright A_NaziShoot();
 			"####" I 5 A_FaceTarget;
-			"####" J 10 Bright A_NaziShoot();
+			"####" P 10 Bright A_NaziShoot();
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
 	}
@@ -1294,6 +1309,7 @@ class HitlerGhost : ClassicNazi
 		+AMBUSH
 		+LOOKALLAROUND
 		+ClassicBase.NerfWhenReplaced
+		+ClassicBase.OptionalRotations
 
 		Speed 4;
 		Painchance 0;

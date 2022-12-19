@@ -11,6 +11,7 @@ server int g_replacenativeactors = 1; // 0 = Off, 1 = All, 2 = Items only
 server int g_placeholders = 1;
 server int g_dynamiclights = 0;
 server int g_showhashes = 0;
+server int g_userotations = 0;
 
 user int g_borderstyle = 0;
 user int g_hudratio = 0;

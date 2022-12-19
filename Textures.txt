@@ -740,15 +740,15 @@ Sprite WBRND5, 64, 64 { Offset 32, 64 Patch WSPR0086, 0, 0 }
 Sprite WBRND6, 64, 64 { Offset 32, 64 Patch WSPR0087, 0, 0 }
 Sprite WBRND7, 64, 64 { Offset 32, 64 Patch WSPR0088, 0, 0 }
 Sprite WBRND8, 64, 64 { Offset 32, 64 Patch WSPR0089, 0, 0 }
-Sprite WBRNJ0, 64, 64 { Offset 32, 64 Patch WSPR0090, 0, 0 }
+Sprite WBRNJ1, 64, 64 { Offset 32, 64 Patch WSPR0090, 0, 0 }
 Sprite WBRNK0, 64, 64 { Offset 32, 64 Patch WSPR0091, 0, 0 }
 Sprite WBRNL0, 64, 64 { Offset 32, 64 Patch WSPR0092, 0, 0 }
 Sprite WBRNM0, 64, 64 { Offset 32, 64 Patch WSPR0093, 0, 0 }
-Sprite WBRNF0, 64, 64 { Offset 32, 64 Patch WSPR0094, 0, 0 }
+Sprite WBRNF1, 64, 64 { Offset 32, 64 Patch WSPR0094, 0, 0 }
 Sprite WBRNN0, 64, 64 { Offset 32, 64 Patch WSPR0095, 0, 0 }
-Sprite WBRNG0, 64, 64 { Offset 32, 64 Patch WSPR0096, 0, 0 }
-Sprite WBRNH0, 64, 64 { Offset 32, 64 Patch WSPR0097, 0, 0 }
-Sprite WBRNI0, 64, 64 { Offset 32, 64 Patch WSPR0098, 0, 0 }
+Sprite WBRNG1, 64, 64 { Offset 32, 64 Patch WSPR0096, 0, 0 }
+Sprite WBRNH1, 64, 64 { Offset 32, 64 Patch WSPR0097, 0, 0 }
+Sprite WBRNI1, 64, 64 { Offset 32, 64 Patch WSPR0098, 0, 0 }
 
 // Dog
 Sprite WDOGA1, 64, 64 { Offset 32, 64 Patch WSPR0099, 0, 0 }
@@ -787,9 +787,9 @@ Sprite WDOGH0, 64, 64 { Offset 32, 64 Patch WSPR0131, 0, 0 }
 Sprite WDOGI0, 64, 64 { Offset 32, 64 Patch WSPR0132, 0, 0 }
 Sprite WDOGJ0, 64, 64 { Offset 32, 64 Patch WSPR0133, 0, 0 }
 Sprite WDOGK0, 64, 64 { Offset 32, 64 Patch WSPR0134, 0, 0 }
-Sprite WDOGE0, 64, 64 { Offset 32, 64 Patch WSPR0135, 0, 0 }
-Sprite WDOGF0, 64, 64 { Offset 32, 64 Patch WSPR0136, 0, 0 }
-Sprite WDOGG0, 64, 64 { Offset 32, 64 Patch WSPR0137, 0, 0 }
+Sprite WDOGE1, 64, 64 { Offset 32, 64 Patch WSPR0135, 0, 0 }
+Sprite WDOGF1, 64, 64 { Offset 32, 64 Patch WSPR0136, 0, 0 }
+Sprite WDOGG1, 64, 64 { Offset 32, 64 Patch WSPR0137, 0, 0 }
 
 // SS
 Sprite WBLUE1, 64, 64 { Offset 32, 64 Patch WSPR0138, 0, 0 }
@@ -832,15 +832,15 @@ Sprite WBLUD5, 64, 64 { Offset 32, 64 Patch WSPR0174, 0, 0 }
 Sprite WBLUD6, 64, 64 { Offset 32, 64 Patch WSPR0175, 0, 0 }
 Sprite WBLUD7, 64, 64 { Offset 32, 64 Patch WSPR0176, 0, 0 }
 Sprite WBLUD8, 64, 64 { Offset 32, 64 Patch WSPR0177, 0, 0 }
-Sprite WBLUJ0, 64, 64 { Offset 32, 64 Patch WSPR0178, 0, 0 }
+Sprite WBLUJ1, 64, 64 { Offset 32, 64 Patch WSPR0178, 0, 0 }
 Sprite WBLUK0, 64, 64 { Offset 32, 64 Patch WSPR0179, 0, 0 }
 Sprite WBLUL0, 64, 64 { Offset 32, 64 Patch WSPR0180, 0, 0 }
 Sprite WBLUM0, 64, 64 { Offset 32, 64 Patch WSPR0181, 0, 0 }
-Sprite WBLUF0, 64, 64 { Offset 32, 64 Patch WSPR0182, 0, 0 }
+Sprite WBLUF1, 64, 64 { Offset 32, 64 Patch WSPR0182, 0, 0 }
 Sprite WBLUN0, 64, 64 { Offset 32, 64 Patch WSPR0183, 0, 0 }
-Sprite WBLUG0, 64, 64 { Offset 32, 64 Patch WSPR0184, 0, 0 }
-Sprite WBLUH0, 64, 64 { Offset 32, 64 Patch WSPR0185, 0, 0 }
-Sprite WBLUI0, 64, 64 { Offset 32, 64 Patch WSPR0186, 0, 0 }
+Sprite WBLUG1, 64, 64 { Offset 32, 64 Patch WSPR0184, 0, 0 }
+Sprite WBLUH1, 64, 64 { Offset 32, 64 Patch WSPR0185, 0, 0 }
+Sprite WBLUI1, 64, 64 { Offset 32, 64 Patch WSPR0186, 0, 0 }
 
 // Mutant
 Sprite WMUTE1, 64, 64 { Offset 32, 64 Patch WSPR0187, 0, 0 }
@@ -883,17 +883,17 @@ Sprite WMUTD5, 64, 64 { Offset 32, 64 Patch WSPR0223, 0, 0 }
 Sprite WMUTD6, 64, 64 { Offset 32, 64 Patch WSPR0224, 0, 0 }
 Sprite WMUTD7, 64, 64 { Offset 32, 64 Patch WSPR0225, 0, 0 }
 Sprite WMUTD8, 64, 64 { Offset 32, 64 Patch WSPR0226, 0, 0 }
-Sprite WMUTJ0, 64, 64 { Offset 32, 64 Patch WSPR0227, 0, 0 }
+Sprite WMUTJ1, 64, 64 { Offset 32, 64 Patch WSPR0227, 0, 0 }
 Sprite WMUTK0, 64, 64 { Offset 32, 64 Patch WSPR0228, 0, 0 }
 Sprite WMUTL0, 64, 64 { Offset 32, 64 Patch WSPR0229, 0, 0 }
 Sprite WMUTM0, 64, 64 { Offset 32, 64 Patch WSPR0230, 0, 0 }
-Sprite WMUTF0, 64, 64 { Offset 32, 64 Patch WSPR0231, 0, 0 }
+Sprite WMUTF1, 64, 64 { Offset 32, 64 Patch WSPR0231, 0, 0 }
 Sprite WMUTN0, 64, 64 { Offset 32, 64 Patch WSPR0232, 0, 0 }
 Sprite WMUTO0, 64, 64 { Offset 32, 64 Patch WSPR0233, 0, 0 }
-Sprite WMUTG0, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
-Sprite WMUTH0, 64, 64 { Offset 32, 64 Patch WSPR0235, 0, 0 }
-Sprite WMUTI0, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
-Sprite WMUTJ0, 64, 64 { Offset 32, 64 Patch WSPR0237, 0, 0 }
+Sprite WMUTG1, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
+Sprite WMUTH1, 64, 64 { Offset 32, 64 Patch WSPR0235, 0, 0 }
+Sprite WMUTI1, 64, 64 { Offset 32, 64 Patch WSPR0234, 0, 0 }
+Sprite WMUTP1, 64, 64 { Offset 32, 64 Patch WSPR0237, 0, 0 }
 
 // Officer
 Sprite WWHTE1, 64, 64 { Offset 32, 64 Patch WSPR0238, 0, 0 }
@@ -936,48 +936,48 @@ Sprite WWHTD5, 64, 64 { Offset 32, 64 Patch WSPR0274, 0, 0 }
 Sprite WWHTD6, 64, 64 { Offset 32, 64 Patch WSPR0275, 0, 0 }
 Sprite WWHTD7, 64, 64 { Offset 32, 64 Patch WSPR0276, 0, 0 }
 Sprite WWHTD8, 64, 64 { Offset 32, 64 Patch WSPR0277, 0, 0 }
-Sprite WWHTJ0, 64, 64 { Offset 32, 64 Patch WSPR0278, 0, 0 }
+Sprite WWHTJ1, 64, 64 { Offset 32, 64 Patch WSPR0278, 0, 0 }
 Sprite WWHTK0, 64, 64 { Offset 32, 64 Patch WSPR0279, 0, 0 }
 Sprite WWHTL0, 64, 64 { Offset 32, 64 Patch WSPR0280, 0, 0 }
 Sprite WWHTM0, 64, 64 { Offset 32, 64 Patch WSPR0281, 0, 0 }
-Sprite WWHTF0, 64, 64 { Offset 32, 64 Patch WSPR0282, 0, 0 }
+Sprite WWHTF1, 64, 64 { Offset 32, 64 Patch WSPR0282, 0, 0 }
 Sprite WWHTN0, 64, 64 { Offset 32, 64 Patch WSPR0283, 0, 0 }
 Sprite WWHTO0, 64, 64 { Offset 32, 64 Patch WSPR0284, 0, 0 }
-Sprite WWHTG0, 64, 64 { Offset 32, 64 Patch WSPR0285, 0, 0 }
-Sprite WWHTH0, 64, 64 { Offset 32, 64 Patch WSPR0286, 0, 0 }
-Sprite WWHTI0, 64, 64 { Offset 32, 64 Patch WSPR0287, 0, 0 }
+Sprite WWHTG1, 64, 64 { Offset 32, 64 Patch WSPR0285, 0, 0 }
+Sprite WWHTH1, 64, 64 { Offset 32, 64 Patch WSPR0286, 0, 0 }
+Sprite WWHTI1, 64, 64 { Offset 32, 64 Patch WSPR0287, 0, 0 }
 
 // Hans Grosse
-Sprite WBOSA0, 64, 64 { Offset 32, 64 Patch WSPR0296, 0, 0 }
-Sprite WBOSB0, 64, 64 { Offset 32, 64 Patch WSPR0297, 0, 0 }
-Sprite WBOSC0, 64, 64 { Offset 32, 64 Patch WSPR0298, 0, 0 }
-Sprite WBOSD0, 64, 64 { Offset 32, 64 Patch WSPR0299, 0, 0 }
-Sprite WBOSE0, 64, 64 { Offset 32, 64 Patch WSPR0300, 0, 0 }
-Sprite WBOSF0, 64, 64 { Offset 32, 64 Patch WSPR0301, 0, 0 }
-Sprite WBOSG0, 64, 64 { Offset 32, 64 Patch WSPR0302, 0, 0 }
+Sprite WBOSA1, 64, 64 { Offset 32, 64 Patch WSPR0296, 0, 0 }
+Sprite WBOSB1, 64, 64 { Offset 32, 64 Patch WSPR0297, 0, 0 }
+Sprite WBOSC1, 64, 64 { Offset 32, 64 Patch WSPR0298, 0, 0 }
+Sprite WBOSD1, 64, 64 { Offset 32, 64 Patch WSPR0299, 0, 0 }
+Sprite WBOSE1, 64, 64 { Offset 32, 64 Patch WSPR0300, 0, 0 }
+Sprite WBOSF1, 64, 64 { Offset 32, 64 Patch WSPR0301, 0, 0 }
+Sprite WBOSG1, 64, 64 { Offset 32, 64 Patch WSPR0302, 0, 0 }
 Sprite WBOSK0, 64, 64 { Offset 32, 64 Patch WSPR0303, 0, 0 }
 Sprite WBOSH0, 64, 64 { Offset 32, 64 Patch WSPR0304, 0, 0 }
 Sprite WBOSI0, 64, 64 { Offset 32, 64 Patch WSPR0305, 0, 0 }
 Sprite WBOSJ0, 64, 64 { Offset 32, 64 Patch WSPR0306, 0, 0 }
 
 // Dr. Schabbs
-Sprite WBO3A0, 64, 64 { Offset 32, 64 Patch WSPR0307, 0, 0 }
-Sprite WBO3B0, 64, 64 { Offset 32, 64 Patch WSPR0308, 0, 0 }
-Sprite WBO3C0, 64, 64 { Offset 32, 64 Patch WSPR0309, 0, 0 }
-Sprite WBO3D0, 64, 64 { Offset 32, 64 Patch WSPR0310, 0, 0 }
-Sprite WBO3E0, 64, 64 { Offset 32, 64 Patch WSPR0311, 0, 0 }
-Sprite WBO3F0, 64, 64 { Offset 32, 64 Patch WSPR0312, 0, 0 }
+Sprite WBO3A1, 64, 64 { Offset 32, 64 Patch WSPR0307, 0, 0 }
+Sprite WBO3B1, 64, 64 { Offset 32, 64 Patch WSPR0308, 0, 0 }
+Sprite WBO3C1, 64, 64 { Offset 32, 64 Patch WSPR0309, 0, 0 }
+Sprite WBO3D1, 64, 64 { Offset 32, 64 Patch WSPR0310, 0, 0 }
+Sprite WBO3E1, 64, 64 { Offset 32, 64 Patch WSPR0311, 0, 0 }
+Sprite WBO3F1, 64, 64 { Offset 32, 64 Patch WSPR0312, 0, 0 }
 Sprite WBO3H0, 64, 64 { Offset 32, 64 Patch WSPR0313, 0, 0 }
 Sprite WBO3I0, 64, 64 { Offset 32, 64 Patch WSPR0314, 0, 0 }
 Sprite WBO3J0, 64, 64 { Offset 32, 64 Patch WSPR0315, 0, 0 }
 Sprite WBO3K0, 64, 64 { Offset 32, 64 Patch WSPR0316, 0, 0 }
 
 // Hitler Ghost
-Sprite WHGTA0, 64, 64 { Offset 32, 64 Patch WSPR0321, 0, 0 }
-Sprite WHGTB0, 64, 64 { Offset 32, 64 Patch WSPR0322, 0, 0 }
-Sprite WHGTC0, 64, 64 { Offset 32, 64 Patch WSPR0323, 0, 0 }
-Sprite WHGTD0, 64, 64 { Offset 32, 64 Patch WSPR0324, 0, 0 }
-Sprite WHGTE0, 64, 64 { Offset 32, 64 Patch WSPR0325, 0, 0 }
+Sprite WHGTA1, 64, 64 { Offset 32, 64 Patch WSPR0321, 0, 0 }
+Sprite WHGTB1, 64, 64 { Offset 32, 64 Patch WSPR0322, 0, 0 }
+Sprite WHGTC1, 64, 64 { Offset 32, 64 Patch WSPR0323, 0, 0 }
+Sprite WHGTD1, 64, 64 { Offset 32, 64 Patch WSPR0324, 0, 0 }
+Sprite WHGTE1, 64, 64 { Offset 32, 64 Patch WSPR0325, 0, 0 }
 Sprite WHGTF0, 64, 64 { Offset 32, 64 Patch WSPR0328, 0, 0 }
 Sprite WHGTG0, 64, 64 { Offset 32, 64 Patch WSPR0329, 0, 0 }
 Sprite WHGTH0, 64, 64 { Offset 32, 64 Patch WSPR0330, 0, 0 }
@@ -986,12 +986,12 @@ Sprite WHGTJ0, 64, 64 { Offset 32, 64 Patch WSPR0332, 0, 0 }
 Sprite WHGTK0, 64, 64 { Offset 32, 64 Patch WSPR0333, 0, 0 }
 
 // Hitler Mech Suit
-Sprite WHR1A0, 64, 64 { Offset 32, 64 Patch WSPR0334, 0, 0 }
-Sprite WHR1B0, 64, 64 { Offset 32, 64 Patch WSPR0335, 0, 0 }
-Sprite WHR1C0, 64, 64 { Offset 32, 64 Patch WSPR0336, 0, 0 }
-Sprite WHR1D0, 64, 64 { Offset 32, 64 Patch WSPR0337, 0, 0 }
-Sprite WHR1E0, 64, 64 { Offset 32, 64 Patch WSPR0338, 0, 0 }
-Sprite WHR1F0, 64, 64 { Offset 32, 64 Patch WSPR0339, 0, 0 }
+Sprite WHR1A1, 64, 64 { Offset 32, 64 Patch WSPR0334, 0, 0 }
+Sprite WHR1B1, 64, 64 { Offset 32, 64 Patch WSPR0335, 0, 0 }
+Sprite WHR1C1, 64, 64 { Offset 32, 64 Patch WSPR0336, 0, 0 }
+Sprite WHR1D1, 64, 64 { Offset 32, 64 Patch WSPR0337, 0, 0 }
+Sprite WHR1E1, 64, 64 { Offset 32, 64 Patch WSPR0338, 0, 0 }
+Sprite WHR1F1, 64, 64 { Offset 32, 64 Patch WSPR0339, 0, 0 }
 Sprite WHR1G0, 64, 64 { Offset 32, 64 Patch WSPR0340, 0, 0 }
 Sprite WHR1K0, 64, 64 { Offset 32, 64 Patch WSPR0341, 0, 0 }
 Sprite WHR1H0, 64, 64 { Offset 32, 64 Patch WSPR0342, 0, 0 }
@@ -999,13 +999,13 @@ Sprite WHR1I0, 64, 64 { Offset 32, 64 Patch WSPR0343, 0, 0 }
 Sprite WHR1J0, 64, 64 { Offset 32, 64 Patch WSPR0344, 0, 0 }
 
 // Hitler
-Sprite WHR2A0, 64, 64 { Offset 32, 64 Patch WSPR0345, 0, 0 }
-Sprite WHR2B0, 64, 64 { Offset 32, 64 Patch WSPR0346, 0, 0 }
-Sprite WHR2C0, 64, 64 { Offset 32, 64 Patch WSPR0347, 0, 0 }
-Sprite WHR2D0, 64, 64 { Offset 32, 64 Patch WSPR0348, 0, 0 }
-Sprite WHR2G0, 64, 64 { Offset 32, 64 Patch WSPR0349, 0, 0 }
-Sprite WHR2H0, 64, 64 { Offset 32, 64 Patch WSPR0350, 0, 0 }
-Sprite WHR2I0, 64, 64 { Offset 32, 64 Patch WSPR0351, 0, 0 }
+Sprite WHR2A1, 64, 64 { Offset 32, 64 Patch WSPR0345, 0, 0 }
+Sprite WHR2B1, 64, 64 { Offset 32, 64 Patch WSPR0346, 0, 0 }
+Sprite WHR2C1, 64, 64 { Offset 32, 64 Patch WSPR0347, 0, 0 }
+Sprite WHR2D1, 64, 64 { Offset 32, 64 Patch WSPR0348, 0, 0 }
+Sprite WHR2G1, 64, 64 { Offset 32, 64 Patch WSPR0349, 0, 0 }
+Sprite WHR2H1, 64, 64 { Offset 32, 64 Patch WSPR0350, 0, 0 }
+Sprite WHR2I1, 64, 64 { Offset 32, 64 Patch WSPR0351, 0, 0 }
 Sprite WHR2Q0, 64, 64 { Offset 32, 64 Patch WSPR0352, 0, 0 }
 Sprite WHR2J0, 64, 64 { Offset 32, 64 Patch WSPR0353, 0, 0 }
 Sprite WHR2K0, 64, 64 { Offset 32, 64 Patch WSPR0354, 0, 0 }
@@ -1016,39 +1016,39 @@ Sprite WHR2O0, 64, 64 { Offset 32, 64 Patch WSPR0358, 0, 0 }
 Sprite WHR2P0, 64, 64 { Offset 32, 64 Patch WSPR0359, 0, 0 }
 
 // GiftMacher
-Sprite WBO8A0, 64, 64 { Offset 32, 64 Patch WSPR0360, 0, 0 }
-Sprite WBO8B0, 64, 64 { Offset 32, 64 Patch WSPR0361, 0, 0 }
-Sprite WBO8C0, 64, 64 { Offset 32, 64 Patch WSPR0362, 0, 0 }
-Sprite WBO8D0, 64, 64 { Offset 32, 64 Patch WSPR0363, 0, 0 }
-Sprite WBO8E0, 64, 64 { Offset 32, 64 Patch WSPR0364, 0, 0 }
-Sprite WBO8F0, 64, 64 { Offset 32, 64 Patch WSPR0365, 0, 0 }
+Sprite WBO8A1, 64, 64 { Offset 32, 64 Patch WSPR0360, 0, 0 }
+Sprite WBO8B1, 64, 64 { Offset 32, 64 Patch WSPR0361, 0, 0 }
+Sprite WBO8C1, 64, 64 { Offset 32, 64 Patch WSPR0362, 0, 0 }
+Sprite WBO8D1, 64, 64 { Offset 32, 64 Patch WSPR0363, 0, 0 }
+Sprite WBO8E1, 64, 64 { Offset 32, 64 Patch WSPR0364, 0, 0 }
+Sprite WBO8F1, 64, 64 { Offset 32, 64 Patch WSPR0365, 0, 0 }
 Sprite WBO8G0, 64, 64 { Offset 32, 64 Patch WSPR0366, 0, 0 }
 Sprite WBO8H0, 64, 64 { Offset 32, 64 Patch WSPR0367, 0, 0 }
 Sprite WBO8I0, 64, 64 { Offset 32, 64 Patch WSPR0368, 0, 0 }
 Sprite WBO8J0, 64, 64 { Offset 32, 64 Patch WSPR0369, 0, 0 }
 
 // Gretel Grosse
-Sprite WBO4A0, 64, 64 { Offset 32, 64 Patch WSPR0385, 0, 0 }
-Sprite WBO4B0, 64, 64 { Offset 32, 64 Patch WSPR0386, 0, 0 }
-Sprite WBO4C0, 64, 64 { Offset 32, 64 Patch WSPR0387, 0, 0 }
-Sprite WBO4D0, 64, 64 { Offset 32, 64 Patch WSPR0388, 0, 0 }
-Sprite WBO4E0, 64, 64 { Offset 32, 64 Patch WSPR0389, 0, 0 }
-Sprite WBO4F0, 64, 64 { Offset 32, 64 Patch WSPR0390, 0, 0 }
-Sprite WBO4G0, 64, 64 { Offset 32, 64 Patch WSPR0391, 0, 0 }
+Sprite WBO4A1, 64, 64 { Offset 32, 64 Patch WSPR0385, 0, 0 }
+Sprite WBO4B1, 64, 64 { Offset 32, 64 Patch WSPR0386, 0, 0 }
+Sprite WBO4C1, 64, 64 { Offset 32, 64 Patch WSPR0387, 0, 0 }
+Sprite WBO4D1, 64, 64 { Offset 32, 64 Patch WSPR0388, 0, 0 }
+Sprite WBO4E1, 64, 64 { Offset 32, 64 Patch WSPR0389, 0, 0 }
+Sprite WBO4F1, 64, 64 { Offset 32, 64 Patch WSPR0390, 0, 0 }
+Sprite WBO4G1, 64, 64 { Offset 32, 64 Patch WSPR0391, 0, 0 }
 Sprite WBO4K0, 64, 64 { Offset 32, 64 Patch WSPR0392, 0, 0 }
 Sprite WBO4H0, 64, 64 { Offset 32, 64 Patch WSPR0393, 0, 0 }
 Sprite WBO4I0, 64, 64 { Offset 32, 64 Patch WSPR0394, 0, 0 }
 Sprite WBO4J0, 64, 64 { Offset 32, 64 Patch WSPR0395, 0, 0 }
 
 // Fettgesicht
-Sprite WBO5A0, 64, 64 { Offset 32, 64 Patch WSPR0396, 0, 0 }
-Sprite WBO5B0, 64, 64 { Offset 32, 64 Patch WSPR0397, 0, 0 }
-Sprite WBO5C0, 64, 64 { Offset 32, 64 Patch WSPR0398, 0, 0 }
-Sprite WBO5D0, 64, 64 { Offset 32, 64 Patch WSPR0399, 0, 0 }
-Sprite WBO5E0, 64, 64 { Offset 32, 64 Patch WSPR0400, 0, 0 }
-Sprite WBO5F0, 64, 64 { Offset 32, 64 Patch WSPR0401, 0, 0 }
-Sprite WBO5G0, 64, 64 { Offset 32, 64 Patch WSPR0402, 0, 0 }
-Sprite WBO5H0, 64, 64 { Offset 32, 64 Patch WSPR0403, 0, 0 }
+Sprite WBO5A1, 64, 64 { Offset 32, 64 Patch WSPR0396, 0, 0 }
+Sprite WBO5B1, 64, 64 { Offset 32, 64 Patch WSPR0397, 0, 0 }
+Sprite WBO5C1, 64, 64 { Offset 32, 64 Patch WSPR0398, 0, 0 }
+Sprite WBO5D1, 64, 64 { Offset 32, 64 Patch WSPR0399, 0, 0 }
+Sprite WBO5E1, 64, 64 { Offset 32, 64 Patch WSPR0400, 0, 0 }
+Sprite WBO5F1, 64, 64 { Offset 32, 64 Patch WSPR0401, 0, 0 }
+Sprite WBO5G1, 64, 64 { Offset 32, 64 Patch WSPR0402, 0, 0 }
+Sprite WBO5H1, 64, 64 { Offset 32, 64 Patch WSPR0403, 0, 0 }
 Sprite WBO5J0, 64, 64 { Offset 32, 64 Patch WSPR0404, 0, 0 }
 Sprite WBO5K0, 64, 64 { Offset 32, 64 Patch WSPR0405, 0, 0 }
 Sprite WBO5L0, 64, 64 { Offset 32, 64 Patch WSPR0406, 0, 0 }
@@ -1579,7 +1579,7 @@ Sprite WBATO0, 64, 64 { Offset 32, 64 Patch WSPR2237, 0, 0 }
 Sprite WBATG0, 64, 64 { Offset 32, 64 Patch WSPR2238, 0, 0 }
 Sprite WBATH0, 64, 64 { Offset 32, 64 Patch WSPR2239, 0, 0 }
 Sprite WBATI0, 64, 64 { Offset 32, 64 Patch WSPR2240, 0, 0 }
-Sprite WBATJ0, 64, 64 { Offset 32, 64 Patch WSPR2241, 0, 0 }
+Sprite WBATP0, 64, 64 { Offset 32, 64 Patch WSPR2241, 0, 0 }
 
 // Alternate Officer
 Sprite WWH2E1, 64, 64 { Offset 32, 64 Patch WSPR2242, 0, 0 }
@@ -1635,27 +1635,27 @@ Sprite WWH2I0, 64, 64 { Offset 32, 64 Patch WSPR2291, 0, 0 }
 
 // SoD Bosses
 // Trans Grosse
-Sprite WBO2A0, 64, 64 { Offset 32, 64 Patch WSPR1326, 0, 0 }
-Sprite WBO2B0, 64, 64 { Offset 32, 64 Patch WSPR1327, 0, 0 }
-Sprite WBO2C0, 64, 64 { Offset 32, 64 Patch WSPR1328, 0, 0 }
-Sprite WBO2D0, 64, 64 { Offset 32, 64 Patch WSPR1329, 0, 0 }
-Sprite WBO2E0, 64, 64 { Offset 32, 64 Patch WSPR1330, 0, 0 }
-Sprite WBO2F0, 64, 64 { Offset 32, 64 Patch WSPR1331, 0, 0 }
-Sprite WBO2G0, 64, 64 { Offset 32, 64 Patch WSPR1332, 0, 0 }
+Sprite WBO2A1, 64, 64 { Offset 32, 64 Patch WSPR1326, 0, 0 }
+Sprite WBO2B1, 64, 64 { Offset 32, 64 Patch WSPR1327, 0, 0 }
+Sprite WBO2C1, 64, 64 { Offset 32, 64 Patch WSPR1328, 0, 0 }
+Sprite WBO2D1, 64, 64 { Offset 32, 64 Patch WSPR1329, 0, 0 }
+Sprite WBO2E1, 64, 64 { Offset 32, 64 Patch WSPR1330, 0, 0 }
+Sprite WBO2F1, 64, 64 { Offset 32, 64 Patch WSPR1331, 0, 0 }
+Sprite WBO2G1, 64, 64 { Offset 32, 64 Patch WSPR1332, 0, 0 }
 Sprite WBO2K0, 64, 64 { Offset 32, 64 Patch WSPR1333, 0, 0 }
 Sprite WBO2H0, 64, 64 { Offset 32, 64 Patch WSPR1334, 0, 0 }
 Sprite WBO2I0, 64, 64 { Offset 32, 64 Patch WSPR1335, 0, 0 }
 Sprite WBO2J0, 64, 64 { Offset 32, 64 Patch WSPR1336, 0, 0 }
 
 // Barnacle Wilhelm
-Sprite WBO9A0, 64, 64 { Offset 32, 64 Patch WSPR1337, 0, 0 }
-Sprite WBO9B0, 64, 64 { Offset 32, 64 Patch WSPR1338, 0, 0 }
-Sprite WBO9C0, 64, 64 { Offset 32, 64 Patch WSPR1339, 0, 0 }
-Sprite WBO9D0, 64, 64 { Offset 32, 64 Patch WSPR1340, 0, 0 }
-Sprite WBO9E0, 64, 64 { Offset 32, 64 Patch WSPR1341, 0, 0 }
-Sprite WBO9F0, 64, 64 { Offset 32, 64 Patch WSPR1342, 0, 0 }
-Sprite WBO9G0, 64, 64 { Offset 32, 64 Patch WSPR1343, 0, 0 }
-Sprite WBO9H0, 64, 64 { Offset 32, 64 Patch WSPR1344, 0, 0 }
+Sprite WBO9A1, 64, 64 { Offset 32, 64 Patch WSPR1337, 0, 0 }
+Sprite WBO9B1, 64, 64 { Offset 32, 64 Patch WSPR1338, 0, 0 }
+Sprite WBO9C1, 64, 64 { Offset 32, 64 Patch WSPR1339, 0, 0 }
+Sprite WBO9D1, 64, 64 { Offset 32, 64 Patch WSPR1340, 0, 0 }
+Sprite WBO9E1, 64, 64 { Offset 32, 64 Patch WSPR1341, 0, 0 }
+Sprite WBO9F1, 64, 64 { Offset 32, 64 Patch WSPR1342, 0, 0 }
+Sprite WBO9G1, 64, 64 { Offset 32, 64 Patch WSPR1343, 0, 0 }
+Sprite WBO9H1, 64, 64 { Offset 32, 64 Patch WSPR1344, 0, 0 }
 Sprite WBO9J0, 64, 64 { Offset 32, 64 Patch WSPR1345, 0, 0 }
 Sprite WBO9K0, 64, 64 { Offset 32, 64 Patch WSPR1346, 0, 0 }
 Sprite WBO9L0, 64, 64 { Offset 32, 64 Patch WSPR1347, 0, 0 }
