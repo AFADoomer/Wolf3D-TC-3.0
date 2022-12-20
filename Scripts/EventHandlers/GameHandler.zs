@@ -73,8 +73,9 @@ class GameHandler : StaticEventHandler
 				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
 			}
 			else if (
-				hash == "a4e73706e100dc0cadfb02d23de46481" || // v1.4 / GoG / Steam
-				hash == "a15b04941937b7e136419a1e74e57e2f" // v1.1
+				hash == "05ee51e9bc7d60f01a05334b1cfab1a5" || // v1.1
+				hash == "a15b04941937b7e136419a1e74e57e2f" || // v1.2
+				hash == "a4e73706e100dc0cadfb02d23de46481" // v1.4 / GoG / Steam
 			)
 			{
 				gamefiles.Push("WL6");

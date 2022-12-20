@@ -183,6 +183,14 @@ class ClassicBase : Actor
 	{
 		if (bDormant || !target) { return; }
 
+		if (target.health <= 0)
+		{
+			target = null;
+			SetStateLabel("Spawn.Stand");
+			
+			return;
+		}
+
 		bool dodge = false;
 		State curmelee, curmissile;
 
