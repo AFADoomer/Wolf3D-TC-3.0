@@ -1,18 +1,18 @@
 CORNER,08 - Enemy Around the Corner
 DUNGEON,13 - Into the Dungeons
 ENDLEVEL,21 - End of Level
-FUNKYOU,20 - Funk You!
+FUNKYOU,20 - Funk You
 GETTHEM,03 - Get Them Before They Get You
 GOINGAFT,11 - Going After Hitler
 HEADACHE,12 - Pounding Headache
 HITLWLTZ,24 - Hitler Waltz
-INTROCW3,14 - Kill the S.O.B.
+INTROCW3,14 - Kill the SOB
 NAZI_NOR,01 - Horst Wessel Lied
 NAZI_OMI,09 - Nazi Anthem
 NAZI_RAP,15 - The Nazi Rap
 PACMAN,19 - Wolf Pac
-POW,05 - P.O.W.
-PREGNANT,10 - Lurking...
+POW,05 - POW
+PREGNANT,10 - Lurking
 ROSTER,23 - Roster
 SALUTE,25 - Salute
 SEARCHN,04 - Searching For the Enemy
@@ -25,7 +25,7 @@ VICTORS,26 - Victors
 WARMARCH,07 - The March to War
 WONDERIN,02 - Wondering About My Loved Ones
 XAWARD,37 - Award Ceremony
-XDEATH ,31 - Death to the Nazis
+XDEATH,31 - Death to the Nazis
 XEVIL,34 - Evil Incarnate
 XFUNKIE,30 - Funkie Colonel Bill
 XGETYOU,32 - The SS Gonna Get You

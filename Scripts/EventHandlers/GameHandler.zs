@@ -234,7 +234,7 @@ class GameHandler : StaticEventHandler
 		Array<String> translations;
 
 		int lump = -1;
-		lump = Wads.CheckNumForFullName("Data/MIDIList.txt");
+		lump = Wads.CheckNumForFullName("Data/IMFtoMIDI.txt");
 
 		if (lump != -1)
 		{
