@@ -156,11 +156,11 @@ class GenericOptionMenu : OptionMenu
 		bottomclip = lastrow + (BigFont.GetHeight() + 1) * CleanYfac_1;
 
 		int indent = x + spacing;
-		
+
 		if (columnwidth > -1) { indent = columnwidth; }
 		else
 		{
-			for (int j = 0; j < mDesc.mItems.Size(); j++)
+			for (int j = 0; j < source.mDesc.mItems.Size(); j++)
 			{
 				indent = columnwidth = max(indent, OptionWidth(Stringtable.Localize(mDesc.mItems[j].mLabel), fnt));
 			}
@@ -246,6 +246,10 @@ class GenericOptionMenu : OptionMenu
 			else if (item is "OptionMenuItemCommand")
 			{
 				return DrawCommand(item, x, y, fnt, isSelected, columnwidth);
+			}
+			else if (item is "OptionMenuItemJoyConfigMenu")
+			{
+				return DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu(item), x, y, indent, fnt, isSelected, columnwidth);
 			}
 			else if (item is "OptionMenuItemSubmenu")
 			{
@@ -768,6 +772,37 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
+	virtual ItemInfo DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	{
+		ItemInfo info = MenuHandler.FindItem(item);
+		info.x = x;
+		info.y = y;
+
+		int height = 0;
+		String label = Stringtable.Localize(item.mLabel);
+		height = max(DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth), height);
+
+		info.width = OptionWidth(label, fnt);
+		info.valueleft = info.valueright = x + info.width;
+
+		if (!(item is "GenericOptionMenuItemJoyConfigMenu"))
+		{
+			let newitem = new("GenericOptionMenuItemJoyConfigMenu");
+
+			String menu = item.GetAction();
+			menu = menuprefix .. menu;
+
+			newitem.Init(item.mLabel, item.mJoy);
+
+			int i = mDesc.mItems.Find(OptionMenuItem(item));
+			mDesc.mItems[i] = newitem;
+		}
+
+		info.height = height;
+
+		return info;
+	}
+
 	virtual ItemInfo DrawSubmenu(OptionMenuItemSubmenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1)
 	{
 		ItemInfo info = MenuHandler.FindItem(item);
@@ -866,6 +901,8 @@ class GenericOptionMenu : OptionMenu
 }
 
 class GenericOptionMenuItemSubmenu : OptionMenuItemSubmenu {}
+
+class GenericOptionMenuItemJoyConfigMenu : OptionMenuItemJoyConfigMenu {}
 
 class GenericOptionMenuItemColorPicker : OptionMenuItemColorPicker
 {

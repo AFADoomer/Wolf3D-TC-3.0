@@ -258,17 +258,23 @@ class ExtendedOptionMenu : GenericOptionMenu
 						nodim = true;
 						return Super.MenuEvent(Menu.MKEY_Enter, false);
 					}
-					// No idea if this works...  I have no external controllers to test.
 					else if (mDesc.mItems[mDesc.mSelectedItem] is "OptionMenuItemJoyConfigMenu")
 					{
 						let item = OptionMenuItemJoyConfigMenu(mDesc.mItems[mDesc.mSelectedItem]);
+
 						let desc = OptionMenuDescriptor(MenuDescriptor.GetDescriptor('WolfJoystickConfigMenu'));
 						if (desc != NULL)
 						{
 							item.SetController(OptionMenuDescriptor(desc), item.mJoy);
 						}
-						let joymenu = JoystickConfigMenu(Menu.GetCurrentMenu());
-						if (joymenu != null) joymenu.mJoy = item.mJoy;
+
+						SetMenu("WolfJoystickConfigMenu");
+
+						fadecolor = 0x880000;
+						MenuSound("menu/select");
+						fadetarget = gametic + fadetime;
+
+						return true;
 					}
 
 					fadecolor = 0x880000;
