@@ -73,7 +73,7 @@ class GameHandler : StaticEventHandler
 		{
 			hash = MD5.hash(Wads.ReadLump(g));
 			if (
-				hash == "???" // I can't find the md5 of GAMEMAPS.WL3 anywhere, and don't own it, so...  unsupported.
+				hash == "cec494930f3ac0545563cbd23cd611d6" // v1.2
 			)
 			{
 				if (gamefiles.Find("WL3") == gamefiles.Size()) { gamefiles.Push("WL3"); }
