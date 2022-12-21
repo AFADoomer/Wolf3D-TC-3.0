@@ -80,7 +80,7 @@ class WolfPostProcessor : LevelPostProcessor
 				if (f == 106) { SetThingEdNum(i, 20000 + clamp(g_sod, 1, 3) * 1000 + f); }
 				else { SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 0) + f); }
 			}
-			else if (f >= 107 && f <= 161) // SoD Bosses
+			else if (f >= 107 && f <= 159) // SoD Bosses
 			{
 				SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 1000) + f);
 			}
