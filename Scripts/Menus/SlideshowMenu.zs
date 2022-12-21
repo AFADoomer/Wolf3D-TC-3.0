@@ -38,7 +38,7 @@ class HelpMenu : ReadThisMenu
 
 		sharewareremap = true;
 		allowexit = true;
-		ParseFile(GameHandler.GameFilePresent("WL3") ? "data/helpregistered.txt" : "data/help.txt");
+		ParseFile(GameHandler.GameFilePresent("WL3", true) ? "data/helpregistered.txt" : "data/help.txt");
 
 		if (gamestate != GS_FINALE)
 		{
@@ -618,10 +618,10 @@ class IntroSlideshow : WolfMenu
 	{
 		if (sodversion == Game.IsSoD()) { return; }
 
-		startup = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD", false) ? "SSTARTUP" : "SDSTARTU" : "STARTUP"), TexMan.Type_Any);
-		startup2 = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD", false) ? "SSTARTU2" : "SDSTART2" : "STARTUP2"), TexMan.Type_Any);
+		startup = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD") ? "SSTARTUP" : "SDSTARTU" : "STARTUP"), TexMan.Type_Any);
+		startup2 = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD") ? "SSTARTU2" : "SDSTART2" : "STARTUP2"), TexMan.Type_Any);
 		warning = TexMan.CheckForTexture("WARNING", TexMan.Type_Any);
-		title = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD", false) ? "STITLEPI" : "SDTITLEP" : "TITLEPIC"), TexMan.Type_Any);
+		title = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD") ? "STITLEPI" : "SDTITLEP" : "TITLEPIC"), TexMan.Type_Any);
 		credits = TexMan.CheckForTexture((Game.IsSoD() ? "SCREDIT" : "CREDIT"), TexMan.Type_Any);
 		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
 

@@ -34,7 +34,7 @@ class GameHandler : StaticEventHandler
 
 	static void CheckGameFiles(GameHandler this)
 	{
-		console.printf(StringTable.Localize("$TXT_CHECKFILE"));
+		Console.PrintF(StringTable.Localize("$TXT_CHECKFILE"));
 
 		if (this)
 		{
@@ -47,7 +47,7 @@ class GameHandler : StaticEventHandler
 		}
 	}
 
-	ui static bool GameFilePresent(String extension, bool allowdemos = true)
+	ui static bool GameFilePresent(String extension, bool allowdemos = false)
 	{
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)

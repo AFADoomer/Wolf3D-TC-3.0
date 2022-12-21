@@ -397,7 +397,7 @@ class ExtendedListMenu : ListMenu
 				// Fix the text string...
 				ListMenuItemTextItem(mDesc.mItems[i]).mText = temp;
 
-				if (GameHandler.GameFilePresent(filecheck)) { continue; }
+				if (GameHandler.GameFilePresent(filecheck, true)) { continue; }
 
 				// Otherwise, recolor it, and add it to the list of known placeholders
 				ListMenuItemTextItem(mDesc.mItems[i]).mColor = DisabledColor();
