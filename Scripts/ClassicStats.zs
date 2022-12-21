@@ -194,7 +194,7 @@ class ClassicStats : DoomStatusScreen
 		{
 			if (acceleratestage)
 			{
-				if (Game.IsSod() && level.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD", false))
+				if (Game.IsSod() && level.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD"))
 				{
 					PlaySound("pickups/life");
 					Menu.StartMessage(StringTable.Localize("$DEMOSTRING"), 1);

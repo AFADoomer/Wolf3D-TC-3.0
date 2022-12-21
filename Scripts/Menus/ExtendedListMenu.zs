@@ -679,8 +679,8 @@ class GameMenu : IconListMenu
 
 					if (filechecks[i] == "")
 					{
-						if (GameHandler.GameFilePresent("WL6", false)) { continue; }
-						if (GameHandler.GameFilePresent("WL3", false))
+						if (GameHandler.GameFilePresent("WL6")) { continue; }
+						if (GameHandler.GameFilePresent("WL3"))
 						{
 							overlay = registered;
 						}
@@ -689,7 +689,7 @@ class GameMenu : IconListMenu
 							overlay = shareware;
 						}
 					}
-					else if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD", false))
+					else if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD"))
 					{
 						overlay = demo;
 					}
