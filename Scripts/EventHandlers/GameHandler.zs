@@ -28,16 +28,23 @@ class GameHandler : StaticEventHandler
 
 	override void OnRegister()
 	{
+		CheckGameFiles(self);
+		ParseMusicMapping();
+	}
+
+	static void CheckGameFiles(GameHandler this)
+	{
 		console.printf(StringTable.Localize("$TXT_CHECKFILE"));
 
-		// Check to see if a Wolf3D data file is present
-		GameHandler.CheckGameFile("GAMEMAPS.WL3", gamefiles, g_showhashes);
-		GameHandler.CheckGameFile("GAMEMAPS.WL6", gamefiles, g_showhashes);
-		GameHandler.CheckGameFile("GAMEMAPS.SOD", gamefiles, g_showhashes);
-		GameHandler.CheckGameFile("GAMEMAPS.SD2", gamefiles, g_showhashes);
-		GameHandler.CheckGameFile("GAMEMAPS.SD3", gamefiles, g_showhashes);
-
-		ParseMusicMapping();
+		if (this)
+		{
+			// Check to see if a Wolf3D data file is present
+			GameHandler.CheckGameFile("GAMEMAPS.WL3", this.gamefiles, g_showhashes);
+			GameHandler.CheckGameFile("GAMEMAPS.WL6", this.gamefiles, g_showhashes);
+			GameHandler.CheckGameFile("GAMEMAPS.SOD", this.gamefiles, g_showhashes);
+			GameHandler.CheckGameFile("GAMEMAPS.SD2", this.gamefiles, g_showhashes);
+			GameHandler.CheckGameFile("GAMEMAPS.SD3", this.gamefiles, g_showhashes);
+		}
 	}
 
 	ui static bool GameFilePresent(String extension, bool allowdemos = true)
@@ -69,7 +76,7 @@ class GameHandler : StaticEventHandler
 				hash == "???" // I can't find the md5 of GAMEMAPS.WL3 anywhere, and don't own it, so...  unsupported.
 			)
 			{
-				gamefiles.Push("WL3");
+				if (gamefiles.Find("WL3") == gamefiles.Size()) { gamefiles.Push("WL3"); }
 				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
 			}
 			else if (
@@ -78,22 +85,22 @@ class GameHandler : StaticEventHandler
 				hash == "a4e73706e100dc0cadfb02d23de46481" // v1.4 / GoG / Steam
 			)
 			{
-				gamefiles.Push("WL6");
+				if (gamefiles.Find("WL6") == gamefiles.Size()) {gamefiles.Push("WL6"); }
 				message.Replace("%s", "Wolfenstein 3D");
 			}
 			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
 			{
-				gamefiles.Push("SDM");
+				if (gamefiles.Find("SDM") == gamefiles.Size()) { gamefiles.Push("SDM"); }
 				message.Replace("%s", "Spear of Destiny Demo");
 			}
 			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
 			{
-				gamefiles.Push("SOD");
+				if (gamefiles.Find("SOD") == gamefiles.Size()) {gamefiles.Push("SOD"); }
 				message.Replace("%s", "Spear of Destiny");
 			}
 			else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
 			{
-				gamefiles.Push("SD2");
+				if (gamefiles.Find("SD2") == gamefiles.Size()) { gamefiles.Push("SD2"); }
 				message.Replace("%s", "Return to Danger");
 			}
 			else if (
@@ -101,13 +108,13 @@ class GameHandler : StaticEventHandler
 				hash == "29860b87c31348e163e10f8aa6f19295"
 			)
 			{
-				gamefiles.Push("SD3");
+				if (gamefiles.Find("SD3") == gamefiles.Size()) { gamefiles.Push("SD3"); }
 				message.Replace("%s", "The Ultimate Challenge");
 			}
 
 			if (!(message == StringTable.Localize("$TXT_FOUNDFILE")))
 			{
-				if (verbose) { console.printf(message); }
+				if (verbose) { console.printf(String.Format("%s (%s)", message, hash)); }
 			}
 			else
 			{
@@ -270,6 +277,14 @@ class GameHandler : StaticEventHandler
 	{
 		if (musicname == "*") { musicname = level.music; }
 		S_ChangeMusic(GameHandler.GetMusic(musicname), order, looping, force);
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name == "printhashes")
+		{
+			CheckGameFiles(self);
+		}
 	}
 }
 
