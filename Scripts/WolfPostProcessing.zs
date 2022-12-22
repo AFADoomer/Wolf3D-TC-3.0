@@ -47,43 +47,72 @@ class WolfPostProcessor : LevelPostProcessor
 			}
 		}
 
+		Array<ActorTranslation> translations;
+		ParseActorTranslations(translations);
 		uint count = GetThingCount();
 	
 		for (uint i = 0; i < count; i++)
 		{
 			uint e = GetThingEdNum(i);
 
-			if (e < 20000 || e > 22089 || (e >= 21075 && e <= 21089)) { continue; }
-
-			uint f = e % 1000;
-
-			if (e > 21022 && e < 21075 || e > 21122 && e < 21175 || e > 21222 && e < 21275) // Objects
+			int j;
+			for (j = 0; j < translations.Size(); j++)
 			{
-				if (f == 124) { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + f); }
-				else
-				{
-					f = e % 100;
-					if (
-						f == 33 ||
-						f == 38 ||
-						f == 45 ||
-						f == 51 ||
-						f == 63 ||
-						f >= 67 && f <= 69 ||
-						f >= 71 && f <= 74
-					) { SetThingEdNum(i, 21000 + clamp(g_sod, 0, 2) * 100 + f); }
-					else { SetThingEdNum(i, 21000 + (g_sod > 1 ? 200 : 0) + f); }
-				}
+				if (
+					translations[j] &&
+					(
+						translations[j].games[0] == e ||
+						translations[j].games[1] == e ||
+						translations[j].games[2] == e ||
+						translations[j].games[3] == e
+					)
+				){ break; }
 			}
-			else if (e > 20000 && e < 20006 || e > 21000 && e < 21006 || e > 20200 && e < 20206 || f == 106) // Standard Enemies
+
+			if (j < translations.Size() && g_sod >= 0)
 			{
-				if (f == 106) { SetThingEdNum(i, 20000 + clamp(g_sod, 1, 3) * 1000 + f); }
-				else { SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 0) + f); }
-			}
-			else if (f >= 107 && f <= 159) // SoD Bosses
-			{
-				SetThingEdNum(i, 20000 + (g_sod > 1 ? 2000 : 1000) + f);
+				SetThingEdNum(i, translations[j].games[clamp(g_sod, 0, 3)]);
 			}
 		}
+	}
+
+	void ParseActorTranslations(out Array<ActorTranslation> translations)
+	{
+		int lump = -1;
+		lump = Wads.CheckNumForFullName("Data/ActorTranslations.txt");
+
+		if (lump != -1)
+		{
+			Array<String> lines;
+			String data = Wads.ReadLump(lump);
+			data.Split(lines, "\n");
+
+			for (int i = 0; i < lines.Size(); i++)
+			{
+				ActorTranslation t = ActorTranslation.Add(lines[i]);
+				if (t) { translations.Push(t); }
+			}
+		}
+	}
+}
+
+class ActorTranslation
+{
+	int games[4];
+
+	static ActorTranslation Add(String entry)
+	{
+		Array<String> values;
+
+		entry.split(values, ",");
+		if (values.Size() < 4) { return null; }
+
+		ActorTranslation t = New("ActorTranslation");
+		t.games[0] = values[0].ToInt();
+		t.games[1] = values[1].ToInt();
+		t.games[2] = values[2].ToInt();
+		t.games[3] = values[3].ToInt();
+
+		return t;
 	}
 }
