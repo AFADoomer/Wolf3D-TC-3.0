@@ -62,12 +62,15 @@ class GameHandler : StaticEventHandler
 
 	private static void CheckGameFile(String filename, out Array<String> gamefiles, bool verbose = false)
 	{
+		filename.MakeUpper();
+
 		if (!g_placeholders) { gamefiles.Push(filename.Mid(filename.length() - 3)); return; }
 
 		// Check to see if a Wolf3D GAMEMAPS data file is present
 		int g =	Wads.CheckNumForFullName(filename);
 		String message = StringTable.Localize("$TXT_FOUNDFILE");
 		String hash;
+		String ext = "";
 
 		if (g > -1)
 		{
@@ -76,7 +79,7 @@ class GameHandler : StaticEventHandler
 				hash == "cec494930f3ac0545563cbd23cd611d6" // v1.2
 			)
 			{
-				if (gamefiles.Find("WL3") == gamefiles.Size()) { gamefiles.Push("WL3"); }
+				ext = "WL3";
 				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
 			}
 			else if (
@@ -85,22 +88,22 @@ class GameHandler : StaticEventHandler
 				hash == "a4e73706e100dc0cadfb02d23de46481" // v1.4 / GoG / Steam
 			)
 			{
-				if (gamefiles.Find("WL6") == gamefiles.Size()) {gamefiles.Push("WL6"); }
+				ext = "WL6";
 				message.Replace("%s", "Wolfenstein 3D");
 			}
 			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
 			{
-				if (gamefiles.Find("SDM") == gamefiles.Size()) { gamefiles.Push("SDM"); }
+				ext = "SDM";
 				message.Replace("%s", "Spear of Destiny Demo");
 			}
 			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
 			{
-				if (gamefiles.Find("SOD") == gamefiles.Size()) {gamefiles.Push("SOD"); }
+				ext = "SOD";
 				message.Replace("%s", "Spear of Destiny");
 			}
 			else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
 			{
-				if (gamefiles.Find("SD2") == gamefiles.Size()) { gamefiles.Push("SD2"); }
+				ext = "SD2";
 				message.Replace("%s", "Return to Danger");
 			}
 			else if (
@@ -108,13 +111,25 @@ class GameHandler : StaticEventHandler
 				hash == "29860b87c31348e163e10f8aa6f19295"
 			)
 			{
-				if (gamefiles.Find("SD3") == gamefiles.Size()) { gamefiles.Push("SD3"); }
+				ext = "SD3";
 				message.Replace("%s", "The Ultimate Challenge");
 			}
 
-			if (!(message == StringTable.Localize("$TXT_FOUNDFILE")))
+			if (ext.length())
 			{
-				if (verbose) { console.printf(String.Format("%s (%s)", message, hash)); }
+				if (gamefiles.Find(ext) == gamefiles.Size())
+				{
+					if (verbose) { console.printf(String.Format("%s (%s)", message, hash)); }
+					gamefiles.Push(ext);
+				}
+
+				if (!(ext ~== filename.Mid(filename.length() - 3)))
+				{ 
+					message = StringTable.Localize("$TXT_DUPLICATEFILE");
+					message.replace("%s", filename);
+				
+					console.printf(message .. "GAMEMAPS." .. ext);
+				}
 			}
 			else
 			{
@@ -283,6 +298,7 @@ class GameHandler : StaticEventHandler
 	{
 		if (e.Name == "printhashes")
 		{
+			gamefiles.Clear();
 			CheckGameFiles(self);
 		}
 	}
