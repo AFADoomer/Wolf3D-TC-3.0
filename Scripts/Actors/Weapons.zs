@@ -35,8 +35,8 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.WeaponScaleX 2.5;
-		Weapon.WeaponScaleY 3.0;
+//		Weapon.WeaponScaleX 2.5;
+//		Weapon.WeaponScaleY 3.0;
 		Weapon.YAdjust 2.0;
 	}
 
@@ -129,7 +129,7 @@ class ClassicWeapon : Weapon
 		let psp = owner.player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		if (screenblocks < 11) { psp.y = WEAPONTOP - 15.0 * st_Scale / WeaponScaleY; }
+		if (screenblocks < 11) { psp.y = WEAPONTOP - 15.0 * max(st_scale, 0) / WeaponScaleY; }
 		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
 	}
 
@@ -138,6 +138,29 @@ class ClassicWeapon : Weapon
 		if (bDoGrin && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
 
 		Super.Touch(toucher);
+	}
+
+	override void BeginPlay()
+	{
+		Super.BeginPlay();
+
+		// If the weapon sprite is 64x64, assume it's an original sprite and scale it up.
+		// Otherwise don't mess with it
+		State ReadyState = FindState("Ready");
+		if (ReadyState && ReadyState.sprite)
+		{
+			TextureID tex = ReadyState.GetSpriteTexture(0);
+			if (tex.IsValid())
+			{
+				Vector2 size = TexMan.GetScaledSize(tex);
+				if (size.x == size.y && size.x <= 64.0)
+				{
+					double factor = 160.0 / size.x;
+					WeaponScaleX = Default.WeaponScaleX * factor;
+					WeaponScaleY = Default.WeaponScaleY * factor;
+				}
+			}
+		}
 	}
 }
 
