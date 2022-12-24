@@ -28,12 +28,14 @@ class ClassicBase : Actor
 	SpriteID spr;
 	State AttackState;
 	Vector2 lastpos;
+	Class<Inventory> dropweapon;
 
 	int baseflags;
 
 	Property ScoreAmount:scoreamt;
 	Property SkillHealth:skillhealth0, skillhealth1, skillhealth2, skillhealth3;
 	Property BaseSprite:basesprite;
+	Property DropWeapon:dropweapon;
 
 	FlagDef Lost:baseflags, 0;
 	FlagDef NerfWhenReplaced:baseflags, 1;
@@ -491,6 +493,12 @@ class ClassicBase : Actor
 
 	void A_DeathDrop()
 	{
+		if (dropweapon && target && !target.CheckInventory(dropweapon, 1))
+		{
+			A_SpawnItemEx(dropweapon);
+			return;
+		}
+
 		DropItem drops = GetDropItems();
 		DropItem item;
 
@@ -896,6 +904,7 @@ class Guard : ClassicNazi
 
 		ClassicBase.ScoreAmount 100;
 		ClassicBase.BaseSprite "WBRN";
+		ClassicBase.DropWeapon "WolfPistol";
 	}
 
 	States
@@ -923,6 +932,7 @@ class GreenGuard : Guard
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "WGRN";
+		ClassicBase.DropWeapon "WolfPistolLost";
 	}
 }
 
@@ -962,9 +972,11 @@ class SS : ClassicNazi
 		SeeSound "blue/sight";
 		AttackSound "shots/burst";
 		DeathSound "blue/death";
+		DropItem "WolfClip";
 
 		ClassicBase.ScoreAmount 500;
 		ClassicBase.BaseSprite "WBLU";
+		ClassicBase.DropWeapon "WolfMachineGun";
 	}
 
 	States
@@ -981,18 +993,6 @@ class SS : ClassicNazi
 			"####" H 5 A_FaceTarget;
 			"####" I 5 A_NaziShoot(0.666);
 			Goto Chase;
-		Death:
-			"####" A 0 DoWeaponDrop();
-			Goto Super::Death;
-		Death.Fire:
-			"####" A 0 DoWeaponDrop();
-			Goto Super::Death.Fire;
-	}
-
-	void DoWeaponDrop()
-	{
-		if (target && target.CheckInventory(bLost ? "WolfMachinegunLost" : "WolfMachineGun", 1)) { A_SpawnItemEx(bLost ? "WolfCLipDropLost" : "WolfClipDrop"); }
-		else { A_SpawnItemEx(bLost ? "WolfMachinegunLost" : "WolfMachineGun"); }
 	}
 }
 
@@ -1006,9 +1006,11 @@ class BlackSS : SS
 		SeeSound "black/sight";
 		AttackSound "shots/burst2";
 		DeathSound "black/death";
+		DropItem "WolfClipLost";
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "WBLA";
+		ClassicBase.DropWeapon "WolfMachineGunLost";
 	}
 }
 
@@ -1131,6 +1133,7 @@ class Officer : ClassicNazi
 		ClassicBase.ScoreAmount 400;
 		ClassicNazi.DeathTics 6;
 		ClassicBase.BaseSprite "WWHT";
+		ClassicBase.DropWeapon "WolfPistol";
 	}
 
 	States
@@ -1159,6 +1162,7 @@ class AltOfficer : Officer
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "WWH2";
+		ClassicBase.DropWeapon "WolfPistolLost";
 	}
 }
 

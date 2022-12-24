@@ -340,7 +340,7 @@ class WolfPistol : ClassicWeapon
 		Inventory.Icon "LUGER";
 		Inventory.PickupSound "pickups/pistol";
 		Weapon.AmmoType "WolfClip";
-		Weapon.AmmoGive 0;
+		Weapon.AmmoGive 8;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 3;
 		+Weapon.WIMPY_WEAPON
