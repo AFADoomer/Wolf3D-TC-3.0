@@ -14,7 +14,7 @@ KeyPrompt icons - Modified by AFADoomer from Input Prompts by Kenney (http://www
 Floor textures - Pulled from Laz Rojas's WolfenDoom (http://lazrojas.com/wolfendoom/original.zip) and from AReyeP's web site (http://www.areyep.com/RIPandMCS-TextureLibrary-Floorceilingtextures.html)
 Syringe explosion and fireball impact sprites - Modified by AFADoomer from sprites by DoomJedi (http://dhw.wolfenstein3d.com/viewtopic.php?t=7865) and original Wolf3D sprites
 Flame sprites - Modified by AFADoomer from pixel art by Seamartini (https://www.alamy.com/fire-flame-pixel-art-animation-sprite-frames-8bit-game-cartoon-torch-motion-set-vector-graphic-explosion-or-burning-ignition-effect-for-videogame-i-image452235104.html)
-Area map sprite - by AFADoomer
 Enemy rotation sprites - by DoomJedi; originally for SplitWolf (http://dhw.wolfenstein3d.com/viewtopic.php?t=7865)
+Area map sprite, bright maps - by AFADoomer
 
 ZScript MD5 hash library - 3saster (https://forum.zdoom.org/viewtopic.php?p=1178935)

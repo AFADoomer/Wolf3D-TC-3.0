@@ -992,7 +992,7 @@ Sprite WHR1C1, 64, 64 { Offset 32, 64 Patch WSPR0336, 0, 0 }
 Sprite WHR1D1, 64, 64 { Offset 32, 64 Patch WSPR0337, 0, 0 }
 Sprite WHR1E1, 64, 64 { Offset 32, 64 Patch WSPR0338, 0, 0 }
 Sprite WHR1F1, 64, 64 { Offset 32, 64 Patch WSPR0339, 0, 0 }
-Sprite WHR1G0, 64, 64 { Offset 32, 64 Patch WSPR0340, 0, 0 }
+Sprite WHR1G1, 64, 64 { Offset 32, 64 Patch WSPR0340, 0, 0 }
 Sprite WHR1K0, 64, 64 { Offset 32, 64 Patch WSPR0341, 0, 0 }
 Sprite WHR1H0, 64, 64 { Offset 32, 64 Patch WSPR0342, 0, 0 }
 Sprite WHR1I0, 64, 64 { Offset 32, 64 Patch WSPR0343, 0, 0 }

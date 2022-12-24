@@ -904,7 +904,7 @@ class Guard : ClassicNazi
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
 		Attack:
-			"####" I 8 Bright A_NaziShoot();
+			"####" I 8 A_NaziShoot();
 			Goto Chase;
 	}
 }
@@ -973,13 +973,13 @@ class SS : ClassicNazi
 			"####" A 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
 		Attack:
-			"####" I 5 Bright A_NaziShoot(0.666);
+			"####" I 5 A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_NaziShoot(0.666);
+			"####" I 5 A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_NaziShoot(0.666);
+			"####" I 5 A_NaziShoot(0.666);
 			"####" H 5 A_FaceTarget;
-			"####" I 5 Bright A_NaziShoot(0.666);
+			"####" I 5 A_NaziShoot(0.666);
 			Goto Chase;
 		Death:
 			"####" A 0 DoWeaponDrop();
@@ -1063,9 +1063,9 @@ class Mutant : ClassicNazi
 			"####" A 0 A_Stop;
 			"####" G 3 A_FaceTarget;
 		Attack:
-			"####" H 10 Bright A_NaziShoot();
+			"####" H 10 A_NaziShoot();
 			"####" I 5 A_FaceTarget;
-			"####" P 10 Bright A_NaziShoot();
+			"####" P 10 A_NaziShoot();
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
 	}
@@ -1140,7 +1140,7 @@ class Officer : ClassicNazi
 			"####" G 3 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
 		Attack:
-			"####" I 5 Bright A_NaziShoot();
+			"####" I 5 A_NaziShoot();
 			Goto Chase;
 	}
 }
@@ -1225,7 +1225,7 @@ class HansGrosse : ClassicBoss
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
 		Attack:
-			"####" GFGFGE 5 Bright A_NaziShoot(0.666);
+			"####" GFGFGE 5 A_NaziShoot(0.666);
 			"####" A 0 A_JumpIfCloser(64, "Missile");
 			Goto Walk;
 		Death:
@@ -1345,7 +1345,7 @@ class HitlerGhost : ClassicNazi
 		Missile:
 			WHGT E 4 A_FaceTarget;
 		Attack:
-			WHGT EEEEEEEE 4 Bright A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
+			WHGT EEEEEEEE 4 A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
 			WHGT F 5 A_DeathDrop();
@@ -1395,7 +1395,7 @@ class HitlerMech : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
-			"####" GFGF 5 Bright A_NaziShoot();
+			"####" GFGF 5 A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" H 5 A_Scream;
@@ -1438,7 +1438,7 @@ class Hitler : ClassicBoss
 			"####" G 15 A_FaceTarget;
 			"####" H 5 A_FaceTarget;
 		Attack:
-			"####" IHIH 5 Bright A_NaziShoot();
+			"####" IHIH 5 A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1491,7 +1491,7 @@ class Giftmacher : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 		Attack:
-			"####" F 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
+			"####" F 5 A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1559,9 +1559,9 @@ class Fettgesicht : ClassicBoss
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
 		Attack:
-			"####" G 5 Bright A_SpawnProjectile("WolfRocket", 30, 13, 0);
+			"####" G 5 A_SpawnProjectile("WolfRocket", 30, 13, 0);
 			"####" E 0 A_FaceTarget;
-			"####" HGH 5 Bright A_NaziShoot();
+			"####" HGH 5 A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1799,15 +1799,15 @@ class UberMutant : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 		Attack:
-			"####" F 6 Bright A_NaziShoot();
+			"####" F 6 A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" G 6 Bright A_NaziShoot();
+			"####" G 6 A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" H 6 Bright A_NaziShoot();
+			"####" H 6 A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" G 6 Bright A_NaziShoot();
+			"####" G 6 A_NaziShoot();
 			"####" E 0 A_FaceTarget;
-			"####" F 6 Bright A_NaziShoot();
+			"####" F 6 A_NaziShoot();
 			"####" E 0 A_FaceTarget;
 			Goto Chase;
 		Death:
@@ -1890,11 +1890,11 @@ class DeathKnight : ClassicBoss
 		Missile:
 			"####" F 15 A_FaceTarget;
 		Attack:
-			"####" G 5 Bright A_SpawnProjectile(projectile, 48, 15, 0);
-			"####" I 5 Bright A_NaziShoot();
+			"####" G 5 A_SpawnProjectile(projectile, 48, 15, 0);
+			"####" I 5 A_NaziShoot();
 			"####" I 0 A_FaceTarget;
-			"####" H 5 Bright A_SpawnProjectile(projectile, 48, -15, 0);
-			"####" I 5 Bright A_NaziShoot();
+			"####" H 5 A_SpawnProjectile(projectile, 48, -15, 0);
+			"####" I 5 A_NaziShoot();
 			Goto Chase;
 		Death:
 			"####" A 53 A_Scream;
@@ -1977,15 +1977,15 @@ class AngelofDeath : ClassicBoss
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
 		Attack:
-			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 Bright A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
 		Tired:
 			"####" I 20;
 			"####" J 20 A_Pain;

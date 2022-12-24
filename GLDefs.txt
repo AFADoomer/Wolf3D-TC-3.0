@@ -147,7 +147,7 @@ HardwareShader Sprite "WHR1C1" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "WHR1D1" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1D0.png" }
 HardwareShader Sprite "WHR1E1" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1E0.png" }
 HardwareShader Sprite "WHR1F1" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1F0.png" }
-HardwareShader Sprite "WHR1G0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1G0.png" }
+HardwareShader Sprite "WHR1G1" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1G0.png" }
 HardwareShader Sprite "WHR1H0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1H0.png" }
 HardwareShader Sprite "WHR1I0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1I0.png" }
 HardwareShader Sprite "WHR1J0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/WHR1J0.png" }
