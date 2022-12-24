@@ -47,6 +47,21 @@ class WolfPostProcessor : LevelPostProcessor
 			}
 		}
 
+		// Use color-coded door textures
+		if (g_usedoorkeycolors)
+		{
+			for (int g = 0; g < 4; g++)
+			{
+				for (int l = 1; l < 3; l++)
+				{
+					for (int s = 0x41; s < 0x45; s++)
+					{
+						level.ReplaceTextures(String.Format("WLF%iLK%i%c", g, l, s), String.Format("WLF%iLK%i%c", g, l, s + 4), 0);
+					}
+				}
+			}
+		}
+
 		Array<ActorTranslation> translations;
 		ParseActorTranslations(translations);
 		uint count = GetThingCount();

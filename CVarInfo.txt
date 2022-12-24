@@ -12,6 +12,7 @@ server int g_placeholders = 1;
 server int g_dynamiclights = 0;
 server int g_showhashes = 0;
 server int g_userotations = 0;
+server int g_usedoorkeycolors = 0;
 
 user int g_borderstyle = 0;
 user int g_hudratio = 0;
