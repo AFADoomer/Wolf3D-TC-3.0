@@ -589,8 +589,13 @@ class ClassicBase : Actor
 			targetspeed = (w.lastpos - w.pos).length();
 		}
 
+		// Lower starting hit chance for running enemies
 		int hitchance = targetspeed < 10.0 ? 256 : 160;
+
+		// Lower hitchance for enemies that are in the player's FOV (hard-coded to 45 degrees right/left)
 		int multiplier = absangle(target.angle, target.AngleTo(self)) < 45 ? 16 : 8;
+		
+		// Lower hitchance based on distance
 		hitchance -= dist * multiplier;
 
 		if (GameHandler.WolfRandom() < hitchance)

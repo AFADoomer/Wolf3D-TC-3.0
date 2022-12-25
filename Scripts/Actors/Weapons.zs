@@ -88,6 +88,15 @@ class ClassicWeapon : Weapon
 		if (tgt)
 		{
 			dmg = GameHandler.WolfRandom();
+			
+			if (ClassicBase(tgt))
+			{
+				if (!ClassicBase(tgt).bActive)
+				{
+					dmg <<= 1; // Double damage for non-awake enemies
+					if (!(player.cheats & CF_NOTARGET)) { tgt.SetStateLabel("See"); } // And wake up the enemy and their peers
+				}
+			}
 
 			Vector2 offset = tgt.pos.xy - pos.xy;
 
@@ -314,7 +323,7 @@ class WolfKnife : ClassicWeapon
 			Loop;
 		Fire:
 			"####" B 3;
-			"####" C 3 A_CustomPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
+			"####" C 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" DE 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
@@ -326,6 +335,102 @@ class WolfKnife : ClassicWeapon
 		if (owner && owner.player && owner.player.ReadyWeapon == self)
 		{
 			adrenaline = !!owner.FindInventory("PowerStrength", true);
+		}
+	}
+
+	// Specialized A_CustomPunch that doubles damage for non-alerted actors
+	action void A_WolfPunch(int damage, bool norandom = false, int flags = CPF_USEAMMO, class<Actor> pufftype = "BulletPuff", double range = 0, double lifesteal = 0, int lifestealmax = 0, class<BasicArmorBonus> armorbonustype = "ArmorBonus", sound MeleeSound = 0, sound MissSound = "")
+	{
+		let player = self.player;
+		if (!player) return;
+
+		let weapon = player.ReadyWeapon;
+
+		double angle;
+		double pitch;
+		FTranslatedLineTarget t;
+		int			actualdamage;
+
+		if (!norandom)
+			damage *= random[cwpunch](1, 8);
+
+		angle = self.Angle + random2[cwpunch]() * (5.625 / 256);
+		if (range == 0) range = DEFMELEERANGE;
+		pitch = AimLineAttack (angle, range, t, 0., ALF_CHECK3D);
+
+		if (t.linetarget && ClassicBase(t.linetarget))
+		{
+			if (!ClassicBase(t.linetarget).bActive)
+			{
+				damage <<= 1; // Double damage for non-awake enemies
+				if (!(player.cheats & CF_NOTARGET)) { t.linetarget.SetStateLabel("See"); } // And wake up the enemy and their peers
+			}
+		}
+
+		// only use ammo when actually hitting something!
+		if ((flags & CPF_USEAMMO) && t.linetarget && weapon && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
+		{
+			if (!weapon.DepleteAmmo(weapon.bAltFire, true))
+				return;	// out of ammo
+		}
+
+		if (pufftype == NULL)
+			pufftype = 'BulletPuff';
+		int puffFlags = LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0);
+
+		Actor puff;
+		[puff, actualdamage] = LineAttack (angle, range, pitch, damage, 'Melee', pufftype, puffFlags, t);
+
+		if (!t.linetarget)
+		{
+			if (MissSound) A_StartSound(MissSound, CHAN_WEAPON);
+		}
+		else
+		{
+			if (lifesteal > 0 && !(t.linetarget.bDontDrain))
+			{
+				if (flags & CPF_STEALARMOR)
+				{
+					if (armorbonustype == NULL)
+					{
+						armorbonustype = 'ArmorBonus';
+					}
+					if (armorbonustype != NULL)
+					{
+						let armorbonus = BasicArmorBonus(Spawn(armorbonustype));
+						if (armorbonus)
+						{
+							armorbonus.SaveAmount *= int(actualdamage * lifesteal);
+							if (lifestealmax > 0) armorbonus.MaxSaveAmount = lifestealmax;
+							armorbonus.bDropped = true;
+							armorbonus.ClearCounters();
+
+							if (!armorbonus.CallTryPickup(self))
+							{
+								armorbonus.Destroy ();
+							}
+						}
+					}
+				}
+				else
+				{
+					GiveBody (int(actualdamage * lifesteal), lifestealmax);
+				}
+			}
+			if (weapon != NULL)
+			{
+				if (MeleeSound) A_StartSound(MeleeSound, CHAN_WEAPON);
+				else			A_StartSound(weapon.AttackSound, CHAN_WEAPON);
+			}
+
+			if (!(flags & CPF_NOTURN))
+			{
+				// turn to face target
+				self.Angle = t.angleFromSource;
+			}
+
+			if (flags & CPF_PULLIN) self.bJustAttacked = true;
+			if (flags & CPF_DAGGER) t.linetarget.DaggerAlert (self);
 		}
 	}
 }
