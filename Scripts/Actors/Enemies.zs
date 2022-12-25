@@ -590,7 +590,8 @@ class ClassicBase : Actor
 		}
 
 		int hitchance = targetspeed < 10.0 ? 256 : 160;
-		hitchance -= dist * 16;
+		int multiplier = absangle(target.angle, target.AngleTo(self)) < 45 ? 16 : 8;
+		hitchance -= dist * multiplier;
 
 		if (GameHandler.WolfRandom() < hitchance)
 		{
