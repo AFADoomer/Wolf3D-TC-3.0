@@ -846,7 +846,7 @@ class Dog : ClassicNazi
 			"####" E 0 A_Stop;
 			"####" EF 5 A_FaceTarget;
 		Attack:
-			"####" G 5 A_CustomMeleeAttack(Random(1,15));
+			"####" G 5 A_CustomMeleeAttack(GameHandler.WolfRandom() < 180 ? GameHandler.WolfRandom() >> 4 : 0);
 			"####" EA 5;
 			Goto Chase;
 		Death:
