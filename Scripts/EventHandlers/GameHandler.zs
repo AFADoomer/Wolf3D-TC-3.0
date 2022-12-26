@@ -74,7 +74,6 @@ class GameHandler : StaticEventHandler
 
 		if (!g_placeholders) { gamefiles.Push(filename.Mid(filename.length() - 3)); return; }
 
-		// Check to see if a Wolf3D GAMEMAPS data file is present
 		int g =	Wads.CheckNumForFullName(filename);
 		String message = StringTable.Localize("$TXT_FOUNDFILE");
 		String hash;

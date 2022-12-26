@@ -1139,13 +1139,18 @@ class Notice : WolfMenu
 	String text;
 	BrokenString lines;
 	bool finished;
+	TextureID bkg;
+	transient CVar initial;
 
 	override void Init(Menu parent)
 	{
 		w = 480;
 		h = 300;
 
-		ParseText();
+		initial = CVar.FindCVar("g_initial");
+		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+
+		Initialize();
 
 		alpha = 0.0;
 		bgalpha = 1.0;
@@ -1160,9 +1165,9 @@ class Notice : WolfMenu
 		DontBlur = true;
 	}
 
-	virtual void ParseText()
+	virtual void Initialize()
 	{
-		SetupText("$NOTICE", BigFont, "L");
+		SetupText("$NOTICE", BigFont, "WolfMenuYellow");
 	}
 
 	virtual void SetupText(String input, font fnt, String fontcolor = "L")
@@ -1182,11 +1187,24 @@ class Notice : WolfMenu
 
 	virtual void NextScreen()
 	{
+		initial.SetInt(0);
 		Menu.SetMenu("LoadScreen");
+	}
+
+	virtual void DoTick()
+	{
+		if (tic == 0 && initial && initial.GetInt() == 0)
+		{
+			delay = 0;
+			finished = true;
+			bgalpha = 0.0;
+		}
 	}
 
 	override void Ticker()
 	{
+		DoTick();
+
 		if (delay) { delay--; }
 
 		if (delay == 0)
@@ -1212,6 +1230,7 @@ class Notice : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
+		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4); }
 
 		PrintFullJustified(lines, maxwidth);
 	}
@@ -1300,7 +1319,7 @@ class GamemapsMessage : Notice
 		fadespeed = 2.0;
 	}
 
-	override void ParseText()
+	override void Initialize()
 	{
 		SetupText("$NOGAMEMAPS", BigFont, "WolfMenuYellow");
 	}
@@ -1340,4 +1359,6 @@ class GamemapsMessage : Notice
 		Menu current = GetCurrentMenu();
 		if (current) { current.mParentMenu = null; }
 	}
+
+	override void DoTick() {}
 }
