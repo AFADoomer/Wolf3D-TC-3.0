@@ -836,17 +836,18 @@ class LoadScreen : IntroSlideShow
 		screen.Dim(0x000000, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		int step = int(actiontick * speed);
+		int w = int(480 * Screen.GetAspectRatio());
 
 		if (curscreen == 4)
 		{
-			screen.DrawTexture(thirtyyears, false, 320, 240, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_CenterOffset, true);
+			screen.DrawTexture(thirtyyears, false, w / 2, 240, DTA_VirtualWidth, w, DTA_VirtualHeight, 480, DTA_CenterOffset, true, DTA_KeepRatio, true);
 		}
 		else if (curscreen > 0 && curscreen < 4)
 		{
 			screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255);
 			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
-			screen.DrawTexture(bkg1, false, CleanWidth_1 - min(640, 320 + step), 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
-			screen.DrawTexture(bkg2, false, min(0, -320 + step), 0, DTA_KeepRatio, true, DTA_VirtualHeight, 480);
+			screen.DrawTexture(bkg1, false, w - min(640, 320 + step), 0, DTA_KeepRatio, true, DTA_VirtualWidth, w, DTA_VirtualHeight, 480);
+			screen.DrawTexture(bkg2, false, min(0, -320 + step), 0, DTA_KeepRatio, true, DTA_VirtualWidth, w, DTA_VirtualHeight, 480);
 			screen.Dim(0x000000, 0.6, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 			if (curscreen == 2)
@@ -856,7 +857,7 @@ class LoadScreen : IntroSlideShow
 			else if (curscreen == 3)
 			{
 				screen.DrawTexture(gametitle, false, 0, 32, DTA_VirtualWidth, 480, DTA_VirtualHeight, 360);
-				screen.DrawTexture(gzdoom, false, 480, 320, DTA_VirtualWidth, 640, DTA_VirtualHeight, 480, DTA_Alpha, assetalpha);
+				screen.DrawTexture(gzdoom, false, int(w * 3 / 4), 320, DTA_KeepRatio, true, DTA_VirtualWidth, w, DTA_VirtualHeight, 640, DTA_VirtualHeight, 480, DTA_Alpha, assetalpha);
 			}
 		}
 

@@ -35,8 +35,6 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-//		Weapon.WeaponScaleX 2.5;
-//		Weapon.WeaponScaleY 3.0;
 		Weapon.YAdjust 2.0;
 	}
 
