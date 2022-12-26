@@ -65,6 +65,8 @@ class WolfPostProcessor : LevelPostProcessor
 		Array<ActorTranslation> translations;
 		ParseActorTranslations(translations);
 		uint count = GetThingCount();
+		int g, temp;
+		[temp, g] = Game.IsSod(); 
 	
 		for (uint i = 0; i < count; i++)
 		{
@@ -81,12 +83,12 @@ class WolfPostProcessor : LevelPostProcessor
 						translations[j].games[2] == e ||
 						translations[j].games[3] == e
 					)
-				){ break; }
+				) { break; }
 			}
 
-			if (j < translations.Size() && g_sod >= 0)
+			if (j < translations.Size() && g >= 0)
 			{
-				SetThingEdNum(i, translations[j].games[clamp(g_sod, 0, 3)]);
+				SetThingEdNum(i, translations[j].games[g]);
 			}
 		}
 	}
