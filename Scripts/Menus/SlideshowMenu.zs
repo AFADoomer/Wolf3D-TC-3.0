@@ -905,7 +905,14 @@ class LoadScreen : IntroSlideShow
 					fadetarget = gametic + fadetime;
 					break;
 				case 5:
-					Menu.SetMenu("GameMenu", -1);
+					if (GameHandler.NoGamemaps())
+					{
+						Menu.SetMenu("GamemapsMessage", -1);
+					}
+					else
+					{
+						Menu.SetMenu("GameMenu", -1);
+					}
 					break;
 				default:
 					advancetime = gametic + 20;
@@ -936,7 +943,15 @@ class LoadScreen : IntroSlideShow
 		if (mkey && fadetarget < gametic)
 		{
 			System.StopAllSounds();
-			Menu.SetMenu("GameMenu", -1);
+
+			if (GameHandler.NoGamemaps())
+			{
+				Menu.SetMenu("GamemapsMessage", -1);
+			}
+			else
+			{
+				Menu.SetMenu("GameMenu", -1);
+			}
 			return true;
 		}
 	

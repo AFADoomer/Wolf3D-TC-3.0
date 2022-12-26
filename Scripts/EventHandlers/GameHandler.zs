@@ -60,6 +60,14 @@ class GameHandler : StaticEventHandler
 		return false;
 	}
 
+	ui static bool NoGamemaps()
+	{
+		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+		if (this && !this.gamefiles.Size()) { return true; }
+
+		return false;
+	}
+
 	private static void CheckGameFile(String filename, out Array<String> gamefiles, bool verbose = false)
 	{
 		filename.MakeUpper();
@@ -82,14 +90,20 @@ class GameHandler : StaticEventHandler
 				ext = "WL3";
 				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
 			}
-			else if (
-				hash == "05ee51e9bc7d60f01a05334b1cfab1a5" || // v1.1
-				hash == "a15b04941937b7e136419a1e74e57e2f" || // v1.2
-				hash == "a4e73706e100dc0cadfb02d23de46481" // v1.4 / GoG / Steam
-			)
+			else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
 			{
 				ext = "WL6";
-				message.Replace("%s", "Wolfenstein 3D");
+				message.Replace("%s", "Wolfenstein 3D v1.1");
+			}
+			else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
+			{
+				ext = "WL6";
+				message.Replace("%s", "Wolfenstein 3D v1.2");
+			}
+			else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
+			{
+				ext = "WL6";
+				message.Replace("%s", "Wolfenstein 3D v1.4");
 			}
 			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
 			{
@@ -106,13 +120,15 @@ class GameHandler : StaticEventHandler
 				ext = "SD2";
 				message.Replace("%s", "Return to Danger");
 			}
-			else if (
-				hash == "4219d83568d770b1c6ac9c2d4d1dfb9e" ||
-				hash == "29860b87c31348e163e10f8aa6f19295"
-			)
+			else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
 			{
 				ext = "SD3";
 				message.Replace("%s", "The Ultimate Challenge");
+			}
+			else if (hash == "29860b87c31348e163e10f8aa6f19295")
+			{
+				ext = "SD3";
+				message.Replace("%s", "The Ultimate Challenge (UAC Version)");
 			}
 
 			if (ext.length())

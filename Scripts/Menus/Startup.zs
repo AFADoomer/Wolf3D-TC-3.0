@@ -1132,35 +1132,57 @@ class Startup : GenericMenu
 
 class Notice : WolfMenu
 {
-	int tic, maxwidth, lineheight, w, h, delay;
+	int tic, maxwidth, lineheight, w, h, delay, fntclr, displaytime;
 	double x, y;
 	double alpha, bgalpha;
+	double fadespeed;
 	String text;
 	BrokenString lines;
 	bool finished;
 
 	override void Init(Menu parent)
 	{
-		w = 640;
-		h = 400;
+		w = 480;
+		h = 300;
 
-		text = StringTable.Localize("$NOTICE");
-
-		maxwidth = 500;
-		lineheight = BigFont.GetHeight();
-		[text, lines] = BrokenString.BreakString(text, maxwidth, false, "L", BigFont);
+		ParseText();
 
 		alpha = 0.0;
 		bgalpha = 1.0;
-		x = w  / 2 - maxwidth / 2;
-		y = h / 2 - lineheight * (lines.Count() - 1) / 2;
 
+		fadespeed = 1.0;
 		delay = 35;
+		displaytime = 350;
 
 		GenericMenu.Init(parent);
 
 		DontDim = true;
 		DontBlur = true;
+	}
+
+	virtual void ParseText()
+	{
+		SetupText("$NOTICE", BigFont, "L");
+	}
+
+	virtual void SetupText(String input, font fnt, String fontcolor = "L")
+	{
+		if (fontcolor.length() > 1) { fntclr = Font.FindFontColor(fontcolor); }
+		else { fntclr = fontcolor.MakeUpper().GetNextCodePoint(0) - 65; }
+
+		text = StringTable.Localize(input);
+
+		maxwidth = int(w * 0.9);
+		lineheight = BigFont.GetHeight();
+		[text, lines] = BrokenString.BreakString(text, maxwidth, false, fontcolor, fnt);
+
+		x = w  / 2 - maxwidth / 2;
+		y = h / 2 - lineheight * lines.Count() / 2;
+	}
+
+	virtual void NextScreen()
+	{
+		Menu.SetMenu("LoadScreen");
 	}
 
 	override void Ticker()
@@ -1169,18 +1191,18 @@ class Notice : WolfMenu
 
 		if (delay == 0)
 		{
-			if (tic++ >= 350 ) { finished = true; }
+			if (tic++ >= displaytime) { finished = true; }
 
 			if (finished)
 			{
-				alpha = max(0.0, alpha - 1.0 / 35); // Fade out
-				if (alpha == 0.0) { bgalpha -= 1.0 / 35; }
-				if (bgalpha < 1.0) { Menu.SetMenu("LoadScreen"); }
+				alpha = max(0.0, alpha - fadespeed / 35); // Fade out
+				if (alpha == 0.0) { bgalpha -= fadespeed / 35; }
+				if (bgalpha < 1.0) { NextScreen(); }
 				else if (bgalpha <= 0) { Close(); }
 			}
 			else if (alpha < 1.0)
 			{
-				alpha += 1.0 / 35; // Fade in
+				alpha += fadespeed / 35; // Fade in
 			}
 		}
 
@@ -1202,12 +1224,13 @@ class Notice : WolfMenu
 		{
 			String line = lines.StringAt(t);
 			double textwidth = lines.StringWidth(t);
+			spacing = 0;
 
 			if ( // Don't full justify if a line is the end of a paragraph and it's less than 80% of the desired width
 				!(
 					(
 						t == lines.Count() - 1 ||
-						lines.StringAt(t + 1) == ""
+						!ZScriptTools.StripControlCodes(lines.StringAt(t + 1)).length()
 					) &&
 					textwidth < width * 0.8
 				)
@@ -1239,7 +1262,7 @@ class Notice : WolfMenu
 						c == 0x0
 					)
 					{
-						screen.DrawText(BigFont, Font.FindFontColor("Light Gray"), x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+						screen.DrawText(BigFont, fntclr, x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
 
 						if (c == 0x9) // Tab alignment
 						{
@@ -1262,8 +1285,59 @@ class Notice : WolfMenu
 			}
 			else
 			{	
-				screen.DrawText (BigFont, Font.FindFontColor("Light Gray"), x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
 			}
 		}
+	}
+}
+
+class GamemapsMessage : Notice
+{
+	override void Init(Menu parent)
+	{
+		Super.Init(parent);
+
+		fadespeed = 2.0;
+	}
+
+	override void ParseText()
+	{
+		SetupText("$NOGAMEMAPS", BigFont, "WolfMenuYellow");
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		delay = 0;
+		finished = true;
+
+		return false;
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.Type == UIEvent.Type_KeyDown)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.OnUIEvent(ev);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (type == MOUSE_Click)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	override void NextScreen()
+	{
+		Menu.SetMenu("GameMenu", -1);
+
+		Menu current = GetCurrentMenu();
+		if (current) { current.mParentMenu = null; }
 	}
 }

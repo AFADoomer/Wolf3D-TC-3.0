@@ -1900,10 +1900,10 @@ class DeathKnight : ClassicBoss
 		Missile:
 			"####" F 15 A_FaceTarget;
 		Attack:
-			"####" G 5 A_SpawnProjectile(projectile, 48, 15, 0);
+			"####" G 5 A_SpawnProjectile(projectile, 48, 15, 4, CMF_AIMDIRECTION);
 			"####" I 5 A_NaziShoot();
 			"####" I 0 A_FaceTarget;
-			"####" H 5 A_SpawnProjectile(projectile, 48, -15, 0);
+			"####" H 5 A_SpawnProjectile(projectile, 48, -15, -4, CMF_AIMDIRECTION);
 			"####" I 5 A_NaziShoot();
 			Goto Chase;
 		Death:

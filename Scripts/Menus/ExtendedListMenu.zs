@@ -597,6 +597,7 @@ class GameMenu : IconListMenu
 
 		fadetarget = gametic;
 		fadealpha = 1.0;
+		fadecolor = 0x000000;
 
 		GameHandler.ChangeMusic("SALUTE");
 	}
