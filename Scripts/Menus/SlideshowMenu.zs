@@ -777,12 +777,14 @@ class IntroSlideshow : WolfMenu
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (ev.type == UIEvent.Type_KeyDown)
+		if (ev.type == UIEvent.Type_KeyUp)
 		{
 			if (CheckControl(self, ev, "toggleconsole"))
 			{
-				
-				return true;
+				GameHandler.OpenConsole();
+				Close();
+
+				return false;
 			}
 			
 			return MenuEvent(MKEY_Enter, true);
@@ -888,7 +890,7 @@ class LoadScreen : IntroSlideShow
 					fadetarget = gametic + fadetime;
 					break;
 				case 1: // Background only
-					S_StartSound("introsplash", CHAN_VOICE, CHANF_UI, 0.85);
+					GameHandler.ChangeMusic("INTRO", 0, false);
 					advancetime = gametic + 35 * 4;
 					fadetarget = -1;
 					break;

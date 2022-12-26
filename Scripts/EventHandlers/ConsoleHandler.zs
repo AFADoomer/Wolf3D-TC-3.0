@@ -71,16 +71,19 @@ class ConsoleHandler : StaticEventHandler
 
 			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
+			int v, temp;
+			[temp, v] = Game.IsSoD();
+
 			int size = 3;
 			int steps = 64;
 			for (int g = 0; g < steps; g ++)
 			{
 				int y = h - 2 - g * size;
-				conbackcanvas.DrawThickLine(0, y, w, y, size, Game.IsSoD() ? 0x0000DD : 0xDD0000, 64 - (g * 64 / steps));
+				conbackcanvas.DrawThickLine(0, y, w, y, size, v >= 0 ? v ? 0x0000DD : 0xDD0000 : 0xDDDDDD, 64 - (g * 64 / steps));
 			}
 
-			TextureID logo = TexMan.CheckForTexture((Game.IsSoD() ? "Graphics/SoD.png" : "Graphics/Wolf3D.png"), TexMan.Type_Any);
-			if (logo)
+			TextureID logo = TexMan.CheckForTexture((v >= 0 ? v ? "Graphics/SoD.png" : "Graphics/Wolf3D.png" : ""), TexMan.Type_Any);
+			if (logo.IsValid())
 			{
 				Vector2 size = TexMan.GetScaledSize(logo);
 				conbackcanvas.DrawTexture(logo, true, w - size.x * wscale, h - size.y - 8, DTA_ScaleX, wscale);
@@ -88,7 +91,7 @@ class ConsoleHandler : StaticEventHandler
 
 			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, h - fontheight * fontscale - 3, gamestring, DTA_ScaleX, wscale * fontscale, DTA_ScaleY, fontscale);
 
-			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, Game.IsSoD() ? 0xDDDD00 : 0xDD0000);
+			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, v >= 0 ? v ? 0xDDDD00 : 0xDD0000 : 0xDDDDDD);
 			conbackcanvas.DrawLine(0, h - 1, w, h - 1, 0x000000, 128);
 		}
 	}

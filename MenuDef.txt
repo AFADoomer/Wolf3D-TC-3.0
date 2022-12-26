@@ -159,6 +159,7 @@ OptionMenu "TCOptions"
 	StaticText ""
 	SafeCommand	"$M_OPTIONSRESET",			"g_resetdefaults"
 	SafeCommand	"$M_OPTIONSSAVE",			"writeini"
+	Command "$OPTMNU_CONSOLE",				"menuconsole"
 }
 
 OptionMenu "WolfColorPickerMenu" protected

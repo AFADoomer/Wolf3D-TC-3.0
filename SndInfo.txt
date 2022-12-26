@@ -258,9 +258,6 @@ wilhelm/death			SSND0032
 quarkblitz/sight		LSND0031
 quarkblitz/death		LSND0032
 
-// TC Intro Screen
-introsplash				INTRO
-
 // Add-on Items
 $alias pickups/knife		pickups/ammo
 $alias pickups/pistol		pickups/ammo

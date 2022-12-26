@@ -317,6 +317,24 @@ class GameHandler : StaticEventHandler
 			CheckGameFiles(self);
 		}
 	}
+
+	ui static void OpenConsole()
+	{
+		// HACK: This will break if the console command to open the console ever changes
+		Menu.SetMenu("TCOptions");
+							
+		let m = OptionMenu(Menu.GetCurrentMenu());
+		if (m)
+		{
+			let i = m.GetItem("menuconsole");
+			if (i) { i.Activate(); }
+
+			m.Close();
+
+			if (level.levelnum) { GameHandler.ChangeMusic(level.music); }
+			else { GameHandler.ChangeMusic(""); }
+		}
+	}
 }
 
 class Game

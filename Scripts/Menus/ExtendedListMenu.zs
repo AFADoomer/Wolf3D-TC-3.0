@@ -214,6 +214,13 @@ class ExtendedListMenu : ListMenu
 	{
 		Super.Ticker();
 
+		if (g_sod < 0 && mDesc.mMenuName != "GameMenu")
+		{
+			Close();
+			Menu.SetMenu("GameMenu");
+			return;
+		}
+
 		if (gametic > 1)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
@@ -431,6 +438,16 @@ class ExtendedListMenu : ListMenu
 		if (ev.type == UIEvent.Type_RButtonUp)
 		{
 			return MenuEvent(MKEY_Back, false);
+		}
+		else if (ev.type == UIEvent.Type_KeyUp)
+		{
+			if (WolfMenu.CheckControl(self, ev, "toggleconsole"))
+			{
+				GameHandler.OpenConsole();
+				Close();
+
+				return false;
+			}
 		}
 
 		return Super.OnUIEvent(ev);
