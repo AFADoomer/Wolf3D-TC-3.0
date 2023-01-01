@@ -566,7 +566,7 @@ class ClassicBase : Actor
 	}
 
 	// Custom implementation of Wolf-style firing logic
-	void A_NaziShoot(double rangemultiplier = 1.0)
+	void A_NaziShoot(double rangemultiplier = 1.0, Class<Actor> pufftype = "WolfPuff")
 	{
 		if (!target || !CheckSight(target)) { return; }
 
@@ -593,18 +593,43 @@ class ClassicBase : Actor
 		int hitchance = targetspeed < 10.0 ? 256 : 160;
 
 		// Lower hitchance for enemies that are in the player's FOV (hard-coded to 45 degrees right/left)
-		int multiplier = absangle(target.angle, target.AngleTo(self)) < 45 ? 16 : 8;
+		double targetangle = target.AngleTo(self);
+		int multiplier = absangle(target.angle, targetangle) < 45 ? 16 : 8;
 		
 		// Lower hitchance based on distance
 		hitchance -= dist * multiplier;
 
-		if (GameHandler.WolfRandom() < hitchance)
+		let puffclass = GetReplacement(pufftype);
+		Vector3 bloodpos = target.Vec3Angle(target.radius, targetangle + Random(-40, 40), target.height / 2 + Random(-8, 8));
+
+		if (GameHandler.CheckForClass("BulletZPuff") && puffclass is String.Format("BulletZPuff"))
 		{
+			SpawnPuff(puffclass, bloodpos, targetangle, targetangle, 0, 0, target);
+		}
+		else if (GameHandler.WolfRandom() < hitchance)
+		{
+			// Lower damage based on distance
 			if (dist < 2) { damage = damage >> 2; }
 			else if (dist < 4) { damage = damage >> 3; }
 			else { damage = damage >> 4; }
 
-			target.DamageMobj(self, self, damage, "Bullet", DMG_THRUSTLESS);
+			Name mod = 'Bullet';
+			let puff = GetDefaultByType(puffclass);
+			if (puff) { mod = puff.DamageType; }
+
+			int damagecalc = target.DamageMobj(self, self, damage, mod, DMG_THRUSTLESS);
+
+			if (!g_noblood)
+			{
+				if (bNoBlood || bDormant)
+				{
+					SpawnPuff(puffclass, bloodpos, targetangle, targetangle, 0, 0, target);
+				}
+				else
+				{
+					SpawnBlood(bloodpos, targetangle, damagecalc > 0 ? damagecalc : damage);
+				}
+			}
 		}
 
 		S_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
@@ -666,6 +691,7 @@ class ClassicBase : Actor
 		if (target && (CheckSight(target) || Distance2D(target) < 256)) { return; }
 		Super.Deactivate(activator);
 
+		movedir = int(angle / 45);
 		bDormant = true;
 		SetStateLabel("Spawn.Stand");
 	}

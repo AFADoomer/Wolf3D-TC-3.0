@@ -335,6 +335,11 @@ class GameHandler : StaticEventHandler
 			else { GameHandler.ChangeMusic(""); }
 		}
 	}
+
+	static Class<Actor> CheckForClass(String cls)
+	{
+		return (Class<Actor>)(cls);
+	}
 }
 
 class Game

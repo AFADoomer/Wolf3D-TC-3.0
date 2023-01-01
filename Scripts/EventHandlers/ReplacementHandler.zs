@@ -68,6 +68,13 @@ class ReplacementHandler : StaticEventHandler
 			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
 			case 'Backpack': e.replacement = "WolfBackpack"; break;
 			case 'AllMap': e.replacement = "WolfMap"; break;
+
+			// BulletZBorn compatibility
+			case 'WolfPuff':
+				e.replacement = GameHandler.CheckForClass("BulletZPuff");
+				break;
+			case 'WallSmoke': e.replacement = "WolfPuff"; break;
+
 		}
 
 		if (e.replacement) { e.IsFinal = true; }
