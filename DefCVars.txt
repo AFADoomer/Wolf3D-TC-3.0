@@ -11,3 +11,4 @@ set disableautosave 0
 set crosshairon 0
 set gl_lightmode 0
 set gl_texture_filter 6
+set cl_showsecretmessage 0
