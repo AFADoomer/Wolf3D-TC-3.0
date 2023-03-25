@@ -91,6 +91,19 @@ class WolfPostProcessor : LevelPostProcessor
 				SetThingEdNum(i, translations[j].games[g]);
 			}
 		}
+
+		// Spawn door sound player
+		for (uint i = 0; i < count; i++)
+		{
+			uint e = GetThingEdNum(i);
+
+			// Polyobject Start Spot
+			if (e == 9301)
+			{
+				Vector3 sPos = GetThingPos(i);
+				AddThing(22101, sPos, GetThingAngle(i));
+			}
+		}
 	}
 
 	void ParseActorTranslations(out Array<ActorTranslation> translations)

@@ -405,4 +405,19 @@ class Game
 			mo.A_RemoveLight("DownLight");
 		}
 	}
+
+	play static void WolfDoorSound(int po, String soundname)
+	{
+		// Find the WolfDoorSound actor who has the matching angle
+		ThinkerIterator it = ThinkerIterator.Create("WolfDoorSound");
+		Actor mo;
+		while (mo = Actor(it.Next()))
+		{
+			if (int(mo.Angle) == po)
+			{
+				mo.A_StartSound(soundName, CHAN_BODY);
+				break;
+			}
+		}
+	}
 }

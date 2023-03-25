@@ -1361,6 +1361,7 @@ DoomEdNums
 
 	// Miscellanous
 	22100=SecretMarker
+	22101=WolfDoorSound
 	22090=Turn
 	22091=Turn45
 	22092=Turn90
