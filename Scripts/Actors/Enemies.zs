@@ -632,7 +632,7 @@ class ClassicBase : Actor
 			}
 		}
 
-		S_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
+		A_StartSound(AttackSound, CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
 	}
 
 	void ActivatePeers()
