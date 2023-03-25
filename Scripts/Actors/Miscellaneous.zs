@@ -343,8 +343,8 @@ class Fire : Actor
 	{
 		Super.PostBeginPlay();
 
-		frame = Random(0, 7);
-		vel.z = FRandom(0.05, 0.5);
+		frame = Random[FirePBP](0, 7);
+		vel.z = FRandom[FirePBP](0.05, 0.5);
 	}
 
 	void Advance()
@@ -397,9 +397,9 @@ class Smoke : Actor
 	{
 		Super.PostBeginPlay();
 
-		vel.z = FRandom(0.05, 0.5);
-		scale = FRandom(0.25, 0.75) * (1.0, 1.0);
-		roll = Random(0, 7) * 45;
+		vel.z = FRandom[SmokePBP](0.05, 0.5);
+		scale = FRandom[SmokePBP](0.25, 0.75) * (1.0, 1.0);
+		roll = Random[SmokePBP](0, 7) * 45;
 	}
 
 	override void Tick()
@@ -431,7 +431,7 @@ class SmokeSpawner : Actor
 	{
 		Super.PostBeginPlay();
 
-		interval = Random(10, 35);
+		interval = Random[SmokeSpawnerPBP](10, 35);
 	}
 
 	override void Tick()
@@ -443,7 +443,7 @@ class SmokeSpawner : Actor
 		if (counter++ % interval == 0)
 		{
 			Actor s = Spawn("Smoke", pos);
-			if (s) { s.scale.x *= RandomPick(-1, 1); }
+			if (s) { s.scale.x *= RandomPick[SmokeSpawner](-1, 1); }
 		}
 
 		if (counter++ > duration) { Destroy(); }

@@ -482,11 +482,11 @@ class ClassicBase : Actor
 
 		if (delta.x > 0) { d[0] = DI_EAST; }
 		else if (delta.x < 0) { d[0] = DI_WEST; }
-		else { d[0] = RandomPick(DI_EAST, DI_WEST); }
+		else { d[0] = RandomPick[GetDirX](DI_EAST, DI_WEST); }
 
 		if (delta.y < 0) { d[1] = DI_SOUTH; }
 		else if (delta.y > 0) { d[1] = DI_NORTH; }
-		else { d[1] = RandomPick(DI_SOUTH, DI_NORTH); }
+		else { d[1] = RandomPick[GetDirY](DI_SOUTH, DI_NORTH); }
 
 		return delta, d[0], d[1];
 	}
@@ -600,7 +600,7 @@ class ClassicBase : Actor
 		hitchance -= dist * multiplier;
 
 		let puffclass = GetReplacement(pufftype);
-		Vector3 bloodpos = target.Vec3Angle(target.radius, targetangle + Random(-40, 40), target.height / 2 + Random(-8, 8));
+		Vector3 bloodpos = target.Vec3Angle(target.radius, targetangle + Random[BloodPos](-40, 40), target.height / 2 + Random[BloodPos](-8, 8));
 
 		if (GameHandler.CheckForClass("BulletZPuff") && puffclass is String.Format("BulletZPuff"))
 		{
@@ -669,11 +669,11 @@ class ClassicBase : Actor
 		{
 			if (rad == -1) { rad = radius / 2; }
 
-			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
+			Vector3 spawnpos = pos + (FRandom[SpawnFlames](-rad, rad), FRandom(-rad, rad), FRandom[SpawnFlames](0, maxheight));
 			Spawn("Fire", spawnpos);
-			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
-			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16))));
-			if (ss) { ss.duration = Random(45, 105); }
+			Spawn("SmallFire", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-8, 8)));
+			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16))));
+			if (ss) { ss.duration = Random[SpawnFlames](45, 105); }
 		}
 	}
 

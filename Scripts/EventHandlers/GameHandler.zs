@@ -263,7 +263,7 @@ class GameHandler : StaticEventHandler
 			if (this) { return rnd_table[this.randomcount++ % 256]; }
 		}
 
-		return Random(0, 255);
+		return Random[WolfRandom](0, 255);
 	}
 
 	void ParseMusicMapping()

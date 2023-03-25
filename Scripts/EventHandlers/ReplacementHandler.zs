@@ -52,12 +52,12 @@ class ReplacementHandler : StaticEventHandler
 			case 'CellPack': e.replacement = "WolfGas"; break;
 
 			// Armor
-			case 'ArmorBonus': e.replacement = Random(0, 1) ? "JeweledScepter" : "JeweledCross"; break;
-			case 'GreenArmor': e.replacement = Random(0, 1) ? "Chest" : "Chalice"; break;
+			case 'ArmorBonus': e.replacement = Random[WolfReplace](0, 1) ? "JeweledScepter" : "JeweledCross"; break;
+			case 'GreenArmor': e.replacement = Random[WolfReplace](0, 1) ? "Chest" : "Chalice"; break;
 			case 'BlueArmor': e.replacement = "Crown"; break;
 
 			// Health
-			case 'HealthBonus': e.replacement = Random(0, 1) ? "DogFood" : "MoldyCheese"; break;
+			case 'HealthBonus': e.replacement = Random[WolfReplace](0, 1) ? "DogFood" : "MoldyCheese"; break;
 			case 'StimPack': e.replacement = "PlateOfFood"; break;
 			case 'MediKit': e.replacement = "FirstAidKit"; break;
 			case 'SoulSphere':

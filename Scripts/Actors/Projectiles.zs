@@ -193,8 +193,8 @@ class Syringe : WolfProjectile
 		Death:
 			SYRP A 2 {
 				bInvisible = g_noblood;
-				roll = Random(0, 7) * 45;
-				scale.x *= RandomPick(-1, 1);
+				roll = Random[SyringeDeath](0, 7) * 45;
+				scale.x *= RandomPick[SyringeDeath](-1, 1);
 				WolfExplode(20);
 			}
 			SYRP BCD 2;
@@ -221,8 +221,8 @@ class GhostFireBall : WolfProjectile
 		Death:
 			BALP A 4 Bright {
 				bInvisible = g_noblood;
-				roll = Random(0, 7) * 45;
-				scale.x *= RandomPick(-1, 1);
+				roll = Random[GhostFireBallDeath](0, 7) * 45;
+				scale.x *= RandomPick[GhostFireBallDeath](-1, 1);
 				WolfExplode(0, flags:0);
 			}
 			BALP BCD 4 Bright  { A_FadeOut(alpha / 2); }
