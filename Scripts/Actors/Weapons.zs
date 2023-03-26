@@ -36,6 +36,7 @@ class ClassicWeapon : Weapon
 		Obituary "";
 		Inventory.PickupMessage "";
 		Weapon.YAdjust 2.0;
+		Weapon.BobSpeed 2.0;
 	}
 
 	States
