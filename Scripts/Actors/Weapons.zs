@@ -175,6 +175,7 @@ class WolfPuff : BulletPuff
 {
 	Default
 	{
+		+NOEXTREMEDEATH
 		+ROLLSPRITE
 		Alpha 1.0;
 	}
