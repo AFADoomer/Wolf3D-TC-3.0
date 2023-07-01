@@ -568,7 +568,7 @@ class ClassicBase : Actor
 	// Custom implementation of Wolf-style firing logic
 	void A_NaziShoot(double rangemultiplier = 1.0, Class<Actor> pufftype = "WolfPuff")
 	{
-		S_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
+		A_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
 
 		if (!target || !CheckSight(target)) { return; }
 
