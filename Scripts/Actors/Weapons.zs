@@ -123,8 +123,8 @@ class ClassicWeapon : Weapon
 			CVar bobscale = CVar.GetCVar("g_viewbobscale", owner.player);
 			if (bobscale)
 			{
-				bobrangex = Default.bobrangex * bobscale.GetFloat();
-				bobrangey = Default.bobrangey * bobscale.GetFloat();
+				bobrangex = Default.bobrangex * bobscale.GetFloat() / WeaponScaleY;
+				bobrangey = Default.bobrangey * bobscale.GetFloat() / WeaponScaleY;
 			}
 
 			SetYPosition();

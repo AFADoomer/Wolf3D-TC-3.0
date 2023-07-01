@@ -97,6 +97,8 @@ class WolfPlayer : DoomPlayer
 		CVar momentum = CVar.FindCVar("g_momentum");
 		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
 
+		ViewBob = default.ViewBob * (bobscale && bobscale.GetFloat() != 0);
+
 		if ((!momentum || !momentum.GetInt()) && pos.z == floorz)
 		{
 			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
