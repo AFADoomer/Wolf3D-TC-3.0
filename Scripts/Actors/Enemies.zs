@@ -706,6 +706,18 @@ class ClassicNazi : ClassicBase
 	FlagDef LongDeath:flags, 0;
 	FlagDef Patrolling:flags, 1;
 
+	// [DenisBelmondo]: in OG Doom (p_inter.c > P_KillMobj), there is a random
+	// amount of tics between 0 and 3 subtracted from the death animation. This
+	// behavior, of course carries in GZDoom, but Wolf3D never had this
+	// behavior. This is a quick hack that fixes it because evidently, calling
+	// A_SetTics on the first death state doesn't do the trick.
+
+	override void Die(Actor source, Actor inflictor, int dmgflags, Name meansofdeath)
+	{
+		super.Die(source, inflictor, dmgflags, meansofdeath);
+		tics = deathtics;
+	}
+
 	Default
 	{
 		ClassicNazi.DeathTics 8;
@@ -761,14 +773,11 @@ class ClassicNazi : ClassicBase
 			"####" J 5 A_Pain;
 			"####" A 0 A_Jump(256, "Chase");
 		Death:
-			"####" A 0 {
-				A_DeathScream();
-				A_DeathDrop();
-			}
-			"####" K 7 A_SetTics(deathtics - 1);
+			"####" A 0 A_DeathDrop();
+			"####" K 8 A_SetTics(deathtics);
 		Death.Resume:
-			"####" L 8 A_SetTics(deathtics);
-			"####" M 7 A_SetTics(deathtics - 1);
+			"####" L 7 { A_SetTics(deathtics - 1); A_DeathScream(); }
+			"####" M 8 A_SetTics(deathtics);
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
 		Dead:
 			"####" N -1 { if (bLongDeath) { frame = 14; } }
@@ -876,9 +885,10 @@ class Dog : ClassicNazi
 			"####" EA 5;
 			Goto Chase;
 		Death:
-			"####" A 0 A_DeathScream;
+			"####" H 8 A_DeathDrop();
 		Death.Resume:
-			"####" HIJ 5;
+			"####" I 7 A_DeathScream();
+			"####" J 8;
 		Dead:
 			"####" K -1;
 			Stop;
@@ -945,7 +955,7 @@ class Guard : ClassicNazi
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
 		Attack:
-			"####" I 8 A_NaziShoot();
+			"####" I 10 A_NaziShoot();
 			Goto Chase;
 	}
 }
