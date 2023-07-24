@@ -39,6 +39,7 @@ class WolfPlayer : DoomPlayer
 		Player.DisplayName "BJ";
 		Player.Face "WLF";
 		Player.ForwardMove 1.3, 1.3;
+		Player.ViewBob 0.125;
 		Player.MaxHealth 100;
 		Player.SideMove 1.3, 1.3;
 		Player.StartItem "WolfPistol";
@@ -94,27 +95,9 @@ class WolfPlayer : DoomPlayer
 	{
 		if (!player) { return; }
 
-		CVar momentum = CVar.FindCVar("g_momentum");
-		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
-
-		if ((!momentum || !momentum.GetInt()) && pos.z == floorz)
-		{
-			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
-			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
-		}
-
 		lastpos = pos;
 
 		Super.Tick();
-
-		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
-		{
-			if (!vel.xy.length()) { player.mo.PlayIdle(); }
-			vel *= 0;
-
-			Speed = Default.Speed * 8;
-		}
-		else { Speed = Default.Speed; }
 
 		// SoD-specific idle and ouch face mugshots
 		if (Game.IsSoD() || level.levelnum < 101)
@@ -133,9 +116,37 @@ class WolfPlayer : DoomPlayer
 		}
 	}
 
+	override void MovePlayer(void)
+	{
+		CVar momentum = CVar.FindCVar("g_momentum");
+		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
+
+		if ((!momentum || !momentum.GetInt()) && pos.z == floorz)
+		{
+			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
+			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
+		}
+
+		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
+		{
+			if (!vel.xy.length()) { player.mo.PlayIdle(); }
+			vel *= 0;
+
+			Speed = Default.Speed * 8;
+		}
+		else { Speed = Default.Speed; }
+
+		Super.MovePlayer();
+	}
+
 	override void PlayerThink()
 	{
 		Super.PlayerThink();
+
+		if (!(player.cheats & CF_PREDICTING))
+		{
+			ViewBob = Default.ViewBob * CVar.GetCVar("g_viewbobscale", player).GetFloat();
+		}
 
 		if (player.playerstate != PST_DEAD && !(player.cheats & CF_PREDICTING))
 		{

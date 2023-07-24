@@ -51,7 +51,7 @@ class ClassicMessageBox : MessageBoxMenu
 
 		// Adjust quit messages to select SoD variants as appropriate
 		// Randomly use either set on the game selection screen
-		if (Game.IsSoD() && !(g_sod < 0 && Random(0, 1)))
+		if (Game.IsSoD() && !(g_sod < 0 && Random[QuitMsg](0, 1)))
 		{
 			for (int m = 1; m <= 9; m++)
 			{

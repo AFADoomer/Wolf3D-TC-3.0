@@ -482,11 +482,11 @@ class ClassicBase : Actor
 
 		if (delta.x > 0) { d[0] = DI_EAST; }
 		else if (delta.x < 0) { d[0] = DI_WEST; }
-		else { d[0] = RandomPick(DI_EAST, DI_WEST); }
+		else { d[0] = RandomPick[GetDirX](DI_EAST, DI_WEST); }
 
 		if (delta.y < 0) { d[1] = DI_SOUTH; }
 		else if (delta.y > 0) { d[1] = DI_NORTH; }
-		else { d[1] = RandomPick(DI_SOUTH, DI_NORTH); }
+		else { d[1] = RandomPick[GetDirY](DI_SOUTH, DI_NORTH); }
 
 		return delta, d[0], d[1];
 	}
@@ -602,7 +602,7 @@ class ClassicBase : Actor
 		hitchance -= dist * multiplier;
 
 		let puffclass = GetReplacement(pufftype);
-		Vector3 bloodpos = target.Vec3Angle(target.radius, targetangle + Random(-40, 40), target.height / 2 + Random(-8, 8));
+		Vector3 bloodpos = target.Vec3Angle(target.radius, targetangle + Random[BloodPos](-40, 40), target.height / 2 + Random[BloodPos](-8, 8));
 
 		if (GameHandler.CheckForClass("BulletZPuff") && puffclass is String.Format("BulletZPuff"))
 		{
@@ -669,11 +669,11 @@ class ClassicBase : Actor
 		{
 			if (rad == -1) { rad = radius / 2; }
 
-			Vector3 spawnpos = pos + (FRandom(-rad, rad), FRandom(-rad, rad), FRandom(0, maxheight));
+			Vector3 spawnpos = pos + (FRandom[SpawnFlames](-rad, rad), FRandom(-rad, rad), FRandom[SpawnFlames](0, maxheight));
 			Spawn("Fire", spawnpos);
-			Spawn("SmallFire", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-8, 8)));
-			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom(-16, 16), FRandom(-16, 16), FRandom(-16, 16))));
-			if (ss) { ss.duration = Random(45, 105); }
+			Spawn("SmallFire", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-8, 8)));
+			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16))));
+			if (ss) { ss.duration = Random[SpawnFlames](45, 105); }
 		}
 	}
 
@@ -705,6 +705,18 @@ class ClassicNazi : ClassicBase
 	Property DeathTics:deathtics;
 	FlagDef LongDeath:flags, 0;
 	FlagDef Patrolling:flags, 1;
+
+	// [DenisBelmondo]: in OG Doom (p_inter.c > P_KillMobj), there is a random
+	// amount of tics between 0 and 3 subtracted from the death animation. This
+	// behavior, of course carries in GZDoom, but Wolf3D never had this
+	// behavior. This is a quick hack that fixes it because evidently, calling
+	// A_SetTics on the first death state doesn't do the trick.
+
+	override void Die(Actor source, Actor inflictor, int dmgflags, Name meansofdeath)
+	{
+		super.Die(source, inflictor, dmgflags, meansofdeath);
+		tics = deathtics;
+	}
 
 	Default
 	{
@@ -761,14 +773,11 @@ class ClassicNazi : ClassicBase
 			"####" J 5 A_Pain;
 			"####" A 0 A_Jump(256, "Chase");
 		Death:
-			"####" A 0 {
-				A_DeathScream();
-				A_DeathDrop();
-			}
-			"####" K 7 A_SetTics(deathtics - 1);
+			"####" A 0 A_DeathDrop();
+			"####" K 8 A_SetTics(deathtics);
 		Death.Resume:
-			"####" L 8 A_SetTics(deathtics);
-			"####" M 7 A_SetTics(deathtics - 1);
+			"####" L 7 { A_SetTics(deathtics - 1); A_DeathScream(); }
+			"####" M 8 A_SetTics(deathtics);
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
 		Dead:
 			"####" N -1 { if (bLongDeath) { frame = 14; } }
@@ -876,9 +885,10 @@ class Dog : ClassicNazi
 			"####" EA 5;
 			Goto Chase;
 		Death:
-			"####" A 0 A_DeathScream;
+			"####" H 8 A_DeathDrop();
 		Death.Resume:
-			"####" HIJ 5;
+			"####" I 7 A_DeathScream();
+			"####" J 8;
 		Dead:
 			"####" K -1;
 			Stop;
@@ -945,7 +955,7 @@ class Guard : ClassicNazi
 			"####" # 0 A_Stop;
 			"####" GH 10 A_FaceTarget;
 		Attack:
-			"####" I 8 A_NaziShoot();
+			"####" I 10 A_NaziShoot();
 			Goto Chase;
 	}
 }

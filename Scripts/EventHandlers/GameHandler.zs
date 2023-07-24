@@ -263,7 +263,7 @@ class GameHandler : StaticEventHandler
 			if (this) { return rnd_table[this.randomcount++ % 256]; }
 		}
 
-		return Random(0, 255);
+		return Random[WolfRandom](0, 255);
 	}
 
 	void ParseMusicMapping()
@@ -403,6 +403,21 @@ class Game
 		{
 			mo.A_RemoveLight("Light");
 			mo.A_RemoveLight("DownLight");
+		}
+	}
+
+	play static void WolfDoorSound(int po, String soundname)
+	{
+		// Find the WolfDoorSound actor who has the matching angle
+		ThinkerIterator it = ThinkerIterator.Create("WolfDoorSound");
+		Actor mo;
+		while (mo = Actor(it.Next()))
+		{
+			if (int(mo.Angle) == po)
+			{
+				mo.A_StartSound(soundName, CHAN_BODY);
+				break;
+			}
 		}
 	}
 }
