@@ -124,8 +124,8 @@ class ClassicWeapon : Weapon
 			CVar bobscale = CVar.GetCVar("g_viewbobscale", owner.player);
 			if (bobscale)
 			{
-				bobrangex = Default.bobrangex * bobscale.GetFloat();
-				bobrangey = Default.bobrangey * bobscale.GetFloat();
+				bobrangex = Default.bobrangex * bobscale.GetFloat() / WeaponScaleY;
+				bobrangey = Default.bobrangey * bobscale.GetFloat() / WeaponScaleY;
 			}
 
 			SetYPosition();
@@ -323,8 +323,9 @@ class WolfKnife : ClassicWeapon
 			Loop;
 		Fire:
 			"####" B 3;
-			"####" C 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
-			"####" DE 3;
+			"####" C 3;
+			"####" D 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
+			"####" E 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
 
@@ -461,8 +462,9 @@ class WolfPistol : ClassicWeapon
 			Loop;
 		Fire:
 			"####" B 3;
-			"####" C 3 Bright A_FireGun(2.0);
-			"####" DE 3;
+			"####" C 3 Bright;
+			"####" D 3 A_FireGun(2.0);
+			"####" E 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
 }
@@ -493,8 +495,8 @@ class WolfMachineGun : ClassicWeapon
 		Fire:
 			"####" B 3;
 		Hold:
-			"####" C 3 Bright A_FireGun(3.0);
-			"####" D 3;
+			"####" C 3 Bright;
+			"####" D 3 A_FireGun(3.0);
 			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
 	}
@@ -527,7 +529,9 @@ class WolfChaingun : ClassicWeapon
 		Fire:
 			"####" B 3;
 		Hold:
-			"####" CD 3 Bright A_FireGun(4.0);
+			"####" C 3 Bright;
+			"####" D 3 Bright A_FireGun(4.0);
+			"####" "#" 0 A_FireGun(4.0);
 			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
 	}
