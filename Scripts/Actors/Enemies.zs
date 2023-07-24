@@ -568,6 +568,8 @@ class ClassicBase : Actor
 	// Custom implementation of Wolf-style firing logic
 	void A_NaziShoot(double rangemultiplier = 1.0, Class<Actor> pufftype = "WolfPuff")
 	{
+		A_StartSound(AttackSound, CHAN_WEAPON, 0, 1.0, ATTN_NORM);
+
 		if (!target || !CheckSight(target)) { return; }
 
 		int damage = GameHandler.WolfRandom();
@@ -631,8 +633,6 @@ class ClassicBase : Actor
 				}
 			}
 		}
-
-		A_StartSound(AttackSound, CHAN_WEAPON, CHANF_DEFAULT, 1.0, ATTN_NORM);
 	}
 
 	void ActivatePeers()
