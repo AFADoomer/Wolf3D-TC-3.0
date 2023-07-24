@@ -24,6 +24,13 @@ Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
 	HudMessage (s:"A"; 3, 0, -1, 160.0, 100.0, holdTime, inTime, outTime);
 }
 
+Function void WolfDoorSound(int po, str snd)
+{
+	// Find the Polyobject Start Spot actor from the PO number, and play the sound originating from it.
+	// ACS lacks the facilities to do this efficiently, so we'll just offload this to a ZScript function.
+	ScriptCall("Game", "WolfDoorSound", po, snd);
+}
+
 Script "RespawnPlayer" RESPAWN
 {
 	Delay(1);
@@ -195,8 +202,8 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 
 	if (polydoors[index][DOOR_STATE] == DOOR_CLOSED || polydoors[index][DOOR_STATE] == DOOR_CLOSING)
 	{
-		if (GetCVar("g_sod") > 1) { ActivatorSound("door/open2", 127); }
-		else { ActivatorSound("door/classic/open", 127); }
+		if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/open2"); }
+		else { WolfDoorSound(po, "door/classic/open"); }
 
 		if (polydoors[index][DOOR_STATE] == DOOR_CLOSED) { polydoors[index][DOOR_STATE] = DOOR_FIRSTOPENING; }
 		else { polydoors[index][DOOR_STATE] = DOOR_OPENING; }
@@ -244,8 +251,8 @@ Script "W_DoSlidingDoor" (int po, int dir, int lock)
 
 	if (polydoors[index][DOOR_STATE] == DOOR_OPENED || polydoors[index][DOOR_STATE] == DOOR_OPENING)
 	{
-		if (GetCVar("g_sod") > 1) { ActivatorSound("door/close2", 127); }
-		else { ActivatorSound("door/classic/close", 127); }
+		if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/close2"); }
+		else { WolfDoorSound(po, "door/classic/close"); }
 
 		polydoors[index][DOOR_STATE] = DOOR_CLOSING;
 
@@ -328,8 +335,8 @@ Script "W_DoSecretDoor" (int po, int Angle)
 
 			PolyObj_Move(po, 8, Angle, intMoveDist/1.0);
 
-			if (GetCVar("g_sod") > 1) { ActivatorSound("door/secret2", 127); }
-			else { AmbientSound("door/classic/secret",127); }
+			if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/secret2"); }
+			else { WolfDoorSound(po, "door/classic/secret"); }
 
 			PolyX = GetPolyObjX(po) + 24.0;
 			PolyY = GetPolyObjY(po);

@@ -257,6 +257,36 @@ class Turn315 : Turn
 	}
 }
 
+class WolfDoorSound : Actor
+{
+	Default
+	{
+		+FIXMAPTHINGPOS
+		+NOTONAUTOMAP
+		+NOINTERACTION
+	}
+
+	override void BeginPlay(void)
+	{
+		Super.BeginPlay();
+
+		// Move it to the middle of the sector
+		Sector sec = CurSector;
+		Vector3 sPos = (sec.centerspot.X, sec.centerspot.Y, 0);
+		SetXYZ(sPos);
+	}
+
+	/*
+	// Just to visually confirm that the position is correct
+	States
+	{
+	Spawn:
+		BALP A -1;
+		Stop;
+	}
+	*/
+}
+
 // Deathcam Spot
 class DeathCam : Actor
 {
