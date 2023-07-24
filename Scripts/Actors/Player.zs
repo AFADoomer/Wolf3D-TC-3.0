@@ -39,6 +39,7 @@ class WolfPlayer : DoomPlayer
 		Player.DisplayName "BJ";
 		Player.Face "WLF";
 		Player.ForwardMove 1.3, 1.3;
+		Player.ViewBob 0.125;
 		Player.MaxHealth 100;
 		Player.SideMove 1.3, 1.3;
 		Player.StartItem "WolfPistol";
@@ -141,6 +142,11 @@ class WolfPlayer : DoomPlayer
 	override void PlayerThink()
 	{
 		Super.PlayerThink();
+
+		if (!(player.cheats & CF_PREDICTING))
+		{
+			ViewBob = Default.ViewBob * CVar.GetCVar("g_viewbobscale", player).GetFloat();
+		}
 
 		if (player.playerstate != PST_DEAD && !(player.cheats & CF_PREDICTING))
 		{
