@@ -634,7 +634,7 @@ class ClassicStatusBar : WidgetStatusBar
 		{
 			mugshot = GetMugShot(5);
 			mugshottimer = 0;
-			idleframe = Random(1, 2);
+			idleframe = Random[mugshot](1, 2);
 		}
 
 		Vector2 texsize = TexMan.GetScaledSize(mugshot);

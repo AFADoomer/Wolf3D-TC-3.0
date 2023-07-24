@@ -1025,7 +1025,7 @@ class Startup : GenericMenu
 		node.parent = parent;
 		node.title = title;
 		node.extension = extension;
-		node.size = size > 0 ? size : Random(1, 999999);
+		node.size = size > 0 ? size : Random[DOSItem](1, 999999);
 		node.date = GetDate(date);
 		node.lump = lump;
 
@@ -1080,7 +1080,7 @@ class Startup : GenericMenu
 		node.parent = parent;
 		node.title = file[0];
 		node.extension = (file.Size() > 1 ? file[1] : "");
-		node.size = size > 0 ? size : Random(1, 999999);
+		node.size = size > 0 ? size : Random[DOSItem](1, 999999);
 		node.date = GetDate(date);
 		node.lump = lump;
 
@@ -1091,7 +1091,7 @@ class Startup : GenericMenu
 
 	String GetDate(string input = "")
 	{
-		String temp = String.Format("%02i-%02i-%i  %2i:%02i%s", Random(1, 12), Random(1, 28), Random(1992, 1993), Random(1, 12), Random(0, 59), Random(0, 1) ? "a" : "p");
+		String temp = String.Format("%02i-%02i-%i  %2i:%02i%s", Random[RDate](1, 12), Random[RDate](1, 28), Random[RDate](1992, 1993), Random[RDate](1, 12), Random[RDate](0, 59), Random[RDate](0, 1) ? "a" : "p");
 
 		return input .. temp.mid(input.length());
 	}

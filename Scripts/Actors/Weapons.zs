@@ -185,7 +185,7 @@ class WolfPuff : BulletPuff
 
 		Super.PostBeginPlay();
 
-		roll = Random(0, 3) * 90;
+		roll = Random[WolfPuffPBP](0, 3) * 90;
 	}
 
 	States
