@@ -58,8 +58,9 @@ class ConsoleHandler : StaticEventHandler
 		Canvas conbackcanvas = TexMan.GetCanvas("CONBACK");
 		if (conbackcanvas)
 		{
-			int h = 768;
 			int w = 1024;
+			int h = 768;
+
 			double fontscale = 2.0;
 
 			Font fnt = SmallFont;
@@ -67,7 +68,7 @@ class ConsoleHandler : StaticEventHandler
 			int fontheight = fnt.GetHeight();
 			int fontwidth = fnt.StringWidth("0");
 
-			double wscale = w / double(Screen.GetWidth());
+			double wscale = (4.0 / 3.0) / Screen.GetAspectRatio();
 
 			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
@@ -86,7 +87,7 @@ class ConsoleHandler : StaticEventHandler
 			if (logo.IsValid())
 			{
 				Vector2 size = TexMan.GetScaledSize(logo);
-				conbackcanvas.DrawTexture(logo, true, w - size.x * wscale, h - size.y - 8, DTA_ScaleX, wscale);
+				conbackcanvas.DrawTexture(logo, true, w - size.x * wscale, h - size.y - fontheight * 1.5, DTA_ScaleX, wscale);
 			}
 
 			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, h - fontheight * fontscale - 3, gamestring, DTA_ScaleX, wscale * fontscale, DTA_ScaleY, fontscale);
