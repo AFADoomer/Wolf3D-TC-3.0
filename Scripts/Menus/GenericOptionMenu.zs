@@ -271,9 +271,11 @@ class GenericOptionMenu : OptionMenu
 			return OptionMenu.MouseEvent(type, x, y);
 		}
 
+		ItemInfo item;
+
 		if (mFocusControl)
 		{
-			ItemInfo item = MenuHandler.FindItem(mFocusControl);
+			item = MenuHandler.FindItem(mFocusControl);
 
 			if
 			(
@@ -319,7 +321,7 @@ class GenericOptionMenu : OptionMenu
 		{
 			for (int i = 0; i < handler.Items.Size(); i++)
 			{
-				ItemInfo item = handler.Items[i];
+				item = handler.Items[i];
 
 				if (
 					item.menu == GetCurrentMenu() &&
@@ -343,13 +345,28 @@ class GenericOptionMenu : OptionMenu
 		{
 			for (int i = 0; i < mDesc.mItems.Size(); i++)
 			{
-				ItemInfo item = MenuHandler.FindItem(mDesc.mItems[i]);
+				item = MenuHandler.FindItem(mDesc.mItems[i]);
 
 				if (
 					item &&
 					y >= item.y && y <= item.y + item.height
 				)
 				{
+					if (item.item is "OptionMenuSliderBase")
+					{
+						if (x >= item.valueleft && x <= item.valueright)
+						{
+							if (type == MOUSE_Release)
+							{
+								ReleaseFocus();
+							}
+
+							SetSlider(item, x);
+
+							return true;
+						}
+					}
+
 					mDesc.mSelectedItem = i;
 					mDesc.mItems[i].MouseEvent(type, x, y);
 					return true;
