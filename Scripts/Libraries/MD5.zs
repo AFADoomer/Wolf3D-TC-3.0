@@ -71,7 +71,9 @@ Class MD5
 		// Cut the last letter off, since readLump adds a null character to the string,
 		// causing the hash obtained to not match the actual hash of the file
 		if(trunc)
-			key.Truncate(key.length() - 1);
+		{
+			if (key.mid(key.length() - 1) == String.format("%c", 0x00)) { key.Truncate(key.length() - 1); }
+		}
 
 		// s specifies the per-round shift amounts
 		uint s[64] = { 7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,  7, 12, 17, 22,
