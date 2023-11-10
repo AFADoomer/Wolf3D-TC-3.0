@@ -257,11 +257,8 @@ class GameHandler : StaticEventHandler
 		197, 242,  98,  43,  39, 175, 254, 145, 190,  84, 118, 222, 187, 136,
 		120, 163, 236, 249 };
 
-		if (gamestate == GS_DEMOSCREEN)
-		{
-			GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
-			if (this) { return rnd_table[this.randomcount++ % 256]; }
-		}
+		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+		if (this) { return rnd_table[this.randomcount++ % 256]; }
 
 		return Random[WolfRandom](0, 255);
 	}
