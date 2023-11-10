@@ -69,10 +69,10 @@ Class MD5
 	static string Hash(string key, bool trunc = true)
 	{	
 		// Cut the last letter off, since readLump adds a null character to the string,
-		// causing the hash obtained to not match the actual hash of the file
+		// causing the hash obtained to not match the actual hash of the file (in older versions of GZDoom)
 		if(trunc)
 		{
-			if (key.mid(key.length() - 1) == String.format("%c", 0x00)) { key.Truncate(key.length() - 1); }
+			if (key.ByteAt(key.length() - 1) == 0) { key.Truncate(key.length() - 1); }
 		}
 
 		// s specifies the per-round shift amounts
