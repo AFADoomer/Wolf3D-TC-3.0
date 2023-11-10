@@ -635,7 +635,7 @@ class Startup : GenericMenu
 
 	DOSItem, bool FindPath(String path)
 	{
-		if (!path) { return null; }
+		if (!path) { return null, false; }
 
 		Array<String> tree;
 
