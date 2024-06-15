@@ -637,7 +637,7 @@ class ClassicBase : Actor
 
 	void ActivatePeers()
 	{
-		if (bActive || !tid) { return; }
+		if (bActive || !tid || !target) { return; }
 
 		int lookup = (tid > 500) ? tid - 500 : tid;
 
@@ -694,6 +694,12 @@ class ClassicBase : Actor
 		movedir = int(angle / 45);
 		bDormant = true;
 		SetStateLabel("Spawn.Stand");
+	}
+
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if (!target) { target = source; }
+		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
 	}
 }
 
