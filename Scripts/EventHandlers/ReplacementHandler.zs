@@ -151,7 +151,13 @@ class ReplacementHandler : StaticEventHandler
 
 	void CheckFlats()
 	{
-		if (useflatsval[consoleplayer] < 4 && level.levelnum <= 100) { return; }
+		int levelnum;
+		ParsedMap queuedmap;
+		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (handler && handler.queuedmap) { levelnum = handler.queuedmap.mapnum; }
+		else { levelnum = level.levelnum; }
+
+		if (useflatsval[consoleplayer] < 4 && levelnum <= 100) { return; }
 
 		static const String WolfCeilings[] = {"1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "BF", "4E", "4E", "4E", "1D", "8D", "4E", "1D", "2D", "1D", "8D", "1D", "1D", "1D", "1D", "1D", "2D", "DD", "1D", "1D", "98", "1D", "9D", "2D", "DD", "DD", "9D", "2D", "4D", "1D", "DD", "7D", "1D", "2D", "2D", "DD", "D7", "1D", "1D", "1D", "2D", "1D", "1D", "1D", "1D", "DD", "DD", "7D", "DD", "DD", "DD"};
 		static const String SoDCeilings[] = {"6F", "4F", "1D", "DE", "DF", "2E", "7F", "9E", "AE", "7F", "1D", "DE", "DF", "DE", "DF", "DE", "E1", "DC", "2E", "1D", "DC"};
@@ -162,8 +168,8 @@ class ReplacementHandler : StaticEventHandler
 		int h, gamemode;
 		[h, gamemode] = Game.IsSoD();
 
-		if (gamemode > 0) { ceilname = SoDCeilings[clamp(level.levelnum % 100 - 1, 0, 20)]; }
-		else { ceilname = WolfCeilings[clamp((level.levelnum / 100 - 1) * 10 + level.levelnum % 100 - 1, 0, 59)]; }
+		if (gamemode > 0) { ceilname = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
+		else { ceilname = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
  
 		TextureID floortex, ceiltex;
 
@@ -172,14 +178,14 @@ class ReplacementHandler : StaticEventHandler
 			int val = useflats.GetInt() % 4;
 			if (val == 3)
 			{
-				floorname = "FLOOR" .. (level.levelnum / 5) % 8;
-				ceilname = "CEIL" .. level.levelnum % 7;
+				floorname = "FLOOR" .. (levelnum / 5) % 8;
+				ceilname = "CEIL" .. levelnum % 7;
 			}
 			else
 			{
 				if (val == 2)
 				{
-					floorname = "FLOOR" .. (level.levelnum / 5) % 8;
+					floorname = "FLOOR" .. (levelnum / 5) % 8;
 				}
 				else
 				{

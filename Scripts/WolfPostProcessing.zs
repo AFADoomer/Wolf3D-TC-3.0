@@ -23,6 +23,8 @@
 // Handle swapping out items if a custom SoD or Lost Episodes map is loaded with Wolf3D, or vice versa.
 // Can be toggled by setting 'g_sod' CVar and restarting map
 
+const MAXDOORS = 14;
+
 class WolfPostProcessor : LevelPostProcessor
 {
 	protected void Apply(Name checksum, String mapname)
@@ -92,16 +94,119 @@ class WolfPostProcessor : LevelPostProcessor
 			}
 		}
 
-		// Spawn door sound player
-		for (uint i = 0; i < count; i++)
+		// Move doors into place
+		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (handler && level.mapname ~== "Generic")
 		{
-			uint e = GetThingEdNum(i);
-
-			// Polyobject Start Spot
-			if (e == 9301)
+			if (!handler.queuedmap) { handler.queuedmap = handler.parsedmaps.GetMapData("Wolf1 Map1"); }
+			
+			if (handler.queuedmap)
 			{
-				Vector3 sPos = GetThingPos(i);
-				AddThing(22101, sPos, GetThingAngle(i));
+				int doorcount[3];
+
+				for (uint i = 0; i < count; i++)
+				{
+					uint e = GetThingEdNum(i);
+
+					// Polyobject Start Spot
+					if (e == 9301)
+					{
+						int id = GetThingAngle(i);
+						Vector3 pos = GetThingPos(i);
+
+						if (id > 0 && id <= 64)
+						{
+							int skip = doorcount[0];
+
+							for (int y = 0; y < 64; y++)
+							{
+								for (int x = 0; x < 64; x++)
+								{
+									int t = handler.queuedmap.TileAt((x, y));
+
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 0)
+									{
+										if (!skip--)
+										{
+											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
+											SetThingXY(i, pos.x, pos.y);
+											doorcount[0]++;
+
+											x = 64; y = 64;
+										}
+									}
+								}
+							}
+						}
+						else if (id > 64 && id <= 128)
+						{
+							int skip = doorcount[1];
+
+							for (int y = 0; y < 64; y++)
+							{
+								for (int x = 0; x < 64; x++)
+								{
+									int t = handler.queuedmap.TileAt((x, y));
+
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 1)
+									{
+										if (!skip--)
+										{
+											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
+											SetThingXY(i, pos.x, pos.y);
+											doorcount[1]++;
+
+											x = 64; y = 64;
+										}
+									}
+								}
+							}
+						}
+						else // Secret Door
+						{
+							int skip = doorcount[2];
+
+							for (int y = 0; y < 64; y++)
+							{
+								for (int x = 0; x < 64; x++)
+								{
+									int a = handler.queuedmap.ActorAt((x, y));
+									int t = handler.queuedmap.TileAt((x, y));
+
+									if (a == 0x62)
+									{
+										if (!skip--)
+										{
+											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
+											SetThingXY(i, pos.x, pos.y);
+											doorcount[2]++;
+
+											x = 64; y = 64;
+										}
+									}
+								}
+							}
+						}
+
+						// Spawn door sound player
+						AddThing(22101, pos, id);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Spawn door sound player
+			for (uint i = 0; i < count; i++)
+			{
+				uint e = GetThingEdNum(i);
+
+				// Polyobject Start Spot
+				if (e == 9301)
+				{
+					Vector3 sPos = GetThingPos(i);
+					AddThing(22101, sPos, GetThingAngle(i));
+				}
 			}
 		}
 	}

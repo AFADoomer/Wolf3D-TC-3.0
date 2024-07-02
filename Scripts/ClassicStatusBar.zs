@@ -557,16 +557,22 @@ class ClassicStatusBar : WidgetStatusBar
 		DrawString(ClassicFont, FormatNumber(max(lives, 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
 
 		//Level
-		String levelnum = String.Format("%i", level.levelnum);
-		if (level.levelnum > 100)
+		int levelnum;
+		String levelnumstring;
+
+		ParsedMap curmap = MapHandler.GetCurrentMap();
+		if (curmap) { levelnum = curmap.mapnum; }
+		else { levelnum = level.levelnum; }
+
+		if (levelnum > 100)
 		{
-			levelnum = String.Format("%i", level.levelnum % 100);
-			if (levelnum == "0") { levelnum = "10"; }
+			levelnumstring = String.Format("%i", levelnum % 100);
+			if (levelnumstring == "0") { levelnumstring = "10"; }
 		}
 
-		if (levelnum == "0") { levelnum = "?"; }
+		if (levelnumstring == "0") { levelnumstring = "?"; }
 
-		DrawString(ClassicFont, (Game.IsSoD() && levelnum == "21" ? "18" : levelnum), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+		DrawString(ClassicFont, (Game.IsSoD() && levelnumstring == "21" ? "18" : levelnumstring), (32, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 
 		//Score
 		if (points < 0) { points = GetAmount("Score"); }
@@ -1007,6 +1013,8 @@ class ClassicStatusBar : WidgetStatusBar
 
 		return Log.DrawPrompt(txt .. " ", "Chat", fnt);
 	}
+
+	override void DrawMyPos() {}
 }
 
 class JaguarHUD : AltHUD

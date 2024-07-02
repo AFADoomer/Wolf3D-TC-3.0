@@ -248,6 +248,18 @@ class ClassicBase : Actor
 		if (level.Vec2Diff(pos.xy, lastpos).length() < 32.0)
 		{
 			if (TryWalk()) { return; }
+			else if (BlockingLine && BlockingLine.special == 8)
+			{
+				if (bCanUseWalls)
+				{
+					BlockingLine.Activate(self, 0, SPAC_Use);
+					
+					frame = 4;
+					tics = 25;
+
+					return;
+				}
+			}
 		}
 
 		if (bRun && dist < 4) { movedir = GetRunDir(); }
@@ -637,9 +649,12 @@ class ClassicBase : Actor
 
 	void ActivatePeers()
 	{
-		if (bActive || !tid || !target) { return; }
+		if (bActive || !target) { return; }
 
-		int lookup = (tid > 500) ? tid - 500 : tid;
+		int lookup = MapHandler.TileAt(pos.xy);
+		if (lookup < 0x6C) { lookup = tid; }
+
+		if (lookup == 0) { return; }
 
 		let it = level.CreateActorIterator(lookup, "Actor");
 		Actor mo;
@@ -647,7 +662,7 @@ class ClassicBase : Actor
 		while (mo = Actor(it.Next()))
 		{
 			if (mo == self) { continue; }
-			if (!mo.bIsMonster || mo.bDormant || !mo.bShootable || mo.health <= 0) { continue; }
+			if (!mo.bIsMonster || mo.bDormant || !mo.bShootable || mo.health <= 0 || mo.bAmbush) { continue; }
 
 			let c = ClassicBase(mo);
 			if (c)
@@ -808,6 +823,23 @@ class ClassicNazi : ClassicBase
 
 		if (bPatrolling) { SetStateLabel("Spawn.Patrol"); }
 		else { SetStateLabel("Spawn.Stand"); }
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (vel.xy.length() > 0 && BlockingLine && BlockingLine.special == 8)
+		{
+			if (bCanUseWalls)
+			{
+				BlockingLine.Activate(self, 0, SPAC_Use);
+				
+				frame = 4;
+				tics = 25;
+				BlockingLine = null;
+			}
+		}
 	}
 }
 

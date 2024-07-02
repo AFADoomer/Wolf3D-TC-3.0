@@ -1,0 +1,1024 @@
+/*
+ * Copyright (c) 2024 AFADoomer
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+class MapHandler : StaticEventHandler
+{
+	WolfMapParser parsedmaps;
+	Array<ActorMap> actormapping;
+	ParsedMap curmap, queuedmap;
+	LevelInfo info;
+
+	override void OnRegister()
+	{
+		ParseGameMaps();
+		ParseActorMaps(actormapping);
+	}
+
+	void ParseGameMaps()
+	{
+		console.printf("Parsing Map Info");
+
+		for (int l = 0; l < Wads.GetNumLumps(); l++)
+		{
+			String lumpname = Wads.GetLumpFullName(l);
+			if (lumpname.Left(8) ~== "GAMEMAPS")
+			{
+				String headname = String.Format("%s.%s", "MAPHEAD", lumpname.Mid(lumpname.Length() - 3));
+				if (Wads.CheckNumForFullName(headname) > -1)
+				{
+					WolfMapParser.Parse(parsedmaps, lumpname, headname);
+				}
+			}
+			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".MAP")
+			{
+				WolfMapParser.Parse(parsedmaps, lumpname);
+			}
+		}
+
+		for (int m = 0; m < parsedmaps.maps.Size(); m++)
+		{
+			console.printf(parsedmaps.maps[m].mapname);
+		}
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name.Left(10) == "initialize" && parsedmaps)
+		{
+			String mapname = "Wolf1 Map1";
+			if (e.Name.Length() > 11)
+			{
+				mapname = e.Name.Mid(11);
+				mapname.Substitute("_", " ");
+			}
+
+			queuedmap = parsedmaps.GetMapData(mapname);
+
+			level.ChangeLevel("Generic");
+		}
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		if (level.mapname ~== "Generic" && queuedmap)
+		{
+			curmap = queuedmap;
+			curmap.Initialize();
+
+			info = curmap.GetInfo();
+			if (info)
+			{
+				level.nextmap = info.nextmap;
+				level.nextsecretmap = info.nextsecretmap;
+			}
+		}
+		else
+		{
+			queuedmap = null;
+			curmap = null;
+		}
+	}
+
+	override void WorldLinePreActivated(WorldEvent e)
+	{
+		if (level.mapname ~== "Generic")
+		{
+			Line ln = e.ActivatedLine;
+			if (ln.special != 80 || ln.args[0] != 10) { return; }
+
+			// Prevent line from activating
+			e.ShouldActivate = false;
+
+			if (info)
+			{
+				String nextmap = ln.args[2] == 10 ? info.nextsecretmap : info.nextmap;
+
+				if (nextmap.left(6) == "enDSeQ" || nextmap == "")
+				{
+					// End of episode/game
+					level.ChangeLevel("GENERIC");
+				}
+				else
+				{
+					LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+					if (nextinfo)
+					{
+						queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
+						level.ChangeLevel("GENERIC");
+					}
+				}
+			}
+		}
+	}
+	
+	void ParseActorMaps(out Array<ActorMap> actormaps)
+	{
+		int lump = -1;
+		lump = Wads.CheckNumForFullName("Data/ActorCodes.txt");
+
+		if (lump != -1)
+		{
+			Array<String> lines;
+			String data = Wads.ReadLump(lump);
+			data.Split(lines, "\n");
+
+			for (int i = 0; i < lines.Size(); i++)
+			{
+				if (lines[i].Left(2) == "//") { continue; }
+
+				Array<String> values;
+				lines[i].split(values, "=");
+
+				if (values.Size() < 2) { continue; }
+
+				ActorMap m = ActorMap.Add(values[0].ToInt(), values[1]);
+				if (m) { actormapping.Push(m); }
+			}
+		}
+	}
+
+	static ui ParsedMap GetCurrentMap()
+	{
+		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (!this) { return null; }
+
+		return this.curmap;
+	}
+
+	static int TileAt(Vector2 pos)
+	{
+		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (!this) { return -1; }
+
+		pos = ParsedMap.CoordsToGrid(pos);
+
+		return this.curmap.TileAt(pos);
+	}
+
+	static int ActorAt(Vector2 pos)
+	{
+		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (!this) { return -1; }
+
+		pos = ParsedMap.CoordsToGrid(pos);
+
+		return this.curmap.ActorAt(pos);
+	}
+}
+
+class ActorMap
+{
+	int index;
+	String classname;
+	int skill;
+	int angle;
+
+	static ActorMap Add(int index, String entry)
+	{
+		entry = ZScriptTools.Trim(entry);
+		if (!entry.length()) { return null; }
+
+		Array<String> values;
+
+		entry.split(values, ",");
+		if (!values.Size()) { values.Push(entry); }
+
+		ActorMap m = New("ActorMap");
+		m.index = index;
+		m.classname = values[0];
+		m.skill = values.Size() > 1 ? values[1].ToInt() : 0;
+		m.angle = values.Size() > 2 ? values[2].ToInt() : 270;
+
+		return m;
+	}
+
+	static ActorMap GetActor(Array<ActorMap> actormaps, int index, int skill)
+	{
+		for (int m = 0; m < actormaps.Size(); m++)
+		{
+			if (actormaps[m].index == index && actormaps[m].skill <= skill)
+			{
+				return actormaps[m];
+			}
+		}
+
+		return null;
+	}
+}
+
+class ParsedMap
+{
+	String mapname;
+	int mapnum;
+	int gametype;
+	String signature;
+	int width;
+	int height;
+	int planes[3][64][64];
+
+	int TileAt(Vector2 pos)
+	{
+		pos.x = clamp(pos.x, 0, 63);
+		pos.y = clamp(pos.y, 0, 63);
+		return planes[0][int(pos.x)][int(pos.y)];
+	}
+
+	int ActorAt(Vector2 pos)
+	{
+		pos.x = clamp(pos.x, 0, 63);
+		pos.y = clamp(pos.y, 0, 63);
+		return planes[1][int(pos.x)][int(pos.y)];
+	}
+
+	static Vector2 CoordsToGrid(Vector2 coords)
+	{
+		return (int(floor(coords.x / 64)) + 32, int(floor(-coords.y / 64)) + 32);
+	}
+
+	void PrintPlane(int plane = 0)
+	{
+		console.printf("%s - Plane %i", mapname, plane);
+		for (int i = 0; i < 64; i++)
+		{
+			console.printf("%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x", 
+			planes[plane][0][i], planes[plane][1][i], planes[plane][2][i], planes[plane][3][i], planes[plane][4][i], planes[plane][5][i], planes[plane][6][i], planes[plane][7][i],
+			planes[plane][8][i], planes[plane][9][i], planes[plane][10][i], planes[plane][11][i], planes[plane][12][i], planes[plane][13][i], planes[plane][14][i], planes[plane][15][i],
+			planes[plane][16][i], planes[plane][17][i], planes[plane][18][i], planes[plane][19][i], planes[plane][20][i], planes[plane][21][i], planes[plane][22][i], planes[plane][23][i],
+			planes[plane][24][i], planes[plane][25][i], planes[plane][26][i], planes[plane][27][i], planes[plane][28][i], planes[plane][29][i], planes[plane][30][i], planes[plane][31][i],
+			planes[plane][32][i], planes[plane][33][i], planes[plane][34][i], planes[plane][35][i], planes[plane][36][i], planes[plane][37][i], planes[plane][38][i], planes[plane][39][i],
+			planes[plane][40][i], planes[plane][41][i], planes[plane][42][i], planes[plane][43][i], planes[plane][44][i], planes[plane][45][i], planes[plane][46][i], planes[plane][47][i],
+			planes[plane][48][i], planes[plane][49][i], planes[plane][50][i], planes[plane][51][i], planes[plane][52][i], planes[plane][53][i], planes[plane][54][i], planes[plane][55][i],
+			planes[plane][56][i], planes[plane][57][i], planes[plane][58][i], planes[plane][59][i], planes[plane][60][i], planes[plane][61][i], planes[plane][62][i], planes[plane][63][i]);
+		}
+	}
+
+	void ExpandData(int plane, String planedata, int encoding = 0xABCD)
+	{
+		Array<int> expanded;
+
+		if (planedata.length() != 8192)
+		{
+			CarmackExpand(planedata, expanded);
+		}
+
+		RLEWExpand(planedata, encoding, expanded);
+
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				int index = y * 2 * width + x * 2;
+
+				if (index < expanded.size()) { planes[plane][x][y] = expanded[index + 1] * 0x100 + expanded[index]; }
+			}
+		}
+	}
+
+	int CarmackExpand(String input, in out Array<int> outputbytes)
+	{
+		Array<int> inputbytes;
+		int offset = 0;
+
+		for (int i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
+
+		int length = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
+		offset += 2;
+
+		while (offset < inputbytes.Size())
+		{
+			if (inputbytes[offset + 1] == 0xA7)
+			{
+				int count = inputbytes[offset];
+				int dist = inputbytes[offset + 2];
+
+				if (count == 0)
+				{
+					outputbytes.Push(dist);
+					outputbytes.Push(0xA7);
+				}
+				else
+				{
+					int start = outputbytes.Size() - dist * 2;
+					for (int o = start; o < start + count * 2; o++) { outputbytes.Push(outputbytes[o]); }
+				}
+
+				offset += 3;
+			}
+			else if (inputbytes[offset + 1] == 0xA8)
+			{
+				int count = inputbytes[offset];
+
+				if (count == 0)
+				{
+					outputbytes.Push(inputbytes[offset + 2]);
+					outputbytes.Push(0xA8);
+
+					offset += 3;
+				}
+				else
+				{
+					int dist = inputbytes[offset + 3] * 0x100 + inputbytes[offset + 2];
+					int start = dist * 2;
+
+					for (int o = start; o < start + count * 2; o++) { outputbytes.Push(outputbytes[o]); }
+
+					offset += 4;
+				}
+			}
+			else
+			{
+				outputbytes.Push(inputbytes[offset]);
+				outputbytes.Push(inputbytes[offset + 1]);
+
+				offset += 2;
+			}
+		}
+
+		return length;
+	}
+
+	int RLEWExpand(String input, int encoding, in out Array<int> outputbytes)
+	{
+		Array<int> inputbytes;
+		int offset = 0;
+
+		if (!outputbytes.Size())
+		{
+			for (int i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
+		}
+		else
+		{
+			for (int i = 0; i < outputbytes.Size(); i++) { inputbytes.Push(outputbytes[i]); }
+			outputbytes.Clear();
+		}
+
+		int length = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
+		offset += 2;
+
+		while (offset < inputbytes.Size())
+		{
+			int value = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
+
+			if (value == encoding)
+			{
+				int count = inputbytes[offset + 3] * 0x100 + inputbytes[offset + 2];
+
+				while (count--)
+				{
+					outputbytes.Push(inputbytes[offset + 4]);
+					outputbytes.Push(inputbytes[offset + 5]);
+				}
+
+				offset += 6;
+			}
+			else
+			{
+				outputbytes.Push(inputbytes[offset]);
+				outputbytes.Push(inputbytes[offset + 1]);
+
+				offset += 2;
+			}
+		}
+
+		return length;
+	}
+
+	play void Initialize()
+	{
+		if (level.mapname ~== "Generic")
+		{
+			MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+
+			CVar sodvar = CVar.FindCVar("g_sod");
+			if (sodvar) { sodvar.SetInt(gametype); }
+
+			for (int sec = 0; sec < level.sectors.Size(); sec++)
+			{
+				Sector cursec = level.sectors[sec];
+
+				if (abs(cursec.centerspot.x) < 2048 && abs(cursec.centerspot.y) < 2048)
+				{
+					Vector2 pos = CoordsToGrid(cursec.centerspot);
+
+					int t = TileAt(pos);
+					int a = ActorAt(pos);
+
+					if (t < 0x5A && a != 0x62)
+					{
+						cursec.MoveFloor(64, cursec.floorplane.PointToDist(cursec.centerspot, cursec.CenterCeiling()), 0, 1, 0, true);
+
+						String texpath;
+						String texpathtemplate = "Patches/Walls/Wall%i%03i.png";
+						if (t == 0x16) { texpathtemplate = "Patches/Walls/Wall0041.png"; }
+
+						for (int l = 0; l < cursec.lines.Size(); l++)
+						{
+							let ln = cursec.lines[l];
+
+							ln.flags &= ~Line.ML_TWOSIDED;
+							ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
+
+							texpath = "";
+
+							if (t > 0x31)
+							{ 
+								if (ln.delta.x) { texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2); }
+								else { texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2 + 1); }
+							}
+							else
+							{
+								if (ln.delta.x) { texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2); }
+								else { texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2 + 1); }
+							}
+							
+							if (!texpath.length()) { continue; }
+							TextureID tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s] && ln.sidedef[s].sector != cursec)
+								{
+									ln.sidedef[s].SetTexture((a > 0 && a != 0x62) ? side.bottom : side.mid, tex);
+								}
+							}
+						}
+
+						if ((t == 0x15 || t == 0x16) && (TileAt(pos + (1, 0)) > 0x65 || TileAt(pos - (1, 0)) > 0x65))
+						{
+							texpath = "Patches/Walls/Wall0041.png";
+						}
+						else
+						{
+							if (t > 0x31)
+							{ 
+								texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2);
+							}
+							else
+							{
+								texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2);
+							}
+						}
+
+						cursec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+					}
+
+					if (a)
+					{
+						ActorMap am;
+						if (g_sod > 0) { am = ActorMap.GetActor(handler.actormapping, a + 500 * min(g_sod, 2), G_SkillPropertyInt(SKILLP_ACSReturn) + 1); }
+						if (!am) { am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1); }
+
+						if (am)
+						{
+							Actor mo = Actor.Spawn(am.classname, (cursec.centerspot, 0));
+							if (mo)
+							{
+								mo.angle = am.angle;
+								if (t == 0x6A)  // Deaf Guard Floor Code
+								{
+									mo.bAmbush = true;
+
+									// Look at nearby tiles to find the closest floor code
+									t = TileAt(pos + (1, 0));
+									if (t < 0x6C) { t = TileAt(pos - (1, 0)); }
+									if (t < 0x6C) { t = TileAt(pos + (0, 1)); }
+									if (t < 0x6C) { t = TileAt(pos - (0, 1)); }
+									if (t < 0x6C) { t = 0; } // Fall back to not assigning a TID
+								}
+								
+								mo.ChangeTID(t);
+							}
+						}
+
+						if (a >= 0x13 && a <= 0x16)
+						{
+							Vector2 pos = cursec.centerspot;
+							if (players[0].mo)
+							{
+								players[0].mo.SetOrigin((pos, 0), false);
+								players[0].mo.angle = 90 - (a - 0x13) * 90;
+							}
+
+							// TODO: Expand for additional player starts
+						}
+					}
+				}
+			}
+
+			for (int s = 0; s < level.sectors.Size(); s++)
+			{
+				let sec = level.sectors[s];
+
+				// Don't draw lines between sectors that are collapsed
+				int edges = 0;
+				for (int l = 0; l < sec.lines.Size(); l++)
+				{
+					let ln = sec.lines[l];
+					int solid = 0;
+
+					for (int s = 0; s < 2; s++)
+					{
+						if (!ln.sidedef[s] || ln.sidedef[s].sector.CenterCeiling() - ln.sidedef[s].sector.CenterFloor() == 0) { solid++; }
+					}
+
+					if (solid > 1)
+					{
+						ln.flags |= Line.ML_DONTDRAW;
+						edges++;
+					}
+				}
+
+				// Set the floor and ceiling textures for collapsed sectors to "-"
+				if (edges == sec.lines.Size())
+				{
+					sec.SetTexture(Sector.floor, TexMan.CheckForTexture("-", TexMan.Type_Any));
+					sec.SetTexture(Sector.ceiling, TexMan.CheckForTexture("-", TexMan.Type_Any));
+
+					// for (int l = 0; l < sec.lines.Size(); l++)
+					// {
+					// 	let ln = sec.lines[l];
+					// 	for (int s = 0; s < 2; s++)
+					// 	{
+					// 		if (ln.sidedef[s])
+					// 		{
+					// 			ln.sidedef[s].SetTexture(side.top, TexMan.CheckForTexture("BLACK", TexMan.Type_Any));
+					// 		}
+					// 	}
+					// }
+
+					// sec.MoveFloor(64, sec.floorplane.PointToDist(sec.centerspot, 0), 0, -1, 0);
+					// sec.MoveCeiling(64, sec.floorplane.PointToDist(sec.centerspot, 0), 0, -1, 0);
+				}
+
+				// If this sector is collapsed or out of range, continue
+				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
+
+				Vector2 pos = CoordsToGrid(sec.centerspot);
+
+				int t = TileAt(pos);
+				int a = ActorAt(pos);
+
+				// Handle doors and door frames
+				if ((t >= 0x5A && t <= 0x65) || t == 0x32 || t == 0x35 || a == 0x62)
+				{
+					PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
+					if (door)
+					{
+						if (door.StartLine.special == Polyobj_ExplicitLine)
+						{
+							door.Lines.Push(door.StartLine);
+						}
+						else
+						{
+							// Find all lines that belong to this polyobject
+							Vertex start = door.StartLine.v1;
+							Vertex current = door.StartLine.v2;
+							int count = 0;
+
+							while (current.Index() != start.Index() && count < level.lines.Size())
+							{
+								for (int l = 0; l < level.lines.Size(); l++)
+								{
+									count++;
+									let ln = level.lines[l];
+									if (ln.v1 == current)
+									{
+										if (door.Lines.Find(ln) == door.Lines.Size()) { door.Lines.Push(ln); }
+										current = ln.v2;
+										count = 0;
+										break;
+									}
+									if (count > level.lines.Size()) { break; }
+								}
+							}
+						}
+					}
+
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+
+						// Block sounds by default
+						if (ln.flags & Line.ML_TWOSIDED) { ln.flags |= Line.ML_SOUNDBLOCK; }
+
+						// If this is a secret door, continue
+						if (a == 0x62)
+						{
+							if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
+							{
+								ln.flags |= Line.ML_SECRET;
+							}
+							continue;
+						}
+
+						if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
+						{
+							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
+
+							if (door) // Let everything continue just in case we didn't have enough prefab doors
+							{
+								// Set two-sided lines to open/close the door so that it
+								// can be closed even without directly using the polyobject
+								ln.special = Polyobj_DoorSlide;
+								ln.args[0] = door.PolyobjectNum;
+								ln.args[2] = (t % 2 == 0) ? 192 : 0;
+								ln.activation = SPAC_Use | SPAC_UseBack | SPAC_UseThrough;
+								ln.flags |= Line.ML_REPEAT_SPECIAL;
+
+								if (t >= 0x5C && t <= 0x63)
+								{
+									int lock = (t - 0x5C) / 2;
+									switch (lock)
+									{
+										case 0:
+											ln.locknumber = 131;
+											break;
+										case 1:
+											ln.locknumber = 130;
+											break;
+										default:
+											ln.locknumber = 130 + lock;
+											break;
+									}
+								}
+							}
+						}
+
+						// If this line isn't a wall, continue;
+						if (ln.flags & Line.ML_TWOSIDED) { continue; }
+
+						// Set door frame textures on the sides
+						String texpath = "Patches/Walls/Wall%04i.png";
+						if (ln.delta.x) { texpath = String.Format(texpath, 100); }
+						else { texpath = String.Format(texpath, 101); }
+
+						for (int s = 0; s < 2; s++)
+						{
+							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
+							{
+								ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+							}
+						}
+					}
+
+					// If this was a secret door, update its textures and continue
+					if (a == 0x62)
+					{
+						if (door)
+						{
+							for (int l = 0; l < door.Lines.Size(); l++)
+							{
+								let ln = door.lines[l];
+
+								String texpath = "Patches/Walls/Wall%04i.png";
+								if (ln.delta.x) { texpath = String.Format(texpath, (t - 1) * 2); }
+								else { texpath = String.Format(texpath, (t - 1) * 2 + 1); }
+
+								for (int s = 0; s < 2; s++)
+								{
+									if (ln.sidedef[s])
+									{
+										ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+									}
+								}
+							}
+
+							// texpath = String.Format("Patches/Walls/Wall%04i.png", (t - 1) * 2);
+							// sec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+						}
+
+						// Make the starting sector a secret
+						sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
+						Level.total_secrets++;
+					}
+					else
+					{
+						// If this is a locked door, set up the lock number and textures
+						if (t >= 0x5C && t <= 0x63)
+						{
+							if (door)
+							{
+								for (int l = 0; l < door.Lines.Size(); l++)
+								{
+									let ln = door.lines[l];
+
+									if (ln.special == 8)
+									{
+										int lock = (t - 0x5C) / 2;
+										switch (lock)
+										{
+											case 0:
+												ln.locknumber = 131;
+												break;
+											case 1:
+												ln.locknumber = 130;
+												break;
+											default:
+												ln.locknumber = 130 + lock;
+												break;
+										}
+									}
+
+									String texpath = "Patches/Walls/Wall%04i.png";
+									if (t % 2 == 1 && ln.delta.x) { texpath = String.Format(texpath, 104); }
+									else if (t % 2 == 0 && ln.delta.y) { texpath = String.Format(texpath, 105); }
+									else { continue; }
+
+									for (int s = 0; s < 2; s++)
+									{
+										if (ln.sidedef[s])
+										{
+											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+										}
+									}
+								}
+							}
+						}
+						// If this was an elevator door, set up the textures
+						else if (t >= 0x64 && t <= 0x65)
+						{
+							if (door)
+							{
+								for (int l = 0; l < door.Lines.Size(); l++)
+								{
+									let ln = door.lines[l];
+
+									String texpath = "Patches/Walls/Wall%04i.png";
+									if (t % 2 == 1 && ln.delta.x) { texpath = String.Format(texpath, 102); }
+									else if (t % 2 == 0 && ln.delta.y) { texpath = String.Format(texpath, 103); }
+									else { continue; }
+
+									for (int s = 0; s < 2; s++)
+									{
+										if (ln.sidedef[s])
+										{
+											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (t == 0x15) // Elevator switch
+				{
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+						if (ln.delta.x || (ln.frontsector && ln.backsector && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())) { continue; }
+
+						ln.special = 80;
+						ln.args[0] = 10;
+						
+						// Check for secret elevator floor tile
+						if (
+							TileAt(pos + (1, 0)) == 0x6B ||
+							TileAt(pos - (1, 0)) == 0x6B ||
+							TileAt(pos + (0, 1)) == 0x6B ||
+							TileAt(pos - (0, 1)) == 0x6B
+						)
+						{
+							ln.args[2] = 10;
+						}
+
+						ln.activation = SPAC_Use | SPAC_UseBack;
+					}
+				}
+
+				if (a == 0x63) // Walkover exit trigger
+				{
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+
+						// If this line is a wall, continue;
+						if (!(ln.flags & Line.ML_TWOSIDED)) { continue; }
+
+						ln.special = 80;
+						ln.args[0] = 4;
+						ln.args[2] = 1;
+
+						ln.activation = SPAC_Cross;
+					}
+				}
+			}
+		}
+	}
+
+	LevelInfo GetInfo()
+	{
+		for (int i = 0; i < LevelInfo.GetLevelInfoCount(); i++)
+		{
+			LevelInfo info = LevelInfo.GetLevelInfo(i);
+			if (info.levelnum == mapnum) { return info; }
+		}
+
+		return null;
+	}
+}
+
+class WolfMapParser
+{
+	Array<ParsedMap> maps;
+	int gametype;
+
+	static void Parse(in out WolfMapParser parsedmaps, String maps, String head = "")
+	{
+		int headlump = -1;
+		int mapslump = -1;
+
+		if (!parsedmaps) { parsedmaps = New("WolfMapParser"); }
+
+		if (head.length()) { headlump = Wads.CheckNumForFullName(head); }
+		mapslump = Wads.CheckNumForFullName(maps);
+
+		if (mapslump == -1) { return; }
+
+		String game = maps.Mid(maps.length() - 3);
+		if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
+		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
+		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
+		else { parsedmaps.gametype = 0; }
+
+		int encoding;
+		Array<int> addresses;
+		if (headlump > -1) { parsedmaps.ReadMapHead(Wads.ReadLump(headlump), encoding, addresses); }
+		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses);
+	}
+
+	void ReadMapHead(String content, out int encoding, in out Array<int> addresses)
+	{
+		int offset = 0;
+		[encoding, offset] = WolfMapParser.GetLittleEndian(content, 0, 2);
+
+		while (offset < content.Length())
+		{
+			int address;
+			[address, offset] = GetLittleEndian(content, offset, 4);
+
+			addresses.Push(address);
+		}
+	}
+
+	enum maptypes
+	{
+		GameMaps,
+		Raw,
+		RawWithHeader,
+	};
+
+	void ReadGameMaps(String content, int encoding, Array<int> addresses)
+	{
+		maptypes type = GameMaps;
+		if (!addresses.Size())
+		{
+			int size = content.length();
+
+			if (size == 16384)
+			{ // Raw
+				addresses.Push(8);
+				type = Raw;
+			}
+			else if (size == 16418)
+			{ // Raw with Header
+				addresses.Push(8);
+				type = RawWithHeader;
+			}
+			else
+			{ // Invalid Format
+				return;
+			}
+		}
+
+		for (int a = 0; a < addresses.Size(); a++)
+		{
+			int offset = addresses[a];
+			if (offset == 0) { continue; }
+
+			ParsedMap newmap = New("ParsedMap");
+			
+			int planeoffsets[3];
+			int planesizes[3];
+
+			if (type == Raw || type == RawWithHeader)
+			{
+				if (type == RawWithHeader)
+				{
+					newmap.signature = content.Left(8);
+					planeoffsets[0] = 34;
+					newmap.width = content.ByteAt(0x0C) * 0x100 + content.ByteAt(0x0D);
+					newmap.height = content.ByteAt(0x0E) * 0x100 + content.ByteAt(0x0F);
+					newmap.mapname = content.Mid(0x12, content.ByteAt(0x10) * 0x100 + content.ByteAt(0x11));
+				}
+				else
+				{
+					newmap.width = 64;
+					newmap.height = 64;
+					newmap.mapname = "Custom Map";
+					
+					planeoffsets[0] = 0;
+				}
+
+				planeoffsets[1] = planeoffsets[0] + 8192;
+
+				newmap.mapnum = 1000 + maps.Size();
+
+				for (int p = 0; p < 2; p++)
+				{
+					String plane = content.Mid(planeoffsets[p]);
+
+					for (int y = 0; y < newmap.height; y++)
+					{
+						for (int x = 0; x < newmap.width; x++)
+						{
+							int index = y * 2 * newmap.width + x * 2;
+
+							newmap.planes[p][x][y] = plane.ByteAt(index + 1) * 0x100 + plane.ByteAt(index);
+						}
+					}
+				}
+			}
+			else
+			{
+				[planeoffsets[0], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
+				[planeoffsets[1], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
+				[planeoffsets[2], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
+
+
+				[planesizes[0], offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
+				[planesizes[1], offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
+				[planesizes[2], offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
+
+				[newmap.width, offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
+				[newmap.height, offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
+
+				newmap.mapname = content.Mid(offset, 16);
+				offset += 16;
+				newmap.signature = content.Mid(offset, 4);
+				newmap.mapnum = g_sod <= 0 ? (a / 10 + 1) * 100 + a % 10 + 1 : 600 + (min(3, g_sod) * 100) + a + 1;
+
+				for (int p = 0; p < 3; p++)
+				{
+					if (planesizes[p] <= 0) { continue; }
+					newmap.ExpandData(p, content.mid(planeoffsets[p], planesizes[p]), encoding);
+				}
+			}
+			
+			newmap.gametype = gametype;
+
+			maps.Push(newmap);
+		}
+	}
+
+	ParsedMap GetMapData(String mapname)
+	{
+		for (int m = 0; m < maps.Size(); m++)
+		{
+			if (maps[m].mapname ~== mapname) { return maps[m]; }
+		}
+
+		return null;
+	}
+
+	ParsedMap GetMapDataByNumber(int mapnum)
+	{
+		for (int m = 0; m < maps.Size(); m++)
+		{
+			if (maps[m].mapnum == mapnum) { return maps[m]; }
+		}
+
+		return null;
+	}
+
+	static int, int GetLittleEndian(String input, int offset = 0, int count = 2)
+	{
+		int ret = 0;
+
+		for (int b = count - 1; b >= 0; b--)
+		{
+			ret += int((0x100 ** b) * input.ByteAt(offset + b));
+		}
+
+		return ret, offset + count;
+	}
+}

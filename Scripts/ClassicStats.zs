@@ -33,6 +33,7 @@ class ClassicStats : DoomStatusScreen
 	int style;
 	Font ClassicFont;
 	LevelData totals;
+	LevelInfo info;
 
 	int fadetarget;
 	int fadetime;
@@ -194,7 +195,7 @@ class ClassicStats : DoomStatusScreen
 		{
 			if (acceleratestage)
 			{
-				if (Game.IsSod() && level.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD"))
+				if (Game.IsSod() && info.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD"))
 				{
 					PlaySound("pickups/life");
 					Menu.StartMessage(StringTable.Localize("$DEMOSTRING"), 1);
@@ -207,7 +208,7 @@ class ClassicStats : DoomStatusScreen
 				if (style == finale)
 				{
 					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
-					else { Menu.SetMenu("Episode" .. level.levelnum / 100 .. "End", -1); }
+					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
 				}
 
 				if (gametic > fadetarget) { fadetarget = gametic + fadetime; }
@@ -302,10 +303,10 @@ class ClassicStats : DoomStatusScreen
 				Write(24, 10, "$STATS_LEVELTIME", right);
 				WriteTime(26, 10, Plrs[me].stime);
 
-				if (wbs.partime > 0)
+				if (info.partime > 0)
 				{ 
 					Write(24, 12, "$STATS_PAR", right);
-					WriteTime(26, 12, wbs.partime, true);
+					WriteTime(26, 12, info.partime, true);
 				}
 
 				Write(29, 14, "$STATS_KILLRATIO", right);
@@ -438,20 +439,24 @@ class ClassicStats : DoomStatusScreen
 		points = GetScore();
 		lives = LifeHandler.GetLives(players[me].mo);
 
+		info = level.info;
+		ParsedMap curmap = MapHandler.GetCurrentMap();
+		if (curmap) { info = curmap.GetInfo(); }
+
 		// Use the local level structure which can be overridden by hubs
 		Array<String> levelname;
-		Level.levelname.Split(levelname, ": "); // Use the portion of the name after the colon, if there is one.
+		info.levelname.Split(levelname, ": "); // Use the portion of the name after the colon, if there is one.
 
 		lnametexts[0] = levelname[levelname.Size() - 1];
 		lnametexts[1] = wbstartstruct.nextname;
 
-		int levelnum = level.levelnum % 100;
+		int levelnum = info.levelnum % 100;
 
 		if (wbs.next == "") { style = finale; }
 		else if 
 		(
 			(Game.IsSoD() && levelnum > 18) ||
-			(level.levelnum > 100 && levelnum == 10)
+			(info.levelnum > 100 && levelnum == 10)
 		) { style = secret; }
 		else { style = normal; }
 
@@ -519,7 +524,7 @@ class ClassicStats : DoomStatusScreen
 				break;
 		}
 
-		if (Game.IsSoD() && level.levelnum % 100 == 21) { fadealpha = 0.0; }
+		if (Game.IsSoD() && info.levelnum % 100 == 21) { fadealpha = 0.0; }
 		else if (gametic > 35)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));

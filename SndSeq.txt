@@ -1,0 +1,49 @@
+:DOORDSBDOPN
+	Volume 127
+	PlayUntilDone door/classic/open
+	NoStopCutoff
+end
+
+:DOORDSBDCLS
+	Volume 127
+	PlayUntilDone door/classic/close
+	NoStopCutoff
+end
+
+[DOORMETAL
+   Door 1
+   0 DOORDSBDOPN
+   1 DOORDSBDCLS
+]
+
+:DOORSECRETOPEN
+	Door 4
+	Volume 127
+	PlayUntilDone door/classic/secret
+	NoStopCutoff
+end
+
+:DOORDSBDOPNLOST
+	Volume 127
+	PlayUntilDone door/open2
+	NoStopCutoff
+end
+
+:DOORDSBDCLSLOST
+	Volume 127
+	PlayUntilDone door/close2
+	NoStopCutoff
+end
+
+[DOORMETALLOST
+   Door 2
+   0 DOORDSBDOPNLOST
+   1 DOORDSBDCLSLOST
+]
+
+:DOORSECRETOPENLOST
+	Door 3
+	Volume 127
+	PlayUntilDone door/secret2
+	NoStopCutoff
+end

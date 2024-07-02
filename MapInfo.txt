@@ -30,7 +30,7 @@ gameinfo
 	drawreadthis = true
 	maparrow = "maparrows/knife.txt"
 
-	eventhandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler", "ReplacementHandler", "GameHandler"
+	EventHandlers = "MapStatsHandler", "PersistentMapstatsHandler", "LifeHandler", "PersistentLifeHandler", "DeathCamHandler", "KeyHandler", "MenuHandler", "ConsoleHandler", "ReplacementHandler", "PolyMoveHandler", "DoorHandler", "GameHandler", "MapHandler"
 
 	StatusbarClass = "ClassicStatusBar"
 	AltHUDClass = "JaguarHUD"
@@ -89,6 +89,13 @@ defaultmap
 map TITLEMAP "Wolfenstein 3D"
 {
 	levelnum = 0
+}
+
+map GENERIC "Wolfenstein 3D"
+{
+	levelnum = 1000
+	next = GENERIC
+	secretnext = GENERIC
 }
 
 clearepisodes

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 AFADoomer
+ * Copyright (c) 2018-2024 AFADoomer
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,7 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
+**/
 
 class ZScriptTools
 {
@@ -47,7 +47,7 @@ class ZScriptTools
 		{
 			if (!(input.Mid(place, 1) == String.Format("%c", 0x1C)))
 			{
-				output = output .. input.Mid(place, 1);
+				output = String.Format("%s%s", output, input.Mid(place, 1));
 				place++;
 			}
 			else if (input.Mid(place + 1, 1) == "[")
@@ -102,6 +102,40 @@ class ZScriptTools
 		}
 	}
 
+	enum PuncuationType
+	{
+		PUNC_DEFAULT = 0,
+		PUNC_NUMBER = 1,
+		PUNC_PATH = 2,
+		PUNC_STRICT = 3,
+	};
+
+	static bool IsPunctuation(int c, int punctype = ZScriptTools.PUNC_DEFAULT)
+	{
+		bool ispunc;
+
+		if (punctype == PUNC_NUMBER) { ispunc = (c < 0x30 || c > 0x3A); }
+		else { ispunc = (punctype == PUNC_PATH ? false : ZScriptTools.IsWhiteSpace(c)) || (c >= 0x21 && c <= 0x2F || c >= 0x3A && c <= 0x40 || c >= 0x5B && c <= 0x60 || c >= 0x7B && c <= 0x7E); }
+
+		if (!ispunc) { return false; }
+
+		switch (punctype)
+		{
+			case PUNC_PATH: // allow "*./:<>?[\]^_`{|}~
+				if (c == 0x22 || c == 0x2A || c == 0x2E || c == 0x2F || c == 0x3A || c == 0x3C || c == 0x3E || c == 0x3F || c >= 0x5B && c <= 0x60 || c >= 0x7B && c <= 0x7E) { return false; }
+				break;
+			case PUNC_NUMBER: // allow +-.
+				if (c == 0x2B || c == 0x2D || c == 0x2E) { return false; }
+				break;
+			case PUNC_DEFAULT: // allow [\]^_`{|}~
+				if (c >= 0x5B && c <= 0x60 || c >= 0x7B && c <= 0x7E) { return false; }
+			default:
+				break;
+		}
+
+		return true;
+	}
+
 	static String StripControlCodes(String input)
 	{
 		String output = "";
@@ -121,6 +155,11 @@ class ZScriptTools
 		}
 
 		return output;
+	}
+
+	static String GetText(String input)
+	{
+		return ZScriptTools.StripColorCodes(ZScriptTools.Trim(input));
 	}
 
 	static String Trim(String input)
@@ -262,5 +301,219 @@ class ZScriptTools
 		}
 
 		return (ratio, ratio), imagesize;
+	}
+
+	// Returns the best text color match for the passed-in RGB color
+	// Modified from gzdoom/src/common/utility/palette.cpp
+	// static String BestTextColor(Color clr)
+	// {
+	// 	DataHandler data = DataHandler(StaticEventHandler.Find("DataHandler"));
+	// 	if (!data) { return "L"; }
+
+	// 	int bestcolor = 0;
+	// 	int bestdist = 257 * 257 + 257 * 257 + 257 * 257;
+
+	// 	for (int p = 0; p < data.textcolordata.children.Size(); p++)
+	// 	{
+	// 		Color palentry = ZScriptTools.HexStrToInt(data.textcolordata.children[p].value);
+	// 		int x = clr.r - palentry.r;
+	// 		int y = clr.g - palentry.g;
+	// 		int z = clr.b - palentry.b;
+	// 		int dist = x * x + y * y + z * z;
+	// 		if (dist < bestdist)
+	// 		{
+	// 			if (dist == 0) { return String.Format("[%s]", data.textcolordata.children[p].keyname); }
+
+	// 			bestdist = dist;
+	// 			bestcolor = p;
+	// 		}
+	// 	}
+
+	// 	return String.Format("[%s]", data.textcolordata.children[bestcolor].keyname);
+	// }
+
+	static int HexStrToInt(String input)
+	{
+		int output;
+
+		input = input.MakeUpper();
+
+		for (uint i = 0; i < input.Length(); i++)
+		{		
+			int index = input.Mid(i, 1).ToInt();
+
+			if (!(input.Mid(i, 1) == "0") && !index)
+			{
+				index = input.ByteAt(i) - 55;
+				if (index > 15) { return -1; }
+			}
+
+			if (index < 0) { return -1; }
+
+			int multiplier = 1;
+			for (uint j = 0; j < input.Length() - i - 1; j++)
+			{
+				multiplier *= 16;
+			}
+
+			output += multiplier * index;
+		}
+
+		return output;
+	}
+
+	static String, int GetWord(String input, int punctype = ZScriptTools.PUNC_DEFAULT, int end = -1)
+	{
+		String output = "";
+		input = ZScriptTools.Trim(input);
+
+		uint c, t;
+		[c, t] = input.GetNextCodePoint(0);
+
+		while (!ZScriptTools.IsPunctuation(c, punctype) && (end < 0 || c != end) && t <= input.length())
+		{
+			output = String.Format("%s%c", output, c);
+			[c, t] = input.GetNextCodePoint(t);
+		}
+
+		return ZScriptTools.Trim(output), t;
+	}
+
+	static int, int GetNumber(String input)
+	{
+		while (input.left(1) == " ") { input = input.mid(1); }
+
+		String output;
+		int next;
+		[output, next] = GetWord(input, ZScriptTools.PUNC_NUMBER);
+
+		return output.ToInt(), next;
+	}
+
+	// Function to find the shortest distance between an actor and a line
+	//
+	// Returns:	Shortest distance between the given actor and line
+	//			Position of the closest point on the line to the given actor
+	//
+	// Adapted from https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
+	play static double, Vector2 DistanceFromLine(Actor mo, Line l)
+	{
+		if (!l || !mo) { return 0, (0, 0); }
+
+		Vector2 v1, v2, delta, point;
+
+		v1 = l.v1.p;
+		v2 = l.v2.p;
+		delta = l.delta;
+		point = mo.pos.xy;
+
+		double lengthsquared = (v2 - v1).length() ** 2;
+
+		if (!lengthsquared) { return (v1 - point).length(), v1; }
+
+		double t = clamp((point - v1) dot delta / lengthsquared, 0, 1);
+		Vector2 projection = v1 + t * delta;
+
+		return (point - projection).length(), projection;
+	}
+
+	// Function to find the closest line that an actor is touching
+	//
+	// Returns:	Line closest to actor centerpoint
+	//			Perpendicular distance from the line to the actor
+	//			Closest point on the line to the actor
+	play static Line, double, Vector2 GetCurrentLine(Actor mo)
+	{
+		Line linedef = null;
+		double dist;
+		Vector2 projection;
+
+		BlockLinesIterator it = BlockLinesIterator.Create(mo);
+
+		double radius = mo.radius;
+		if (!radius) { radius = 1; }
+
+		While (it.Next())
+		{
+			Line current = it.curline;
+
+			// Discard lines that are outside of the actor's radius
+			if (
+				(current.v1.p.x > mo.pos.x + radius && current.v2.p.x > mo.pos.x + radius) ||
+				(current.v1.p.x < mo.pos.x - radius && current.v2.p.x < mo.pos.x - radius) ||
+				(current.v1.p.y > mo.pos.y + radius && current.v2.p.y > mo.pos.y + radius) ||
+				(current.v1.p.y < mo.pos.y - radius && current.v2.p.y < mo.pos.y - radius) 
+			) { continue; }
+
+			// Find the line that is closest to the actor's center point
+			double curdist;
+			Vector2 curprojection;
+			[curdist, curprojection] = ZScriptTools.DistanceFromLine(mo, current);
+			if (!linedef || curdist <= dist)
+			{
+				linedef = current;
+				dist = curdist;
+				projection = curprojection;
+			}
+		}
+
+		return linedef, dist, projection;		
+	}
+
+	play static Line AlignToLine(Actor mo, double offsetamount = 0.1)
+	{
+		if (!mo) { return null; }
+
+		double dist;
+		Line linedef;
+		Vector2 projection;
+		[linedef, dist, projection] = ZScriptTools.GetCurrentLine(mo);
+
+		if (linedef)
+		{
+			Vector2 offset = mo.pos.xy - projection;
+			Vector3 newpos;
+
+			if (offset.length())
+			{
+				offset = offset.Unit() * offsetamount;
+				newpos = ((projection + offset), mo.pos.z);
+			}
+			else { newpos = mo.Vec3Angle(offsetamount, mo.angle); }
+
+			mo.SetXYZ(newpos);
+		}
+
+		return linedef;
+	}
+
+	clearscope static bool IsCoop(void)
+	{
+		return (multiplayer && !deathmatch);
+	}
+
+	static TextureID FullPathTexture(TextureID tex)
+	{
+		String texname = TexMan.GetName(tex);
+
+		if (texname.IndexOf("/") == -1)
+		{
+			int lump = Wads.CheckNumForName(texname, Wads.ns_newtextures);
+			texname = Wads.GetLumpFullName(lump);
+			tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+		}
+
+		return tex;
+	}
+
+	static bool IsSameTexture(TextureID tex, TextureID tex2)
+	{
+		if (!tex.IsValid() || !tex2.IsValid()) { return false; }
+		if (tex == tex2) { return true; }
+
+		tex = ZScriptTools.FullPathTexture(tex);
+		tex2 = ZScriptTools.FullPathTexture(tex2);
+
+		return tex == tex2;
 	}
 }

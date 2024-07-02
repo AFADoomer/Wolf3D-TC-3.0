@@ -85,7 +85,22 @@ class MapStatsHandler : StaticEventHandler
 		MapStatsHandler this = MapStatsHandler(StaticEventHandler.Find("MapStatsHandler"));
 		if (!this) { return; }
 
-		int i = this.FindLevel(level.mapname);
+		String mapname = level.mapname;
+		String levelname = level.levelname;
+		int levelnum = level.levelnum;
+
+		MapHandler maphandle = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (maphandle)
+		{
+			ParsedMap curmap = maphandle.curmap;
+			if (curmap)
+			{
+				mapname = levelname = curmap.mapname;
+				levelnum = curmap.mapnum;
+			}
+		}
+
+		int i = this.FindLevel(mapname);
 
 		LevelData l;
 
@@ -99,9 +114,9 @@ class MapStatsHandler : StaticEventHandler
 
 			if (!l) { if (developer) { console.printf("Failed to save level statistics data!"); } return; }
 
-			l.mapname = level.mapname;
-			l.levelname = level.levelname;
-			l.levelnum = level.levelnum;
+			l.mapname = mapname;
+			l.levelname = levelname;
+			l.levelnum = levelnum;
 
 			this.Levels.Push(l);
 		}
@@ -198,11 +213,20 @@ class MapStatsHandler : StaticEventHandler
 
 		active[consoleplayer] = false;
 
-		chapter = level.mapname.Mid(1, 1).ToInt();
+		int levelnum = level.levelnum;
 
-		if (Game.IsSoD() && level.levelnum % 100 == 21)
+		MapHandler maphandle = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (maphandle)
 		{
-			int l = FindLevelNumber(level.levelnum - 3);
+			ParsedMap curmap = maphandle.curmap;
+			if (curmap) { levelnum = curmap.mapnum; }
+		}
+
+		chapter = levelnum / 100;
+
+		if (Game.IsSoD() && levelnum % 100 == 21)
+		{
+			int l = FindLevelNumber(levelnum - 3);
 			if (l < Levels.Size())
 			{
 				LevelData previous = Levels[l];

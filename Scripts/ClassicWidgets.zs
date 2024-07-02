@@ -1068,6 +1068,8 @@ class PositionWidget : Widget
 {
 	Font fnt;
 	double scale;
+	LevelInfo info;
+	ParsedMap curmap;
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
@@ -1085,6 +1087,13 @@ class PositionWidget : Widget
 		scale = 0.5 * ClassicStatusBar(StatusBar).GetUIScale(con_scaletext);
 
 		fnt = HUDFont;
+
+		if (level.time < 5)
+		{
+			curmap = MapHandler.GetCurrentMap();
+			if (curmap) { info = curmap.GetInfo(); }
+			else { info = level.info; }
+		}
 
 		Super.DoTick(index);
 	}
@@ -1108,9 +1117,13 @@ class PositionWidget : Widget
 		String header, value;
 
 		// Draw map name
-		DrawToHud.DrawText(level.mapname.MakeUpper(), (x, y), BigFont, alpha, scale, shade:Font.CR_RED, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-
-		y += int(BigFont.GetHeight() * scale);
+		if (!automapactive)
+		{
+			String mapname = curmap ? curmap.mapname : level.mapname.MakeUpper();
+			DrawToHud.DrawText(mapname, (x + width - BigFont.StringWidth(mapname) * scale, y), BigFont, alpha, scale, shade:Font.CR_RED, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
+			
+			y += int(BigFont.GetHeight() * scale);
+		}
 		
 		for (int i = 0; i < 3; y += height, ++i)
 		{
@@ -1774,6 +1787,8 @@ class AutomapWidget : Widget
 {
 	int titleheight, lineheight;
 	double scale;
+	LevelInfo info;
+	ParsedMap curmap;
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
@@ -1799,6 +1814,14 @@ class AutomapWidget : Widget
 	{
 		// Match scaling with normal console output
 		scale = 0.5 * ClassicStatusBar(StatusBar).GetUIScale(con_scaletext);
+
+		if (!info || level.time <= 5)
+		{
+			info = level.info;
+
+			curmap = MapHandler.GetCurrentMap();
+			if (curmap) { info = curmap.GetInfo(); }
+		}
 
 		Super.DoTick(index);
 	}
@@ -1844,8 +1867,14 @@ class AutomapWidget : Widget
 			if (curwidth > labelwidth) { labelwidth = curwidth; }
 		}
 
-		String levelname = level.LevelName;
-		if (idmypos) { levelname = levelname .. " (" .. level.mapname.MakeUpper() .. ")"; }
+		String levelname = info ? StringTable.Localize(info.levelname, false) : level.levelname;
+		if (levelname == level.levelname && level.mapname == "GENERIC" && curmap) { levelname = curmap.mapname; }
+
+		if (idmypos && info)
+		{
+			String mapname = curmap ? curmap.mapname : level.mapname.MakeUpper();
+			levelname = String.Format("%s (%s)", levelname, mapname);
+		}
 
 		width = max(labelwidth, titlefnt.StringWidth(levelname) * scale);
 
