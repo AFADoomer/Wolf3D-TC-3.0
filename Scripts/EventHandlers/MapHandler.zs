@@ -64,7 +64,7 @@ class MapHandler : StaticEventHandler
 	{
 		if (e.Name.Left(10) == "initialize" && parsedmaps)
 		{
-			String mapname = "Wolf1 Map1";
+			String mapname = "Wolf3D TC Test";
 			if (e.Name.Length() > 11)
 			{
 				mapname = e.Name.Mid(11);
@@ -164,6 +164,14 @@ class MapHandler : StaticEventHandler
 		return this.curmap;
 	}
 
+	static int GetGameType()
+	{
+		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (!this) { return -1; }
+
+		return this.curmap.gametype;
+	}
+
 	static int TileAt(Vector2 pos)
 	{
 		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
@@ -188,7 +196,7 @@ class MapHandler : StaticEventHandler
 class ActorMap
 {
 	int index;
-	String classname;
+	String classname[4];
 	int skill;
 	int angle;
 
@@ -204,9 +212,12 @@ class ActorMap
 
 		ActorMap m = New("ActorMap");
 		m.index = index;
-		m.classname = values[0];
-		m.skill = values.Size() > 1 ? values[1].ToInt() : 0;
-		m.angle = values.Size() > 2 ? values[2].ToInt() : 270;
+		m.classname[0] = values[0];
+		m.classname[1] = (values.Size() > 1 && values[1].length()) ? values[1] : m.classname[0];
+		m.classname[2] = (values.Size() > 2 && values[2].length()) ? values[2] : m.classname[1];
+		m.classname[3] = (values.Size() > 3 && values[3].length()) ? values[3] : m.classname[2];
+		m.skill = values.Size() > 4 ? values[4].ToInt() : 0;
+		m.angle = values.Size() > 5 ? values[5].ToInt() : 270;
 
 		return m;
 	}
@@ -223,6 +234,11 @@ class ActorMap
 
 		return null;
 	}
+
+	Class<Actor> GetSpawnClass(int which = -1)
+	{
+		return classname[clamp(which > -1 ? which : g_sod, 0, 3)];
+	}
 }
 
 class ParsedMap
@@ -237,15 +253,13 @@ class ParsedMap
 
 	int TileAt(Vector2 pos)
 	{
-		pos.x = clamp(pos.x, 0, 63);
-		pos.y = clamp(pos.y, 0, 63);
+		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return -1; } // Map edges return an invalid tile, but not "nothing"
 		return planes[0][int(pos.x)][int(pos.y)];
 	}
 
 	int ActorAt(Vector2 pos)
 	{
-		pos.x = clamp(pos.x, 0, 63);
-		pos.y = clamp(pos.y, 0, 63);
+		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return 0; }
 		return planes[1][int(pos.x)][int(pos.y)];
 	}
 
@@ -408,125 +422,109 @@ class ParsedMap
 		{
 			MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
 
-			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(gametype); }
-
-			for (int sec = 0; sec < level.sectors.Size(); sec++)
+			if (gametype > -1)
 			{
-				Sector cursec = level.sectors[sec];
+				CVar sodvar = CVar.FindCVar("g_sod");
+				if (sodvar) { sodvar.SetInt(gametype); }
+			}
 
-				if (abs(cursec.centerspot.x) < 2048 && abs(cursec.centerspot.y) < 2048)
+			for (int s = 0; s < level.sectors.Size(); s++)
+			{
+				Sector sec = level.sectors[s];
+
+				// If this sector is out of range, continue
+				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
+
+				Vector2 pos = CoordsToGrid(sec.centerspot);
+
+				int t = TileAt(pos);
+				int a = ActorAt(pos);
+
+				// Move player starts
+				if (a >= 0x13 && a <= 0x16)
 				{
-					Vector2 pos = CoordsToGrid(cursec.centerspot);
-
-					int t = TileAt(pos);
-					int a = ActorAt(pos);
-
-					if (t < 0x5A && a != 0x62)
+					Vector2 pos = sec.centerspot;
+					if (players[0].mo)
 					{
-						cursec.MoveFloor(64, cursec.floorplane.PointToDist(cursec.centerspot, cursec.CenterCeiling()), 0, 1, 0, true);
-
-						String texpath;
-						String texpathtemplate = "Patches/Walls/Wall%i%03i.png";
-						if (t == 0x16) { texpathtemplate = "Patches/Walls/Wall0041.png"; }
-
-						for (int l = 0; l < cursec.lines.Size(); l++)
-						{
-							let ln = cursec.lines[l];
-
-							ln.flags &= ~Line.ML_TWOSIDED;
-							ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
-
-							texpath = "";
-
-							if (t > 0x31)
-							{ 
-								if (ln.delta.x) { texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2); }
-								else { texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2 + 1); }
-							}
-							else
-							{
-								if (ln.delta.x) { texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2); }
-								else { texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2 + 1); }
-							}
-							
-							if (!texpath.length()) { continue; }
-							TextureID tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
-
-							for (int s = 0; s < 2; s++)
-							{
-								if (ln.sidedef[s] && ln.sidedef[s].sector != cursec)
-								{
-									ln.sidedef[s].SetTexture((a > 0 && a != 0x62) ? side.bottom : side.mid, tex);
-								}
-							}
-						}
-
-						if ((t == 0x15 || t == 0x16) && (TileAt(pos + (1, 0)) > 0x65 || TileAt(pos - (1, 0)) > 0x65))
-						{
-							texpath = "Patches/Walls/Wall0041.png";
-						}
-						else
-						{
-							if (t > 0x31)
-							{ 
-								texpath = String.Format(texpathtemplate, max(1, g_sod), (t - 1) * 2);
-							}
-							else
-							{
-								texpath = String.Format(texpathtemplate, g_sod <= 1 ? 0 : g_sod, (t - 1) * 2);
-							}
-						}
-
-						cursec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+						players[0].mo.SetOrigin((pos, 0), false);
+						players[0].mo.angle = 90 - (a - 0x13) * 90;
 					}
 
-					if (a)
+					// TODO: Expand for additional player starts
+				}
+
+				// Build the wall structure
+				if (t < 0x5A && a != 0x62)
+				{
+					// Collapse the sector height
+					sec.MoveFloor(64, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, 0, true);
+
+					// Make lines blocking and set textures
+					for (int l = 0; l < sec.lines.Size(); l++)
 					{
-						ActorMap am;
-						if (g_sod > 0) { am = ActorMap.GetActor(handler.actormapping, a + 500 * min(g_sod, 2), G_SkillPropertyInt(SKILLP_ACSReturn) + 1); }
-						if (!am) { am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1); }
+						let ln = sec.lines[l];
 
-						if (am)
+						ln.flags &= ~Line.ML_TWOSIDED;
+						ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
+
+						TextureID tex = GetTexture(pos, ln);
+
+						for (int s = 0; s < 2; s++)
 						{
-							Actor mo = Actor.Spawn(am.classname, (cursec.centerspot, 0));
-							if (mo)
+							if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
 							{
-								mo.angle = am.angle;
-								if (t == 0x6A)  // Deaf Guard Floor Code
-								{
-									mo.bAmbush = true;
-
-									// Look at nearby tiles to find the closest floor code
-									t = TileAt(pos + (1, 0));
-									if (t < 0x6C) { t = TileAt(pos - (1, 0)); }
-									if (t < 0x6C) { t = TileAt(pos + (0, 1)); }
-									if (t < 0x6C) { t = TileAt(pos - (0, 1)); }
-									if (t < 0x6C) { t = 0; } // Fall back to not assigning a TID
-								}
-								
-								mo.ChangeTID(t);
+								ln.sidedef[s].SetTexture((a > 0 && a != 0x62) ? side.bottom : side.mid, tex);
 							}
 						}
+					}
 
-						if (a >= 0x13 && a <= 0x16)
+					// Set the floor texture to the wall texture so they show up on the automap
+					sec.SetTexture(Sector.floor, GetTexture(pos));
+				}
+
+				// Spawn actors
+				if (a > 0)
+				{
+					ActorMap am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+
+					if (am)
+					{
+						// Spawn the actor
+						Class<Actor> spawnclass = am.GetSpawnClass(gametype);
+						Actor mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
+						if (mo)
 						{
-							Vector2 pos = cursec.centerspot;
-							if (players[0].mo)
+							// Align the actor
+							mo.angle = am.angle;
+							
+							// Assign a TID matching the floor code for alerting reasons
+							// (Recreate's Wolf's ability to alert actors elsewhere 
+							// in the map if they share the same floor code)
+							if (t == 0x6A)  // Deaf Guard Floor Code
 							{
-								players[0].mo.SetOrigin((pos, 0), false);
-								players[0].mo.angle = 90 - (a - 0x13) * 90;
-							}
+								mo.bAmbush = true;
 
-							// TODO: Expand for additional player starts
+								// Look at nearby tiles to find the closest floor code
+								t = TileAt(pos + (1, 0));
+								if (t < 0x6C) { t = TileAt(pos - (1, 0)); }
+								if (t < 0x6C) { t = TileAt(pos + (0, 1)); }
+								if (t < 0x6C) { t = TileAt(pos - (0, 1)); }
+								if (t < 0x6C) { t = 0; } // Fall back to not assigning a TID
+							}
+							
+							mo.ChangeTID(t);
 						}
 					}
 				}
 			}
 
+			// Clean up display of collapse sectors on the automap
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				let sec = level.sectors[s];
+
+				// If this sector is out of range, continue
+				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
 
 				// Don't draw lines between sectors that are collapsed
 				int edges = 0;
@@ -569,15 +567,12 @@ class ParsedMap
 					// sec.MoveCeiling(64, sec.floorplane.PointToDist(sec.centerspot, 0), 0, -1, 0);
 				}
 
-				// If this sector is collapsed or out of range, continue
-				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
-
 				Vector2 pos = CoordsToGrid(sec.centerspot);
 
 				int t = TileAt(pos);
 				int a = ActorAt(pos);
 
-				// Handle doors and door frames
+				// Handle texturing of doors and door frames
 				if ((t >= 0x5A && t <= 0x65) || t == 0x32 || t == 0x35 || a == 0x62)
 				{
 					PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
@@ -620,7 +615,7 @@ class ParsedMap
 						// Block sounds by default
 						if (ln.flags & Line.ML_TWOSIDED) { ln.flags |= Line.ML_SOUNDBLOCK; }
 
-						// If this is a secret door, continue
+						// If this is a secret door, tag the line and continue iterating
 						if (a == 0x62)
 						{
 							if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
@@ -630,12 +625,13 @@ class ParsedMap
 							continue;
 						}
 
+						// If this is a standard door entry, set up activation and flags
 						if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
 						{
-							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
-
 							if (door) // Let everything continue just in case we didn't have enough prefab doors
 							{
+								ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
+
 								// Set two-sided lines to open/close the door so that it
 								// can be closed even without directly using the polyobject
 								ln.special = Polyobj_DoorSlide;
@@ -667,120 +663,61 @@ class ParsedMap
 						if (ln.flags & Line.ML_TWOSIDED) { continue; }
 
 						// Set door frame textures on the sides
-						String texpath = "Patches/Walls/Wall%04i.png";
-						if (ln.delta.x) { texpath = String.Format(texpath, 100); }
-						else { texpath = String.Format(texpath, 101); }
-
 						for (int s = 0; s < 2; s++)
 						{
 							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 							{
-								ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+
+								ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
 							}
 						}
 					}
 
-					// If this was a secret door, update its textures and continue
-					if (a == 0x62)
+					if (door)
 					{
-						if (door)
+						for (int l = 0; l < door.Lines.Size(); l++)
 						{
-							for (int l = 0; l < door.Lines.Size(); l++)
+							let ln = door.lines[l];
+
+							if (ln.special == 8)
 							{
-								let ln = door.lines[l];
+								if (t >= 0x5C && t <= 0x63)
+								{
+									int lock = (t - 0x5C) / 2;
+									switch (lock)
+									{
+										case 0:
+											ln.locknumber = 131;
+											break;
+										case 1:
+											ln.locknumber = 130;
+											break;
+										default:
+											ln.locknumber = 130 + lock;
+											break;
+									}
+								}
 
-								String texpath = "Patches/Walls/Wall%04i.png";
-								if (ln.delta.x) { texpath = String.Format(texpath, (t - 1) * 2); }
-								else { texpath = String.Format(texpath, (t - 1) * 2 + 1); }
-
+								// Set door textures
 								for (int s = 0; s < 2; s++)
 								{
 									if (ln.sidedef[s])
 									{
-										ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+										ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln));
 									}
 								}
 							}
-
-							// texpath = String.Format("Patches/Walls/Wall%04i.png", (t - 1) * 2);
-							// sec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
 						}
+					}
 
-						// Make the starting sector a secret
+					// If this was a secret door, flag it as a secret
+					if (a == 0x62)
+					{
 						sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
 						Level.total_secrets++;
 					}
-					else
-					{
-						// If this is a locked door, set up the lock number and textures
-						if (t >= 0x5C && t <= 0x63)
-						{
-							if (door)
-							{
-								for (int l = 0; l < door.Lines.Size(); l++)
-								{
-									let ln = door.lines[l];
-
-									if (ln.special == 8)
-									{
-										int lock = (t - 0x5C) / 2;
-										switch (lock)
-										{
-											case 0:
-												ln.locknumber = 131;
-												break;
-											case 1:
-												ln.locknumber = 130;
-												break;
-											default:
-												ln.locknumber = 130 + lock;
-												break;
-										}
-									}
-
-									String texpath = "Patches/Walls/Wall%04i.png";
-									if (t % 2 == 1 && ln.delta.x) { texpath = String.Format(texpath, 104); }
-									else if (t % 2 == 0 && ln.delta.y) { texpath = String.Format(texpath, 105); }
-									else { continue; }
-
-									for (int s = 0; s < 2; s++)
-									{
-										if (ln.sidedef[s])
-										{
-											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
-										}
-									}
-								}
-							}
-						}
-						// If this was an elevator door, set up the textures
-						else if (t >= 0x64 && t <= 0x65)
-						{
-							if (door)
-							{
-								for (int l = 0; l < door.Lines.Size(); l++)
-								{
-									let ln = door.lines[l];
-
-									String texpath = "Patches/Walls/Wall%04i.png";
-									if (t % 2 == 1 && ln.delta.x) { texpath = String.Format(texpath, 102); }
-									else if (t % 2 == 0 && ln.delta.y) { texpath = String.Format(texpath, 103); }
-									else { continue; }
-
-									for (int s = 0; s < 2; s++)
-									{
-										if (ln.sidedef[s])
-										{
-											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
-										}
-									}
-								}
-							}
-						}
-					}
 				}
-
-				if (t == 0x15) // Elevator switch
+				else if (t == 0x15) // Elevator switch
 				{
 					for (int l = 0; l < sec.lines.Size(); l++)
 					{
@@ -804,8 +741,7 @@ class ParsedMap
 						ln.activation = SPAC_Use | SPAC_UseBack;
 					}
 				}
-
-				if (a == 0x63) // Walkover exit trigger
+				else if (a == 0x63) // Walkover exit trigger
 				{
 					for (int l = 0; l < sec.lines.Size(); l++)
 					{
@@ -835,6 +771,50 @@ class ParsedMap
 
 		return null;
 	}
+
+	TextureID GetTexture(Vector2 pos, Line ln = null)
+	{
+		int t = TileAt(pos);
+
+		return GetTileTexture(t, pos, ln);
+	}
+
+	TextureID GetTileTexture(int t, Vector2 pos, Line ln = null)
+	{
+		int game = gametype;
+		if (game < 0) { game = max(0, g_sod); }
+		game = game <= 1 ? 0 : game;
+
+		// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
+		if (t >= 0x5A && t <= 0x6A || t == 0x41)
+		{
+			if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
+			else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
+			else if (t >= 0x5C&& t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
+			else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
+		}
+		else { game = max(1, game); }
+
+		int tiletex = (!ln || ln.delta.x) ? (t - 1) * 2 : (t - 1) * 2 + 1;
+		if (tiletex == 42) { tiletex = 40; }
+		if (!ln && tiletex == 40 && (TileAt(pos + (1, 0)) > 0x65 || TileAt(pos - (1, 0)) > 0x65)) { tiletex = 41; }
+
+		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
+		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
+		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
+
+		TextureID tex;
+
+		while (game > -1 && !tex.IsValid())
+		{
+			String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, tiletex);
+			tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+
+			if (!tex.IsValid()) { game--; }
+		}
+
+		return tex;
+	}
 }
 
 class WolfMapParser
@@ -855,10 +835,11 @@ class WolfMapParser
 		if (mapslump == -1) { return; }
 
 		String game = maps.Mid(maps.length() - 3);
-		if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
+		if (game ~== "WL1" || game ~== "WL3" || game ~== "WL6") { parsedmaps.gametype = 0; }
+		else if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
 		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
 		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
-		else { parsedmaps.gametype = 0; }
+		else { parsedmaps.gametype = -1; } // Play as Wolf, but allow setting via CVar
 
 		int encoding;
 		Array<int> addresses;
@@ -986,7 +967,7 @@ class WolfMapParser
 			
 			newmap.gametype = gametype;
 
-			maps.Push(newmap);
+			if (!GetMapData(newmap.mapname)) { maps.Push(newmap); }
 		}
 	}
 

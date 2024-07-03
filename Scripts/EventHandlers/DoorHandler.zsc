@@ -111,8 +111,11 @@ class DoorHandler: EventHandler
 		// Assign a sound sequence if one wasn't set
 		if (!po.SoundSequenceNum)
 		{
-			if (eff.distance > 64) { po.SoundSequenceNum = 4; } // A pushwall
-			else { po.SoundSequenceNum = 1; } // Otherwise a normal door
+			int gametype = MapHandler.GetGameType();
+			if (gametype < 0) { gametype = max(0, g_sod); }
+
+			if (eff.delay < 0) { po.SoundSequenceNum = gametype <= 1 ? 4 : 3; } // A pushwall
+			else { po.SoundSequenceNum = gametype <= 1 ? 1 : 2; } // Otherwise a normal door
 		}
 
 		// Check if activator is actually able to activate the line
@@ -242,6 +245,8 @@ class DoorEffector: PolyobjectEffector
 	// Try to open the door, if possible
 	void TryOpen()
 	{
+		if (distance == 0) { return; }
+
 		// Close an open door (unless it's currently opening for the first time), and open a closed door
 		if (Status == WDST_OPENING || Status == WDST_OPEN)
 		{
@@ -379,9 +384,43 @@ class DoorEffector: PolyobjectEffector
 			else { distance = (ActivationLine ? int(ActivationLine.delta.length()) : (speed == 4 ? 128 : 64)); }
 		}
 
-		// Scale speed so that door movement takes the same amount of time regardless
-		// of distance so that door sounds always are the right length
-		speed = max(speed, int(speed * distance / 64.0));
+		if (speed == 4 && delay < 0) // Secret door
+		{
+			Vector2 moveunit = Actor.AngleToVector(angle, 64);
+
+			// See how far the door can move without being blocked
+			int m = 1;
+			for (m = 1; m <= g_maxpushwallmove; m++)
+			{
+				Vector2 spot = Polyobject.StartSpotPos + moveunit * m;
+				int t = MapHandler.TileAt(spot);
+				int a = MapHandler.ActorAt(spot);
+				if (t < 0x6C) { break; }
+				if (a > 0 && a != 0x62)
+				{
+					MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+					if (!handler) { continue;}
+
+					ActorMap am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+					if (!am) { continue; }
+
+					let spawnactor = GetDefaultByType(am.GetSpawnClass());
+					if (!spawnactor) { continue; }
+					if (!spawnactor.bSolid || spawnactor.bSpecial) { continue; }
+
+					break;
+				}
+			}
+
+			distance = (m - 1) * 64;
+			speed = max(speed, int(speed * max(g_maxpushwallmove * 64, distance) / 64.0));
+		}
+		else
+		{
+			// Scale speed so that door movement takes the same amount of time regardless
+			// of distance so that door sounds always are the right length
+			speed = max(speed, int(speed * distance / 64.0));
+		}
 
 		Destination = Actor.AngleToVector(angle, distance) + Polyobject.StartSpotPos;
 
@@ -448,11 +487,19 @@ class DoorEffector: PolyobjectEffector
 
 			if (delay < 0) // Negative delay leaves the door open forever
 			{
-				Sector sec = Level.PointInSector(Polyobject.GetPos());
-				String texpath = "Patches/Walls/Wall%04i.png";
-				int t = MapHandler.TileAt(PolyObject.StartSpotPos);
-				texpath = String.Format(texpath, (t - 1) * 2);
-				sec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+				if (MapHandler.ActorAt(Destination) == 0x62) // Unless there's another secret door at the destination spot
+				{
+					PolyObject.StartSpotPos = Destination;
+					Destroy();
+				}
+				else
+				{
+					Sector sec = Level.PointInSector(Polyobject.GetPos());
+					String texpath = "Patches/Walls/Wall%04i.png";
+					int t = MapHandler.TileAt(PolyObject.StartSpotPos);
+					texpath = String.Format(texpath, (t - 1) * 2);
+					sec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+				}
 			}
 		}
 		else if (Status == WDST_CLOSED)

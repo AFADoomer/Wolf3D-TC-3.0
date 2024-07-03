@@ -439,9 +439,9 @@ class ClassicStats : DoomStatusScreen
 		points = GetScore();
 		lives = LifeHandler.GetLives(players[me].mo);
 
-		info = level.info;
 		ParsedMap curmap = MapHandler.GetCurrentMap();
 		if (curmap) { info = curmap.GetInfo(); }
+		if (!info) { info = level.info; }
 
 		// Use the local level structure which can be overridden by hubs
 		Array<String> levelname;
