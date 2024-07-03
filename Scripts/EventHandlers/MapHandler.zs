@@ -48,7 +48,7 @@ class MapHandler : StaticEventHandler
 					WolfMapParser.Parse(parsedmaps, lumpname, headname);
 				}
 			}
-			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".MAP")
+			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".MAP" || lumpname.Mid(lumpname.Length() - 4) ~== ".LVL")
 			{
 				WolfMapParser.Parse(parsedmaps, lumpname);
 			}
@@ -866,6 +866,7 @@ class WolfMapParser
 		GameMaps,
 		Raw,
 		RawWithHeader,
+		FloEdit,
 	};
 
 	void ReadGameMaps(String content, int encoding, Array<int> addresses)
@@ -880,7 +881,12 @@ class WolfMapParser
 				addresses.Push(8);
 				type = Raw;
 			}
-			else if (size == 16418)
+			else if (size == 16393)
+			{ // Raw
+				addresses.Push(8);
+				type = FloEdit;
+			}
+			else if (size == 16418 || size == 24610)
 			{ // Raw with Header
 				addresses.Push(8);
 				type = RawWithHeader;
@@ -901,22 +907,38 @@ class WolfMapParser
 			int planeoffsets[3];
 			int planesizes[3];
 
-			if (type == Raw || type == RawWithHeader)
+			if (type == Raw || type == RawWithHeader || type == FloEdit)
 			{
+				// Set defaults for fallback
+				newmap.width = 64;
+				newmap.height = 64;
+				newmap.mapname = "Custom Map";
+
 				if (type == RawWithHeader)
 				{
 					newmap.signature = content.Left(8);
 					planeoffsets[0] = 34;
-					newmap.width = content.ByteAt(0x0C) * 0x100 + content.ByteAt(0x0D);
-					newmap.height = content.ByteAt(0x0E) * 0x100 + content.ByteAt(0x0F);
-					newmap.mapname = content.Mid(0x12, content.ByteAt(0x10) * 0x100 + content.ByteAt(0x11));
+
+					if (newmap.signature.left(3) ~== "WDC")
+					{
+						newmap.width = WolfMapParser.GetLittleEndian(content, 0x1E, 2);
+						newmap.height = WolfMapParser.GetLittleEndian(content, 0x20, 2);
+						newmap.mapname = content.Mid(0x0E, WolfMapParser.GetLittleEndian(content, 0x0C, 2));
+					}
+					else if(newmap.signature.left(2) ~== "CE") // ChaosEdit
+					{
+						newmap.width = content.ByteAt(0x0C) * 0x100 + content.ByteAt(0x0D);
+						newmap.height = content.ByteAt(0x0E) * 0x100 + content.ByteAt(0x0F);
+						newmap.mapname = content.Mid(0x12, content.ByteAt(0x10) * 0x100 + content.ByteAt(0x11));
+					}
+				}
+				else if (type == FloEdit)
+				{
+					newmap.signature = content.Left(8);
+					planeoffsets[0] = 9;
 				}
 				else
 				{
-					newmap.width = 64;
-					newmap.height = 64;
-					newmap.mapname = "Custom Map";
-					
 					planeoffsets[0] = 0;
 				}
 
@@ -932,9 +954,16 @@ class WolfMapParser
 					{
 						for (int x = 0; x < newmap.width; x++)
 						{
-							int index = y * 2 * newmap.width + x * 2;
-
-							newmap.planes[p][x][y] = plane.ByteAt(index + 1) * 0x100 + plane.ByteAt(index);
+							if (type == FloEdit)
+							{
+								int index = x * 2 * newmap.width + y * 2;
+								newmap.planes[p][x][y] = WolfMapParser.GetLittleEndian(plane, index, 2);
+							}
+							else
+							{
+								int index = y * 2 * newmap.width + x * 2;
+								newmap.planes[p][x][y] = WolfMapParser.GetLittleEndian(plane, index, 2);
+							}
 						}
 					}
 				}
