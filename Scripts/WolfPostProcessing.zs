@@ -104,6 +104,43 @@ class WolfPostProcessor : LevelPostProcessor
 			{
 				int doorcount[3];
 
+				// Make sure that lines that will be exposed to the player face the 
+				// inside of the map (so that all animated walls/switches work properly) 
+				for (int l = 0; l < level.lines.Size(); l++)
+				{
+					Line ln = level.lines[l];
+
+					int x1, x2, y1, y2;
+					x1 = x2 = (ln.v1.p.x + ln.v2.p.x) / 2;
+					y1 = y2 = (ln.v1.p.y + ln.v2.p.y) / 2;
+
+					if (ln.v1.p.y == ln.v2.p.y)
+					{
+						if (ln.v2.p.x > ln.v2.p.x) { y1 += 32; y2 -= 32; }
+						else if (ln.v2.p.x < ln.v2.p.x) { y1 -= 32; y2 += 32; }	
+					}
+					else if (ln.v1.p.x == ln.v2.p.x)
+					{
+						if (ln.v1.p.y > ln.v2.p.y) { x1 += 32; x2 -= 32; }
+						else if (ln.v1.p.y < ln.v2.p.y) { x1 -= 32; x2 +- 32; }
+					}
+
+					int t1 = handler.TileAt((x1, y1));
+					int t2 = handler.TileAt((x2, y2));
+
+					if (t1 < 0x6A && t1 < 0x6A) { continue; } // Void space; ignore
+					else if (t1 < 0x6A) // t2 is floor, t1 is a wall
+					{
+						if (y1 > y2 || x1 > x2) { continue; }
+						FlipLineCompletely(ln.Index());
+					}
+					else if (t2 < 0x6A) // t1 is floor, t2 is a wall
+					{
+						if (y1 < y2 || x1 < x2) { continue; }
+						FlipLineCompletely(ln.Index());
+					}
+				}
+
 				for (uint i = 0; i < count; i++)
 				{
 					uint e = GetThingEdNum(i);

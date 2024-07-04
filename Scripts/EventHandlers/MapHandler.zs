@@ -98,8 +98,8 @@ class MapHandler : StaticEventHandler
 			if (curmap.info)
 			{
 				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
-				level.nextmap = curmap.info.nextmap;
-				level.nextsecretmap = curmap.info.nextsecretmap;
+				if (curmap.info.nextmap.length()) { level.nextmap = curmap.info.nextmap; }
+				if (curmap.info.nextsecretmap.length()) { level.nextsecretmap = curmap.info.nextsecretmap; }
 				S_ChangeMusic(curmap.info.music);
 			}
 			else
@@ -161,8 +161,12 @@ class MapHandler : StaticEventHandler
 			Line ln = e.ActivatedLine;
 			if (ln.special != 80 || ln.args[0] != 10) { return; }
 
-			// Prevent line from activating
-			e.ShouldActivate = false;
+			int side = 0;
+			for (int s = 0; s < 2; s++)
+			{
+				let sidedef = ln.sidedef[s];
+				if (sidedef.sector.CenterFloor() == e.Thing.cursector.CenterFloor()) { side = s; }
+			}
 
 			String nextmap = ln.args[2] == 10 ? level.nextsecretmap : level.nextmap;
 
@@ -170,12 +174,10 @@ class MapHandler : StaticEventHandler
 			{
 				// If this is a custom map with no corresponding MAPINFO, just loop this map
 				queuedmap = curmap;
-				level.ChangeLevel("Level");
 			}
 			else if (nextmap.left(6) == "enDSeQ" || nextmap == "")
 			{
 				// End of episode/game
-				level.ChangeLevel("Level");
 			}
 			else
 			{
@@ -183,7 +185,7 @@ class MapHandler : StaticEventHandler
 				if (nextinfo)
 				{
 					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
-					level.ChangeLevel("Level");
+					level.nextmap = level.nextsecretmap = "Level";
 				}
 			}
 		}
@@ -543,7 +545,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if (t < 0x5A && a != 0x62)
+				if ((t < 0x5A || t > 0x8F) && a != 0x62)
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
