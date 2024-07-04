@@ -35,36 +35,36 @@ class MapHandler : StaticEventHandler
 
 	void ParseGameMaps()
 	{
-		console.printf("Parsing Map Info");
+		console.printf("Parsing map data...");
 
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
 		{
 			String lumpname = Wads.GetLumpFullName(l);
-			if (lumpname.Left(8) ~== "GAMEMAPS")
+			String shortlumpname = Wads.GetLumpName(l);
+			if (shortlumpname.Left(8) ~== "gamemaps")
 			{
-				String headname = String.Format("%s.%s", "MAPHEAD", lumpname.Mid(lumpname.Length() - 3));
+				String headname = lumpname;
+				headname.Substitute("gamemaps", "maphead");
+
 				if (Wads.CheckNumForFullName(headname) > -1)
 				{
 					WolfMapParser.Parse(parsedmaps, lumpname, headname);
 				}
 			}
-			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".MAP" || lumpname.Mid(lumpname.Length() - 4) ~== ".LVL")
+			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".map" || lumpname.Mid(lumpname.Length() - 4) ~== ".lvl")
 			{
 				WolfMapParser.Parse(parsedmaps, lumpname);
 			}
-		}
-
-		for (int m = 0; m < parsedmaps.maps.Size(); m++)
-		{
-			console.printf(parsedmaps.maps[m].mapname);
 		}
 	}
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
-		if (e.Name.Left(10) == "initialize" && parsedmaps)
+		if (!parsedmaps) { return; }
+
+		if (e.Name.Left(10) == "initialize")
 		{
-			String mapname = "Wolf3D TC Test";
+			String mapname = "Wolf1 Map1";
 			if (e.Name.Length() > 11)
 			{
 				mapname = e.Name.Mid(11);
@@ -74,6 +74,13 @@ class MapHandler : StaticEventHandler
 			queuedmap = parsedmaps.GetMapData(mapname);
 
 			level.ChangeLevel("Generic");
+		}
+		else if (e.Name == "listmaps")
+		{
+			for (int m = 0; m < parsedmaps.maps.Size(); m++)
+			{
+				console.printf("%s (%s)", parsedmaps.maps[m].mapname, parsedmaps.maps[m].datafile);
+			}
 		}
 	}
 
@@ -90,11 +97,54 @@ class MapHandler : StaticEventHandler
 				level.nextmap = info.nextmap;
 				level.nextsecretmap = info.nextsecretmap;
 			}
+			else
+			{
+				level.nextmap = level.nextsecretmap = level.mapname;
+			}
 		}
 		else
 		{
 			queuedmap = null;
 			curmap = null;
+		}
+	}
+
+	override void WorldTick()
+	{
+		// TODO: Fix automap view traversal in a better way
+		// Check for noclipping players; allow them to see through void space
+		// by clearing line textures that normally block automap sight traversal
+		//
+		// We are assuming that if they are noclipping, they don't care about
+		// seeing parts of the map that they shouldn't actually be able to see
+		if (!(level.mapname ~== "Generic") || !curmap || level.time % 10) { return; } // only check every 10 tics for performance
+
+		int noclip;
+		for (int p = 0; p < MAXPLAYERS; p++)
+		{
+			if (playeringame[p]) { noclip += players[p].cheats & CF_NOCLIP; }
+		}
+
+		if (!!noclip != curmap.noclip)
+		{
+			TextureID tex = TexMan.CheckForTexture(noclip ? "-" : "BLACK", TexMan.Type_Any);
+			for (int s = 0; s < curmap.voidspace.Size(); s++)
+			{
+				let sec = curmap.voidspace[s];
+				for (int l = 0; l < sec.lines.Size(); l++)
+				{
+					let ln = sec.lines[l];
+					for (int s = 0; s < 2; s++)
+					{
+						if (ln.sidedef[s])
+						{
+							ln.sidedef[s].SetTexture(side.top, tex);
+							ln.sidedef[s].SetTexture(side.bottom, tex);
+						}
+					}
+				}
+			}
+			curmap.noclip = !!noclip;
 		}
 	}
 
@@ -108,23 +158,26 @@ class MapHandler : StaticEventHandler
 			// Prevent line from activating
 			e.ShouldActivate = false;
 
-			if (info)
-			{
-				String nextmap = ln.args[2] == 10 ? info.nextsecretmap : info.nextmap;
+			String nextmap = ln.args[2] == 10 ? level.nextsecretmap : level.nextmap;
 
-				if (nextmap.left(6) == "enDSeQ" || nextmap == "")
+			if (nextmap ~== "Generic")
+			{
+				// If this is a custom map with no corresponding MAPINFO, just loop this map
+				queuedmap = curmap;
+				level.ChangeLevel("Generic");
+			}
+			else if (nextmap.left(6) == "enDSeQ" || nextmap == "")
+			{
+				// End of episode/game
+				level.ChangeLevel("Generic");
+			}
+			else
+			{
+				LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+				if (nextinfo)
 				{
-					// End of episode/game
-					level.ChangeLevel("GENERIC");
-				}
-				else
-				{
-					LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
-					if (nextinfo)
-					{
-						queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
-						level.ChangeLevel("GENERIC");
-					}
+					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
+					level.ChangeLevel("Generic");
 				}
 			}
 		}
@@ -143,7 +196,8 @@ class MapHandler : StaticEventHandler
 
 			for (int i = 0; i < lines.Size(); i++)
 			{
-				if (lines[i].Left(2) == "//") { continue; }
+				// Skip blank lines and comments
+				if (lines[i].Left(2) == "//" || !lines[i].length()) { continue; }
 
 				Array<String> values;
 				lines[i].split(values, "=");
@@ -244,12 +298,15 @@ class ActorMap
 class ParsedMap
 {
 	String mapname;
+	String datafile;
 	int mapnum;
 	int gametype;
 	String signature;
 	int width;
 	int height;
 	int planes[3][64][64];
+	Array<Sector> voidspace;
+	bool noclip;
 
 	int TileAt(Vector2 pos)
 	{
@@ -428,6 +485,9 @@ class ParsedMap
 				if (sodvar) { sodvar.SetInt(gametype); }
 			}
 
+			TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
+			TextureID blanktex = TexMan.CheckForTexture("BLACK", TexMan.Type_Any);
+			
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				Sector sec = level.sectors[s];
@@ -457,7 +517,7 @@ class ParsedMap
 				if (t < 0x5A && a != 0x62)
 				{
 					// Collapse the sector height
-					sec.MoveFloor(64, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, 0, true);
+					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
 
 					// Make lines blocking and set textures
 					for (int l = 0; l < sec.lines.Size(); l++)
@@ -518,6 +578,9 @@ class ParsedMap
 				}
 			}
 
+			voidspace.Clear();
+			noclip = false;
+
 			// Clean up display of collapse sectors on the automap
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
@@ -545,26 +608,27 @@ class ParsedMap
 					}
 				}
 
-				// Set the floor and ceiling textures for collapsed sectors to "-"
+				// Set the floor and ceiling for collapsed sectors to "-", and 
+				// set the wall textures to solid so they block automap sight traversal
 				if (edges == sec.lines.Size())
 				{
-					sec.SetTexture(Sector.floor, TexMan.CheckForTexture("-", TexMan.Type_Any));
-					sec.SetTexture(Sector.ceiling, TexMan.CheckForTexture("-", TexMan.Type_Any));
+					voidspace.Push(sec);
 
-					// for (int l = 0; l < sec.lines.Size(); l++)
-					// {
-					// 	let ln = sec.lines[l];
-					// 	for (int s = 0; s < 2; s++)
-					// 	{
-					// 		if (ln.sidedef[s])
-					// 		{
-					// 			ln.sidedef[s].SetTexture(side.top, TexMan.CheckForTexture("BLACK", TexMan.Type_Any));
-					// 		}
-					// 	}
-					// }
+					sec.SetTexture(Sector.floor, nulltex);
+					sec.SetTexture(Sector.ceiling, nulltex);
 
-					// sec.MoveFloor(64, sec.floorplane.PointToDist(sec.centerspot, 0), 0, -1, 0);
-					// sec.MoveCeiling(64, sec.floorplane.PointToDist(sec.centerspot, 0), 0, -1, 0);
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+						for (int s = 0; s < 2; s++)
+						{
+							if (ln.sidedef[s])
+							{
+								ln.sidedef[s].SetTexture(side.top, blanktex);
+								ln.sidedef[s].SetTexture(side.bottom, blanktex);
+							}
+						}
+					}
 				}
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
@@ -790,7 +854,7 @@ class ParsedMap
 		{
 			if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
 			else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
-			else if (t >= 0x5C&& t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
+			else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
 			else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
 		}
 		else { game = max(1, game); }
@@ -799,14 +863,11 @@ class ParsedMap
 		if (tiletex == 42) { tiletex = 40; }
 		if (!ln && tiletex == 40 && (TileAt(pos + (1, 0)) > 0x65 || TileAt(pos - (1, 0)) > 0x65)) { tiletex = 41; }
 
-		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
-		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
-		if (t >= 0x64 && t <= 0x65) { tiletex = gametype <= 1 ? 52 : 66; }
-
 		TextureID tex;
 
 		while (game > -1 && !tex.IsValid())
 		{
+			// Note: SD3 texture order is mapped onto SD2 textures via TEXTURES definitions
 			String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, tiletex);
 			tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 
@@ -821,6 +882,7 @@ class WolfMapParser
 {
 	Array<ParsedMap> maps;
 	int gametype;
+	int custommapcount;
 
 	static void Parse(in out WolfMapParser parsedmaps, String maps, String head = "")
 	{
@@ -844,7 +906,7 @@ class WolfMapParser
 		int encoding;
 		Array<int> addresses;
 		if (headlump > -1) { parsedmaps.ReadMapHead(Wads.ReadLump(headlump), encoding, addresses); }
-		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses);
+		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses, maps);
 	}
 
 	void ReadMapHead(String content, out int encoding, in out Array<int> addresses)
@@ -869,7 +931,7 @@ class WolfMapParser
 		FloEdit,
 	};
 
-	void ReadGameMaps(String content, int encoding, Array<int> addresses)
+	void ReadGameMaps(String content, int encoding, Array<int> addresses, String datafile = "")
 	{
 		maptypes type = GameMaps;
 		if (!addresses.Size())
@@ -903,11 +965,12 @@ class WolfMapParser
 			if (offset == 0) { continue; }
 
 			ParsedMap newmap = New("ParsedMap");
+			newmap.datafile = datafile;
 			
 			int planeoffsets[3];
 			int planesizes[3];
 
-			if (type == Raw || type == RawWithHeader || type == FloEdit)
+			if (type > GameMaps)
 			{
 				// Set defaults for fallback
 				newmap.width = 64;
@@ -937,14 +1000,10 @@ class WolfMapParser
 					newmap.signature = content.Left(8);
 					planeoffsets[0] = 9;
 				}
-				else
-				{
-					planeoffsets[0] = 0;
-				}
 
 				planeoffsets[1] = planeoffsets[0] + 8192;
 
-				newmap.mapnum = 1000 + maps.Size();
+				newmap.mapnum = 1000 + custommapcount++;
 
 				for (int p = 0; p < 2; p++)
 				{
@@ -985,7 +1044,7 @@ class WolfMapParser
 				newmap.mapname = content.Mid(offset, 16);
 				offset += 16;
 				newmap.signature = content.Mid(offset, 4);
-				newmap.mapnum = g_sod <= 0 ? (a / 10 + 1) * 100 + a % 10 + 1 : 600 + (min(3, g_sod) * 100) + a + 1;
+				newmap.mapnum = gametype <= 0 ? (a / 10 + 1) * 100 + a % 10 + 1 : 600 + gametype * 100 + a + 1;
 
 				for (int p = 0; p < 3; p++)
 				{
@@ -996,25 +1055,29 @@ class WolfMapParser
 			
 			newmap.gametype = gametype;
 
-			if (!GetMapData(newmap.mapname)) { maps.Push(newmap); }
+			if (!GetMapData(newmap.mapname, datafile))
+			{
+				// console.printf(" Adding %s (%s)", newmap.mapname, datafile);
+				maps.Push(newmap);
+			}
 		}
 	}
 
-	ParsedMap GetMapData(String mapname)
+	ParsedMap GetMapData(String mapname, String datafile = "")
 	{
-		for (int m = 0; m < maps.Size(); m++)
+		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
-			if (maps[m].mapname ~== mapname) { return maps[m]; }
+			if (maps[m].mapname ~== mapname && (!datafile.length() || maps[m].datafile ~== datafile)) { return maps[m]; }
 		}
 
 		return null;
 	}
 
-	ParsedMap GetMapDataByNumber(int mapnum)
+	ParsedMap GetMapDataByNumber(int mapnum, String datafile = "")
 	{
 		for (int m = 0; m < maps.Size(); m++)
 		{
-			if (maps[m].mapnum == mapnum) { return maps[m]; }
+			if (maps[m].mapnum == mapnum && (!datafile.length() || maps[m].datafile ~== datafile)) { return maps[m]; }
 		}
 
 		return null;
