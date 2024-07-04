@@ -455,7 +455,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 			if (exittimeout >= fadetime)
 			{
-				if (!mParentMenu || (mParentMenu is "IntroSlideshow")) { GameHandler.ChangeMusic(level.music); }
+				if (!mParentMenu || (mParentMenu is "IntroSlideshow")) { GameHandler.ChangeMusic("*"); }
 				Close();
 			}
 		}

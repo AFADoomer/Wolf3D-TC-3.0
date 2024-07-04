@@ -236,7 +236,7 @@ class ExtendedListMenu : ListMenu
 			if (exittimeout >= fadetime)
 			{
 				RestorePlaceholderMarkers();
-				GameHandler.ChangeMusic(level.music);
+				GameHandler.ChangeMusic("*");
 				Close();
 			}
 		}
@@ -1016,7 +1016,7 @@ class ExtendedLoadMenu : LoadMenu
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
-		if (!mParentMenu && mkey == MKEY_Back) { GameHandler.ChangeMusic(level.music); }
+		if (!mParentMenu && mkey == MKEY_Back) { GameHandler.ChangeMusic("*"); }
 
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
@@ -1141,11 +1141,11 @@ class ExtendedSaveMenu : SaveMenu
 	{
 		if (Super.MenuEvent(mkey, fromcontroller))
 		{
-			if (mkey == MKEY_Back && !mParentMenu) { GameHandler.ChangeMusic(level.music); }
+			if (mkey == MKEY_Back && !mParentMenu) { GameHandler.ChangeMusic("*"); }
 			return true;
 		}
 
-		if (mkey == MKEY_Input) { GameHandler.ChangeMusic(level.music); }
+		if (mkey == MKEY_Input) { GameHandler.ChangeMusic("*"); }
 		return false;
 	}
 }

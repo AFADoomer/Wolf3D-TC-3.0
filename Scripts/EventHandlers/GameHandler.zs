@@ -302,7 +302,7 @@ class GameHandler : StaticEventHandler
 
 	ui static void ChangeMusic(String musicname, int order = 0, bool looping = true, bool force = false)
 	{
-		if (musicname == "*") { musicname = level.music; }
+		if (musicname == "*") { musicname = MapHandler.GetMusic(); }
 		S_ChangeMusic(GameHandler.GetMusic(musicname), order, looping, force);
 	}
 
@@ -328,7 +328,7 @@ class GameHandler : StaticEventHandler
 
 			m.Close();
 
-			if (level.levelnum) { GameHandler.ChangeMusic(level.music); }
+			if (level.levelnum) { GameHandler.ChangeMusic("*"); }
 			else { GameHandler.ChangeMusic(""); }
 		}
 	}
@@ -343,20 +343,30 @@ class Game
 {
 	static int, int IsSoD()
 	{
-		if (level.levelnum < 100 || level.levelnum >= 999) { return g_sod, g_sod; }
-
-		int ret = max(0, g_sod);
-
-		if (level && level.levelnum > 700)
+		int ret;
+		if (level.mapname ~== "Level")
 		{
-			String ext = level.mapname.Left(3);
-			if (ext ~== "SOD") { ret = 1; }
-			else if (ext ~== "SD2") { ret = 2; }
-			else if (ext ~== "SD3") { ret = 3; }
+			MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+			if (!this || !this.curmap) { ret = max(0, g_sod); }
+			else { ret = this.curmap.gametype < 0 ? g_sod : this.curmap.gametype; }
 		}
 		else
 		{
-			ret = 0;
+			if (level.levelnum < 100 || level.levelnum >= 999) { return g_sod, g_sod; }
+
+			ret = max(0, g_sod);
+
+			if (level && level.levelnum > 700)
+			{
+				String ext = level.mapname.Left(3);
+				if (ext ~== "SOD") { ret = 1; }
+				else if (ext ~== "SD2") { ret = 2; }
+				else if (ext ~== "SD3") { ret = 3; }
+			}
+			else
+			{
+				ret = 0;
+			}
 		}
 
 		if (g_sod != ret && gamestate == GS_LEVEL && level.time == 2) // Set the value if we are in a game and it hasn't been set already by the startup menu

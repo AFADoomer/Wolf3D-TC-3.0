@@ -64,7 +64,7 @@ class CloseMenu : GenericMenu
 			{
 				if (!Game.InGame() || !GameHandler.CheckEpisode()) { Menu.SetMenu("IntroSlideshowLoop"); }
 				else if (players[consoleplayer].mo && LifeHandler.GetLives(players[consoleplayer].mo) == -1) { Menu.SetMenu("HighScores"); }
-				else if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE) { GameHandler.ChangeMusic(level.music); }
+				else if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE) { GameHandler.ChangeMusic("*"); }
 			}
 		}
 	}

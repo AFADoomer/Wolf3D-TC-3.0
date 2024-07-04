@@ -96,7 +96,7 @@ class WolfPostProcessor : LevelPostProcessor
 
 		// Move doors into place
 		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
-		if (handler && level.mapname ~== "Generic")
+		if (handler && level.mapname ~== "Level")
 		{
 			if (!handler.queuedmap) { handler.queuedmap = handler.parsedmaps.GetMapData("Wolf3D TC Test"); }
 			
@@ -188,8 +188,11 @@ class WolfPostProcessor : LevelPostProcessor
 							}
 						}
 
-						// Spawn door sound player
-						AddThing(22101, pos, id);
+						// Spawn door sound player for doors that were placed in the map
+						if (abs(pos.x) < 2048 && abs(pos.y) < 2048)
+						{
+							AddThing(22101, pos, id);
+						}
 					}
 				}
 			}

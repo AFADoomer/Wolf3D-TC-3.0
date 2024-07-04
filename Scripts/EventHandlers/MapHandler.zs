@@ -25,7 +25,6 @@ class MapHandler : StaticEventHandler
 	WolfMapParser parsedmaps;
 	Array<ActorMap> actormapping;
 	ParsedMap curmap, queuedmap;
-	LevelInfo info;
 
 	override void OnRegister()
 	{
@@ -76,7 +75,7 @@ class MapHandler : StaticEventHandler
 
 			queuedmap = parsedmaps.GetMapData(mapname);
 
-			level.ChangeLevel("Generic");
+			level.ChangeLevel("Level");
 		}
 		else if (e.Name == "listmaps")
 		{
@@ -89,19 +88,23 @@ class MapHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (level.mapname ~== "Generic" && queuedmap)
+		if (e.IsSaveGame) { return; }
+
+		if (level.mapname ~== "Level" && queuedmap)
 		{
 			curmap = queuedmap;
 			curmap.Initialize();
 
-			info = curmap.GetInfo();
-			if (info)
+			if (curmap.info)
 			{
-				level.nextmap = info.nextmap;
-				level.nextsecretmap = info.nextsecretmap;
+				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
+				level.nextmap = curmap.info.nextmap;
+				level.nextsecretmap = curmap.info.nextsecretmap;
+				S_ChangeMusic(curmap.info.music);
 			}
 			else
 			{
+				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", curmap.mapname);
 				level.nextmap = level.nextsecretmap = level.mapname;
 			}
 		}
@@ -120,7 +123,7 @@ class MapHandler : StaticEventHandler
 		//
 		// We are assuming that if they are noclipping, they don't care about
 		// seeing parts of the map that they shouldn't actually be able to see
-		if (!(level.mapname ~== "Generic") || !curmap || level.time % 10) { return; } // only check every 10 tics for performance
+		if (!(level.mapname ~== "Level") || !curmap || level.time % 10) { return; } // only check every 10 tics for performance
 
 		int noclip;
 		for (int p = 0; p < MAXPLAYERS; p++)
@@ -153,7 +156,7 @@ class MapHandler : StaticEventHandler
 
 	override void WorldLinePreActivated(WorldEvent e)
 	{
-		if (level.mapname ~== "Generic")
+		if (level.mapname ~== "Level")
 		{
 			Line ln = e.ActivatedLine;
 			if (ln.special != 80 || ln.args[0] != 10) { return; }
@@ -163,16 +166,16 @@ class MapHandler : StaticEventHandler
 
 			String nextmap = ln.args[2] == 10 ? level.nextsecretmap : level.nextmap;
 
-			if (nextmap ~== "Generic")
+			if (nextmap ~== "Level")
 			{
 				// If this is a custom map with no corresponding MAPINFO, just loop this map
 				queuedmap = curmap;
-				level.ChangeLevel("Generic");
+				level.ChangeLevel("Level");
 			}
 			else if (nextmap.left(6) == "enDSeQ" || nextmap == "")
 			{
 				// End of episode/game
-				level.ChangeLevel("Generic");
+				level.ChangeLevel("Level");
 			}
 			else
 			{
@@ -180,7 +183,7 @@ class MapHandler : StaticEventHandler
 				if (nextinfo)
 				{
 					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
-					level.ChangeLevel("Generic");
+					level.ChangeLevel("Level");
 				}
 			}
 		}
@@ -224,15 +227,23 @@ class MapHandler : StaticEventHandler
 	static int GetGameType()
 	{
 		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
-		if (!this) { return -1; }
+		if (!this || !this.curmap) { return -1; }
 
 		return this.curmap.gametype;
+	}
+
+	static ui String GetMusic()
+	{
+		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		if (!this || !this.curmap || !this.curmap.info) { return level.music; }
+
+		return this.curmap.info.music;
 	}
 
 	static int TileAt(Vector2 pos)
 	{
 		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
-		if (!this) { return -1; }
+		if (!this || !this.curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
@@ -242,7 +253,7 @@ class MapHandler : StaticEventHandler
 	static int ActorAt(Vector2 pos)
 	{
 		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
-		if (!this) { return -1; }
+		if (!this || !this.curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
@@ -302,6 +313,7 @@ class ParsedMap
 {
 	String mapname;
 	String datafile;
+	LevelInfo info;
 	int mapnum;
 	int gametype;
 	String signature;
@@ -478,9 +490,12 @@ class ParsedMap
 
 	play void Initialize()
 	{
-		if (level.mapname ~== "Generic")
+		if (level.mapname ~== "Level")
 		{
 			MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+
+			voidspace.Clear();
+			noclip = false;
 
 			if (gametype > -1)
 			{
@@ -498,6 +513,14 @@ class ParsedMap
 				// If this sector is out of range, continue
 				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
 
+				// Clear any previously spawned actors
+				Actor thing = sec.thinglist;
+				while (thing != null)
+				{
+					if (!(thing is "PlayerPawn")) { thing.Destroy(); }
+					thing = (thing == sec.thinglist) ? null : thing.snext;
+				}
+
 				Vector2 pos = CoordsToGrid(sec.centerspot);
 
 				int t = TileAt(pos);
@@ -507,13 +530,16 @@ class ParsedMap
 				if (a >= 0x13 && a <= 0x16)
 				{
 					Vector2 pos = sec.centerspot;
-					if (players[0].mo)
-					{
-						players[0].mo.SetOrigin((pos, 0), false);
-						players[0].mo.angle = 90 - (a - 0x13) * 90;
-					}
 
 					// TODO: Expand for additional player starts
+					for (int p = 0; p < MAXPLAYERS; p++)
+					{
+						if (playeringame[p] && players[p].mo)
+						{
+							players[p].mo.SetOrigin((pos, 0), false);
+							players[p].mo.angle = 90 - (a - 0x13) * 90;
+						}
+					}
 				}
 
 				// Build the wall structure
@@ -580,9 +606,6 @@ class ParsedMap
 					}
 				}
 			}
-
-			voidspace.Clear();
-			noclip = false;
 
 			// Clean up display of collapse sectors on the automap
 			for (int s = 0; s < level.sectors.Size(); s++)
@@ -833,7 +856,7 @@ class ParsedMap
 		for (int i = 0; i < LevelInfo.GetLevelInfoCount(); i++)
 		{
 			LevelInfo info = LevelInfo.GetLevelInfo(i);
-			if (info.levelnum == mapnum) { return info; }
+			if (info.levelnum == mapnum || info.mapname ~== mapname) { return info; }
 		}
 
 		return null;
@@ -1057,6 +1080,7 @@ class WolfMapParser
 			}
 			
 			newmap.gametype = gametype;
+			newmap.info = newmap.GetInfo();
 
 			if (!GetMapData(newmap.mapname, datafile))
 			{

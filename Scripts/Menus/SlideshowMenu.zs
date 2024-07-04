@@ -89,7 +89,7 @@ class HelpMenu : ReadThisMenu
 
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
-				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
+				if (!mParentMenu) { GameHandler.ChangeMusic("*"); }
 				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
 

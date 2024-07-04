@@ -756,7 +756,7 @@ class Startup : GenericMenu
 		{
 			if (instances == 0)
 			{
-				GameHandler.ChangeMusic(level.music);
+				GameHandler.ChangeMusic("*");
 				Close();
 			}
 			else

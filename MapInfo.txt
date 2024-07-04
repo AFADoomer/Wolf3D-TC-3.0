@@ -91,11 +91,17 @@ map TITLEMAP "Wolfenstein 3D"
 	levelnum = 0
 }
 
-map GENERIC "Wolfenstein 3D"
+map Level "Wolfenstein 3D"
+{
+	levelnum = -1
+	next = Level
+	secretnext = Level
+}
+
+map "Wolf3D TC Test" "Demo Map"
 {
 	levelnum = 1000
-	next = GENERIC
-	secretnext = GENERIC
+	music = GETTHEM
 }
 
 clearepisodes

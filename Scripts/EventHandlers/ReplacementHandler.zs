@@ -154,7 +154,11 @@ class ReplacementHandler : StaticEventHandler
 		int levelnum;
 		ParsedMap queuedmap;
 		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
-		if (handler && handler.queuedmap) { levelnum = handler.queuedmap.mapnum; }
+		if (handler && handler.queuedmap)
+		{
+			queuedmap = handler.queuedmap;
+			levelnum = handler.queuedmap.mapnum;
+		}
 		else { levelnum = level.levelnum; }
 
 		if (useflatsval[consoleplayer] < 4 && levelnum <= 100) { return; }
@@ -165,8 +169,9 @@ class ReplacementHandler : StaticEventHandler
 		String ceilname = "1D";
 		String floorname = "FLOOR";
 
-		int h, gamemode;
-		[h, gamemode] = Game.IsSoD();
+		int h, gamemode = -1;
+		if (queuedmap) { gamemode = queuedmap.gametype; }
+		if (gamemode < 0) { [h, gamemode] = Game.IsSoD(); }
 
 		if (gamemode > 0) { ceilname = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
 		else { ceilname = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
