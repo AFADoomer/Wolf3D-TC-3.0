@@ -37,11 +37,14 @@ class MapHandler : StaticEventHandler
 	{
 		console.printf("Parsing map data...");
 
+		// Parse the demo map first
+		WolfMapParser.Parse(parsedmaps, "Data/EditorThings.map");
+
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
 		{
 			String lumpname = Wads.GetLumpFullName(l);
 			String shortlumpname = Wads.GetLumpName(l);
-			if (shortlumpname.Left(8) ~== "gamemaps")
+			if (shortlumpname ~== "gamemaps")
 			{
 				String headname = lumpname;
 				headname.Substitute("gamemaps", "maphead");
@@ -64,7 +67,7 @@ class MapHandler : StaticEventHandler
 
 		if (e.Name.Left(10) == "initialize")
 		{
-			String mapname = "Wolf1 Map1";
+			String mapname = "Wolf3D TC Test";
 			if (e.Name.Length() > 11)
 			{
 				mapname = e.Name.Mid(11);
