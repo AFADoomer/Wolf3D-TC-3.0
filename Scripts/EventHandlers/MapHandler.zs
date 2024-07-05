@@ -533,7 +533,7 @@ class ParsedMap
 				{
 					Vector2 pos = sec.centerspot;
 
-					// TODO: Expand for additional player starts
+					// TODO: Expand for additional player starts and handle placing deathmatch starts
 					for (int p = 0; p < MAXPLAYERS; p++)
 					{
 						if (playeringame[p] && players[p].mo)
@@ -1084,11 +1084,7 @@ class WolfMapParser
 			newmap.gametype = gametype;
 			newmap.info = newmap.GetInfo();
 
-			if (!GetMapData(newmap.mapname, datafile))
-			{
-				// console.printf(" Adding %s (%s)", newmap.mapname, datafile);
-				maps.Push(newmap);
-			}
+			if (!GetMapData(newmap.mapname, datafile)) { maps.Push(newmap); }
 		}
 	}
 

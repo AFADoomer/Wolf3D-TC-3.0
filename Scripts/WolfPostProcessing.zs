@@ -111,8 +111,8 @@ class WolfPostProcessor : LevelPostProcessor
 					Line ln = level.lines[l];
 
 					int x1, x2, y1, y2;
-					x1 = x2 = (ln.v1.p.x + ln.v2.p.x) / 2;
-					y1 = y2 = (ln.v1.p.y + ln.v2.p.y) / 2;
+					x1 = x2 = int((ln.v1.p.x + ln.v2.p.x) / 2);
+					y1 = y2 = int((ln.v1.p.y + ln.v2.p.y) / 2);
 
 					if (ln.v1.p.y == ln.v2.p.y)
 					{
