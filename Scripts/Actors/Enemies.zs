@@ -784,7 +784,7 @@ class ClassicNazi : ClassicBase
 							nextsector.MoveFloor(256, nextsector.floorplane.PointToDist(nextsector.CenterSpot, nextsector.CenterFloor() - 64), 0, -1, 0, true);
 							nextsector.SetTexture(Sector.floor, floorpic);
 
-							// Remove line blocking and set textures
+							// Remove line blocking and set textures to re-create the original effect
 							for (int l = 0; l < nextsector.lines.Size(); l++)
 							{
 								let ln = nextsector.lines[l];
@@ -793,15 +793,6 @@ class ClassicNazi : ClassicBase
 								ln.flags &= ~(Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK);
 								ln.activation = 0; // Allow walkthrough of elevators
 
-								// TextureID tex = handler.curmap.GetTexture(newpos, ln);
-
-								// for (int s = 0; s < 2; s++)
-								// {
-								// 	if (ln.sidedef[s] && ln.sidedef[s].sector != nextsector || ln.frontsector.CenterFloor() != ln.backsector.CenterFloor())
-								// 	{
-								// 		ln.sidedef[s].SetTexture(side.mid, tex);
-								// 	}
-								// }
 								Sector texsec = (ln.frontsector == nextsector) ? ln.backsector : ln.frontsector;
 								Vector2 texpos = (texsec ? texsec.CenterSpot : (-4096, 4096));
 								texpos = ParsedMap.CoordsToGrid(texpos);
@@ -811,7 +802,7 @@ class ClassicNazi : ClassicBase
 								{
 									if (ln.sidedef[s] && ln.sidedef[s].sector == nextsector)
 									{
-										if (texsec.CenterFloor() != 0)
+										if (handler.curmap.TileAt(texpos) < 0x5A && handler.curmap.ActorAt(texpos) != 0x62)
 										{
 											ln.sidedef[s].SetTexture(side.mid, tex);
 											ln.sidedef[s].SetTexture(side.bottom, tex);

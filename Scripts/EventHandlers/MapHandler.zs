@@ -677,12 +677,14 @@ class ParsedMap
 					}
 				}
 
+				Vector2 pos = CoordsToGrid(sec.centerspot);
+				
+				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
+
 				// Set the floor and ceiling for collapsed sectors to "-", and 
 				// set the wall textures to solid so they block automap sight traversal
-				if (edges == sec.lines.Size())
+				if (edges == sec.lines.Size() && !accessible)
 				{
-					voidspace.Push(sec);
-
 					sec.SetTexture(Sector.floor, nulltex);
 					sec.SetTexture(Sector.ceiling, nulltex);
 
@@ -698,6 +700,8 @@ class ParsedMap
 							}
 						}
 					}
+
+					voidspace.Push(sec);
 				}
 				else
 				{
@@ -714,8 +718,6 @@ class ParsedMap
 						}
 					}
 				}
-
-				Vector2 pos = CoordsToGrid(sec.centerspot);
 
 				int t = TileAt(pos);
 				int a = ActorAt(pos);
