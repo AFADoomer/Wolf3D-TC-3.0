@@ -192,7 +192,31 @@ class MapHandler : StaticEventHandler
 			}
 		}
 	}
-	
+
+	override void PlayerSpawned (PlayerEvent e)
+	{
+		PlacePlayer(e.PlayerNumber);
+	}
+
+	override void PlayerRespawned (PlayerEvent e)
+	{
+		PlacePlayer(e.PlayerNumber);
+	}
+
+	void PlacePlayer(int p)
+	{
+		if (!curmap) { return; }
+		if (!playeringame[p] || !players[p].mo) { return; }
+
+		Vector2 pos = curmap.startspot;
+
+		int a = ActorAt(pos);
+		double angle = 90 - (a - 0x13) * 90;
+
+		players[p].mo.SetOrigin((curmap.GetNextSpot(pos, angle, p - 1, deathmatch), 0), false);
+		players[p].mo.angle = angle;
+	}
+
 	void ParseActorMaps(out Array<ActorMap> actormaps)
 	{
 		int lump = -1;
@@ -363,6 +387,7 @@ class ParsedMap
 	int planes[3][64][64];
 	Array<Sector> voidspace;
 	bool noclip;
+	Vector2 startspot;
 
 	int TileAt(Vector2 pos)
 	{
@@ -379,6 +404,11 @@ class ParsedMap
 	static Vector2 CoordsToGrid(Vector2 coords)
 	{
 		return (int(floor(coords.x / 64)) + 32, int(floor(-coords.y / 64)) + 32);
+	}
+
+	static Vector2 GridToCoords(Vector2 coords)
+	{
+		return ((coords.x - 32) * 64 + 32, -(coords.y - 32) * 64 - 32);
 	}
 
 	void PrintPlane(int plane = 0)
@@ -567,20 +597,22 @@ class ParsedMap
 				int t = TileAt(pos);
 				int a = ActorAt(pos);
 
-				// Move player starts
 				if (a >= 0x13 && a <= 0x16)
 				{
-					Vector2 pos = sec.centerspot;
+					startspot = sec.centerspot;
+					double angle = 90 - (a - 0x13) * 90;
 
-					// TODO: Expand for additional player starts and handle placing deathmatch starts
-					for (int p = 0; p < MAXPLAYERS; p++)
+					if (deathmatch)
 					{
-						if (playeringame[p] && players[p].mo)
-						{
-							players[p].mo.SetOrigin((pos, 0), false);
-							players[p].mo.angle = 90 - (a - 0x13) * 90;
-						}
+						players[0].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), false);
 					}
+					else
+					{
+						// Move player 1 into start spot; the rest are handled in event handler
+						players[0].mo.SetOrigin((startspot, 0), false);
+					}
+
+					players[0].mo.angle = angle;
 				}
 
 				// Build the wall structure
@@ -678,7 +710,7 @@ class ParsedMap
 				}
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
-				
+
 				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
 
 				// Set the floor and ceiling for collapsed sectors to "-", and 
@@ -1001,6 +1033,61 @@ class ParsedMap
 
 		return tex;
 	}
+
+	Vector2 GetNextSpot(Vector2 pos, double angle, int iter = 0, bool random = false)
+	{
+		// Randomize spawn locations across the map
+		if (random)
+		{
+			bool blocked = true;
+			while (blocked)
+			{
+				int column = Random[dmstart](1, 63); // Random column
+				int row = Random[dmstart](1, 63); // Random row
+				
+				for (int y = row; y < 64; y++) // Look for an empty tile
+				{
+					Vector2 gridpos = (column, Random[dmstart](0, 1) ? y : 63 - y); // Start from the botton randomly
+					int t = TileAt(gridpos);
+
+					bool blocked = (t != 0 && t < 0x6A); // Walls keep you from spawning
+					if (!blocked) { blocked = !!FindBlockingActor(GridToCoords(gridpos)); } // And so do blocking actors
+
+					if (!blocked) { return GridToCoords(gridpos); } // But if you're not blocked, spawn here
+					// Keep looking in this column
+				}
+				// Otherwise try again with a new random spot
+			}
+		}
+
+		// Otherwise, spawn in a 3x3 grid pattern in alignment with the player start
+		Vector2 offset = (iter / 3,  (iter % 3) - 1);
+		offset = Actor.RotateVector(offset, angle);
+
+		Vector2 gridpos = CoordsToGrid(pos) - offset;
+
+		if (gridpos.x > 64 || gridpos.y > 64 || gridpos.x < 0 || gridpos.y < 0) { return pos; }
+
+		int t = TileAt(gridpos);
+
+		bool blocked = (t != 0 && t < 0x6A);
+		if (!blocked) { blocked = !!FindBlockingActor(pos + offset * 64); }
+		if (blocked) { return GetNextSpot(pos, angle, ++iter); }
+		
+		return pos + offset * 64;
+	}
+
+	Actor FindBlockingActor(Vector2 spot, int dist = 32)
+	{
+		BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, 0, 0, dist, false);
+		while (it.Next())
+		{
+			if (it.thing.bSolid && Level.Vec2Diff(spot, it.thing.pos.xy).length() < dist) { return it.thing; }
+		}
+
+		return null;
+	}
+
 }
 
 class WolfMapParser
