@@ -306,26 +306,30 @@ class DoorEffector: PolyobjectEffector
 	}
 
 	// Find an actor that prevents the door from closing, if one exists
-	Actor FindBlockingActor()
+	Actor FindBlockingActor(Vector3 spot, int dist, bool simple)
 	{
 		// Iterate over actors that are close to the door
-		BlockThingsIterator it = BlockThingsIterator.CreateFromPos(CenterSpot.x, CenterSpot.y, CenterSpot.z, 512, distance, false);
+		BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, spot.z, 0, dist, false);
 		while (it.Next())
 		{
+			if (simple && it.thing.bSolid) { return it.thing; }
 			if (IsActorBlocking(it.Thing)) { return it.thing; }
 		}
 
 		return null;
 	}
 
-	bool IsBlocked()
+	bool IsBlocked(Vector3 spot = (0, 0, 0), int dist = -1, bool simple = false)
 	{
+		if (!spot.length()) { spot = Centerspot; }
+		if (dist < 0) { dist = distance; }
+
 		// Check if still blocked by the same actor
 		if (Blocker && IsActorBlocking(Blocker)) { return true; }
 		else
 		{
 			// Check if any actors are blocking the door
-			Blocker = FindBlockingActor();
+			Blocker = FindBlockingActor(spot, dist, simple);
 			if (Blocker) { return true; }
 		}
 
@@ -437,7 +441,6 @@ class DoorEffector: PolyobjectEffector
 			}
 
 			distance = (m - 1) * 64;
-			speed = max(speed, int(speed * max(g_maxpushwallmove * 64, distance) / 64.0));
 		}
 		else
 		{
@@ -457,7 +460,26 @@ class DoorEffector: PolyobjectEffector
 		// Track polyobject position and update door status accordingly
 
 		// A negative delay amount means 'stay open forever'...  So stop processing
-		if (Status == WDST_OPEN && delay < 0 ) { return; }
+		if (delay < 0 )
+		{
+			if (Status == WDST_OPEN) { return; }
+			else if (Status == WDST_FIRSTOPENING && speed == 4)
+			{
+				// Re-check at intervals for the pushwall being blocked...
+				Vector2 moveunit = Actor.AngleToVector(angle, 64);
+				Vector2 pos = PolyObject.GetPos();
+
+				if (pos == PolyObject.StartSpotPos + (moveunit / 4))
+				{
+					if (IsBlocked((pos, 0), 32, true))
+					{
+						Destination = PolyObject.StartSpotPos + moveunit;
+						Level.ExecuteSpecial(Polyobj_Stop, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum);
+						Level.ExecuteSpecial(Polyobj_OR_MoveTo, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, Speed, int(Destination.x), int(Destination.y));
+					}
+				}
+			}
+		}
 
 		if (!Polyobject.IsMoving() && (!PolyObject.Mirror || !Polyobject.Mirror.IsMoving()))
 		{
