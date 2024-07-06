@@ -60,9 +60,11 @@
 81=WolfKnife
 82=WolfPistol
 83=WolfBerserk
-85=WolfBackpack
+84=WolfBackpack
+85=ExplosiveOilDrum
 86=BreakableColumn
-87=ExplosiveOilDrum
+87=RedKey
+88=GreenKey
 89=JeweledScepter
 
 // Turn Markers

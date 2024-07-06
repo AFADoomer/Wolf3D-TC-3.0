@@ -821,19 +821,7 @@ class ParsedMap
 
 								if (t >= 0x5C && t <= 0x63)
 								{
-									int lock = (t - 0x5C) / 2;
-									switch (lock)
-									{
-										case 0:
-											ln.locknumber = 131;
-											break;
-										case 1:
-											ln.locknumber = 130;
-											break;
-										default:
-											ln.locknumber = 130 + lock;
-											break;
-									}
+									ln.locknumber = 60 + (t - 0x5C) / 2;
 								}
 							}
 						}
@@ -860,20 +848,19 @@ class ParsedMap
 
 							if (ln.special == 8 || a == 0x62)
 							{
+								TextureID tex;
+
 								if (ln.special == 8 && t >= 0x5C && t <= 0x63 && a != 0x62)
 								{
-									int lock = (t - 0x5C) / 2;
-									switch (lock)
+									ln.locknumber = 60 + (t - 0x5C) / 2;
+
+									if (g_usedoorkeycolors)
 									{
-										case 0:
-											ln.locknumber = 131;
-											break;
-										case 1:
-											ln.locknumber = 130;
-											break;
-										default:
-											ln.locknumber = 130 + lock;
-											break;
+										String texpath = String.Format("WLF%iLK%i", gametype > 0 ? gametype : max(0, g_sod), ln.locknumber - 59);
+										if (ln.delta.x) { texpath = String.Format("%sG", texpath); }
+										else { texpath = String.Format("%sF", texpath); }
+
+										tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 									}
 								}
 
@@ -882,7 +869,8 @@ class ParsedMap
 								{
 									if (ln.sidedef[s])
 									{
-										ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln));
+										if (tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
+										else { ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln)); }
 									}
 								}
 							}

@@ -2123,3 +2123,20 @@ Texture WLF3LK2E, 64, 64 { Patch WALL2132, 0, 0 { FlipX } Patch DOOROBL, 0, 0 { 
 Texture WLF3LK2F, 64, 64 { Patch WALL2133, 0, 0 Patch DOOROBL, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF3LK2G, 64, 64 { Patch WALL2132, 0, 0 Patch DOOROBL, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF3LK2H, 64, 64 { Patch WALL2133, 0, 0 { FlipX } Patch DOOROBL, 0, 0 { Alpha 0.5 Style Add FlipX } }
+
+Texture WLF0LK3F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF0LK3G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF0LK4F, 64, 64 { Patch WALL0105, 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF0LK4G, 64, 64 { Patch WALL0104, 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK3F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK3G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK4F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK4G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF2LK3F, 64, 64 { Patch WALL2133, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF2LK3G, 64, 64 { Patch WALL2132, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF2LK4F, 64, 64 { Patch WALL2133, 0, 0  Patch DOOROGL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF2LK4G, 64, 64 { Patch WALL2132, 0, 0  Patch DOOROGL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF3LK3F, 64, 64 { Patch WALL2133, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF3LK3G, 64, 64 { Patch WALL2132, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF3LK4F, 64, 64 { Patch WALL2133, 0, 0  Patch DOOROGL, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF3LK4G, 64, 64 { Patch WALL2132, 0, 0  Patch DOOROGL, 0, 0 { Alpha 0.5 Style Add } }

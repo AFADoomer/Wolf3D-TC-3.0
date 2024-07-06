@@ -1,14 +1,41 @@
-
 Lock 130
 {
-	//$Title "Blue Key"
+	//$Title "Any Blue Key"
 	Any { BlueKey BlueKeyLost BlueCard BlueSkull KeyBlue }
 	MapColor 32 176 176
 }
 
 Lock 131
 {
-	//$Title "Yellow Key"
+	//$Title "Any Yellow Key"
 	Any { YellowKey YellowKeyLost YellowCard YellowSkull KeyYellow }
 	MapColor 228 216 0
+}
+
+Lock 60
+{
+	//$Title "Yellow Key"
+	Any { YellowKey YellowKeyLost }
+	MapColor 228 216 0
+}
+
+Lock 61
+{
+	//$Title "Blue Key"
+	Any { BlueKey BlueKeyLost }
+	MapColor 32 176 176
+}
+
+Lock 62
+{
+	//$Title "Red Key"
+	RedKey
+	Mapcolor 255 0 0
+}
+
+Lock 63
+{
+	//$Title "Green Key"
+	GreenKey
+	Mapcolor 0 255 0
 }

@@ -18,6 +18,8 @@ HardwareShader Sprite "CAG1A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "CAG2A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/CAG1A0.png" }
 HardwareShader Sprite "KEYSA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/KEYSA0.png" }
 HardwareShader Sprite "KEYSB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/KEYSB0.png" }
+HardwareShader Sprite "KEYSE0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/KEYSA0.png" }
+HardwareShader Sprite "KEYSF0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/KEYSA0.png" }
 HardwareShader Sprite "BED1A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/BED1A0.png" }
 HardwareShader Sprite "BASKA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/BASKA0.png" }
 HardwareShader Sprite "HLTHD0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Textures/Shadows/HLTHD0.png" }

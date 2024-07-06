@@ -553,6 +553,38 @@ class BlueKey : Key
 	}
 }
 
+class RedKey : Key
+{
+	Default
+	{
+		Inventory.PickupSound "pickups/key";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			KEYS E -1;
+			Stop;
+	}
+}
+
+class GreenKey : Key
+{
+	Default
+	{
+		Inventory.PickupSound "pickups/key";
+		Inventory.PickupMessage "";
+	}
+
+	States
+	{
+		Spawn:
+			KEYS F -1;
+			Stop;
+	}
+}
+
 class Bed : ClassicDecoration
 {
 	Default
