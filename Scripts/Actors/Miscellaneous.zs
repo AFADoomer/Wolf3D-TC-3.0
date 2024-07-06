@@ -169,6 +169,7 @@ class Turn : SwitchableDecoration
 					if (target.health <= 0) { return;}
 					
 					target.SetStateLabel("Spawn.Stand");
+					target.SetOrigin(pos, true);
 					target.vel *= 0;
 					target.angle = ang;
 					target.SetStateLabel("Spawn.Patrol");

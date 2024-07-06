@@ -769,7 +769,7 @@ class ClassicNazi : ClassicBase
 				if (handler && handler.curmap)
 				{
 					bool initial = (level.time < 30);
-					sector nextsector = Level.PointInSector((pos.xy + RotateVector((radius * 1.4 + 32, 0), angle)));
+					sector nextsector = Level.PointInSector((pos.xy + RotateVector((45.25, 0), angle)));
 					Vector2 newpos = ParsedMap.CoordsToGrid(nextsector.CenterSpot);
 
 					bool blocked = false;
@@ -814,17 +814,11 @@ class ClassicNazi : ClassicBase
 									}
 								}
 							}
-
-							SetOrigin((nextsector.CenterSpot, pos.z), true);
 						}
 						else
 						{
 							blocked = true;
 						}
-					}
-					else
-					{
-						SetOrigin((nextsector.CenterSpot, pos.z), true);
 					}
 				
 					if (a)
@@ -845,7 +839,11 @@ class ClassicNazi : ClassicBase
 					}
 
 					if (blocked) { SetStateLabel("TurnAround"); }
-					else { SetStateLabel("Spawn.Patrol"); }
+					else
+					{
+						bNoClip = true;
+						SetStateLabel("Spawn.Patrol");
+					}
 				}
 			}
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 45, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
@@ -861,16 +859,39 @@ class ClassicNazi : ClassicBase
 			"####" A 0 A_SetAngle(angle + 180);
 			"####" A 0 A_Jump(256, "Spawn.Patrol");
 		Spawn.Patrol:
-			"####" AAA 1 ThrustThing (int(angle * 256 / 360), 1, 0, 0);
-			"####" AAA 1 A_LookEx (0, 0, 0, 2048, 0, "See");
-			"####" BBBBBB 1 A_LookEx (0, 0, 0, 2048, 0, "See");
-			"####" CCC 1 ThrustThing (int(angle * 256 / 360), 1, 0, 0);
-			"####" CCC 1 A_LookEx (0, 0, 0, 2048, 0, "See");
-			"####" DDDDDD 1 A_LookEx (0, 0, 0, 2048, 0, "See");
-			"####" A 0 A_JumpIf((vel.x == 0) && (vel.y == 0), "Spawn.PatrolNoClip");
+			"####" A 1 ThrustThing (int(angle * 256 / 360), 1, 0, 0);
+			"####" AA 1 {
+				DoVelocityCheck();
+				ThrustThing (int(angle * 256 / 360), 1, 0, 0);
+			}
+			"####" AAA 1 {
+				DoVelocityCheck();
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
+			"####" BBBBBB 1 {
+				DoVelocityCheck();
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
+			"####" CCC 1 {
+				DoVelocityCheck();
+				ThrustThing (int(angle * 256 / 360), 1, 0, 0);
+			}
+			"####" CCC 1 {
+				DoVelocityCheck();
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
+			"####" DDDDDD 1 {
+				DoVelocityCheck();
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
+			"####" A 0 { bNoClip = false; }
 			Loop;
 		Chase:
-			"####" A 0 { if (health <= 0) { SetStateLabel("Dead"); } }  // Just in case...
+			"####" A 0
+			{
+				if (health <= 0) { SetStateLabel("Dead"); } // Just in case...
+				bNoClip = false;
+			}
 			"####" AAAAA 1 A_NaziChase();
 			"####" A 1;
 			"####" BBBB 1 A_NaziChase();
@@ -931,6 +952,14 @@ class ClassicNazi : ClassicBase
 				tics = 25;
 				BlockingLine = null;
 			}
+		}
+	}
+
+	void DoVelocityCheck()
+	{
+		if (!vel.xy.length())
+		{
+			SetStateLabel("Spawn.PatrolNoClip");
 		}
 	}
 }
