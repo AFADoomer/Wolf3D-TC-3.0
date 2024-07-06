@@ -312,8 +312,11 @@ class DoorEffector: PolyobjectEffector
 		BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, spot.z, 0, dist, false);
 		while (it.Next())
 		{
-			if (simple && it.thing.bSolid) { return it.thing; }
-			if (IsActorBlocking(it.Thing)) { return it.thing; }
+			if (simple)
+			{
+				if (it.thing.bSolid && Level.Vec2Diff(spot.xy, it.thing.pos.xy).length() < dist) { return it.thing; }
+			}
+			else if (IsActorBlocking(it.Thing)) { return it.thing; }
 		}
 
 		return null;
@@ -325,7 +328,7 @@ class DoorEffector: PolyobjectEffector
 		if (dist < 0) { dist = distance; }
 
 		// Check if still blocked by the same actor
-		if (Blocker && IsActorBlocking(Blocker)) { return true; }
+		if (!simple && Blocker && IsActorBlocking(Blocker)) { return true; }
 		else
 		{
 			// Check if any actors are blocking the door
@@ -469,9 +472,10 @@ class DoorEffector: PolyobjectEffector
 				Vector2 moveunit = Actor.AngleToVector(angle, 64);
 				Vector2 pos = PolyObject.GetPos();
 
-				if (pos == PolyObject.StartSpotPos + (moveunit / 4))
+				if ((pos - PolyObject.StartSpotPos).length() % 16 == 0)
 				{
-					if (IsBlocked((pos, 0), 32, true))
+					Vector2 dest = pos + moveunit;
+					if (IsBlocked((dest, 0), 32, true))
 					{
 						Destination = PolyObject.StartSpotPos + moveunit;
 						Level.ExecuteSpecial(Polyobj_Stop, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum);
