@@ -832,7 +832,7 @@ class ClassicNazi : ClassicBase
 								if (it.thing == self) { continue; }
 
 								// Special handling to recreate non-solid thing engine bug
-								if (initial) { it.thing.bSolid = false; }
+								if (initial && Level.Vec2Diff(nextsector.CenterSpot, it.thing.pos.xy).length() < 32) { it.thing.bSolid = false; }
 								else { blocked = true; }
 							}
 						}
