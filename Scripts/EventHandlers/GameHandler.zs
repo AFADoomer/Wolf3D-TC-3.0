@@ -346,7 +346,7 @@ class Game
 		int ret;
 		if (level.mapname ~== "Level")
 		{
-			MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+			MapHandler this = MapHandler.Get();
 			if (!this || !this.curmap) { ret = max(0, g_sod); }
 			else { ret = this.curmap.gametype < 0 ? g_sod : this.curmap.gametype; }
 		}

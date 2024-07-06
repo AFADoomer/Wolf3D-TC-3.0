@@ -119,7 +119,7 @@ class DoorHandler: EventHandler
 		}
 
 		// Check if activator is actually able to activate the line
-		if (!ln || ln.Activate(activator, Line.front, ln.Activation))
+		if (!ln || ln.Activate(activator, Line.front, ln.Activation) || activator.bIsMonster)
 		{
 			eff.Activator = activator;
 
@@ -224,7 +224,7 @@ class DoorEffector: PolyobjectEffector
 	// Open the door
 	void Open()
 	{
-		// Polyobject.StartSector.SetTexture(Sector.floor, TexMan.CheckForTexture("FLOOR", TexMan.Type_Any));
+		Polyobject.StartSector.SetTexture(Sector.floor, Activator.floorpic);
 
 		// Door is opening, set status accordingly
 		if (Status == WDST_CLOSED) { Status = WDST_FIRSTOPENING; }
@@ -395,21 +395,45 @@ class DoorEffector: PolyobjectEffector
 				Vector2 spot = Polyobject.StartSpotPos + moveunit * m;
 				int t = MapHandler.TileAt(spot);
 				int a = MapHandler.ActorAt(spot);
-				if (t < 0x6C) { break; }
-				if (a > 0 && a != 0x62)
+
+				bool blocked = false;
+				
+				if (t < 0x6A)
 				{
-					MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
-					if (!handler) { continue;}
-
-					ActorMap am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
-					if (!am) { continue; }
-
-					let spawnactor = GetDefaultByType(am.GetSpawnClass());
-					if (!spawnactor) { continue; }
-					if (!spawnactor.bSolid || spawnactor.bSpecial) { continue; }
-
-					break;
+					if (a == 0x62)
+					{
+						ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
+						PolyobjectHandle ph;
+						while (ph = PolyobjectHandle(it.Next()))
+						{
+							if (ph.StartSpotPos == spot)
+							{
+								blocked = true;  // Can't move through pushwalls
+								break;
+							}
+						}
+					}
+					else { break; } // Can't move through solid walls
 				}
+
+				if (blocked) { break; }
+				
+				if (a == 0x7C) { break; } // Dead guard always blocks pushwalls
+				else
+				{
+					BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, 0, 0, 32, false);
+					
+					while (it.Next())
+					{
+						if (it.thing.bSolid && abs(it.thing.pos.x - spot.x) <= 32 &&  abs(it.thing.pos.y - spot.y) <= 32)
+						{
+							blocked = true;
+							break;
+						}
+					}
+				}
+
+				if (blocked) { break; }
 			}
 
 			distance = (m - 1) * 64;
@@ -487,18 +511,32 @@ class DoorEffector: PolyobjectEffector
 
 			if (delay < 0) // Negative delay leaves the door open forever
 			{
+				PolyObject.StartSpotPos = Destination;
+
 				if (MapHandler.ActorAt(Destination) == 0x62) // Unless there's another secret door at the destination spot
 				{
-					PolyObject.StartSpotPos = Destination;
 					Destroy();
 				}
-				else
+
+				PolyObject.StartSector = Level.PointInSector(Destination);
+				if (PolyObject.StartSector)
 				{
-					Sector sec = Level.PointInSector(Polyobject.GetPos());
-					String texpath = "Patches/Walls/Wall%04i.png";
-					int t = MapHandler.TileAt(PolyObject.StartSpotPos);
-					texpath = String.Format(texpath, (t - 1) * 2);
-					sec.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+					String texpath = "Patches/Walls/Wall%i%03i.png";
+					int t = MapHandler.TileAt(PolyObject.Origin);
+
+					if (t == 0x40 && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
+					{
+						// Special handling for "disappearing pushwall"
+						Level.ExecuteSpecial(Polyobj_OR_MoveTo, null, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, 8192, -2176, 2176);
+					}
+					else
+					{
+						int gametype = MapHandler.GetGameType();
+						if (gametype < 0) { gametype = max(0, g_sod); }
+
+						texpath = String.Format(texpath, gametype, (t - 1) * 2);
+						PolyObject.StartSector.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+					}
 				}
 			}
 		}

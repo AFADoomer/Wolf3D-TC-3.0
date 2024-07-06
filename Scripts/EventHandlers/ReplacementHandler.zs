@@ -153,7 +153,7 @@ class ReplacementHandler : StaticEventHandler
 	{
 		int levelnum;
 		ParsedMap queuedmap;
-		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler handler = MapHandler.Get();
 		if (handler && handler.queuedmap)
 		{
 			queuedmap = handler.queuedmap;

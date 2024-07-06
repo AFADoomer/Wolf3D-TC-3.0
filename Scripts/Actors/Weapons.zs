@@ -115,6 +115,8 @@ class ClassicWeapon : Weapon
 		}
 
 		A_FireBullets(spread, spread, 1, dmg, "WolfPuff", FBF_NORANDOM | FBF_USEAMMO);
+
+		MapHandler.ActivateFloorCode(pos.xy, self);
 	}
 
 	override void DoEffect()

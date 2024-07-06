@@ -29,6 +29,7 @@ class ClassicBase : Actor
 	State AttackState;
 	Vector2 lastpos;
 	Class<Inventory> dropweapon;
+	MapHandler handler;
 
 	int baseflags;
 
@@ -116,6 +117,8 @@ class ClassicBase : Actor
 			if (spr > -1) { sprite = spr; }
 		}
 		else { spr = -1; }
+
+		handler = MapHandler.Get();
 
 		Super.BeginPlay();
 	}
@@ -250,7 +253,7 @@ class ClassicBase : Actor
 			if (TryWalk()) { return; }
 			else if (BlockingLine && BlockingLine.special == 8)
 			{
-				if (bCanUseWalls)
+				if (bCanUseWalls && BlockingLine.activation & SPAC_MUse)
 				{
 					BlockingLine.Activate(self, 0, SPAC_Use);
 					
@@ -652,7 +655,7 @@ class ClassicBase : Actor
 		if (bActive || !target) { return; }
 
 		int lookup = MapHandler.TileAt(pos.xy);
-		if (lookup < 0x6C) { lookup = tid; }
+		if (lookup < 0x6B) { lookup = tid; }
 
 		if (lookup == 0) { return; }
 
@@ -672,7 +675,8 @@ class ClassicBase : Actor
 			}
 
 			mo.target = target;
-			mo.SetState(SeeState);
+			mo.SetState(mo.SeeState);
+			mo.vel *= 0;
 		}
 
 		bActive = true;
@@ -755,7 +759,104 @@ class ClassicNazi : ClassicBase
 			}
 			Loop;
 		Spawn.PatrolNoClip:
-			"####" A 0 A_JumpIf((level.levelnum < 100 || level.levelnum > 999) || angle % 45 != 0 || angle % 90 == 0, "TurnAround"); // Only do special "noclip" handling at precisely 45 degree diagonal angles and in Wolf levels
+			"####" # 0 {
+				if (level.time > 30 && angle % 90 != 45)
+				{
+					SetStateLabel("TurnAround");
+					return;
+				}
+				
+				if (handler && handler.curmap)
+				{
+					bool initial = (level.time < 30);
+					sector nextsector = Level.PointInSector((pos.xy + RotateVector((radius * 1.4 + 32, 0), angle)));
+					Vector2 newpos = ParsedMap.CoordsToGrid(nextsector.CenterSpot);
+
+					bool blocked = false;
+					int t = handler.TileAt(nextsector.CenterSpot);
+					int a = handler.ActorAt(nextsector.CenterSpot);
+
+					if (t > 0 && t < 0x5A)
+					{
+						// Special handling to recreate holo-wall engine bug
+						if (initial)
+						{
+							nextsector.MoveFloor(256, nextsector.floorplane.PointToDist(nextsector.CenterSpot, nextsector.CenterFloor() - 64), 0, -1, 0, true);
+							nextsector.SetTexture(Sector.floor, floorpic);
+
+							// Remove line blocking and set textures
+							for (int l = 0; l < nextsector.lines.Size(); l++)
+							{
+								let ln = nextsector.lines[l];
+
+								ln.flags |= Line.ML_TWOSIDED;
+								ln.flags &= ~(Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK);
+								ln.activation = 0; // Allow walkthrough of elevators
+
+								// TextureID tex = handler.curmap.GetTexture(newpos, ln);
+
+								// for (int s = 0; s < 2; s++)
+								// {
+								// 	if (ln.sidedef[s] && ln.sidedef[s].sector != nextsector || ln.frontsector.CenterFloor() != ln.backsector.CenterFloor())
+								// 	{
+								// 		ln.sidedef[s].SetTexture(side.mid, tex);
+								// 	}
+								// }
+								Sector texsec = (ln.frontsector == nextsector) ? ln.backsector : ln.frontsector;
+								Vector2 texpos = (texsec ? texsec.CenterSpot : (-4096, 4096));
+								texpos = ParsedMap.CoordsToGrid(texpos);
+								TextureID tex = handler.curmap.GetTexture(texpos, ln);
+
+								for (int s = 0; s < 2; s++)
+								{
+									if (ln.sidedef[s] && ln.sidedef[s].sector == nextsector)
+									{
+										if (texsec.CenterFloor() != 0)
+										{
+											ln.sidedef[s].SetTexture(side.mid, tex);
+											ln.sidedef[s].SetTexture(side.bottom, tex);
+										}
+										else
+										{
+											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture("-", TexMan.Type_Any));
+										}
+									}
+								}
+							}
+
+							SetOrigin((nextsector.CenterSpot, pos.z), true);
+						}
+						else
+						{
+							blocked = true;
+						}
+					}
+					else
+					{
+						SetOrigin((nextsector.CenterSpot, pos.z), true);
+					}
+				
+					if (a)
+					{
+						BlockThingsIterator it = BlockThingsIterator.CreateFromPos(nextsector.CenterSpot.x, nextsector.CenterSpot.y, pos.z, 64, 32, false);
+
+						while (it.Next())
+						{
+							if (it.thing.bSolid)
+							{
+								if (it.thing == self) { continue; }
+
+								// Special handling to recreate non-solid thing engine bug
+								if (initial) { it.thing.bSolid = false; }
+								else { blocked = true; }
+							}
+						}
+					}
+
+					if (blocked) { SetStateLabel("TurnAround"); }
+					else { SetStateLabel("Spawn.Patrol"); }
+				}
+			}
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 45, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 6 A_Warp(AAPTR_DEFAULT, 90, 0, 0, 0, WARPF_STOP | WARPF_INTERPOLATE, "Spawn.Patrol");
 			"####" A 0 A_Jump(256, "TurnAround");
@@ -831,7 +932,7 @@ class ClassicNazi : ClassicBase
 
 		if (vel.xy.length() > 0 && BlockingLine && BlockingLine.special == 8)
 		{
-			if (bCanUseWalls)
+			if (bCanUseWalls && BlockingLine.activation & SPAC_MUse)
 			{
 				BlockingLine.Activate(self, 0, SPAC_Use);
 				

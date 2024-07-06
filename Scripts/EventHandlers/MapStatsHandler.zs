@@ -89,7 +89,7 @@ class MapStatsHandler : StaticEventHandler
 		String levelname = level.levelname;
 		int levelnum = level.levelnum;
 
-		MapHandler maphandle = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler maphandle = MapHandler.Get();
 		if (maphandle)
 		{
 			ParsedMap curmap = maphandle.curmap;
@@ -215,7 +215,7 @@ class MapStatsHandler : StaticEventHandler
 
 		int levelnum = level.levelnum;
 
-		MapHandler maphandle = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler maphandle = MapHandler.Get();
 		if (maphandle)
 		{
 			ParsedMap curmap = maphandle.curmap;

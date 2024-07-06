@@ -95,7 +95,7 @@ class WolfPostProcessor : LevelPostProcessor
 		}
 
 		// Move doors into place
-		MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler handler = MapHandler.Get();
 		if (handler && level.mapname ~== "Level")
 		{
 			if (!handler.queuedmap) { handler.queuedmap = handler.parsedmaps.GetMapData("Wolf3D TC Test"); }
@@ -159,9 +159,10 @@ class WolfPostProcessor : LevelPostProcessor
 							{
 								for (int x = 0; x < 64; x++)
 								{
+									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 0)
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62)
 									{
 										if (!skip--)
 										{
@@ -183,9 +184,10 @@ class WolfPostProcessor : LevelPostProcessor
 							{
 								for (int x = 0; x < 64; x++)
 								{
+									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 1)
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62)
 									{
 										if (!skip--)
 										{
@@ -210,7 +212,7 @@ class WolfPostProcessor : LevelPostProcessor
 									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (a == 0x62 && t > 0 && t < 0x5A)
+									if (a == 0x62 && t > 0 && t < 0x6A)
 									{
 										if (!skip--)
 										{

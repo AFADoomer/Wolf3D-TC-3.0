@@ -25,6 +25,7 @@ class MapHandler : StaticEventHandler
 	WolfMapParser parsedmaps;
 	Array<ActorMap> actormapping;
 	ParsedMap curmap, queuedmap;
+	Array<int> activatedfloors;
 
 	override void OnRegister()
 	{
@@ -94,6 +95,7 @@ class MapHandler : StaticEventHandler
 		{
 			curmap = queuedmap;
 			curmap.Initialize();
+			activatedfloors.Clear();
 
 			if (curmap.info)
 			{
@@ -218,9 +220,14 @@ class MapHandler : StaticEventHandler
 		}
 	}
 
+	static clearscope MapHandler Get()
+	{
+		return MapHandler(StaticEventHandler.Find("MapHandler"));
+	}
+
 	static ui ParsedMap GetCurrentMap()
 	{
-		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler this = MapHandler.Get();
 		if (!this) { return null; }
 
 		return this.curmap;
@@ -228,7 +235,7 @@ class MapHandler : StaticEventHandler
 
 	static int GetGameType()
 	{
-		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler this = MapHandler.Get();
 		if (!this || !this.curmap) { return -1; }
 
 		return this.curmap.gametype;
@@ -236,7 +243,7 @@ class MapHandler : StaticEventHandler
 
 	static ui String GetMusic()
 	{
-		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler this = MapHandler.Get();
 		if (!this || !this.curmap || !this.curmap.info) { return level.music; }
 
 		return this.curmap.info.music;
@@ -244,7 +251,7 @@ class MapHandler : StaticEventHandler
 
 	static int TileAt(Vector2 pos)
 	{
-		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler this = MapHandler.Get();
 		if (!this || !this.curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
@@ -254,12 +261,44 @@ class MapHandler : StaticEventHandler
 
 	static int ActorAt(Vector2 pos)
 	{
-		MapHandler this = MapHandler(StaticEventHandler.Find("MapHandler"));
+		MapHandler this = MapHandler.Get();
 		if (!this || !this.curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
 		return this.curmap.ActorAt(pos);
+	}
+
+	static void ActivateFloorCode(Vector2 pos, Actor activator)
+	{
+		MapHandler this = MapHandler.Get();
+		if (!this) { return; }
+
+		int floor = MapHandler.TileAt(pos);
+
+		if (floor > 0x65 && this.activatedfloors.Find(floor) == this.activatedfloors.Size())
+		{
+			this.activatedfloors.Push(floor);
+
+			let it = level.CreateActorIterator(floor, "Actor");
+			Actor mo;
+
+			while (mo = Actor(it.Next()))
+			{
+				if (!mo.bIsMonster || mo.bDormant || !mo.bShootable || mo.health <= 0 || mo.bAmbush) { continue; }
+
+				let c = ClassicBase(mo);
+				if (c)
+				{
+					if (c.bActive) { continue; }
+					else { c.bActive = true; }
+				}
+
+				mo.target = activator;
+				mo.SetState(mo.SeeState);
+				mo.vel *= 0;
+			}
+		}
 	}
 }
 
@@ -494,7 +533,7 @@ class ParsedMap
 	{
 		if (level.mapname ~== "Level")
 		{
-			MapHandler handler = MapHandler(StaticEventHandler.Find("MapHandler"));
+			MapHandler handler = MapHandler.Get();
 
 			voidspace.Clear();
 			noclip = false;
@@ -545,7 +584,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((t < 0x5A || t > 0x8F) && a != 0x62)
+				if ((t > 0 && t < 0x5A || t > 0x8F) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
@@ -564,7 +603,8 @@ class ParsedMap
 						{
 							if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
 							{
-								ln.sidedef[s].SetTexture((a > 0 && a != 0x62) ? side.bottom : side.mid, tex);
+								ln.sidedef[s].SetTexture(side.mid, tex);
+								ln.sidedef[s].SetTexture(side.bottom, tex);
 							}
 						}
 					}
@@ -576,13 +616,14 @@ class ParsedMap
 				// Spawn actors
 				if (a > 0)
 				{
+					Actor mo;
 					ActorMap am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
 
 					if (am)
 					{
 						// Spawn the actor
 						Class<Actor> spawnclass = am.GetSpawnClass(gametype);
-						Actor mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
+						mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
 						if (mo)
 						{
 							// Align the actor
@@ -597,10 +638,10 @@ class ParsedMap
 
 								// Look at nearby tiles to find the closest floor code
 								t = TileAt(pos + (1, 0));
-								if (t < 0x6C) { t = TileAt(pos - (1, 0)); }
-								if (t < 0x6C) { t = TileAt(pos + (0, 1)); }
-								if (t < 0x6C) { t = TileAt(pos - (0, 1)); }
-								if (t < 0x6C) { t = 0; } // Fall back to not assigning a TID
+								if (t < 0x6B) { t = TileAt(pos - (1, 0)); }
+								if (t < 0x6B) { t = TileAt(pos + (0, 1)); }
+								if (t < 0x6B) { t = TileAt(pos - (0, 1)); }
+								if (t < 0x6B) { t = 0; } // Fall back to not assigning a TID
 							}
 							
 							mo.ChangeTID(t);
@@ -658,6 +699,21 @@ class ParsedMap
 						}
 					}
 				}
+				else
+				{
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+						for (int s = 0; s < 2; s++)
+						{
+							if (ln.sidedef[s])
+							{
+								ln.sidedef[s].SetTexture(side.top, nulltex);
+								ln.sidedef[s].SetTexture(side.bottom, nulltex);
+							}
+						}
+					}
+				}
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
 
@@ -670,16 +726,16 @@ class ParsedMap
 					PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
 					if (door)
 					{
-						if (door.StartLine.special == Polyobj_ExplicitLine)
-						{
-							door.Lines.Push(door.StartLine);
-						}
-						else
+						door.Lines.Push(door.StartLine);
+
+						if (door.StartLine.special != Polyobj_ExplicitLine)
 						{
 							// Find all lines that belong to this polyobject
 							Vertex start = door.StartLine.v1;
 							Vertex current = door.StartLine.v2;
 							int count = 0;
+
+							door.Lines.Push(door.StartLine);
 
 							while (current.Index() != start.Index() && count < level.lines.Size())
 							{
@@ -707,19 +763,16 @@ class ParsedMap
 						// Block sounds by default
 						if (ln.flags & Line.ML_TWOSIDED) { ln.flags |= Line.ML_SOUNDBLOCK; }
 
-						// If this is a secret door, tag the line and continue iterating
-						if (a == 0x62)
-						{
-							if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
-							{
-								ln.flags |= Line.ML_SECRET;
-							}
-							continue;
-						}
-
 						// If this is a standard door entry, set up activation and flags
 						if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
 						{
+							// If this is a secret door, set the lines to draw as secret and continue iterating
+							if (a == 0x62)
+							{
+								ln.flags |= Line.ML_SECRET | Line.ML_BLOCKMONSTERS;
+								continue;
+							}
+
 							if (door) // Let everything continue just in case we didn't have enough prefab doors
 							{
 								ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
@@ -751,8 +804,8 @@ class ParsedMap
 							}
 						}
 
-						// If this line isn't a wall, continue;
-						if (ln.flags & Line.ML_TWOSIDED) { continue; }
+						// If this line isn't a wall or borders a secret door, continue;
+						if (ln.flags & Line.ML_TWOSIDED || a == 0x62) { continue; }
 
 						// Set door frame textures on the sides
 						for (int s = 0; s < 2; s++)
@@ -771,9 +824,9 @@ class ParsedMap
 						{
 							let ln = door.lines[l];
 
-							if (ln.special == 8)
+							if (ln.special == 8 || a == 0x62)
 							{
-								if (t >= 0x5C && t <= 0x63)
+								if (ln.special == 8 && t >= 0x5C && t <= 0x63 && a != 0x62)
 								{
 									int lock = (t - 0x5C) / 2;
 									switch (lock)
@@ -802,15 +855,18 @@ class ParsedMap
 						}
 					}
 
-					// If this was a secret door, flag it as a secret
+					// If this was a secret door, flag it as a secret and set the floor texture for the automap
 					if (a == 0x62)
 					{
 						sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
 						Level.total_secrets++;
+
+						if (t < 0x5A) { sec.SetTexture(Sector.floor, GetTexture(pos)); }
 					}
 				}
 				else if (t == 0x15) // Elevator switch
 				{
+					bool secret = (TileAt(pos + (1, 0)) == 0x6B || TileAt(pos - (1, 0)) == 0x6B);
 					for (int l = 0; l < sec.lines.Size(); l++)
 					{
 						let ln = sec.lines[l];
@@ -818,17 +874,7 @@ class ParsedMap
 
 						ln.special = 80;
 						ln.args[0] = 10;
-						
-						// Check for secret elevator floor tile
-						if (
-							TileAt(pos + (1, 0)) == 0x6B ||
-							TileAt(pos - (1, 0)) == 0x6B ||
-							TileAt(pos + (0, 1)) == 0x6B ||
-							TileAt(pos - (0, 1)) == 0x6B
-						)
-						{
-							ln.args[2] = 10;
-						}
+						ln.args[2] = secret ? 10 : 0;
 
 						ln.activation = SPAC_Use | SPAC_UseBack;
 					}
@@ -847,6 +893,53 @@ class ParsedMap
 						ln.args[2] = 1;
 
 						ln.activation = SPAC_Cross;
+					}
+				}
+
+				// Set wall textures for walls with things spawned inside of them
+				if (t > 0 && t < 0x5A && (a > 0 && a != 0x62))
+				{
+					// Make lines blocking and set textures
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+
+						ln.flags |= Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
+
+						if (ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
+						{
+							TextureID tex = GetTexture(pos, ln);
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s])
+								{
+									if (ln.sidedef[s].sector != sec)
+									{
+										ln.sidedef[s].SetTexture(side.mid, tex);
+										ln.sidedef[s].SetTexture(side.bottom, tex);
+									}
+								}
+							}	
+						}
+						else
+						{
+							Sector texsec = (ln.frontsector == sec) ? ln.backsector : ln.frontsector;
+							Vector2 texpos = (texsec ? texsec.CenterSpot : (-4096, 4096));
+							texpos = ParsedMap.CoordsToGrid(texpos);
+							TextureID tex = GetTexture(texpos, ln);
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s])
+								{
+									if (ln.sidedef[s].sector == sec)
+									{
+										ln.sidedef[s].SetTexture(side.mid, tex);
+										ln.sidedef[s].SetTexture(side.bottom, tex);
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -901,6 +994,8 @@ class ParsedMap
 
 			if (!tex.IsValid()) { game--; }
 		}
+
+		if (!tex.IsValid()) { tex = TexMan.CheckForTexture("Patches/Walls/Wall0000.png", TexMan.Type_Any); }
 
 		return tex;
 	}
@@ -1043,7 +1138,7 @@ class WolfMapParser
 						{
 							if (type == FloEdit)
 							{
-								int index = x * 2 * newmap.width + y * 2;
+								int index = x * 2 * newmap.height + y * 2;
 								newmap.planes[p][x][y] = WolfMapParser.GetLittleEndian(plane, index, 2);
 							}
 							else

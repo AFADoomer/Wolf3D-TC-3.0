@@ -26,7 +26,7 @@ class PolyobjectHandlePostProcessor: LevelPostProcessor
 
       // Store StartSpot position
       Vector3 pos = GetThingPos(i);
-      handle.StartSpotPos = pos.xy;
+      handle.StartSpotPos = handle.Origin = pos.xy;
       handle.z = pos.z;
       handle.StartSpotIndex = i;
 

@@ -36,6 +36,7 @@ class PolyobjectHandle: Thinker
 
 	// StartSpot position
 	Vector2 StartSpotPos;
+	Vector2 Origin;
 
 	int StartSpotIndex;
 
