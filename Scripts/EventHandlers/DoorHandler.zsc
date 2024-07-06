@@ -444,6 +444,7 @@ class DoorEffector: PolyobjectEffector
 			}
 
 			distance = (m - 1) * 64;
+			speed = max(speed, int(speed * max(g_maxpushwallmove * 64, distance) / 64.0));
 		}
 		else
 		{
@@ -466,18 +467,20 @@ class DoorEffector: PolyobjectEffector
 		if (delay < 0 )
 		{
 			if (Status == WDST_OPEN) { return; }
-			else if (Status == WDST_FIRSTOPENING && speed == 4)
+			else if (Status == WDST_FIRSTOPENING)
 			{
 				// Re-check at intervals for the pushwall being blocked...
-				Vector2 moveunit = Actor.AngleToVector(angle, 64);
 				Vector2 pos = PolyObject.GetPos();
-
-				if ((pos - PolyObject.StartSpotPos).length() % 16 == 0)
+				int movedist = int((pos - PolyObject.StartSpotPos).length());
+	
+				if (movedist % 16 == 0)
 				{
+					Vector2 moveunit = Actor.AngleToVector(angle, 64);
+				
 					Vector2 dest = pos + moveunit;
 					if (IsBlocked((dest, 0), 32, true))
 					{
-						Destination = PolyObject.StartSpotPos + moveunit;
+						Destination = PolyObject.StartSpotPos + moveunit * ceil(movedist / 64.0);
 						Level.ExecuteSpecial(Polyobj_Stop, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum);
 						Level.ExecuteSpecial(Polyobj_OR_MoveTo, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, Speed, int(Destination.x), int(Destination.y));
 					}
