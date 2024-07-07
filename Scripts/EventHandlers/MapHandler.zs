@@ -807,7 +807,7 @@ class ParsedMap
 								continue;
 							}
 
-							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW | Line.ML_BLOCKMONSTERS; // Block players by default, and don't draw on the automap
+							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
 
 							if (door)
 							{

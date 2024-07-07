@@ -359,7 +359,7 @@ class DoorEffector: PolyobjectEffector
 		// Restore player blocking flag to lines
 		for (int l = 0; l < SoundLines.Size(); l++)
 		{
-			level.lines[SoundLines[l]].flags |= Line.ML_BLOCK_PLAYERS | Line.ML_BLOCKMONSTERS;
+			level.lines[SoundLines[l]].flags |= Line.ML_BLOCK_PLAYERS;
 		}
 	}
 
@@ -498,7 +498,7 @@ class DoorEffector: PolyobjectEffector
 				// Remove player blocking flag from lines
 				for (int l = 0; l < SoundLines.Size(); l++)
 				{
-					level.lines[SoundLines[l]].flags &= ~(Line.ML_BLOCK_PLAYERS | Line.ML_BLOCKMONSTERS);
+					level.lines[SoundLines[l]].flags &= ~Line.ML_BLOCK_PLAYERS;
 				}
 			}
 			else if (Status == WDST_CLOSING)
