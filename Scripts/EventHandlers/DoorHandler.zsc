@@ -405,7 +405,7 @@ class DoorEffector: PolyobjectEffector
 
 				bool blocked = false;
 				
-				if (t < 0x6A)
+				if (t < 0x5A)
 				{
 					if (a == 0x62)
 					{
@@ -421,6 +421,24 @@ class DoorEffector: PolyobjectEffector
 						}
 					}
 					else { break; } // Can't move through solid walls
+				}
+				else if (t < 0x6A)
+				{
+					ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
+					PolyobjectHandle ph;
+					while (ph = PolyobjectHandle(it.Next()))
+					{
+						if (ph.StartSpotPos == spot)
+						{
+							DoorEffector eff = DoorEffector(ph.FindEffector("DoorEffector"));
+							// Can't move through closed doors
+							if (!eff || eff.Status != DoorEffector.WDST_OPEN)
+							{
+								blocked = true;
+								break;
+							}
+						}
+					}
 				}
 
 				if (blocked) { break; }
