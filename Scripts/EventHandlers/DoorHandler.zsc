@@ -516,6 +516,90 @@ class DoorEffector: PolyobjectEffector
 						Level.ExecuteSpecial(Polyobj_OR_MoveTo, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, Speed, int(Destination.x), int(Destination.y));
 					}
 				}
+
+				PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(PolyObject.StartSpotPos);
+				if (door && door != PolyObject)
+				{
+					if (movedist == 0)
+					{
+						TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
+						for (int l = 0; l < door.Lines.Size(); l++)
+						{
+							let ln = door.lines[l];
+
+							ln.special = 0;
+							ln.flags &= ~Line.ML_BLOCKING;
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s])
+								{
+									ln.sidedef[s].SetTexture(side.mid, nulltex);
+								}
+							}
+						}
+
+						let handler = MapHandler.Get();
+
+						if (handler)
+						{
+							int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
+							for (int l = 0; l < PolyObject.Lines.Size(); l++)
+							{
+								let ln = PolyObject.lines[l];
+
+								for (int s = 0; s < 2; s++)
+								{
+									if (ln.sidedef[s])
+									{
+										ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
+									}
+								}
+							}
+						}
+					}
+					else if (movedist == 64)
+					{
+						let handler = MapHandler.Get();
+
+						if (handler)
+						{
+							Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.StartSpotPos);
+							int t = handler.curmap.TileAt(pos);
+
+							for (int l = 0; l < PolyObject.StartSector.Lines.Size(); l++)
+							{
+								let ln = PolyObject.StartSector.lines[l];
+
+								if (ln.flags & Line.ML_TWOSIDED)
+								{
+									if (t % 2 == 1 && ln.delta.x) { continue; }
+									if (t % 2 == 0 && ln.delta.y) { continue; }
+								}
+
+								for (int s = 0; s < 2; s++)
+								{
+									if (ln.sidedef[s] && ln.sidedef[s].sector == PolyObject.StartSector)
+									{
+										int tt = 0;
+										if (t % 2 == 1)
+										{
+											if (ln.v1.p.x > PolyObject.StartSpotPos.x) { tt = handler.curmap.TileAt(pos + (1, 0)); }
+											else { tt = handler.curmap.TileAt(pos - (1, 0)); }
+										}
+										else
+										{
+											if (ln.v1.p.y > PolyObject.StartSpotPos.y) { tt = handler.curmap.TileAt(pos - (0, 1)); }
+											else { tt = handler.curmap.TileAt(pos + (0, 1)); }
+										}
+										
+										ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tt, (0, 0), ln));
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 

@@ -755,7 +755,7 @@ class ParsedMap
 				int a = ActorAt(pos);
 
 				// Handle texturing of doors and door frames
-				if ((t >= 0x5A && t <= 0x65) || t == 0x32 || t == 0x35 || a == 0x62)
+				if ((t >= 0x5A && t <= 0x65) || a == 0x62)
 				{
 					PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
 					if (door)
@@ -800,34 +800,35 @@ class ParsedMap
 						// If this is a standard door entry, set up activation and flags
 						if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
 						{
-							// If this is a secret door, set the lines to draw as secret and continue iterating
+							// If this is a secret door, set the lines to draw as secret
 							if (a == 0x62)
 							{
 								ln.flags |= Line.ML_SECRET | Line.ML_BLOCKMONSTERS;
-								continue;
 							}
-
-							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
-
-							if (door)
+							else
 							{
-								// Set two-sided lines to open/close the door so that it
-								// can be closed even without directly using the polyobject
-								ln.special = Polyobj_DoorSlide;
-								ln.args[0] = door.PolyobjectNum;
-								ln.args[2] = (t % 2 == 0) ? 192 : 0;
-								ln.activation = SPAC_Use | SPAC_UseBack | SPAC_UseThrough;
-								ln.flags |= Line.ML_REPEAT_SPECIAL;
+								ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
 
-								if (t >= 0x5C && t <= 0x63)
+								if (door)
 								{
-									ln.locknumber = 60 + (t - 0x5C) / 2;
+									// Set two-sided lines to open/close the door so that it
+									// can be closed even without directly using the polyobject
+									ln.special = Polyobj_DoorSlide;
+									ln.args[0] = door.PolyobjectNum;
+									ln.args[2] = (t % 2 == 0) ? 192 : 0;
+									ln.activation = SPAC_Use | SPAC_UseBack | SPAC_UseThrough;
+									ln.flags |= Line.ML_REPEAT_SPECIAL;
+
+									if (t >= 0x5C && t <= 0x63)
+									{
+										ln.locknumber = 60 + (t - 0x5C) / 2;
+									}
 								}
 							}
 						}
 
 						// If this line borders a secret door, continue
-						if (a == 0x62) { continue; }
+						if (t < 0x5A || t > 0x65 && a == 0x62) { continue; }
 
 						// If this line is an entryway, continue
 						if (ln.flags & Line.ML_TWOSIDED)
@@ -844,7 +845,6 @@ class ParsedMap
 							{
 								if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 								{
-
 									ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
 								}
 							}
@@ -862,7 +862,7 @@ class ParsedMap
 								TextureID tex;
 								bool locked = false;
 
-								if (t >= 0x5C && t <= 0x63 && a != 0x62)
+								if (t >= 0x5C && t <= 0x63)
 								{
 									locked = true;
 									if (ln.special == 8) { ln.locknumber = 60 + (t - 0x5C) / 2; }
@@ -894,10 +894,13 @@ class ParsedMap
 					// If this was a secret door, flag it as a secret and set the floor texture for the automap
 					if (a == 0x62)
 					{
-						sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
-						Level.total_secrets++;
+						if (t < 0x5A)
+						{
+							sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
+							Level.total_secrets++;
 
-						if (t < 0x5A) { sec.SetTexture(Sector.floor, GetTexture(pos)); }
+							sec.SetTexture(Sector.floor, GetTexture(pos));
+						}
 					}
 				}
 				else if (t == 0x15) // Elevator switch
@@ -1116,6 +1119,24 @@ class ParsedMap
 		if (tile != 0x6A) { return tilecount; }
 
 		return !!(tilecount >= g_deafguarddoors);
+	}
+
+	int CountDoors(Vector2 pos)
+	{
+		int count = 0;
+
+		for (int y = 0; y <= pos.y; y++)
+		{
+			for (int x = 0; x < 64; x++)
+			{
+				int t = TileAt((x, y));
+				count += (t >= 0x5A && t <= 0x65);
+
+				if (y == pos.y && x + 1 == pos.x) { break; }
+			}
+		}
+
+		return count;
 	}
 }
 

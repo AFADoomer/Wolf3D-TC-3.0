@@ -88,18 +88,19 @@ class PolyobjectHandle: Thinker
 
 	// Returns a PolyobjectHandle corresponding to the polyobject at provided location
 	// Returns NULL if no such handler exists.
-	static PolyobjectHandle FindPolyobjAt(Vector2 pos)
+	static PolyobjectHandle FindPolyobjAt(Vector2 pos, int skip = 0)
 	{
 		PolyobjectHandle po;
 		let it = ThinkerIterator.Create('PolyobjectHandle');
 		while ((po = PolyobjectHandle(it.Next())) != NULL)
 		{
 			if (po.StartSpotPos == pos)
-			return po;
+			{
+				if (skip-- <= 0) { return po; }
+			}
 		}
 		return NULL;
 	}
-
 
 	// Adds effector to the end of current effector list 
 	void AddEffector(PolyobjectEffector effector)

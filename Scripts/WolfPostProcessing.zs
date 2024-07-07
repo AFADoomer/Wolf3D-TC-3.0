@@ -102,8 +102,6 @@ class WolfPostProcessor : LevelPostProcessor
 			
 			if (handler.queuedmap)
 			{
-				int doorcount[3];
-
 				// Make sure that lines that will be exposed to the player face the 
 				// inside of the map (so that all animated walls/switches work properly) 
 				for (int l = 0; l < level.lines.Size(); l++)
@@ -141,98 +139,66 @@ class WolfPostProcessor : LevelPostProcessor
 					}
 				}
 
+				// Index and place polyobject doors
+
+				int startspots[3][256];
+				int doorcount[3];
+
+				// Find all of the start spots and store them in an array by type
 				for (uint i = 0; i < count; i++)
 				{
 					uint e = GetThingEdNum(i);
-// TODO: Collect start spots into an array, then loop over the map data x/y and place them
-// Also allows collecting sequential index of the polyobjects for fake door/pushwall bug
+
 					// Polyobject Start Spot
 					if (e == 9301)
 					{
 						int id = GetThingAngle(i);
-						Vector3 pos = GetThingPos(i);
+						int index = (id > 128 ? 2 : id > 64 ? 1 : 0);
 
-						if (id > 0 && id <= 64)
+						startspots[index][id - index * 64] = i; // Insert in numerical order so number will match order of use
+					}
+				}
+
+				// Position door polyobjects in the map
+				for (int y = 0; y < 64; y++)
+				{
+					for (int x = 0; x < 64; x++)
+					{
+						int a = handler.queuedmap.ActorAt((x, y));
+						int t = handler.queuedmap.TileAt((x, y));
+
+						if ((t < 0x5A || t > 0x65) && a != 0x62) { continue; }
+
+						Vector2 pos = ParsedMap.GridToCoords((x, y));
+						int doortype = -1; // Invalid door type
+
+						if (t >= 0x5A && t <= 0x65 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
 						{
-							int skip = doorcount[0];
+							doortype = !!(t % 2); // E/W or N/S
+						}
 
-							for (int y = 0; y < 64; y++)
+						if (t > 0 && t < 0x6A && a == 0x62) // Pushwall
+						{
+							// Special handling for secret door placed on top of normal door
+							if (doortype > -1)
 							{
-								for (int x = 0; x < 64; x++)
-								{
-									int a = handler.queuedmap.ActorAt((x, y));
-									int t = handler.queuedmap.TileAt((x, y));
-
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
-									{
-										if (!skip--)
-										{
-											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
-											SetThingXY(i, pos.x, pos.y);
-											doorcount[0]++;
-
-											x = 64; y = 64;
-										}
-									}
-								}
+								int spotindex = startspots[2][++doorcount[2]];
+								SetThingXY(spotindex, pos.x, pos.y);
+								AddThing(22101, (pos, 0), GetThingAngle(spotindex));
+							}
+							else
+							{
+								doortype = 2;
 							}
 						}
-						else if (id > 64 && id <= 128)
-						{
-							int skip = doorcount[1];
 
-							for (int y = 0; y < 64; y++)
-							{
-								for (int x = 0; x < 64; x++)
-								{
-									int a = handler.queuedmap.ActorAt((x, y));
-									int t = handler.queuedmap.TileAt((x, y));
+						if (doortype < 0) { continue; }
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
-									{
-										if (!skip--)
-										{
-											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
-											SetThingXY(i, pos.x, pos.y);
-											doorcount[1]++;
-
-											x = 64; y = 64;
-										}
-									}
-								}
-							}
-						}
-						else // Secret Door
-						{
-							int skip = doorcount[2];
-
-							for (int y = 0; y < 64; y++)
-							{
-								for (int x = 0; x < 64; x++)
-								{
-									int a = handler.queuedmap.ActorAt((x, y));
-									int t = handler.queuedmap.TileAt((x, y));
-
-									if (a == 0x62 && t > 0 && t < 0x6A)
-									{
-										if (!skip--)
-										{
-											pos.xy = ((x - 32) * 64 + 32, -((y - 32) * 64 + 32));
-											SetThingXY(i, pos.x, pos.y);
-											doorcount[2]++;
-
-											x = 64; y = 64;
-										}
-									}
-								}
-							}
-						}
+						int spotindex = startspots[doortype][++doorcount[doortype]];
+						SetThingXY(spotindex, pos.x, pos.y);
 
 						// Spawn door sound player for doors that were placed in the map
-						if (abs(pos.x) < 2048 && abs(pos.y) < 2048)
-						{
-							AddThing(22101, pos, id);
-						}
+						AddThing(22101, (pos, 0), GetThingAngle(spotindex));
 					}
 				}
 			}
