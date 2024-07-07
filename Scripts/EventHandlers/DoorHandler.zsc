@@ -404,7 +404,7 @@ class DoorEffector: PolyobjectEffector
 			else { distance = (ActivationLine ? int(ActivationLine.delta.length()) : (speed == 4 ? 128 : 64)); }
 		}
 
-		if (speed == 4 && delay < 0) // Secret door
+		if (delay < 0) // Secret door
 		{
 			Vector2 moveunit = Actor.AngleToVector(angle, 64);
 
@@ -418,23 +418,12 @@ class DoorEffector: PolyobjectEffector
 
 				bool blocked = false;
 				
-				if (t < 0x5A)
+				if (a == 0x62) // Can't move through pushwalls - but make sure it's still there
 				{
-					if (a == 0x62)
-					{
-						ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
-						PolyobjectHandle ph;
-						while (ph = PolyobjectHandle(it.Next()))
-						{
-							if (ph.StartSpotPos == spot)
-							{
-								blocked = true;  // Can't move through pushwalls
-								break;
-							}
-						}
-					}
-					else { break; } // Can't move through solid walls
+					PolyobjectHandle ph = PolyobjectHandle.FindPolyobjAt(spot);
+					if (ph) { break; }
 				}
+				else if (t < 0x5A) { break; } // Can't move through solid walls
 				else if (t < 0x6A)
 				{
 					ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');

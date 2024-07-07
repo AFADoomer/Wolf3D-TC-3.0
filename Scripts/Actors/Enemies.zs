@@ -769,7 +769,7 @@ class ClassicNazi : ClassicBase
 				if (handler && handler.curmap)
 				{
 					bool initial = (level.time < 30);
-					sector nextsector = Level.PointInSector((pos.xy + RotateVector((45.25, 0), angle)));
+					sector nextsector = Level.PointInSector((pos.xy + RotateVector((48, 0), angle)));
 					Vector2 newpos = ParsedMap.CoordsToGrid(nextsector.CenterSpot);
 
 					bool blocked = false;
