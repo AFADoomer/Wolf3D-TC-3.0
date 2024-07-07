@@ -144,7 +144,8 @@ class WolfPostProcessor : LevelPostProcessor
 				for (uint i = 0; i < count; i++)
 				{
 					uint e = GetThingEdNum(i);
-
+// TODO: Collect start spots into an array, then loop over the map data x/y and place them
+// Also allows collecting sequential index of the polyobjects for fake door/pushwall bug
 					// Polyobject Start Spot
 					if (e == 9301)
 					{
@@ -162,7 +163,7 @@ class WolfPostProcessor : LevelPostProcessor
 									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62 && (handler.queuedmap.TileAt((x - 1, y)) != 0x6A || handler.queuedmap.TileAt((x + 1, y)) != 0x6A))
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
 									{
 										if (!skip--)
 										{
@@ -187,7 +188,7 @@ class WolfPostProcessor : LevelPostProcessor
 									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62 && (handler.queuedmap.TileAt((x, y - 1)) != 0x6A || handler.queuedmap.TileAt((x, y + 1)) != 0x6A))
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
 									{
 										if (!skip--)
 										{

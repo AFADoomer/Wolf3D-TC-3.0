@@ -8,6 +8,7 @@ server int g_momentum = 0; // Use Doom-styl emovement
 server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
 server int g_fastfireballs = 1; // More accurate Fake Hitler fireballs
 server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
+server int g_deafguarddoors = 2; // Enable deaf guard tiles making doors transparent - 0 = Off, 1 = only require one side, 2 = require both sides
 server int g_defaultmenus = 0; // Use the default GZDoom option menus
 server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
 server int g_placeholders = 1; // Enable dubious legality

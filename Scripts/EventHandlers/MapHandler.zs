@@ -829,11 +829,8 @@ class ParsedMap
 						// If this line isn't a wall or borders a secret door, continue;
 						if (ln.flags & Line.ML_TWOSIDED || a == 0x62) { continue; }
 
-						// Check for Deaf Guard tiles on either side of the door - don't add door frames if the diir is invisible
-						if (
-							(t % 2 == 0 && (TileAt( pos - (1, 0)) != 0x6A || handler.queuedmap.TileAt(pos + (1, 0)) != 0x6A)) || 
-							(t % 2 == 1 && (TileAt( pos - (0, 1)) != 0x6A || handler.queuedmap.TileAt(pos + (0, 1)) != 0x6A))
-						)
+						// Don't add door frames if Deaf Guard tiles meet the threshhold
+						if (!CheckForDoorTiles(pos, 0x6A))
 						{
 							// Set door frame textures on the sides
 							for (int s = 0; s < 2; s++)
@@ -1086,6 +1083,33 @@ class ParsedMap
 		return null;
 	}
 
+	// Check for tiles on either side of doors
+	// Check against g_deafguardoors CVar amount if checking for Deaf Guard tiles (default)
+	int CheckForDoorTiles(Vector2 spot, int tile = 0x6A)
+	{ 
+		if (tile == 0x6A && g_deafguarddoors == 0) { return 0; }
+
+		int t = TileAt(spot);
+		int a = ActorAt(spot);
+		if (t < 0x5A || t > 0x65 || a == 0x62) { return 0; }
+
+		int tilecount = 0;
+
+		if (t % 2 == 0)
+		{
+			tilecount += (TileAt(spot - (1, 0)) == tile);
+			tilecount += (TileAt(spot + (1, 0)) == tile);
+		}
+		else
+		{
+			tilecount += (TileAt(spot - (0, 1)) == tile);
+			tilecount += (TileAt(spot + (0, 1)) == tile);
+		}
+
+		if (tile != 0x6A) { return tilecount; }
+
+		return !!(tilecount >= g_deafguarddoors);
+	}
 }
 
 class WolfMapParser
