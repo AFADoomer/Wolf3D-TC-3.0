@@ -826,8 +826,15 @@ class ParsedMap
 							}
 						}
 
-						// If this line isn't a wall or borders a secret door, continue;
-						if (ln.flags & Line.ML_TWOSIDED || a == 0x62) { continue; }
+						// If this line borders a secret door, continue
+						if (a == 0x62) { continue; }
+
+						// If this line is an entryway, continue
+						if (ln.flags & Line.ML_TWOSIDED)
+						{
+							if (t % 2 == 1 && ln.delta.x) { continue; }
+							if (t % 2 == 0 && ln.delta.y) { continue; }
+						}
 
 						// Don't add door frames if Deaf Guard tiles meet the threshhold
 						if (!CheckForDoorTiles(pos, 0x6A))
