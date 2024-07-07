@@ -172,7 +172,7 @@ class WolfPostProcessor : LevelPostProcessor
 						Vector2 pos = ParsedMap.GridToCoords((x, y));
 						int doortype = -1; // Invalid door type
 
-						if (t >= 0x5A && t <= 0x65 && !handler.queuedmap.CheckForDoorTiles((x, y), 0x6A))
+						if (t >= 0x5A && t <= 0x65 && !handler.queuedmap.CheckDoorTiles((x, y)))
 						{
 							doortype = !!(t % 2); // E/W or N/S
 						}

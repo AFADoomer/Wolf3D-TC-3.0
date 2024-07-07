@@ -227,7 +227,22 @@ class DoorEffector: PolyobjectEffector
 		Polyobject.StartSector.SetTexture(Sector.floor, Activator.floorpic);
 
 		// Door is opening, set status accordingly
-		if (Status == WDST_CLOSED) { Status = WDST_FIRSTOPENING; }
+		if (Status == WDST_CLOSED)
+		{
+			Status = WDST_FIRSTOPENING;
+
+			/*
+				Notes for implementing memory overflow bug floor tiles:
+					One side must be: 0 (No floor code)
+					Other side: Effect:
+						0x40	NoClip
+						0xA0	Fire
+						0xD6	Strafe
+						0xD7	Use
+						0xF6	Forward
+						0xFB	Right Turn
+			*/
+		}
 		else { Status = WDST_OPENING; }
 
 		Counter = Delay; // Reset the countdown 

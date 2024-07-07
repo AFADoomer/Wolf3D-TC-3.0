@@ -838,7 +838,7 @@ class ParsedMap
 						}
 
 						// Don't add door frames if Deaf Guard tiles meet the threshhold
-						if (!CheckForDoorTiles(pos, 0x6A))
+						if (!CheckDoorTiles(pos))
 						{
 							// Set door frame textures on the sides
 							for (int s = 0; s < 2; s++)
@@ -1017,7 +1017,6 @@ class ParsedMap
 			else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
 			else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
 		}
-		else { game = max(1, game); }
 
 		int tiletex = (!ln || ln.delta.x) ? (t - 1) * 2 : (t - 1) * 2 + 1;
 		if (tiletex == 42) { tiletex = 40; }
@@ -1095,26 +1094,29 @@ class ParsedMap
 
 	// Check for tiles on either side of doors
 	// Check against g_deafguardoors CVar amount if checking for Deaf Guard tiles (default)
-	int CheckForDoorTiles(Vector2 spot, int tile = 0x6A)
+	int CheckDoorTiles(Vector2 spot, int tile = 0x6A, int tile2 = -1)
 	{ 
 		if (tile == 0x6A && g_deafguarddoors == 0) { return 0; }
 
 		int t = TileAt(spot);
 		int a = ActorAt(spot);
-		if (t < 0x5A || t > 0x65 || a == 0x62) { return 0; }
+		if (t < 0x5A || t > 0x65) { return 0; }
 
+		int t1, t2;
 		int tilecount = 0;
 
 		if (t % 2 == 0)
 		{
-			tilecount += (TileAt(spot - (1, 0)) == tile);
-			tilecount += (TileAt(spot + (1, 0)) == tile);
+			t1 = TileAt(spot - (1, 0));
+			t2 = TileAt(spot + (1, 0));
 		}
 		else
 		{
-			tilecount += (TileAt(spot - (0, 1)) == tile);
-			tilecount += (TileAt(spot + (0, 1)) == tile);
+			t1 = TileAt(spot - (0, 1));
+			t2 = TileAt(spot + (0, 1));
 		}
+
+		tilecount += (t1 == tile && (tile2 < 0 ? 1 : t2 == tile2)) + (t2 == tile && (tile2 < 0 ? 1 : t1 == tile2));
 
 		if (tile != 0x6A) { return tilecount; }
 
