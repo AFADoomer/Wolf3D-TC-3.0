@@ -162,7 +162,7 @@ class WolfPostProcessor : LevelPostProcessor
 									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62)
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 0 && a != 0x62 && (handler.queuedmap.TileAt((x - 1, y)) != 0x6A || handler.queuedmap.TileAt((x + 1, y)) != 0x6A))
 									{
 										if (!skip--)
 										{
@@ -187,7 +187,7 @@ class WolfPostProcessor : LevelPostProcessor
 									int a = handler.queuedmap.ActorAt((x, y));
 									int t = handler.queuedmap.TileAt((x, y));
 
-									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62)
+									if (t >= 0x5A && t <= 0x65 && t % 2 == 1 && a != 0x62 && (handler.queuedmap.TileAt((x, y - 1)) != 0x6A || handler.queuedmap.TileAt((x, y + 1)) != 0x6A))
 									{
 										if (!skip--)
 										{

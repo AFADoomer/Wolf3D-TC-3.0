@@ -616,7 +616,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((t > 0 && t < 0x5A || t > 0x8F) && (a == 0 || (a > 0x59 && a < 0x62)))
+				if ((t > 0 && t < 0x5A) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
@@ -807,10 +807,10 @@ class ParsedMap
 								continue;
 							}
 
-							if (door) // Let everything continue just in case we didn't have enough prefab doors
-							{
-								ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
+							ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW | Line.ML_BLOCKMONSTERS; // Block players by default, and don't draw on the automap
 
+							if (door)
+							{
 								// Set two-sided lines to open/close the door so that it
 								// can be closed even without directly using the polyobject
 								ln.special = Polyobj_DoorSlide;
@@ -829,13 +829,20 @@ class ParsedMap
 						// If this line isn't a wall or borders a secret door, continue;
 						if (ln.flags & Line.ML_TWOSIDED || a == 0x62) { continue; }
 
-						// Set door frame textures on the sides
-						for (int s = 0; s < 2; s++)
+						// Check for Deaf Guard tiles on either side of the door - don't add door frames if the diir is invisible
+						if (
+							(t % 2 == 0 && (TileAt( pos - (1, 0)) != 0x6A || handler.queuedmap.TileAt(pos + (1, 0)) != 0x6A)) || 
+							(t % 2 == 1 && (TileAt( pos - (0, 1)) != 0x6A || handler.queuedmap.TileAt(pos + (0, 1)) != 0x6A))
+						)
 						{
-							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
+							// Set door frame textures on the sides
+							for (int s = 0; s < 2; s++)
 							{
+								if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
+								{
 
-								ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
+									ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
+								}
 							}
 						}
 					}
@@ -849,11 +856,14 @@ class ParsedMap
 							if (ln.special == 8 || a == 0x62)
 							{
 								TextureID tex;
+								bool locked = false;
 
-								if (ln.special == 8 && t >= 0x5C && t <= 0x63 && a != 0x62)
+								if (t >= 0x5C && t <= 0x63 && a != 0x62)
 								{
-									ln.locknumber = 60 + (t - 0x5C) / 2;
+									locked = true;
+									if (ln.special == 8) { ln.locknumber = 60 + (t - 0x5C) / 2; }
 
+									// Set the doors to colored variants if the CVar is set
 									if (g_usedoorkeycolors)
 									{
 										String texpath = String.Format("WLF%iLK%i", gametype > 0 ? gametype : max(0, g_sod), ln.locknumber - 59);
@@ -869,7 +879,7 @@ class ParsedMap
 								{
 									if (ln.sidedef[s])
 									{
-										if (tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
+										if (locked && tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
 										else { ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln)); }
 									}
 								}
