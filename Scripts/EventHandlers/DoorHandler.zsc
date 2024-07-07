@@ -235,6 +235,14 @@ class DoorEffector: PolyobjectEffector
 		// Move the polyobject to destination
 		Polyobject.MoveTo(Activator, Destination, Speed, 0);  // SNDSEQ sound 0 for opening
 
+		if (delay > 0)
+		{
+			for (int l = 0; l < Polyobject.Lines.Size(); l++)
+			{
+				Polyobject.Lines[l].flags &= ~Line.ML_BLOCKING;
+			}
+		}
+
 		// Remove sound blocking flag from lines
 		for (int l = 0; l < SoundLines.Size(); l++)
 		{
@@ -355,6 +363,11 @@ class DoorEffector: PolyobjectEffector
 		// Door is closing, set status accordingly
 		Status = WDST_CLOSING;
 		Polyobject.MoveTo(Activator, Polyobject.StartSpotPos, Speed, 1); // SNDSEQ sound 1 for closing
+
+		for (int l = 0; l < Polyobject.Lines.Size(); l++)
+		{
+			Polyobject.Lines[l].flags |= Line.ML_BLOCKING;
+		}
 
 		// Restore player blocking flag to lines
 		for (int l = 0; l < SoundLines.Size(); l++)
