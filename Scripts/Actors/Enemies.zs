@@ -1805,8 +1805,6 @@ class PacManGhost : ClassicBase
 		+LOOKALLAROUND
 		+NOBLOOD
 		-COUNTKILL
-		-CANPUSHWALLS
-		-SOLID
 
 		Radius 32;
 		Speed 5;
@@ -1832,6 +1830,13 @@ class PacManGhost : ClassicBase
 			"####" A -1;
 			Loop;
 	}
+
+	override bool CanCollideWith(Actor other, bool passive)
+	{
+		if (other.bIsMonster) { return false; }
+		
+		return Super.CanCollideWith(other, passive);
+	}
 }
 
 class Blinky : PacManGhost
@@ -1844,7 +1849,7 @@ class Blinky : PacManGhost
 	States
 	{
 		Spawn:
-			GHO0 A 0;
+			GHO1 A 0;
 			Goto Super::Spawn;
 	}
 }
@@ -1859,7 +1864,7 @@ class Inky : PacManGhost
 	States
 	{
 		Spawn:
-			GHO1 A 0;
+			GHO0 A 0;
 			Goto Super::Spawn;
 	}
 }

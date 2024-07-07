@@ -1201,9 +1201,9 @@ DoomEdNums
 	23106=RadioactiveMist
 
 	20224=Blinky
-	20225=Inky
+	20225=Clyde
 	20226=Pinky
-	20227=Clyde
+	20227=Inky
 
 	// Compatibility
 	21002=Guard

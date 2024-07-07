@@ -188,9 +188,9 @@
 222=MMutant,,MBatLost,,1,180
 223=MMutant,,MBatLost,,1,270
 224=Blinky
-225=Inky
+225=Clyde
 226=Pinky
-227=Clyde
+227=Inky
 234=Mutant,,BatLost,,3,0
 235=Mutant,,BatLost,,3,90
 236=Mutant,,BatLost,,3,180
