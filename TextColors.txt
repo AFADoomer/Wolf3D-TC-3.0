@@ -79,17 +79,6 @@ WolfStartupYellow
 	#FCFC54 #FCFC54 
 }
 
-// End screen text colors
-Palette00 { #000000 #000000 }
-Palette28 { #980000 #980000 }
-Palette29 { #880000 #880000 }
-Palette2C { #640000 #640000 }
-Palette6D { #045800 #045800 }
-Palette6E { #044C00 #044C00 }
-Palette6F { #044000 #044000 }
-Palette7C { #008484 #008484 }
-Palette7E { #005858 #005858 }
-
 DOSBlue 	{ #0000AA #0000AA Console: #0000AA #0000AA 0 256 }
 DOSGreen 	{ #00AA00 #00AA00 Console: #00AA00 #00AA00 0 256 }
 DOSCyan 	{ #00AAAA #00AAAA Console: #00AAAA #00AAAA 0 256 }
@@ -107,3 +96,1796 @@ DOSYellow 	{ #FFFF55 #FFFF55 Console: #FFFF55 #FFFF55 0 256 }
 
 WolfMenuDisable { #700000 #700000 }
 SpearMenuDisable { #00006b #00006b }
+
+// Wolf3D-palette solid text colors
+Palette00
+{
+	#000000 #000000
+Flat:
+	#000000
+}
+
+Palette01
+{
+	#0000A8 #0000A8
+Flat:
+	#0000A8
+}
+
+Palette02
+{
+	#00A800 #00A800
+Flat:
+	#00A800
+}
+
+Palette03
+{
+	#00A8A8 #00A8A8
+Flat:
+	#00A8A8
+}
+
+Palette04
+{
+	#A80000 #A80000
+Flat:
+	#A80000
+}
+
+Palette05
+{
+	#A800A8 #A800A8
+Flat:
+	#A800A8
+}
+
+Palette06
+{
+	#A85400 #A85400
+Flat:
+	#A85400
+}
+
+Palette07
+{
+	#A8A8A8 #A8A8A8
+Flat:
+	#A8A8A8
+}
+
+Palette08
+{
+	#545454 #545454
+Flat:
+	#545454
+}
+
+Palette09
+{
+	#5454FC #5454FC
+Flat:
+	#5454FC
+}
+
+Palette0A WolfStartupGreen
+{
+	#54FC54 #54FC54
+Flat:
+	#54FC54
+}
+
+Palette0B
+{
+	#54FCFC #54FCFC
+Flat:
+	#54FCFC
+}
+
+Palette0C
+{
+	#FC5454 #FC5454
+Flat:
+	#FC5454
+}
+
+Palette0D
+{
+	#FC54FC #FC54FC
+Flat:
+	#FC54FC
+}
+
+Palette0E WolfStartupYellow
+{
+	#FCFC54 #FCFC54
+Flat:
+	#FCFC54
+}
+
+Palette0F
+{
+	#FCFCFC #FCFCFC
+Flat:
+	#FCFCFC
+}
+
+Palette10
+{
+	#ECECEC #ECECEC
+Flat:
+	#ECECEC
+}
+
+Palette11
+{
+	#DCDCDC #DCDCDC
+Flat:
+	#DCDCDC
+}
+
+Palette12
+{
+	#D0D0D0 #D0D0D0
+Flat:
+	#D0D0D0
+}
+
+Palette13
+{
+	#C0C0C0 #C0C0C0
+Flat:
+	#C0C0C0
+}
+
+Palette14
+{
+	#B4B4B4 #B4B4B4
+Flat:
+	#B4B4B4
+}
+
+Palette15
+{
+	#A8A8A8 #A8A8A8
+Flat:
+	#A8A8A8
+}
+
+Palette16
+{
+	#989898 #989898
+Flat:
+	#989898
+}
+
+Palette17
+{
+	#8C8C8C #8C8C8C
+Flat:
+	#8C8C8C
+}
+
+Palette18
+{
+	#7C7C7C #7C7C7C
+Flat:
+	#7C7C7C
+}
+
+Palette19 WolfMenuDisable
+{
+	#707070 #707070
+Flat:
+	#707070
+}
+
+Palette1A
+{
+	#646464 #646464
+Flat:
+	#646464
+}
+
+Palette1B
+{
+	#545454 #545454
+Flat:
+	#545454
+}
+
+Palette1C
+{
+	#484848 #484848
+Flat:
+	#484848
+}
+
+Palette1D
+{
+	#383838 #383838
+Flat:
+	#383838
+}
+
+Palette1E
+{
+	#2C2C2C #2C2C2C
+Flat:
+	#2C2C2C
+}
+
+Palette1F
+{
+	#202020 #202020
+Flat:
+	#202020
+}
+
+Palette20
+{
+	#FC0000 #FC0000
+Flat:
+	#FC0000
+}
+
+Palette21
+{
+	#EC0000 #EC0000
+Flat:
+	#EC0000
+}
+
+Palette22
+{
+	#E00000 #E00000
+Flat:
+	#E00000
+}
+
+Palette23
+{
+	#D40000 #D40000
+Flat:
+	#D40000
+}
+
+Palette24
+{
+	#C80000 #C80000
+Flat:
+	#C80000
+}
+
+Palette25
+{
+	#BC0000 #BC0000
+Flat:
+	#BC0000
+}
+
+Palette26
+{
+	#B00000 #B00000
+Flat:
+	#B00000
+}
+
+Palette27
+{
+	#A40000 #A40000
+Flat:
+	#A40000
+}
+
+Palette28
+{
+	#980000 #980000
+Flat:
+	#980000
+}
+
+Palette29
+{
+	#880000 #880000
+Flat:
+	#880000
+}
+
+Palette2A
+{
+	#7C0000 #7C0000
+Flat:
+	#7C0000
+}
+
+Palette2B
+{
+	#700000 #700000
+Flat:
+	#700000
+}
+
+Palette2C
+{
+	#640000 #640000
+Flat:
+	#640000
+}
+
+Palette2D
+{
+	#580000 #580000
+Flat:
+	#580000
+}
+
+Palette2E
+{
+	#4C0000 #4C0000
+Flat:
+	#4C0000
+}
+
+Palette2F
+{
+	#400000 #400000
+Flat:
+	#400000
+}
+
+Palette30
+{
+	#FCD8D8 #FCD8D8
+Flat:
+	#FCD8D8
+}
+
+Palette31
+{
+	#FCB8B8 #FCB8B8
+Flat:
+	#FCB8B8
+}
+
+Palette32
+{
+	#FC9C9C #FC9C9C
+Flat:
+	#FC9C9C
+}
+
+Palette33
+{
+	#FC7C7C #FC7C7C
+Flat:
+	#FC7C7C
+}
+
+Palette34
+{
+	#FC5C5C #FC5C5C
+Flat:
+	#FC5C5C
+}
+
+Palette35
+{
+	#FC4040 #FC4040
+Flat:
+	#FC4040
+}
+
+Palette36
+{
+	#FC2020 #FC2020
+Flat:
+	#FC2020
+}
+
+Palette37
+{
+	#FC0000 #FC0000
+Flat:
+	#FC0000
+}
+
+Palette38
+{
+	#FCA85C #FCA85C
+Flat:
+	#FCA85C
+}
+
+Palette39
+{
+	#FC9840 #FC9840
+Flat:
+	#FC9840
+}
+
+Palette3A
+{
+	#FC8820 #FC8820
+Flat:
+	#FC8820
+}
+
+Palette3B
+{
+	#FC7800 #FC7800
+Flat:
+	#FC7800
+}
+
+Palette3C
+{
+	#E46C00 #E46C00
+Flat:
+	#E46C00
+}
+
+Palette3D
+{
+	#CC6000 #CC6000
+Flat:
+	#CC6000
+}
+
+Palette3E
+{
+	#B45400 #B45400
+Flat:
+	#B45400
+}
+
+Palette3F
+{
+	#9C4C00 #9C4C00
+Flat:
+	#9C4C00
+}
+
+Palette40
+{
+	#FCFCD8 #FCFCD8
+Flat:
+	#FCFCD8
+}
+
+Palette41
+{
+	#FCFCB8 #FCFCB8
+Flat:
+	#FCFCB8
+}
+
+Palette42
+{
+	#FCFC9C #FCFC9C
+Flat:
+	#FCFC9C
+}
+
+Palette43
+{
+	#FCFC7C #FCFC7C
+Flat:
+	#FCFC7C
+}
+
+Palette44
+{
+	#FCF85C #FCF85C
+Flat:
+	#FCF85C
+}
+
+Palette45
+{
+	#FCF440 #FCF440
+Flat:
+	#FCF440
+}
+
+Palette46
+{
+	#FCF420 #FCF420
+Flat:
+	#FCF420
+}
+
+Palette47
+{
+	#FCF400 #FCF400
+Flat:
+	#FCF400
+}
+
+Palette48
+{
+	#E4D800 #E4D800
+Flat:
+	#E4D800
+}
+
+Palette49
+{
+	#CCC400 #CCC400
+Flat:
+	#CCC400
+}
+
+Palette4A
+{
+	#B4AC00 #B4AC00
+Flat:
+	#B4AC00
+}
+
+Palette4B
+{
+	#9C9C00 #9C9C00
+Flat:
+	#9C9C00
+}
+
+Palette4C
+{
+	#848400 #848400
+Flat:
+	#848400
+}
+
+Palette4D
+{
+	#706C00 #706C00
+Flat:
+	#706C00
+}
+
+Palette4E
+{
+	#585400 #585400
+Flat:
+	#585400
+}
+
+Palette4F WolfDarkGold
+{
+	#404000 #404000
+Flat:
+	#404000
+}
+
+Palette50
+{
+	#D0FC5C #D0FC5C
+Flat:
+	#D0FC5C
+}
+
+Palette51
+{
+	#C4FC40 #C4FC40
+Flat:
+	#C4FC40
+}
+
+Palette52
+{
+	#B4FC20 #B4FC20
+Flat:
+	#B4FC20
+}
+
+Palette53
+{
+	#A0FC00 #A0FC00
+Flat:
+	#A0FC00
+}
+
+Palette54
+{
+	#90E400 #90E400
+Flat:
+	#90E400
+}
+
+Palette55
+{
+	#80CC00 #80CC00
+Flat:
+	#80CC00
+}
+
+Palette56
+{
+	#74B400 #74B400
+Flat:
+	#74B400
+}
+
+Palette57
+{
+	#609C00 #609C00
+Flat:
+	#609C00
+}
+
+Palette58
+{
+	#D8FCD8 #D8FCD8
+Flat:
+	#D8FCD8
+}
+
+Palette59
+{
+	#BCFCB8 #BCFCB8
+Flat:
+	#BCFCB8
+}
+
+Palette5A
+{
+	#9CFC9C #9CFC9C
+Flat:
+	#9CFC9C
+}
+
+Palette5B
+{
+	#80FC7C #80FC7C
+Flat:
+	#80FC7C
+}
+
+Palette5C
+{
+	#60FC5C #60FC5C
+Flat:
+	#60FC5C
+}
+
+Palette5D
+{
+	#40FC40 #40FC40
+Flat:
+	#40FC40
+}
+
+Palette5E
+{
+	#20FC20 #20FC20
+Flat:
+	#20FC20
+}
+
+Palette5F
+{
+	#00FC00 #00FC00
+Flat:
+	#00FC00
+}
+
+Palette60
+{
+	#00FC00 #00FC00
+Flat:
+	#00FC00
+}
+
+Palette61
+{
+	#00EC00 #00EC00
+Flat:
+	#00EC00
+}
+
+Palette62
+{
+	#00E000 #00E000
+Flat:
+	#00E000
+}
+
+Palette63
+{
+	#00D400 #00D400
+Flat:
+	#00D400
+}
+
+Palette64
+{
+	#04C800 #04C800
+Flat:
+	#04C800
+}
+
+Palette65
+{
+	#04BC00 #04BC00
+Flat:
+	#04BC00
+}
+
+Palette66
+{
+	#04B000 #04B000
+Flat:
+	#04B000
+}
+
+Palette67
+{
+	#04A400 #04A400
+Flat:
+	#04A400
+}
+
+Palette68
+{
+	#049800 #049800
+Flat:
+	#049800
+}
+
+Palette69
+{
+	#048800 #048800
+Flat:
+	#048800
+}
+
+Palette6A
+{
+	#047C00 #047C00
+Flat:
+	#047C00
+}
+
+Palette6B WolfMenuEpisodeDisable 
+{
+	#047000 #047000
+Flat:
+	#047000
+}
+
+Palette6C
+{
+	#046400 #046400
+Flat:
+	#046400
+}
+
+Palette6D
+{
+	#045800 #045800
+Flat:
+	#045800
+}
+
+Palette6E
+{
+	#044C00 #044C00
+Flat:
+	#044C00
+}
+
+Palette6F
+{
+	#044000 #044000
+Flat:
+	#044000
+}
+
+Palette70
+{
+	#D8FCFC #D8FCFC
+Flat:
+	#D8FCFC
+}
+
+Palette71
+{
+	#B8FCFC #B8FCFC
+Flat:
+	#B8FCFC
+}
+
+Palette72
+{
+	#9CFCFC #9CFCFC
+Flat:
+	#9CFCFC
+}
+
+Palette73
+{
+	#7CFCF8 #7CFCF8
+Flat:
+	#7CFCF8
+}
+
+Palette74
+{
+	#5CFCFC #5CFCFC
+Flat:
+	#5CFCFC
+}
+
+Palette75
+{
+	#40FCFC #40FCFC
+Flat:
+	#40FCFC
+}
+
+Palette76
+{
+	#20FCFC #20FCFC
+Flat:
+	#20FCFC
+}
+
+Palette77
+{
+	#00FCFC #00FCFC
+Flat:
+	#00FCFC
+}
+
+Palette78
+{
+	#00E4E4 #00E4E4
+Flat:
+	#00E4E4
+}
+
+Palette79
+{
+	#00CCCC #00CCCC
+Flat:
+	#00CCCC
+}
+
+Palette7A
+{
+	#00B4B4 #00B4B4
+Flat:
+	#00B4B4
+}
+
+Palette7B
+{
+	#009C9C #009C9C
+Flat:
+	#009C9C
+}
+
+Palette7C
+{
+	#008484 #008484
+Flat:
+	#008484
+}
+
+Palette7D
+{
+	#007070 #007070
+Flat:
+	#007070
+}
+
+Palette7E
+{
+	#005858 #005858
+Flat:
+	#005858
+}
+
+Palette7F
+{
+	#004040 #004040
+Flat:
+	#004040
+}
+
+Palette80
+{
+	#5CBCFC #5CBCFC
+Flat:
+	#5CBCFC
+}
+
+Palette81
+{
+	#40B0FC #40B0FC
+Flat:
+	#40B0FC
+}
+
+Palette82
+{
+	#20A8FC #20A8FC
+Flat:
+	#20A8FC
+}
+
+Palette83
+{
+	#009CFC #009CFC
+Flat:
+	#009CFC
+}
+
+Palette84
+{
+	#008CE4 #008CE4
+Flat:
+	#008CE4
+}
+
+Palette85
+{
+	#007CCC #007CCC
+Flat:
+	#007CCC
+}
+
+Palette86
+{
+	#006CB4 #006CB4
+Flat:
+	#006CB4
+}
+
+Palette87
+{
+	#005C9C #005C9C
+Flat:
+	#005C9C
+}
+
+Palette88
+{
+	#D8D8FC #D8D8FC
+Flat:
+	#D8D8FC
+}
+
+Palette89
+{
+	#B8BCFC #B8BCFC
+Flat:
+	#B8BCFC
+}
+
+Palette8A
+{
+	#9C9CFC #9C9CFC
+Flat:
+	#9C9CFC
+}
+
+Palette8B
+{
+	#7C80FC #7C80FC
+Flat:
+	#7C80FC
+}
+
+Palette8C
+{
+	#5C60FC #5C60FC
+Flat:
+	#5C60FC
+}
+
+Palette8D
+{
+	#4040FC #4040FC
+Flat:
+	#4040FC
+}
+
+Palette8E
+{
+	#2024FC #2024FC
+Flat:
+	#2024FC
+}
+
+Palette8F
+{
+	#0004FC #0004FC
+Flat:
+	#0004FC
+}
+
+Palette90
+{
+	#0000FC #0000FC
+Flat:
+	#0000FC
+}
+
+Palette91
+{
+	#0000EC #0000EC
+Flat:
+	#0000EC
+}
+
+Palette92
+{
+	#0000E0 #0000E0
+Flat:
+	#0000E0
+}
+
+Palette93
+{
+	#0000D4 #0000D4
+Flat:
+	#0000D4
+}
+
+Palette94
+{
+	#0000C8 #0000C8
+Flat:
+	#0000C8
+}
+
+Palette95
+{
+	#0000BC #0000BC
+Flat:
+	#0000BC
+}
+
+Palette96
+{
+	#0000B0 #0000B0
+Flat:
+	#0000B0
+}
+
+Palette97
+{
+	#0000A4 #0000A4
+Flat:
+	#0000A4
+}
+
+Palette98
+{
+	#000098 #000098
+Flat:
+	#000098
+}
+
+Palette99
+{
+	#000088 #000088
+Flat:
+	#000088
+}
+
+Palette9A
+{
+	#00007C #00007C
+Flat:
+	#00007C
+}
+
+Palette9B
+{
+	#000070 #000070
+Flat:
+	#000070
+}
+
+Palette9C
+{
+	#000064 #000064
+Flat:
+	#000064
+}
+
+Palette9D
+{
+	#000058 #000058
+Flat:
+	#000058
+}
+
+Palette9E
+{
+	#00004C #00004C
+Flat:
+	#00004C
+}
+
+Palette9F
+{
+	#000040 #000040
+Flat:
+	#000040
+}
+
+PaletteA0
+{
+	#282828 #282828
+Flat:
+	#282828
+}
+
+PaletteA1
+{
+	#FCE034 #FCE034
+Flat:
+	#FCE034
+}
+
+PaletteA2
+{
+	#FCD424 #FCD424
+Flat:
+	#FCD424
+}
+
+PaletteA3
+{
+	#FCCC18 #FCCC18
+Flat:
+	#FCCC18
+}
+
+PaletteA4
+{
+	#FCC008 #FCC008
+Flat:
+	#FCC008
+}
+
+PaletteA5
+{
+	#FCB400 #FCB400
+Flat:
+	#FCB400
+}
+
+PaletteA6
+{
+	#B420FC #B420FC
+Flat:
+	#B420FC
+}
+
+PaletteA7
+{
+	#A800FC #A800FC
+Flat:
+	#A800FC
+}
+
+PaletteA8
+{
+	#9800E4 #9800E4
+Flat:
+	#9800E4
+}
+
+PaletteA9
+{
+	#8000CC #8000CC
+Flat:
+	#8000CC
+}
+
+PaletteAA
+{
+	#7400B4 #7400B4
+Flat:
+	#7400B4
+}
+
+PaletteAB
+{
+	#60009C #60009C
+Flat:
+	#60009C
+}
+
+PaletteAC
+{
+	#500084 #500084
+Flat:
+	#500084
+}
+
+PaletteAD
+{
+	#440070 #440070
+Flat:
+	#440070
+}
+
+PaletteAE
+{
+	#340058 #340058
+Flat:
+	#340058
+}
+
+PaletteAF
+{
+	#280040 #280040
+Flat:
+	#280040
+}
+
+PaletteB0
+{
+	#FCD8FC #FCD8FC
+Flat:
+	#FCD8FC
+}
+
+PaletteB1
+{
+	#FCB8FC #FCB8FC
+Flat:
+	#FCB8FC
+}
+
+PaletteB2
+{
+	#FC9CFC #FC9CFC
+Flat:
+	#FC9CFC
+}
+
+PaletteB3
+{
+	#FC7CFC #FC7CFC
+Flat:
+	#FC7CFC
+}
+
+PaletteB4
+{
+	#FC5CFC #FC5CFC
+Flat:
+	#FC5CFC
+}
+
+PaletteB5
+{
+	#FC40FC #FC40FC
+Flat:
+	#FC40FC
+}
+
+PaletteB6
+{
+	#FC20FC #FC20FC
+Flat:
+	#FC20FC
+}
+
+PaletteB7
+{
+	#FC00FC #FC00FC
+Flat:
+	#FC00FC
+}
+
+PaletteB8
+{
+	#E000E4 #E000E4
+Flat:
+	#E000E4
+}
+
+PaletteB9
+{
+	#C800CC #C800CC
+Flat:
+	#C800CC
+}
+
+PaletteBA
+{
+	#B400B4 #B400B4
+Flat:
+	#B400B4
+}
+
+PaletteBB
+{
+	#9C009C #9C009C
+Flat:
+	#9C009C
+}
+
+PaletteBC
+{
+	#840084 #840084
+Flat:
+	#840084
+}
+
+PaletteBD
+{
+	#6C0070 #6C0070
+Flat:
+	#6C0070
+}
+
+PaletteBE
+{
+	#580058 #580058
+Flat:
+	#580058
+}
+
+PaletteBF
+{
+	#400040 #400040
+Flat:
+	#400040
+}
+
+PaletteC0
+{
+	#FCE8DC #FCE8DC
+Flat:
+	#FCE8DC
+}
+
+PaletteC1
+{
+	#FCE0D0 #FCE0D0
+Flat:
+	#FCE0D0
+}
+
+PaletteC2
+{
+	#FCD8C4 #FCD8C4
+Flat:
+	#FCD8C4
+}
+
+PaletteC3
+{
+	#FCD4BC #FCD4BC
+Flat:
+	#FCD4BC
+}
+
+PaletteC4
+{
+	#FCCCB0 #FCCCB0
+Flat:
+	#FCCCB0
+}
+
+PaletteC5
+{
+	#FCC4A4 #FCC4A4
+Flat:
+	#FCC4A4
+}
+
+PaletteC6
+{
+	#FCBC9C #FCBC9C
+Flat:
+	#FCBC9C
+}
+
+PaletteC7
+{
+	#FCB890 #FCB890
+Flat:
+	#FCB890
+}
+
+PaletteC8
+{
+	#FCB080 #FCB080
+Flat:
+	#FCB080
+}
+
+PaletteC9
+{
+	#FCA470 #FCA470
+Flat:
+	#FCA470
+}
+
+PaletteCA
+{
+	#FC9C60 #FC9C60
+Flat:
+	#FC9C60
+}
+
+PaletteCB
+{
+	#F0945C #F0945C
+Flat:
+	#F0945C
+}
+
+PaletteCC
+{
+	#E88C58 #E88C58
+Flat:
+	#E88C58
+}
+
+PaletteCD
+{
+	#DC8854 #DC8854
+Flat:
+	#DC8854
+}
+
+PaletteCE
+{
+	#D08050 #D08050
+Flat:
+	#D08050
+}
+
+PaletteCF
+{
+	#C87C4C #C87C4C
+Flat:
+	#C87C4C
+}
+
+PaletteD0
+{
+	#BC7848 #BC7848
+Flat:
+	#BC7848
+}
+
+PaletteD1
+{
+	#B47044 #B47044
+Flat:
+	#B47044
+}
+
+PaletteD2
+{
+	#A86840 #A86840
+Flat:
+	#A86840
+}
+
+PaletteD3
+{
+	#A0643C #A0643C
+Flat:
+	#A0643C
+}
+
+PaletteD4
+{
+	#9C6038 #9C6038
+Flat:
+	#9C6038
+}
+
+PaletteD5
+{
+	#905C34 #905C34
+Flat:
+	#905C34
+}
+
+PaletteD6
+{
+	#885830 #885830
+Flat:
+	#885830
+}
+
+PaletteD7
+{
+	#80502C #80502C
+Flat:
+	#80502C
+}
+
+PaletteD8
+{
+	#744C28 #744C28
+Flat:
+	#744C28
+}
+
+PaletteD9
+{
+	#6C4824 #6C4824
+Flat:
+	#6C4824
+}
+
+PaletteDA
+{
+	#5C4020 #5C4020
+Flat:
+	#5C4020
+}
+
+PaletteDB
+{
+	#543C1C #543C1C
+Flat:
+	#543C1C
+}
+
+PaletteDC
+{
+	#483818 #483818
+Flat:
+	#483818
+}
+
+PaletteDD
+{
+	#403018 #403018
+Flat:
+	#403018
+}
+
+PaletteDE
+{
+	#382C14 #382C14
+Flat:
+	#382C14
+}
+
+PaletteDF
+{
+	#28200C #28200C
+Flat:
+	#28200C
+}
+
+PaletteE0
+{
+	#600064 #600064
+Flat:
+	#600064
+}
+
+PaletteE1
+{
+	#006464 #006464
+Flat:
+	#006464
+}
+
+PaletteE2
+{
+	#006060 #006060
+Flat:
+	#006060
+}
+
+PaletteE3
+{
+	#00001C #00001C
+Flat:
+	#00001C
+}
+
+PaletteE4
+{
+	#00002C #00002C
+Flat:
+	#00002C
+}
+
+PaletteE5
+{
+	#302410 #302410
+Flat:
+	#302410
+}
+
+PaletteE6
+{
+	#480048 #480048
+Flat:
+	#480048
+}
+
+PaletteE7
+{
+	#500050 #500050
+Flat:
+	#500050
+}
+
+PaletteE8
+{
+	#000034 #000034
+Flat:
+	#000034
+}
+
+PaletteE9
+{
+	#1C1C1C #1C1C1C
+Flat:
+	#1C1C1C
+}
+
+PaletteEA
+{
+	#4C4C4C #4C4C4C
+Flat:
+	#4C4C4C
+}
+
+PaletteEB
+{
+	#5C5C5C #5C5C5C
+Flat:
+	#5C5C5C
+}
+
+PaletteEC
+{
+	#404040 #404040
+Flat:
+	#404040
+}
+
+PaletteED
+{
+	#303030 #303030
+Flat:
+	#303030
+}
+
+PaletteEE
+{
+	#343434 #343434
+Flat:
+	#343434
+}
+
+PaletteEF
+{
+	#D8F4F4 #D8F4F4
+Flat:
+	#D8F4F4
+}
+
+PaletteF0
+{
+	#B8E8E8 #B8E8E8
+Flat:
+	#B8E8E8
+}
+
+PaletteF1
+{
+	#9CDCDC #9CDCDC
+Flat:
+	#9CDCDC
+}
+
+PaletteF2
+{
+	#74C8C8 #74C8C8
+Flat:
+	#74C8C8
+}
+
+PaletteF3
+{
+	#48C0C0 #48C0C0
+Flat:
+	#48C0C0
+}
+
+PaletteF4
+{
+	#20B4B4 #20B4B4
+Flat:
+	#20B4B4
+}
+
+PaletteF5
+{
+	#20B0B0 #20B0B0
+Flat:
+	#20B0B0
+}
+
+PaletteF6
+{
+	#00A4A4 #00A4A4
+Flat:
+	#00A4A4
+}
+
+PaletteF7
+{
+	#009898 #009898
+Flat:
+	#009898
+}
+
+PaletteF8
+{
+	#008C8C #008C8C
+Flat:
+	#008C8C
+}
+
+PaletteF9
+{
+	#008484 #008484
+Flat:
+	#008484
+}
+
+PaletteFA
+{
+	#007C7C #007C7C
+Flat:
+	#007C7C
+}
+
+PaletteFB
+{
+	#007878 #007878
+Flat:
+	#007878
+}
+
+PaletteFC
+{
+	#007474 #007474
+Flat:
+	#007474
+}
+
+PaletteFD
+{
+	#007070 #007070
+Flat:
+	#007070
+}
+
+PaletteFE
+{
+	#006C6C #006C6C
+Flat:
+	#006C6C
+}
+
+PaletteFF
+{
+	#980088 #980088
+Flat:
+	#980088
+}

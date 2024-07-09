@@ -428,3 +428,33 @@ class Game
 		}
 	}
 }
+
+class DataHandler : StaticEventHandler
+{
+	ParsedValue textcolordata;
+
+	override void OnRegister()
+	{
+		// Parse defined text colors
+		textcolordata = FileReader.Parse("textcolors.txt", true);
+		for (int d = 0; d < textcolordata.children.Size(); d++)
+		{
+			Array<String> temp;
+			textcolordata.children[d].keyname.Split(temp, " ");
+			textcolordata.children[d].keyname = ZScriptTools.Trim(temp[0]); // Only store the first listed name
+
+			for (int c = 0; c < textcolordata.children[d].children.Size(); c++)
+			{
+				String colordata = textcolordata.children[d].children[c].keyname;
+
+				// Only store the 'Flat:' color for lookup - ignore text colors that don't have this defined
+				int start = colordata.IndexOf("Flat:");
+				if (start > -1)
+				{
+					int i = colordata.IndexOf("#", colordata.IndexOf("Flat:")) + 1;
+					if (i > -1) { textcolordata.children[d].value = colordata.mid(i, 6); }
+				}
+			}
+		}
+	}
+}

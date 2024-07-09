@@ -5,7 +5,8 @@ version "4.8.0"
 #include "Scripts/Libraries/zstools.zs"			// Helper scripts for string manipulation
 #include "Scripts/Libraries/MD5.zs"				// 3saster's MD5 hashing algorithm
 #include "Scripts/Libraries/BreakString.zs"		// Unicode-aware string/line splitting
-#include "scripts/libraries/Polyobjects/Polyobjects.zs" // ZPolyobject by mikolah - https://forum.zdoom.org/viewtopic.php?f=105&t=69999
+#include "Scripts/Libraries/Polyobjects/Polyobjects.zs" // ZPolyobject by mikolah - https://forum.zdoom.org/viewtopic.php?f=105&t=69999
+#include "Scripts/Libraries/Reader.zsc"			// Parser for bracketed data in files
 
 // Menu Components
 #include "Scripts/Menus/ExtendedListMenu.zs"	// New menu with background and skill/episode icons

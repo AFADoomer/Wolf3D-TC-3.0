@@ -305,32 +305,32 @@ class ZScriptTools
 
 	// Returns the best text color match for the passed-in RGB color
 	// Modified from gzdoom/src/common/utility/palette.cpp
-	// static String BestTextColor(Color clr)
-	// {
-	// 	DataHandler data = DataHandler(StaticEventHandler.Find("DataHandler"));
-	// 	if (!data) { return "L"; }
+	static String BestTextColor(Color clr)
+	{
+		DataHandler data = DataHandler(StaticEventHandler.Find("DataHandler"));
+		if (!data) { return "L"; }
 
-	// 	int bestcolor = 0;
-	// 	int bestdist = 257 * 257 + 257 * 257 + 257 * 257;
+		int bestcolor = 0;
+		int bestdist = 257 * 257 + 257 * 257 + 257 * 257;
 
-	// 	for (int p = 0; p < data.textcolordata.children.Size(); p++)
-	// 	{
-	// 		Color palentry = ZScriptTools.HexStrToInt(data.textcolordata.children[p].value);
-	// 		int x = clr.r - palentry.r;
-	// 		int y = clr.g - palentry.g;
-	// 		int z = clr.b - palentry.b;
-	// 		int dist = x * x + y * y + z * z;
-	// 		if (dist < bestdist)
-	// 		{
-	// 			if (dist == 0) { return String.Format("[%s]", data.textcolordata.children[p].keyname); }
+		for (int p = 0; p < data.textcolordata.children.Size(); p++)
+		{
+			Color palentry = ZScriptTools.HexStrToInt(data.textcolordata.children[p].value);
+			int x = clr.r - palentry.r;
+			int y = clr.g - palentry.g;
+			int z = clr.b - palentry.b;
+			int dist = x * x + y * y + z * z;
+			if (dist < bestdist)
+			{
+				if (dist == 0) { return String.Format("[%s]", data.textcolordata.children[p].keyname); }
 
-	// 			bestdist = dist;
-	// 			bestcolor = p;
-	// 		}
-	// 	}
+				bestdist = dist;
+				bestcolor = p;
+			}
+		}
 
-	// 	return String.Format("[%s]", data.textcolordata.children[bestcolor].keyname);
-	// }
+		return String.Format("[%s]", data.textcolordata.children[bestcolor].keyname);
+	}
 
 	static int HexStrToInt(String input)
 	{
