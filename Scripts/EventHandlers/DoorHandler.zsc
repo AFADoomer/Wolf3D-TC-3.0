@@ -679,11 +679,28 @@ class DoorEffector: PolyobjectEffector
 					}
 					else
 					{
+						// Handling for secret door placed on top of regular door (door turns into a pushwall)
 						int gametype = MapHandler.GetGameType();
 						if (gametype < 0) { gametype = max(0, g_sod); }
 
-						texpath = String.Format(texpath, gametype, (t - 1) * 2);
-						PolyObject.StartSector.SetTexture(Sector.floor, TexMan.CheckForTexture(texpath, TexMan.Type_Any));
+						TextureID tex;
+						if (t >= 0x5A && t <= 0x65)
+						{
+							let handler = MapHandler.Get();
+
+							if (handler)
+							{
+								int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
+								tex = handler.curmap.GetTileTexture(t, (0, 0), null);
+							}
+						}
+						else
+						{
+							texpath = String.Format(texpath, gametype, (t - 1) * 2);
+							tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+						}
+
+						PolyObject.StartSector.SetTexture(Sector.floor, tex);
 					}
 				}
 			}
