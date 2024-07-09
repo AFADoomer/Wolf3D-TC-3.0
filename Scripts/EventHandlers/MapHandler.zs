@@ -23,6 +23,7 @@
 class MapHandler : StaticEventHandler
 {
 	WolfMapParser parsedmaps;
+	Array<DataFile> datafiles;
 	Array<ActorMap> actormapping;
 	ParsedMap curmap, queuedmap;
 	Array<int> activatedfloors;
@@ -38,7 +39,8 @@ class MapHandler : StaticEventHandler
 		console.printf("Parsing map data...");
 
 		// Parse the demo map first
-		WolfMapParser.Parse(parsedmaps, "Data/EditorThings.map");
+		let d = DataFile.Find(datafiles, "Data/EditorThings.map");
+		WolfMapParser.Parse(parsedmaps, d);
 
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
 		{
@@ -51,12 +53,14 @@ class MapHandler : StaticEventHandler
 
 				if (Wads.CheckNumForFullName(headname) > -1)
 				{
-					WolfMapParser.Parse(parsedmaps, lumpname, headname);
+					let d = DataFile.Find(datafiles, lumpname, headname);
+					WolfMapParser.Parse(parsedmaps, d);
 				}
 			}
 			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".map" || lumpname.Mid(lumpname.Length() - 4) ~== ".lvl")
 			{
-				WolfMapParser.Parse(parsedmaps, lumpname);
+				let d = DataFile.Find(datafiles, lumpname);
+				WolfMapParser.Parse(parsedmaps, d);
 			}
 		}
 	}
@@ -68,13 +72,21 @@ class MapHandler : StaticEventHandler
 		if (e.Name.Left(10) == "initialize")
 		{
 			String mapname = "Wolf3D TC Test";
+			String datafile = "";
 			if (e.Name.Length() > 11)
 			{
-				mapname = e.Name.Mid(11);
-				mapname.Substitute("_", " ");
+				String data = e.Name.Mid(11);
+
+				Array<String> splitdata;
+				data.Split(splitdata, ":");
+
+				mapname = splitdata[0];
+				if (e.IsManual) { mapname.Substitute("_", " "); }
+
+				if (splitdata.Size() > 1) { datafile = splitdata[1]; }
 			}
 
-			queuedmap = parsedmaps.GetMapData(mapname);
+			queuedmap = parsedmaps.GetMapData(mapname, datafile);
 
 			level.ChangeLevel("Level");
 		}
@@ -82,7 +94,7 @@ class MapHandler : StaticEventHandler
 		{
 			for (int m = 0; m < parsedmaps.maps.Size(); m++)
 			{
-				console.printf("%s (%s)", parsedmaps.maps[m].mapname, parsedmaps.maps[m].datafile);
+				console.printf("%s (%s)", parsedmaps.maps[m].mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
 	}
@@ -321,6 +333,15 @@ class MapHandler : StaticEventHandler
 				mo.target = activator;
 				mo.SetState(mo.SeeState);
 				mo.vel *= 0;
+
+				if (mo.bBoss || mo.bFullVolSee)
+				{
+					mo.A_StartSound(mo.SeeSound, CHAN_VOICE, CHANF_DEFAULT, 1.0, ATTN_NONE);
+				}
+				else
+				{
+					mo.A_StartSound(mo.SeeSound, CHAN_VOICE, CHANF_DEFAULT, 1.0, ATTN_NORM);
+				}
 			}
 		}
 	}
@@ -377,7 +398,7 @@ class ActorMap
 class ParsedMap
 {
 	String mapname;
-	String datafile;
+	DataFile datafile;
 	LevelInfo info;
 	int mapnum;
 	int gametype;
@@ -740,6 +761,7 @@ class ParsedMap
 					for (int l = 0; l < sec.lines.Size(); l++)
 					{
 						let ln = sec.lines[l];
+
 						for (int s = 0; s < 2; s++)
 						{
 							if (ln.sidedef[s])
@@ -800,12 +822,7 @@ class ParsedMap
 						// If this is a standard door entry, set up activation and flags
 						if (ln.flags & Line.ML_TWOSIDED && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
 						{
-							// If this is a secret door, set the lines to draw as secret
-							if (a == 0x62)
-							{
-								ln.flags |= Line.ML_SECRET | Line.ML_BLOCKMONSTERS;
-							}
-							else
+							if (a != 0x62) // Don't set activation lines for secret doors
 							{
 								ln.flags |= Line.ML_BLOCK_PLAYERS | Line.ML_DONTDRAW; // Block players by default, and don't draw on the automap
 
@@ -838,15 +855,14 @@ class ParsedMap
 						}
 
 						// Don't add door frames if Deaf Guard tiles meet the threshhold
-						if (!CheckDoorTiles(pos))
+						if (CheckDoorTiles(pos)) { continue; }
+
+						// Set door frame textures on the sides
+						for (int s = 0; s < 2; s++)
 						{
-							// Set door frame textures on the sides
-							for (int s = 0; s < 2; s++)
+							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 							{
-								if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
-								{
-									ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
-								}
+								ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
 							}
 						}
 					}
@@ -1007,11 +1023,13 @@ class ParsedMap
 	{
 		int game = gametype;
 		if (game < 0) { game = max(0, g_sod); }
-		game = game <= 1 ? 0 : game;
 
-		// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
+		// Special handling for doors
 		if (t >= 0x5A && t <= 0x6A || t == 0x41)
 		{
+			// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
+			game = game <= 1 ? 0 : game;
+
 			if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
 			else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
 			else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
@@ -1148,19 +1166,20 @@ class WolfMapParser
 	int gametype;
 	int custommapcount;
 
-	static void Parse(in out WolfMapParser parsedmaps, String maps, String head = "")
+	static void Parse(in out WolfMapParser parsedmaps, in out DataFile d)
 	{
 		int headlump = -1;
 		int mapslump = -1;
 
 		if (!parsedmaps) { parsedmaps = New("WolfMapParser"); }
+		if (!d) { return; }
 
-		if (head.length()) { headlump = Wads.CheckNumForFullName(head); }
-		mapslump = Wads.CheckNumForFullName(maps);
+		if (d.headpath.length()) { headlump = Wads.CheckNumForFullName(d.headpath); }
+		mapslump = Wads.CheckNumForFullName(d.path);
 
 		if (mapslump == -1) { return; }
 
-		String game = maps.Mid(maps.length() - 3);
+		String game = d.path.Mid(d.path.length() - 3);
 		if (game ~== "WL1" || game ~== "WL3" || game ~== "WL6") { parsedmaps.gametype = 0; }
 		else if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
 		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
@@ -1170,7 +1189,7 @@ class WolfMapParser
 		int encoding;
 		Array<int> addresses;
 		if (headlump > -1) { parsedmaps.ReadMapHead(Wads.ReadLump(headlump), encoding, addresses); }
-		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses, maps);
+		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses, d);
 	}
 
 	void ReadMapHead(String content, out int encoding, in out Array<int> addresses)
@@ -1195,7 +1214,7 @@ class WolfMapParser
 		FloEdit,
 	};
 
-	void ReadGameMaps(String content, int encoding, Array<int> addresses, String datafile = "")
+	void ReadGameMaps(String content, int encoding, Array<int> addresses, Datafile d)
 	{
 		maptypes type = GameMaps;
 		if (!addresses.Size())
@@ -1229,7 +1248,7 @@ class WolfMapParser
 			if (offset == 0) { continue; }
 
 			ParsedMap newmap = New("ParsedMap");
-			newmap.datafile = datafile;
+			newmap.datafile = d;
 			
 			int planeoffsets[3];
 			int planesizes[3];
@@ -1320,7 +1339,11 @@ class WolfMapParser
 			newmap.gametype = gametype;
 			newmap.info = newmap.GetInfo();
 
-			if (!GetMapData(newmap.mapname, datafile)) { maps.Push(newmap); }
+			if (!GetMapData(newmap.mapname, d.path))
+			{
+				d.maps.Push(newmap);
+				maps.Push(newmap);
+			}
 		}
 	}
 
@@ -1328,7 +1351,7 @@ class WolfMapParser
 	{
 		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
-			if (maps[m].mapname ~== mapname && (!datafile.length() || maps[m].datafile ~== datafile)) { return maps[m]; }
+			if (maps[m].mapname ~== mapname && (!datafile.length() || maps[m].datafile.path ~== datafile)) { return maps[m]; }
 		}
 
 		return null;
@@ -1338,7 +1361,7 @@ class WolfMapParser
 	{
 		for (int m = 0; m < maps.Size(); m++)
 		{
-			if (maps[m].mapnum == mapnum && (!datafile.length() || maps[m].datafile ~== datafile)) { return maps[m]; }
+			if (maps[m].mapnum == mapnum && (!datafile.length() || maps[m].datafile.path ~== datafile)) { return maps[m]; }
 		}
 
 		return null;
@@ -1354,5 +1377,70 @@ class WolfMapParser
 		}
 
 		return ret, offset + count;
+	}
+}
+
+class DataFile
+{
+	String gametitle;
+	String path;
+	String headpath;
+	Array<ParsedMap> maps;
+
+	static DataFile Find(in out Array<DataFile> datafiles, String path, String headpath = "")
+	{
+		for (int i = 0; i < datafiles.Size(); i++)
+		{
+			if (datafiles[i].path ~== path && datafiles[i].headpath ~== headpath)
+			{
+				return datafiles[i];
+			}
+		}
+
+		let d = New("DataFile");
+		d.path = path;
+		d.headpath = headpath;
+		d.gametitle = path;
+
+		String hash = MD5.hash(Wads.ReadLump(Wads.CheckNumForFullName(path)));
+
+		if (hash == "30fecd7cce6bc70402651ec922d2da3d")
+		{ d.gametitle = "Wolfenstein 3D Shareware"; }
+		if (hash == "cec494930f3ac0545563cbd23cd611d6") // v1.2
+		{ d.gametitle = "Wolfenstein 3D (Episodes 1-3)"; }
+		else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
+		{ d.gametitle = "Wolfenstein 3D v1.1"; }
+		else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
+		{ d.gametitle = "Wolfenstein 3D v1.2"; }
+		else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
+		{ d.gametitle = "Wolfenstein 3D v1.4"; }
+		else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
+		{ d.gametitle = "Spear of Destiny Demo"; }
+		else if (hash == "04f16534235b4b57fc379d5709f88f4a")
+		{ d.gametitle = "Spear of Destiny"; }
+		else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
+		{ d.gametitle = "Return to Danger"; }
+		else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
+		{ d.gametitle = "The Ultimate Challenge"; }
+		else if (hash == "29860b87c31348e163e10f8aa6f19295")
+		{ d.gametitle = "The Ultimate Challenge (UAC Version)"; }
+
+		if (d.gametitle == path)
+		{
+			String ext = path.Mid(path.length() - 3, 3);
+			ext = ext.MakeLower();
+
+			if (ext == "wl6") { d.gametitle = "Wolfenstein 3D (Modified)"; }
+			else if (ext == "wl3") { d.gametitle = "Wolfenstein 3D (Episodes 1-3) (Modified)"; }
+			else if (ext == "wl1") { d.gametitle = "Wolfenstein 3D Shareware (Modified)"; }
+			else if (ext == "sdm") { d.gametitle = "Spear of Destiny Demo (Modified)"; }
+			else if (ext == "sod" || ext == "sd1") { d.gametitle = "Spear of Destiny (Modified)"; }
+			else if (ext == "sd2") { d.gametitle = "Return to Danger (Modified)"; }
+			else if (ext == "sd3") { d.gametitle = "The Ultimate Challenge (Modified)"; }
+		}
+
+		datafiles.Push(d);
+
+		return d;
 	}
 }

@@ -1302,3 +1302,1333 @@ class HighScores : WolfMenu
 		mInput.ActivateMenu();
 	}
 }
+
+class TextScreenMenu : ReadThisMenu
+{
+	TextureID border;
+	Vector2 dimcoords, dimsize;
+	int lineheight;
+	bool allowexit;
+	bool allowinput;
+	int selected;
+	Vector2 padding;
+
+	Array<HelpInfo> PagesInfo;
+
+	bool showoverlay;
+
+	void InitCommon(Menu parent)
+	{
+		GenericMenu.Init(parent);
+		selected = 0;
+		mInfoTic = gametic;
+		border = TexMan.CheckForTexture("BORDER", TexMan.Type_Any);
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+
+		lineheight = 10;
+		allowinput = true;
+
+		padding = (16, 16);
+	}
+
+	override void Drawer()
+	{
+		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(0xDCDCDC, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+
+		if (selected < PagesInfo.Size()) { DrawText(PagesInfo[selected]); }
+
+		if (border) { screen.DrawTexture(border, false, 0, 0, DTA_320x200, true); }
+
+		screen.DrawText(SmallFont, Font.FindFontColor("WolfDarkGold"), 213, 183, String.Format("pg %i of %i", selected + 1, PagesInfo.Size()), DTA_320x200, true);
+	}
+
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		if (mkey == MKEY_Back)
+		{
+			if (allowexit)
+			{
+				Close();
+			}
+			else
+			{
+				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
+				else { Menu.SetMenu("MainMenu", -1); }
+			}
+
+			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
+			{
+				if (!mParentMenu) { S_ChangeMusic(level.music); }
+				else { S_ChangeMusic("WONDERIN"); }
+			}
+
+			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
+			return true;
+		}
+
+		if (!allowinput) { return false; }
+
+		if (mkey == MKEY_Enter || mkey == MKEY_Right)
+		{
+			selected = min(PagesInfo.Size() - 1, selected + 1);
+			mInfoTic = gametic;
+
+			return true;
+		}
+		else if (mkey == MKEY_Left)
+		{
+			selected = max(0, selected - 1);
+			mInfoTic = gametic;
+
+			return true;
+		}
+		else return Super.MenuEvent(mkey, fromcontroller);
+	}
+
+	override bool MouseEvent(int type, int x, int y)
+	{
+		if (type == MOUSE_Click)
+		{
+			return MenuEvent(MKEY_Enter, true);
+		}
+
+		return Super.MouseEvent(type, x, y);
+	}
+
+	ui void ParseFile(String filename)
+	{
+		ParseData(ReadLump(filename));
+	}
+
+	ui void ParseData(String data)
+	{
+		int s = data.IndexOf("^P");
+		while (s > -1)
+		{
+			int e = data.IndexOf("^P", s + 2);
+			if (e < 0) { e == 0x7FFFFFFF; }
+
+			let h = HelpInfo.Create(data.Mid(s, e - s), lineheight);
+			PagesInfo.Push(h);
+
+			s = e < 0x7FFFFFFF ? e : -1;
+		}
+	}
+
+	ui String ReadLump(String lumpname)
+	{
+		int lump = -1;
+
+		lump = Wads.CheckNumForFullName(lumpname);
+
+		if (lump > -1) { return Wads.ReadLump(lump); }
+
+		return "";
+	}
+
+	void DrawText(in out HelpInfo info, int textx = 0, int texty = 0, font fnt = null)
+	{
+		if (fnt == null) { fnt = SmallFont; }
+
+		info.Draw(textx, texty, fnt, padding);
+	}
+
+	virtual void DrawDebugOverlay(int textx = 0, int texty = 0)
+	{
+		double scale = 0.4;
+
+		for (int c = textx; c < 320; c += 5)
+		{
+			String num = String.Format("%i", c - textx);
+			String gnum = String.Format("(%i)", c - textx + padding.x);
+			if ((c - textx) % 25 == 0)
+			{
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Cyan"), padding.x + c - (NewSmallFont.StringWidth(num) * scale / 2), texty - 6, num, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Purple"), padding.x + c - (NewSmallFont.StringWidth(gnum) * scale / 2), texty + 1, gnum, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+				
+			}
+			screen.DrawText(NewSmallFont, Font.FindFontColor("White"), padding.x + c - (NewSmallFont.StringWidth("╵") * scale / 2), texty + 7, "╵", DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+		}
+
+		for (int l = 1; texty + padding.y + l * lineheight < 200; l++)
+		{
+			String lnum = String.Format("\c[Cyan]%i \c[Purple](%i)", l - 1, (l + 1) * lineheight);
+			screen.DrawText(NewSmallFont, Font.FindFontColor("TrueBlack"), textx - 12 - NewSmallFont.StringWidth(lnum) * scale, texty + padding.y + l * lineheight, lnum, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+
+			for (int c = textx; c < 320; c += 5)
+			{
+				screen.DrawText(SmallFont, Font.FindFontColor("TrueBlack"), padding.x + c - (SmallFont.StringWidth("|") * scale / 2) + 0.5, texty + padding.y + l * lineheight, "|", DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, 0.9, DTA_Alpha, 0.125);
+			}
+		}
+	}
+
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_KeyDown)
+		{
+			if (g_DebugTextScreens && ev.keystring == "G") { showoverlay = true; }
+		}
+		else if (ev.type == UIEvent.Type_KeyUp)
+		{
+			if (ev.keystring == "G") { showoverlay = false; }
+		}
+
+		return Super.OnUIEvent(ev);
+	}
+}
+
+class MapMenu : TextScreenMenu
+{
+	double alpha;
+	int h, w;
+
+	Font titlefont, textfont, captionfont;
+	
+	int contentheight;
+	int drawbottom;
+	int scrollpos, maxscroll, scrollamt;
+	int topoffset, bottomoffset;
+
+	Vector2 cellsize, realcellsize;
+	Vector2 scale;
+	Vector2 screensize;
+
+	ScrollBar scroll;
+
+	Array<int> VisiblePages;
+	MapHandler handler;
+
+	override void Init(Menu parent)
+	{
+		border = TexMan.CheckForTexture("Graphics/Menu/MapSelectBackground.png", TexMan.Type_Any);
+
+		mMouseCapture = true;
+		allowexit = true;
+		allowinput = true;
+
+		alpha = 1.0;
+
+		// Set the base resolution
+		h = 200;
+		w = 320;
+
+		// Set frame padding and draw offsets
+		padding = (4, 4);
+		topoffset = 16;
+		bottomoffset = 0;
+		
+		// Set cell size for index entries
+		cellsize = (120, 12);
+
+		// Set the fonts
+		titlefont = BigFont;
+		textfont = SmallFont;
+		captionfont = SmallFont;
+
+		// Font height used by entry content (captionfont)
+		lineheight = max(captionfont.GetHeight(), 7);
+
+		// Parse the data file and store it into an array
+		//ParseFile("data/help.txt");
+		handler = MapHandler.Get();
+		GetMapData();
+
+		MapDataInfo parent, last;
+		int lasttier;
+		selected = -1;
+
+		for (int p = 0; p < PagesInfo.Size(); p++)
+		{
+			let h = PagesInfo[p];
+
+			if (!parent || h.tier == 0)
+			{
+				parent = MapDataInfo(h);
+				h.path = ZScriptTools.Trim(h.title);
+				h.childrenhidden = true;
+			}
+			else
+			{
+			 	if (h.tier < lasttier)
+				{
+					int d = lasttier - h.tier;
+					while (d > 0 && parent)
+					{
+						parent = MapDataInfo(parent.parent);
+						d--;
+					}
+				}
+				else if (h.tier > lasttier)
+				{
+					parent = last;
+				}
+
+				h.parent = parent;
+				if (h.parent.childrenhidden)
+				{
+					h.childrenhidden = true; 
+					h.hidden = true;
+				}
+				
+				h.path = String.Format("%s \c[Palette7E]> %s", parent.path, ZScriptTools.Trim(h.title));
+
+				if (parent) { parent.children.Push(h); }
+			}
+
+			last = MapDataInfo(h);
+			lasttier = h.tier;
+
+			h.ParseLines(186, captionfont, padding);
+		}
+
+		scrollpos = 0;
+		scrollamt = 10;
+
+		CalculatePositions();
+
+		if (gamestate != GS_FINALE)
+		{
+			GameHandler.ChangeMusic("*");
+		}
+
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+	}
+
+	void CalculatePositions()
+	{
+		scale = (CleanXFac, CleanYFac);
+		
+		// Calculate the usable content area bounds
+		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset);
+
+		Vector2 realpos, realsize;
+		[realpos, realsize] = Screen.VirtualToRealCoords((padding.x, padding.y + topoffset), (w - 2 * padding.x, contentheight), (w, h));
+
+		drawbottom = int(realpos.y + realsize.y);
+
+		Vector2 temp;
+		[temp, realcellsize] = Screen.VirtualToRealCoords((0, 0), cellsize, (w, h));
+
+		maxscroll = int(cellsize.y * (PagesInfo.Size() - 2) - contentheight);
+
+		// Initialize the scrollbar
+		if (scroll) { scroll.Destroy(); }
+		scroll = Scroll.Init(int(realpos.x + realcellsize.x + 2 * scale.x), int(realpos.y), int(12 * scale.x), int(realsize.y), maxscroll);
+	}
+
+	override void Ticker()
+	{
+		Super.Ticker();
+
+		if (screensize.x != Screen.GetWidth() || screensize.y != Screen.GetHeight())
+		{
+			screensize = (Screen.GetWidth(), Screen.GetHeight());
+			CalculatePositions();
+		}
+
+		VisiblePages.Clear();
+
+		// Create the entry list
+		for (int p = 0; p < PagesInfo.Size() - 1; p++)
+		{
+			let page = PagesInfo[p];
+
+			if (page.hidden) { continue; }
+
+			page.index = VisiblePages.Size();
+			page.pos = (padding.x, padding.y + topoffset - scrollpos + VisiblePages.Size() * cellsize.y);
+			page.boxpos = (padding.x, padding.y + topoffset);
+			[page.realpos, page.realboxpos] = Screen.VirtualToRealCoords(page.pos, page.boxpos, (w, h));
+			page.size = realcellsize;
+
+			page.size.y = min(page.size.y, page.realpos.y + page.size.y - page.realboxpos.y);
+			page.size.y = min(page.size.y, drawbottom - page.realpos.y);
+			page.realpos.y = clamp(page.realpos.y, page.realboxpos.y, drawbottom);
+
+			VisiblePages.Push(p);
+
+			if (selected == -1 && page.spans.Size()) { selected = page.index; }
+		}
+
+		maxscroll = max(0, int(cellsize.y * VisiblePages.Size() - contentheight));
+		if (!maxscroll) { scrollpos = 0; }
+
+		// Update the scrollbar
+		if (scroll)
+		{
+			scroll.alpha = alpha;
+			scroll.scrollpos = scrollpos;
+			scroll.maxscroll = maxscroll;
+		}
+	}
+
+	override void Drawer()
+	{
+		// Fill in the background
+		screen.Dim(0x282828, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
+		if (border) { screen.DrawTexture(border, false, 160, 100, DTA_320x200, true, DTA_CenterOffset, true); }
+
+		// Draw the title
+		String pagetitle = StringTable.Localize("$M_MAPSELECT");
+		screen.DrawText(titlefont, Font.FindFontColor("Palette6C"), 160 - titlefont.StringWidth(pagetitle) / 2, padding.y, pagetitle, DTA_320x200, true);
+
+		// If there aren't any pages, stop here
+		if (!VisiblePages.Size()) { return; }
+
+		// Draw the entry list
+		for (int p = 0; p < VisiblePages.Size(); p++)
+		{
+			let page = PagesInfo[VisiblePages[p]];
+
+			if (page.realpos.y >= drawbottom || page.realpos.y + page.size.y <= page.realboxpos.y) { continue; }
+
+			// Draw shading behind the selected entry
+			if (p == selected)
+			{
+				screen.Dim(0xF, 0.25, int(page.realpos.x), int(page.realpos.y), int(page.size.x), int(page.size.y));
+			}
+
+			// Draw each entry
+			String title = page.title;
+			String indicator = " ";
+			if (page.children.Size()) { indicator = (page.childrenhidden ? "🢓" : "🢒"); }
+			title = String.Format("%s%s%s", title.left(page.tier), indicator, title.mid(page.tier));
+
+			screen.DrawText(textfont, Font.FindFontColor("WolfMenuLightGrey"), page.pos.x, page.pos.y, title, DTA_320x200, true, DTA_ClipTop, int(page.realboxpos.y), DTA_ClipBottom, int(drawbottom), DTA_ClipRight, int(page.realpos.x + realcellsize.x));
+		}
+
+		// Draw page content
+		if (VisiblePages.Size() && selected > -1)
+		{
+			int textx = int(cellsize.x + scroll.w / scale.x) + 2;
+			int texty = int(topoffset - lineheight);
+
+			if (showoverlay) { DrawDebugOverlay(textx, texty); }
+
+			if (!PagesInfo[VisiblePages[selected]].spans.Size()) { DrawText(PagesInfo[PagesInfo.Size() - 1], textx, texty, captionfont); }
+			else { DrawText(PagesInfo[VisiblePages[selected]], textx, texty, captionfont); }
+		}
+
+		// Draw page number
+		// screen.DrawText(captionfont, Font.FindFontColor("Palette07"), 270, 189, String.Format("pg %i of %i", selected + 1, VisiblePages.Size() - 1), DTA_320x200, true);
+
+		// Draw the scrollbar
+		if (scroll && maxscroll) { scroll.Draw(); }
+	}
+
+	MapDataInfo GetEntryAt(int x, int y)
+	{
+		for (int p = 0; p < VisiblePages.Size(); p++)
+		{
+			let page = MapDataInfo(PagesInfo[VisiblePages[p]]);
+			if (!page) { continue; }
+
+			if (
+				x >= page.realpos.x &&
+				x <= page.realpos.x + page.size.x &&
+				y >= page.realpos.y &&
+				y <= page.realpos.y + page.size.y
+			) { return page; }
+		}
+
+		return null;
+	}
+
+	override bool MouseEvent(int type, int mx, int my)
+	{
+		if (type == MOUSE_CLICK)
+		{
+			MapDataInfo entry = GetEntryAt(mx, my);
+
+			if (entry)
+			{
+				if (selected == entry.index) { entry.Clicked(); }
+				else { selected = entry.index; }
+
+				if (entry.size.y < realcellsize.y)
+				{
+					if (entry.realpos.y < Screen.GetHeight() / 2) { scrollpos -= int(realcellsize.y - entry.size.y); }
+					else { scrollpos += int(realcellsize.y - entry.size.y); }
+				}
+
+				if (entry.childrenhidden)
+				{
+					maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() - entry.children.Size()) - contentheight));
+				}
+				else
+				{
+					maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() + entry.children.Size()) - contentheight));
+				}
+
+				return true;
+			}
+
+			if (scroll)
+			{
+				int scrollclick = scroll.CheckClick(mx, my);
+
+				switch (scrollclick)
+				{
+					case ScrollBar.SCROLL_SLIDER:
+						scroll.capture = true;
+						break;
+					case ScrollBar.SCROLL_UP:
+						scrollpos = max(0, int(scrollpos - cellsize.y));
+						break;
+					case ScrollBar.SCROLL_DOWN:
+						scrollpos = min(maxscroll, int(scrollpos + cellsize.y));
+						break;
+					case ScrollBar.SCROLL_PGUP:
+						scrollpos = max(0, int(scrollpos - cellsize.y * 5));
+						break;
+					case ScrollBar.SCROLL_PGDOWN:
+						scrollpos = min(maxscroll, int(scrollpos + cellsize.y * 5));
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		else if (type == MOUSE_MOVE && scroll && scroll.capture)
+		{
+			int ypos = clamp(my - (scroll.y + scroll.elementsize), 0, scroll.h - (scroll.elementsize * 2));
+			scrollpos = maxscroll * ypos / (scroll.h - (scroll.elementsize * 2));
+		}
+		else
+		{
+			if (scroll && scroll.capture) { scroll.capture = false; }
+		}
+
+		return true;
+	}
+	
+	override bool OnUIEvent(UIEvent ev)
+	{
+		if (ev.type == UIEvent.Type_WheelUp)
+		{
+			if (!maxscroll) { scrollpos = 0; return true; }
+			scrollpos = max(0, scrollpos - scrollamt);
+			return true;
+		}
+		else if (ev.type == UIEvent.Type_WheelDown)
+		{
+			if (!maxscroll) { scrollpos = 0; return true; }
+			scrollpos = min(maxscroll, scrollpos + scrollamt);
+			return true;
+		}
+		return Super.OnUIEvent(ev);
+	}
+
+	override bool MenuEvent (int mkey, bool fromcontroller)
+	{
+		if (mkey == MKEY_Back)
+		{
+			if (allowexit)
+			{
+				Close();
+			}
+			else
+			{
+				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
+				else { Menu.SetMenu("MainMenu", -1); }
+			}
+
+			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
+			{
+				if (!mParentMenu) { S_ChangeMusic(level.music); }
+				else { S_ChangeMusic("WONDERIN"); }
+			}
+
+			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
+			return true;
+		}
+
+		if (!allowinput) { return false; }
+
+		int startedAt = selected;
+		int pageamt = int(contentheight / cellsize.y);
+
+		switch (mkey)
+		{
+			case MKEY_Left:
+				if (PagesInfo[VisiblePages[selected]].children.Size() && !PagesInfo[VisiblePages[selected]].childrenhidden)
+				{
+					PagesInfo[VisiblePages[selected]].Clicked(0);
+					maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() - PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
+				}
+				else if (PagesInfo[VisiblePages[selected]].parent)
+				{
+					PagesInfo[VisiblePages[selected]].parent.Clicked(0);
+					selected = PagesInfo[VisiblePages[selected]].parent.index;
+				}
+				break;
+			case MKEY_Up:
+				selected--;
+				break;
+			case MKEY_Right:
+				if (PagesInfo[VisiblePages[selected]].children.Size())
+				{
+					if (PagesInfo[VisiblePages[selected]].childrenhidden)
+					{
+						PagesInfo[VisiblePages[selected]].Clicked(1);
+						maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() + PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
+					}
+					else
+					{
+						selected = PagesInfo[VisiblePages[selected]].children[0].index;
+					}
+				}
+				break;
+			case MKEY_Down:
+				selected++;
+				break;
+			case MKEY_PageUp:
+				selected -= pageamt;
+				break;
+			case MKEY_PageDown:
+				selected += pageamt;
+				break;
+			case MKEY_Enter:
+				if (PagesInfo[VisiblePages[selected]].children.Size())
+				{
+					PagesInfo[VisiblePages[selected]].Clicked();
+				}
+				else
+				{
+					MapDataInfo m = MapDataInfo(PagesInfo[VisiblePages[selected]]);
+
+					String queuecmd = String.Format("initialize:%s:%s", ZScriptTools.GetText(m.title), ZScriptTools.GetText(m.d.path));
+					EventHandler.SendNetworkEvent(queuecmd);
+					Close();
+				}
+				break;
+			default:
+				return Super.MenuEvent(mkey, fromcontroller);
+		}
+
+		SetScrollPosition();
+
+		if (selected != startedAt)
+		{
+			MenuSound ("menu/cursor");
+		}
+
+		return true;
+	}
+
+	void SetScrollPosition()
+	{
+		int lastentry = VisiblePages.Size() - 1;
+
+		if (selected < 0)
+		{
+			selected = 0;
+		}
+		else if (selected > lastentry)
+		{
+			selected = lastentry;
+		}
+
+		if (selected == 0)
+		{
+			scrollpos = 0;
+		}
+		else if (selected == lastentry)
+		{
+			scrollpos = maxscroll;
+		}
+		else if (selected * cellsize.y < scrollpos)
+		{
+			scrollpos = int(selected * cellsize.y);
+		}
+		else if ((selected + 1) * cellsize.y > scrollpos + contentheight)
+		{
+			scrollpos = int((selected + 1) * cellsize.y - contentheight);
+		}
+
+		scrollpos = clamp(scrollpos, 0, maxscroll);
+	}
+
+	void GetMapData()
+	{
+		if (!handler || !handler.datafiles.Size()) { return; }
+
+		for (int d = 0; d < handler.datafiles.Size(); d++)
+		{
+			let gamefile = handler.datafiles[d];
+
+			String gamefiledata = "^P\n^I0%s\n$PATH\n\n";
+			if (gamefile.maps.Size() == 1)
+			{
+				gamefiledata = String.Format(gamefiledata, gamefile.maps[0].mapname);
+				let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
+				PagesInfo.Push(h);
+				continue;
+			}
+			else
+			{
+				gamefiledata = String.Format(gamefiledata, ZScriptTools.GetText(gamefile.gametitle));
+				let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
+				PagesInfo.Push(h);
+			}
+
+			for (int m = 0; m < gamefile.maps.Size(); m++)
+			{
+				let parsedmap = gamefile.maps[m];
+
+				String mapdata = String.Format("^P\n^I1!%s\n$PATH", parsedmap.mapname);
+				let n = MapDataInfo.Create(mapdata, lineheight, gamefile);
+				PagesInfo.Push(n);
+			}
+		}
+	}
+}
+
+// Scrollbar UI widget class
+class ScrollBar ui
+{
+	int x, y, w, h;
+	int scrollpos, maxscroll;
+	int elementsize;
+	int blocktop, blockbottom;
+	bool capture;
+
+	double alpha;
+
+	TextureID up, down, scroll_t, scroll_m, scroll_b, scroll_s;
+
+	ScrollBar Init(int x, int y, int w, int h, int maxscroll)
+	{
+		ScrollBar s = New("ScrollBar");
+
+		if (s)
+		{
+			s.up = TexMan.CheckForTexture("graphics/menu/arrow_up.png", TexMan.Type_Any);
+			s.down = TexMan.CheckForTexture("graphics/menu/arrow_dn.png", TexMan.Type_Any);
+			s.scroll_t = TexMan.CheckForTexture("graphics/menu/scroll_t.png", TexMan.Type_Any);
+			s.scroll_m = TexMan.CheckForTexture("graphics/menu/scroll_m.png", TexMan.Type_Any);
+			s.scroll_b = TexMan.CheckForTexture("graphics/menu/scroll_b.png", TexMan.Type_Any);
+			s.scroll_s = TexMan.CheckForTexture("graphics/menu/scroll_s.png", TexMan.Type_Any);
+	
+			s.x = x;
+			s.y = y;
+			s.w = w;
+			s.h = h;
+			s.maxscroll = maxscroll;
+			s.elementsize = s.w;
+		}
+
+		return s;
+	}
+
+	void Draw()
+	{
+		double scrollblocksize = double(h - elementsize * 3) / max(1, maxscroll);
+		int scrollbarsize = int(clamp(scrollblocksize, 0, h / elementsize - 2));
+
+		Screen.Dim(0x0, 0.5, x, y, w, h);
+
+		if (scrollbarsize <= 1)
+		{
+				blocktop = y + elementsize + int(scrollblocksize * scrollpos);
+				blockbottom = blocktop + elementsize;
+				screen.DrawTexture(scroll_s, true, x, blocktop, DTA_Alpha, alpha, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+		}
+		else
+		{
+			blocktop = y + elementsize + min(int(scrollblocksize * scrollpos), h - elementsize * (2 + scrollbarsize));
+			blockbottom = blocktop + elementsize * scrollbarsize;
+			for (int b = 0; b < scrollbarsize; b++)
+			{
+				if (b == 0)
+				{
+					screen.DrawTexture(scroll_t, true, x, blocktop, DTA_Alpha, alpha, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+				}
+				else if (b == scrollbarsize - 1)
+				{
+					screen.DrawTexture(scroll_b, true, x, blocktop + b * elementsize, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+				}
+				else if (scrollbarsize > 2)
+				{
+					screen.DrawTexture(scroll_m, true, x, blocktop + b * elementsize, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+				}
+			}
+		}
+
+		Color clr = 0xFFFF00;
+		Color disabled = 0xAAAAAA;
+
+		screen.DrawTexture(up, true, x, y, DTA_Alpha, alpha, DTA_AlphaChannel, true, DTA_FillColor, scrollpos == 0 ? disabled : clr, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+		screen.DrawTexture(down, true, x, y + h - elementsize, DTA_Alpha, alpha, DTA_AlphaChannel, true, DTA_FillColor, scrollpos == maxscroll ? disabled : clr, DTA_DestHeight, elementsize, DTA_DestWidth, elementsize);
+	}
+
+	enum Clicks
+	{
+		NONE,
+		SCROLL_UP,
+		SCROLL_DOWN,
+		SCROLL_SLIDER,
+		SCROLL_PGUP,
+		SCROLL_PGDOWN,
+	};
+
+	int CheckClick(int mousex, int mousey)
+	{
+		if (mousex < x || mousex > x + elementsize) { return NONE; }
+		if (mousey < y && mousey > y + h) { return NONE; }
+
+		if (mousey <= y + elementsize) { return SCROLL_UP; }
+		if (mousey >= y + h - elementsize) { return SCROLL_DOWN; }
+		if (mousey >= blocktop && mousey <= blockbottom) { return SCROLL_SLIDER; }
+		if (mousey < blocktop) { return SCROLL_PGUP; }
+		if (mousey > blockbottom) { return SCROLL_PGDOWN; }
+
+		return NONE;
+	}
+
+	int GetRight()
+	{
+		return x + w;
+	}
+}
+
+class HelpInfo
+{
+	HelpInfo parent;
+	Array<HelpInfo> children;
+	String pagedata, title, path;
+	int index, linecount, tier, column;
+	Vector2 pos, realpos, boxpos, realboxpos, size;
+	bool hidden, childrenhidden;
+	Array<SpanInfo> spans;
+	Array<GraphicInfo> graphics;
+	Array<BlockInfo> blocks;
+	int margins[26][2];
+	int lineheight;
+
+	virtual void Clicked(int activate = -1)
+	{
+		if (activate == 1) { HideChildren(false); }
+		else if (activate == 0) { HideChildren(true); }
+		else { HideChildren(!childrenhidden); }
+	}
+
+	virtual void Hide(bool hide = true)
+	{
+		hidden = hide;
+
+		if (!hide) { return; }
+		HideChildren(hide);
+	}
+
+	virtual void HideChildren(bool hide = true)
+	{
+		childrenhidden = hide;
+
+		for (int i = 0; i < children.Size(); i++)
+		{
+			children[i].Hide(hide);
+		}
+	}
+
+	static HelpInfo Create(String page, int lineheight)
+	{
+		let h = New("HelpInfo");
+		h.pagedata = page;
+		h.lineheight = lineheight;
+
+		h.ParseLines();
+
+		return h;
+	}
+
+	virtual void ParseLines(int maxwidth = 320, Font fnt = null, Vector2 padding = (16, 16))
+	{
+		spans.Clear();
+		graphics.Clear();
+		blocks.Clear();
+
+		for (int m = 0; m < margins.Size(); m++)
+		{
+			margins[m][0] = int(padding.x);
+			margins[m][1] = int(maxwidth - padding.x);
+		}
+		linecount = 0;
+		column = 0;
+
+		int t = 0;
+		while (t > -1)
+		{
+			int f = pagedata.IndexOf("\n", t + 1);
+			if (f < 0) { f == 0x7FFFFFFF; }
+
+			ParseLine(pagedata.Mid(t == 0 ? 0 : t + 1, f - t), maxwidth, fnt);
+
+			t = f < 0x7FFFFFFF ? f : -1;
+		}
+
+		if (!spans.Size() && !graphics.Size()) { hidden = true; }
+	}
+
+	virtual String ParseLine(String input = "", int maxwidth = 320, Font fnt = null, bool savedata = true)
+	{
+		if (!input.length()) { return ""; }
+
+		if (fnt == null) { fnt = SmallFont; }
+
+		String word = "";
+		String content = "";
+		String newclr = "\c[Palette00]", clr = "\c[Palette00]";
+		linecount = min(linecount, margins.Size() - 1);
+
+		int charoffset, j, c;
+
+		int s = input.IndexOf("$");
+		while (s > -1)
+		{
+			String lookup = ZScriptTools.GetWord(input.mid(s + 1), ZScriptTools.PUNC_DEFAULT, 0x5E);
+
+			String entry;
+			if (lookup ~== "PATH") { entry = path; }
+			else { entry = StringTable.Localize(lookup, false); }
+
+			input = String.Format("%s%s%s", input.Left(s), entry, input.Mid(s + lookup.length() + 1));
+
+			s = input.IndexOf("$", s);
+		}
+
+		SpanInfo span = New("SpanInfo");
+		span.fnt = fnt;
+		span.x = max(column, margins[linecount][0]);
+		span.y = linecount;
+
+		for (uint i = 0; i < input.Length(); i++)
+		{
+			int nextchar = input.GetNextCodePoint(i);
+			switch(nextchar)
+			{
+				// Handle control characters
+				case 0x5E: // ^
+					i++;
+					switch(input.GetNextCodePoint(i))
+					{
+						// Change text alignment for this line (and all following text on this line)
+						case 0x41: // A
+						case 0x61: // a
+							int textalign = ZScriptTools.STR_LEFT;
+
+							i++;
+							String align = input.Mid(i, 1);
+							if (align ~== "C") { textalign = ZScriptTools.STR_CENTERED; }
+							else if (align ~== "R") { textalign = ZScriptTools.STR_RIGHT; }
+
+							i++;
+							content = ZScriptTools.Trim(ParseLine(input.Mid(i), 0x7FFFFFFF, fnt, false));
+
+							span.content = content;
+
+							switch (textalign)
+							{
+								case ZScriptTools.STR_RIGHT:
+									span.x -= fnt.StringWidth(content);
+									break;
+								case ZScriptTools.STR_CENTERED:
+									span.x -= int(fnt.StringWidth(content) / 2.0);
+									break;
+								case ZScriptTools.STR_LEFT:
+								default:
+									break;
+							}
+
+							if (savedata && ZScriptTools.GetText(span.content).length()) { spans.Push(span); }
+
+							return content;
+						case 0x42: // B
+						case 0x62: // b
+							let b = New("BlockInfo");
+							charoffset = 1;
+
+							i += charoffset;
+							[b.y, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+							[b.x, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+							[b.size.x, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+							[b.size.y, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+
+							b.clr = Screen.PaletteColor(ZScriptTools.HexStrToInt(ZScriptTools.Trim(input.Mid(i))));
+							if (b.clr == 0x0) { b.clr = 0xDCDCDC; }
+
+							if (savedata) { blocks.Push(b); }
+							return "";
+						// Change the text color
+						case 0x43: // C
+						case 0x63: // c
+							string colorname = "";
+
+							[c, j] = input.GetNextCodePoint(i + 1);
+							if (c == 0x5B) // [
+							{
+								colorname = ZScriptTools.GetWord(input.mid(j), ZScriptTools.PUNC_DEFAULT, 0x5D);
+							}
+
+							if (colorname.length()) { i = j - 1; }
+							else
+							{
+								colorname = String.Format("Palette%s", input.Mid(i + 1, 2));
+								i += 2;
+							}
+
+							if (colorname.Left(1) == "#")
+							{
+								Color hexclr = ZScriptTools.HexStrToInt(colorname.Mid(1));
+								newclr = String.Format("\c%s", ZScriptTools.BestTextColor(hexclr));
+							}
+							else
+							{
+								newclr = String.Format("\c[%s]", colorname);
+							}
+							break;
+						// Marks end of file.  Not used in this implementation
+						case 0x45: // E
+						case 0x65: // e
+						default:
+							break;
+						// Change the current font
+						case 0x46: // F
+						case 0x66: // f
+							i++;
+							String fontname = "";
+
+							[c, j] = input.GetNextCodePoint(i);
+							if (c == 0x5B) { fontname = ZScriptTools.GetWord(input.mid(j), ZScriptTools.PUNC_DEFAULT, 0x5D); }
+
+							Font newfnt = Font.FindFont(fontname);
+							if (newfnt)
+							{
+								if (savedata && ZScriptTools.GetText(span.content).length()) { spans.Push(span); }
+								SpanInfo prevspan = span;
+
+								span = New("SpanInfo");
+								span.x = prevspan.x + prevspan.Width();
+								span.y = linecount;
+								span.fnt = newfnt;
+
+								i = j + fontname.length();
+							}
+							break;
+						// Insert a graphic...  
+						// First looks for the lump by graphic number x as "SLIDEGx", then
+						// falls back to looking for graphic by name/path
+						case 0x47: // G
+						case 0x67: // g
+							int y, x, n;
+							charoffset = 1;
+
+							i += charoffset;
+							[y, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+							[x, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+
+							i += charoffset;
+							n = ZScriptTools.GetNumber(input.Mid(i));
+
+							String path;
+							if (n) { path = String.Format("SLIDEG%i", n); }
+							else { path = ZScriptTools.GetWord(input.Mid(i), ZScriptTools.PUNC_PATH); }
+
+							TextureID tex = TexMan.CheckForTexture(path, TexMan.Type_Any);
+
+							if (tex.IsValid())
+							{
+								let g = New("GraphicInfo");
+								g.tex = tex;
+								g.x = x;
+								g.y = y;
+								g.size = TexMan.GetScaledSize(tex);
+								if (savedata) { graphics.Push(g); }
+
+								int adjustleft = 0;
+								int adjustright = 0;
+
+								Vector2 offsets = TexMan.GetScaledOffset(tex);
+
+								if (x + size.x / 2 > maxwidth / 2) { adjustright = int(x - offsets.x - 8); }
+								else { adjustleft = int(x - offsets.x + g.size.x + 8); }
+
+								double top = (y - offsets.y - boxpos.y) / lineheight;
+								double bottom = (y - offsets.y + g.size.y - boxpos.y) / lineheight;
+
+								for (int m = int(floor(top)) - 1; m < ceil(bottom) - 1 && m < margins.Size(); m++)
+								{
+									if (adjustleft) { margins[m][0] = max(margins[m][0], adjustleft); }
+									if (adjustright) { margins[m][1] = min(margins[m][1], adjustright); }
+								}
+							}
+							else
+							{
+								console.printf("\c[Red]Error in screen format command \c[Gray]%s\n\c[Red]Specified texture '%s' is invalid.\n", ZScriptTools.Trim(input), path);
+							}
+
+							return "";
+						// Custom addition to identify title and indentation
+						// The numbers after the ^I are the number of spaces to indent by
+						// e.g.:  ^I2 for two spaces of indentation
+						case 0x49: // I
+						case 0x69: // i
+							title = "";
+							charoffset = 1;
+							int spacingamt;
+
+							[spacingamt, charoffset] = ZScriptTools.GetNumber(input.Mid(i + charoffset));
+
+							i += charoffset;
+
+							hidden = (input.Mid(i, 1) == "!");
+							if (hidden) { i++; }
+
+							if (spacingamt > 0)
+							{
+								for (int s = 0; s < spacingamt; s++) { title = String.Format("%s%s", title, " "); }
+								tier = spacingamt;
+							}
+
+							title = String.Format("%s%s", title, ParseLine(input.Mid(i), maxwidth, fnt, false));
+							return title;
+						// Position the cursor
+						case 0x4C: // L
+						case 0x6C: // l
+							charoffset = 1;
+
+							i += charoffset;
+							[span.y, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+							span.y = int(floor(span.y / lineheight)) + 1;
+							linecount = min(span.y, margins.Size() - 1);
+
+							i += charoffset;
+							[span.x, charoffset] = ZScriptTools.GetNumber(input.Mid(i));
+							column = span.x;
+							return "";
+						// New page.  Ignore here.
+						case 0x50: // P
+						case 0x70: // p
+							return "";
+					}
+					break;
+				// Handle tabs and spaces
+				case 0x09: // Tab
+				case 0x20: // Space
+					content = String.Format("%s%s ", content, word);
+					span.content = content;
+					word = "";
+
+					if (input.ByteAt(i) == 0x09)
+					{
+						if (savedata && ZScriptTools.GetText(span.content).length()) { spans.Push(span); }
+						SpanInfo prevspan = span;
+
+						content = "";
+						span = New("SpanInfo");
+						span.x = prevspan.x + prevspan.Width();
+						span.y = prevspan.y;
+						span.fnt = prevspan.fnt;
+
+						span.x = int(32 * floor((span.x + fnt.StringWidth("        ")) / 32));
+					}
+
+					int nextspace = input.IndexOf(" ", i + 1); // Find the next space
+					if (nextspace < 0) { nextspace = input.Length() - 1; }
+
+					String teststring = input.mid(i + 1, nextspace - (i + 1));
+					if (teststring.ByteAt(0) == 0x5E) { teststring = teststring.Mid(4); } // Skip color codes that are in lines when calculating length
+					int testlength = fnt.StringWidth(teststring);
+
+					if (savedata && span.x + span.Width() + testlength > margins[linecount][1])
+					{
+						linecount = min(linecount + 1, margins.Size() - 1);
+
+						if (savedata && ZScriptTools.Trim(span.content).length()) { spans.Push(span); }
+						SpanInfo prevspan = span;
+
+						content = "";
+						span = New("SpanInfo");
+						span.x = column ? max(column, margins[linecount][0]) : margins[linecount][0];
+						span.y = linecount;
+						span.fnt = prevspan.fnt;
+					}
+					break;
+				// Ignore comments and stop parsing the line
+				// Modified to only work if the semi-colon is at the start of a line
+				case 0x3B: // ;
+					if (i == 0) { return ""; }
+				// Build the current word one character at  time
+				default:
+					if (ZScriptTools.IsPunctuation(nextchar) || ZScriptTools.IsWhiteSpace(nextchar) || !word.length())
+					{
+						if (clr != newclr)
+						{
+							word = String.Format("%s%s%s", clr, word, newclr);
+							clr = newclr;
+						}
+						else { word = String.Format("%s%s", clr, word); }
+					}
+
+					word = String.Format("%s%c", word, nextchar);
+					break;
+			}
+		}
+
+		content = String.Format("%s%s ", content, word);
+		span.content = content;
+		if (savedata && ZScriptTools.GetText(span.content).length()) { spans.Push(span); }
+
+		linecount = min(linecount + 1, margins.Size() - 1);
+
+		return content;
+	}
+
+	void Draw(int x, int y, Font fnt, Vector2 padding = (0, 0))
+	{
+		double scale = 0.4;
+
+		for (int b = 0; b < blocks.Size(); b++)
+		{
+			let block = blocks[b];
+
+			Vector2 pos, size;
+			[pos, size] = Screen.VirtualToRealCoords((x + block.x, y + block.y - lineheight / 2), block.size, (320, 200));
+			screen.Dim(block.clr, 1.0, int(pos.x), int(pos.y), int(size.x), int(size.y));
+
+			// Draw block x/y coordinates
+			if (g_DebugTextScreens)
+			{
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Yellow"), x + block.x + 1, y + block.y - lineheight / 2, String.Format("%i, %i  %ix%i", block.x, block.y, block.size.x, block.size.y), DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+			}
+		}
+
+		for (int g = 0; g < graphics.Size(); g++)
+		{
+			let graphic = graphics[g];
+
+			// Highlight draw area
+			if (g_DebugTextScreens)
+			{
+				Vector2 pos, size, offsets;
+				offsets = TexMan.GetScaledOffset(graphic.tex);
+				[pos, size] = Screen.VirtualToRealCoords((x + graphic.x - offsets.x, y + graphic.y - lineheight / 2 - offsets.y), graphic.size, (320, 200));
+				screen.Dim(0xDC00DC, 0.25, int(pos.x), int(pos.y), int(size.x), int(size.y));
+			}
+
+			screen.DrawTexture(graphic.tex, true, x + graphic.x, y + graphic.y - lineheight / 2, DTA_320x200, true); //, DTA_TopOffset, 0, DTA_LeftOffset, 0);
+
+			// Draw graphic x/y coordinates
+			if (g_DebugTextScreens)
+			{
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Purple"), x + graphic.x - NewSmallFont.StringWidth("◸") * scale / 2 + 1, y + graphic.y - lineheight * 0.5, "◸", DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Purple"), x + graphic.x + 3, min(y + graphic.y - lineheight / 2, 200 - 12 * scale), String.Format("%i, %i", graphic.x, graphic.y), DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+			}
+		}
+
+		for (int s = 0; s < spans.Size(); s++)
+		{
+			let span = spans[s];
+			Font spanfnt = span.fnt ? span.fnt : fnt;
+			screen.DrawText(span.fnt, Font.FindFontColor("WolfMenuLightGrey"), x + span.x, padding.y + y + span.y * lineheight, span.content, DTA_320x200, true);
+			
+			// Draw line x/y coordinates if they aren't at default for that line
+			if (g_DebugTextScreens && (span.x - padding.x))
+			{
+				String coords = String.Format("%i, %i", int(span.x), int(span.y - 1));
+				screen.DrawText(NewSmallFont, Font.FindFontColor("Cyan"), x + span.x, padding.y + y + span.y * lineheight, coords, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+			}
+		}
+
+		if (g_DebugTextScreens)
+		{
+			String marker, m = "│";
+			int left = 0;
+			int right = 0;
+
+			for (int l = 0; l < margins.Size(); l++)
+			{
+				if (left != margins[l][0])
+				{
+					left = int(margins[l][0]);
+					marker = String.Format("\c[Gray]%i\c[TrueBlack] >%s", left, m);
+				}
+				else { marker = m; }
+				if (left > padding.x) { screen.DrawText(NewSmallFont, Font.FindFontColor("TrueBlack"), x + margins[l][0] - NewSmallFont.StringWidth(marker) *  scale, padding.y + y + l * lineheight, marker, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale); }
+
+				if (right != margins[l][1])
+				{
+					right = int(margins[l][1]);
+					marker = String.Format("\c[TrueBlack]%s< \c[Gray]%i", m, right);
+				}
+				else { marker = m; }
+				if (x + right + padding.x * 2 < 320) { screen.DrawText(NewSmallFont, Font.FindFontColor("TrueBlack"), x + margins[l][1], padding.y + y + l * lineheight, marker, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale); }
+			}
+		}
+	}
+}
+
+class SpanInfo
+{
+	String content;
+	Font fnt;
+	int x, y;
+
+	int Width()
+	{
+		return fnt.StringWidth(content);
+	}
+}
+
+class GraphicInfo
+{
+	TextureID tex;
+	int x, y;
+	Vector2 size;
+
+	static int Find(Array<GraphicInfo> graphics, TextureID tex)
+	{
+		for (int g = 0; g < graphics.Size(); g++)
+		{
+			if (graphics[g].tex == tex) { return g; }
+		}
+
+		return graphics.Size();
+	}
+}
+
+class BlockInfo
+{
+	Color clr;
+	int x, y;
+	Vector2 size;
+}
+
+class MapDataInfo : HelpInfo
+{
+	DataFile d;
+
+	static MapDataInfo Create(String page, int lineheight, DataFile d)
+	{
+		let h = New("MapDataInfo");
+		h.pagedata = page;
+		h.lineheight = lineheight;
+		h.d = d;
+
+		h.ParseLines();
+
+		return h;
+	}
+}

@@ -16,6 +16,7 @@ server int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf 
 server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on startup
 server int g_userotations = 0; // Use additional sprite rotations if they are available
 server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
+server int g_debugtextscreens = 0; // Draw debug info on some text screens
 
 user int g_borderstyle = 0; // Style of screen border
 user int g_hudratio = 0; // Force fullscreen hud to draw at a specific ratio
