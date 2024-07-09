@@ -790,7 +790,7 @@ class ClassicNazi : ClassicBase
 								let ln = nextsector.lines[l];
 
 								ln.flags |= Line.ML_TWOSIDED;
-								ln.flags &= ~(Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK);
+								ln.flags &= ~(Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK | Line.ML_DONTDRAW);
 								ln.activation = 0; // Allow walkthrough of elevators
 
 								Sector texsec = (ln.frontsector == nextsector) ? ln.backsector : ln.frontsector;
@@ -829,10 +829,10 @@ class ClassicNazi : ClassicBase
 						{
 							if (it.thing.bSolid)
 							{
-								if (it.thing == self) { continue; }
+								if (it.thing == self || Level.Vec2Diff(nextsector.CenterSpot, it.thing.pos.xy).length() > 32) { continue; }
 
 								// Special handling to recreate non-solid thing engine bug
-								if (initial && Level.Vec2Diff(nextsector.CenterSpot, it.thing.pos.xy).length() < 32) { it.thing.bSolid = false; }
+								if (initial) { it.thing.bSolid = false; }
 								else { blocked = true; }
 							}
 						}
