@@ -1959,20 +1959,9 @@ class MapMenu : TextScreenMenu
 		{
 			let gamefile = handler.datafiles[d];
 
-			String gamefiledata = "^P\n^I0%s\n$PATH\n\n";
-			if (gamefile.maps.Size() == 1)
-			{
-				gamefiledata = String.Format(gamefiledata, gamefile.maps[0].mapname);
-				let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
-				PagesInfo.Push(h);
-				continue;
-			}
-			else
-			{
-				gamefiledata = String.Format(gamefiledata, ZScriptTools.GetText(gamefile.gametitle));
-				let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
-				PagesInfo.Push(h);
-			}
+			String gamefiledata = String.Format("^P\n^I0%s\n$PATH\n\n", ZScriptTools.GetText(gamefile.gametitle));
+			let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
+			PagesInfo.Push(h);
 
 			for (int m = 0; m < gamefile.maps.Size(); m++)
 			{
@@ -2398,7 +2387,7 @@ class HelpInfo
 
 							if (spacingamt > 0)
 							{
-								for (int s = 0; s < spacingamt; s++) { title = String.Format("%s%s", title, " "); }
+								for (int s = 0; s < spacingamt; s++) { title = String.Format("%s%s", " ", title); }
 								tier = spacingamt;
 							}
 

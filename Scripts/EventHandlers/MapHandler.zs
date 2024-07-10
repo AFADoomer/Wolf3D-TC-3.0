@@ -39,7 +39,7 @@ class MapHandler : StaticEventHandler
 		console.printf("Parsing map data...");
 
 		// Parse the demo map first
-		let d = DataFile.Find(datafiles, "Data/EditorThings.map");
+		let d = DataFile.Find(datafiles, "Custom Maps", "Data/EditorThings.map");
 		WolfMapParser.Parse(parsedmaps, d);
 
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
@@ -53,13 +53,13 @@ class MapHandler : StaticEventHandler
 
 				if (Wads.CheckNumForFullName(headname) > -1)
 				{
-					let d = DataFile.Find(datafiles, lumpname, headname);
-					WolfMapParser.Parse(parsedmaps, d);
+					let e = DataFile.Find(datafiles, lumpname, lumpname, headname);
+					WolfMapParser.Parse(parsedmaps, e);
 				}
 			}
 			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".map" || lumpname.Mid(lumpname.Length() - 4) ~== ".lvl")
 			{
-				let d = DataFile.Find(datafiles, lumpname);
+				d.path = lumpname;
 				WolfMapParser.Parse(parsedmaps, d);
 			}
 		}
@@ -217,6 +217,7 @@ class MapHandler : StaticEventHandler
 
 	void PlacePlayer(int p)
 	{
+		if (!(level.mapname ~== "Level")) { return; }
 		if (!curmap) { return; }
 		if (!playeringame[p] || !players[p].mo) { return; }
 
@@ -1339,11 +1340,8 @@ class WolfMapParser
 			newmap.gametype = gametype;
 			newmap.info = newmap.GetInfo();
 
-			if (!GetMapData(newmap.mapname, d.path))
-			{
-				d.maps.Push(newmap);
-				maps.Push(newmap);
-			}
+			d.maps.Push(newmap);
+			maps.Push(newmap);
 		}
 	}
 
@@ -1352,6 +1350,11 @@ class WolfMapParser
 		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
 			if (maps[m].mapname ~== mapname && (!datafile.length() || maps[m].datafile.path ~== datafile)) { return maps[m]; }
+		}
+
+		for (int m = maps.Size() - 1; m >= 0; m--)
+		{
+			if (maps[m].mapname ~== mapname && maps[m].datafile.gametitle == "Custom Maps") { return maps[m]; }
 		}
 
 		return null;
@@ -1387,57 +1390,68 @@ class DataFile
 	String headpath;
 	Array<ParsedMap> maps;
 
-	static DataFile Find(in out Array<DataFile> datafiles, String path, String headpath = "")
+	static DataFile Find(in out Array<DataFile> datafiles, String title, String path, String headpath = "")
 	{
 		for (int i = 0; i < datafiles.Size(); i++)
 		{
-			if (datafiles[i].path ~== path && datafiles[i].headpath ~== headpath)
+			if (
+				(!headpath.length() && datafiles[i].gametitle == title) ||
+				(datafiles[i].path ~== path && datafiles[i].headpath ~== headpath)
+			)
 			{
 				return datafiles[i];
 			}
 		}
 
 		let d = New("DataFile");
-		d.path = path;
-		d.headpath = headpath;
-		d.gametitle = path;
 
-		String hash = MD5.hash(Wads.ReadLump(Wads.CheckNumForFullName(path)));
-
-		if (hash == "30fecd7cce6bc70402651ec922d2da3d")
-		{ d.gametitle = "Wolfenstein 3D Shareware"; }
-		if (hash == "cec494930f3ac0545563cbd23cd611d6") // v1.2
-		{ d.gametitle = "Wolfenstein 3D (Episodes 1-3)"; }
-		else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
-		{ d.gametitle = "Wolfenstein 3D v1.1"; }
-		else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
-		{ d.gametitle = "Wolfenstein 3D v1.2"; }
-		else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
-		{ d.gametitle = "Wolfenstein 3D v1.4"; }
-		else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
-		{ d.gametitle = "Spear of Destiny Demo"; }
-		else if (hash == "04f16534235b4b57fc379d5709f88f4a")
-		{ d.gametitle = "Spear of Destiny"; }
-		else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
-		{ d.gametitle = "Return to Danger"; }
-		else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
-		{ d.gametitle = "The Ultimate Challenge"; }
-		else if (hash == "29860b87c31348e163e10f8aa6f19295")
-		{ d.gametitle = "The Ultimate Challenge (UAC Version)"; }
-
-		if (d.gametitle == path)
+		if (!headpath.length())
 		{
-			String ext = path.Mid(path.length() - 3, 3);
-			ext = ext.MakeLower();
-
-			if (ext == "wl6") { d.gametitle = "Wolfenstein 3D (Modified)"; }
-			else if (ext == "wl3") { d.gametitle = "Wolfenstein 3D (Episodes 1-3) (Modified)"; }
-			else if (ext == "wl1") { d.gametitle = "Wolfenstein 3D Shareware (Modified)"; }
-			else if (ext == "sdm") { d.gametitle = "Spear of Destiny Demo (Modified)"; }
-			else if (ext == "sod" || ext == "sd1") { d.gametitle = "Spear of Destiny (Modified)"; }
-			else if (ext == "sd2") { d.gametitle = "Return to Danger (Modified)"; }
-			else if (ext == "sd3") { d.gametitle = "The Ultimate Challenge (Modified)"; }
+			d.gametitle = title;
 		}
+		else
+		{
+			d.path = path;
+			d.headpath = headpath;
+
+			String hash = MD5.hash(Wads.ReadLump(Wads.CheckNumForFullName(path)));
+
+			if (hash == "30fecd7cce6bc70402651ec922d2da3d")
+			{ d.gametitle = "Wolfenstein 3D Shareware"; }
+			if (hash == "cec494930f3ac0545563cbd23cd611d6") // v1.2
+			{ d.gametitle = "Wolfenstein 3D (Episodes 1-3)"; }
+			else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
+			{ d.gametitle = "Wolfenstein 3D v1.1"; }
+			else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
+			{ d.gametitle = "Wolfenstein 3D v1.2"; }
+			else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
+			{ d.gametitle = "Wolfenstein 3D v1.4"; }
+			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
+			{ d.gametitle = "Spear of Destiny Demo"; }
+			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
+			{ d.gametitle = "Spear of Destiny"; }
+			else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
+			{ d.gametitle = "Return to Danger"; }
+			else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
+			{ d.gametitle = "The Ultimate Challenge"; }
+			else if (hash == "29860b87c31348e163e10f8aa6f19295")
+			{ d.gametitle = "The Ultimate Challenge (UAC Version)"; }
+			else
+			{
+				String ext = path.Mid(path.length() - 3, 3);
+				ext = ext.MakeLower();
+
+				if (ext == "wl6") { d.gametitle = "Wolfenstein 3D (Modified)"; }
+				else if (ext == "wl3") { d.gametitle = "Wolfenstein 3D (Episodes 1-3) (Modified)"; }
+				else if (ext == "wl1") { d.gametitle = "Wolfenstein 3D Shareware (Modified)"; }
+				else if (ext == "sdm") { d.gametitle = "Spear of Destiny Demo (Modified)"; }
+				else if (ext == "sod" || ext == "sd1") { d.gametitle = "Spear of Destiny (Modified)"; }
+				else if (ext == "sd2") { d.gametitle = "Return to Danger (Modified)"; }
+				else if (ext == "sd3") { d.gametitle = "The Ultimate Challenge (Modified)"; }
+			}
+		}
+
+		if (!d.gametitle.length()) { d.gametitle = path; }
 
 		datafiles.Push(d);
 
