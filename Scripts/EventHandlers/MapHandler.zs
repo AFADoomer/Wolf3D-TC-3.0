@@ -27,6 +27,7 @@ class MapHandler : StaticEventHandler
 	Array<ActorMap> actormapping;
 	ParsedMap curmap, queuedmap;
 	Array<int> activatedfloors;
+	Array<int> activatedpushwalls;
 
 	override void OnRegister()
 	{
@@ -108,6 +109,7 @@ class MapHandler : StaticEventHandler
 			curmap = queuedmap;
 			curmap.Initialize();
 			activatedfloors.Clear();
+			activatedpushwalls.Clear();
 
 			if (curmap.info)
 			{
@@ -306,20 +308,30 @@ class MapHandler : StaticEventHandler
 		return this.curmap.ActorAt(pos);
 	}
 
-	static bool ClearTileAt(Vector2 pos)
+	static bool CheckPushwallAt(Vector2 pos)
 	{
-		if (!g_singlestartpushwalls) { return false; }
-
 		MapHandler this = MapHandler.Get();
-		if (!this || !this.curmap) { return false; }
+		if (!this || !this.curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
-		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return false; }
+		int index = int(pos.y * this.curmap.width + pos.x);
+		if (index >= this.activatedpushwalls.Size()) { return this.curmap.ActorAt(pos) == 0x62; }
 
-		this.curmap.planes[0][int(pos.x)][int(pos.y)] = 0;
-		this.curmap.planes[1][int(pos.x)][int(pos.y)] = 0;
-		this.curmap.planes[2][int(pos.x)][int(pos.y)] = 0;
+		return (this.curmap.ActorAt(pos) == 0x62 && !this.activatedpushwalls[index]);
+	}
+
+	static bool MarkPushwallAt(Vector2 pos)
+	{
+		MapHandler this = MapHandler.Get();
+		if (!this || !this.curmap) { return false; }
+
+		if (!g_singlestartpushwalls) { return true; }
+
+		pos = ParsedMap.CoordsToGrid(pos);
+
+		int index = int(pos.y * this.curmap.width + pos.x);
+		this.activatedpushwalls.Insert(index, true);
 
 		return true;
 	}
@@ -424,48 +436,71 @@ class ParsedMap
 	String signature;
 	int width;
 	int height;
-	int planes[3][64][64];
+	Array<int> planes[3];
 	Array<Sector> voidspace;
 	bool noclip;
 	Vector2 startspot;
 
 	int TileAt(Vector2 pos)
 	{
-		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return -1; } // Map edges return an invalid tile, but not "nothing"
-		return planes[0][int(pos.x)][int(pos.y)];
+		int index = int(pos.y * width + pos.x);
+		if (index < 0 || index >= planes[0].Size()) { return -1; } // Map edges return an invalid tile, but not "nothing"
+
+		return planes[0][index];
 	}
 
 	int ActorAt(Vector2 pos)
 	{
-		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return 0; }
-		return planes[1][int(pos.x)][int(pos.y)];
+		int index = int(pos.y * width + pos.x);
+		if (index < 0 || index >= planes[1].Size()) { return 0; } 
+
+		return planes[1][index];
 	}
 
 	static Vector2 CoordsToGrid(Vector2 coords)
 	{
-		return (int(floor(coords.x / 64)) + 32, int(floor(-coords.y / 64)) + 32);
+		int width, height;
+		width = height = 64;
+
+		MapHandler this = MapHandler.Get();
+		if (this)
+		{
+			if (this.curmap)
+			{
+				width = this.curmap.width;
+				height = this.curmap.height;
+			}
+			else if (this.queuedmap)
+			{
+				width = this.queuedmap.width;
+				height = this.queuedmap.height;
+			}
+		}
+
+		return (int(floor(coords.x / width)) + (width / 2), int(floor(-coords.y / height)) + (height / 2));
 	}
 
 	static Vector2 GridToCoords(Vector2 coords)
 	{
-		return ((coords.x - 32) * 64 + 32, -(coords.y - 32) * 64 - 32);
-	}
+		int width, height;
+		width = height = 64;
 
-	void PrintPlane(int plane = 0)
-	{
-		console.printf("%s - Plane %i", mapname, plane);
-		for (int i = 0; i < 64; i++)
+		MapHandler this = MapHandler.Get();
+		if (this)
 		{
-			console.printf("%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x", 
-			planes[plane][0][i], planes[plane][1][i], planes[plane][2][i], planes[plane][3][i], planes[plane][4][i], planes[plane][5][i], planes[plane][6][i], planes[plane][7][i],
-			planes[plane][8][i], planes[plane][9][i], planes[plane][10][i], planes[plane][11][i], planes[plane][12][i], planes[plane][13][i], planes[plane][14][i], planes[plane][15][i],
-			planes[plane][16][i], planes[plane][17][i], planes[plane][18][i], planes[plane][19][i], planes[plane][20][i], planes[plane][21][i], planes[plane][22][i], planes[plane][23][i],
-			planes[plane][24][i], planes[plane][25][i], planes[plane][26][i], planes[plane][27][i], planes[plane][28][i], planes[plane][29][i], planes[plane][30][i], planes[plane][31][i],
-			planes[plane][32][i], planes[plane][33][i], planes[plane][34][i], planes[plane][35][i], planes[plane][36][i], planes[plane][37][i], planes[plane][38][i], planes[plane][39][i],
-			planes[plane][40][i], planes[plane][41][i], planes[plane][42][i], planes[plane][43][i], planes[plane][44][i], planes[plane][45][i], planes[plane][46][i], planes[plane][47][i],
-			planes[plane][48][i], planes[plane][49][i], planes[plane][50][i], planes[plane][51][i], planes[plane][52][i], planes[plane][53][i], planes[plane][54][i], planes[plane][55][i],
-			planes[plane][56][i], planes[plane][57][i], planes[plane][58][i], planes[plane][59][i], planes[plane][60][i], planes[plane][61][i], planes[plane][62][i], planes[plane][63][i]);
+			if (this.curmap)
+			{
+				width = this.curmap.width;
+				height = this.curmap.height;
+			}
+			else if (this.queuedmap)
+			{
+				width = this.queuedmap.width;
+				height = this.queuedmap.height;
+			}
 		}
+
+		return ((coords.x - 32) * width + (width / 2), -(coords.y - 32) * height - (height / 2));
 	}
 
 	void ExpandData(int plane, String planedata, int encoding = 0xABCD)
@@ -485,7 +520,7 @@ class ParsedMap
 			{
 				int index = y * 2 * width + x * 2;
 
-				if (index < expanded.size()) { planes[plane][x][y] = expanded[index + 1] * 0x100 + expanded[index]; }
+				if (index < expanded.size()) { planes[plane].Insert(y * width + x, expanded[index + 1] * 0x100 + expanded[index]); }
 			}
 		}
 	}
@@ -1318,12 +1353,12 @@ class WolfMapParser
 							if (type == FloEdit)
 							{
 								int index = x * 2 * newmap.height + y * 2;
-								newmap.planes[p][x][y] = WolfMapParser.GetLittleEndian(plane, index, 2);
+								newmap.planes[p].Insert(y * newmap.height + x, WolfMapParser.GetLittleEndian(plane, index, 2));
 							}
 							else
 							{
 								int index = y * 2 * newmap.width + x * 2;
-								newmap.planes[p][x][y] = WolfMapParser.GetLittleEndian(plane, index, 2);
+								newmap.planes[p].Insert(y * newmap.width + x, WolfMapParser.GetLittleEndian(plane, index, 2));
 							}
 						}
 					}
@@ -1334,7 +1369,6 @@ class WolfMapParser
 				[planeoffsets[0], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
 				[planeoffsets[1], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
 				[planeoffsets[2], offset] = WolfMapParser.GetLittleEndian(content, offset, 4);
-
 
 				[planesizes[0], offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
 				[planesizes[1], offset] = WolfMapParser.GetLittleEndian(content, offset, 2);
