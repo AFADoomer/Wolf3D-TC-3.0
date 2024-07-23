@@ -230,7 +230,7 @@ class DoorEffector: PolyobjectEffector
 		if (Status == WDST_CLOSED)
 		{
 			Status = WDST_FIRSTOPENING;
-			if (delay < 0) { MapHandler.ClearTileAt(PolyObject.StartSpotPos); }
+			if (delay < 0) { MapHandler.MarkPushwallAt(PolyObject.StartSpotPos); }
 
 			/*
 				Notes for implementing memory overflow bug floor tiles:
@@ -662,7 +662,7 @@ class DoorEffector: PolyobjectEffector
 			{
 				PolyObject.StartSpotPos = Destination;
 
-				if (MapHandler.ActorAt(Destination) == 0x62) // Unless there's another secret door at the destination spot
+				if (MapHandler.CheckPushwallAt(Destination)) // Unless there's another unused secret door spot at the destination
 				{
 					Destroy();
 				}
@@ -670,7 +670,6 @@ class DoorEffector: PolyobjectEffector
 				PolyObject.StartSector = Level.PointInSector(Destination);
 				if (PolyObject.StartSector)
 				{
-					String texpath = "Patches/Walls/Wall%i%03i.png";
 					int t = MapHandler.TileAt(PolyObject.Origin);
 
 					if (t == 0x40 && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
@@ -685,6 +684,7 @@ class DoorEffector: PolyobjectEffector
 						if (gametype < 0) { gametype = max(0, g_sod); }
 
 						TextureID tex;
+
 						if (t >= 0x5A && t <= 0x65)
 						{
 							let handler = MapHandler.Get();
@@ -697,8 +697,14 @@ class DoorEffector: PolyobjectEffector
 						}
 						else
 						{
-							texpath = String.Format(texpath, gametype, (t - 1) * 2);
-							tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+							int game = gametype;
+							while (game > -1 && !tex.IsValid())
+							{
+								String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, (t - 1) * 2);
+								tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+
+								if (!tex.IsValid()) { game--; }
+							}
 						}
 
 						PolyObject.StartSector.SetTexture(Sector.floor, tex);
