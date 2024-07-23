@@ -230,6 +230,7 @@ class DoorEffector: PolyobjectEffector
 		if (Status == WDST_CLOSED)
 		{
 			Status = WDST_FIRSTOPENING;
+			if (delay < 0) { MapHandler.ClearTileAt(PolyObject.StartSpotPos); }
 
 			/*
 				Notes for implementing memory overflow bug floor tiles:
@@ -438,7 +439,7 @@ class DoorEffector: PolyobjectEffector
 					PolyobjectHandle ph = PolyobjectHandle.FindPolyobjAt(spot);
 					if (ph) { break; }
 				}
-				else if (t < 0x5A) { break; } // Can't move through solid walls
+				else if (t > 0 && t < 0x5A) { break; } // Can't move through solid walls
 				else if (t < 0x6A)
 				{
 					ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');

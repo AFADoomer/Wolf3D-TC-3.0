@@ -3,30 +3,31 @@ server int g_initial = 1; // Show initial disclaimer message
 server noarchive int g_sod = -2; // What game should this be
 server noarchive cheat int goobers = 0; // Turn Wolf-style cheats on
 
-server int g_nointro = 0; // Skip 'Get Psyched'
-server int g_momentum = 0; // Use Doom-styl emovement
-server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
-server int g_fastfireballs = 1; // More accurate Fake Hitler fireballs
-server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
 server int g_deafguarddoors = 2; // Enable deaf guard tiles making doors transparent - 0 = Off, 1 = only require one side, 2 = require both sides
-server int g_defaultmenus = 0; // Use the default GZDoom option menus
-server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
-server int g_placeholders = 1; // Enable dubious legality
-server int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf actors
-server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on startup
-server int g_userotations = 0; // Use additional sprite rotations if they are available
-server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
 server int g_debugtextscreens = 0; // Draw debug info on some text screens
+server int g_defaultmenus = 0; // Use the default GZDoom option menus
+server int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf actors
+server int g_fastfireballs = 1; // More accurate Fake Hitler fireballs
+server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
+server int g_momentum = 0; // Use Doom-style movement
+server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
+server int g_nointro = 0; // Skip 'Get Psyched'
+server int g_placeholders = 1; // Enable dubious legality
+server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
+server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on startup
+server int g_singlestartpushwalls = 1; // Pushwall start spots can only be used once
+server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
+server int g_userotations = 0; // Use additional sprite rotations if they are available
 
 user int g_borderstyle = 0; // Style of screen border
-user int g_hudratio = 0; // Force fullscreen hud to draw at a specific ratio
 user int g_defaultlog = 0; // Use the GZDoom console output
-user int g_menubackstyle = 0; // Choose if pressing Esc in menu closes the menu (Doom stlye) or quits game (Wolf stlye)
-user float g_viewbobscale = 0.0; // Scale amount of Doom-style weapon/view bob
 user int g_fadestyle = 0; // Use fizzle effect (processor intensive) or standard fade
-user int g_useflats = 0; // Use textured floors/ceilings - 0 = Off, 1 = Minimalist, 2 = Minimalist ceiling, textured floors, 3 = Textured floors and ceilings
 user float g_fizzlespeed = 1.0; // Speed modifier for fizzle effect
+user int g_hudratio = 0; // Force fullscreen hud to draw at a specific ratio
+user int g_menubackstyle = 0; // Choose if pressing Esc in menu closes the menu (Doom stlye) or quits game (Wolf stlye)
 user int g_musicstyle = 0; // MUS or MIDI music - 0 = MUS, 1 = MIDI
+user int g_useflats = 0; // Use textured floors/ceilings - 0 = Off, 1 = Minimalist, 2 = Minimalist ceiling, textured floors, 3 = Textured floors and ceilings
+user float g_viewbobscale = 0.0; // Scale amount of Doom-style weapon/view bob
 
 // Default high score entries
 //  Wolf3D

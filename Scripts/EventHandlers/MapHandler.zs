@@ -306,6 +306,24 @@ class MapHandler : StaticEventHandler
 		return this.curmap.ActorAt(pos);
 	}
 
+	static bool ClearTileAt(Vector2 pos)
+	{
+		if (!g_singlestartpushwalls) { return; }
+
+		MapHandler this = MapHandler.Get();
+		if (!this || !this.curmap) { return false; }
+
+		pos = ParsedMap.CoordsToGrid(pos);
+
+		if (pos.x < 0 || pos.y < 0 || pos.x > 63 || pos.y > 63) { return false; }
+
+		this.curmap.planes[0][int(pos.x)][int(pos.y)] = 0;
+		this.curmap.planes[1][int(pos.x)][int(pos.y)] = 0;
+		this.curmap.planes[2][int(pos.x)][int(pos.y)] = 0;
+
+		return true;
+	}
+
 	static void ActivateFloorCode(Vector2 pos, Actor activator)
 	{
 		MapHandler this = MapHandler.Get();
