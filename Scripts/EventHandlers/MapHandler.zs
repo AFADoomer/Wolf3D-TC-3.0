@@ -308,7 +308,7 @@ class MapHandler : StaticEventHandler
 
 	static bool ClearTileAt(Vector2 pos)
 	{
-		if (!g_singlestartpushwalls) { return; }
+		if (!g_singlestartpushwalls) { return false; }
 
 		MapHandler this = MapHandler.Get();
 		if (!this || !this.curmap) { return false; }
