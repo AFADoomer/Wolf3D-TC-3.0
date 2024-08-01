@@ -1867,8 +1867,11 @@ class AutomapWidget : Widget
 			if (curwidth > labelwidth) { labelwidth = curwidth; }
 		}
 
-		String levelname = info ? StringTable.Localize(info.levelname, false) : level.levelname;
-		if (levelname == level.levelname && level.mapname == "Level" && curmap) { levelname = curmap.mapname; }
+		String levelname;
+		
+		if (info) { levelname = StringTable.Localize(info.levelname, false); }
+		else if (curmap && level.mapname ~== "Level") { levelname = curmap.mapname; }
+		else { levelname = level.levelname; }
 
 		if (idmypos && info)
 		{
