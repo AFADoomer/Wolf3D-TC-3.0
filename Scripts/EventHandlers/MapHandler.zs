@@ -61,7 +61,62 @@ class MapHandler : StaticEventHandler
 			else if (lumpname.Mid(lumpname.Length() - 4) ~== ".map" || lumpname.Mid(lumpname.Length() - 4) ~== ".lvl")
 			{
 				d.path = lumpname;
+				d.lump = l;
 				WolfMapParser.Parse(parsedmaps, d);
+			}
+			else if (shortlumpname ~== "PLANES")
+			{
+				d.path = lumpname;
+				d.lump = l;
+				WolfMapParser.Parse(parsedmaps, d);
+			}
+			else if (lumpname.left(5) ~== "maps/" && lumpname.Mid(lumpname.Length() - 4) ~== ".wad")
+			{
+				ParseWadMap(l, shortlumpname);
+			}
+		}
+	}
+
+	void ParseWadMap(int lump, String mapname)
+	{
+		String data = Wads.ReadLump(lump);
+
+		String header = data.left(4);
+		int files = WolfMapParser.GetLittleEndian(data, 4, 4);
+		int offset = WolfMapParser.GetLittleEndian(data, 8, 4);
+
+		if (files != 2) { return; }
+
+		Array<WadEntry> entries;
+
+		String directory = data.Mid(offset);
+		while (directory.length())
+		{
+			let e = New("WadEntry");
+
+			e.datalump = lump;
+			e.offset = WolfMapParser.GetLittleEndian(directory, 0, 4);
+			e.size = WolfMapParser.GetLittleEndian(directory, 4, 4);
+			e.name = directory.Mid(8, 8);
+			e.data = data.Mid(e.offset, e.size);
+
+			entries.Push(e);
+
+			directory = directory.Mid(16);
+		}
+
+		for (int d = 0; d < entries.Size(); d++)
+		{
+			let entry = entries[d];
+
+			if (entry.name ~== "Planes")
+			{
+				let d = DataFile.Find(datafiles, "Custom Maps", mapname);
+				d.path = mapname;
+				d.lump = lump;
+
+				Array<int> temp;
+				parsedmaps.ReadGameMaps(entry.data, 0, temp, d);
 			}
 		}
 	}
@@ -691,7 +746,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((t > 0 && t < 0x5A) && (a == 0 || (a > 0x59 && a < 0x62)))
+				if ((t > 0 && (t < 0x5A || t > 0x8F)) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
@@ -1229,7 +1284,9 @@ class WolfMapParser
 		if (!d) { return; }
 
 		if (d.headpath.length()) { headlump = Wads.CheckNumForFullName(d.headpath); }
-		mapslump = Wads.CheckNumForFullName(d.path);
+
+		if (d.lump) { mapslump = d.lump; }
+		else { mapslump = Wads.CheckNumForFullName(d.path); }
 
 		if (mapslump == -1) { return; }
 
@@ -1285,7 +1342,7 @@ class WolfMapParser
 				addresses.Push(8);
 				type = FloEdit;
 			}
-			else if (size == 16418 || size == 24610)
+			else if (size % 8192 == 34)
 			{ // Raw with Header
 				addresses.Push(8);
 				type = RawWithHeader;
@@ -1304,8 +1361,8 @@ class WolfMapParser
 			ParsedMap newmap = New("ParsedMap");
 			newmap.datafile = d;
 			
-			int planeoffsets[3];
-			int planesizes[3];
+			int planeoffsets[4];
+			int planesizes[4];
 
 			if (type > GameMaps)
 			{
@@ -1441,6 +1498,7 @@ class DataFile
 	String path;
 	String headpath;
 	Array<ParsedMap> maps;
+	int lump;
 
 	static DataFile Find(in out Array<DataFile> datafiles, String title, String path, String headpath = "")
 	{
@@ -1465,8 +1523,9 @@ class DataFile
 		{
 			d.path = path;
 			d.headpath = headpath;
+			d.lump = Wads.CheckNumForFullName(path);
 
-			String hash = MD5.hash(Wads.ReadLump(Wads.CheckNumForFullName(path)));
+			String hash = MD5.hash(Wads.ReadLump(d.lump));
 
 			if (hash == "30fecd7cce6bc70402651ec922d2da3d")
 			{ d.gametitle = "Wolfenstein 3D Shareware"; }
@@ -1509,4 +1568,13 @@ class DataFile
 
 		return d;
 	}
+}
+
+class WadEntry
+{
+	int datalump;
+	int offset;
+	int size;
+	String name;
+	String data;
 }
