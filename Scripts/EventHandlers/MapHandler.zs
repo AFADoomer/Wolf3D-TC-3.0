@@ -85,8 +85,6 @@ class MapHandler : StaticEventHandler
 		int files = WolfMapParser.GetLittleEndian(data, 4, 4);
 		int offset = WolfMapParser.GetLittleEndian(data, 8, 4);
 
-		if (files != 2) { return; }
-
 		Array<WadEntry> entries;
 
 		String directory = data.Mid(offset);
@@ -108,7 +106,6 @@ class MapHandler : StaticEventHandler
 		for (int d = 0; d < entries.Size(); d++)
 		{
 			let entry = entries[d];
-
 			if (entry.name ~== "Planes")
 			{
 				let d = DataFile.Find(datafiles, "Custom Maps", mapname);
@@ -1398,6 +1395,7 @@ class WolfMapParser
 				planeoffsets[1] = planeoffsets[0] + 8192;
 
 				newmap.mapnum = 1000 + custommapcount++;
+				newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);
 
 				for (int p = 0; p < 2; p++)
 				{
