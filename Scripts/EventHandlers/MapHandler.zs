@@ -495,6 +495,8 @@ class ParsedMap
 
 	int TileAt(Vector2 pos)
 	{
+		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) { return -1; }
+
 		int index = int(pos.y * width + pos.x);
 		if (index < 0 || index >= planes[0].Size()) { return -1; } // Map edges return an invalid tile, but not "nothing"
 
@@ -503,6 +505,8 @@ class ParsedMap
 
 	int ActorAt(Vector2 pos)
 	{
+		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) { return 0; }
+
 		int index = int(pos.y * width + pos.x);
 		if (index < 0 || index >= planes[1].Size()) { return 0; } 
 
@@ -529,7 +533,7 @@ class ParsedMap
 			}
 		}
 
-		return (int(floor(coords.x / width)) + (width / 2), int(floor(-coords.y / height)) + (height / 2));
+		return (int(floor(coords.x / 64)) + (width / 2), int(floor(-coords.y / 64)) + (height / 2));
 	}
 
 	static Vector2 GridToCoords(Vector2 coords)
@@ -552,7 +556,7 @@ class ParsedMap
 			}
 		}
 
-		return ((coords.x - 32) * width + (width / 2), -(coords.y - 32) * height - (height / 2));
+		return ((coords.x - 32) * 64 + (width / 2), -(coords.y - 32) * 64 - (height / 2));
 	}
 
 	void ExpandData(int plane, String planedata, int encoding = 0xABCD)
@@ -709,7 +713,7 @@ class ParsedMap
 				Sector sec = level.sectors[s];
 
 				// If this sector is out of range, continue
-				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
+				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096) { continue; }
 
 				// Clear any previously spawned actors
 				Actor thing = sec.thinglist;
@@ -743,7 +747,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((t > 0 && (t < 0x5A || t > 0x8F)) && (a == 0 || (a > 0x59 && a < 0x62)))
+				if ((t == -1 || t > 0 && (t < 0x5A || t > 0x8F)) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
@@ -815,7 +819,7 @@ class ParsedMap
 				let sec = level.sectors[s];
 
 				// If this sector is out of range, continue
-				if (abs(sec.centerspot.x) > 2048 || abs(sec.centerspot.y) > 2048) { continue; }
+				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096) { continue; }
 
 				// Don't draw lines between sectors that are collapsed
 				int edges = 0;
@@ -1392,7 +1396,7 @@ class WolfMapParser
 					planeoffsets[0] = 9;
 				}
 
-				planeoffsets[1] = planeoffsets[0] + 8192;
+				planeoffsets[1] = planeoffsets[0] + newmap.width * newmap.height * 2;
 
 				newmap.mapnum = 1000 + custommapcount++;
 				newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);

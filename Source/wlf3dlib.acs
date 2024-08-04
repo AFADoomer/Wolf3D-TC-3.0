@@ -10,7 +10,7 @@ Function int WolfCoord(int intCoord)
 {
 	int intReturn = 0;
 	intCoord = intCoord / 1.0;
-	intCoord = (intCoord + 2048 - 32) / 64;
+	intCoord = (intCoord + 4096 - 32) / 64;
 	return intCoord;
 }
 
