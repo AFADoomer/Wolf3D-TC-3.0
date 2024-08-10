@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-class HelpMenu : ReadThisMenu
+class OldHelpMenu : ReadThisMenu
 {
 	TextureID border;
 	Vector2 dimcoords, dimsize;
@@ -299,18 +299,17 @@ class HelpMenu : ReadThisMenu
 	}
 }
 
-class HelpMenuRegistered : HelpMenu
+class HelpMenuRegistered : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
-		Super.Init(parent);
+		InitCommon(parent);
 
-		pages.Clear();
 		ParseFile("data/helpregistered.txt");
 	}
 }
 
-class Episode0End : HelpMenu
+class Episode0End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -320,7 +319,7 @@ class Episode0End : HelpMenu
 	}
 }
 
-class Episode1End : HelpMenu
+class Episode1End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -330,7 +329,7 @@ class Episode1End : HelpMenu
 	}
 }
 
-class Episode2End : HelpMenu
+class Episode2End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -340,7 +339,7 @@ class Episode2End : HelpMenu
 	}
 }
 
-class Episode3End : HelpMenu
+class Episode3End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -350,7 +349,7 @@ class Episode3End : HelpMenu
 	}
 }
 
-class Episode4End : HelpMenu
+class Episode4End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -360,7 +359,7 @@ class Episode4End : HelpMenu
 	}
 }
 
-class Episode5End : HelpMenu
+class Episode5End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -370,7 +369,7 @@ class Episode5End : HelpMenu
 	}
 }
 
-class Episode6End : HelpMenu
+class Episode6End : TextScreenMenu
 {
 	override void Init(Menu parent)
 	{
@@ -380,7 +379,7 @@ class Episode6End : HelpMenu
 	}
 }
 
-class SoDEnd : HelpMenu
+class SoDEnd : OldHelpMenu
 {
 	TextureID page, nextpage;
 
@@ -1402,7 +1401,7 @@ class TextScreenMenu : ReadThisMenu
 		ParseData(ReadLump(filename));
 	}
 
-	ui void ParseData(String data)
+	ui void ParseData(String data, String defaultcolor = "\c[Palette00]")
 	{
 		int s = data.IndexOf("^P");
 		while (s > -1)
@@ -1410,7 +1409,7 @@ class TextScreenMenu : ReadThisMenu
 			int e = data.IndexOf("^P", s + 2);
 			if (e < 0) { e == 0x7FFFFFFF; }
 
-			let h = HelpInfo.Create(data.Mid(s, e - s), lineheight);
+			let h = HelpInfo.Create(data.Mid(s, e - s), lineheight, defaultcolor, 15);
 			PagesInfo.Push(h);
 
 			s = e < 0x7FFFFFFF ? e : -1;
@@ -1520,7 +1519,7 @@ class MapMenu : TextScreenMenu
 		bottomoffset = 0;
 		
 		// Set cell size for index entries
-		cellsize = (120, 12);
+		cellsize = (299, 12);
 
 		// Set the fonts
 		titlefont = BigFont;
@@ -1531,7 +1530,6 @@ class MapMenu : TextScreenMenu
 		lineheight = max(captionfont.GetHeight(), 7);
 
 		// Parse the data file and store it into an array
-		//ParseFile("data/help.txt");
 		handler = MapHandler.Get();
 		GetMapData();
 
@@ -1572,7 +1570,7 @@ class MapMenu : TextScreenMenu
 					h.hidden = true;
 				}
 				
-				h.path = String.Format("%s \c[Palette7E]> %s", parent.path, ZScriptTools.Trim(h.title));
+				h.path = String.Format("%s%s \c[Palette7E]> %s%s", h.defaultcolor, parent.path, h.defaultcolor, ZScriptTools.Trim(h.title));
 
 				if (parent) { parent.children.Push(h); }
 			}
@@ -1580,7 +1578,7 @@ class MapMenu : TextScreenMenu
 			last = MapDataInfo(h);
 			lasttier = h.tier;
 
-			h.ParseLines(186, captionfont, padding);
+			h.ParseLines(300, captionfont, padding);
 		}
 
 		scrollpos = 0;
@@ -1601,7 +1599,7 @@ class MapMenu : TextScreenMenu
 		scale = (CleanXFac, CleanYFac);
 		
 		// Calculate the usable content area bounds
-		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset);
+		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset - 60);
 
 		Vector2 realpos, realsize;
 		[realpos, realsize] = Screen.VirtualToRealCoords((padding.x, padding.y + topoffset), (w - 2 * padding.x, contentheight), (w, h));
@@ -1687,7 +1685,7 @@ class MapMenu : TextScreenMenu
 			// Draw shading behind the selected entry
 			if (p == selected)
 			{
-				screen.Dim(0xF, 0.25, int(page.realpos.x), int(page.realpos.y), int(page.size.x), int(page.size.y));
+				screen.Dim(0xF, 0.25, int(page.realpos.x), int(page.realpos.y), int(page.size.x + (maxscroll ? 0 : 13 * scale.x)), int(page.size.y));
 			}
 
 			// Draw each entry
@@ -1702,8 +1700,8 @@ class MapMenu : TextScreenMenu
 		// Draw page content
 		if (VisiblePages.Size() && selected > -1)
 		{
-			int textx = int(cellsize.x + scroll.w / scale.x) + 2;
-			int texty = int(topoffset - lineheight);
+			int textx = 4;
+			int texty = int(topoffset - lineheight + contentheight + 4);
 
 			if (showoverlay) { DrawDebugOverlay(textx, texty); }
 
@@ -1967,8 +1965,10 @@ class MapMenu : TextScreenMenu
 			{
 				let parsedmap = gamefile.maps[m];
 
-				String mapdata = String.Format("^P\n^I1!%s\n$PATH", parsedmap.mapname);
+				String mapdata = String.Format("^P\n^I1!%s\n$PATH\n\n", parsedmap.mapname);
 				let n = MapDataInfo.Create(mapdata, lineheight, gamefile);
+				n.map = parsedmap;
+		
 				PagesInfo.Push(n);
 			}
 		}
@@ -2096,6 +2096,7 @@ class HelpInfo
 	Array<BlockInfo> blocks;
 	int margins[26][2];
 	int lineheight;
+	String defaultcolor;
 
 	virtual void Clicked(int activate = -1)
 	{
@@ -2122,24 +2123,28 @@ class HelpInfo
 		}
 	}
 
-	static HelpInfo Create(String page, int lineheight)
+	static HelpInfo Create(String page, int lineheight, String defaultcolor, int maxlines = -1)
 	{
 		let h = New("HelpInfo");
 		h.pagedata = page;
 		h.lineheight = lineheight;
+		h.defaultcolor = defaultcolor;
 
-		h.ParseLines();
+		h.ParseLines(maxrows:maxlines);
 
 		return h;
 	}
 
-	virtual void ParseLines(int maxwidth = 320, Font fnt = null, Vector2 padding = (16, 16))
+	virtual void ParseLines(int maxwidth = 320, Font fnt = null, Vector2 padding = (16, 16), int maxrows = -1)
 	{
 		spans.Clear();
 		graphics.Clear();
 		blocks.Clear();
 
-		for (int m = 0; m < margins.Size(); m++)
+		if (maxrows == -1) { maxrows = margins.Size(); }
+		else { maxrows = min(margins.Size(), maxrows); }
+
+		for (int m = 0; m < maxrows; m++)
 		{
 			margins[m][0] = int(padding.x);
 			margins[m][1] = int(maxwidth - padding.x);
@@ -2147,13 +2152,15 @@ class HelpInfo
 		linecount = 0;
 		column = 0;
 
+		boxpos = (padding.x, padding.y);
+
 		int t = 0;
-		while (t > -1)
+		while (t > -1 && linecount < maxrows)
 		{
 			int f = pagedata.IndexOf("\n", t + 1);
 			if (f < 0) { f == 0x7FFFFFFF; }
 
-			ParseLine(pagedata.Mid(t == 0 ? 0 : t + 1, f - t), maxwidth, fnt);
+			ParseLine(pagedata.Mid(t == 0 ? 0 : t + 1, f - t), maxwidth, fnt, true);
 
 			t = f < 0x7FFFFFFF ? f : -1;
 		}
@@ -2169,7 +2176,7 @@ class HelpInfo
 
 		String word = "";
 		String content = "";
-		String newclr = "\c[Palette00]", clr = "\c[Palette00]";
+		String newclr = defaultcolor, clr = defaultcolor;
 		linecount = min(linecount, margins.Size() - 1);
 
 		int charoffset, j, c;
@@ -2332,17 +2339,26 @@ class HelpInfo
 							n = ZScriptTools.GetNumber(input.Mid(i));
 
 							String path;
-							if (n) { path = String.Format("SLIDEG%i", n); }
-							else { path = ZScriptTools.GetWord(input.Mid(i), ZScriptTools.PUNC_PATH); }
+							TextureID tex;
+							if (n)
+							{
+								path = String.Format("SLIDEG%i", n);
+								tex = TexMan.CheckForTexture(path, TexMan.Type_Any);
 
-							TextureID tex = TexMan.CheckForTexture(path, TexMan.Type_Any);
+								if (!tex.IsValid()) { tex = TexMan.CheckForTexture(String.Format("WVGA%04i", n), TexMan.Type_Any); }
+							}
+							else
+							{
+								path = ZScriptTools.GetWord(input.Mid(i), ZScriptTools.PUNC_PATH);
+								tex = TexMan.CheckForTexture(path, TexMan.Type_Any);
+							}
 
 							if (tex.IsValid())
 							{
 								let g = New("GraphicInfo");
 								g.tex = tex;
-								g.x = x;
-								g.y = y;
+								g.x = x & ~7;
+								g.y = y + 7;
 								g.size = TexMan.GetScaledSize(tex);
 								if (savedata) { graphics.Push(g); }
 
@@ -2354,10 +2370,10 @@ class HelpInfo
 								if (x + size.x / 2 > maxwidth / 2) { adjustright = int(x - offsets.x - 8); }
 								else { adjustleft = int(x - offsets.x + g.size.x + 8); }
 
-								double top = (y - offsets.y - boxpos.y) / lineheight;
-								double bottom = (y - offsets.y + g.size.y - boxpos.y) / lineheight;
+								double top = max(0, (y - offsets.y - boxpos.y) / lineheight);
+								double bottom = min(25, (g.y - offsets.y + g.size.y - boxpos.y) / lineheight);
 
-								for (int m = int(floor(top)) - 1; m < ceil(bottom) - 1 && m < margins.Size(); m++)
+								for (int m = int(floor(top)); m < floor(bottom) && m <  margins.Size(); m++)
 								{
 									if (adjustleft) { margins[m][0] = max(margins[m][0], adjustleft); }
 									if (adjustright) { margins[m][1] = min(margins[m][1], adjustright); }
@@ -2427,23 +2443,31 @@ class HelpInfo
 
 						content = "";
 						span = New("SpanInfo");
-						span.x = prevspan.x + prevspan.Width();
+						span.x = prevspan.x + prevspan.Width() - fnt.StringWidth(" ");
 						span.y = prevspan.y;
 						span.fnt = prevspan.fnt;
 
-						span.x = int(32 * floor((span.x + fnt.StringWidth("        ")) / 32));
+						span.x = int((span.x + 8) & 0xf8);
 					}
 
 					int nextspace = input.IndexOf(" ", i + 1); // Find the next space
 					if (nextspace < 0) { nextspace = input.Length() - 1; }
 
-					String teststring = input.mid(i + 1, nextspace - (i + 1));
-					if (teststring.ByteAt(0) == 0x5E) { teststring = teststring.Mid(4); } // Skip color codes that are in lines when calculating length
+					String teststring = ZScriptTools.Trim(input.mid(i + 1, nextspace - (i + 1)));
+
+					// Skip color codes that are in lines when calculating length
+					int c = 0;
+					while (c < teststring.length())
+					{
+						if (teststring.ByteAt(c) == 0x5E) { teststring = String.Format("%s%s", teststring.Left(c), teststring.Mid(c + 4)); }
+						c++;
+					}
+
 					int testlength = fnt.StringWidth(teststring);
 
 					if (savedata && span.x + span.Width() + testlength > margins[linecount][1])
 					{
-						linecount = min(linecount + 1, margins.Size() - 1);
+						linecount++;
 
 						if (savedata && ZScriptTools.Trim(span.content).length()) { spans.Push(span); }
 						SpanInfo prevspan = span;
@@ -2480,12 +2504,12 @@ class HelpInfo
 		span.content = content;
 		if (savedata && ZScriptTools.GetText(span.content).length()) { spans.Push(span); }
 
-		linecount = min(linecount + 1, margins.Size() - 1);
+		linecount++;
 
 		return content;
 	}
 
-	void Draw(int x, int y, Font fnt, Vector2 padding = (0, 0))
+	virtual void Draw(int x, int y, Font fnt, Vector2 padding = (0, 0))
 	{
 		double scale = 0.4;
 
@@ -2531,7 +2555,7 @@ class HelpInfo
 		{
 			let span = spans[s];
 			Font spanfnt = span.fnt ? span.fnt : fnt;
-			screen.DrawText(span.fnt, Font.FindFontColor("WolfMenuLightGrey"), x + span.x, padding.y + y + span.y * lineheight, span.content, DTA_320x200, true);
+			screen.DrawText(span.fnt, Font.FindFontColor("TrueBlack"), x + span.x, padding.y + y + span.y * lineheight, span.content, DTA_320x200, true);
 			
 			// Draw line x/y coordinates if they aren't at default for that line
 			if (g_DebugTextScreens && (span.x - padding.x))
@@ -2608,6 +2632,7 @@ class BlockInfo
 class MapDataInfo : HelpInfo
 {
 	DataFile d;
+	ParsedMap map;
 
 	static MapDataInfo Create(String page, int lineheight, DataFile d)
 	{
@@ -2615,9 +2640,74 @@ class MapDataInfo : HelpInfo
 		h.pagedata = page;
 		h.lineheight = lineheight;
 		h.d = d;
+		h.defaultcolor = "\c[White]";
 
 		h.ParseLines();
 
 		return h;
+	}
+
+	override void Draw(int x, int y, Font fnt, Vector2 padding)
+	{
+		String title = ZScriptTools.GetText(title);
+
+		if (!map || !map.info)
+		{
+			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, padding.y + y + lineheight, title, DTA_320x200, true);
+		}
+		else
+		{
+			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, padding.y + y + lineheight, StringTable.Localize(map.info.levelname, false) .. "\n \c[Gray]" .. title, DTA_320x200, true);
+		}
+
+		if (map)
+		{
+			TextureID tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
+			double scale = 64.0 / map.height;
+			for (int w = 0; w < map.width; w++)
+			{
+				for (int h = 0; h < map.height; h++)
+				{
+					int val = map.TileAt((w, h));
+					if (val < 0x6A)
+					{
+						int l = map.TileAt((w - 1, h));
+						int r = map.TileAt((w + 1, h));
+						int a = map.TileAt((w, h - 1));
+						int b = map.TileAt((w, h + 1));
+
+						if (
+							l > 0x6A && l < 0x90 || 
+							r > 0x6A && r < 0x90 || 
+							a > 0x6A && a < 0x90 || 
+							b > 0x6A && b < 0x90
+						)
+						{
+							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+						}
+					}
+					else if (val > 0x6A && val < 0x90)
+					{
+						tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
+						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+					}
+					else if (val > 0x95)
+					{
+						screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+					}
+				}
+			}
+		}
+
+	}
+}
+
+class HelpMenu : TextScreenMenu
+{
+	override void Init(Menu parent)
+	{
+		InitCommon(parent);
+
+		ParseFile(GameHandler.GameFilePresent("WL3", true) ? "data/helpregistered.txt" : "data/help.txt");
 	}
 }
