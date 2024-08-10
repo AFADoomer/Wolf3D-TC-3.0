@@ -846,7 +846,7 @@ class ParsedMap
 
 				// Set the floor and ceiling for collapsed sectors to "-", and 
 				// set the wall textures to solid so they block automap sight traversal
-				if (edges == sec.lines.Size() && !accessible)
+				if (edges == sec.lines.Size() && !accessible && TileAt(pos) < 0x96)
 				{
 					sec.SetTexture(Sector.floor, nulltex);
 					sec.SetTexture(Sector.ceiling, nulltex);
@@ -1148,7 +1148,16 @@ class ParsedMap
 
 		int tiletex = (!ln || ln.delta.x) ? (t - 1) * 2 : (t - 1) * 2 + 1;
 		if (tiletex == 42) { tiletex = 40; }
-		if (!ln && tiletex == 40 && (TileAt(pos + (1, 0)) > 0x65 || TileAt(pos - (1, 0)) > 0x65)) { tiletex = 41; }
+		if (!ln)
+		{
+			if (tiletex == 30 || tiletex == 40) // Landscape and Elevator walls show alternate walls on map as appropriate
+			{
+				int l = TileAt(pos - (1, 0));
+				int r = TileAt(pos + (1, 0));
+
+				if (l > 0x65 && l < 0x90 || r > 0x65 && r < 0x90) { tiletex++; }
+			}
+		}
 
 		TextureID tex;
 
@@ -1159,6 +1168,61 @@ class ParsedMap
 			tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 
 			if (!tex.IsValid()) { game--; }
+		}
+
+		if (!tex.IsValid() && t > 0x95)
+		{
+			int c = 0;
+			switch (t)
+			{
+				case 0xCA: // Space
+					break;
+				case 0xE3: // !
+					c = 0x21;
+					break;
+				case 0xCB: // Highlight (*)
+					c = 0x2A;
+					break;
+				case 0xDB: // -
+					c = 0x2D;
+					break;
+				case 0xE1: // ?
+					c = 0x3F;
+					break;
+				case 0xE2: // .
+					c = 0x2E;
+					break;
+				case 0xDE: // /
+					c = 0x2F;
+					break;
+				case 0xDF: // <
+					c = 0x3C;
+					break;
+				case 0xDA: // =
+					c = 0x3D;
+					break;
+				case 0xE0: // >
+					c = 0x3E;
+					break;
+				case 0xDD: // \
+					c = 0x5C;
+					break;
+				case 0xDC: // |
+					c = 0x7C;
+					break;
+				default:
+					if (t < 0xB0) { c = 0x41 + (t - 0x96); } // Uppercase letters
+					else if (t < 0xCA) { c = 0x61 + (t - 0xB0); } // Lowercase letters
+					else if (t < 0xDA) { c = 0x30 + (t - 0xD0); } // Numbers
+					break;
+			}
+
+			if (c > 0)
+			{
+				tex = TexMan.CheckForTexture(String.Format("Fonts/Tiles/%04x.png", c), TexMan.Type_Any);
+			}
+
+			return tex;
 		}
 
 		if (!tex.IsValid()) { tex = TexMan.CheckForTexture("Patches/Walls/Wall0000.png", TexMan.Type_Any); }
