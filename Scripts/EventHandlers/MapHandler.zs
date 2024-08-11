@@ -813,7 +813,7 @@ class ParsedMap
 				}
 			}
 
-			// Clean up display of collapse sectors on the automap
+			// Clean up display of collapsed sectors on the automap
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				let sec = level.sectors[s];
@@ -917,6 +917,23 @@ class ParsedMap
 										break;
 									}
 									if (count > level.lines.Size()) { break; }
+								}
+							}
+						}
+
+						if (t < 0x5A && a == 0x62)
+						{
+							for (int n = 0; n < door.Lines.Size(); n++)
+							{
+								let dln = door.Lines[n];
+
+								for (int s = 0; s < 2; s++)
+								{
+									if (dln.sidedef[s])
+									{
+										dln.sidedef[s].SetAdditiveColor(side.mid, 0x3F3700);
+										if (g_highlightpushwalls) { dln.sidedef[s].EnableAdditiveColor(side.mid, true); }
+									}
 								}
 							}
 						}

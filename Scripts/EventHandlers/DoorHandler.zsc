@@ -505,6 +505,19 @@ class DoorEffector: PolyobjectEffector
 			if (Status == WDST_OPEN) { return; }
 			else if (Status == WDST_FIRSTOPENING)
 			{
+				for (int n = 0; n < PolyObject.Lines.Size(); n++)
+				{
+					let dln = PolyObject.Lines[n];
+
+					for (int s = 0; s < 2; s++)
+					{
+						if (dln.sidedef[s])
+						{
+							dln.sidedef[s].EnableAdditiveColor(side.mid, false);
+						}
+					}
+				}
+
 				// Re-check at intervals for the pushwall being blocked...
 				Vector2 pos = PolyObject.GetPos();
 				int movedist = int((pos - PolyObject.StartSpotPos).length());
@@ -665,6 +678,22 @@ class DoorEffector: PolyobjectEffector
 				if (MapHandler.CheckPushwallAt(Destination)) // Unless there's another unused secret door spot at the destination
 				{
 					Destroy();
+
+					if (g_highlightpushwalls)
+					{
+						for (int n = 0; n < PolyObject.Lines.Size(); n++)
+						{
+							let dln = PolyObject.Lines[n];
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (dln.sidedef[s])
+								{
+									dln.sidedef[s].EnableAdditiveColor(side.mid, true);
+								}
+							}
+						}
+					}
 				}
 
 				PolyObject.StartSector = Level.PointInSector(Destination);
