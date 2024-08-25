@@ -1,5 +1,5 @@
 ^P
-^G16,16,5
+^G16,16,WVGA0005
 ^C7eCONGRATULATIONS!
 ^C00
 The General gasps his last breath, and the free world is safe from the terrifying Nazi chemical war.  You return to Allied Headquarters, a Medal of Honor waiting for you.

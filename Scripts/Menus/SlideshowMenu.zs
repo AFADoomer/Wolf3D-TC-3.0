@@ -299,83 +299,13 @@ class OldHelpMenu : ReadThisMenu
 	}
 }
 
-class HelpMenuRegistered : TextScreenMenu
+class FinaleMenu : TextScreenMenu
 {
-	override void Init(Menu parent)
+	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
-		InitCommon(parent);
+		InitCommon(parent, desc);
 
-		ParseFile("data/helpregistered.txt");
-	}
-}
-
-class Episode0End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode0.txt");
-	}
-}
-
-class Episode1End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode1.txt");
-	}
-}
-
-class Episode2End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode2.txt");
-	}
-}
-
-class Episode3End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode3.txt");
-	}
-}
-
-class Episode4End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode4.txt");
-	}
-}
-
-class Episode5End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode5.txt");
-	}
-}
-
-class Episode6End : TextScreenMenu
-{
-	override void Init(Menu parent)
-	{
-		InitCommon(parent);
-
-		ParseFile("data/episode6.txt");
+		if (mDesc.mTitle.length()) { ParseFile(mDesc.mTitle); }
 	}
 }
 
@@ -1302,7 +1232,7 @@ class HighScores : WolfMenu
 	}
 }
 
-class TextScreenMenu : ReadThisMenu
+class TextScreenMenu : OptionMenu
 {
 	TextureID border;
 	Vector2 dimcoords, dimsize;
@@ -1312,13 +1242,16 @@ class TextScreenMenu : ReadThisMenu
 	int selected;
 	Vector2 padding;
 
+	int mScreen;
+	int mInfoTic;
+
 	Array<HelpInfo> PagesInfo;
 
 	bool showoverlay;
 
-	void InitCommon(Menu parent)
+	void InitCommon(Menu parent, OptionMenuDescriptor desc)
 	{
-		GenericMenu.Init(parent);
+		Super.Init(parent, desc);
 		selected = 0;
 		mInfoTic = gametic;
 		border = TexMan.CheckForTexture("BORDER", TexMan.Type_Any);
@@ -1499,8 +1432,10 @@ class MapMenu : TextScreenMenu
 	Array<int> VisiblePages;
 	MapHandler handler;
 
-	override void Init(Menu parent)
+	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
+		OptionMenu.Init(parent, desc);
+
 		border = TexMan.CheckForTexture("Graphics/Menu/MapSelectBackground.png", TexMan.Type_Any);
 
 		mMouseCapture = true;
@@ -1667,6 +1602,8 @@ class MapMenu : TextScreenMenu
 		// Fill in the background
 		screen.Dim(0x282828, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 		if (border) { screen.DrawTexture(border, false, 160, 100, DTA_320x200, true, DTA_CenterOffset, true); }
+
+		OptionMenu.Drawer();
 
 		// Draw the title
 		String pagetitle = StringTable.Localize("$M_MAPSELECT");
@@ -2704,10 +2641,80 @@ class MapDataInfo : HelpInfo
 
 class HelpMenu : TextScreenMenu
 {
-	override void Init(Menu parent)
+	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
-		InitCommon(parent);
+		InitCommon(parent, desc);
 
 		ParseFile(GameHandler.GameFilePresent("WL3", true) ? "data/helpregistered.txt" : "data/help.txt");
+	}
+}
+
+class OptionMenuItemVariableText : OptionMenuItem 
+{
+	int mColor;
+
+	OptionMenuItemVariableText Init(String label, Name command, int cr = -1)
+	{
+		Super.Init(label, command, true);
+
+		mColor = OptionMenuSettings.mFontColor;
+		if ((cr & 0xffff0000) == 0x12340000) mColor = cr & 0xffff;
+		else if (cr > 0) mColor = OptionMenuSettings.mFontColorHeader;
+		return self;
+	}
+
+	OptionMenuItemVariableText InitDirect(String label, Name command, int cr)
+	{
+		Super.Init(label, command, true);
+		mColor = cr;
+		return self;
+	}
+
+	override int Draw(OptionMenuDescriptor desc, int y, int indent, bool selected)
+	{
+		String txt = StringTable.Localize(String.Format("$%s%i", mLabel, CoG_WarpSkill));
+		int w = Menu.OptionWidth(txt) * CleanXfac_1;
+		int x = (screen.GetWidth() - w) / 2;
+		drawText(x, y, mColor, txt);
+		return -1;
+	}
+
+	override bool Selectable()
+	{
+		return false;
+	}
+}
+
+class OptionMenuItemImageSlider : OptionMenuSliderBase
+{
+	CVar mCVar;
+	String prefix;
+
+	OptionMenuItemImageSlider Init(String label, String texprefix, Name command, double min, double max, double step, CVar graycheck = NULL, int graycheckVal = 0)
+	{
+		Super.Init(label, min, max, step, -1, command, graycheck, graycheckVal);
+		prefix = texprefix;
+		mCVar = CVar.FindCVar(command);
+		return self;
+	}
+
+	override double GetSliderValue()
+	{
+		if (mCVar != null)
+		{
+			return mCVar.GetFloat();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	override void SetSliderValue(double val)
+	{
+		if (mCVar != null)
+		{
+			mCVar.SetFloat(val);
+		}
 	}
 }

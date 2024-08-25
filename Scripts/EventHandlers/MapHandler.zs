@@ -47,10 +47,11 @@ class MapHandler : StaticEventHandler
 		{
 			String lumpname = Wads.GetLumpFullName(l);
 			String shortlumpname = Wads.GetLumpName(l);
-			if (shortlumpname ~== "gamemaps")
+			if (shortlumpname ~== "gamemaps" || shortlumpname ~== "maptemp")
 			{
 				String headname = lumpname;
 				headname.Substitute("gamemaps", "maphead");
+				headname.Substitute("maptemp", "maphead");
 
 				if (Wads.CheckNumForFullName(headname) > -1)
 				{
@@ -559,11 +560,13 @@ class ParsedMap
 		return ((coords.x - 32) * 64 + (width / 2), -(coords.y - 32) * 64 - (height / 2));
 	}
 
-	void ExpandData(int plane, String planedata, int encoding = 0xABCD)
+	void ExpandData(int plane, String planedata, int encoding = 0xABCD, bool carmack = true)
 	{
+		if (!planedata.length()) { return; }
+
 		Array<int> expanded;
 
-		if (planedata.length() != 8192)
+		if (carmack && planedata.length() != 8192)
 		{
 			CarmackExpand(planedata, expanded);
 		}
@@ -591,7 +594,7 @@ class ParsedMap
 		int length = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
 		offset += 2;
 
-		while (offset < inputbytes.Size())
+		while (offset < inputbytes.Size() - 1)
 		{
 			if (inputbytes[offset + 1] == 0xA7)
 			{
@@ -662,7 +665,7 @@ class ParsedMap
 		int length = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
 		offset += 2;
 
-		while (offset < inputbytes.Size())
+		while (offset < inputbytes.Size() - 1)
 		{
 			int value = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
 
@@ -1390,11 +1393,10 @@ class WolfMapParser
 		int offset = 0;
 		[encoding, offset] = WolfMapParser.GetLittleEndian(content, 0, 2);
 
-		while (offset < content.Length())
+		int address = 8;
+		while (offset < content.Length() && address > 0)
 		{
-			int address;
 			[address, offset] = GetLittleEndian(content, offset, 4);
-
 			addresses.Push(address);
 		}
 	}
@@ -1525,7 +1527,7 @@ class WolfMapParser
 				for (int p = 0; p < 3; p++)
 				{
 					if (planesizes[p] <= 0) { continue; }
-					newmap.ExpandData(p, content.mid(planeoffsets[p], planesizes[p]), encoding);
+					newmap.ExpandData(p, content.mid(planeoffsets[p], planesizes[p]), encoding, d.carmack);
 				}
 			}
 			
@@ -1582,6 +1584,7 @@ class DataFile
 	String headpath;
 	Array<ParsedMap> maps;
 	int lump;
+	bool carmack;
 
 	static DataFile Find(in out Array<DataFile> datafiles, String title, String path, String headpath = "")
 	{
@@ -1607,6 +1610,7 @@ class DataFile
 			d.path = path;
 			d.headpath = headpath;
 			d.lump = Wads.CheckNumForFullName(path);
+			d.carmack = true;
 
 			String hash = MD5.hash(Wads.ReadLump(d.lump));
 
@@ -1630,6 +1634,21 @@ class DataFile
 			{ d.gametitle = "The Ultimate Challenge"; }
 			else if (hash == "29860b87c31348e163e10f8aa6f19295")
 			{ d.gametitle = "The Ultimate Challenge (UAC Version)"; }
+			else if (hash == "6532d4062fed1817b440684c41a21fb5")
+			{
+				d.gametitle = "Blake Stone: Aliens of Gold Demo";
+				d.carmack = false;
+			}
+			else if (hash == "9b259747340ffedd37eb5eae898e95c1")
+			{
+				d.gametitle = "Blake Stone: Aliens of Gold";
+				d.carmack = false;
+			}
+			// else if (hash == "")
+			// {
+			// 	d.gametitle = "Blake Stone: Planet Strike";
+			// 	d.carmack = false;
+			// }
 			else
 			{
 				String ext = path.Mid(path.length() - 3, 3);
@@ -1642,6 +1661,21 @@ class DataFile
 				else if (ext == "sod" || ext == "sd1") { d.gametitle = "Spear of Destiny (Modified)"; }
 				else if (ext == "sd2") { d.gametitle = "Return to Danger (Modified)"; }
 				else if (ext == "sd3") { d.gametitle = "The Ultimate Challenge (Modified)"; }
+				else if (ext == "bs1")
+				{
+					d.gametitle = "Blake Stone: Aliens of Gold Demo (Modified)";
+					d.carmack = false;
+				}
+				else if (ext == "bs6")
+				{
+					d.gametitle = "Blake Stone: Aliens of Gold (Modified)";
+					d.carmack = false;
+				}
+				else if (ext == "vsi")
+				{
+					d.gametitle = "Blake Stone: Planet Strike (Modified)";
+					d.carmack = false;
+				}
 			}
 		}
 

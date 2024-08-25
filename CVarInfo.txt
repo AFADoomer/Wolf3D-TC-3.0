@@ -19,6 +19,7 @@ server int g_singlestartpushwalls = 1; // Pushwall start spots can only be used 
 server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
 server int g_userotations = 0; // Use additional sprite rotations if they are available
 server int g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
+server int g_warpskill = 2; // Skill variable used in map select screen
 
 user int g_borderstyle = 0; // Style of screen border
 user int g_defaultlog = 0; // Use the GZDoom console output

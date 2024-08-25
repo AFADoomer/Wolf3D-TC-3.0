@@ -471,3 +471,58 @@ OptionValue "FlatStyle"
 	2, "$FLAT_FLOORS"
 	3, "$FLAT_BOTH"
 }
+
+OptionMenu "MapMenu"
+{
+	ImageSlider "$M_GAME", "GAME", "g_sod", 1, 5, 1
+	ImageSlider "$M_SKILL2", "SKILL", "g_warpskill", 1, 5, 1
+
+	Class "MapMenu"
+}
+
+OptionMenu "HelpMenu"
+{
+	Class "HelpMenu"
+}
+
+OptionMenu "Episode0End"
+{
+	Caption "data/episode0.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode1End"
+{
+	Caption "data/episode1.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode2End"
+{
+	Caption "data/episode2.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode3End"
+{
+	Caption "data/episode3.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode4End"
+{
+	Caption "data/episode4.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode5End"
+{
+	Caption "data/episode5.txt"
+	Class "FinaleMenu"
+}
+
+OptionMenu "Episode6End"
+{
+	Caption "data/episode6.txt"
+	Class "FinaleMenu"
+}
