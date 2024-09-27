@@ -421,7 +421,7 @@ class ClassicStatusBar : WidgetStatusBar
 		fizzleindex += fizzlespeed; // Draw a chunk of pixels at a time...
 
 		if (fizzleindex >= fizzlepoints.Size()) { fizzleindex = fizzlepoints.Size() - 1; }
-		if (fizzleindex <= 0)
+		if (fizzleindex <= -fizzlespeed)
 		{
 			fizzleindex = 0;
 			fizzleeffect = false;
