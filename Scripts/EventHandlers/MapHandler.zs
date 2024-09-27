@@ -1612,6 +1612,9 @@ class DataFile
 			d.lump = Wads.CheckNumForFullName(path);
 			d.carmack = true;
 
+			path = path.MakeUpper();
+			if (path.IndexOf("MAPTEMP") > -1) { d.carmack = false; } // Assume MAPTEMP files are not Carmackized (Blake Stone and TED5 output)
+
 			String hash = MD5.hash(Wads.ReadLump(d.lump));
 
 			if (hash == "30fecd7cce6bc70402651ec922d2da3d")
