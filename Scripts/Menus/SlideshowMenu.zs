@@ -2687,7 +2687,7 @@ class OptionMenuItemVariableText : OptionMenuItem
 
 class OptionMenuItemImageSlider : OptionMenuSliderBase
 {
-	CVar mCVar;
+	transient CVar mCVar;
 	String prefix;
 
 	OptionMenuItemImageSlider Init(String label, String texprefix, Name command, double min, double max, double step, CVar graycheck = NULL, int graycheckVal = 0)

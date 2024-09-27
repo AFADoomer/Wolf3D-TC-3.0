@@ -598,7 +598,7 @@ class EpisodeMenu : IconListMenu
 
 class GameMenu : IconListMenu
 {
-	CVar sodvar;
+	transient CVar sodvar;
 	TextureID demo, shareware, registered;
 
 	override void Init(Menu parent, ListMenuDescriptor desc)
