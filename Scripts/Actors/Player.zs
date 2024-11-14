@@ -21,7 +21,7 @@
  */
 
 // Wolf3D Player Class
-class WolfPlayer : DoomPlayer
+class WolfPlayer : PlayerPawn
 {
 	bool goobers, mutated, respawn, justdied;
 	int deathtick, respawntick, idletick;
@@ -35,6 +35,9 @@ class WolfPlayer : DoomPlayer
 		Health 100;
 		Height 56;
 		Mass 10000;
+		PainChance 255;
+		Radius 16;
+		Speed 1;
 
 		Player.DisplayName "BJ";
 		Player.Face "WLF";
@@ -46,13 +49,17 @@ class WolfPlayer : DoomPlayer
 		Player.StartItem "WolfKnife";
 		Player.StartItem "WolfClip", 8;
 		Player.ViewHeight 32;
-		Player.WeaponSlot 1, "WolfKnife", "WolfKnifeLost";
-		Player.WeaponSlot 2, "WolfPistol", "WolfPistolLost";
-		Player.WeaponSlot 3, "WolfMachinegun", "WolfMachinegunLost";
-		Player.WeaponSlot 4, "WolfChaingun", "WolfChaingunLost";
-		Player.WeaponSlot 5, "";
-		Player.WeaponSlot 6, "";
-		Player.WeaponSlot 7, "";
+		Player.WeaponSlot 1, "WolfKnife";
+
+		Player.ColorRange 112, 127;
+		Player.Colorset 0, "$TXT_COLOR_GREEN",		0x70, 0x7F,  0x72;
+		Player.Colorset 1, "$TXT_COLOR_GRAY",		0x60, 0x6F,  0x62;
+		Player.Colorset 2, "$TXT_COLOR_BROWN",		0x40, 0x4F,  0x42;
+		Player.Colorset 3, "$TXT_COLOR_RED",		0x20, 0x2F,  0x22;
+		Player.Colorset 4, "$TXT_COLOR_LIGHTGRAY",	0x58, 0x67,  0x5A;
+		Player.Colorset 5, "$TXT_COLOR_LIGHTBROWN",	0x38, 0x47,  0x3A;
+		Player.Colorset 6, "$TXT_COLOR_LIGHTRED",	0xB0, 0xBF,  0xB2;
+		Player.Colorset 7, "$TXT_COLOR_LIGHTBLUE",	0xC0, 0xCF,  0xC2;
 	}
 
 	States

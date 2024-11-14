@@ -309,7 +309,7 @@ class DeathCam : Actor
 }
 
 // BJ victory run
-class BJ : Actor
+class BJFinaleRun : Actor
 {
 	Default
 	{

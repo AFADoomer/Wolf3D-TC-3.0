@@ -452,7 +452,7 @@ Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
 	SpawnForced ("MovingCamera", StartX + OffsetX, StartY + OffsetY, 32.0, 2, BitAngle);
 	SetThingSpecial (2, 0, 7, 0, 3);
 
-	SpawnForced ("BJ", StartX, StartY, 32, 1, BitAngle);
+	SpawnForced ("BJFinaleRun", StartX, StartY, 32, 1, BitAngle);
 	Thing_Deactivate(1);
 	SetThingSpecial (1, 229, 0, 9, 1);
 }

@@ -50,8 +50,7 @@ class ClassicWeapon : Weapon
 		Select:
 			"####" "#" 0 A_QuickRaise();
 		Ready:
-			"####" "#" 1;
-			"####" "#" 0 A_WeaponReady();
+			"####" "#" 1 A_WeaponReady();
 			Loop;
 		Fire:
 			"####" "#" 1;
@@ -124,6 +123,8 @@ class ClassicWeapon : Weapon
 	{
 		if (owner && owner.player && owner.player.ReadyWeapon == self)
 		{
+			if (owner.player.PendingWeapon && owner.player.PendingWeapon != WP_NOCHANGE) { return; }
+
 			CVar bobscale = CVar.GetCVar("g_viewbobscale", owner.player);
 			if (bobscale)
 			{
@@ -311,6 +312,7 @@ class WolfKnife : ClassicWeapon
 		Inventory.PickupSound "pickups/knife";
 		Weapon.AmmoUse 0;
 		Weapon.SelectionOrder 4;
+		Weapon.SlotNumber 1;
 		+Weapon.NOALERT
 		+Weapon.MELEEWEAPON
 		+Weapon.WIMPY_WEAPON
@@ -452,6 +454,7 @@ class WolfPistol : ClassicWeapon
 		Weapon.AmmoGive 8;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 3;
+		Weapon.SlotNumber 2;
 		+Weapon.WIMPY_WEAPON
 	}
 
@@ -485,6 +488,7 @@ class WolfMachineGun : ClassicWeapon
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 2;
+		Weapon.SlotNumber 3;
 	}
 
 	States
@@ -518,6 +522,7 @@ class WolfChaingun : ClassicWeapon
 		Weapon.AmmoGive 6;
 		Weapon.AmmoUse 1;
 		Weapon.SelectionOrder 1;
+		Weapon.SlotNumber 4;
 		+ClassicWeapon.DOGRIN
 	}
 
