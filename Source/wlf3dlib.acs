@@ -120,6 +120,13 @@ Script 4 (int type)
 
 Script 10 (int Type)
 {
+	//
+	// DenisBelmondo: freeze things on exit
+	//
+
+	SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+	ScriptCall("Game", "LevelExitFreeze");
+
 	Delay(15); // Give time for the switch animation and sound to play
 
 	FadeToBlack(5.0, 0.5, 0.0, 0);
@@ -128,6 +135,11 @@ Script 10 (int Type)
 
 	if (Type) { Exit_Secret(0); }
 	else { Exit_Normal(0); }
+
+	//
+	// DenisBelmondo: freeze things on exit
+	//
+	SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 }
 
 Script 15 (int WallID)
@@ -351,6 +363,11 @@ Script "W_DoSecretDoor" (int po, int Angle)
 
 Script "W_PlayerDeath" DEATH //501
 {
+	//
+	// DenisBelmondo: don't let player slide when dying
+	//
+	SetActorVelocity(0, 0.0, 0.0, 0.0, false, true);
+
 	If (PlayerCount() == 1) { SetMusic(""); }
 
 	Delay(35);
