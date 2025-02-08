@@ -23,7 +23,7 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
-	const WEAPON_OFFSET_Y = 4.8;
+	const WEAPON_OFFSET_Y = 14.4;
 
 	int flags;
 
@@ -143,7 +143,7 @@ class ClassicWeapon : Weapon
 		let psp = owner.player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y; }
+		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y * max(st_scale, 0) / WeaponScaleY; }
 		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
 	}
 
