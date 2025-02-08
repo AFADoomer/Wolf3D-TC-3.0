@@ -427,6 +427,14 @@ class Game
 			}
 		}
 	}
+
+	//
+	// DenisBelmondo: level exit freeze
+	//
+	play static void LevelExitFreeze()
+	{
+		level.SetFrozen(true);
+	}
 }
 
 class DataHandler : StaticEventHandler
