@@ -23,6 +23,8 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
+	const WEAPON_OFFSET_Y = 4.8;
+
 	int flags;
 
 	FlagDef DOGRIN:flags, 0;
@@ -86,7 +88,7 @@ class ClassicWeapon : Weapon
 		if (tgt)
 		{
 			dmg = GameHandler.WolfRandom();
-			
+
 			if (ClassicBase(tgt))
 			{
 				if (!ClassicBase(tgt).bActive)
@@ -141,7 +143,7 @@ class ClassicWeapon : Weapon
 		let psp = owner.player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		if (screenblocks < 11) { psp.y = WEAPONTOP - 15.0 * max(st_scale, 0) / WeaponScaleY; }
+		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y; }
 		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
 	}
 
@@ -474,7 +476,7 @@ class WolfPistol : ClassicWeapon
 			"####" A 0 A_Jump(256, "Refire");
 	}
 }
- 
+
 class WolfMachineGun : ClassicWeapon
 {
 	Default
@@ -507,7 +509,7 @@ class WolfMachineGun : ClassicWeapon
 			"####" E 3 A_ReFire();
 			"####" A 0 A_Jump(256, "Ready");
 	}
-} 
+}
 
 class WolfChaingun : ClassicWeapon
 {
