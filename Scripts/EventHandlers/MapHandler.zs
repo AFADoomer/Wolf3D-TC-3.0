@@ -20,19 +20,130 @@
  * SOFTWARE.
  */
 
+Class TileInfo
+{
+	int id;
+	TextureID tex[2];
+	int scriptaction;
+	int args[5];
+	String ActorFlags;
+	bool directional;
+}
+
+Class GameTileInfo
+{
+	String gamename;
+	Array<TileInfo> Tiles;
+
+	TileInfo Add(ParsedValue tiledata)
+	{
+//		for (int d = 0; d < tiledata.children.Size(); d++)
+//		{
+//			let tiletype = tiledata.children[d];
+
+			let walldata = tiledata.Find("Walls");
+
+			console.printf(tiledata.keyname .. " - " .. walldata.keyname);
+
+			Array<int> tilerange;
+			walldata.GetNumberList("Tiles", tilerange);
+
+			for (int i = 0; i < tilerange.Size(); i++)
+			{
+				console.printF("%x", tilerange[i]);
+			}
+
+
+
+			let floordata = tiledata.Find("Floors");
+			let doordata = tiledata.Find("Doors");
+			let commentdata = tiledata.Find("Comments");
+
+
+			// for (int e = 0; e < walldata.children.Size(); e++)
+			// {
+			// 	let tileinfo = tiletype.children[e];
+			// 	String tilerange = tileinfo.GetString("Tiles");
+			// 	String tilerange = tileinfo.GetString("Tiles");
+			// 	console.printf(walldata.children[e].keyname)DumpData();
+			// }
+//		}
+
+		return null;
+	}
+
+	static GameTileInfo Find(in out Array<GameTileInfo> tilemaps, String gamename)
+	{
+		GameTileInfo tilemap;
+
+		for (int g = 0; g < tilemaps.Size(); g++)
+		{
+			tilemap = tilemaps[g];
+			if (tilemap && tilemap.gamename ~== gamename) { return tilemap; }
+		}
+
+		tilemap = New("GameTileInfo");
+		tilemap.gamename = gamename;
+		tilemaps.Push(tilemap);
+
+		return tilemap;
+	}
+}
+
+Class ActorMap : ParsedValue
+{
+	static ParsedValue GetActor(ParsedValue actormaps, int gametype, int index, int skill)
+	{
+		String istr = String.Format("%i", index);
+		ParsedValue gm, am;
+
+		switch (gametype)
+		{
+			case 4:
+				gm = actormaps.Find("BS");
+				am = gm.Find(istr);
+				if (am && am.GetInt("Skill") <= skill) { return am; }
+				break;
+			case 3:
+				gm = actormaps.Find("SD3");
+				am = gm.Find(istr);
+				if (am && am.GetInt("Skill") <= skill) { return am; }
+			case 2:
+				gm = actormaps.Find("SD2");
+				am = gm.Find(istr);
+				if (am && am.GetInt("Skill") <= skill) { return am; }
+				break;
+			case 1:
+				gm = actormaps.Find("SD1");
+				am = gm.Find(istr);
+				if (am && am.GetInt("Skill") <= skill) { return am; }
+			case 0:
+			default:
+				gm = actormaps.Find("Default");
+				am = gm.Find(istr);
+				if (am && am.GetInt("Skill") <= skill) { return am; }
+				break;
+		}
+
+		return null;
+	}
+}
+
 class MapHandler : StaticEventHandler
 {
 	WolfMapParser parsedmaps;
 	Array<DataFile> datafiles;
-	Array<ActorMap> actormapping;
 	ParsedMap curmap, queuedmap;
 	Array<int> activatedfloors;
 	Array<int> activatedpushwalls;
+	ParsedValue actormaps;
+	Array<GameTileInfo> tilemaps;
 
 	override void OnRegister()
 	{
 		ParseGameMaps();
-		ParseActorMaps(actormapping);
+		ParseActorMaps();
+		ParseTileMaps();
 	}
 
 	void ParseGameMaps()
@@ -285,30 +396,96 @@ class MapHandler : StaticEventHandler
 		players[p].mo.angle = angle;
 	}
 
-	void ParseActorMaps(out Array<ActorMap> actormaps)
+	void ParseActorMaps()
 	{
-		int lump = -1;
-		lump = Wads.CheckNumForFullName("Data/ActorCodes.txt");
+		console.printf("Parsing actor data...");
 
-		if (lump != -1)
+		actormaps = FileReader.Parse("Data/ActorCodes.txt");
+			
+		for (int d = 0; d < actormaps.children.Size(); d++)
 		{
-			Array<String> lines;
-			String data = Wads.ReadLump(lump);
-			data.Split(lines, "\n");
-
-			for (int i = 0; i < lines.Size(); i++)
+			let gamedata = actormaps.children[d];
+			
+			for (int e = 0; e < gamedata.children.Size(); e++)
 			{
-				// Skip blank lines and comments
-				if (lines[i].Left(2) == "//" || !lines[i].length()) { continue; }
+				let entry = gamedata.children[e];
+
+				String value = entry.value;
 
 				Array<String> values;
-				lines[i].split(values, "=");
+				value.split(values, ",");
+				if (!values.Size()) { values.Push(value); }
+		
+				ParsedValue m;
+				m = entry.AddKey(true);
+				m.keyname = "Class";
+				m.value = ZScriptTools.Trim(values[0]);
 
-				if (values.Size() < 2) { continue; }
+				m = entry.AddKey(true);
+				m.keyname = "Skill";
+				if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
+				else { m.value = "-1"; }
+				
+				m = entry.AddKey(true);
+				m.keyname = "Angle";
+				if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
+				else { m.value = "90"; }
 
-				ActorMap m = ActorMap.Add(values[0].ToInt(), values[1]);
-				if (m) { actormapping.Push(m); }
+				m = entry.AddKey(true);
+				m.keyname = "Patrolling";
+				if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
+				else { m.value = "0"; }
+
+				entry.value = "";
 			}
+		}
+	}
+
+	void ParseTileMaps()
+	{
+		console.printf("Parsing tile data...");
+
+		ParsedValue tilemapdata = FileReader.Parse("Data/TileCodes.txt");
+
+		for (int d = 0; d < tilemapdata.children.Size(); d++)
+		{
+			let gamedata = tilemapdata.children[d];
+
+			GameTileInfo gametiles = GameTileInfo.Find(tilemaps, gamedata.keyname);
+			gametiles.Add(gamedata);
+
+		// 	for (int e = 0; e < gamedata.children.Size(); e++)
+		// 	{
+		// 		let entry = gamedata.children[e];
+
+		// 		String value = entry.value;
+
+		// 		Array<String> values;
+		// 		value.split(values, ",");
+		// 		if (!values.Size()) { values.Push(value); }
+		
+		// 		ParsedValue m;
+		// 		m = entry.AddKey(true);
+		// 		m.keyname = "Class";
+		// 		m.value = ZScriptTools.Trim(values[0]);
+
+		// 		m = entry.AddKey(true);
+		// 		m.keyname = "Skill";
+		// 		if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
+		// 		else { m.value = "-1"; }
+				
+		// 		m = entry.AddKey(true);
+		// 		m.keyname = "Angle";
+		// 		if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
+		// 		else { m.value = "90"; }
+
+		// 		m = entry.AddKey(true);
+		// 		m.keyname = "Patrolling";
+		// 		if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
+		// 		else { m.value = "0"; }
+
+		// 		entry.value = "";
+		// 	}
 		}
 	}
 
@@ -431,54 +608,6 @@ class MapHandler : StaticEventHandler
 	}
 }
 
-class ActorMap
-{
-	int index;
-	String classname[4];
-	int skill;
-	int angle;
-
-	static ActorMap Add(int index, String entry)
-	{
-		entry = ZScriptTools.Trim(entry);
-		if (!entry.length()) { return null; }
-
-		Array<String> values;
-
-		entry.split(values, ",");
-		if (!values.Size()) { values.Push(entry); }
-
-		ActorMap m = New("ActorMap");
-		m.index = index;
-		m.classname[0] = values[0];
-		m.classname[1] = (values.Size() > 1 && values[1].length()) ? values[1] : m.classname[0];
-		m.classname[2] = (values.Size() > 2 && values[2].length()) ? values[2] : m.classname[1];
-		m.classname[3] = (values.Size() > 3 && values[3].length()) ? values[3] : m.classname[2];
-		m.skill = values.Size() > 4 ? values[4].ToInt() : 0;
-		m.angle = values.Size() > 5 ? values[5].ToInt() : 270;
-
-		return m;
-	}
-
-	static ActorMap GetActor(Array<ActorMap> actormaps, int index, int skill)
-	{
-		for (int m = 0; m < actormaps.Size(); m++)
-		{
-			if (actormaps[m].index == index && actormaps[m].skill <= skill)
-			{
-				return actormaps[m];
-			}
-		}
-
-		return null;
-	}
-
-	Class<Actor> GetSpawnClass(int which = -1)
-	{
-		return classname[clamp(which > -1 ? which : g_sod, 0, 3)];
-	}
-}
-
 class ParsedMap
 {
 	String mapname;
@@ -493,6 +622,7 @@ class ParsedMap
 	Array<Sector> voidspace;
 	bool noclip;
 	Vector2 startspot;
+	String hash;
 
 	int TileAt(Vector2 pos)
 	{
@@ -783,34 +913,40 @@ class ParsedMap
 				if (a > 0)
 				{
 					Actor mo;
-					ActorMap am = ActorMap.GetActor(handler.actormapping, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+					ParsedValue am = ActorMap.GetActor(handler.actormaps, gametype, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
 
 					if (am)
 					{
 						// Spawn the actor
-						Class<Actor> spawnclass = am.GetSpawnClass(gametype);
-						mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
-						if (mo)
-						{
-							// Align the actor
-							mo.angle = am.angle;
-							
-							// Assign a TID matching the floor code for alerting reasons
-							// (Recreate's Wolf's ability to alert actors elsewhere 
-							// in the map if they share the same floor code)
-							if (t == 0x6A)  // Deaf Guard Floor Code
-							{
-								mo.bAmbush = true;
+						Class<Actor> spawnclass = am.GetString("Class", true);
 
-								// Look at nearby tiles to find the closest floor code
-								t = TileAt(pos + (1, 0));
-								if (t < 0x6B) { t = TileAt(pos - (1, 0)); }
-								if (t < 0x6B) { t = TileAt(pos + (0, 1)); }
-								if (t < 0x6B) { t = TileAt(pos - (0, 1)); }
-								if (t < 0x6B) { t = 0; } // Fall back to not assigning a TID
+						if (spawnclass)
+						{
+							mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
+							if (mo)
+							{
+								// Align the actor
+								mo.angle = am.GetInt("Angle");
+								
+								// Assign a TID matching the floor code for alerting reasons
+								// (Recreate's Wolf's ability to alert actors elsewhere 
+								// in the map if they share the same floor code)
+								if (t == 0x6A)  // Deaf Guard Floor Code
+								{
+									mo.bAmbush = true;
+
+									// Look at nearby tiles to find the closest floor code
+									t = TileAt(pos + (1, 0));
+									if (t < 0x6B) { t = TileAt(pos - (1, 0)); }
+									if (t < 0x6B) { t = TileAt(pos + (0, 1)); }
+									if (t < 0x6B) { t = TileAt(pos - (0, 1)); }
+									if (t < 0x6B) { t = 0; } // Fall back to not assigning a TID
+								}
+								
+								mo.ChangeTID(t);
+
+								if (ClassicNazi(mo)) { ClassicNazi(mo).bPatrolling = am.GetBool("Patrolling"); }
 							}
-							
-							mo.ChangeTID(t);
 						}
 					}
 				}
@@ -1155,27 +1291,34 @@ class ParsedMap
 		if (game < 0) { game = max(0, g_sod); }
 
 		// Special handling for doors
-		if (t >= 0x5A && t <= 0x6A || t == 0x41)
+		if (game < 4)
 		{
-			// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
-			game = game <= 1 ? 0 : game;
+			if (t >= 0x5A && t <= 0x6A || t == 0x41)
+			{
+				// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
+				game = game <= 1 ? 0 : game;
 
-			if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
-			else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
-			else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
-			else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
+				if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
+				else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
+				else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
+				else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
+			}
 		}
 
 		int tiletex = (!ln || ln.delta.x) ? (t - 1) * 2 : (t - 1) * 2 + 1;
-		if (tiletex == 42) { tiletex = 40; }
-		if (!ln)
-		{
-			if (tiletex == 30 || tiletex == 40) // Landscape and Elevator walls show alternate walls on map as appropriate
-			{
-				int l = TileAt(pos - (1, 0));
-				int r = TileAt(pos + (1, 0));
 
-				if (l > 0x65 && l < 0x90 || r > 0x65 && r < 0x90) { tiletex++; }
+		if (game < 4)
+		{
+			if (tiletex == 42) { tiletex = 40; }
+			if (!ln)
+			{
+				if (tiletex == 30 || tiletex == 40) // Landscape and Elevator walls show alternate walls on map as appropriate
+				{
+					int l = TileAt(pos - (1, 0));
+					int r = TileAt(pos + (1, 0));
+
+					if (l > 0x65 && l < 0x90 || r > 0x65 && r < 0x90) { tiletex++; }
+				}
 			}
 		}
 
@@ -1190,8 +1333,20 @@ class ParsedMap
 			if (!tex.IsValid()) { game--; }
 		}
 
-		if (!tex.IsValid() && t > 0x95)
+		if (!tex.IsValid())
 		{
+			switch (gametype)
+			{
+				case 4:
+					if (t > 0xD0) { t -= 0x13C; }
+					else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any);; }
+					else { return tex; }
+					break;
+				default:
+					if (t <= 0x95) { return TexMan.CheckForTexture("Patches/Walls/Wall0000.png", TexMan.Type_Any); }
+					break;
+			}
+
 			int c = 0;
 			switch (t)
 			{
@@ -1236,16 +1391,12 @@ class ParsedMap
 					else if (t < 0xDA) { c = 0x30 + (t - 0xD0); } // Numbers
 					break;
 			}
-
+	
 			if (c > 0)
 			{
 				tex = TexMan.CheckForTexture(String.Format("Fonts/Tiles/%04x.png", c), TexMan.Type_Any);
 			}
-
-			return tex;
 		}
-
-		if (!tex.IsValid()) { tex = TexMan.CheckForTexture("Patches/Walls/Wall0000.png", TexMan.Type_Any); }
 
 		return tex;
 	}
@@ -1380,6 +1531,7 @@ class WolfMapParser
 		else if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
 		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
 		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
+		else if (game ~== "BS1" || game ~== "BS6") { parsedmaps.gametype = 4; }
 		else { parsedmaps.gametype = -1; } // Play as Wolf, but allow setting via CVar
 
 		int encoding;
@@ -1422,7 +1574,7 @@ class WolfMapParser
 				type = Raw;
 			}
 			else if (size == 16393)
-			{ // Raw
+			{ // Raw inverted x/y (FloEdit)
 				addresses.Push(8);
 				type = FloEdit;
 			}
@@ -1479,7 +1631,8 @@ class WolfMapParser
 					planeoffsets[0] = 9;
 				}
 
-				planeoffsets[1] = planeoffsets[0] + newmap.width * newmap.height * 2;
+				planesizes[0] = planesizes[1] = newmap.width * newmap.height * 2;
+				planeoffsets[1] = planeoffsets[0] + planesizes[0];
 
 				newmap.mapnum = 1000 + custommapcount++;
 				newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);
@@ -1530,6 +1683,8 @@ class WolfMapParser
 					newmap.ExpandData(p, content.mid(planeoffsets[p], planesizes[p]), encoding, d.carmack);
 				}
 			}
+
+			newmap.hash = MD5.hash(content.Mid(planeoffsets[0], planesizes[0] + planesizes[1]));
 			
 			newmap.gametype = gametype;
 			newmap.info = newmap.GetInfo();

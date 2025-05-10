@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 AFADoomer
+ * Copyright (c) 2018-2025 AFADoomer
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,14 @@
 
 // AFADoomer's ugly but functional parser for nested bracketed data
 // Free for use with attribution
-// Used for Info/Help pages and parsing of various data files
+// Used for parsing of various data files
 class ParsedValue
 {
 	String KeyName;
 	String Value;
 	Array<ParsedValue> Children;
-	ParsedValue Parent;
+	ParsedValue Parent, Root;
+	String filepath;
 
 	private int index;
 
@@ -67,186 +68,38 @@ class ParsedValue
 
 		return null;
 	}
-}
 
-class FileReader
-{
-	static ParsedValue Parse(String path, bool allinstances = false)
+	int GetInt(String path, ParsedValue defaults = null)
 	{
-		ParsedValue root = new("ParsedValue");
+		String val = GetString(path, true, defaults);
 
-		if (!allinstances)
+		if (val.Left(2) ~== "0x")
 		{
-			ParseString(ReadLump(path), root);
-		}
-		else
-		{
-			// Ideally this would use FileSystem.GetNumEntries(), but that's not exposed to ZScript,
-			// so I'm arbitrarily using 15 as the number of files to check...
-			for (int i = 15; i >= 0; i--)
-			{
-				int lump = Wads.CheckNumForName(path, 0, i, true);
-				if (lump > -1) { ParseString(Wads.ReadLump(lump), root); }
-			}
+			return ZScriptTools.HexStrToInt(val.Mid(2));
 		}
 
-		return root;
+		return val.ToInt();
 	}
 
-	static String ReadLump(String lumpname)
+	double GetDouble(String path, ParsedValue defaults = null)
 	{
-		int lump = Wads.CheckNumForFullName(lumpname);
-		if (lump > -1) { return Wads.ReadLump(lump); }
-
-		return "";
+		return GetString(path, true, defaults).ToDouble();
 	}
 
-	static int ParseString(String input, ParsedValue parent = null)
+	bool GetBool(String path, ParsedValue defaults = null)
 	{
-		String token = "";
-		int length = 0;
-		ParsedValue block, key;
-		bool linecomment, blockcomment;
-
-		if (parent == null) { console.printf("\cgERROR: \ckParent node of parsed string cannot be null."); return 0; }
-
-		for (uint i = 0; i < input.Length(); i++)
-		{
-			length = i;
-
-			switch(input.ByteAt(i))
-			{
-				case 13: // \r (Carriage Return)
-					if (i < input.Length() - 1 && input.ByteAt(i + 1) == 10) { break; }
-				case 10: // \n (Line Feed)
-					linecomment = false;
-				case 0:  // null
-				case 9:  // Tab
-					break;
-				case 47: // /
-					if (i < input.Length() - 1 && input.ByteAt(i + 1) == "/") { linecomment = true; }
-					else if (i < input.Length() - 1 && input.ByteAt(i + 1) == "*") { blockcomment = true; }
-					else if (i > 0 && input.ByteAt(i - 1) == "*") { blockcomment = false; }
-					else if (!blockcomment && !linecomment) { token = token .. input.Mid(i, 1); }
-					break;
-				case 59: // ;
-					if (blockcomment || linecomment) { break; }
-					key = new("ParsedValue");
-					key.parent = parent;
-					Array<String> temp;
-					temp.Clear();
-
-					token.Split(temp, "=");
-					if (temp.Size())
-					{
-						key.keyname = ZScriptTools.Trim(temp[0]);
-						if (temp.Size() > 1) { key.value = ZScriptTools.Trim(temp[1]); }
-
-						if (parent) { parent.Children.Push(key); }
-					}
-
-					token = "";
-					break;
-				case 123: // {
-					if (blockcomment || linecomment) { break; }
-					block = new("ParsedValue");
-					block.parent = parent;
-					block.KeyName = ZScriptTools.Trim(token);
-
-					if (parent) { parent.Children.Push(block); }
-
-					token = "";
-					int l = 0;
-					l = ParseString(input.mid(i + 1), block);
-					i += l + 1;
-					break;
-				case 125: // }
-					if (blockcomment || linecomment) { break; }
-					if (ZScriptTools.Trim(token).length())
-					{
-						// console.printf("Missing semi-colon after %s", token);
-						// Dump everything to the data key for later handling if semi-colons are missing
-						key = new("ParsedValue");
-						key.parent = parent;
-						Array<String> temp;
-						temp.Clear();
-
-						token.Split(temp, "=");
-						if (temp.Size())
-						{
-							key.keyname = ZScriptTools.Trim(temp[0]);
-							if (temp.Size() > 1) { key.value = ZScriptTools.Trim(temp[1]); }
-
-							if (parent) { parent.Children.Push(key); }
-						}
-
-						token = "";
-					}
-					return i;
-					break;
-				default:
-					if (blockcomment || linecomment) { break; }
-					token = token .. input.Mid(i, 1);
-					break;
-			}
-		}
-
-		return length;
-	}
-
-	static String DumpData(ParsedValue data, int depth = 0)
-	{
-		String output = "";
-		String padding = "";
-
-		for (int s = 1; s < depth; s++)
-		{
-			padding = padding .. "    ";
-		}
-
-		if (data.keyname && data.value) {
-			output.AppendFormat("%sKey: %s = %s\n", padding, data.keyname, data.value);
-			console.printf("%sKey: %s = %s", padding, data.keyname, data.value); }
-		else if (data.keyname) {
-			output.AppendFormat("%s%s\n", padding, data.keyname);
-			console.printf("%s%s", padding, data.keyname);
-		}
-
-		if (data.Children.Size())
-		{
-			for (int i = 0; i < data.Children.Size(); i++)
-			{
-				DumpData(data.Children[i], depth + 1);
-			}
-		}
-
-		return output;
-	}
-
-	static int GetInt(ParsedValue data, String path, ParsedValue defaults = null)
-	{
-		return GetString(data, path, true, defaults).ToInt();
-	}
-
-	static double GetDouble(ParsedValue data, String path, ParsedValue defaults = null)
-	{
-		return GetString(data, path, true, defaults).ToDouble();
-	}
-
-	static bool GetBool(ParsedValue data, String path, ParsedValue defaults = null)
-	{
-		String val = GetString(data, path, true, defaults);
+		String val = GetString(path, true, defaults);
 
 		if (val == "0" || val ~== "False" || !val.length()) { return false; }
 
 		return true;
 	}
 
-	static color GetColor(ParsedValue data, String path, ParsedValue defaults = null)
+	color GetColor(String path, ParsedValue defaults = null)
 	{
 		int c = 0;
 
-		String clr = GetString(data, path, true, defaults);
+		String clr = GetString(path, true, defaults);
 		if (clr.Left(2) ~== "0x")
 		{
 			c = ZScriptTools.HexStrToInt(clr.Mid(2));
@@ -269,16 +122,63 @@ class FileReader
 		return color(r, g, b);
 	}
 
-	static String GetString(ParsedValue data, String path, bool strip = false, ParsedValue defaults = null)
+	void GetNumberList(String path, in out Array<int> output, ParsedValue defaults = null)
 	{
-		ParsedValue current = data;
+		String list = GetString(path, true, defaults);
+
+		Array<String> temp;
+		list.Split(temp, ",");
+
+		if (!temp.Size())
+		{
+			GetRange(list, output);
+			return;
+		}
+		
+		for (int r = 0; r < temp.Size(); r++)
+		{
+			GetRange(temp[r], output);
+		}
+	}
+
+
+	void GetRange(String range, in out Array<int> output)
+	{
+		Array<String> temp;
+		range.Split(temp, "-");
+
+		if (!temp.Size())
+		{
+			output.Push(GetInteger(range));
+			return;
+		}
+		
+		int start = GetInteger(temp[0]);
+		int end = GetInteger(temp[1]);
+
+		for (int r = start; r <= end; r++) { output.Push(r); }
+	}
+
+	int GetInteger(String val)
+	{
+		val = ZScriptTools.Trim(val);
+
+		if (val.Left(2) ~== "0x") { return ZScriptTools.HexStrToInt(val.Mid(2)); }
+		
+		return val.ToInt();
+	}
+
+	String GetString(String path, bool strip = false, ParsedValue defaults = null)
+	{
+		ParsedValue current = self;
 		Array<String> temp;
 
 		path.Split(temp, ".");
 
 		for (int i = 0; i < temp.Size(); i++)
 		{
-			for (int j = 0; j < current.Children.Size(); j++)
+			if (!current) { break; }
+			for (int j = 0; j < current.children.Size(); j++)
 			{
 				if (current.children[j].keyname ~== temp[i])
 				{
@@ -288,13 +188,214 @@ class FileReader
 			}
 		}
 
-		if (!current.value)
+		if (!current || !current.value)
 		{
-			if (defaults) { return GetString(defaults, path, strip); }
+			if (defaults) { return defaults.GetString(path, strip); }
 			return "";
 		}
 
-		return strip ? StripQuotes(current.value) : current.value;
+		return strip ? FileReader.StripQuotes(current.value) : current.value;
+	}
+
+	static ParsedValue Create()
+	{
+		ParsedValue newvalue = new("ParsedValue");
+		newvalue.root = newvalue;
+
+		return newvalue;
+	}
+
+	ParsedValue AddKey(bool push = true)
+	{
+		ParsedValue newvalue = new("ParsedValue");
+		newvalue.parent = self;
+		newvalue.root = self.root;
+
+		if (push) { Children.Push(newvalue); }
+
+		return newvalue;
+	}
+
+	int ParseString(String input, bool ignoreerrors = false)
+	{
+		String token = "";
+		int length = 0;
+		ParsedValue block, key;
+		bool linecomment, blockcomment;
+
+		for (uint i = 0; i < input.Length(); i++)
+		{
+			length = i;
+
+			switch(input.ByteAt(i))
+			{
+				case 13: // \r (Carriage Return)
+					if (i < input.Length() - 1 && input.ByteAt(i + 1) == 10) { break; }
+				case 10: // \n (Line Feed)
+					linecomment = false;
+				case 0:  // null
+				case 9:  // Tab
+					break;
+				case 47: // /
+					if (i < input.Length() - 1 && input.ByteAt(i + 1) == "/") { linecomment = true; }
+					else if (i < input.Length() - 1 && input.ByteAt(i + 1) == "*") { blockcomment = true; }
+					else if (i > 0 && input.ByteAt(i - 1) == "*") { blockcomment = false; }
+					else if (!blockcomment && !linecomment) { token = token .. input.Mid(i, 1); }
+					break;
+				case 59: // ;
+					if (blockcomment || linecomment) { break; }
+					key = AddKey(false);
+					Array<String> temp;
+					token.Split(temp, "=");
+					if (temp.Size())
+					{
+						key.keyname = ZScriptTools.Trim(temp[0]);
+						if (temp.Size() > 1) { key.value = ZScriptTools.Trim(temp[1]); }
+
+						Children.Push(key);
+					}
+
+					token = "";
+					break;
+				case 123: // {
+					if (blockcomment || linecomment) { break; }
+					block = AddKey();
+					block.KeyName = ZScriptTools.Trim(token);
+
+					token = "";
+					int l = 0;
+					l = block.ParseString(input.mid(i + 1), ignoreerrors);
+					i += l + 1;
+					break;
+				case 125: // }
+					if (blockcomment || linecomment) { break; }
+					if (ZScriptTools.Trim(token).length())
+					{
+						if (developer && !ignoreerrors) { console.printf("\c[Yellow]Missing semi-colon after %s in lump %s", token, root.filepath); }
+						// Dump everything to the data key for later handling if semi-colons are missing
+						key = AddKey(false);
+						Array<String> temp;
+						token.Split(temp, "=");
+						if (temp.Size())
+						{
+							key.keyname = ZScriptTools.Trim(temp[0]);
+							if (temp.Size() > 1) { key.value = ZScriptTools.Trim(temp[1]); }
+
+							if (parent) { Children.Push(key); }
+						}
+
+						token = "";
+					}
+					return i;
+					break;
+				default:
+					if (blockcomment || linecomment) { break; }
+					token = token .. input.Mid(i, 1);
+					break;
+			}
+		}
+
+		return length;
+	}
+
+	String DumpData(int depth = 0)
+	{
+		String output = "";
+		String padding = "";
+
+		for (int s = 1; s < depth; s++)
+		{
+			padding = padding .. "    ";
+		}
+
+		if (keyname && value) {
+			output.AppendFormat("%sKey: %s = %s\n", padding, keyname, value);
+			console.printf("%sKey: %s = %s", padding, keyname, value); }
+		else if (keyname) {
+			output.AppendFormat("%s%s\n", padding, keyname);
+			console.printf("%s%s", padding, keyname);
+		}
+
+		if (Children.Size())
+		{
+			for (int i = 0; i < Children.Size(); i++)
+			{
+				Children[i].DumpData(depth + 1);
+			}
+		}
+
+		return output;
+	}
+}
+
+class FileReader
+{
+	static ParsedValue Parse(String path, bool allinstances = false, bool ignoreerrors = false)
+	{
+		ParsedValue root = ParsedValue.Create();
+		root.filepath = path;
+
+		if (!allinstances || path.IndexOf("/") > -1)
+		{
+			root.ParseString(ReadLump(path), ignoreerrors);
+		}
+		else
+		{
+			// Ideally this would use FileSystem.GetNumEntries(), but that's not exposed to ZScript,
+			// so I'm arbitrarily using 30 as the number of files to check...
+			for (int i = 30; i >= 0; i--)
+			{
+				int lump = Wads.CheckNumForName(path, 0, i, true);
+				if (lump > -1) { root.ParseString(Wads.ReadLump(lump), ignoreerrors); }
+			}
+		}
+
+		return root;
+	}
+
+	static String ReadLump(String lumpname)
+	{
+		int lump = Wads.CheckNumForFullName(lumpname);
+		if (lump > -1) { return Wads.ReadLump(lump); }
+
+		return "";
+	}
+
+	static int ParseString(String input, ParsedValue parent, bool ignoreerrors = false)
+	{
+		if (parent == null) { console.printf("\cgERROR: \ckParent node of parsed string cannot be null."); return 0; }
+
+		return parent.ParseString(input, ignoreerrors);
+	}
+
+	static String DumpData(ParsedValue data, int depth = 0)
+	{
+		return data.DumpData(depth);
+	}
+
+	static int GetInt(ParsedValue data, String path, ParsedValue defaults = null)
+	{
+		return data.GetInt(path, defaults);
+	}
+
+	static double GetDouble(ParsedValue data, String path, ParsedValue defaults = null)
+	{
+		return data.GetDouble(path, defaults);
+	}
+
+	static bool GetBool(ParsedValue data, String path, ParsedValue defaults = null)
+	{
+		return data.GetBool(path, defaults);
+	}
+
+	static color GetColor(ParsedValue data, String path, ParsedValue defaults = null)
+	{
+		return data.GetColor(path, defaults);
+	}
+
+	static String GetString(ParsedValue data, String path, bool strip = false, ParsedValue defaults = null)
+	{
+		return data.GetString(path, strip, defaults);
 	}
 
 	static void GetStrings(in out Array<String> output, ParsedValue data, String path, bool Uppercase = false)

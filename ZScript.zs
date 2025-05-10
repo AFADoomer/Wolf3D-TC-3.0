@@ -27,8 +27,9 @@ version "4.8.0"
 #include "Scripts/EventHandlers/ReplacementHandler.zs"
 #include "Scripts/EventHandlers/GameHandler.zs"
 #include "Scripts/EventHandlers/MapHandler.zs"
-#include "Scripts/EventHandlers/DoorHandler.zsc"
-#include "Scripts/EventHandlers/PolyMoveHandler.zsc"
+#include "Scripts/EventHandlers/DoorHandler.zs"
+#include "Scripts/EventHandlers/PolyMoveHandler.zs"
+#include "Scripts/EventHandlers/GraphicsHandler.zs"
 
 // Level Post-processing
 #include "Scripts/WolfPostProcessing.zs"

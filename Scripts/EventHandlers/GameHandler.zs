@@ -440,11 +440,12 @@ class Game
 class DataHandler : StaticEventHandler
 {
 	ParsedValue textcolordata;
+	ParsedValue graphicdata;
 
 	override void OnRegister()
 	{
 		// Parse defined text colors
-		textcolordata = FileReader.Parse("textcolors.txt", true);
+		textcolordata = FileReader.Parse("textcolors.txt", true, true);
 		for (int d = 0; d < textcolordata.children.Size(); d++)
 		{
 			Array<String> temp;
@@ -464,5 +465,7 @@ class DataHandler : StaticEventHandler
 				}
 			}
 		}
+
+		graphicdata = FileReader.Parse("data/graphicmap.txt", true);
 	}
 }

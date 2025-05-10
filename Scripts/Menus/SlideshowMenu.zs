@@ -1902,6 +1902,11 @@ class MapMenu : TextScreenMenu
 			{
 				let parsedmap = gamefile.maps[m];
 
+				if (
+					(m > 0 && parsedmap.hash == gamefile.maps[m - 1].hash) ||
+					(m < gamefile.maps.Size() - 1 && parsedmap.hash == gamefile.maps[m + 1].hash)
+				 ) { continue; }
+
 				String mapdata = String.Format("^P\n^I1!%s\n$PATH\n\n", parsedmap.mapname);
 				let n = MapDataInfo.Create(mapdata, lineheight, gamefile);
 				n.map = parsedmap;
