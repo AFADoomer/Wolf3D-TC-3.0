@@ -59,6 +59,8 @@ Script "InitializePlayer" (int playernum)
 		}
 		else
 		{
+			bool isMultiplayer = (GameType() == GAME_NET_COOPERATIVE || GameType() == GAME_NET_DEATHMATCH);
+
 			if (justdied)
 			{
 				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
@@ -68,7 +70,7 @@ Script "InitializePlayer" (int playernum)
 
 				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			}
-			else if (!GetCVar("g_nointro"))
+			else if (!GetCVar("g_nointro") && !isMultiplayer)
 			{
 				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
