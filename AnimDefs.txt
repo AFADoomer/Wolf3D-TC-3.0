@@ -34,7 +34,7 @@ pic I_DISK0 tics 5
 pic I_DISK1 tics 5
 
 canvastexture "CONBACK" 1024 768
-
+/*
 // Texture canvases
 canvastexture "Patches/Walls/WALL0000.png" 64 64
 canvastexture "Patches/Walls/WALL0001.png" 64 64
@@ -434,3 +434,37 @@ canvastexture "WLF1LK2A" 64 64
 canvastexture "WLF1LK2B" 64 64
 canvastexture "WLF1LK2C" 64 64
 canvastexture "WLF1LK2D" 64 64
+*/
+
+canvastexture "DEMO" 64 64
+canvastexture "DEATHCAM" 64 64
+/* canvastexture "POL1A0" 64 64 sprite offset 32 64
+canvastexture "BARLC0" 64 64 sprite offset 32 64
+canvastexture "TAB1A0" 64 64 sprite offset 32 64
+canvastexture "LIT1A0" 64 64 sprite offset 32 64
+canvastexture "LIT3A0" 64 64 sprite offset 32 64
+canvastexture "HNG1A0" 64 64 sprite offset 32 64
+canvastexture "HLTHC0" 64 64 sprite offset 32 64
+canvastexture "COLWA0" 64 64 sprite offset 32 64
+canvastexture "PLT1A0" 64 64 sprite offset 32 64
+canvastexture "BONCA0" 64 64 sprite offset 32 64
+canvastexture "SINKA0" 64 64 sprite offset 32 64
+canvastexture "PLT2A0" 64 64 sprite offset 32 64
+canvastexture "VASEC0" 64 64 sprite offset 32 64
+canvastexture "TAB2A0" 64 64 sprite offset 32 64
+canvastexture "LIT5A0" 64 64 sprite offset 32 64
+canvastexture "POT1A0" 64 64 sprite offset 32 64
+canvastexture "KNIGA0" 64 64 sprite offset 32 64
+canvastexture "CAG1A0" 64 64 sprite offset 32 64
+canvastexture "CAG2A0" 64 64 sprite offset 32 64
+canvastexture "POB1A0" 64 64 sprite offset 32 64
+canvastexture "KEYSA0" 64 64 sprite offset 32 64
+canvastexture "KEYSB0" 64 64 sprite offset 32 64
+canvastexture "BED1A0" 64 64 sprite offset 32 64
+canvastexture "BASKA0" 64 64 sprite offset 32 64
+canvastexture "HLTHD0" 64 64 sprite offset 32 64
+canvastexture "HLTHE0" 64 64 sprite offset 32 64
+canvastexture "CCLIA0" 64 64 sprite offset 32 64
+canvastexture "CMGUP0" 64 64 sprite offset 32 64
+canvastexture "CCGUP0" 64 64 sprite offset 32 64
+canvastexture "TRECA0" 64 64 sprite offset 32 64 */

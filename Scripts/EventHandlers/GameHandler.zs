@@ -441,6 +441,7 @@ class DataHandler : StaticEventHandler
 {
 	ParsedValue textcolordata;
 	ParsedValue graphicdata;
+	Color palette[256];
 
 	override void OnRegister()
 	{
@@ -467,5 +468,40 @@ class DataHandler : StaticEventHandler
 		}
 
 		graphicdata = FileReader.Parse("data/graphicmap.txt", true);
+
+		ParsePalette();
+	}
+
+	void ParsePalette()
+	{
+		int lump = Wads.CheckNumForFullName("Wolf3D.pal");
+
+		if (lump > -1)
+		{
+			ScriptScanner sc = New("ScriptScanner");
+
+			sc.OpenLumpNum(lump);
+			sc.MustGetString();
+			sc.MustGetNumber();
+			sc.MustGetNumber();
+
+			int colors = min(256, sc.Number);
+
+			for (int i = 0; i < colors; i++)
+			{
+				sc.MustGetNumber();
+				palette[i].r = sc.Number;
+				sc.MustGetNumber();
+				palette[i].g = sc.Number;
+				sc.MustGetNumber();
+				palette[i].b = sc.Number;
+			}
+
+			sc.Close();
+		}
+		else
+		{
+			console.printf("PLAYPAL lump not found!");
+		}
 	}
 }

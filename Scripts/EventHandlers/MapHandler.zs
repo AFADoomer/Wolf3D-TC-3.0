@@ -48,10 +48,10 @@ Class GameTileInfo
 			Array<int> tilerange;
 			walldata.GetNumberList("Tiles", tilerange);
 
-			for (int i = 0; i < tilerange.Size(); i++)
-			{
-				console.printF("%x", tilerange[i]);
-			}
+			// for (int i = 0; i < tilerange.Size(); i++)
+			// {
+			// 	// console.printF("%x", tilerange[i]);
+			// }
 
 
 
@@ -148,7 +148,7 @@ class MapHandler : StaticEventHandler
 
 	void ParseGameMaps()
 	{
-		console.printf("Parsing map data...");
+		if (developer) { console.printf("Parsing map data..."); }
 
 		// Parse the demo map first
 		let d = DataFile.Find(datafiles, "Custom Maps", "Data/EditorThings.map");
@@ -254,12 +254,19 @@ class MapHandler : StaticEventHandler
 			queuedmap = parsedmaps.GetMapData(mapname, datafile);
 
 			level.ChangeLevel("Level");
+
+			if (mapname == "Wolf3D TC Test")
+			{
+				console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname>\c-' to load a specific map.", e.Name);
+			}
 		}
 		else if (e.Name == "listmaps")
 		{
 			for (int m = 0; m < parsedmaps.maps.Size(); m++)
 			{
-				console.printf("%s (%s)", parsedmaps.maps[m].mapname, parsedmaps.maps[m].datafile.path);
+				String mapname = parsedmaps.maps[m].mapname;
+				mapname.Substitute(" ", "_");
+				console.printf("%s (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
 	}
@@ -398,7 +405,7 @@ class MapHandler : StaticEventHandler
 
 	void ParseActorMaps()
 	{
-		console.printf("Parsing actor data...");
+		if (developer) { console.printf("Parsing actor data..."); }
 
 		actormaps = FileReader.Parse("Data/ActorCodes.txt");
 			
@@ -443,7 +450,7 @@ class MapHandler : StaticEventHandler
 
 	void ParseTileMaps()
 	{
-		console.printf("Parsing tile data...");
+		if (developer) { console.printf("Parsing tile data..."); }
 
 		ParsedValue tilemapdata = FileReader.Parse("Data/TileCodes.txt");
 
