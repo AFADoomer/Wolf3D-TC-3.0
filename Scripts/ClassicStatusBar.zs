@@ -289,7 +289,7 @@ class ClassicStatusBar : WidgetStatusBar
 	HUDFont ClassicFont, BigFont;
 	TextureID mugshot;
 
-	int mugshottimer, mugshottarget, idleframe;
+	int mugshottimer, mugshottarget;
 	Vector3 playerpos[MAXPLAYERS];
 
 	TextureID pixel;
@@ -634,14 +634,11 @@ class ClassicStatusBar : WidgetStatusBar
 		if (staticmugshot && staticmugshottimer >= gametic)
 		{
 			mugshot = GetMugShot(5, type:staticmugshot);
-			mugshottimer = 0;
 		}
-		else if (!mugshot || mugshottimer > mugshottarget)
+		else if (!mugshot.IsValid() || mugshottimer < gametic)
 		{
 			mugshot = GetMugShot(5);
-			mugshottimer = 0;
-			mugshottarget = GameHandler.UIRandom(0, 25);
-			idleframe = GameHandler.UIRandom(1, 2);
+			mugshottimer = gametic + GameHandler.UIRandom(1, 25);
 		}
 
 		Vector2 texsize = TexMan.GetScaledSize(mugshot);
@@ -701,7 +698,7 @@ class ClassicStatusBar : WidgetStatusBar
 						mugshot = face .. "EVL";
 						break;
 					case 2: // Idle
-						mugshot = face .. "STT" .. idleframe;
+						mugshot = face .. "STT" .. GameHandler.UIRandom(1, 2);
 						break;
 					case 3: // Scream
 						mugshot = face .. "SCRM";
@@ -762,8 +759,6 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override void Tick()
 	{
-		mugshottimer++;
-
 		Super.Tick();
 
 		savetimer = max(0, savetimer - 1);
