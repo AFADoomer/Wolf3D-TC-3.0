@@ -18,435 +18,435 @@ Texture g_sod, 1, 1 {}
 
 Texture DOORTRAK, 64, 64 { Patch BLACK, 0, 0 }
 
-Texture WLF1032A, 64, 64 {Graphic WALL1098, 0, 0 }
-Texture WLF1032B, 64, 64 {Graphic WALL1099, 0, 0 }
-Texture WLF1033A, 64, 64 {Graphic WALL1100, 0, 0 }
-Texture WLF1033B, 64, 64 {Graphic WALL1101, 0, 0 }
-Texture WLF1034A, 64, 64 {Graphic WALL1102, 0, 0 }
-Texture WLF1034B, 64, 64 {Graphic WALL1103, 0, 0 }
-Texture WLF1035A, 64, 64 {Graphic WALL1104, 0, 0 }
-Texture WLF1035B, 64, 64 {Graphic WALL1105, 0, 0 }
-Texture WLF1036A, 64, 64 {Graphic WALL1106, 0, 0 }
-Texture WLF1036B, 64, 64 {Graphic WALL1107, 0, 0 }
-Texture WLF1037A, 64, 64 {Graphic WALL1108, 0, 0 }
-Texture WLF1037B, 64, 64 {Graphic WALL1109, 0, 0 }
-Texture WLF1038A, 64, 64 {Graphic WALL1110, 0, 0 }
-Texture WLF1038B, 64, 64 {Graphic WALL1111, 0, 0 }
-Texture WLF1039A, 64, 64 {Graphic WALL1112, 0, 0 }
-Texture WLF1039B, 64, 64 {Graphic WALL1113, 0, 0 }
-Texture WLF103AA, 64, 64 {Graphic WALL1114, 0, 0 }
-Texture WLF103AB, 64, 64 {Graphic WALL1115, 0, 0 }
-Texture WLF103BA, 64, 64 {Graphic WALL1116, 0, 0 }
-Texture WLF103BB, 64, 64 {Graphic WALL1117, 0, 0 }
-Texture WLF103CA, 64, 64 {Graphic WALL1118, 0, 0 }
-Texture WLF103CB, 64, 64 {Graphic WALL1119, 0, 0 }
-Texture WLF103DA, 64, 64 {Graphic WALL1120, 0, 0 }
-Texture WLF103DB, 64, 64 {Graphic WALL1121, 0, 0 }
-Texture WLF103EA, 64, 64 {Graphic WALL1122, 0, 0 }
-Texture WLF103EB, 64, 64 {Graphic WALL1123, 0, 0 }
-Texture WLF103FA, 64, 64 {Graphic WALL1124, 0, 0 }
-Texture WLF103FB, 64, 64 {Graphic WALL1125, 0, 0 }
+Texture WLF1032A, 64, 64 { Patch WALL1098, 0, 0 }
+Texture WLF1032B, 64, 64 { Patch WALL1099, 0, 0 }
+Texture WLF1033A, 64, 64 { Patch WALL1100, 0, 0 }
+Texture WLF1033B, 64, 64 { Patch WALL1101, 0, 0 }
+Texture WLF1034A, 64, 64 { Patch WALL1102, 0, 0 }
+Texture WLF1034B, 64, 64 { Patch WALL1103, 0, 0 }
+Texture WLF1035A, 64, 64 { Patch WALL1104, 0, 0 }
+Texture WLF1035B, 64, 64 { Patch WALL1105, 0, 0 }
+Texture WLF1036A, 64, 64 { Patch WALL1106, 0, 0 }
+Texture WLF1036B, 64, 64 { Patch WALL1107, 0, 0 }
+Texture WLF1037A, 64, 64 { Patch WALL1108, 0, 0 }
+Texture WLF1037B, 64, 64 { Patch WALL1109, 0, 0 }
+Texture WLF1038A, 64, 64 { Patch WALL1110, 0, 0 }
+Texture WLF1038B, 64, 64 { Patch WALL1111, 0, 0 }
+Texture WLF1039A, 64, 64 { Patch WALL1112, 0, 0 }
+Texture WLF1039B, 64, 64 { Patch WALL1113, 0, 0 }
+Texture WLF103AA, 64, 64 { Patch WALL1114, 0, 0 }
+Texture WLF103AB, 64, 64 { Patch WALL1115, 0, 0 }
+Texture WLF103BA, 64, 64 { Patch WALL1116, 0, 0 }
+Texture WLF103BB, 64, 64 { Patch WALL1117, 0, 0 }
+Texture WLF103CA, 64, 64 { Patch WALL1118, 0, 0 }
+Texture WLF103CB, 64, 64 { Patch WALL1119, 0, 0 }
+Texture WLF103DA, 64, 64 { Patch WALL1120, 0, 0 }
+Texture WLF103DB, 64, 64 { Patch WALL1121, 0, 0 }
+Texture WLF103EA, 64, 64 { Patch WALL1122, 0, 0 }
+Texture WLF103EB, 64, 64 { Patch WALL1123, 0, 0 }
+Texture WLF103FA, 64, 64 { Patch WALL1124, 0, 0 }
+Texture WLF103FB, 64, 64 { Patch WALL1125, 0, 0 }
 
-Texture WLF2001A, 64, 64 {Graphic WALL2000, 0, 0 }
-Texture WLF2001B, 64, 64 {Graphic WALL2001, 0, 0 }
-Texture WLF2002A, 64, 64 {Graphic WALL2002, 0, 0 }
-Texture WLF2002B, 64, 64 {Graphic WALL2003, 0, 0 }
-Texture WLF2003A, 64, 64 {Graphic WALL2004, 0, 0 }
-Texture WLF2003B, 64, 64 {Graphic WALL2005, 0, 0 }
-Texture WLF2004A, 64, 64 {Graphic WALL2006, 0, 0 }
-Texture WLF2004B, 64, 64 {Graphic WALL2007, 0, 0 }
-Texture WLF2005A, 64, 64 {Graphic WALL2008, 0, 0 }
-Texture WLF2005B, 64, 64 {Graphic WALL2009, 0, 0 }
-Texture WLF2006A, 64, 64 {Graphic WALL2010, 0, 0 }
-Texture WLF2006B, 64, 64 {Graphic WALL2011, 0, 0 }
-Texture WLF2007A, 64, 64 {Graphic WALL2012, 0, 0 }
-Texture WLF2007B, 64, 64 {Graphic WALL2013, 0, 0 }
-Texture WLF2008A, 64, 64 {Graphic WALL2014, 0, 0 }
-Texture WLF2008B, 64, 64 {Graphic WALL2015, 0, 0 }
-Texture WLF2009A, 64, 64 {Graphic WALL2016, 0, 0 }
-Texture WLF2009B, 64, 64 {Graphic WALL2017, 0, 0 }
-Texture WLF200AA, 64, 64 {Graphic WALL2018, 0, 0 }
-Texture WLF200AB, 64, 64 {Graphic WALL2019, 0, 0 }
-Texture WLF200BA, 64, 64 {Graphic WALL2020, 0, 0 }
-Texture WLF200BB, 64, 64 {Graphic WALL2021, 0, 0 }
-Texture WLF200CA, 64, 64 {Graphic WALL2022, 0, 0 }
-Texture WLF200CB, 64, 64 {Graphic WALL2023, 0, 0 }
-Texture WLF200DA, 64, 64 {Graphic WALL2024, 0, 0 }
-Texture WLF200DB, 64, 64 {Graphic WALL2025, 0, 0 }
-Texture WLF200EA, 64, 64 {Graphic WALL2026, 0, 0 }
-Texture WLF200EB, 64, 64 {Graphic WALL2027, 0, 0 }
-Texture WLF200FA, 64, 64 {Graphic WALL2028, 0, 0 }
-Texture WLF200FB, 64, 64 {Graphic WALL2029, 0, 0 }
-Texture WLF2010A, 64, 64 {Graphic WALL2030, 0, 0 }
-Texture WLF2010B, 64, 64 {Graphic WALL2031, 0, 0 }
-Texture WLF2011A, 64, 64 {Graphic WALL2032, 0, 0 }
-Texture WLF2011B, 64, 64 {Graphic WALL2033, 0, 0 }
-Texture WLF2012A, 64, 64 {Graphic WALL2034, 0, 0 }
-Texture WLF2012B, 64, 64 {Graphic WALL2035, 0, 0 }
-Texture WLF2013A, 64, 64 {Graphic WALL2036, 0, 0 }
-Texture WLF2013B, 64, 64 {Graphic WALL2037, 0, 0 }
-Texture WLF2014A, 64, 64 {Graphic WALL2038, 0, 0 }
-Texture WLF2014B, 64, 64 {Graphic WALL2039, 0, 0 }
-Texture WLF2015A, 64, 64 {Graphic WALL2040, 0, 0 }
-Texture WLF2015B, 64, 64 {Graphic WALL2041, 0, 0 }
-Texture WLF2016A, 64, 64 {Graphic WALL2042, 0, 0 }
-Texture WLF2016B, 64, 64 {Graphic WALL2043, 0, 0 }
-Texture WLF2017A, 64, 64 {Graphic WALL2044, 0, 0 }
-Texture WLF2017B, 64, 64 {Graphic WALL2045, 0, 0 }
-Texture WLF2018A, 64, 64 {Graphic WALL2046, 0, 0 }
-Texture WLF2018B, 64, 64 {Graphic WALL2047, 0, 0 }
-Texture WLF2019A, 64, 64 {Graphic WALL2048, 0, 0 }
-Texture WLF2019B, 64, 64 {Graphic WALL2049, 0, 0 }
-Texture WLF201AA, 64, 64 {Graphic WALL2050, 0, 0 }
-Texture WLF201AB, 64, 64 {Graphic WALL2051, 0, 0 }
-Texture WLF201BA, 64, 64 {Graphic WALL2052, 0, 0 }
-Texture WLF201BB, 64, 64 {Graphic WALL2053, 0, 0 }
-Texture WLF201CA, 64, 64 {Graphic WALL2054, 0, 0 }
-Texture WLF201CB, 64, 64 {Graphic WALL2055, 0, 0 }
-Texture WLF201DA, 64, 64 {Graphic WALL2056, 0, 0 }
-Texture WLF201DB, 64, 64 {Graphic WALL2057, 0, 0 }
-Texture WLF201EA, 64, 64 {Graphic WALL2058, 0, 0 }
-Texture WLF201EB, 64, 64 {Graphic WALL2059, 0, 0 }
-Texture WLF201FA, 64, 64 {Graphic WALL2060, 0, 0 }
-Texture WLF201FB, 64, 64 {Graphic WALL2061, 0, 0 }
-Texture WLF2020A, 64, 64 {Graphic WALL2062, 0, 0 }
-Texture WLF2020B, 64, 64 {Graphic WALL2063, 0, 0 }
-Texture WLF2021A, 64, 64 {Graphic WALL2064, 0, 0 }
-Texture WLF2021B, 64, 64 {Graphic WALL2065, 0, 0 }
-Texture WLF2022A, 64, 64 {Graphic WALL2066, 0, 0 }
-Texture WLF2022B, 64, 64 {Graphic WALL2067, 0, 0 }
-Texture WLF2023A, 64, 64 {Graphic WALL2068, 0, 0 }
-Texture WLF2023B, 64, 64 {Graphic WALL2069, 0, 0 }
-Texture WLF2024A, 64, 64 {Graphic WALL2070, 0, 0 }
-Texture WLF2024B, 64, 64 {Graphic WALL2071, 0, 0 }
-Texture WLF2025A, 64, 64 {Graphic WALL2072, 0, 0 }
-Texture WLF2025B, 64, 64 {Graphic WALL2073, 0, 0 }
-Texture WLF2026A, 64, 64 {Graphic WALL2074, 0, 0 }
-Texture WLF2026B, 64, 64 {Graphic WALL2075, 0, 0 }
-Texture WLF2027A, 64, 64 {Graphic WALL2076, 0, 0 }
-Texture WLF2027B, 64, 64 {Graphic WALL2077, 0, 0 }
-Texture WLF2028A, 64, 64 {Graphic WALL2078, 0, 0 }
-Texture WLF2028B, 64, 64 {Graphic WALL2079, 0, 0 }
-Texture WLF2029A, 64, 64 {Graphic WALL2080, 0, 0 }
-Texture WLF2029B, 64, 64 {Graphic WALL2081, 0, 0 }
-Texture WLF202AA, 64, 64 {Graphic WALL2082, 0, 0 }
-Texture WLF202AB, 64, 64 {Graphic WALL2083, 0, 0 }
-Texture WLF202BA, 64, 64 {Graphic WALL2084, 0, 0 }
-Texture WLF202BB, 64, 64 {Graphic WALL2085, 0, 0 }
-Texture WLF202CA, 64, 64 {Graphic WALL2086, 0, 0 }
-Texture WLF202CB, 64, 64 {Graphic WALL2087, 0, 0 }
-Texture WLF202DA, 64, 64 {Graphic WALL2088, 0, 0 }
-Texture WLF202DB, 64, 64 {Graphic WALL2089, 0, 0 }
-Texture WLF202EA, 64, 64 {Graphic WALL2090, 0, 0 }
-Texture WLF202EB, 64, 64 {Graphic WALL2091, 0, 0 }
-Texture WLF202FA, 64, 64 {Graphic WALL2092, 0, 0 }
-Texture WLF202FB, 64, 64 {Graphic WALL2093, 0, 0 }
-Texture WLF2030A, 64, 64 {Graphic WALL2094, 0, 0 }
-Texture WLF2030B, 64, 64 {Graphic WALL2095, 0, 0 }
+Texture WLF2001A, 64, 64 { Patch WALL2000, 0, 0 }
+Texture WLF2001B, 64, 64 { Patch WALL2001, 0, 0 }
+Texture WLF2002A, 64, 64 { Patch WALL2002, 0, 0 }
+Texture WLF2002B, 64, 64 { Patch WALL2003, 0, 0 }
+Texture WLF2003A, 64, 64 { Patch WALL2004, 0, 0 }
+Texture WLF2003B, 64, 64 { Patch WALL2005, 0, 0 }
+Texture WLF2004A, 64, 64 { Patch WALL2006, 0, 0 }
+Texture WLF2004B, 64, 64 { Patch WALL2007, 0, 0 }
+Texture WLF2005A, 64, 64 { Patch WALL2008, 0, 0 }
+Texture WLF2005B, 64, 64 { Patch WALL2009, 0, 0 }
+Texture WLF2006A, 64, 64 { Patch WALL2010, 0, 0 }
+Texture WLF2006B, 64, 64 { Patch WALL2011, 0, 0 }
+Texture WLF2007A, 64, 64 { Patch WALL2012, 0, 0 }
+Texture WLF2007B, 64, 64 { Patch WALL2013, 0, 0 }
+Texture WLF2008A, 64, 64 { Patch WALL2014, 0, 0 }
+Texture WLF2008B, 64, 64 { Patch WALL2015, 0, 0 }
+Texture WLF2009A, 64, 64 { Patch WALL2016, 0, 0 }
+Texture WLF2009B, 64, 64 { Patch WALL2017, 0, 0 }
+Texture WLF200AA, 64, 64 { Patch WALL2018, 0, 0 }
+Texture WLF200AB, 64, 64 { Patch WALL2019, 0, 0 }
+Texture WLF200BA, 64, 64 { Patch WALL2020, 0, 0 }
+Texture WLF200BB, 64, 64 { Patch WALL2021, 0, 0 }
+Texture WLF200CA, 64, 64 { Patch WALL2022, 0, 0 }
+Texture WLF200CB, 64, 64 { Patch WALL2023, 0, 0 }
+Texture WLF200DA, 64, 64 { Patch WALL2024, 0, 0 }
+Texture WLF200DB, 64, 64 { Patch WALL2025, 0, 0 }
+Texture WLF200EA, 64, 64 { Patch WALL2026, 0, 0 }
+Texture WLF200EB, 64, 64 { Patch WALL2027, 0, 0 }
+Texture WLF200FA, 64, 64 { Patch WALL2028, 0, 0 }
+Texture WLF200FB, 64, 64 { Patch WALL2029, 0, 0 }
+Texture WLF2010A, 64, 64 { Patch WALL2030, 0, 0 }
+Texture WLF2010B, 64, 64 { Patch WALL2031, 0, 0 }
+Texture WLF2011A, 64, 64 { Patch WALL2032, 0, 0 }
+Texture WLF2011B, 64, 64 { Patch WALL2033, 0, 0 }
+Texture WLF2012A, 64, 64 { Patch WALL2034, 0, 0 }
+Texture WLF2012B, 64, 64 { Patch WALL2035, 0, 0 }
+Texture WLF2013A, 64, 64 { Patch WALL2036, 0, 0 }
+Texture WLF2013B, 64, 64 { Patch WALL2037, 0, 0 }
+Texture WLF2014A, 64, 64 { Patch WALL2038, 0, 0 }
+Texture WLF2014B, 64, 64 { Patch WALL2039, 0, 0 }
+Texture WLF2015A, 64, 64 { Patch WALL2040, 0, 0 }
+Texture WLF2015B, 64, 64 { Patch WALL2041, 0, 0 }
+Texture WLF2016A, 64, 64 { Patch WALL2042, 0, 0 }
+Texture WLF2016B, 64, 64 { Patch WALL2043, 0, 0 }
+Texture WLF2017A, 64, 64 { Patch WALL2044, 0, 0 }
+Texture WLF2017B, 64, 64 { Patch WALL2045, 0, 0 }
+Texture WLF2018A, 64, 64 { Patch WALL2046, 0, 0 }
+Texture WLF2018B, 64, 64 { Patch WALL2047, 0, 0 }
+Texture WLF2019A, 64, 64 { Patch WALL2048, 0, 0 }
+Texture WLF2019B, 64, 64 { Patch WALL2049, 0, 0 }
+Texture WLF201AA, 64, 64 { Patch WALL2050, 0, 0 }
+Texture WLF201AB, 64, 64 { Patch WALL2051, 0, 0 }
+Texture WLF201BA, 64, 64 { Patch WALL2052, 0, 0 }
+Texture WLF201BB, 64, 64 { Patch WALL2053, 0, 0 }
+Texture WLF201CA, 64, 64 { Patch WALL2054, 0, 0 }
+Texture WLF201CB, 64, 64 { Patch WALL2055, 0, 0 }
+Texture WLF201DA, 64, 64 { Patch WALL2056, 0, 0 }
+Texture WLF201DB, 64, 64 { Patch WALL2057, 0, 0 }
+Texture WLF201EA, 64, 64 { Patch WALL2058, 0, 0 }
+Texture WLF201EB, 64, 64 { Patch WALL2059, 0, 0 }
+Texture WLF201FA, 64, 64 { Patch WALL2060, 0, 0 }
+Texture WLF201FB, 64, 64 { Patch WALL2061, 0, 0 }
+Texture WLF2020A, 64, 64 { Patch WALL2062, 0, 0 }
+Texture WLF2020B, 64, 64 { Patch WALL2063, 0, 0 }
+Texture WLF2021A, 64, 64 { Patch WALL2064, 0, 0 }
+Texture WLF2021B, 64, 64 { Patch WALL2065, 0, 0 }
+Texture WLF2022A, 64, 64 { Patch WALL2066, 0, 0 }
+Texture WLF2022B, 64, 64 { Patch WALL2067, 0, 0 }
+Texture WLF2023A, 64, 64 { Patch WALL2068, 0, 0 }
+Texture WLF2023B, 64, 64 { Patch WALL2069, 0, 0 }
+Texture WLF2024A, 64, 64 { Patch WALL2070, 0, 0 }
+Texture WLF2024B, 64, 64 { Patch WALL2071, 0, 0 }
+Texture WLF2025A, 64, 64 { Patch WALL2072, 0, 0 }
+Texture WLF2025B, 64, 64 { Patch WALL2073, 0, 0 }
+Texture WLF2026A, 64, 64 { Patch WALL2074, 0, 0 }
+Texture WLF2026B, 64, 64 { Patch WALL2075, 0, 0 }
+Texture WLF2027A, 64, 64 { Patch WALL2076, 0, 0 }
+Texture WLF2027B, 64, 64 { Patch WALL2077, 0, 0 }
+Texture WLF2028A, 64, 64 { Patch WALL2078, 0, 0 }
+Texture WLF2028B, 64, 64 { Patch WALL2079, 0, 0 }
+Texture WLF2029A, 64, 64 { Patch WALL2080, 0, 0 }
+Texture WLF2029B, 64, 64 { Patch WALL2081, 0, 0 }
+Texture WLF202AA, 64, 64 { Patch WALL2082, 0, 0 }
+Texture WLF202AB, 64, 64 { Patch WALL2083, 0, 0 }
+Texture WLF202BA, 64, 64 { Patch WALL2084, 0, 0 }
+Texture WLF202BB, 64, 64 { Patch WALL2085, 0, 0 }
+Texture WLF202CA, 64, 64 { Patch WALL2086, 0, 0 }
+Texture WLF202CB, 64, 64 { Patch WALL2087, 0, 0 }
+Texture WLF202DA, 64, 64 { Patch WALL2088, 0, 0 }
+Texture WLF202DB, 64, 64 { Patch WALL2089, 0, 0 }
+Texture WLF202EA, 64, 64 { Patch WALL2090, 0, 0 }
+Texture WLF202EB, 64, 64 { Patch WALL2091, 0, 0 }
+Texture WLF202FA, 64, 64 { Patch WALL2092, 0, 0 }
+Texture WLF202FB, 64, 64 { Patch WALL2093, 0, 0 }
+Texture WLF2030A, 64, 64 { Patch WALL2094, 0, 0 }
+Texture WLF2030B, 64, 64 { Patch WALL2095, 0, 0 }
 Texture WLF2031A, 64, 64 {NoDecals Graphic WALL2096, 0, 0 }
 Texture WLF2031B, 64, 64 {NoDecals Graphic WALL2097, 0, 0 }
-Texture WLF2032A, 64, 64 {Graphic WALL2098, 0, 0 }
-Texture WLF2032B, 64, 64 {Graphic WALL2099, 0, 0 }
-Texture WLF2033A, 64, 64 {Graphic WALL2100, 0, 0 }
-Texture WLF2033B, 64, 64 {Graphic WALL2101, 0, 0 }
-Texture WLF2034A, 64, 64 {Graphic WALL2102, 0, 0 }
-Texture WLF2034B, 64, 64 {Graphic WALL2103, 0, 0 }
+Texture WLF2032A, 64, 64 { Patch WALL2098, 0, 0 }
+Texture WLF2032B, 64, 64 { Patch WALL2099, 0, 0 }
+Texture WLF2033A, 64, 64 { Patch WALL2100, 0, 0 }
+Texture WLF2033B, 64, 64 { Patch WALL2101, 0, 0 }
+Texture WLF2034A, 64, 64 { Patch WALL2102, 0, 0 }
+Texture WLF2034B, 64, 64 { Patch WALL2103, 0, 0 }
 Texture WLF2035A, 64, 64 {NoDecals Graphic WALL2096, 0, 0 }
 Texture WLF2035B, 64, 64 {NoDecals Graphic WALL2097, 0, 0 }
-Texture WLF2036A, 64, 64 {Graphic WALL2106, 0, 0 }
-Texture WLF2036B, 64, 64 {Graphic WALL2107, 0, 0 }
-Texture WLF2037A, 64, 64 {Graphic WALL2108, 0, 0 }
-Texture WLF2037B, 64, 64 {Graphic WALL2109, 0, 0 }
-Texture WLF2038A, 64, 64 {Graphic WALL2110, 0, 0 }
-Texture WLF2038B, 64, 64 {Graphic WALL2111, 0, 0 }
-Texture WLF2039A, 64, 64 {Graphic WALL2112, 0, 0 }
-Texture WLF2039B, 64, 64 {Graphic WALL2113, 0, 0 }
-Texture WLF203AA, 64, 64 {Graphic WALL2114, 0, 0 }
-Texture WLF203AB, 64, 64 {Graphic WALL2115, 0, 0 }
-Texture WLF203BA, 64, 64 {Graphic WALL2116, 0, 0 }
-Texture WLF203BB, 64, 64 {Graphic WALL2117, 0, 0 }
-Texture WLF203CA, 64, 64 {Graphic WALL2118, 0, 0 }
-Texture WLF203CB, 64, 64 {Graphic WALL2119, 0, 0 }
-Texture WLF203DA, 64, 64 {Graphic WALL2120, 0, 0 }
-Texture WLF203DB, 64, 64 {Graphic WALL2121, 0, 0 }
-Texture WLF203EA, 64, 64 {Graphic WALL2122, 0, 0 }
-Texture WLF203EB, 64, 64 {Graphic WALL2123, 0, 0 }
-Texture WLF203FA, 64, 64 {Graphic WALL2124, 0, 0 }
-Texture WLF203FB, 64, 64 {Graphic WALL2125, 0, 0 }
+Texture WLF2036A, 64, 64 { Patch WALL2106, 0, 0 }
+Texture WLF2036B, 64, 64 { Patch WALL2107, 0, 0 }
+Texture WLF2037A, 64, 64 { Patch WALL2108, 0, 0 }
+Texture WLF2037B, 64, 64 { Patch WALL2109, 0, 0 }
+Texture WLF2038A, 64, 64 { Patch WALL2110, 0, 0 }
+Texture WLF2038B, 64, 64 { Patch WALL2111, 0, 0 }
+Texture WLF2039A, 64, 64 { Patch WALL2112, 0, 0 }
+Texture WLF2039B, 64, 64 { Patch WALL2113, 0, 0 }
+Texture WLF203AA, 64, 64 { Patch WALL2114, 0, 0 }
+Texture WLF203AB, 64, 64 { Patch WALL2115, 0, 0 }
+Texture WLF203BA, 64, 64 { Patch WALL2116, 0, 0 }
+Texture WLF203BB, 64, 64 { Patch WALL2117, 0, 0 }
+Texture WLF203CA, 64, 64 { Patch WALL2118, 0, 0 }
+Texture WLF203CB, 64, 64 { Patch WALL2119, 0, 0 }
+Texture WLF203DA, 64, 64 { Patch WALL2120, 0, 0 }
+Texture WLF203DB, 64, 64 { Patch WALL2121, 0, 0 }
+Texture WLF203EA, 64, 64 { Patch WALL2122, 0, 0 }
+Texture WLF203EB, 64, 64 { Patch WALL2123, 0, 0 }
+Texture WLF203FA, 64, 64 { Patch WALL2124, 0, 0 }
+Texture WLF203FB, 64, 64 { Patch WALL2125, 0, 0 }
 
-Texture WLF2DORA, 64, 64 {Graphic WALL2126, 0, 0 { FlipX } }
-Texture WLF2DORB, 64, 64 {Graphic WALL2127, 0, 0 }
-Texture WLF2ELEA, 64, 64 {Graphic WALL2130, 0, 0 { FlipX } }
-Texture WLF2ELEB, 64, 64 {Graphic WALL2131, 0, 0 }
-Texture WLF2JMBA, 64, 64 {Graphic WALL2128, 0, 0 }
-Texture WLF2JMBB, 64, 64 {Graphic WALL2129, 0, 0 }
-Texture WLF2LK1A, 64, 64 {Graphic WALL2132, 0, 0 { FlipX } }
-Texture WLF2LK1B, 64, 64 {Graphic WALL2133, 0, 0 }
+Texture WLF2DORA, 64, 64 { Patch WALL2126, 0, 0 { FlipX } }
+Texture WLF2DORB, 64, 64 { Patch WALL2127, 0, 0 }
+Texture WLF2ELEA, 64, 64 { Patch WALL2130, 0, 0 { FlipX } }
+Texture WLF2ELEB, 64, 64 { Patch WALL2131, 0, 0 }
+Texture WLF2JMBA, 64, 64 { Patch WALL2128, 0, 0 }
+Texture WLF2JMBB, 64, 64 { Patch WALL2129, 0, 0 }
+Texture WLF2LK1A, 64, 64 { Patch WALL2132, 0, 0 { FlipX } }
+Texture WLF2LK1B, 64, 64 { Patch WALL2133, 0, 0 }
 
-Texture WLF3001A, 64, 64 {Graphic WALL2062, 0, 0 }
-Texture WLF3001B, 64, 64 {Graphic WALL2063, 0, 0 }
-Texture WLF3002A, 64, 64 {Graphic WALL2066, 0, 0 }
-Texture WLF3002B, 64, 64 {Graphic WALL2067, 0, 0 }
-Texture WLF3003A, 64, 64 {Graphic WALL2070, 0, 0 }
-Texture WLF3003B, 64, 64 {Graphic WALL2071, 0, 0 }
-Texture WLF3004A, 64, 64 {Graphic WALL2072, 0, 0 }
-Texture WLF3004B, 64, 64 {Graphic WALL2073, 0, 0 }
-Texture WLF3005A, 64, 64 {Graphic WALL2096, 0, 0 }
-Texture WLF3005B, 64, 64 {Graphic WALL2097, 0, 0 }
-Texture WLF3006A, 64, 64 {Graphic WALL2064, 0, 0 }
-Texture WLF3006B, 64, 64 {Graphic WALL2065, 0, 0 }
-Texture WLF3007A, 64, 64 {Graphic WALL2068, 0, 0 }
-Texture WLF3007B, 64, 64 {Graphic WALL2069, 0, 0 }
-Texture WLF3008A, 64, 64 {Graphic WALL2084, 0, 0 }
-Texture WLF3008B, 64, 64 {Graphic WALL2085, 0, 0 }
-Texture WLF3009A, 64, 64 {Graphic WALL3016, 0, 0 }
-Texture WLF3009B, 64, 64 {Graphic WALL3017, 0, 0 }
-Texture WLF300AA, 64, 64 {Graphic WALL2018, 0, 0 }
-Texture WLF300AB, 64, 64 {Graphic WALL2019, 0, 0 }
-Texture WLF300BA, 64, 64 {Graphic WALL2014, 0, 0 }
-Texture WLF300BB, 64, 64 {Graphic WALL2015, 0, 0 }
-Texture WLF300CA, 64, 64 {Graphic WALL2016, 0, 0 }
-Texture WLF300CB, 64, 64 {Graphic WALL2017, 0, 0 }
-Texture WLF300DA, 64, 64 {Graphic WALL2024, 0, 0 }
-Texture WLF300DB, 64, 64 {Graphic WALL2025, 0, 0 }
-Texture WLF300EA, 64, 64 {Graphic WALL2112, 0, 0 }
-Texture WLF300EB, 64, 64 {Graphic WALL2113, 0, 0 }
-Texture WLF300FA, 64, 64 {Graphic WALL2114, 0, 0 }
-Texture WLF300FB, 64, 64 {Graphic WALL2115, 0, 0 }
-Texture WLF3010A, 64, 64 {Graphic WALL3030, 0, 0 }
-Texture WLF3010B, 64, 64 {Graphic WALL3031, 0, 0 }
-Texture WLF3011A, 64, 64 {Graphic WALL3032, 0, 0 }
-Texture WLF3011B, 64, 64 {Graphic WALL3033, 0, 0 }
-Texture WLF3012A, 64, 64 {Graphic WALL3034, 0, 0 }
-Texture WLF3012B, 64, 64 {Graphic WALL3035, 0, 0 }
-Texture WLF3013A, 64, 64 {Graphic WALL3036, 0, 0 }
-Texture WLF3013B, 64, 64 {Graphic WALL3037, 0, 0 }
-Texture WLF3014A, 64, 64 {Graphic WALL3038, 0, 0 }
-Texture WLF3014B, 64, 64 {Graphic WALL3039, 0, 0 }
-Texture WLF3015A, 64, 64 {Graphic WALL2040, 0, 0 }
-Texture WLF3015B, 64, 64 {Graphic WALL2041, 0, 0 }
-Texture WLF3016A, 64, 64 {Graphic WALL2042, 0, 0 }
-Texture WLF3016B, 64, 64 {Graphic WALL2043, 0, 0 }
-Texture WLF3017A, 64, 64 {Graphic WALL2096, 0, 0 }
-Texture WLF3017B, 64, 64 {Graphic WALL2097, 0, 0 }
-Texture WLF3018A, 64, 64 {Graphic WALL2096, 0, 0 }
-Texture WLF3018B, 64, 64 {Graphic WALL2097, 0, 0 }
-Texture WLF3019A, 64, 64 {Graphic WALL2096, 0, 0 }
-Texture WLF3019B, 64, 64 {Graphic WALL2097, 0, 0 }
-Texture WLF301AA, 64, 64 {Graphic WALL2056, 0, 0 }
-Texture WLF301AB, 64, 64 {Graphic WALL2057, 0, 0 }
-Texture WLF301BA, 64, 64 {Graphic WALL2060, 0, 0 }
-Texture WLF301BB, 64, 64 {Graphic WALL2061, 0, 0 }
-Texture WLF301CA, 64, 64 {Graphic WALL2058, 0, 0 }
-Texture WLF301CB, 64, 64 {Graphic WALL2059, 0, 0 }
-Texture WLF301DA, 64, 64 {Graphic WALL3056, 0, 0 }
-Texture WLF301DB, 64, 64 {Graphic WALL3057, 0, 0 }
-Texture WLF301EA, 64, 64 {Graphic WALL3058, 0, 0 }
-Texture WLF301EB, 64, 64 {Graphic WALL3059, 0, 0 }
-Texture WLF301FA, 64, 64 {Graphic WALL2000, 0, 0 }
-Texture WLF301FB, 64, 64 {Graphic WALL2001, 0, 0 }
-Texture WLF3020A, 64, 64 {Graphic WALL2002, 0, 0 }
-Texture WLF3020B, 64, 64 {Graphic WALL2003, 0, 0 }
-Texture WLF3021A, 64, 64 {Graphic WALL2004, 0, 0 }
-Texture WLF3021B, 64, 64 {Graphic WALL2005, 0, 0 }
-Texture WLF3022A, 64, 64 {Graphic WALL2020, 0, 0 }
-Texture WLF3022B, 64, 64 {Graphic WALL2021, 0, 0 }
-Texture WLF3023A, 64, 64 {Graphic WALL2022, 0, 0 }
-Texture WLF3023B, 64, 64 {Graphic WALL2023, 0, 0 }
-Texture WLF3024A, 64, 64 {Graphic WALL2046, 0, 0 }
-Texture WLF3024B, 64, 64 {Graphic WALL2047, 0, 0 }
-Texture WLF3025A, 64, 64 {Graphic WALL2048, 0, 0 }
-Texture WLF3025B, 64, 64 {Graphic WALL2049, 0, 0 }
-Texture WLF3026A, 64, 64 {Graphic WALL2050, 0, 0 }
-Texture WLF3026B, 64, 64 {Graphic WALL2051, 0, 0 }
-Texture WLF3027A, 64, 64 {Graphic WALL2052, 0, 0 }
-Texture WLF3027B, 64, 64 {Graphic WALL2053, 0, 0 }
-Texture WLF3028A, 64, 64 {Graphic WALL2054, 0, 0 }
-Texture WLF3028B, 64, 64 {Graphic WALL2055, 0, 0 }
-Texture WLF3029A, 64, 64 {Graphic WALL2026, 0, 0 }
-Texture WLF3029B, 64, 64 {Graphic WALL2027, 0, 0 }
-Texture WLF302AA, 64, 64 {Graphic WALL2124, 0, 0 }
-Texture WLF302AB, 64, 64 {Graphic WALL2125, 0, 0 }
-Texture WLF302BA, 64, 64 {Graphic WALL2120, 0, 0 }
-Texture WLF302BB, 64, 64 {Graphic WALL2121, 0, 0 }
-Texture WLF302CA, 64, 64 {Graphic WALL2122, 0, 0 }
-Texture WLF302CB, 64, 64 {Graphic WALL2123, 0, 0 }
-Texture WLF302DA, 64, 64 {Graphic WALL3088, 0, 0 }
-Texture WLF302DB, 64, 64 {Graphic WALL3089, 0, 0 }
-Texture WLF302EA, 64, 64 {Graphic WALL2074, 0, 0 }
-Texture WLF302EB, 64, 64 {Graphic WALL2075, 0, 0 }
-Texture WLF302FA, 64, 64 {Graphic WALL2082, 0, 0 }
-Texture WLF302FB, 64, 64 {Graphic WALL2083, 0, 0 }
-Texture WLF3030A, 64, 64 {Graphic WALL2076, 0, 0 }
-Texture WLF3030B, 64, 64 {Graphic WALL2077, 0, 0 }
-Texture WLF3031A, 64, 64 {Graphic WALL2080, 0, 0 }
-Texture WLF3031B, 64, 64 {Graphic WALL2081, 0, 0 }
-Texture WLF3032A, 64, 64 {Graphic WALL2078, 0, 0 }
-Texture WLF3032B, 64, 64 {Graphic WALL2079, 0, 0 }
-Texture WLF3033A, 64, 64 {Graphic WALL2068, 0, 0 }
-Texture WLF3033B, 64, 64 {Graphic WALL2069, 0, 0 }
-Texture WLF3034A, 64, 64 {Graphic WALL2088, 0, 0 }
-Texture WLF3034B, 64, 64 {Graphic WALL2089, 0, 0 }
-Texture WLF3035A, 64, 64 {Graphic WALL2090, 0, 0 }
-Texture WLF3035B, 64, 64 {Graphic WALL2091, 0, 0 }
-Texture WLF3036A, 64, 64 {Graphic WALL2116, 0, 0 }
-Texture WLF3036B, 64, 64 {Graphic WALL2117, 0, 0 }
-Texture WLF3037A, 64, 64 {Graphic WALL2108, 0, 0 }
-Texture WLF3037B, 64, 64 {Graphic WALL2109, 0, 0 }
-Texture WLF3038A, 64, 64 {Graphic WALL3110, 0, 0 }
-Texture WLF3038B, 64, 64 {Graphic WALL3111, 0, 0 }
-Texture WLF3039A, 64, 64 {Graphic WALL3112, 0, 0 }
-Texture WLF3039B, 64, 64 {Graphic WALL3113, 0, 0 }
-Texture WLF303AA, 64, 64 {Graphic WALL3114, 0, 0 }
-Texture WLF303AB, 64, 64 {Graphic WALL3115, 0, 0 }
-Texture WLF303BA, 64, 64 {Graphic WALL3116, 0, 0 }
-Texture WLF303BB, 64, 64 {Graphic WALL3117, 0, 0 }
-Texture WLF303CA, 64, 64 {Graphic WALL2118, 0, 0 }
-Texture WLF303CB, 64, 64 {Graphic WALL2119, 0, 0 }
-Texture WLF303DA, 64, 64 {Graphic WALL2096, 0, 0 }
-Texture WLF303DB, 64, 64 {Graphic WALL2097, 0, 0 }
-Texture WLF303EA, 64, 64 {Graphic WALL2098, 0, 0 }
-Texture WLF303EB, 64, 64 {Graphic WALL2099, 0, 0 }
-Texture WLF303FA, 64, 64 {Graphic WALL3124, 0, 0 }
-Texture WLF303FB, 64, 64 {Graphic WALL3125, 0, 0 }
+Texture WLF3001A, 64, 64 { Patch WALL2062, 0, 0 }
+Texture WLF3001B, 64, 64 { Patch WALL2063, 0, 0 }
+Texture WLF3002A, 64, 64 { Patch WALL2066, 0, 0 }
+Texture WLF3002B, 64, 64 { Patch WALL2067, 0, 0 }
+Texture WLF3003A, 64, 64 { Patch WALL2070, 0, 0 }
+Texture WLF3003B, 64, 64 { Patch WALL2071, 0, 0 }
+Texture WLF3004A, 64, 64 { Patch WALL2072, 0, 0 }
+Texture WLF3004B, 64, 64 { Patch WALL2073, 0, 0 }
+Texture WLF3005A, 64, 64 { Patch WALL2096, 0, 0 }
+Texture WLF3005B, 64, 64 { Patch WALL2097, 0, 0 }
+Texture WLF3006A, 64, 64 { Patch WALL2064, 0, 0 }
+Texture WLF3006B, 64, 64 { Patch WALL2065, 0, 0 }
+Texture WLF3007A, 64, 64 { Patch WALL2068, 0, 0 }
+Texture WLF3007B, 64, 64 { Patch WALL2069, 0, 0 }
+Texture WLF3008A, 64, 64 { Patch WALL2084, 0, 0 }
+Texture WLF3008B, 64, 64 { Patch WALL2085, 0, 0 }
+Texture WLF3009A, 64, 64 { Patch WALL3016, 0, 0 }
+Texture WLF3009B, 64, 64 { Patch WALL3017, 0, 0 }
+Texture WLF300AA, 64, 64 { Patch WALL2018, 0, 0 }
+Texture WLF300AB, 64, 64 { Patch WALL2019, 0, 0 }
+Texture WLF300BA, 64, 64 { Patch WALL2014, 0, 0 }
+Texture WLF300BB, 64, 64 { Patch WALL2015, 0, 0 }
+Texture WLF300CA, 64, 64 { Patch WALL2016, 0, 0 }
+Texture WLF300CB, 64, 64 { Patch WALL2017, 0, 0 }
+Texture WLF300DA, 64, 64 { Patch WALL2024, 0, 0 }
+Texture WLF300DB, 64, 64 { Patch WALL2025, 0, 0 }
+Texture WLF300EA, 64, 64 { Patch WALL2112, 0, 0 }
+Texture WLF300EB, 64, 64 { Patch WALL2113, 0, 0 }
+Texture WLF300FA, 64, 64 { Patch WALL2114, 0, 0 }
+Texture WLF300FB, 64, 64 { Patch WALL2115, 0, 0 }
+Texture WLF3010A, 64, 64 { Patch WALL3030, 0, 0 }
+Texture WLF3010B, 64, 64 { Patch WALL3031, 0, 0 }
+Texture WLF3011A, 64, 64 { Patch WALL3032, 0, 0 }
+Texture WLF3011B, 64, 64 { Patch WALL3033, 0, 0 }
+Texture WLF3012A, 64, 64 { Patch WALL3034, 0, 0 }
+Texture WLF3012B, 64, 64 { Patch WALL3035, 0, 0 }
+Texture WLF3013A, 64, 64 { Patch WALL3036, 0, 0 }
+Texture WLF3013B, 64, 64 { Patch WALL3037, 0, 0 }
+Texture WLF3014A, 64, 64 { Patch WALL3038, 0, 0 }
+Texture WLF3014B, 64, 64 { Patch WALL3039, 0, 0 }
+Texture WLF3015A, 64, 64 { Patch WALL2040, 0, 0 }
+Texture WLF3015B, 64, 64 { Patch WALL2041, 0, 0 }
+Texture WLF3016A, 64, 64 { Patch WALL2042, 0, 0 }
+Texture WLF3016B, 64, 64 { Patch WALL2043, 0, 0 }
+Texture WLF3017A, 64, 64 { Patch WALL2096, 0, 0 }
+Texture WLF3017B, 64, 64 { Patch WALL2097, 0, 0 }
+Texture WLF3018A, 64, 64 { Patch WALL2096, 0, 0 }
+Texture WLF3018B, 64, 64 { Patch WALL2097, 0, 0 }
+Texture WLF3019A, 64, 64 { Patch WALL2096, 0, 0 }
+Texture WLF3019B, 64, 64 { Patch WALL2097, 0, 0 }
+Texture WLF301AA, 64, 64 { Patch WALL2056, 0, 0 }
+Texture WLF301AB, 64, 64 { Patch WALL2057, 0, 0 }
+Texture WLF301BA, 64, 64 { Patch WALL2060, 0, 0 }
+Texture WLF301BB, 64, 64 { Patch WALL2061, 0, 0 }
+Texture WLF301CA, 64, 64 { Patch WALL2058, 0, 0 }
+Texture WLF301CB, 64, 64 { Patch WALL2059, 0, 0 }
+Texture WLF301DA, 64, 64 { Patch WALL3056, 0, 0 }
+Texture WLF301DB, 64, 64 { Patch WALL3057, 0, 0 }
+Texture WLF301EA, 64, 64 { Patch WALL3058, 0, 0 }
+Texture WLF301EB, 64, 64 { Patch WALL3059, 0, 0 }
+Texture WLF301FA, 64, 64 { Patch WALL2000, 0, 0 }
+Texture WLF301FB, 64, 64 { Patch WALL2001, 0, 0 }
+Texture WLF3020A, 64, 64 { Patch WALL2002, 0, 0 }
+Texture WLF3020B, 64, 64 { Patch WALL2003, 0, 0 }
+Texture WLF3021A, 64, 64 { Patch WALL2004, 0, 0 }
+Texture WLF3021B, 64, 64 { Patch WALL2005, 0, 0 }
+Texture WLF3022A, 64, 64 { Patch WALL2020, 0, 0 }
+Texture WLF3022B, 64, 64 { Patch WALL2021, 0, 0 }
+Texture WLF3023A, 64, 64 { Patch WALL2022, 0, 0 }
+Texture WLF3023B, 64, 64 { Patch WALL2023, 0, 0 }
+Texture WLF3024A, 64, 64 { Patch WALL2046, 0, 0 }
+Texture WLF3024B, 64, 64 { Patch WALL2047, 0, 0 }
+Texture WLF3025A, 64, 64 { Patch WALL2048, 0, 0 }
+Texture WLF3025B, 64, 64 { Patch WALL2049, 0, 0 }
+Texture WLF3026A, 64, 64 { Patch WALL2050, 0, 0 }
+Texture WLF3026B, 64, 64 { Patch WALL2051, 0, 0 }
+Texture WLF3027A, 64, 64 { Patch WALL2052, 0, 0 }
+Texture WLF3027B, 64, 64 { Patch WALL2053, 0, 0 }
+Texture WLF3028A, 64, 64 { Patch WALL2054, 0, 0 }
+Texture WLF3028B, 64, 64 { Patch WALL2055, 0, 0 }
+Texture WLF3029A, 64, 64 { Patch WALL2026, 0, 0 }
+Texture WLF3029B, 64, 64 { Patch WALL2027, 0, 0 }
+Texture WLF302AA, 64, 64 { Patch WALL2124, 0, 0 }
+Texture WLF302AB, 64, 64 { Patch WALL2125, 0, 0 }
+Texture WLF302BA, 64, 64 { Patch WALL2120, 0, 0 }
+Texture WLF302BB, 64, 64 { Patch WALL2121, 0, 0 }
+Texture WLF302CA, 64, 64 { Patch WALL2122, 0, 0 }
+Texture WLF302CB, 64, 64 { Patch WALL2123, 0, 0 }
+Texture WLF302DA, 64, 64 { Patch WALL3088, 0, 0 }
+Texture WLF302DB, 64, 64 { Patch WALL3089, 0, 0 }
+Texture WLF302EA, 64, 64 { Patch WALL2074, 0, 0 }
+Texture WLF302EB, 64, 64 { Patch WALL2075, 0, 0 }
+Texture WLF302FA, 64, 64 { Patch WALL2082, 0, 0 }
+Texture WLF302FB, 64, 64 { Patch WALL2083, 0, 0 }
+Texture WLF3030A, 64, 64 { Patch WALL2076, 0, 0 }
+Texture WLF3030B, 64, 64 { Patch WALL2077, 0, 0 }
+Texture WLF3031A, 64, 64 { Patch WALL2080, 0, 0 }
+Texture WLF3031B, 64, 64 { Patch WALL2081, 0, 0 }
+Texture WLF3032A, 64, 64 { Patch WALL2078, 0, 0 }
+Texture WLF3032B, 64, 64 { Patch WALL2079, 0, 0 }
+Texture WLF3033A, 64, 64 { Patch WALL2068, 0, 0 }
+Texture WLF3033B, 64, 64 { Patch WALL2069, 0, 0 }
+Texture WLF3034A, 64, 64 { Patch WALL2088, 0, 0 }
+Texture WLF3034B, 64, 64 { Patch WALL2089, 0, 0 }
+Texture WLF3035A, 64, 64 { Patch WALL2090, 0, 0 }
+Texture WLF3035B, 64, 64 { Patch WALL2091, 0, 0 }
+Texture WLF3036A, 64, 64 { Patch WALL2116, 0, 0 }
+Texture WLF3036B, 64, 64 { Patch WALL2117, 0, 0 }
+Texture WLF3037A, 64, 64 { Patch WALL2108, 0, 0 }
+Texture WLF3037B, 64, 64 { Patch WALL2109, 0, 0 }
+Texture WLF3038A, 64, 64 { Patch WALL3110, 0, 0 }
+Texture WLF3038B, 64, 64 { Patch WALL3111, 0, 0 }
+Texture WLF3039A, 64, 64 { Patch WALL3112, 0, 0 }
+Texture WLF3039B, 64, 64 { Patch WALL3113, 0, 0 }
+Texture WLF303AA, 64, 64 { Patch WALL3114, 0, 0 }
+Texture WLF303AB, 64, 64 { Patch WALL3115, 0, 0 }
+Texture WLF303BA, 64, 64 { Patch WALL3116, 0, 0 }
+Texture WLF303BB, 64, 64 { Patch WALL3117, 0, 0 }
+Texture WLF303CA, 64, 64 { Patch WALL2118, 0, 0 }
+Texture WLF303CB, 64, 64 { Patch WALL2119, 0, 0 }
+Texture WLF303DA, 64, 64 { Patch WALL2096, 0, 0 }
+Texture WLF303DB, 64, 64 { Patch WALL2097, 0, 0 }
+Texture WLF303EA, 64, 64 { Patch WALL2098, 0, 0 }
+Texture WLF303EB, 64, 64 { Patch WALL2099, 0, 0 }
+Texture WLF303FA, 64, 64 { Patch WALL3124, 0, 0 }
+Texture WLF303FB, 64, 64 { Patch WALL3125, 0, 0 }
 
-Texture "Patches/Walls/WALL3000.png", 64, 64 {Graphic WALL2062, 0, 0 }
-Texture "Patches/Walls/WALL3001.png", 64, 64 {Graphic WALL2063, 0, 0 }
-Texture "Patches/Walls/WALL3002.png", 64, 64 {Graphic WALL2066, 0, 0 }
-Texture "Patches/Walls/WALL3003.png", 64, 64 {Graphic WALL2067, 0, 0 }
-Texture "Patches/Walls/WALL3004.png", 64, 64 {Graphic WALL2070, 0, 0 }
-Texture "Patches/Walls/WALL3005.png", 64, 64 {Graphic WALL2071, 0, 0 }
-Texture "Patches/Walls/WALL3006.png", 64, 64 {Graphic WALL2072, 0, 0 }
-Texture "Patches/Walls/WALL3007.png", 64, 64 {Graphic WALL2073, 0, 0 }
-Texture "Patches/Walls/WALL3008.png", 64, 64 {Graphic WALL2096, 0, 0 }
-Texture "Patches/Walls/WALL3009.png", 64, 64 {Graphic WALL2097, 0, 0 }
-Texture "Patches/Walls/WALL3010.png", 64, 64 {Graphic WALL2064, 0, 0 }
-Texture "Patches/Walls/WALL3011.png", 64, 64 {Graphic WALL2065, 0, 0 }
-Texture "Patches/Walls/WALL3012.png", 64, 64 {Graphic WALL2068, 0, 0 }
-Texture "Patches/Walls/WALL3013.png", 64, 64 {Graphic WALL2069, 0, 0 }
-Texture "Patches/Walls/WALL3014.png", 64, 64 {Graphic WALL2084, 0, 0 }
-Texture "Patches/Walls/WALL3015.png", 64, 64 {Graphic WALL2085, 0, 0 }
-Texture "Patches/Walls/WALL3018.png", 64, 64 {Graphic WALL2018, 0, 0 }
-Texture "Patches/Walls/WALL3019.png", 64, 64 {Graphic WALL2019, 0, 0 }
-Texture "Patches/Walls/WALL3020.png", 64, 64 {Graphic WALL2014, 0, 0 }
-Texture "Patches/Walls/WALL3021.png", 64, 64 {Graphic WALL2015, 0, 0 }
-Texture "Patches/Walls/WALL3022.png", 64, 64 {Graphic WALL2016, 0, 0 }
-Texture "Patches/Walls/WALL3023.png", 64, 64 {Graphic WALL2017, 0, 0 }
-Texture "Patches/Walls/WALL3024.png", 64, 64 {Graphic WALL2024, 0, 0 }
-Texture "Patches/Walls/WALL3025.png", 64, 64 {Graphic WALL2025, 0, 0 }
-Texture "Patches/Walls/WALL3026.png", 64, 64 {Graphic WALL2112, 0, 0 }
-Texture "Patches/Walls/WALL3027.png", 64, 64 {Graphic WALL2113, 0, 0 }
-Texture "Patches/Walls/WALL3028.png", 64, 64 {Graphic WALL2114, 0, 0 }
-Texture "Patches/Walls/WALL3029.png", 64, 64 {Graphic WALL2115, 0, 0 }
-Texture "Patches/Walls/WALL3040.png", 64, 64 {Graphic WALL2040, 0, 0 }
-Texture "Patches/Walls/WALL3041.png", 64, 64 {Graphic WALL2041, 0, 0 }
-Texture "Patches/Walls/WALL3042.png", 64, 64 {Graphic WALL2042, 0, 0 }
-Texture "Patches/Walls/WALL3043.png", 64, 64 {Graphic WALL2043, 0, 0 }
-Texture "Patches/Walls/WALL3044.png", 64, 64 {Graphic WALL2096, 0, 0 }
-Texture "Patches/Walls/WALL3045.png", 64, 64 {Graphic WALL2097, 0, 0 }
-Texture "Patches/Walls/WALL3046.png", 64, 64 {Graphic WALL2096, 0, 0 }
-Texture "Patches/Walls/WALL3047.png", 64, 64 {Graphic WALL2097, 0, 0 }
-Texture "Patches/Walls/WALL3048.png", 64, 64 {Graphic WALL2096, 0, 0 }
-Texture "Patches/Walls/WALL3049.png", 64, 64 {Graphic WALL2097, 0, 0 }
-Texture "Patches/Walls/WALL3050.png", 64, 64 {Graphic WALL2056, 0, 0 }
-Texture "Patches/Walls/WALL3051.png", 64, 64 {Graphic WALL2057, 0, 0 }
-Texture "Patches/Walls/WALL3052.png", 64, 64 {Graphic WALL2060, 0, 0 }
-Texture "Patches/Walls/WALL3053.png", 64, 64 {Graphic WALL2061, 0, 0 }
-Texture "Patches/Walls/WALL3054.png", 64, 64 {Graphic WALL2058, 0, 0 }
-Texture "Patches/Walls/WALL3055.png", 64, 64 {Graphic WALL2059, 0, 0 }
-Texture "Patches/Walls/WALL3060.png", 64, 64 {Graphic WALL2000, 0, 0 }
-Texture "Patches/Walls/WALL3061.png", 64, 64 {Graphic WALL2001, 0, 0 }
-Texture "Patches/Walls/WALL3062.png", 64, 64 {Graphic WALL2002, 0, 0 }
-Texture "Patches/Walls/WALL3063.png", 64, 64 {Graphic WALL2003, 0, 0 }
-Texture "Patches/Walls/WALL3064.png", 64, 64 {Graphic WALL2004, 0, 0 }
-Texture "Patches/Walls/WALL3065.png", 64, 64 {Graphic WALL2005, 0, 0 }
-Texture "Patches/Walls/WALL3066.png", 64, 64 {Graphic WALL2020, 0, 0 }
-Texture "Patches/Walls/WALL3067.png", 64, 64 {Graphic WALL2021, 0, 0 }
-Texture "Patches/Walls/WALL3068.png", 64, 64 {Graphic WALL2022, 0, 0 }
-Texture "Patches/Walls/WALL3069.png", 64, 64 {Graphic WALL2023, 0, 0 }
-Texture "Patches/Walls/WALL3070.png", 64, 64 {Graphic WALL2046, 0, 0 }
-Texture "Patches/Walls/WALL3071.png", 64, 64 {Graphic WALL2047, 0, 0 }
-Texture "Patches/Walls/WALL3072.png", 64, 64 {Graphic WALL2048, 0, 0 }
-Texture "Patches/Walls/WALL3073.png", 64, 64 {Graphic WALL2049, 0, 0 }
-Texture "Patches/Walls/WALL3074.png", 64, 64 {Graphic WALL2050, 0, 0 }
-Texture "Patches/Walls/WALL3075.png", 64, 64 {Graphic WALL2051, 0, 0 }
-Texture "Patches/Walls/WALL3076.png", 64, 64 {Graphic WALL2052, 0, 0 }
-Texture "Patches/Walls/WALL3077.png", 64, 64 {Graphic WALL2053, 0, 0 }
-Texture "Patches/Walls/WALL3078.png", 64, 64 {Graphic WALL2054, 0, 0 }
-Texture "Patches/Walls/WALL3079.png", 64, 64 {Graphic WALL2055, 0, 0 }
-Texture "Patches/Walls/WALL3080.png", 64, 64 {Graphic WALL2026, 0, 0 }
-Texture "Patches/Walls/WALL3081.png", 64, 64 {Graphic WALL2027, 0, 0 }
-Texture "Patches/Walls/WALL3082.png", 64, 64 {Graphic WALL2124, 0, 0 }
-Texture "Patches/Walls/WALL3083.png", 64, 64 {Graphic WALL2125, 0, 0 }
-Texture "Patches/Walls/WALL3084.png", 64, 64 {Graphic WALL2120, 0, 0 }
-Texture "Patches/Walls/WALL3085.png", 64, 64 {Graphic WALL2121, 0, 0 }
-Texture "Patches/Walls/WALL3086.png", 64, 64 {Graphic WALL2122, 0, 0 }
-Texture "Patches/Walls/WALL3087.png", 64, 64 {Graphic WALL2123, 0, 0 }
-Texture "Patches/Walls/WALL3090.png", 64, 64 {Graphic WALL2074, 0, 0 }
-Texture "Patches/Walls/WALL3091.png", 64, 64 {Graphic WALL2075, 0, 0 }
-Texture "Patches/Walls/WALL3092.png", 64, 64 {Graphic WALL2082, 0, 0 }
-Texture "Patches/Walls/WALL3093.png", 64, 64 {Graphic WALL2083, 0, 0 }
-Texture "Patches/Walls/WALL3094.png", 64, 64 {Graphic WALL2076, 0, 0 }
-Texture "Patches/Walls/WALL3095.png", 64, 64 {Graphic WALL2077, 0, 0 }
-Texture "Patches/Walls/WALL3096.png", 64, 64 {Graphic WALL2080, 0, 0 }
-Texture "Patches/Walls/WALL3097.png", 64, 64 {Graphic WALL2081, 0, 0 }
-Texture "Patches/Walls/WALL3098.png", 64, 64 {Graphic WALL2078, 0, 0 }
-Texture "Patches/Walls/WALL3099.png", 64, 64 {Graphic WALL2079, 0, 0 }
-Texture "Patches/Walls/WALL3100.png", 64, 64 {Graphic WALL2068, 0, 0 }
-Texture "Patches/Walls/WALL3101.png", 64, 64 {Graphic WALL2069, 0, 0 }
-Texture "Patches/Walls/WALL3102.png", 64, 64 {Graphic WALL2088, 0, 0 }
-Texture "Patches/Walls/WALL3103.png", 64, 64 {Graphic WALL2089, 0, 0 }
-Texture "Patches/Walls/WALL3104.png", 64, 64 {Graphic WALL2090, 0, 0 }
-Texture "Patches/Walls/WALL3105.png", 64, 64 {Graphic WALL2091, 0, 0 }
-Texture "Patches/Walls/WALL3106.png", 64, 64 {Graphic WALL2116, 0, 0 }
-Texture "Patches/Walls/WALL3107.png", 64, 64 {Graphic WALL2117, 0, 0 }
-Texture "Patches/Walls/WALL3108.png", 64, 64 {Graphic WALL2108, 0, 0 }
-Texture "Patches/Walls/WALL3109.png", 64, 64 {Graphic WALL2109, 0, 0 }
-Texture "Patches/Walls/WALL3118.png", 64, 64 {Graphic WALL2118, 0, 0 }
-Texture "Patches/Walls/WALL3119.png", 64, 64 {Graphic WALL2119, 0, 0 }
-Texture "Patches/Walls/WALL3120.png", 64, 64 {Graphic WALL2096, 0, 0 }
-Texture "Patches/Walls/WALL3121.png", 64, 64 {Graphic WALL2097, 0, 0 }
-Texture "Patches/Walls/WALL3122.png", 64, 64 {Graphic WALL2098, 0, 0 }
-Texture "Patches/Walls/WALL3123.png", 64, 64 {Graphic WALL2099, 0, 0 }
+Texture "Patches/Walls/WALL3000.png", 64, 64 { Patch WALL2062, 0, 0 }
+Texture "Patches/Walls/WALL3001.png", 64, 64 { Patch WALL2063, 0, 0 }
+Texture "Patches/Walls/WALL3002.png", 64, 64 { Patch WALL2066, 0, 0 }
+Texture "Patches/Walls/WALL3003.png", 64, 64 { Patch WALL2067, 0, 0 }
+Texture "Patches/Walls/WALL3004.png", 64, 64 { Patch WALL2070, 0, 0 }
+Texture "Patches/Walls/WALL3005.png", 64, 64 { Patch WALL2071, 0, 0 }
+Texture "Patches/Walls/WALL3006.png", 64, 64 { Patch WALL2072, 0, 0 }
+Texture "Patches/Walls/WALL3007.png", 64, 64 { Patch WALL2073, 0, 0 }
+Texture "Patches/Walls/WALL3008.png", 64, 64 { Patch WALL2096, 0, 0 }
+Texture "Patches/Walls/WALL3009.png", 64, 64 { Patch WALL2097, 0, 0 }
+Texture "Patches/Walls/WALL3010.png", 64, 64 { Patch WALL2064, 0, 0 }
+Texture "Patches/Walls/WALL3011.png", 64, 64 { Patch WALL2065, 0, 0 }
+Texture "Patches/Walls/WALL3012.png", 64, 64 { Patch WALL2068, 0, 0 }
+Texture "Patches/Walls/WALL3013.png", 64, 64 { Patch WALL2069, 0, 0 }
+Texture "Patches/Walls/WALL3014.png", 64, 64 { Patch WALL2084, 0, 0 }
+Texture "Patches/Walls/WALL3015.png", 64, 64 { Patch WALL2085, 0, 0 }
+Texture "Patches/Walls/WALL3018.png", 64, 64 { Patch WALL2018, 0, 0 }
+Texture "Patches/Walls/WALL3019.png", 64, 64 { Patch WALL2019, 0, 0 }
+Texture "Patches/Walls/WALL3020.png", 64, 64 { Patch WALL2014, 0, 0 }
+Texture "Patches/Walls/WALL3021.png", 64, 64 { Patch WALL2015, 0, 0 }
+Texture "Patches/Walls/WALL3022.png", 64, 64 { Patch WALL2016, 0, 0 }
+Texture "Patches/Walls/WALL3023.png", 64, 64 { Patch WALL2017, 0, 0 }
+Texture "Patches/Walls/WALL3024.png", 64, 64 { Patch WALL2024, 0, 0 }
+Texture "Patches/Walls/WALL3025.png", 64, 64 { Patch WALL2025, 0, 0 }
+Texture "Patches/Walls/WALL3026.png", 64, 64 { Patch WALL2112, 0, 0 }
+Texture "Patches/Walls/WALL3027.png", 64, 64 { Patch WALL2113, 0, 0 }
+Texture "Patches/Walls/WALL3028.png", 64, 64 { Patch WALL2114, 0, 0 }
+Texture "Patches/Walls/WALL3029.png", 64, 64 { Patch WALL2115, 0, 0 }
+Texture "Patches/Walls/WALL3040.png", 64, 64 { Patch WALL2040, 0, 0 }
+Texture "Patches/Walls/WALL3041.png", 64, 64 { Patch WALL2041, 0, 0 }
+Texture "Patches/Walls/WALL3042.png", 64, 64 { Patch WALL2042, 0, 0 }
+Texture "Patches/Walls/WALL3043.png", 64, 64 { Patch WALL2043, 0, 0 }
+Texture "Patches/Walls/WALL3044.png", 64, 64 { Patch WALL2096, 0, 0 }
+Texture "Patches/Walls/WALL3045.png", 64, 64 { Patch WALL2097, 0, 0 }
+Texture "Patches/Walls/WALL3046.png", 64, 64 { Patch WALL2096, 0, 0 }
+Texture "Patches/Walls/WALL3047.png", 64, 64 { Patch WALL2097, 0, 0 }
+Texture "Patches/Walls/WALL3048.png", 64, 64 { Patch WALL2096, 0, 0 }
+Texture "Patches/Walls/WALL3049.png", 64, 64 { Patch WALL2097, 0, 0 }
+Texture "Patches/Walls/WALL3050.png", 64, 64 { Patch WALL2056, 0, 0 }
+Texture "Patches/Walls/WALL3051.png", 64, 64 { Patch WALL2057, 0, 0 }
+Texture "Patches/Walls/WALL3052.png", 64, 64 { Patch WALL2060, 0, 0 }
+Texture "Patches/Walls/WALL3053.png", 64, 64 { Patch WALL2061, 0, 0 }
+Texture "Patches/Walls/WALL3054.png", 64, 64 { Patch WALL2058, 0, 0 }
+Texture "Patches/Walls/WALL3055.png", 64, 64 { Patch WALL2059, 0, 0 }
+Texture "Patches/Walls/WALL3060.png", 64, 64 { Patch WALL2000, 0, 0 }
+Texture "Patches/Walls/WALL3061.png", 64, 64 { Patch WALL2001, 0, 0 }
+Texture "Patches/Walls/WALL3062.png", 64, 64 { Patch WALL2002, 0, 0 }
+Texture "Patches/Walls/WALL3063.png", 64, 64 { Patch WALL2003, 0, 0 }
+Texture "Patches/Walls/WALL3064.png", 64, 64 { Patch WALL2004, 0, 0 }
+Texture "Patches/Walls/WALL3065.png", 64, 64 { Patch WALL2005, 0, 0 }
+Texture "Patches/Walls/WALL3066.png", 64, 64 { Patch WALL2020, 0, 0 }
+Texture "Patches/Walls/WALL3067.png", 64, 64 { Patch WALL2021, 0, 0 }
+Texture "Patches/Walls/WALL3068.png", 64, 64 { Patch WALL2022, 0, 0 }
+Texture "Patches/Walls/WALL3069.png", 64, 64 { Patch WALL2023, 0, 0 }
+Texture "Patches/Walls/WALL3070.png", 64, 64 { Patch WALL2046, 0, 0 }
+Texture "Patches/Walls/WALL3071.png", 64, 64 { Patch WALL2047, 0, 0 }
+Texture "Patches/Walls/WALL3072.png", 64, 64 { Patch WALL2048, 0, 0 }
+Texture "Patches/Walls/WALL3073.png", 64, 64 { Patch WALL2049, 0, 0 }
+Texture "Patches/Walls/WALL3074.png", 64, 64 { Patch WALL2050, 0, 0 }
+Texture "Patches/Walls/WALL3075.png", 64, 64 { Patch WALL2051, 0, 0 }
+Texture "Patches/Walls/WALL3076.png", 64, 64 { Patch WALL2052, 0, 0 }
+Texture "Patches/Walls/WALL3077.png", 64, 64 { Patch WALL2053, 0, 0 }
+Texture "Patches/Walls/WALL3078.png", 64, 64 { Patch WALL2054, 0, 0 }
+Texture "Patches/Walls/WALL3079.png", 64, 64 { Patch WALL2055, 0, 0 }
+Texture "Patches/Walls/WALL3080.png", 64, 64 { Patch WALL2026, 0, 0 }
+Texture "Patches/Walls/WALL3081.png", 64, 64 { Patch WALL2027, 0, 0 }
+Texture "Patches/Walls/WALL3082.png", 64, 64 { Patch WALL2124, 0, 0 }
+Texture "Patches/Walls/WALL3083.png", 64, 64 { Patch WALL2125, 0, 0 }
+Texture "Patches/Walls/WALL3084.png", 64, 64 { Patch WALL2120, 0, 0 }
+Texture "Patches/Walls/WALL3085.png", 64, 64 { Patch WALL2121, 0, 0 }
+Texture "Patches/Walls/WALL3086.png", 64, 64 { Patch WALL2122, 0, 0 }
+Texture "Patches/Walls/WALL3087.png", 64, 64 { Patch WALL2123, 0, 0 }
+Texture "Patches/Walls/WALL3090.png", 64, 64 { Patch WALL2074, 0, 0 }
+Texture "Patches/Walls/WALL3091.png", 64, 64 { Patch WALL2075, 0, 0 }
+Texture "Patches/Walls/WALL3092.png", 64, 64 { Patch WALL2082, 0, 0 }
+Texture "Patches/Walls/WALL3093.png", 64, 64 { Patch WALL2083, 0, 0 }
+Texture "Patches/Walls/WALL3094.png", 64, 64 { Patch WALL2076, 0, 0 }
+Texture "Patches/Walls/WALL3095.png", 64, 64 { Patch WALL2077, 0, 0 }
+Texture "Patches/Walls/WALL3096.png", 64, 64 { Patch WALL2080, 0, 0 }
+Texture "Patches/Walls/WALL3097.png", 64, 64 { Patch WALL2081, 0, 0 }
+Texture "Patches/Walls/WALL3098.png", 64, 64 { Patch WALL2078, 0, 0 }
+Texture "Patches/Walls/WALL3099.png", 64, 64 { Patch WALL2079, 0, 0 }
+Texture "Patches/Walls/WALL3100.png", 64, 64 { Patch WALL2068, 0, 0 }
+Texture "Patches/Walls/WALL3101.png", 64, 64 { Patch WALL2069, 0, 0 }
+Texture "Patches/Walls/WALL3102.png", 64, 64 { Patch WALL2088, 0, 0 }
+Texture "Patches/Walls/WALL3103.png", 64, 64 { Patch WALL2089, 0, 0 }
+Texture "Patches/Walls/WALL3104.png", 64, 64 { Patch WALL2090, 0, 0 }
+Texture "Patches/Walls/WALL3105.png", 64, 64 { Patch WALL2091, 0, 0 }
+Texture "Patches/Walls/WALL3106.png", 64, 64 { Patch WALL2116, 0, 0 }
+Texture "Patches/Walls/WALL3107.png", 64, 64 { Patch WALL2117, 0, 0 }
+Texture "Patches/Walls/WALL3108.png", 64, 64 { Patch WALL2108, 0, 0 }
+Texture "Patches/Walls/WALL3109.png", 64, 64 { Patch WALL2109, 0, 0 }
+Texture "Patches/Walls/WALL3118.png", 64, 64 { Patch WALL2118, 0, 0 }
+Texture "Patches/Walls/WALL3119.png", 64, 64 { Patch WALL2119, 0, 0 }
+Texture "Patches/Walls/WALL3120.png", 64, 64 { Patch WALL2096, 0, 0 }
+Texture "Patches/Walls/WALL3121.png", 64, 64 { Patch WALL2097, 0, 0 }
+Texture "Patches/Walls/WALL3122.png", 64, 64 { Patch WALL2098, 0, 0 }
+Texture "Patches/Walls/WALL3123.png", 64, 64 { Patch WALL2099, 0, 0 }
 
-Texture WLF3DORA, 64, 64 {Graphic WALL2126, 0, 0 { FlipX } }
-Texture WLF3DORB, 64, 64 {Graphic WALL2127, 0, 0 }
-Texture WLF3ELEA, 64, 64 {Graphic WALL2130, 0, 0 { FlipX } }
-Texture WLF3ELEB, 64, 64 {Graphic WALL2131, 0, 0 }
-Texture WLF3JMBA, 64, 64 {Graphic WALL2128, 0, 0 }
-Texture WLF3JMBB, 64, 64 {Graphic WALL2129, 0, 0 }
-Texture WLF3LK1A, 64, 64 {Graphic WALL2132, 0, 0 { FlipX } }
-Texture WLF3LK1B, 64, 64 {Graphic WALL2133, 0, 0 }
+Texture WLF3DORA, 64, 64 { Patch WALL2126, 0, 0 { FlipX } }
+Texture WLF3DORB, 64, 64 { Patch WALL2127, 0, 0 }
+Texture WLF3ELEA, 64, 64 { Patch WALL2130, 0, 0 { FlipX } }
+Texture WLF3ELEB, 64, 64 { Patch WALL2131, 0, 0 }
+Texture WLF3JMBA, 64, 64 { Patch WALL2128, 0, 0 }
+Texture WLF3JMBB, 64, 64 { Patch WALL2129, 0, 0 }
+Texture WLF3LK1A, 64, 64 { Patch WALL2132, 0, 0 { FlipX } }
+Texture WLF3LK1B, 64, 64 { Patch WALL2133, 0, 0 }
 
 // Alternate Locked Doors
-Texture WLF2LK2A, 64, 64 {Graphic WALL2132, 0, 0 { FlipX } }
-Texture WLF2LK2B, 64, 64 {Graphic WALL2133, 0, 0 }
-Texture WLF3LK2A, 64, 64 {Graphic WALL2132, 0, 0 { FlipX } }
-Texture WLF3LK2B, 64, 64 {Graphic WALL2133, 0, 0 }
+Texture WLF2LK2A, 64, 64 { Patch WALL2132, 0, 0 { FlipX } }
+Texture WLF2LK2B, 64, 64 { Patch WALL2133, 0, 0 }
+Texture WLF3LK2A, 64, 64 { Patch WALL2132, 0, 0 { FlipX } }
+Texture WLF3LK2B, 64, 64 { Patch WALL2133, 0, 0 }
 
 // Flipped Walls
-Texture WLF2DORC, 64, 64 {Graphic WALL2126, 0, 0 }
-Texture WLF2DORD, 64, 64 {Graphic WALL2127, 0, 0 { FlipX } }
-Texture WLF2ELEC, 64, 64 {Graphic WALL2130, 0, 0 }
-Texture WLF2ELED, 64, 64 {Graphic WALL2131, 0, 0 { FlipX } }
-Texture WLF2JMBC, 64, 64 {Graphic WALL2128, 0, 0 { FlipX } }
-Texture WLF2JMBD, 64, 64 {Graphic WALL2129, 0, 0 { FlipX } }
-Texture WLF2LK1C, 64, 64 {Graphic WALL2132, 0, 0 }
-Texture WLF2LK1D, 64, 64 {Graphic WALL2133, 0, 0 { FlipX } }
+Texture WLF2DORC, 64, 64 { Patch WALL2126, 0, 0 }
+Texture WLF2DORD, 64, 64 { Patch WALL2127, 0, 0 { FlipX } }
+Texture WLF2ELEC, 64, 64 { Patch WALL2130, 0, 0 }
+Texture WLF2ELED, 64, 64 { Patch WALL2131, 0, 0 { FlipX } }
+Texture WLF2JMBC, 64, 64 { Patch WALL2128, 0, 0 { FlipX } }
+Texture WLF2JMBD, 64, 64 { Patch WALL2129, 0, 0 { FlipX } }
+Texture WLF2LK1C, 64, 64 { Patch WALL2132, 0, 0 }
+Texture WLF2LK1D, 64, 64 { Patch WALL2133, 0, 0 { FlipX } }
 
-Texture WLF3DORC, 64, 64 {Graphic WALL2126, 0, 0 }
-Texture WLF3DORD, 64, 64 {Graphic WALL2127, 0, 0 { FlipX } }
-Texture WLF3ELEC, 64, 64 {Graphic WALL2130, 0, 0 }
-Texture WLF3ELED, 64, 64 {Graphic WALL2131, 0, 0 { FlipX } }
-Texture WLF3JMBC, 64, 64 {Graphic WALL2128, 0, 0 { FlipX } }
-Texture WLF3JMBD, 64, 64 {Graphic WALL2129, 0, 0 { FlipX } }
-Texture WLF3LK1C, 64, 64 {Graphic WALL2132, 0, 0 }
-Texture WLF3LK1D, 64, 64 {Graphic WALL2133, 0, 0 { FlipX } }
+Texture WLF3DORC, 64, 64 { Patch WALL2126, 0, 0 }
+Texture WLF3DORD, 64, 64 { Patch WALL2127, 0, 0 { FlipX } }
+Texture WLF3ELEC, 64, 64 { Patch WALL2130, 0, 0 }
+Texture WLF3ELED, 64, 64 { Patch WALL2131, 0, 0 { FlipX } }
+Texture WLF3JMBC, 64, 64 { Patch WALL2128, 0, 0 { FlipX } }
+Texture WLF3JMBD, 64, 64 { Patch WALL2129, 0, 0 { FlipX } }
+Texture WLF3LK1C, 64, 64 { Patch WALL2132, 0, 0 }
+Texture WLF3LK1D, 64, 64 { Patch WALL2133, 0, 0 { FlipX } }
 
-Texture WLF2LK2C, 64, 64 {Graphic WALL2132, 0, 0 }
-Texture WLF2LK2D, 64, 64 {Graphic WALL2133, 0, 0 { FlipX } }
-Texture WLF3LK2C, 64, 64 {Graphic WALL2132, 0, 0 }
-Texture WLF3LK2D, 64, 64 {Graphic WALL2133, 0, 0 { FlipX } }
+Texture WLF2LK2C, 64, 64 { Patch WALL2132, 0, 0 }
+Texture WLF2LK2D, 64, 64 { Patch WALL2133, 0, 0 { FlipX } }
+Texture WLF3LK2C, 64, 64 { Patch WALL2132, 0, 0 }
+Texture WLF3LK2D, 64, 64 { Patch WALL2133, 0, 0 { FlipX } }
 
 // Alternate Ceilings
 Texture F_SKY1, 8, 8 { Patch Ceiling, 0, 0 }
@@ -1883,11 +1883,11 @@ Texture BU_D_BR, 6, 6 { Patch "Graphics/Borders/TagBorder.png", -12, -12 }
 Texture I_LIFE, 48, 48 { Offset 24, 48 Patch WSPR0035, -8, -8 }
 Texture I_HEALTH, 48, 24 { Offset 24, 24 Patch WSPR0027, -8, -40 }
 Texture "I_BERSERK", 48, 24 { Offset 24, 24 Patch WSTRA0, -8, -40 }
-Texture "Shadows/I_BERSERK", 48, 24 { Offset 24, 24 Patch "Textures/Shadows/HLTHE0.png", -8, -40 }
+Texture "Shadows/I_BERSERK", 48, 24 { Offset 24, 24 Patch "Graphics/Shadows/HLTHE0.png", -8, -40 }
 Texture I_CLIP_O, 16, 14 { Offset 8, 14 Patch WSPR0028, -24, -50 }
 Texture I_GAS_O, 36, 26 { Offset 18, 26 Patch WGASA0, -14, -38 }
 Texture "I_ROCKET_O", 22, 23 { Offset 11, 23 Patch "Sprites/Weapons/WRKTA0.png", -21, -41 }
-Texture "Shadows/I_ROCKET_O", 22, 23 { Offset 11, 23 Patch "Textures/Shadows/WRKTA0.png", -21, -41 }
+Texture "Shadows/I_ROCKET_O", 22, 23 { Offset 11, 23 Patch "Graphics/Shadows/WRKTA0.png", -21, -41 }
 
 // Jaguar Status Bar Face
 Texture WLJST00, 24, 32 { Offset 0, -1 Graphic FACE3, 0, 0 }
@@ -1944,23 +1944,23 @@ Texture WLJKILL4, 24, 32 { Offset 0, -1 Graphic FACE15, 0, 0 }
 Texture WLJKILL5, 24, 32 { Offset 0, -1 Graphic FACE18, 0, 0 }
 Texture WLJKILL6, 24, 32 { Offset 0, -1 Graphic FACE21, 0, 0 }
 
-Texture Optional WLF0LK1E, 64, 64 { Patch WALL0104, 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK1F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK1G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK1H, 64, 64 { Patch WALL0105, 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK2E, 64, 64 { Patch WALL0104, 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK2F, 64, 64 { Patch WALL0105, 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK2G, 64, 64 { Patch WALL0104, 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK2H, 64, 64 { Patch WALL0105, 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK1E, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK1F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK1G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK1H, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK2E, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK2F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK2G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK2H, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
 
-Texture WLF1LK1E, 64, 64 { Patch WALL0104, 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK1F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK1G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK1H, 64, 64 { Patch WALL0105, 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK2E, 64, 64 { Patch WALL0104, 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK2F, 64, 64 { Patch WALL0105, 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK2G, 64, 64 { Patch WALL0104, 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK2H, 64, 64 { Patch WALL0105, 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK1E, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK1F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK1G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0  Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK1H, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 { FlipX } Patch DOOROY, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK2E, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK2F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK2G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK2H, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 { FlipX } Patch DOOROB, 0, 0 { Alpha 0.5 Style Add } }
 
 Texture WLF2LK1E, 64, 64 { Patch WALL2132, 0, 0 { FlipX } Patch DOOROYL, 0, 0 { Alpha 0.5 Style Add FlipX } }
 Texture WLF2LK1F, 64, 64 { Patch WALL2133, 0, 0  Patch DOOROYL, 0, 0 { Alpha 0.5 Style Add } }
@@ -1980,14 +1980,14 @@ Texture WLF3LK2F, 64, 64 { Patch WALL2133, 0, 0 Patch DOOROBL, 0, 0 { Alpha 0.5 
 Texture WLF3LK2G, 64, 64 { Patch WALL2132, 0, 0 Patch DOOROBL, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF3LK2H, 64, 64 { Patch WALL2133, 0, 0 { FlipX } Patch DOOROBL, 0, 0 { Alpha 0.5 Style Add FlipX } }
 
-Texture Optional WLF0LK3F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK3G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK4F, 64, 64 { Patch WALL0105, 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
-Texture Optional WLF0LK4G, 64, 64 { Patch WALL0104, 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK3F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK3G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK4F, 64, 64 { Patch WALL0105, 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
-Texture WLF1LK4G, 64, 64 { Patch WALL0104, 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK3F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK3G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK4F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture Optional WLF0LK4G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0 Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK3F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK3G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0  Patch DOOROR, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK4F, 64, 64 { Patch "Patches/Walls/DoorLockedB.png", 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
+Texture WLF1LK4G, 64, 64 { Patch "Patches/Walls/DoorLockedA.png", 0, 0  Patch DOOROG, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF2LK3F, 64, 64 { Patch WALL2133, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF2LK3G, 64, 64 { Patch WALL2132, 0, 0  Patch DOORORL, 0, 0 { Alpha 0.5 Style Add } }
 Texture WLF2LK4F, 64, 64 { Patch WALL2133, 0, 0  Patch DOOROGL, 0, 0 { Alpha 0.5 Style Add } }
