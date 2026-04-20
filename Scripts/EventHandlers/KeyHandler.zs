@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 AFADoomer
+ * Copyright (c) 2022-2025 AFADoomer
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,7 @@ class KeyHandler : EventHandler
 				case InputEvent.Key_LShift:
 				case InputEvent.Key_LAlt:
 				case InputEvent.Key_Backspace:
+				case InputEvent.Key_Del: // Because some computers map Shift+Backspace to Delete
 					if (goobers && !cheatsenabled) { gooberscount++; }
 					break;
 				case InputEvent.Key_Tab:
