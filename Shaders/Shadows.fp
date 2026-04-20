@@ -33,6 +33,8 @@ const vec4 shadowcolor = vec4(0.0, 0.0, 0.0, 1.0);
 // Approximation of Wolf3D's lightest 'cast light' pixel color 
 const vec4 lightcolor = vec4(0.816, 0.816, 0.816, 0.816);
 
+const vec4 transparent = vec4(152.0 / 255, 0, 136.0 / 255, 1.0);
+
 const float maxshade = 0.43;
 const float minlight = 0.57;
 
@@ -47,6 +49,8 @@ vec4 ProcessTexel()
 #else
 	float shadowclip = 0.85;
 #endif
+
+	if (color == transparent) { color.a = 0.0; }
 
 	if (vTexCoord.t < shadowclip) { return color; }
 
