@@ -257,7 +257,7 @@ class MapHandler : StaticEventHandler
 
 			if (mapname == "Wolf3D TC Test")
 			{
-				console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname>\c-' to load a specific map.", e.Name);
+				console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname_with_underscores>\c-' to load a specific map.", e.Name);
 			}
 		}
 		else if (e.Name == "listmaps")
@@ -265,8 +265,7 @@ class MapHandler : StaticEventHandler
 			for (int m = 0; m < parsedmaps.maps.Size(); m++)
 			{
 				String mapname = parsedmaps.maps[m].mapname;
-				mapname.Substitute(" ", "_");
-				console.printf("%s (%s)", mapname, parsedmaps.maps[m].datafile.path);
+				console.printf("'%s' (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
 	}
@@ -1642,7 +1641,7 @@ class WolfMapParser
 				planeoffsets[1] = planeoffsets[0] + planesizes[0];
 
 				newmap.mapnum = 1000 + custommapcount++;
-				newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);
+				//newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);
 
 				for (int p = 0; p < 2; p++)
 				{
