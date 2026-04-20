@@ -43,7 +43,7 @@ Class GameTileInfo
 
 			let walldata = tiledata.Find("Walls");
 
-			console.printf(tiledata.keyname .. " - " .. walldata.keyname);
+			// console.printf(tiledata.keyname .. " - " .. walldata.keyname);
 
 			Array<int> tilerange;
 			walldata.GetNumberList("Tiles", tilerange);
