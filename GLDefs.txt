@@ -1,5 +1,5 @@
 // Alpha masking for sprite shadows
-/* HardwareShader Sprite "BARLC0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/BARLC0.png" }
+HardwareShader Sprite "BARLC0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/BARLC0.png" }
 HardwareShader Sprite "TAB1A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TAB1A0.png" }
 HardwareShader Sprite "LIT1A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LIT1A0.png" }
 HardwareShader Sprite "LIT3A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LIT3A0.png" }
@@ -27,7 +27,7 @@ HardwareShader Sprite "HLTHE0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "CCLIA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/CCLIA0.png" }
 HardwareShader Sprite "CMGUP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/CMGUP0.png" }
 HardwareShader Sprite "CCGUP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/CCGUP0.png" }
-HardwareShader Sprite "TRECA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TRECA0.png" } */
+HardwareShader Sprite "TRECA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TRECA0.png" }
 HardwareShader Sprite "TRECB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TRECB0.png" }
 HardwareShader Sprite "TRECC0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TRECC0.png" }
 HardwareShader Sprite "TRECD0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/TRECD0.png" }
