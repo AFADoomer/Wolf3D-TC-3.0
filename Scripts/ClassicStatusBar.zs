@@ -289,7 +289,7 @@ class ClassicStatusBar : WidgetStatusBar
 	HUDFont ClassicFont, BigFont;
 	TextureID mugshot;
 
-	int mugshottimer, idleframe;
+	int mugshottimer, mugshottarget, idleframe;
 	Vector3 playerpos[MAXPLAYERS];
 
 	TextureID pixel;
@@ -636,11 +636,12 @@ class ClassicStatusBar : WidgetStatusBar
 			mugshot = GetMugShot(5, type:staticmugshot);
 			mugshottimer = 0;
 		}
-		else if (!mugshot || mugshottimer > min(35, Random[mugshot](0, 255)))
+		else if (!mugshot || mugshottimer > mugshottarget)
 		{
 			mugshot = GetMugShot(5);
 			mugshottimer = 0;
-			idleframe = Random[mugshot](1, 2);
+			mugshottarget = GameHandler.UIRandom(0, 25);
+			idleframe = GameHandler.UIRandom(1, 2);
 		}
 
 		Vector2 texsize = TexMan.GetScaledSize(mugshot);
@@ -677,7 +678,7 @@ class ClassicStatusBar : WidgetStatusBar
 
 			while (CPlayer.health < (accuracy - 1 - hlevel) * (maxhealth / accuracy)) { hlevel++; }
 
-			int index = (gamestate == GS_CUTSCENE || level.time < 5) ? 0 : Random[mugshot](0, 255) >> 6;
+			int index = (gamestate == GS_CUTSCENE || level.time < 5) ? 0 : GameHandler.UIRandom() >> 6;
 			if (index == 3) { index = 1; }
 
 			// SoD-specific god face
