@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 AFADoomer
+ * Copyright (c) 2022-2026 AFADoomer
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -988,6 +988,13 @@ class ClassicStatusBar : WidgetStatusBar
 		{
 			if (printlevel <= PRINT_HIGH) { Log.Add(CPlayer, outline, "Notifications", printlevel, fnt); }
 			else { Log.Add(CPlayer, outline, "Chat", printlevel, fnt, "WolfMenuYellowBright"); }
+
+			// Make sure the message is logged properly in the log file if one is being used.
+			if (!(printlevel & PRINT_NOLOG ))
+			{
+				outline.DeleteLastCharacter();
+				console.printfex(PRINT_LOG, outline);
+			}
 
 			processed = true; 
 		}
