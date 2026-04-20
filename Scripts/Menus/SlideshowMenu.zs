@@ -754,7 +754,7 @@ class LoadScreen : IntroSlideShow
 		bkg1 = TexMan.CheckForTexture("Graphics/Title/bkg1.png", TexMan.Type_Any);
 		bkg2 = TexMan.CheckForTexture("Graphics/Title/bkg2.png", TexMan.Type_Any);
 		gametitle = TexMan.CheckForTexture("Graphics/Wolf3D.png", TexMan.Type_Any);
-		gzdoom = TexMan.CheckForTexture("Graphics/Title/gzdoom.png", TexMan.Type_Any);
+		gzdoom = TexMan.CheckForTexture("Graphics/Title/uzdoom.png", TexMan.Type_Any);
 		thirtyyears = TexMan.CheckForTexture("Graphics/Title/30years.png", TexMan.Type_Any);
 	}
 
