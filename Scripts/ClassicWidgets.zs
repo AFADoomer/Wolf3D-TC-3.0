@@ -217,8 +217,8 @@ class Widget ui
 		if (flags & WDG_DRAWINWINDOW && !automapactive)
 		{
 			[xpos, ypos] = Screen.GetViewWindow();
-			xpos = int(xpos / (GetConScale(con_scale) * hudscale.x));
-			ypos = int(ypos / (GetConScale(con_scale) * hudscale.y));
+			xpos = int(xpos / (GetConScale(con_scaletext) * hudscale.x));
+			ypos = int(ypos / (GetConScale(con_scaletext) * hudscale.y));
 		}
 		else if (screenblocks < 11)
 		{
@@ -231,7 +231,7 @@ class Widget ui
 		{
 		 	if (WidgetStatusBar(Statusbar))
 			{
-				if (anchor == WDG_RIGHT && vid_fps) { relpos.y += int(NewSmallFont.GetHeight() / GetConScale(con_scale) / hudscale.y); }
+				if (anchor == WDG_RIGHT && vid_fps) { relpos.y += int(NewSmallFont.GetHeight() / GetConScale(con_scaletext) / hudscale.y); }
 				if (!(anchor & WDG_BOTTOM) && !(anchor & WDG_MIDDLE))
 				{
 					if (pos.y > 0) { relpos.y = max(0, pos.y - 12); }
@@ -395,26 +395,14 @@ class Widget ui
 		}
 	}
 
-	// From v_draw.cpp
-	int GetConScale(int altval = 0)
+	static double GetConScale(int altval = 0)
 	{
-		int scaleval;
+		if (altval > 0) { return clamp((altval + 1) / 2, 1, CleanYfac_1); } // Use alternate value if passed
+		else if (uiscale > 0) { return clamp((uiscale + 1) / 2, 1, CleanYfac_1); } // Honor the uiscale CVar if set
+		else if (st_scale > 0) { return 1; } // Match the status bar scaling
 
-		if (altval > 0) { scaleval = (altval+1) / 2; }
-		else if (uiscale == 0)
-		{
-			// Default should try to scale to 640x400
-			int vscale = screen.GetHeight() / 800;
-			int hscale = screen.GetWidth() / 1280;
-			scaleval = clamp(vscale, 1, hscale);
-		}
-		else { scaleval = (uiscale + 1) / 2; }
-
-		// block scales that result in something larger than the current screen.
-		int vmax = screen.GetHeight() / 400;
-		int hmax = screen.GetWidth() / 640;
-		int mmax = max(vmax, hmax);
-		return max(1, min(scaleval, mmax));
+		// Default to fit a 600x400 screen (half the calculated clean y scale)
+		return max(1, CleanYfac_1 / 4);
 	}
 
 	static int GetHealthColor(Actor mo, double shade = 1.0)

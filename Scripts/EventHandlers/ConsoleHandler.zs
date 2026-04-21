@@ -61,7 +61,15 @@ class ConsoleHandler : StaticEventHandler
 			int w = 1024;
 			int h = 768;
 
-			double fontscale = 2.0;
+			double fontscale;
+			if (con_scale == 0)
+			{
+				fontscale = max(0.5, int(CleanYFac_1 / 2.0));
+			}
+			else
+			{
+				fontscale = max(0.5, int((clamp(con_scale, 1, 10) - 1) / 2.0));
+			}
 
 			Font fnt = SmallFont;
 

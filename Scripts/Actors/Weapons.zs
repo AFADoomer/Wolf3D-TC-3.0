@@ -143,8 +143,10 @@ class ClassicWeapon : Weapon
 		let psp = owner.player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y * max(st_scale, 0) / WeaponScaleY; }
+		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y * clamp(st_scale, 0, 1) / WeaponScaleY; }
 		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
+
+		if (uiscale && !st_scale) { psp.y += (6.0 / WeaponScaleY) / max(1, uiscale - 1); }
 	}
 
 	override void Touch(Actor toucher)

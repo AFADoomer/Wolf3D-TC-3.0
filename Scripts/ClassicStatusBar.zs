@@ -261,26 +261,14 @@ class WidgetStatusBar : BaseStatusBar
 		return cols, rowcount;
 	}
 
-	// From v_draw.cpp
 	static int GetUIScale(int altval = 0)
 	{
-		int scaleval;
+		if (altval > 0) { return clamp(altval, 1, CleanYfac_1); } // Use alternate value if passed
+		else if (uiscale > 0) { return clamp(uiscale, 1, CleanYfac_1); } // Honor the uiscale CVar if set
+		else if (st_scale > 0) { return 1; } // Match the status bar scaling
 
-		if (altval > 0) { scaleval = altval; }
-		else if (uiscale == 0)
-		{
-			// Default should try to scale to 640x400
-			int vscale = screen.GetHeight() / 400;
-			int hscale = screen.GetWidth() / 640;
-			scaleval = clamp(vscale, 1, hscale);
-		}
-		else { scaleval = uiscale; }
-
-		// block scales that result in something larger than the current screen.
-		int vmax = screen.GetHeight() / 200;
-		int hmax = screen.GetWidth() / 320;
-		int max = MAX(vmax, hmax);
-		return MAX(1,MIN(scaleval, max));
+		// Default to fit a 600x400 screen (half the calculated clean y scale)
+		return max(1, CleanYfac_1 / 2);
 	}
 }
 

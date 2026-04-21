@@ -59,7 +59,7 @@ class DrawToHUD
 			fromsize = (Screen.GetWidth(), Screen.GetHeight());
 
 			// Get the scale being used by the Status Bar code
-			double uiscale = DrawToHUD.GetUIScale(st_scale);
+			double uiscale = DrawToHUD.GetUIScale(clamp(st_scale, 0, 1));
 			scale.x = fromsize.x / tosize.x;
 			scale.y = fromsize.y / tosize.y;
 			screensize = tosize * uiscale;
