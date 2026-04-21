@@ -384,7 +384,7 @@ class Fader : GetPsyched
 				{
 					ticcount = 0; curstate++;
 
-					if (!g_nointro) { Close(); }
+					if (!g_nointro || multiplayer) { Close(); }
 				}
 				break;
 			case 1:

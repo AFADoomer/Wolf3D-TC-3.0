@@ -381,6 +381,9 @@ class ClassicStatusBar : WidgetStatusBar
 
 	void DrawFizzle()
 	{
+		if (multiplayer) // No need to draw the fizzle in multiplayer...
+			return;
+
 		if (!pixel || !fizzleeffect)
 		{
 			EventHandler.SendNetworkEvent("fizzle_off");
@@ -390,7 +393,7 @@ class ClassicStatusBar : WidgetStatusBar
 		EventHandler.SendNetworkEvent("fizzle_on");
 
 		CVar fadestyle = CVar.GetCVar("g_fadestyle", CPlayer);
-		if (fadestyle && fadestyle.GetInt()) // Just use a normal fade
+		if ((fadestyle && fadestyle.GetInt()) || multiplayer) // Just use a normal fade
 		{
 			Screen.Dim(fizzlecolor, double(fizzleindex) / (fizzlepoints.Size() - 1), 0, 0, Screen.GetWidth(), Screen.GetHeight());
 		}
@@ -430,14 +433,14 @@ class ClassicStatusBar : WidgetStatusBar
 
 	static bool CheckFizzle()
 	{
-		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return false; }
+		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || multiplayer) { return false; }
 
 		return ClassicStatusBar(StatusBar).fizzleeffect;
 	}
 
 	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
 	{
-		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo) { return; }
+		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || multiplayer) { return; }
 
 		if (!all && StatusBar.CPlayer.mo != caller) { return; }
 

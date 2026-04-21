@@ -995,6 +995,25 @@ class ClassicBoss : ClassicBase
 	{
 		Super.PostBeginPlay();
 
+		// Increase boss health in coop... otherwise they'd be too easy!
+		if (ZScriptTools.IsCoop())
+		{
+			int pcount = 0;
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (playeringame[i])
+				{
+					pcount++;
+				}
+			}
+
+			if (pcount == 0)
+				pcount = 1;
+
+			health *= pcount;
+			StartHealth = health;
+		}
+
 		SetStateLabel("Spawn.Stand");
 	}
 }
