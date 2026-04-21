@@ -51,15 +51,15 @@ class WolfPlayer : PlayerPawn
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife";
 
-		Player.ColorRange 112, 127;
-		Player.Colorset 0, "$TXT_COLOR_GREEN",		0x70, 0x7F,  0x72;
-		Player.Colorset 1, "$TXT_COLOR_GRAY",		0x60, 0x6F,  0x62;
-		Player.Colorset 2, "$TXT_COLOR_BROWN",		0x40, 0x4F,  0x42;
-		Player.Colorset 3, "$TXT_COLOR_RED",		0x20, 0x2F,  0x22;
-		Player.Colorset 4, "$TXT_COLOR_LIGHTGRAY",	0x58, 0x67,  0x5A;
-		Player.Colorset 5, "$TXT_COLOR_LIGHTBROWN",	0x38, 0x47,  0x3A;
-		Player.Colorset 6, "$TXT_COLOR_LIGHTRED",	0xB0, 0xBF,  0xB2;
-		Player.Colorset 7, "$TXT_COLOR_LIGHTBLUE",	0xC0, 0xCF,  0xC2;
+		Player.ColorRange 96, 111;
+		Player.Colorset 0, "$TXT_COLOR_GREEN",		96, 111, 101;
+		Player.Colorset 1, "$TXT_COLOR_GRAY",		15, 31, 24;
+		Player.Colorset 2, "$TXT_COLOR_BROWN",		208, 223, 214;
+		Player.Colorset 3, "$TXT_COLOR_RED",		32, 47, 32;
+		Player.Colorset 4, "$TXT_COLOR_BLUE",		136, 159, 143;
+		Player.Colorset 5, "$TXT_COLOR_BEIGE",		203, 219, 207;
+		Player.Colorset 6, "$TXT_COLOR_PURPLE",		166, 175, 170;
+		Player.Colorset 7, "$TXT_COLOR_YELLOW",		64, 77, 72;
 	}
 
 	States
@@ -85,9 +85,16 @@ class WolfPlayer : PlayerPawn
 		Death:
 			PLAY H 10;
 			PLAY I 10 A_PlayerScream;
-			PLAY JKLM 10;
-			PLAY N 1 A_CheckPlayerDone;
+			PLAY J 10;
+			PLAY K 1 A_CheckPlayerDone;
 			Wait;
+		/*
+		// For future use?
+		XDeath:
+			PLAY LMN 6;
+			PLAY O -1;
+			Stop;
+		*/
 	}
 
 	override void PostBeginPlay()
