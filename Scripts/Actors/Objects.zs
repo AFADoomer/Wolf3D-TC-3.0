@@ -697,6 +697,7 @@ class JeweledCross : Score
 		//$NotAngled
 
 		+COUNTITEM
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 100;
 		Inventory.PickupSound "pickups/cross";
 		Inventory.PickupMessage "";
@@ -720,6 +721,7 @@ class JeweledScepter : Score
 		//$NotAngled
 
 		+COUNTITEM
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 100;
 		Inventory.PickupSound "pickups/cross";
 		Inventory.PickupMessage "";
@@ -742,6 +744,7 @@ class Chalice : Score
 		//$NotAngled
 
 		+COUNTITEM
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 500;
 		Inventory.PickupSound "pickups/cup";
 		Inventory.PickupMessage "";
@@ -764,6 +767,7 @@ class Chest : Score
 		//$NotAngled
 
 		+COUNTITEM
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 1000;
 		Inventory.PickupSound "pickups/chest";
 		Inventory.PickupMessage "";
@@ -786,6 +790,7 @@ class Crown : Score
 		//$NotAngled
 
 		+COUNTITEM
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 5000;
 		Inventory.PickupSound "pickups/crown";
 		Inventory.PickupMessage "";
@@ -809,6 +814,7 @@ class Life : CustomInventory
 
 		+COUNTITEM
 		+Inventory.AUTOACTIVATE
+		+Inventory.NEVERLOCAL
 		Inventory.Amount 1;
 		Inventory.MaxAmount 0;
 		Inventory.PickupSound "pickups/life";

@@ -34,11 +34,13 @@ Function void WolfDoorSound(int po, str snd)
 Script "RespawnPlayer" RESPAWN
 {
 	Delay(1);
-	ACS_NamedExecute("InitializePlayer", 0);
+	ACS_NamedExecute("InitializePlayer", 0, PlayerNumber());
 }
 
 Script "InitializePlayer" (int playernum)
 {
+	bool multiplayer = (GameType() == GAME_NET_COOPERATIVE || GameType() == GAME_NET_DEATHMATCH);
+
 	if (!ScriptCall("GameHandler", "CheckEpisode", ""))
 	{
 		ScriptCall("WolfMenu", "SetMenu", "IntroSlideShow");
@@ -52,10 +54,21 @@ Script "InitializePlayer" (int playernum)
 
 		if (lives == -1 && justdied)
 		{
-			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
-			ScriptCall("WolfMenu", "SetMenu", "HighScores");
-			ScriptCall("GameHandler", "ChangeMusic", "HITLWALTZ");
-			ScriptCall("ClassicStatusBar", "ClearFizzle");
+			if (!multiplayer)
+			{
+				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+				ScriptCall("WolfMenu", "SetMenu", "HighScores");
+				ScriptCall("GameHandler", "ChangeMusic", "HITLWALTZ");
+				ScriptCall("ClassicStatusBar", "ClearFizzle");
+			}
+			else // In coop, running out of lives will give you back 3 lives, but wipe your score!
+			{
+				ScriptCall("LifeHandler", "SetLives", 3);
+				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+				TakeInventory("Score", 0x7FFFFFFF);
+				Delay(1);
+				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			}
 		}
 		else
 		{
@@ -68,7 +81,7 @@ Script "InitializePlayer" (int playernum)
 
 				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			}
-			else if (!GetCVar("g_nointro"))
+			else if (!GetCVar("g_nointro") && !multiplayer)
 			{
 				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
