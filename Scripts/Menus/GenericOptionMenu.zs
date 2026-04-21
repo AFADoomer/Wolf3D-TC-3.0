@@ -183,9 +183,9 @@ class GenericOptionMenu : OptionMenu
 		for (i = 0; i < mDesc.mItems.Size() && y <= lastrow; i++)
 		{
 			// Don't scroll the uppermost items
-			if (i == mDesc.mScrollTop)
+			if (i == mDesc.mScrollTop || i < 0)
 			{
-				i += mDesc.mScrollPos;
+				i = mDesc.mScrollTop + mDesc.mScrollPos;
 				if (i >= mDesc.mItems.Size()) { break; } // skipped beyond end of menu 
 			}
 
@@ -199,10 +199,10 @@ class GenericOptionMenu : OptionMenu
 		}
 
 		source.CanScrollUp = !!(mDesc.mScrollPos > 0);
-		source.CanScrollDown = !!(r < mDesc.mItems.Size() - 1);
+		source.CanScrollDown = !!(r < mDesc.mItems.Size() - 2);
 		source.VisBottom = r;
 
-		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 14 * CleanYfac_1);
+		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 4 * CleanYfac_1);
 	}
 
 	virtual ItemInfo DrawItemType(OptionMenuItem item, int x, int y, int indent, Font fnt, bool isSelected = false)
@@ -413,7 +413,7 @@ class GenericOptionMenu : OptionMenu
 
 		height += lines.Count() * fontheight + 6 * CleanYfac_1;
 
-		if (lines.count() > 1) { height += OptionMenuSettings.mLinespacing - fontheight; }
+		if (lines.count() > 1) { height += OptionMenuSettings.mLinespacing - fontheight + 6 * CleanYfac_1; }
 
 		return max(height, OptionMenuSettings.mLinespacing);
 	}

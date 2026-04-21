@@ -663,11 +663,11 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (!source) { source = self; }
 		if (source.CanScrollUp)
 		{
-			screen.DrawText(NewSmallFont, TitleColor(), x - 16, ytop, "▲", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ytop, "▲", DTA_Alpha, alpha);
 		}
 		if (source.CanScrollDown)
 		{
-			screen.DrawText(NewSmallFont, TitleColor(), x - 16, ybottom, "▼", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ybottom, "▼", DTA_Alpha, alpha);
 		}
 	}
 
