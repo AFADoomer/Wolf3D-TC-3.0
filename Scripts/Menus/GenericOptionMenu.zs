@@ -186,7 +186,8 @@ class GenericOptionMenu : OptionMenu
 			if (i == mDesc.mScrollTop || i < 0)
 			{
 				i = mDesc.mScrollTop + mDesc.mScrollPos;
-				if (i >= mDesc.mItems.Size()) { break; } // skipped beyond end of menu 
+				if (i >= mDesc.mItems.Size()) { break; } // skipped beyond end of menu
+				else if (i < 0) { i = FirstSelectable(); }
 			}
 
 			ItemInfo info = DrawItemType(mDesc.mItems[i], x, y, indent, fnt, mDesc.mSelectedItem == i);
