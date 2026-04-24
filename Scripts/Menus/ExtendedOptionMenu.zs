@@ -291,7 +291,6 @@ class ExtendedOptionMenu : GenericOptionMenu
 				}
 			}
 		default:
-			OptionMenu.MenuEvent(mkey, fromcontroller);
 			if (mDesc.mSelectedItem >= 0 && 
 				mDesc.mItems[mDesc.mSelectedItem].MenuEvent(mkey, fromcontroller)) return true;
 			return Super.MenuEvent(mkey, fromcontroller);
@@ -309,6 +308,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 	override bool OnUIEvent(UIEvent ev)
 	{
 		if (!source) { source = self; }
+
+		int startedAt = mDesc.mSelectedItem;
 
 		if (ev.type == UIEvent.Type_RButtonUp)
 		{
@@ -340,6 +341,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		else if (ev.type == UIEvent.Type_Char)
 		{
 			int key = String.CharLower(ev.keyChar);
+
 			int itemsNumber = mDesc.mItems.Size();
 			int direction = ev.IsAlt ? -1 : 1;
 			for (int i = 0; i < itemsNumber; ++i)
@@ -355,8 +357,9 @@ class ExtendedOptionMenu : GenericOptionMenu
 					break;
 				}
 			}
-			if (mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos
-				|| mDesc.mSelectedItem > source.VisBottom)
+			if (mDesc.mSelectedItem != startedat &&
+				(mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos || mDesc.mSelectedItem > source.VisBottom)
+			)
 			{
 				int pagesize = source.VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
 				mDesc.mScrollPos = clamp(mDesc.mSelectedItem - mDesc.mScrollTop - 1, 0, mDesc.mItems.size() - pagesize - 1);
@@ -889,21 +892,21 @@ class WolfNewPlayerMenu : NewPlayerMenu
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
-		if (generic && generic.MenuEvent(mkey, fromcontroller)) { return true; }
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
 		
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -936,14 +939,14 @@ class WolfJoystickConfigMenu : JoystickConfigMenu
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -972,21 +975,21 @@ class WolfGameplayMenu : GameplayMenu
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
-		if (generic && generic.MenuEvent(mkey, fromcontroller)) { return true; }
+		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
 		
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1022,14 +1025,14 @@ class WolfCompatibilityMenu : CompatibilityMenu
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1062,14 +1065,14 @@ class WolfGLTextureGLOptions : GLTextureGLOptions
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1102,14 +1105,14 @@ class WolfReverbEdit : ReverbEdit
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1142,14 +1145,14 @@ class WolfReverbSelect : ReverbSelect
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1182,14 +1185,14 @@ class WolfReverbSave : ReverbSave
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1286,14 +1289,14 @@ class WolfColorPickerMenu : ColorPickerMenu
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
@@ -1326,14 +1329,14 @@ class WolfOS_Menu : OS_Menu
 
 	override bool MouseEvent(int type, int x, int y)
 	{
-		if (generic && generic.MouseEvent(type, x, y)) { return true; }
+		if (generic) { return generic.MouseEvent(type, x, y); }
 
 		return Super.MouseEvent(type, x, y);
 	}
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic && generic.OnUIEvent(ev)) { return true; }
+		if (generic) { return generic.OnUIEvent(ev); }
 
 		return Super.OnUIEvent(ev);
 	}
