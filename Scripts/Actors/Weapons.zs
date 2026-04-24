@@ -151,7 +151,13 @@ class ClassicWeapon : Weapon
 
 	override void Touch(Actor toucher)
 	{
-		if (bDoGrin && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoGrin(toucher); }
+		if (bDoGrin && ClassicStatusBar(StatusBar))
+		{
+			if (!multiplayer || (!ShouldStay() || !toucher.CheckInventory(GetClass(), 1)))
+			{
+				ClassicStatusBar(StatusBar).DoGrin(toucher);
+			}
+		}
 
 		Super.Touch(toucher);
 	}
