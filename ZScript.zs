@@ -1,4 +1,4 @@
-version "4.8.0"
+version "5.0.0"
 
 // Classes/Libraries
 #include "Scripts/Libraries/DrawToHUD.zs" 		// Drawing and coordinate translation to match HUD element scaling and positioning

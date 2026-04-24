@@ -25,7 +25,7 @@ class GameHandler : StaticEventHandler
 	Array<String> gamefiles;
 	int randomcount;
 	ui int uirandomcount;
-	Dictionary music;
+	Map<String, String> music;
 
 	override void OnRegister()
 	{
@@ -298,7 +298,6 @@ class GameHandler : StaticEventHandler
 
 	void ParseMusicMapping()
 	{
-		music = Dictionary.Create();
 		Array<String> translations;
 
 		int lump = -1;
@@ -326,7 +325,7 @@ class GameHandler : StaticEventHandler
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)
 		{
-			String ret = this.music.At(IMFname);
+			String ret = this.music.GetIfExists(IMFname);
 			if (ret.length()) { return ret; }
 		}
 

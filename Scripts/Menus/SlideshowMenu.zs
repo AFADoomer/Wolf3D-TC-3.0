@@ -187,7 +187,7 @@ class OldHelpMenu : ReadThisMenu
 		int currentx = margins[lineindex][0];
 		int currenty = 16 + lineindex * fontheight;
 
-		for (int i = 0; i < input.Length(); i++)
+		for (uint i = 0; i < input.Length(); i++)
 		{
 			switch(input.ByteAt(i))
 			{
@@ -1135,7 +1135,7 @@ class HighScores : WolfMenu
 		String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 		String r = ""; 
 		String p = ""; 
-		int c = s.Length() % 3;
+		uint c = s.Length() % 3;
 
 		if (c)
 		{
@@ -1164,7 +1164,7 @@ class HighScores : WolfMenu
 		String r = ""; 
 		s = s.Mid(0, s.Length() - p.Length()) .. p;
 
-		for (int c = 0; c < s.Length(); c += 4)
+		for (uint c = 0; c < s.Length(); c += 4)
 		{
 			int c1 = base64chars.IndexOf(s.Mid(c, 1)) << 18;
 			int c2 = base64chars.IndexOf(s.Mid(c + 1, 1)) << 12;
@@ -2401,7 +2401,7 @@ class HelpInfo
 					String teststring = ZScriptTools.Trim(input.mid(i + 1, nextspace - (i + 1)));
 
 					// Skip color codes that are in lines when calculating length
-					int c = 0;
+					uint c = 0;
 					while (c < teststring.length())
 					{
 						if (teststring.ByteAt(c) == 0x5E) { teststring = String.Format("%s%s", teststring.Left(c), teststring.Mid(c + 4)); }

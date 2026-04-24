@@ -1850,7 +1850,6 @@ class PacManGhost : ClassicBase
 		MONSTER;
 		+AMBUSH
 		+FLOAT
-		+LOWGRAVITY
 		+SPAWNFLOAT
 		+INVULNERABLE
 		+JUSTHIT
@@ -1864,6 +1863,7 @@ class PacManGhost : ClassicBase
 		SeeSound "";
 		ActiveSound "";
 		MeleeDamage 1;
+		Gravity 0.125;
 	}
 
 	States
@@ -2341,7 +2341,6 @@ class WolfSpectre : ClassicNazi
 
 		Monster;
 		+FLOAT
-		+LOWGRAVITY
 		+SPAWNFLOAT
 		+NOBLOOD
 		+LOOKALLAROUND
@@ -2357,6 +2356,7 @@ class WolfSpectre : ClassicNazi
 		MeleeDamage 1;
 		SeeSound "spectre/sight";
 		PainSound "spectre/sight";
+		Gravity 0.125;
 
 		ClassicBase.ScoreAmount 200;
 		ClassicBase.BaseSprite "WSPE";

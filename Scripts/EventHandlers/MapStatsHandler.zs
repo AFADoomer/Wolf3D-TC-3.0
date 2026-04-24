@@ -478,7 +478,7 @@ class MapStatsHandler : StaticEventHandler
 		Screen.Dim(clr, alpha, int(pos.x), int(pos.y), int(size.x), int(size.y));
 	}
 
-	ui String PadString(String input, int digits)
+	ui String PadString(String input, uint digits)
 	{
 		While (input.Length() < digits)
 		{	

@@ -203,7 +203,7 @@ class Startup : GenericMenu
 		if (x > -1) { cursorx = x; }
 		if (y > -1) { cursory = y; }
 
-		for (int i = 0; i < text.Length(); i++)
+		for (uint i = 0; i < text.Length(); i++)
 		{
 			if (text.Mid(i, 1) == "\n" || cursorx > 79)
 			{
@@ -392,7 +392,7 @@ class Startup : GenericMenu
 
 		int linecount = 0;
 
-		for (int c = 0; c < text.Length(); c++)
+		for (uint c = 0; c < text.Length(); c++)
 		{
 			if (text.Mid(c, 1) == "\n" || x + c > 79)
 			{
@@ -521,7 +521,7 @@ class Startup : GenericMenu
 			case MKEY_BACK:
 				for (int r = prompty; r < 25; r++)
 				{
-					for (int c = 0; c < 80; c++)
+					for (uint c = 0; c < 80; c++)
 					{	
 						if (r == prompty && c >= prompt.Length() || r > prompty) { buffer[r][c] = ""; }
 					}
@@ -573,7 +573,7 @@ class Startup : GenericMenu
 
 		input = input.MakeUpper();
 
-		for (int i = 0; i < input.Length(); i++)
+		for (uint i = 0; i < input.Length(); i++)
 		{		
 			int index = input.Mid(i, 1).ToInt();
 
@@ -586,7 +586,7 @@ class Startup : GenericMenu
 			if (index < 0) { return -1; }
 
 			int multiplier = 1;
-			for (int j = 0; j < input.Length() - i - 1; j++)
+			for (uint j = 0; j < input.Length() - i - 1; j++)
 			{
 				multiplier *= 16;
 			}
@@ -616,7 +616,7 @@ class Startup : GenericMenu
 
 	String CleanPath(String path)
 	{
-		for (int c = 0; c < path.Length(); c++)
+		for (uint c = 0; c < path.Length(); c++)
 		{
 			if (c == 0 && (path.ByteAt(c) == 0x20 || path.ByteAt(c) == 0x5C))
 			{
@@ -696,7 +696,7 @@ class Startup : GenericMenu
 	{
 		Array<string> tokens;
 
-		for (int c = 0; c < command.length(); c++)
+		for (uint c = 0; c < command.length(); c++)
 		{
 			if (c == 0 && command.Mid(c, 1) == "@")
 			{
@@ -926,7 +926,7 @@ class Startup : GenericMenu
 
 	bool CheckCommand(String cmd, String params)
 	{
-		for (int c = 0; c < params.Length(); c++)
+		for (uint c = 0; c < params.Length(); c++)
 		{
 			if (c == 0 && (params.ByteAt(c) == 0x20 || params.ByteAt(c) == "."))
 			{

@@ -291,6 +291,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 				}
 			}
 		default:
+			OptionMenu.MenuEvent(mkey, fromcontroller);
 			if (mDesc.mSelectedItem >= 0 && 
 				mDesc.mItems[mDesc.mSelectedItem].MenuEvent(mkey, fromcontroller)) return true;
 			return Super.MenuEvent(mkey, fromcontroller);
@@ -299,7 +300,9 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (mDesc.mSelectedItem != startedAt)
 		{
 			MenuSound ("menu/cursor");
+			UpdateTooltip(GetSelectedTooltip());
 		}
+
 		return true;
 	}
 
@@ -342,12 +345,13 @@ class ExtendedOptionMenu : GenericOptionMenu
 			for (int i = 0; i < itemsNumber; ++i)
 			{
 				int index = (mDesc.mSelectedItem + direction * (i + 1) + itemsNumber) % itemsNumber;
-				if (!mDesc.mItems[index].Selectable()) continue;
+				if (!(mDesc.mItems[index].Selectable() && mDesc.mItems[index].Visible())) continue;
 				String label = StringTable.Localize(mDesc.mItems[index].mLabel);
 				int firstLabelCharacter = String.CharLower(label.GetNextCodePoint(0));
 				if (firstLabelCharacter == key)
 				{
 					mDesc.mSelectedItem = index;
+					UpdateTooltip(GetSelectedTooltip());
 					break;
 				}
 			}

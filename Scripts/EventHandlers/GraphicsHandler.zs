@@ -132,7 +132,7 @@ class ParsedGraphic
 		{
 			int readoffset;
 			int firstcolumn, lastcolumn;
-			int instructionoffset;
+			uint instructionoffset;
 
 			[firstcolumn, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
 			[lastcolumn, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
@@ -140,7 +140,7 @@ class ParsedGraphic
 			for (int c = firstcolumn; c <= lastcolumn; ++c)
 			{
 				[instructionoffset, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
-				int linecmds = instructionoffset;
+				uint linecmds = instructionoffset;
 
 				int start, bottom, top;
 				while (linecmds < data.length())

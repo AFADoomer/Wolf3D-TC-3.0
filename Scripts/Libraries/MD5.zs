@@ -128,13 +128,13 @@ Class MD5
 		}
 		
 		// Swap endianess of each byte
-		for(uint i=0; i < input.size(); i++)
+		for(uint i=0; i < uint(input.size()); i++)
 		{
 			input[i] = swapByte(input[i]);
 		}
 		
 		// Break into 64 byte chunks
-		for(uint front=0; front < input.size(); front += 64)
+		for(uint front=0; front < uint(input.size()); front += 64)
 		{
 			//break chunk into 16 four-byte words
 			Array<uint> M;

@@ -725,7 +725,7 @@ class ParsedMap
 		Array<int> inputbytes;
 		int offset = 0;
 
-		for (int i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
+		for (uint i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
 
 		int length = inputbytes[offset + 1] * 0x100 + inputbytes[offset];
 		offset += 2;
@@ -790,7 +790,7 @@ class ParsedMap
 
 		if (!outputbytes.Size())
 		{
-			for (int i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
+			for (uint i = 0; i < input.length(); i++) { inputbytes.Push(input.ByteAt(i)); }
 		}
 		else
 		{
@@ -1548,7 +1548,7 @@ class WolfMapParser
 
 	void ReadMapHead(String content, out int encoding, in out Array<int> addresses)
 	{
-		int offset = 0;
+		uint offset = 0;
 		[encoding, offset] = WolfMapParser.GetLittleEndian(content, 0, 2);
 
 		int address = 8;
