@@ -129,18 +129,20 @@ class ClassicBase : Actor
 		{
 			default:
 			case 0:
-				health = skillhealth0 ? skillhealth0 : Default.health;
+				health = skillhealth0 ? skillhealth0 * health / Default.Health : Default.health;
 				break;
 			case 1:
-				health = skillhealth1 ? skillhealth1 : Default.health;
+				health = skillhealth1 ? skillhealth1 * health / Default.Health : Default.health;
 				break;
 			case 2:
-				health = skillhealth2 ? skillhealth2 : Default.health;
+				health = skillhealth2 ? skillhealth2 * health / Default.Health : Default.health;
 				break;
 			case 3:
-				health = skillhealth3 ? skillhealth3 : Default.health;
+				health = skillhealth3 ? skillhealth3 * health / Default.Health : Default.health;
 				break;
 		}
+
+		StartHealth = health;
 
 		if (!Default.bNoBlood) { bNoBlood = g_noblood; }
 
@@ -184,6 +186,26 @@ class ClassicBase : Actor
 		}
 	}
 
+	void TargetNearestVisiblePlayer()
+	{
+		Actor closest = target;
+		double dist = target ? Distance2D(target) : 0x7FFFFFFF;
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (playeringame[i] && deltaangle(angle, AngleTo(players[i].mo)) < 45 && CheckSight(players[i].mo))
+			{
+				double pdist = Distance2D(players[i].mo);
+				if (pdist < dist)
+				{
+					closest = players[i].mo;
+					dist = pdist;
+				}
+			}
+		}
+
+		target = closest;
+	}
+
 	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int chance = 0)
 	{
 		if (bDormant || !target) { return; }
@@ -191,9 +213,14 @@ class ClassicBase : Actor
 		if (target.health <= 0)
 		{
 			target = null;
-			SetStateLabel("Spawn.Stand");
-			
-			return;
+
+			if (multiplayer) { TargetNearestVisiblePlayer(); }
+
+			if (!target)
+			{
+				SetStateLabel("Spawn.Stand");
+				return;
+			}
 		}
 
 		bool dodge = false;
@@ -236,6 +263,7 @@ class ClassicBase : Actor
 
 			dodge = true;
 		}
+		else if (multiplayer) { TargetNearestVisiblePlayer(); }
 
 		if (movedir == DI_NODIR)
 		{
