@@ -734,7 +734,7 @@ class ClassicBase : Actor
 		{
 			if (rad == -1) { rad = radius / 2; }
 
-			Vector3 spawnpos = pos + (FRandom[SpawnFlames](-rad, rad), FRandom(-rad, rad), FRandom[SpawnFlames](0, maxheight));
+			Vector3 spawnpos = pos + (FRandom[SpawnFlames](-rad, rad), FRandom[SpawnFlames](-rad, rad), FRandom[SpawnFlames](0, maxheight));
 			Spawn("Fire", spawnpos);
 			Spawn("SmallFire", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-8, 8)));
 			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16))));
