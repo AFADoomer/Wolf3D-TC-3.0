@@ -24,6 +24,7 @@ class ClassicBase : Actor
 {
 	int scoreamt;
 	int skillhealth0, skillhealth1, skillhealth2, skillhealth3;
+	int targetswitchdelay;
 	String basesprite;
 	SpriteID spr;
 	State AttackState;
@@ -201,15 +202,20 @@ class ClassicBase : Actor
 		{
 			spriterotation = 0;
 		}
+
+		if (multiplayer && targetswitchdelay > 0) { targetswitchdelay--; }
 	}
 
 	void TargetNearestVisiblePlayer()
 	{
-		Actor closest = target;
+		if (!multiplayer) { return; }
+
+		Actor closest = target; // Use the original target to start
 		double dist = target ? Distance2D(target) : 0x7FFFFFFF;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
-			if (playeringame[i] && deltaangle(angle, AngleTo(players[i].mo)) < 45 && CheckSight(players[i].mo))
+			// Loop through all players in the game and target the closest one that is alive and visible within 45 degrees of the enemy's facing angle. 
+			if (playeringame[i] && players[i].mo.health > 0 && absangle(angle, AngleTo(players[i].mo)) < 45 && CheckSight(players[i].mo))
 			{
 				double pdist = Distance2D(players[i].mo);
 				if (pdist < dist)
@@ -221,23 +227,19 @@ class ClassicBase : Actor
 		}
 
 		target = closest;
+		targetswitchdelay = 70; // Don't let the enemy change targets again for 2 seconds
 	}
 
 	virtual void A_NaziChase(statelabel melee = '_a_chase_default', statelabel missile = '_a_chase_default', int chance = 0)
 	{
-		if (bDormant || !target) { return; }
+		if (multiplayer && !targetswitchdelay) { TargetNearestVisiblePlayer(); }
 
-		if (target.health <= 0)
+		if (target && target.health <= 0) { target = null; }
+
+		if (bDormant || !target)
 		{
-			target = null;
-
-			if (multiplayer) { TargetNearestVisiblePlayer(); }
-
-			if (!target)
-			{
-				SetStateLabel("Spawn.Stand");
-				return;
-			}
+			SetStateLabel("Spawn.Stand");
+			return;
 		}
 
 		bool dodge = false;
@@ -280,7 +282,6 @@ class ClassicBase : Actor
 
 			dodge = true;
 		}
-		else if (multiplayer) { TargetNearestVisiblePlayer(); }
 
 		if (movedir == DI_NODIR)
 		{
@@ -762,7 +763,13 @@ class ClassicBase : Actor
 
 	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
 	{
-		if (!target) { target = source; }
+		// Increase base damage if the enemy wasn't active
+		if (!bActive) { damage *= 2; }
+		
+		// Target attacker
+		target = source;
+		if (multiplayer) { targetswitchdelay = 70; } // Don't let the enemy change targets again for 2 seconds
+
 		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
 	}
 }
