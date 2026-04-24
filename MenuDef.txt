@@ -138,6 +138,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSFREELOOK",				"freelook", "YesNo"
 	Option "$M_OPTIONSFIREBALLS",			"g_fastfireballs", "YesNo"
 	Option "$M_OPTIONSCHEATS",				"goobers", "YesNo"
+	Slider "$M_OPTIONSMPENEMYBUFF",			"g_buffpercent", 0.0, 1.0, 0.05, 2
 	StaticText ""
 	StaticText "$M_COSMETICOPTIONS", 1
 	Option "$M_OPTIONSLOADING",				"g_nointro", "YesNo"

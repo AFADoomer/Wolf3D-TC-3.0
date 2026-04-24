@@ -8,6 +8,7 @@ server int g_debugtextscreens = 0; // Draw debug info on some text screens
 server int g_defaultmenus = 0; // Use the default GZDoom option menus
 server int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf actors
 server int g_fastfireballs = 1; // More accurate Fake Hitler fireballs
+server int g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
 server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
 server int g_momentum = 0; // Use Doom-style movement
 server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
@@ -18,8 +19,8 @@ server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on st
 server int g_singlestartpushwalls = 1; // Pushwall start spots can only be used once
 server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
 server int g_userotations = 0; // Use additional sprite rotations if they are available
-server int g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
 server int g_warpskill = 2; // Skill variable used in map select screen
+server float g_buffpercent = 0.15;
 
 user int g_borderstyle = 0; // Style of screen border
 user int g_defaultlog = 0; // Use the GZDoom console output
