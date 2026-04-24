@@ -51,15 +51,18 @@ class WolfPlayer : PlayerPawn
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife";
 
-		Player.ColorRange 96, 111;
-		Player.Colorset 0, "$TXT_COLOR_GREEN",		96, 111, 101;
-		Player.Colorset 1, "$TXT_COLOR_GRAY",		15, 31, 24;
-		Player.Colorset 2, "$TXT_COLOR_BROWN",		208, 223, 214;
-		Player.Colorset 3, "$TXT_COLOR_RED",		32, 47, 32;
-		Player.Colorset 4, "$TXT_COLOR_BLUE",		136, 159, 143;
-		Player.Colorset 5, "$TXT_COLOR_BEIGE",		203, 219, 207;
-		Player.Colorset 6, "$TXT_COLOR_PURPLE",		166, 175, 170;
-		Player.Colorset 7, "$TXT_COLOR_YELLOW",		64, 77, 72;
+		Player.ColorRange 96, 112;
+		Player.ColorSet 0, "$TXT_COLOR_ORIGINAL", 0x10, 0x1F, 0x15;
+		Player.ColorSet 1, "$TXT_COLOR_RED", 0x20, 0x2F, 0x22;
+		Player.ColorSet 2, "$TXT_COLOR_ORANGE", 0x38, 0x3F, 0x3B;
+		Player.ColorSet 3, "$TXT_COLOR_YELLOW", 0x40, 0x4F, 0x42;
+		Player.ColorSet 4, "$TXT_COLOR_GREEN", 0x60, 0x6F, 0x62;
+		Player.ColorSet 5, "$TXT_COLOR_CYAN", 0x70, 0x7F, 0x76;
+		Player.ColorSet 6, "$TXT_COLOR_BLUE", 0x80, 0x87, 0x82;
+		Player.ColorSet 7, "$TXT_COLOR_DARKBLUE", 0x90, 0x9F, 0x98;
+		Player.ColorSet 8, "$TXT_COLOR_PURPLE", 0xA6, 0xAF, 0xA8;
+		Player.ColorSet 9, "$TXT_COLOR_PINK", 0xB0, 0xBF, 0xB6;
+		Player.ColorSet 10, "$TXT_COLOR_BROWN", 0xC0, 0xDF, 0xD0;
 	}
 
 	States
