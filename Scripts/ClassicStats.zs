@@ -211,7 +211,7 @@ class ClassicStats : DoomStatusScreen
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
 				}
 
-				if (gametic > fadetarget) { fadetarget = gametic + fadetime; }
+				if (!multiplayer && gametic > fadetarget) { fadetarget = gametic + fadetime; }
 
 				if (fadetarget == gametic) { initNoState(); }
 			}
