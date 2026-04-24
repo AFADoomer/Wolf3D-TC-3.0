@@ -428,7 +428,8 @@ class Game
 
 	play static void AttachLight(Actor mo, int radius = 32, color clr = 0xFFFFFF, Vector3 offset = (0, 0, 0), int flags = 0, int inner = 10, int outer = 35, int angle = 0)
 	{
-		if (g_dynamiclights)
+		CVar dynlights = CVar.FindCvar("g_dynamiclights");
+		if (dynlights && dynlights.GetInt())
 		{
 			mo.A_AttachLight("Light", DynamicLight.PointLight, clr, radius, radius, DYNAMICLIGHT.LF_ATTENUATE | (flags & ~DYNAMICLIGHT.LF_SPOT), offset);
 			if (flags & DYNAMICLIGHT.LF_SPOT)
