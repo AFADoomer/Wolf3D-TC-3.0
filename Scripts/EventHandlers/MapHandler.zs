@@ -298,6 +298,29 @@ class MapHandler : StaticEventHandler
 		{
 			queuedmap = null;
 			curmap = null;
+
+			if (multiplayer)
+			{
+				int nextepisode = (level.levelnum / 100) % 10 + 1;
+				String nextmap;
+				switch (nextepisode)
+				{
+					default:
+						nextmap = String.Format("e%il1", nextepisode);
+						break;
+					case 7:
+						nextmap = "SOD01";
+						break;
+					case 8:
+						nextmap = "SD201";
+						break;
+					case 9:
+						nextmap = "SD301";
+						break;
+				}
+
+				level.nextmap = nextmap;
+			}
 		}
 	}
 

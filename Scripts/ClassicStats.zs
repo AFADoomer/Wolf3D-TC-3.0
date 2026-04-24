@@ -205,7 +205,7 @@ class ClassicStats : DoomStatusScreen
 					return;
 				}
 
-				if (style == finale)
+				if (style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
 				{
 					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
@@ -214,6 +214,8 @@ class ClassicStats : DoomStatusScreen
 				if (!multiplayer && gametic > fadetarget) { fadetarget = gametic + fadetime; }
 
 				if (fadetarget == gametic) { initNoState(); }
+
+				sp_state++;
 			}
 		}
 		else if (sp_state & 1)
