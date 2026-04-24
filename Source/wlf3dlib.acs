@@ -78,8 +78,6 @@ Script "InitializePlayer" (int playernum)
 				ScriptCall("ClassicStatusBar", "ReverseFizzle");
 
 				While (ScriptCall("ClassicStatusBar", "CheckFizzle")) { Delay(1); }
-
-				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			}
 			else if (!GetCVar("g_nointro") && !multiplayer)
 			{
@@ -88,7 +86,9 @@ Script "InitializePlayer" (int playernum)
 			}
 
 			ScriptCall("GameHandler", "ChangeMusic", "*");
+			SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 		}
+
 	}
 }
 
