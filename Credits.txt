@@ -8,7 +8,7 @@ Jaguar Wolf3D sprites - id Software
 Broken column sprites - Modified by AFADoomer from AReyeP - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
 Exploding barrel sprites - Modified by AFADoomer from UnTrustable (https://forum.zdoom.org/viewtopic.php?p=884629#p884629)
 Bullet hit sprite - Modified by AFADoomer from Wolf3D development screens (https://tcrf.net/Development:Wolfenstein_3D_(DOS))
-BJ rotation sprites - Mason (http://mmimageworld.dugtrio17.com/cgi-bin/index.cgi?author=mason&page=1)
+BJ rotation and gib sprites - DoomJedi; originally for SplitWolf (http://dhw.wolfenstein3d.com/viewtopic.php?t=7865)
 MiniFont - Ripped for Blade of Agony by Talon1024
 KeyPrompt icons - Modified by AFADoomer from Input Prompts by Kenney (http://www.kenney.nl)
 Floor textures - Pulled from Laz Rojas's WolfenDoom (http://lazrojas.com/wolfendoom/original.zip) and from AReyeP's web site (http://www.areyep.com/RIPandMCS-TextureLibrary-Floorceilingtextures.html)
