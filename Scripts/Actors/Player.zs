@@ -494,4 +494,13 @@ class WolfPlayer : PlayerPawn
 			di = di.Next;
 		}
 	}
+
+	override void CheckPitch()
+	{
+		if (!freelook) { pitch = 0.0; }
+		else
+		{
+			Super.CheckPitch();
+		}
+	}
 }
