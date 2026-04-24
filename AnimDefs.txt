@@ -437,8 +437,8 @@ canvastexture "WLF1LK2D" 64 64
 */
 
 /* canvastexture "DEMO" 64 64
-canvastexture "DEATHCAM" 64 64 */
-/* canvastexture "POL1A0" 64 64 sprite offset 32 64
+canvastexture "DEATHCAM" 64 64
+canvastexture "POL1A0" 64 64 sprite offset 32 64
 canvastexture "BARLC0" 64 64 sprite offset 32 64
 canvastexture "TAB1A0" 64 64 sprite offset 32 64
 canvastexture "LIT1A0" 64 64 sprite offset 32 64
