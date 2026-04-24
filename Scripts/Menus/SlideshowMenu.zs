@@ -1286,7 +1286,10 @@ class TextScreenMenu : OptionMenu
 			}
 			else
 			{
-				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
+				if (!multiplayer && (gamestate == GS_FINALE || gamestate == GS_CUTSCENE))
+				{
+					Menu.SetMenu("HighScores", -1);
+				}
 				else { Menu.SetMenu("MainMenu", -1); }
 			}
 

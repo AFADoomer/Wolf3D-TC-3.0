@@ -35,6 +35,8 @@ gameinfo
 	StatusbarClass = "ClassicStatusBar"
 	AltHUDClass = "JaguarHUD"
 	StatScreen_Single = "ClassicStats"
+	StatScreen_Coop = "ClassicStats"
+	StatScreen_DM = "ClassicStats"
 	MessageboxClass = "ClassicMessageBox"
 	
 	pickupcolor = "FF F8 00"
