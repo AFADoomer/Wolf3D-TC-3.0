@@ -139,11 +139,7 @@ class ExplosiveOilDrum : ExplosiveBarrel
 		Death:
 			WBXP B 5 Bright {
 				A_Scream();
-				
-				if (CurSector.lightlevel < 230)
-				{
-					A_AttachLight("Light", DynamicLight.PointLight, "Yellow", 48.0, 48.0, DYNAMICLIGHT.LF_ATTENUATE, (0, 0, 24));
-				}
+				Game.AttachLight(self, 48.0, "Yellow", (0, 0, 24));
 			}
 			WBXP C 5 Bright A_Explode();
 			WBXP D 10 Bright;
@@ -183,7 +179,7 @@ class FloorLamp : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT1 A -1 Bright;
+			LIT1 A -1;
 			Stop;
 	}
 
@@ -209,7 +205,7 @@ class HangingChandelier : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT3 A -1 Bright;
+			LIT3 A -1;
 			Stop;
 	}
 
@@ -412,7 +408,7 @@ class GreenCeilingLight : ClassicDecoration
 	States
 	{
 		Spawn:
-			LIT5 A -1 Bright;
+			LIT5 A -1;
 			Stop;
 	}
 
@@ -1148,7 +1144,7 @@ class RedCeilingLight : ClassicDecoration
 	States
 	{
 		Spawn:
-			LITR A -1 Bright;
+			LITR A -1;
 			Stop;
 	}
 
@@ -1340,7 +1336,7 @@ class FloorLampLost : FloorLamp
 	States
 	{
 		Spawn:
-			LIT2 A -1 Bright;
+			LIT2 A -1;
 			Stop;
 	}
 } 
@@ -1356,7 +1352,7 @@ class HangingChandelierLost : HangingChandelier
 	States
 	{
 		Spawn:
-			LIT4 A -1 Bright;
+			LIT4 A -1;
 			Stop;
 	}
 } 
@@ -1516,7 +1512,7 @@ class GreenCeilingLightLost : GreenCeilingLight
 	States
 	{
 		Spawn:
-			LIT6 A -1 Bright;
+			LIT6 A -1;
 			Stop;
 	}
 }
@@ -1903,7 +1899,7 @@ class RedCeilingLightLost : AardwolfSign
 	States
 	{
 		Spawn:
-			LIT7 A -1 Bright;
+			LIT7 A -1;
 			Stop;
 	}
 

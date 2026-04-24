@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 AFADoomer
+ * Copyright (c) 2022-2026 AFADoomer
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -81,7 +81,7 @@ vec4 ProcessTexel()
 	}
 	else
 	{
-		if (uLightFactor >= 1.0)
+		if (uDynLightColor != vec4(0.0, 0.0, 0.0, 1.0))
 		{
 			color.a = 0.0;
 		}
