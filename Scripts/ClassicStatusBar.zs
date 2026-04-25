@@ -477,6 +477,14 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 30;
 	}
 
+	play static void ClearSpecialMugshot(Actor caller)
+	{
+		if (players[consoleplayer].mo != caller) { return; }
+
+		ClassicStatusBar(StatusBar).staticmugshot = 0;
+		ClassicStatusBar(StatusBar).staticmugshottimer = 0;
+	}
+
 	void DrawClassicBar(bool drawborder = true, int points = -1, int lives = -1)
 	{
 		if (drawborder)

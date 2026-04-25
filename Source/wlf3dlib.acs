@@ -33,6 +33,7 @@ Function void WolfDoorSound(int po, str snd)
 
 Script "RespawnPlayer" RESPAWN
 {
+	ScriptCall("ClassicStatusBar", "ClearSpecialMugshot");
 	Delay(1);
 	ACS_NamedExecute("InitializePlayer", 0, PlayerNumber());
 }
@@ -61,9 +62,10 @@ Script "InitializePlayer" (int playernum)
 				ScriptCall("GameHandler", "ChangeMusic", "HITLWALTZ");
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
 			}
-			else // In coop, running out of lives will give you back 3 lives, but wipe your score!
+			else // In coop, running out of lives will give you back 3 lives, but wipe your score and clear your weapons/ammo!
 			{
 				ScriptCall("LifeHandler", "SetLives", 3);
+				ScriptCall("LifeHandler", "CleanInventory", true);
 				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 				TakeInventory("Score", 0x7FFFFFFF);
 				Delay(1);

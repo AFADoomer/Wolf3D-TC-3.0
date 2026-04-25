@@ -518,6 +518,7 @@ class YellowKey : Key
 		Inventory.Icon "I_YKEY_T";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
+		+NOTDMATCH
 	}
 
 	States
@@ -539,6 +540,7 @@ class BlueKey : Key
 		Inventory.Icon "I_BKEY_T";
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
+		+NOTDMATCH
 	}
 
 	States
@@ -555,6 +557,7 @@ class RedKey : Key
 	{
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
+		+NOTDMATCH
 	}
 
 	States
@@ -571,6 +574,7 @@ class GreenKey : Key
 	{
 		Inventory.PickupSound "pickups/key";
 		Inventory.PickupMessage "";
+		+NOTDMATCH
 	}
 
 	States

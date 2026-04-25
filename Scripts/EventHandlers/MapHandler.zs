@@ -973,6 +973,7 @@ class ParsedMap
 								}
 								
 								mo.ChangeTID(t);
+								mo.bDropped = false;
 
 								if (ClassicNazi(mo)) { ClassicNazi(mo).bPatrolling = am.GetBool("Patrolling"); }
 							}

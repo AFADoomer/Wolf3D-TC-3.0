@@ -177,7 +177,7 @@ class WolfPlayer : PlayerPawn
 		TickPSprites();
 
 		if (sv_norespawn) { return; }
-		
+
 		if (
 			respawntick++ >= (LifeHandler.CheckLives(self) > -1 ? 70 : 105) ||
 			(player.cmd.buttons & BT_USE && player.Bot != null)
@@ -464,8 +464,7 @@ class WolfPlayer : PlayerPawn
 					let item = FindInventory(tinv);
 					if (item != NULL)
 					{
-						item.Amount = clamp(
-							item.Amount + (di.Amount ? di.Amount : item.default.Amount), 0, item.MaxAmount);
+						item.Amount = clamp(item.Amount + (di.Amount ? di.Amount : item.default.Amount), 0, item.MaxAmount);
 					}
 					else
 					{

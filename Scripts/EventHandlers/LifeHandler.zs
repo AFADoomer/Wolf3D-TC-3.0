@@ -88,6 +88,49 @@ class LifeHandler : StaticEventHandler
 		this.SaveLifeData();
 	}
 
+	static void CleanInventory(Actor p, bool forcereset = false)
+	{
+		let mo = PlayerPawn(p);
+
+		if (!mo) { return; }
+
+		if (sv_cooploseinventory)
+		{
+			mo.ClearInventory();
+			mo.GiveDefaultInventory();
+
+			return;
+		}
+
+		Inventory next;
+		for (Inventory item = mo.Inv; item != null; item = next)
+		{
+			next = item.Inv;
+
+			if ((!sv_cooplosekeys || sv_coopsharekeys) && item is "Key") { continue; }
+
+			if (!forcereset)
+			{
+				if (!sv_cooploseweapons && item is "Weapon") { continue; }
+				else if (!sv_cooplosearmor && item is "Armor") { continue; }
+				else if (!sv_cooplosepowerups && item is "Powerup") { continue; }
+				else if ((!sv_cooploseammo && !sv_coophalveammo) && item is "Ammo") { continue; }
+			}
+
+			if (item is "Ammo")
+			{
+				if (sv_cooploseammo || forcereset) { item.Amount = 0; }
+				else { item.Amount = max(1, item.Amount / 2); }
+
+				continue;
+			}
+
+			item.Destroy();
+		}
+
+		mo.GiveDefaultInventory();
+	}
+
 	static void GiveLife(Actor p, int count = 1)
 	{
 		if (!p) { return; }
@@ -132,7 +175,7 @@ class LifeHandler : StaticEventHandler
 					}
 				}
 			}
-			else // Otherwise this is an autosave or a new game, so treat as if the player just (re)spawned
+			else if (!multiplayer)// Otherwise this is an autosave or a new game, so treat as if the player just (re)spawned
 			{
 				for (i = 0; i < MAXPLAYERS; i++)
 				{
@@ -140,8 +183,7 @@ class LifeHandler : StaticEventHandler
 
 					if (playeringame[i] && players[i].mo)
 					{
-						players[i].mo.ClearInventory();
-						players[i].mo.GiveDefaultInventory();
+						DoInventoryReset(i);
 					}
 				}
 			}
@@ -177,8 +219,13 @@ class LifeHandler : StaticEventHandler
 
 	override void PlayerRespawned(PlayerEvent e)
 	{
-		players[e.playernumber].mo.ClearInventory();
-		players[e.playernumber].mo.GiveDefaultInventory();
+		if (!multiplayer) { DoInventoryReset(e.playernumber); }
+	}
+
+	void DoInventoryReset(uint playernum)
+	{
+		players[playernum].mo.ClearInventory();
+		players[playernum].mo.GiveDefaultInventory();
 	}
 
 	override void PlayerEntered(PlayerEvent e)
