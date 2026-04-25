@@ -961,8 +961,9 @@ class ClassicNazi : ClassicBase
 		Death:
 			"####" A 0 A_DeathDrop();
 			"####" K 8 A_SetTics(deathtics);
+			"####" K 0 A_DeathScream();
 		Death.Resume:
-			"####" L 7 { A_SetTics(deathtics - 1); A_DeathScream(); }
+			"####" L 7 	A_SetTics(deathtics - 1);
 			"####" M 8 A_SetTics(deathtics);
 			"####" N 0 { if (bLongDeath) { A_SetTics(deathtics); } }
 		Dead:
