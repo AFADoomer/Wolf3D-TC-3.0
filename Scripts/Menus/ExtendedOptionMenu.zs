@@ -906,7 +906,7 @@ class WolfNewPlayerMenu : NewPlayerMenu
 
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (generic) { return generic.OnUIEvent(ev); }
+		if (generic && generic.OnUIEvent(ev)) { return true; }
 
 		return Super.OnUIEvent(ev);
 	}
