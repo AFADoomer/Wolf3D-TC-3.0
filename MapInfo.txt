@@ -1303,6 +1303,8 @@ DoomEdNums
 	21087=ExplosiveOilDrum
 	//21088= Invisibility
 	21089=JeweledScepter
+	21090=RedKey
+	21091=GreenKey
 	21124=DeadGuard
 
 	// SoD

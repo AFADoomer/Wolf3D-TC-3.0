@@ -295,6 +295,8 @@ class ClassicStatusBar : WidgetStatusBar
 	int savetimer;
 	int savetimertime;
 
+	GameHandler handler;
+
 	override void Init()
 	{
 		Super.Init();
@@ -304,6 +306,8 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicFont = HUDFont.Create("WOLFNUM", 0);
 		BigFont = HUDFont.Create("BIGFONT", 0);
 		mHUDFont = HUDFont.Create("SmallFont", 0);
+
+		handler = GameHandler(StaticEventHandler.Find("GameHandler"));
 
 		pixel = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 
@@ -583,8 +587,51 @@ class ClassicStatusBar : WidgetStatusBar
 		DrawMugShot(136, 164);
 
 		//Keys
-		if (GetAmount("YellowKey") || GetAmount("YellowKeyLost")) { DrawImage("YKEY", (244, 172), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
-		if (GetAmount("BlueKey") || GetAmount("BlueKeyLost")) { DrawImage("BKEY", (244, 188), DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM); }
+		Array<int> keys;
+		for (int kt = 0; kt < Key.GetKeyTypeCount(); kt++)
+		{
+			let keytype = Key.GetKeyType(kt);
+			let key = GetDefaultByType(keytype); 
+			if (
+				keytype.IsAbstract() || 
+				handler.keys.Find(keytype) == handler.keys.Size() ||
+				!key.icon ||
+				!key.icon.IsValid()
+			) { continue; }
+
+			keys.Push(kt);
+		}
+
+		int startx = 241;
+		int starty = 151;
+
+		int k = 0;
+		int x, y;
+
+		for (int c = 0; c < Ceil(keys.Size() / 2.0); c++)
+		{
+			x = startx + c * 8;
+
+			DrawImage("KeyBack", (x - 1, starty + 13), DI_ITEM_OFFSETS);
+		}
+
+		for (k = 0; k < keys.Size(); k++)
+		{
+			x = startx + (k / 2) * 8;
+			y = starty + (2 - k % 2) * 16;
+
+			DrawKey(keys[k], x, y);
+		}
+
+		if (k % 2 == 1)
+		{
+			x = startx + (k / 2) * 8;
+			y = starty + (2 - k % 2) * 16;
+
+			DrawKey(-1, x, y);
+		}
+
+		int widthchange = x - startx;
 
 		//Weapon
 		TextureID icontex;
@@ -610,14 +657,13 @@ class ClassicStatusBar : WidgetStatusBar
 			Vector2 size = TexMan.GetScaledSize(icontex);
 			Vector2 scalexy = (1.0, 1.0);
 
-			if (size.x > 48) { scalexy.x = 48. / size.x; }
+			if (size.x > 48 - widthchange) { scalexy.x = (48.0 - widthchange) / size.x; }
 			if (size.y > 24) { scalexy.y = 24. / size.y; }
 
 			scale = min(scalexy.x, scalexy.y);
 
-			DrawTexture(icontex, (280, 179), DI_ITEM_CENTER, 1.0, (48, 24), (scale, scale), (!weapon || weapon is "ClassicWeapon") ? STYLE_Translucent : STYLE_Stencil, (!weapon || weapon is "ClassicWeapon") ? 0xFFFFFFFFF : 0xFF0000000);
+			DrawTexture(icontex, (280 + widthchange / 2, 179), DI_ITEM_CENTER, 1.0, (48 - widthchange, 24), (scale, scale), (!weapon || weapon is "ClassicWeapon") ? STYLE_Translucent : STYLE_Stencil, (!weapon || weapon is "ClassicWeapon") ? 0xFFFFFFFFF : 0xFF0000000);
 		}
-
 
 		//Ammo
 		Ammo ammo1, ammo2;
@@ -626,6 +672,19 @@ class ClassicStatusBar : WidgetStatusBar
 		if (ammo2) { ammocount += ammocount2; }
 		if (ammo1) { ammocount += ammocount1; } 
 		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
+	}
+
+	void DrawKey(int k, int x, int y)
+	{
+		if (k < 0) { return; }
+
+		let keytype = Key.GetKeyType(k);
+		if (!keytype) { return; }
+		
+		let key = CPlayer.mo.FindInventory(keytype);
+		if (!key) { return; }
+
+		DrawImage(TexMan.GetName(key.icon), (x + 3, y + 5), DI_ITEM_CENTER, 1.0, (8, 15));
 	}
 
 	void DrawMugShot(int x, int y, int size = 32)

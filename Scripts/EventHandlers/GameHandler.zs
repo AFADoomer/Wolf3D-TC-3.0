@@ -26,11 +26,52 @@ class GameHandler : StaticEventHandler
 	int randomcount;
 	ui int uirandomcount;
 	Map<String, String> music;
+	Array< class<Key> > keys;
 
 	override void OnRegister()
 	{
 		CheckGameFiles(self);
 		ParseMusicMapping();
+	}
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		keys.Clear();
+	
+		Array<int> locks;
+		for (int l = 0; l < level.lines.Size(); l++)
+		{
+			let line = level.lines[l];
+			if (line.locknumber && locks.Find(line.locknumber) == locks.Size())
+			{
+				locks.Push(line.locknumber);
+			}
+		}
+
+		for (int kt = 0; kt < Key.GetKeyTypeCount(); kt++)
+		{
+			let keytype = Key.GetKeyType(kt);
+			if (!keytype || keytype.IsAbstract()) { continue; }
+
+			let key = Wolf3DKey(GetDefaultByType(keytype));
+			if (key && locks.Find(key.locknumber) < locks.Size())
+			{
+				if (keys.Find(keytype) == keys.Size()) { keys.Push(keytype); }
+			}
+		}
+
+		// If less than two keys are used, add the default keys to the list to retain proper placement order
+		if (keys.Size() < 2) { if (keys.Find("YellowKey") == keys.Size()) { keys.Push("YellowKey"); } }
+		if (keys.Size() < 2) { if (keys.Find("BlueKey") == keys.Size()) { keys.Push("BlueKey"); } }
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (e.thing is "Key")
+		{ 
+			class<Key> keytype = (class<Key>)(e.Thing.GetClass());
+			if (keys.Find(keytype) == keys.Size()) { keys.Push(keytype); }
+		}
 	}
 
 	static void CheckGameFiles(GameHandler this)

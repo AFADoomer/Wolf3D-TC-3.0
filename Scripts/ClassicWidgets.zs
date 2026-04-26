@@ -560,7 +560,7 @@ class KeyWidget : Widget
 
 		for (let j = player.mo.Inv; j != null; j = j.Inv)
 		{
-			if ((screenblocks < 11 || automapactive) && (j is "YellowKey" || j is "BlueKey")) { continue; }
+			if (screenblocks < 11 || automapactive) { continue; }
 			if (j is "Key" && j.Icon.IsValid())
 			{
 				[texscale, texsize] = ZScriptTools.ScaleTextureTo(j.icon, iconsize);
@@ -588,7 +588,7 @@ class KeyWidget : Widget
 
 		for (let i = player.mo.Inv; i != null; i = i.Inv)
 		{
-			if ((screenblocks < 11 || automapactive) && (i is "YellowKey" || i is "BlueKey")) { continue; }
+			if (screenblocks < 11 || automapactive) { continue; }
 			if (i is "Key" && i.Icon.IsValid())
 			{
 				[texscale, texsize] = ZScriptTools.ScaleTextureTo(i.icon, iconsize);
@@ -611,12 +611,9 @@ class KeyWidget : Widget
 
 	override bool IsVisible()
 	{
-		if (
-			screenblocks > 11 ||
-			player.morphtics
-		) { return false; }
+		if (screenblocks == 11) { return Super.IsVisible(); }
 
-		return true;
+		return false;
 	}
 }
 

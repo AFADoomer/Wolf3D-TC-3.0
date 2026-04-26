@@ -290,18 +290,41 @@ class WolfPlayer : PlayerPawn
 
 		if (giveall || name ~== "keys")
 		{
-			for (int i = 0; i < AllActorClasses.Size(); ++i)
+			GameHandler handler;
+			handler = GameHandler(StaticEventHandler.Find("GameHandler"));
+
+			if (handler)
 			{
-				if (AllActorClasses[i] is "Key")
+				for (int k = 0; k < handler.keys.Size(); k++)
 				{
-					if (AllActorClasses[i] is "YellowKeyLost" || AllActorClasses[i] is "BlueKeyLost") { continue; }
-					let keyitem = GetDefaultByType (AllActorClasses[i]);
+					let keyitem = GetDefaultByType(handler.keys[k]);
 					if (keyitem.special1 != 0)
 					{
-						let item = Inventory(Spawn(AllActorClasses[i]));
+						let item = Inventory(Spawn(handler.keys[k]));
 						if (!item.CallTryPickup (self))
 						{
 							item.Destroy ();
+						}
+					}
+				}
+			}
+			else // Fall back to naive code if the handler wasn't available for some reason
+			{
+				for (int i = 0; i < AllActorClasses.Size(); ++i)
+				{
+					if (AllActorClasses[i] is "Key")
+					{
+						if (AllActorClasses[i] is "YellowKeyLost" || AllActorClasses[i] is "BlueKeyLost") { continue; }
+						if (giveall != ALL_YESYES && (AllActorClasses[i] is "RedKey" || AllActorClasses[i] is "GreenKey" )) { continue; }
+
+						let keyitem = GetDefaultByType (AllActorClasses[i]);
+						if (keyitem.special1 != 0)
+						{
+							let item = Inventory(Spawn(AllActorClasses[i]));
+							if (!item.CallTryPickup (self))
+							{
+								item.Destroy ();
+							}
 						}
 					}
 				}

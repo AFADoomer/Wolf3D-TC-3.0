@@ -480,3 +480,32 @@ class SmokeSpawner : Actor
 		if (counter++ > duration) { Destroy(); }
 	}
 }
+
+class WolfTeleportIn : Actor replaces TeleportFog
+{
+	Default
+	{
+		ActiveSound "Teleport/In";
+	}
+
+	States
+	{
+		Spawn:
+			TELE ABCDEFG 5 Bright { Game.AttachLight(self, int(8 + sin(frame * 180 / 4.0) * 24), 0x5bf9f9, (0, 0, 32)); }
+			Stop; 
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		A_StartSound(ActiveSound, CHAN_AUTO, CHANF_DEFAULT, 1.0);
+	}
+}
+
+class WolfTeleportOut : WolfTeleportIn
+{
+	Default
+	{
+		ActiveSound "Teleport/Out";
+	}
+}

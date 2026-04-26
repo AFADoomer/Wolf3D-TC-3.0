@@ -505,19 +505,31 @@ class Bones : ClassicDecoration
 			POB1 A -1;
 			Stop;
 	}
-} 
+}
 
-class YellowKey : Key
+class Wolf3DKey : Key
 {
+	int locknumber;
+
+	Property LockNumber:locknumber;
+
 	Default
 	{
 		//$Category Wolfenstein 3D/Items/Keys
+		Inventory.PickupSound "pickups/key";
+		Inventory.PickupMessage "";
+	}
+}
+
+class YellowKey : Wolf3DKey
+{
+	Default
+	{
 		//$Title Key (Gold)
 		//$Color 19
 		Inventory.AltHUDIcon "I_YKEY";
 		Inventory.Icon "I_YKEY_T";
-		Inventory.PickupSound "pickups/key";
-		Inventory.PickupMessage "";
+		Wolf3DKey.LockNumber 60;
 		+NOTDMATCH
 	}
 
@@ -529,17 +541,15 @@ class YellowKey : Key
 	}
 }
 
-class BlueKey : Key
+class BlueKey : Wolf3DKey
 {
 	Default
 	{
-		//$Category Wolfenstein 3D/Items/Keys
 		//$Title Key (Silver)
 		//$Color 11
 		Inventory.AltHUDIcon "I_BKEY";
 		Inventory.Icon "I_BKEY_T";
-		Inventory.PickupSound "pickups/key";
-		Inventory.PickupMessage "";
+		Wolf3DKey.LockNumber 61;
 		+NOTDMATCH
 	}
 
@@ -551,12 +561,14 @@ class BlueKey : Key
 	}
 }
 
-class RedKey : Key
+class RedKey : Wolf3DKey
 {
 	Default
 	{
-		Inventory.PickupSound "pickups/key";
-		Inventory.PickupMessage "";
+		//$Title Key (Red)
+		//$Color 4
+		Inventory.Icon "I_RKEY_T";
+		Wolf3DKey.LockNumber 62;
 		+NOTDMATCH
 	}
 
@@ -568,12 +580,14 @@ class RedKey : Key
 	}
 }
 
-class GreenKey : Key
+class GreenKey : Wolf3DKey
 {
 	Default
 	{
-		Inventory.PickupSound "pickups/key";
-		Inventory.PickupMessage "";
+		//$Title Key (Green)
+		//$Color 2
+		Inventory.Icon "I_GKEY_T";
+		Wolf3DKey.LockNumber 63;
 		+NOTDMATCH
 	}
 
