@@ -143,8 +143,6 @@ class ClassicBase : Actor
 				break;
 		}
 
-		StartHealth = health;
-
 		// Increase enemy health in coop... otherwise they'd be too easy!
 		if (ZScriptTools.IsCoop())
 		{
@@ -158,10 +156,10 @@ class ClassicBase : Actor
 			}
 
 			health += int(pcount * g_buffpercent * health); // Increase all enemies' health by percentage amount per player
-		
-			StartHealth = health;
 		}
 
+		StartHealth = health;
+ 
 		if (!Default.bNoBlood) { bNoBlood = g_noblood; }
 
 		if (bNerfWhenReplaced)
