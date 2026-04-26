@@ -1163,11 +1163,6 @@ map SD321 "$SD321"
 	specialaction = "DevilIncarnate", "ACS_ExecuteAlways", 4, 0, 2
 }
 
-map TestMap "Test Map"
-{
-	levelnum = 999
-}
-
 DoomEdNums
 {
 	// Compatibility
