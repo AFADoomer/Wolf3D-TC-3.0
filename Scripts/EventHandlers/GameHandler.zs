@@ -72,6 +72,9 @@ class GameHandler : StaticEventHandler
 			class<Key> keytype = (class<Key>)(e.Thing.GetClass());
 			if (keys.Find(keytype) == keys.Size()) { keys.Push(keytype); }
 		}
+
+		e.Thing.TeleFogSourceType = "WolfTeleportOut";
+		e.Thing.TeleFogDestType = "WolfTeleportIn";
 	}
 
 	static void CheckGameFiles(GameHandler this)

@@ -273,6 +273,10 @@ $alias column/break			missile/hit
 $alias barrel/explode		missile/hit
 $alias pickups/map			pickups/ammobox
 
+// Teleport
+teleport/in 			"Sounds/Map/TeleIn.wav"
+teleport/out 			"Sounds/Map/TeleOut.wav"
+
 // Rumble Definitions
 $rumble stats/bonus100		HEAVY
 $rumble stats/bonuscount	SUBTLE

@@ -4,6 +4,7 @@ Spear of Destiny assets - id Software
 Spear of Destiny Mission Pack assets - FormGen
 SNES Wolf3D sprites - id Software/Imagineer, ripped by InsanityBringer (https://www.spriters-resource.com/snes/wolfenstein3d/sheet/102303/?source=genre), modified by AFADoomer
 Jaguar Wolf3D sprites - id Software
+Blake Stone assets - JAM/Apogee
 
 Broken column sprites - Modified by AFADoomer from AReyeP - Spear Resurrection (http://www.areyep.com/RIPandMCS-Spearres-Main.html)
 Exploding barrel sprites - Modified by AFADoomer from UnTrustable (https://forum.zdoom.org/viewtopic.php?p=884629#p884629)
