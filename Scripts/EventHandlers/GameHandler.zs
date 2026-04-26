@@ -59,10 +59,16 @@ class GameHandler : StaticEventHandler
 				if (keys.Find(keytype) == keys.Size()) { keys.Push(keytype); }
 			}
 		}
+	}
 
-		// If less than two keys are used, add the default keys to the list to retain proper placement order
-		if (keys.Size() < 2) { if (keys.Find("YellowKey") == keys.Size()) { keys.Push("YellowKey"); } }
-		if (keys.Size() < 2) { if (keys.Find("BlueKey") == keys.Size()) { keys.Push("BlueKey"); } }
+	override void WorldTick()
+	{
+		if (level.time == 5)
+		{
+			// If less than two keys are used in the map, add the default keys to the list to retain proper placement order
+			if (keys.Size() < 2) { if (keys.Find("YellowKey") == keys.Size() && keys.Find("YellowKeyLost") == keys.Size()) { keys.Push("YellowKey"); } }
+			if (keys.Size() < 2) { if (keys.Find("BlueKey") == keys.Size() && keys.Find("BlueKeyLost") == keys.Size()) { keys.Push("BlueKey"); } }
+		}
 	}
 
 	override void WorldThingSpawned(WorldEvent e)

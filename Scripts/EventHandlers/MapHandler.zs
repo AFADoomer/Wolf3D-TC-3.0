@@ -112,7 +112,6 @@ Class ActorMap : ParsedValue
 				gm = actormaps.Find("SD2");
 				am = gm.Find(istr);
 				if (am && am.GetInt("Skill") <= skill) { return am; }
-				break;
 			case 1:
 				gm = actormaps.Find("SD1");
 				am = gm.Find(istr);
@@ -895,17 +894,23 @@ class ParsedMap
 					startspot = sec.centerspot;
 					double angle = 90 - (a - 0x13) * 90;
 
-					if (deathmatch)
+					for (int i = 0; i < MAXPLAYERS; i++)
 					{
-						players[0].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), false);
-					}
-					else
-					{
-						// Move player 1 into start spot; the rest are handled in event handler
-						players[0].mo.SetOrigin((startspot, 0), false);
+						if (playeringame[i])
+						{
+							if (!deathmatch && i == 0)
+							{
+								players[0].mo.SetOrigin((startspot, 0), false);
+								players[0].mo.angle = angle;
+							}
+							else
+							{
+								players[i].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), deathmatch);
+								players[i].mo.angle = int(ceil(GameHandler.WolfRandom() / 64)) * 90;
+							}
+						}
 					}
 
-					players[0].mo.angle = angle;
 				}
 
 				// Build the wall structure
@@ -942,7 +947,7 @@ class ParsedMap
 				if (a > 0)
 				{
 					Actor mo;
-					ParsedValue am = ActorMap.GetActor(handler.actormaps, gametype, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+					ParsedValue am = ActorMap.GetActor(handler.actormaps, max(0, g_sod), a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
 
 					if (am)
 					{
@@ -1318,7 +1323,7 @@ class ParsedMap
 	TextureID GetTileTexture(int t, Vector2 pos, Line ln = null)
 	{
 		int game = gametype;
-		if (game < 0) { game = max(0, g_sod); }
+		if (game <= 0) { game = max(0, g_sod); }
 
 		// Special handling for doors
 		if (game < 4)
