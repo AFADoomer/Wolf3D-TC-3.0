@@ -41,13 +41,18 @@ const float minlight = 0.57;
 vec4 ProcessTexel()
 {
 	vec4 color = getTexel(vTexCoord.st);
+	vec2 size = textureSize(tex, 0);
 
-	// Ignore anything in the top percentage of the image, as configured 
-	// via CLIPHEIGHT define, or defaulting to 85% if not defined
+	// Ignore anything in the top percentage of the image, as configured via CLIPHEIGHT
+	// define, or defaulting to 10 pixels from bottom if not defined
+	//
+	// Decimal values less than one are treated as a percentage of the image, while
+	// values greater than one are treated as a pixel count from the top of the image
 #ifdef CLIPHEIGHT
 	float shadowclip = CLIPHEIGHT;
+	if (shadowclip > 1.0) { shadowclip /= size.y; }
 #else
-	float shadowclip = 0.85;
+	float shadowclip = 1.0 - 10.0 / size.y;
 #endif
 
 	if (color == transparent) { color.a = 0.0; }

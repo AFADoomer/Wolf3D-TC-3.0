@@ -1959,6 +1959,13 @@ class LightBulbLost : CrushedBones2
 			LIT8 A -1;
 			Stop;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
+	}
 } 
 
 class SlimeLost : CrushedBody
