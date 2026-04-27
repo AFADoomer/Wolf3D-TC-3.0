@@ -713,7 +713,7 @@ Sprite POB4A0, 64, 64 { Offset 32, 64 Patch WSPR0045, 0, 0 }
 Sprite POT2A0, 64, 64 { Offset 32, 64 Patch WSPR0046, 0, 0 }
 Sprite STOVA0, 64, 64 { Offset 32, 64 Patch WSPR0047, 0, 0 }
 Sprite SPECA0, 64, 64 { Offset 32, 64 Patch WSPR0048, 0, 0 }
-Sprite VINEA0, 64, 64 { Offset 32, 0 Patch WSPR0049, 0, 0 }
+Sprite VINEA0, 64, 64 { Offset 32, 64 Patch WSPR0049, 0, 0 }
 
 //SoD-Specific Items
 Sprite HEL3A0, 64, 64 { Offset 32, 64 Patch WSPR1012, 0, 0 }
