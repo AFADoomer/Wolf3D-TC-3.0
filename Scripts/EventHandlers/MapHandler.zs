@@ -1351,11 +1351,12 @@ class ParsedMap
 			{
 				case 4:
 					if (t > 0xD0) { t -= 0x13C; }
-					else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any);; }
+					else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any); }
 					else { return tex; }
 					break;
 				default:
-					if (t <= 0x95) { return TexMan.CheckForTexture("Patches/Walls/Wall0000.png", TexMan.Type_Any); }
+					String texpath = String.Format("Patches/Walls/Wall%i000.png", g_sod == 1 ? 0 : max(0, g_sod));
+					if (t <= 0x95) { return TexMan.CheckForTexture(texpath, TexMan.Type_Any); }
 					break;
 			}
 
