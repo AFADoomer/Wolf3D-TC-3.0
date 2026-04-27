@@ -631,7 +631,7 @@ class ClassicStatusBar : WidgetStatusBar
 			DrawKey(-1, x, y);
 		}
 
-		int widthchange = x - startx;
+		int widthchange = max(0, x - startx);
 
 		//Weapon
 		TextureID icontex;
