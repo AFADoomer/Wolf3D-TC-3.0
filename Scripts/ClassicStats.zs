@@ -215,7 +215,7 @@ class ClassicStats : DoomStatusScreen
 
 				if (fadetarget == gametic) { initNoState(); }
 
-				sp_state++;
+				if (multiplayer) { sp_state++; }
 			}
 		}
 		else if (sp_state & 1)
