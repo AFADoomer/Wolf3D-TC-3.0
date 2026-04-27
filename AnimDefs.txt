@@ -11,13 +11,25 @@ switch "Patches/Walls/WALL0041.png"
 on sound switches/elevator
 pic "Patches/Walls/WALL0043.png" tics 0
 
+switch "Patches/Walls/WALL0043.png"
+on sound switches/elevator
+pic "Patches/Walls/WALL0041.png" tics 0
+
 switch "Patches/Walls/WALL2041.png"
 on sound switches/elevator2
 pic "Patches/Walls/WALL2043.png" tics 0
 
+switch "Patches/Walls/WALL2043.png"
+on sound switches/elevator2
+pic "Patches/Walls/WALL2041.png" tics 0
+
 switch "Patches/Walls/WALL3041.png"
 on sound switches/elevator2
 pic "Patches/Walls/WALL3043.png" tics 0
+
+switch "Patches/Walls/WALL3043.png"
+on sound switches/elevator2
+pic "Patches/Walls/WALL3041.png" tics 0
 
 // Menu cursor
 texture M_SEL1
