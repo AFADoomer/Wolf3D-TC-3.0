@@ -297,29 +297,6 @@ class MapHandler : StaticEventHandler
 		{
 			queuedmap = null;
 			curmap = null;
-
-			if (multiplayer)
-			{
-				int nextepisode = (level.levelnum / 100) % 10 + 1;
-				String nextmap;
-				switch (nextepisode)
-				{
-					default:
-						nextmap = String.Format("e%il1", nextepisode);
-						break;
-					case 7:
-						nextmap = "SOD01";
-						break;
-					case 8:
-						nextmap = "SD201";
-						break;
-					case 9:
-						nextmap = "SD301";
-						break;
-				}
-
-				level.nextmap = nextmap;
-			}
 		}
 	}
 
@@ -905,8 +882,8 @@ class ParsedMap
 							}
 							else
 							{
-								players[i].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), deathmatch);
-								players[i].mo.angle = int(ceil(GameHandler.WolfRandom() / 64)) * 90;
+								players[i].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), false);
+								players[i].mo.angle = deathmatch ? int(ceil(GameHandler.WolfRandom() / 64)) * 90 : angle;
 							}
 						}
 					}
