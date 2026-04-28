@@ -1033,7 +1033,7 @@ class HighScores : WolfMenu
 
 		if (inputindex > -1 && mInput)
 		{
-			let printit = mInput.GetText() .. ((gametic % 30 < 15) ? String.Format("%c", 0x80) : "");
+			let printit = mInput.GetText() .. ((gametic % 30 < 15) ? SmallFont.GetCursor() : "");
 			screen.DrawText (SmallFont, Font.FindFontColor("TrueWhite"), 32, 76 + 16 * inputindex, printit, DTA_320x200, true);
 		}
  
