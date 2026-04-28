@@ -256,13 +256,6 @@ HardwareShader Sprite "WROCP0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "WGASA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 HardwareShader Sprite "WRKTA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/WRKTA0.png" }
 HardwareShader Sprite "WRKTB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "DBURA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURB0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURC0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURD0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURE0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURF0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
-HardwareShader Sprite "DBURG0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/DBURN.png" }
 HardwareShader Sprite "HEL3A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 HardwareShader Sprite "HEL4A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 HardwareShader Sprite "HEL2A0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
@@ -330,43 +323,44 @@ HardwareShader Sprite "LBO2K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Tex
 HardwareShader Sprite "LBO2H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 HardwareShader Sprite "LBO2I0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 HardwareShader Sprite "LBO2J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9C0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9E0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9F0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO9M0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6C0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6E0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6F0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6I0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LBO6L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10I0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10M0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10N0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10O0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10P0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
-HardwareShader Sprite "LB10Q0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
+HardwareShader Sprite "LBO9A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO9A0.png" }
+HardwareShader Sprite "LBO9B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO9B0.png" }
+HardwareShader Sprite "LBO9C0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 59 }
+HardwareShader Sprite "LBO9D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 59 }
+HardwareShader Sprite "LBO9E0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 60 }
+HardwareShader Sprite "LBO9F0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 60 }
+HardwareShader Sprite "LBO9G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 60 }
+HardwareShader Sprite "LBO9H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 60 }
+HardwareShader Sprite "LBO9J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO9J0.png" }
+HardwareShader Sprite "LBO9K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 59 }
+HardwareShader Sprite "LBO9L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 60 }
+HardwareShader Sprite "LBO6A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6A0.png" }
+HardwareShader Sprite "LBO6B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6B0.png" }
+HardwareShader Sprite "LBO6C0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6C0.png" }
+HardwareShader Sprite "LBO6D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6D0.png" }
+HardwareShader Sprite "LBO6E0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6E0.png" }
+HardwareShader Sprite "LBO6F0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6E0.png" }
+HardwareShader Sprite "LBO6G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6E0.png" }
+HardwareShader Sprite "LBO6H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6E0.png" }
+HardwareShader Sprite "LBO6I0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6I0.png" }
+HardwareShader Sprite "LBO6J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6J0.png" }
+HardwareShader Sprite "LBO6K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6K0.png" }
+HardwareShader Sprite "LBO6L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/LBO6L0.png" }
+HardwareShader Sprite "LB10A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
+HardwareShader Sprite "LB10C0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
+HardwareShader Sprite "LB10D0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10G0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10H0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10I0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10J0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10K0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10L0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10M0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10N0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10O0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10P0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
+HardwareShader Sprite "LB10Q0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" Define CLIPHEIGHT = 52 }
 HardwareShader Sprite "LB10R0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Graphics/Shadows/Auto.png" }
 
 /// HUD Icons
