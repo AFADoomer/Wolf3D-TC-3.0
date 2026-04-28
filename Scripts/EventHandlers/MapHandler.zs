@@ -299,46 +299,7 @@ class MapHandler : StaticEventHandler
 			curmap = null;
 		}
 	}
-
-	override void WorldTick()
-	{
-		// TODO: Fix automap view traversal in a better way
-		// Check for noclipping players; allow them to see through void space
-		// by clearing line textures that normally block automap sight traversal
-		//
-		// We are assuming that if they are noclipping, they don't care about
-		// seeing parts of the map that they shouldn't actually be able to see
-		if (!(level.mapname ~== "Level") || !curmap || level.time % 10) { return; } // only check every 10 tics for performance
-
-		int noclip;
-		for (int p = 0; p < MAXPLAYERS; p++)
-		{
-			if (playeringame[p]) { noclip += players[p].cheats & CF_NOCLIP; }
-		}
-
-		if (!!noclip != curmap.noclip)
-		{
-			TextureID tex = TexMan.CheckForTexture(noclip ? "-" : "BLACK", TexMan.Type_Any);
-			for (int s = 0; s < curmap.voidspace.Size(); s++)
-			{
-				let sec = curmap.voidspace[s];
-				for (int l = 0; l < sec.lines.Size(); l++)
-				{
-					let ln = sec.lines[l];
-					for (int s = 0; s < 2; s++)
-					{
-						if (ln.sidedef[s])
-						{
-							ln.sidedef[s].SetTexture(side.top, tex);
-							ln.sidedef[s].SetTexture(side.bottom, tex);
-						}
-					}
-				}
-			}
-			curmap.noclip = !!noclip;
-		}
-	}
-
+	
 	override void WorldLinePreActivated(WorldEvent e)
 	{
 		if (level.mapname ~== "Level")
@@ -844,7 +805,6 @@ class ParsedMap
 			}
 
 			TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
-			TextureID blanktex = TexMan.CheckForTexture("BLACK", TexMan.Type_Any);
 			
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
@@ -894,7 +854,7 @@ class ParsedMap
 				if ((t == -1 || t > 0 && (t < 0x5A || t > 0x8F)) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
-					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterFloor() + 64), 0, 1, 0, true);
+					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, 0, true);
 
 					// Make lines blocking and set textures
 					for (int l = 0; l < sec.lines.Size(); l++)
@@ -911,7 +871,6 @@ class ParsedMap
 							if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
 							{
 								ln.sidedef[s].SetTexture(side.mid, tex);
-								ln.sidedef[s].SetTexture(side.bottom, tex);
 							}
 						}
 					}
@@ -995,8 +954,7 @@ class ParsedMap
 
 				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
 
-				// Set the floor and ceiling for collapsed sectors to "-", and 
-				// set the wall textures to solid so they block automap sight traversal
+				// Set the floor and ceiling for collapsed sectors to "-"
 				if (edges == sec.lines.Size() && !accessible && TileAt(pos) < 0x96)
 				{
 					sec.SetTexture(Sector.floor, nulltex);
@@ -1009,29 +967,14 @@ class ParsedMap
 						{
 							if (ln.sidedef[s])
 							{
-								ln.sidedef[s].SetTexture(side.top, blanktex);
-								ln.sidedef[s].SetTexture(side.bottom, blanktex);
+								ln.sidedef[s].SetTexture(side.top, nulltex);
+								ln.sidedef[s].SetTexture(side.mid, nulltex);
+								ln.sidedef[s].SetTexture(side.bottom, nulltex);
 							}
 						}
 					}
 
 					voidspace.Push(sec);
-				}
-				else
-				{
-					for (int l = 0; l < sec.lines.Size(); l++)
-					{
-						let ln = sec.lines[l];
-
-						for (int s = 0; s < 2; s++)
-						{
-							if (ln.sidedef[s])
-							{
-								ln.sidedef[s].SetTexture(side.top, nulltex);
-								ln.sidedef[s].SetTexture(side.bottom, nulltex);
-							}
-						}
-					}
 				}
 
 				int t = TileAt(pos);
@@ -1249,7 +1192,6 @@ class ParsedMap
 									if (ln.sidedef[s].sector != sec)
 									{
 										ln.sidedef[s].SetTexture(side.mid, tex);
-										ln.sidedef[s].SetTexture(side.bottom, tex);
 									}
 								}
 							}	
@@ -1268,7 +1210,6 @@ class ParsedMap
 									if (ln.sidedef[s].sector == sec)
 									{
 										ln.sidedef[s].SetTexture(side.mid, tex);
-										ln.sidedef[s].SetTexture(side.bottom, tex);
 									}
 								}
 							}
