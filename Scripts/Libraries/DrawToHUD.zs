@@ -753,15 +753,9 @@ class DrawToHUD
 				else if (keys[k] == "RightArrow") { label = "▸"; }
 				else if (keys[k] == "UpArrow") { label = "▴"; }
 				else if (keys[k] == "DownArrow") { label = "▾"; }
+				else if (keys[k] == "Space") { label = "     Space     "; }
 				
 				b = Button.Create(label, KeyLabelFont, icon, buttonscale, bkg, fntcolor, fillcolor, margin, bkgalpha, bkgfillalpha);
-
-				// Make the space bar wide so that it closer matches actual space bar width
-				if (b && keys[k] == "Space")
-				{
-					b.width = max(int(96 * buttonscale * CleanXfac_1), b.width);
-					b.labeloffset = b.width / 2;
-				}
 			}
 
 			if (b)
