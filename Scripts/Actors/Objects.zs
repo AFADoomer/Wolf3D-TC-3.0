@@ -170,6 +170,8 @@ class TableandChairs : ClassicDecoration
 
 class FloorLamp : ClassicDecoration
 {
+	CVar dynlights;
+
 	Default
 	{
 		//$Title Floor Lamp
@@ -183,11 +185,21 @@ class FloorLamp : ClassicDecoration
 			Stop;
 	}
 
+
+	override void PostBeginPlay()
+	{
+		dynlights = CVar.FindCVar("g_dynamiclights");
+
+		Super.PostBeginPlay();
+	}
+
 	override void Tick()
 	{
 		Super.Tick();
 
 		Game.AttachLight(self, 22.0, "White", (0, 0, 36), DYNAMICLIGHT.LF_SPOT, 2, 25, 90);
+
+		floorclip = (dynlights && dynlights.GetInt()) ? 2 : 0;
 	}
 } 
 
@@ -1151,12 +1163,11 @@ class CageofSkulls : ClassicDecoration
 	}
 } 
 
-class RedCeilingLight : ClassicDecoration
+class RedCeilingLight : GreenCeilingLight
 {
 	Default
 	{
 		//$Title Ceiling Light (Red)
-		-SOLID
 	}
 
 	States
@@ -1164,13 +1175,6 @@ class RedCeilingLight : ClassicDecoration
 		Spawn:
 			LITR A -1;
 			Stop;
-	}
-
-	override void Tick()
-	{
-		Super.Tick();
-
-		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 } 
 
@@ -1901,17 +1905,12 @@ class ElectrofieldLost : NaziFlag
 	}
 }
 
-class RedCeilingLightLost : AardwolfSign
+class RedCeilingLightLost : GreenCeilingLight
 {
 	Default
 	{
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Ceiling Light (Red, Lost)
-	}
-	
-	Default
-	{
-		-SOLID
 	}
 
 	States
@@ -1919,13 +1918,6 @@ class RedCeilingLightLost : AardwolfSign
 		Spawn:
 			LIT7 A -1;
 			Stop;
-	}
-
-	override void Tick()
-	{
-		Super.Tick();
-
-		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 }
 
@@ -1945,7 +1937,7 @@ class Bones2Lost : CrushedBones1
 	}
 } 
 
-class LightBulbLost : CrushedBones2
+class LightBulbLost : GreenCeilingLight
 {
 	Default
 	{
@@ -1958,13 +1950,6 @@ class LightBulbLost : CrushedBones2
 		Spawn:
 			LIT8 A -1;
 			Stop;
-	}
-
-	override void Tick()
-	{
-		Super.Tick();
-
-		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 } 
 
@@ -1984,12 +1969,13 @@ class SlimeLost : CrushedBody
 	}
 } 
 
-class HLabTableLost : HangingUtensils
+class HLabTableLost : ClassicDecoration
 {
 	Default
 	{
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Lab Table (Lost)
+		Height 64;
 	}
 	
 	States
@@ -1998,7 +1984,7 @@ class HLabTableLost : HangingUtensils
 			TAB5 A -1;
 			Stop;
 	}
-} 
+}
 
 class RadioactiveBarrelLost  : Stove
 {

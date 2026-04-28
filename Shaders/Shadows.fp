@@ -38,7 +38,7 @@ const vec4 transparent = vec4(152.0 / 255, 0, 136.0 / 255, 1.0);
 const float maxshade = 0.43;
 const float minlight = 0.57;
 
-vec4 ProcessTexel()
+vec4 ProcessAlphaMap(inout Material material)
 {
 	vec4 color = getTexel(vTexCoord.st);
 	vec2 size = textureSize(tex, 0);
@@ -78,27 +78,19 @@ vec4 ProcessTexel()
 	// the default Wolf3D floor color
 	float alpha = 2.0 * mix(0.0, 1.0, maxshade - shadowmap.r) * color.a;
 
-	if (alpha > 0.0)
-	{
-		// Shade the dark spots
-		color.rgb = shadowcolor.rgb;
-		color.a = clamp(alpha * shadowcolor.a, 0.0, 1.0);
-	}
-	else
-	{
-		if (uDynLightColor != vec4(0.0, 0.0, 0.0, 1.0))
-		{
-			color.a = 0.0;
-		}
-		else
-		{
-			// Lighten the light spots
-			color.r = mix(minlight, lightcolor.r, 2.0 * shadowmap.r * lightcolor.r);
-			color.g = mix(minlight, lightcolor.g, 2.0 * shadowmap.g * lightcolor.g);
-			color.b = mix(minlight, lightcolor.b, 2.0 * shadowmap.b * lightcolor.b);
-			color.a = clamp(-alpha * lightcolor.a, 0.0, 1.0);
-		}
-	}
+	// Shade the dark spots
+	if (alpha > 0.0) { return vec4(shadowcolor.rgb, color.a = clamp(alpha * shadowcolor.a, 0.0, 1.0)); }
 
-	return color;
+	// Make the transparent spots (and the light spots, if dynamic lights are present) transparent
+	if (alpha == 0.0 || uLightIndex >= 0 || uDynLightColor != vec4(0.0, 0.0, 0.0, 1.0)) { return vec4(color.rgb, 0.0); }
+
+	// Lighten the light spots
+	return vec4(mix(minlight, lightcolor.r, 2.0 * shadowmap.r * lightcolor.r), mix(minlight, lightcolor.g, 2.0 * shadowmap.g * lightcolor.g), mix(minlight, lightcolor.b, 2.0 * shadowmap.b * lightcolor.b), clamp(-alpha * lightcolor.a, 0.0, 1.0));
+}
+
+void SetupMaterial(inout Material material)
+{
+	material.Base = ProcessAlphaMap(material);
+	material.Normal = ApplyNormalMap(vTexCoord.st);
+	material.Bright = texture(brighttexture, vTexCoord.st);
 }
