@@ -644,7 +644,7 @@ class ParsedMap
 		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) { return 0; }
 
 		int index = int(pos.y * width + pos.x);
-		if (index < 0 || index >= planes[1].Size()) { return 0; } 
+		if (index < 0 || index >= planes[1].Size()) { return 0; }
 
 		return planes[1][index];
 	}

@@ -119,7 +119,7 @@ class WolfPlayer : PlayerPawn
 		// SoD-specific idle and ouch face mugshots
 		if (Game.IsSoD() || level.levelnum < 101)
 		{
-			if (player && player.damagecount > 30 && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoScream(self); } 
+			if (player && player.damagecount > 30 && ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).DoScream(self); }
 
 			if (pos == lastpos)
 			{

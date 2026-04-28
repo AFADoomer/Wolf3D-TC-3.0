@@ -826,7 +826,7 @@ class StaticIconListMenu : ExtendedListMenu
 		// Find the middle skill menu entry (with rounding if odd number of entries)
 		double median = listsize / 2;
 		if (median < int(median) + 0.5) { min = int(median); }
-		else { min = int(median) + 1; } 
+		else { min = int(median) + 1; }
 
 		// Figure out the widest skill name...
 		int itemcount = 0;

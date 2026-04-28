@@ -670,7 +670,7 @@ class ClassicStatusBar : WidgetStatusBar
 		int ammocount = 0, ammocount1, ammocount2;
 		[ammo1, ammo2, ammocount1, ammocount2] = GetWeaponAmmo();
 		if (ammo2) { ammocount += ammocount2; }
-		if (ammo1) { ammocount += ammocount1; } 
+		if (ammo1) { ammocount += ammocount1; }
 		DrawString(ClassicFont, FormatNumber(ammocount), (231, 176), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_CENTER_BOTTOM);
 	}
 

@@ -416,7 +416,7 @@ class Widget ui
 			red = 255;
 			green = 255;
 			blue = 64;
-		} 
+		}
 		else
 		{
 			health = clamp(health, 0, 100);

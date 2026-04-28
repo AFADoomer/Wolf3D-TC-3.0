@@ -99,7 +99,7 @@ class PoolofWater : ClassicDecoration
 			POL1 A -1;
 			Stop;
 	}
-} 
+}
 
 class OilDrum : ClassicDecoration
 {
@@ -166,7 +166,7 @@ class TableandChairs : ClassicDecoration
 			TAB1 A -1;
 			Stop;
 	}
-} 
+}
 
 class FloorLamp : ClassicDecoration
 {
@@ -201,7 +201,7 @@ class FloorLamp : ClassicDecoration
 
 		floorclip = (dynlights && dynlights.GetInt()) ? 2 : 0;
 	}
-} 
+}
 
 class HangingChandelier : ClassicDecoration
 {
@@ -227,7 +227,7 @@ class HangingChandelier : ClassicDecoration
 
 		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
-} 
+}
 
 class HangingSkeleton : ClassicDecoration
 {
@@ -245,7 +245,7 @@ class HangingSkeleton : ClassicDecoration
 			HNG1 A -1;
 			Stop;
 	}
-} 
+}
 
 class DogFood : Health
 {
@@ -328,7 +328,7 @@ class Plant : ClassicDecoration
 			PLT1 A -1;
 			Stop;
 	}
-} 
+}
 
 class Skeleton : ClassicDecoration
 {
@@ -343,7 +343,7 @@ class Skeleton : ClassicDecoration
 			BONC A -1;
 			Stop;
 	}
-} 
+}
 
 class Sink : ClassicDecoration
 {
@@ -358,7 +358,7 @@ class Sink : ClassicDecoration
 			SINK A -1;
 			Stop;
 	}
-} 
+}
 
 class PlantinVase : ClassicDecoration
 {
@@ -374,7 +374,7 @@ class PlantinVase : ClassicDecoration
 			PLT2 A -1;
 			Stop;
 	}
-} 
+}
 
 class Vase : ClassicDecoration
 {
@@ -389,7 +389,7 @@ class Vase : ClassicDecoration
 			VASE C -1;
 			Stop;
 	}
-} 
+}
 
 class Table : ClassicDecoration
 {
@@ -404,7 +404,7 @@ class Table : ClassicDecoration
 			TAB2 A -1;
 			Stop;
 	}
-} 
+}
 
 class GreenCeilingLight : ClassicDecoration
 {
@@ -449,7 +449,7 @@ class KitchenUtensils : ClassicDecoration
 			POT1 A -1;
 			Stop;
 	}
-} 
+}
 
 class SuitofArmor : ClassicDecoration
 {
@@ -465,7 +465,7 @@ class SuitofArmor : ClassicDecoration
 			KNIG A -1;
 			Stop;
 	}
-} 
+}
 
 class EmptyCage : ClassicDecoration
 {
@@ -483,7 +483,7 @@ class EmptyCage : ClassicDecoration
 			CAG1 A -1;
 			Stop;
 	}
-} 
+}
 
 class Cage : ClassicDecoration
 {
@@ -501,7 +501,7 @@ class Cage : ClassicDecoration
 			CAG2 A -1;
 			Stop;
 	}
-} 
+}
 
 class Bones : ClassicDecoration
 {
@@ -624,7 +624,7 @@ class Bed : ClassicDecoration
 			BED1 A -1;
 			Stop;
 	}
-} 
+}
 
 class Basket : ClassicDecoration
 {
@@ -902,7 +902,7 @@ class WoodBarrel : ClassicDecoration
 			BAR2 A -1;
 			Stop;
 	}
-} 
+}
 
 class WellwithWater : ClassicDecoration
 {
@@ -918,7 +918,7 @@ class WellwithWater : ClassicDecoration
 			WEL1 A -1;
 			Stop;
 	}
-} 
+}
 
 class DryWell : ClassicDecoration
 {
@@ -934,7 +934,7 @@ class DryWell : ClassicDecoration
 			WEL2 A -1;
 			Stop;
 	}
-} 
+}
 
 class PoolofBlood : BonesWithBlood
 {
@@ -997,7 +997,7 @@ class CrushedBones1 : ClassicDecoration
 			POB2 C -1;
 			Stop;
 	}
-} 
+}
 
 class CrushedBones2 : ClassicDecoration
 {
@@ -1013,7 +1013,7 @@ class CrushedBones2 : ClassicDecoration
 			POB3 A -1;
 			Stop;
 	}
-} 
+}
 
 class CrushedBody : ClassicDecoration
 {
@@ -1029,7 +1029,7 @@ class CrushedBody : ClassicDecoration
 			POB4 A -1;
 			Stop;
 	}
-} 
+}
 
 class HangingUtensils : ClassicDecoration
 {
@@ -1048,7 +1048,7 @@ class HangingUtensils : ClassicDecoration
 			POT2 A -1;
 			Stop;
 	}
-} 
+}
 
 class Stove : ClassicDecoration
 {
@@ -1063,7 +1063,7 @@ class Stove : ClassicDecoration
 			STOV A -1;
 			Stop;
 	}
-} 
+}
 
 class SpearRack : ClassicDecoration
 {
@@ -1079,7 +1079,7 @@ class SpearRack : ClassicDecoration
 			SPEC A -1;
 			Stop;
 	}
-} 
+}
 
 class HangingVines : ClassicDecoration
 {
@@ -1129,7 +1129,7 @@ class SkullsonStick : ClassicDecoration
 			HEL3 A -1;
 			Stop;
 	}
-} 
+}
 
 class BloodyCage : ClassicDecoration
 {
@@ -1145,7 +1145,7 @@ class BloodyCage : ClassicDecoration
 			HEL4 A -1;
 			Stop;
 	}
-} 
+}
 
 class CageofSkulls : ClassicDecoration
 {
@@ -1161,7 +1161,7 @@ class CageofSkulls : ClassicDecoration
 			HEL2 A -1;
 			Stop;
 	}
-} 
+}
 
 class RedCeilingLight : GreenCeilingLight
 {
@@ -1176,7 +1176,7 @@ class RedCeilingLight : GreenCeilingLight
 			LITR A -1;
 			Stop;
 	}
-} 
+}
 
 class BullHeadonStick : ClassicDecoration
 {
@@ -1192,7 +1192,7 @@ class BullHeadonStick : ClassicDecoration
 			HEL1 A -1;
 			Stop;
 	}
-} 
+}
 
 class BloodyWell : ClassicDecoration
 {
@@ -1224,7 +1224,7 @@ class AngelofDeathStatue : ClassicDecoration
 			ADTH A -1;
 			Stop;
 	}
-} 
+}
 
 class BrownColumn : ClassicDecoration
 {
@@ -1313,7 +1313,7 @@ class PoolofWaterLost : PoolofWater
 			POL2 A -1;
 			Stop;
 	}
-} 
+}
 
 class OilDrumLost : OilDrum
 {
@@ -1329,7 +1329,7 @@ class OilDrumLost : OilDrum
 			BAR3 A -1;
 			Stop;
 	}
-} 
+}
 
 class TableandChairsLost : TableandChairs
 {
@@ -1345,7 +1345,7 @@ class TableandChairsLost : TableandChairs
 			TAB3 A -1;
 			Stop;
 	}
-} 
+}
 
 class FloorLampLost : FloorLamp
 {
@@ -1361,7 +1361,7 @@ class FloorLampLost : FloorLamp
 			LIT2 A -1;
 			Stop;
 	}
-} 
+}
 
 class HangingChandelierLost : HangingChandelier
 {
@@ -1377,7 +1377,7 @@ class HangingChandelierLost : HangingChandelier
 			LIT4 A -1;
 			Stop;
 	}
-} 
+}
 
 class HangingSkeletonLost : HangingSkeleton
 {
@@ -1393,7 +1393,7 @@ class HangingSkeletonLost : HangingSkeleton
 			HNG2 A -1;
 			Stop;
 	}
-} 
+}
 
 class DogFoodLost : DogFood
 {
@@ -1441,7 +1441,7 @@ class PlantLost : Plant
 			PLT3 A -1;
 			Stop;
 	}
-} 
+}
 
 class SkeletonLost : Skeleton
 {
@@ -1457,7 +1457,7 @@ class SkeletonLost : Skeleton
 			BONE B -1;
 			Stop;
 	}
-} 
+}
 
 class PileofSkullsLost : Sink
 {
@@ -1473,7 +1473,7 @@ class PileofSkullsLost : Sink
 			POSK A -1;
 			Stop;
 	}
-} 
+}
 
 class BrownPlantLost : PlantinVase
 {
@@ -1489,7 +1489,7 @@ class BrownPlantLost : PlantinVase
 			PLT4 A -1;
 			Stop;
 	}
-} 
+}
 
 class VaseLost : Vase
 {
@@ -1505,7 +1505,7 @@ class VaseLost : Vase
 			VAS2 A -1;
 			Stop;
 	}
-} 
+}
 
 class TableLost : Table
 {
@@ -1521,7 +1521,7 @@ class TableLost : Table
 			TAB4 A -1;
 			Stop;
 	}
-} 
+}
 
 class GreenCeilingLightLost : GreenCeilingLight
 {
@@ -1560,7 +1560,7 @@ class CagewithBloodLost : ClassicDecoration
 			CAG6 A -1;
 			Stop;
 	}
-} 
+}
 
 class SuitofArmorLost : SuitofArmor
 {
@@ -1576,7 +1576,7 @@ class SuitofArmorLost : SuitofArmor
 			KNIG B -1;
 			Stop;
 	}
-} 
+}
 
 class EmptyCageLost : EmptyCage
 {
@@ -1592,7 +1592,7 @@ class EmptyCageLost : EmptyCage
 			CAG3 A -1;
 			Stop;
 	}
-} 
+}
 
 class BrokenCageLost : Cage
 {
@@ -1615,7 +1615,7 @@ class BrokenCageLost : Cage
 			CAG4 A -1;
 			Stop;
 	}
-} 
+}
 
 class Bones1Lost : Bones
 {
@@ -1631,7 +1631,7 @@ class Bones1Lost : Bones
 			POB6 A -1;
 			Stop;
 	}
-} 
+}
 
 class YellowKeyLost : YellowKey
 {
@@ -1679,7 +1679,7 @@ class CageWithSkullsLost : Bed
 			CAG5 A -1;
 			Stop;
 	}
-} 
+}
 
 class DeadRatLost : Basket
 {
@@ -1839,7 +1839,7 @@ class WoodBarrelLost : WoodBarrel
 			BAR4 A -1;
 			Stop;
 	}
-} 
+}
 
 class WellwithWaterLost : WellwithWater
 {
@@ -1855,7 +1855,7 @@ class WellwithWaterLost : WellwithWater
 			WEL3 A -1;
 			Stop;
 	}
-} 
+}
 
 class DryWellLost : DryWell
 {
@@ -1871,7 +1871,7 @@ class DryWellLost : DryWell
 			WEL4 A -1;
 			Stop;
 	}
-} 
+}
 
 class PoolofBloodLost : PoolofBlood
 {
@@ -1935,7 +1935,7 @@ class Bones2Lost : CrushedBones1
 			POB7 A -1;
 			Stop;
 	}
-} 
+}
 
 class LightBulbLost : GreenCeilingLight
 {
@@ -1951,7 +1951,7 @@ class LightBulbLost : GreenCeilingLight
 			LIT8 A -1;
 			Stop;
 	}
-} 
+}
 
 class SlimeLost : CrushedBody
 {
@@ -1967,7 +1967,7 @@ class SlimeLost : CrushedBody
 			GGOO A -1;
 			Stop;
 	}
-} 
+}
 
 class HLabTableLost : ClassicDecoration
 {
@@ -2000,7 +2000,7 @@ class RadioactiveBarrelLost  : Stove
 			BAR5 A -1;
 			Stop;
 	}
-} 
+}
 
 class PipeLost : SpearRack
 {
@@ -2016,7 +2016,7 @@ class PipeLost : SpearRack
 			PIPE A -1;
 			Stop;
 	}
-} 
+}
 
 class BubblesLost : HangingVines
 {

@@ -1143,7 +1143,7 @@ class HighScores : WolfMenu
 			{ 
 				p = p .. '='; 
 				s = s .. "\0"; 
-			} 
+			}
 		}
 
 		for (c = 0; c < s.Length(); c += 3)
