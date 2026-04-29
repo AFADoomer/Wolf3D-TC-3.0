@@ -64,6 +64,7 @@ class ClassicBase : Actor
 		FastSpeed 6; // Generic handling for supporting fast monsters 
 		BloodColor "FF 00 00";
 		DamageFactor "WolfNazi", 0.0;
+		DamageFactor "WolfNaziFire", 0.0;
 	}
 
 	States

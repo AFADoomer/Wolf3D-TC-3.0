@@ -87,10 +87,30 @@ class WolfPlayer : PlayerPawn
 			PLAY H 0 { mutated = true; }
 		Death:
 			PLAY H 10;
-			PLAY I 10 A_PlayerScream;
+			PLAY H 0 A_PlayerScream();
+		Death.Resume:
+			PLAY I 10;
 			PLAY J 10;
-			PLAY K 1 A_CheckPlayerDone;
+			PLAY K 1 A_CheckPlayerDone();
 			Wait;
+		Death.Fire:
+		Death.WolfNaziFire:
+			PLAY H 0 {
+				if (g_noblood)
+				{
+					SetStateLabel("Death");
+					return;
+				}
+
+				vel.xy *= 0;
+				A_PlayerScream();
+				SpawnFlames();
+			}
+			PLAY H 6 A_SetTranslation("Ash25");
+			PLAY H 6 A_SetTranslation("Ash50");
+			PLAY H 6 A_SetTranslation("Ash75");
+			PLAY H 6 A_SetTranslation("Ash100");
+			Goto Death.Resume;
 		/*
 		// For future use?
 		XDeath:
@@ -574,6 +594,20 @@ class WolfPlayer : PlayerPawn
 		else
 		{
 			Super.CheckPitch();
+		}
+	}
+
+	virtual void SpawnFlames(int count = 8, double maxheight = 32, double rad = -1)
+	{
+		for (int f = 0; f < count; f++)
+		{
+			if (rad == -1) { rad = radius / 2; }
+
+			Vector3 spawnpos = pos + (FRandom[SpawnFlames](-rad, rad), FRandom[SpawnFlames](-rad, rad), FRandom[SpawnFlames](0, maxheight));
+			Spawn("Fire", spawnpos);
+			Spawn("SmallFire", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-8, 8)));
+			SmokeSpawner ss = SmokeSpawner(Spawn("SmokeSpawner", spawnpos + (FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16), FRandom[SpawnFlames](-16, 16))));
+			if (ss) { ss.duration = Random[SpawnFlames](45, 105); }
 		}
 	}
 }

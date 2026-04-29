@@ -209,6 +209,7 @@ class GhostFireBall : WolfProjectile
 	{
 		+ROLLSPRITE
 		+MTHRUSPECIES
+		DamageType "WolfNaziFire";
 		Speed 2;
 		SeeSound "flame/fire";
 	}
@@ -229,6 +230,17 @@ class GhostFireBall : WolfProjectile
 			Stop;
 	}
 
+	override void BeginPlay()
+	{
+		// The original fireball speed in Wolf3D was dependant on processor speed
+		// instead of gametics...  So fireballs were faster on slower computers -
+		// the defaulyt speed approximates the speed on a faster 
+		// machine; the faster one is closer to the id-intended speed.
+		if (g_fastfireballs) { speed = 8; }
+
+		Super.BeginPlay();
+	}
+
 	override void Tick()
 	{
 		Super.Tick();
@@ -236,19 +248,6 @@ class GhostFireBall : WolfProjectile
 		Game.AttachLight(self, 24.0, 0xA40000);
 	}
 
-}
-
-//Used instead of GhostFireball when 'g_fastfireballs' cvar is true
-// The original fireball speed in Wolf3D was dependant on processor speed
-// instead of gametics...  So fireballs were faster on slower computers -
-// the GhostFireBall actor above approximates the speed on a faster 
-// machine; the one here is closer to the id-intended speed.
-class FastGhostFireBall : GhostFireball
-{
-	Default
-	{
-		Speed 8;
-	}
 }
 
 class WolfFlame : GhostFireball
@@ -264,6 +263,7 @@ class SoDFireballBase : WolfProjectile
 {
 	Default
 	{
+		DamageType "WolfNaziFire";
 		+MTHRUSPECIES
 	}
 
