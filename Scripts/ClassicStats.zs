@@ -46,16 +46,57 @@ class ClassicStats : DoomStatusScreen
 		finale,
 	};
 
+	color textcolor;
+	double scale;
+	Font displayFont, titlefont;
+	bool allbots;
+
 	override void initStats ()
 	{
 		intermissioncounter = gameinfo.intermissioncounter;
 		CurState = StatCount;
 		acceleratestage = 0;
-		cnt_kills[0] = cnt_items[0] = cnt_secret[0] = -1;
+
+		cnt_otherkills = 0;
+		total_frags = 0;
+		total_deaths = 0;
+
+		int playercount, botcount;
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			cnt_kills[i] = cnt_items[i] = cnt_secret[i] = cnt_bonus[i] = 0;
+			cnt_frags[i] = cnt_deaths[i] = player_deaths[i] = 0;
+
+			if (!playeringame[i]) { continue; }
+
+			for (int j = 0; j < MAXPLAYERS; j++)
+			{
+				if (playeringame[j]) { player_deaths[i] += Plrs[j].frags[i]; }
+			}
+
+			total_deaths += player_deaths[i];
+			total_frags += Plrs[i].fragcount;
+
+			if (!deathmatch) { dofrags += fragSum(i); }
+
+			playercount++;
+			if (players[i].bot) { botcount++; }
+		}
+
+		if (playercount == botcount + 1) { allbots = true; }
+
+		if (!deathmatch) { dofrags = !!dofrags; }
+
 		cnt_pause = Thinker.TICRATE;
-		cnt_bonus[0] = 0;
 
 		if (gamestate == GS_FINALE) { GameHandler.ChangeMusic("URAHERO"); }
+
+		displayFont = Font.GetFont("MiniFont");
+		titlefont = SmallFont;
+
+		textcolor = FONT.CR_WHITE;
+		scale = 0.4;
 
 		switch (style)
 		{
@@ -138,55 +179,124 @@ class ClassicStats : DoomStatusScreen
 		{
 			acceleratestage = 0;
 			sp_state = 11;
-
-			cnt_kills[0] = stats.totalkills ? stats.killcount : -1;
-			cnt_secret[0] = stats.totalsecrets ? stats.secretcount : -1;
-			cnt_items[0] = stats.totalitems ? stats.itemcount : -1;
-
+			
 			bonus = timeleft * PAR_AMOUNT;
 
-			if (style == normal)
+			if (multiplayer)
 			{
-				if (cnt_kills[0] == stats.totalkills) { bonus += PERCENT100AMT; }
-				if (cnt_secret[0] == stats.totalsecrets) { bonus += PERCENT100AMT; }
-				if (cnt_items[0] == stats.totalitems) { bonus += PERCENT100AMT; }
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i]) { continue; }
+
+					cnt_kills[i] = Plrs[i].skills;
+					cnt_items[i] = Plrs[i].sitems;
+					cnt_secret[i] = Plrs[i].ssecret;
+					cnt_frags[i] = Plrs[i].fragcount;
+					cnt_deaths[i] = player_deaths[i];
+
+					if (!deathmatch && dofrags) { cnt_frags[i] = fragSum(i); }
+
+					if (style == normal)
+					{
+						if (cnt_kills[i] == stats.totalkills) { bonus += PERCENT100AMT; }
+						if (cnt_secret[i] == stats.totalsecrets) { bonus += PERCENT100AMT; }
+						if (cnt_items[i] == stats.totalitems) { bonus += PERCENT100AMT; }
+					}
+
+					if (style != finale)
+					{
+						cnt_bonus[i] = bonus;
+
+						AddPoints(bonus, i);
+					}
+				}
+
+				cnt_otherkills = otherkills;
 			}
-
-			if (style != finale)
+			else
 			{
-				cnt_bonus[0] = bonus;
+				cnt_kills[0] = stats.totalkills ? stats.killcount : 0;
+				cnt_secret[0] = stats.totalsecrets ? stats.secretcount : 0;
+				cnt_items[0] = stats.totalitems ? stats.itemcount : 0;
 
-				AddPoints(bonus);
+				if (style == normal)
+				{
+					if (cnt_kills[0] == stats.totalkills) { bonus += PERCENT100AMT; }
+					if (cnt_secret[0] == stats.totalsecrets) { bonus += PERCENT100AMT; }
+					if (cnt_items[0] == stats.totalitems) { bonus += PERCENT100AMT; }
+				}
+
+				if (style != finale)
+				{
+					cnt_bonus[0] = bonus;
+
+					AddPoints(bonus);
+				}
 			}
 		}
 
 		if (sp_state == 2)
 		{
-			if (timeleft)
+			if (timeleft && !deathmatch)
 			{
 				bonus = timeleft * PAR_AMOUNT;
 
-				UpdateCounter(cnt_bonus[0], bonus, 0, PAR_AMOUNT * 2, PAR_AMOUNT / 40);
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i]) { continue; }
+
+					UpdateCounter(cnt_bonus[i], bonus, 0, PAR_AMOUNT * 2, PAR_AMOUNT / 40, p:i);
+				}
 			}
 			else { sp_state += 2; }
 		}
 		else if (sp_state == 4)
 		{
-			UpdateCounter(cnt_kills[0], stats.killcount, style == normal ? stats.totalkills : 0);
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (!playeringame[i]) { continue; }
+
+				if (deathmatch) { UpdateCounter(cnt_frags[i], Plrs[i].fragcount, 0, p:i); }
+				else { UpdateCounter(cnt_kills[i], multiplayer ? Plrs[i].skills : stats.killcount, style == normal ? stats.totalkills : 0, p:i); }
+			}
 		}
 		else if (sp_state == 6)
 		{
-			UpdateCounter(cnt_secret[0], stats.secretcount, style == normal ? stats.totalsecrets : 0);
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (!playeringame[i]) { continue; }
+				
+				if (deathmatch) { UpdateCounter(cnt_deaths[i], player_deaths[i], 0, p:i); }
+				else { UpdateCounter(cnt_secret[i], multiplayer ? Plrs[i].ssecret : stats.secretcount, style == normal ? stats.totalsecrets : 0, p:i); }
+			}
 		}
 		else if (sp_state == 8)
 		{
-			UpdateCounter(cnt_items[0], stats.itemcount, style == normal ? stats.totalitems : 0);
+			if (deathmatch)
+			{
+				sp_state = 11;
+			}
+			else
+			{
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i]) { continue; }
+				
+					UpdateCounter(cnt_items[i], multiplayer ? Plrs[i].sitems : stats.itemcount, style == normal ? stats.totalitems : 0, p:i);
+				}
+			}
 		}
 		else if (sp_state == 10)
 		{
 			if (bonus > 0)
 			{
-				AddPoints(bonus);
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i]) { continue; }
+				
+					AddPoints(bonus, i);
+				}
+
 				sp_state++;
 			}
 			else { sp_state += 2; }
@@ -211,11 +321,30 @@ class ClassicStats : DoomStatusScreen
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
 				}
 
-				if (!multiplayer && gametic > fadetarget) { fadetarget = gametic + fadetime; }
+				if (gametic > fadetarget)
+				{
+					if (!multiplayer || allbots)
+					{
+						fadetarget = gametic + fadetime;
+					}
+				}
 
 				if (fadetarget == gametic) { initNoState(); }
 
-				if (multiplayer) { sp_state++; }
+				if (multiplayer && !allbots) { sp_state++; }
+			}
+		}
+		else if (sp_state > 12)
+		{
+			for (int i = 0; i < MAXPLAYERS; i++)
+			{
+				if (!playeringame[i]) { continue; }
+
+				cnt_kills[i] = Plrs[i].skills;
+				cnt_items[i] = Plrs[i].sitems;
+				cnt_secret[i] = Plrs[i].ssecret;
+				cnt_frags[i] = Plrs[i].fragcount;
+				cnt_deaths[i] = player_deaths[i];
 			}
 		}
 		else if (sp_state & 1)
@@ -228,14 +357,16 @@ class ClassicStats : DoomStatusScreen
 		}
 	}
 
-	void UpdateCounter(out int current, int count, int max = 0, int step = 2, int freq = 5)
+	void UpdateCounter(out int current, int count, int max = 0, int step = 2, int freq = 5, int p = -1)
 	{
+		if (p == -1) { p = me; }
+		
 		if (intermissioncounter)
 		{
 			if (count)
 			{
 				current += step;
-
+				
 				if (!(bcnt % freq)) { PlaySound("stats/bonuscount"); }
 			}
 			else { current = 0; }
@@ -247,7 +378,7 @@ class ClassicStats : DoomStatusScreen
 			if (max > 0 && count == max)
 			{
 				bonus += PERCENT100AMT;
-				cnt_bonus[0] = bonus;
+				cnt_bonus[p] = bonus;
 				PlaySound("stats/bonus100");
 			}
 			else if (count) { PlaySound("stats/total"); }
@@ -324,6 +455,8 @@ class ClassicStats : DoomStatusScreen
 				Write(37, 18, "%");
 				break;
 		}
+
+		if (multiplayer) { DrawScoreboard(21, 17); }
 	}
 
 	void DrawBJ(int x, int y)
@@ -484,12 +617,14 @@ class ClassicStats : DoomStatusScreen
 		return 0;
 	}
 
-	void AddPoints(int amt)
+	void AddPoints(int amt, int p = -1)
 	{
+		if (p == -1) { p = me; }
+
 		points += amt;
 		int lifeamt;
 
-		let scoreinv = Score(players[me].mo.FindInventory("Score"));
+		let scoreinv = Score(players[p].mo.FindInventory("Score"));
 		let scoredef = Score(GetDefaultByType("Score"));
 
 		if (scoreinv) { lifeamt = scoreinv.lifeamount; }
@@ -547,5 +682,165 @@ class ClassicStats : DoomStatusScreen
 		}
 
 		screen.Dim(0x000000, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+	}
+
+	void drawTextScaled (Font fnt, double x, double y, String text, double scale, int translation = Font.CR_UNTRANSLATED)
+	{
+		screen.DrawText(fnt, translation, x / scale, y / scale, text, DTA_VirtualWidthF, 320 / scale, DTA_VirtualHeightF, 200 / scale);
+	}
+
+	void drawNumScaled (Font fnt, int x, int y, double scale, int n, int translation = Font.CR_UNTRANSLATED)
+	{
+		String s = String.Format("%d", n);
+		drawTextScaled(fnt, x - fnt.StringWidth(s) * scale / 2, y, s, scale, translation);
+	}
+
+	void DimScaled(Color clr = 0x000000, double alpha = 0.5, int x = 0, int y = 0, int w = 0, int h = 0, int width = 320, int height = 200)
+	{
+		double dimscale = double(Screen.GetHeight()) / height;
+
+		Vector2 pos, size;
+		[pos, size] = Screen.VirtualToRealCoords((x, y), (w, h), (width, height));
+
+		Screen.Dim(clr, alpha, int(pos.x), int(pos.y), int(size.x), int(size.y));
+	}
+
+	void DrawScoreboard(int x, int y, int w = 79, int h = 86)
+	{
+		int lineheight = displayfont.GetHeight() * scale;
+		int titleheight = titlefont.GetHeight() * scale;
+
+		DimScaled(0x0, 0.5, x, y, w, h);
+
+		int ypadding = 2;
+		int xpadding = 1;
+
+		w -= 2 * xpadding;
+		h -= 2 * ypadding;
+
+		String text_name = Stringtable.Localize("$SCORE_NAME");
+		String text_kills = Stringtable.Localize("$SCORE_KILLS");
+		String text_secrets = Stringtable.Localize("$SCORE_SECRETS");
+		String text_treasure = Stringtable.Localize("$SCORE_TREASURE");
+		String text_deaths = Stringtable.Localize("$SCORE_DEATHS");
+		String text_frags = Stringtable.Localize("$SCORE_FRAGS");
+
+		int datacolwidth;
+		if (deathmatch) { datacolwidth = max(titlefont.StringWidth(text_deaths), titlefont.StringWidth(text_frags)) * scale; }
+		else { datacolwidth = displayfont.StringWidth("0000") * scale; }
+		
+		int maxnamewidth, maxscorewidth, maxiconheight;
+		[maxnamewidth, maxscorewidth, maxiconheight] = GetPlayerWidths();
+			
+		TextureID readyico = TexMan.CheckForTexture("Graphics/ReadySmall.png", TexMan.Type_Any);
+		Vector2 readysize = TexMan.GetScaledSize(readyico) * scale;
+		Vector2 readyoffset = TexMan.GetScaledOffset(readyico) * scale;
+		
+		maxnamewidth = w - datacolwidth * (deathmatch ? 2 : 3) - xpadding * 2 - readysize.x;
+		maxscorewidth = max(maxscorewidth, readysize.x);
+
+		int column[5];
+		column[0] = x + xpadding; // icon
+		column[1] = column[0] + maxscorewidth + xpadding;
+		column[2] = column[1] + maxnamewidth + xpadding;
+		column[3] = column[2] + datacolwidth + xpadding;
+		column[4] = column[3] + datacolwidth + xpadding;
+
+		drawTextScaled(titlefont, column[1], y, text_name, scale, textcolor);
+
+		if (deathmatch)
+		{
+			drawTextScaled(titlefont, column[2] + (datacolwidth - titlefont.StringWidth(text_frags) * scale) / 2, y, text_frags, scale, textcolor);
+			drawTextScaled(titlefont, column[3] + (datacolwidth - titlefont.StringWidth(text_deaths) * scale) / 2, y, text_deaths, scale, textcolor);
+		}
+		else
+		{
+			drawTextScaled(titlefont, column[2] + (datacolwidth - titlefont.StringWidth(text_kills) * scale) / 2, y, text_kills, scale, textcolor);
+			drawTextScaled(titlefont, column[3] + (datacolwidth - titlefont.StringWidth(text_secrets) * scale) / 2, y, text_secrets, scale, textcolor);
+			drawTextScaled(titlefont, column[4] + (datacolwidth - titlefont.StringWidth(text_treasure) * scale) / 2, y, text_treasure, scale, textcolor);
+		}
+
+		y += titleheight + ypadding;
+
+		int missed_kills = wbs.maxkills;
+		int missed_secrets = wbs.maxsecret;
+		int missed_treasure = wbs.maxitems;
+
+		// Sort all players
+		Array<int> sortedplayers;
+		GetSortedPlayers(sortedplayers, teamplay);
+
+		// Draw lines for each player
+		for (int i = 0; i < min(sortedplayers.Size(), (h - titleheight - ypadding) / (lineheight + ypadding) - (deathmatch ? 0 : 2)); i++)
+		{
+			int pnum = sortedplayers[i];
+			PlayerInfo player = players[pnum];
+
+			if (!playeringame[pnum]) { continue; }
+
+			DimScaled(player.GetDisplayColor(), 0.5, column[0] - xpadding, y - ypadding / 2, w + xpadding * 2, lineheight / scale - ypadding / 2);
+
+			if (ScreenJobRunner.IsPlayerReady(pnum))
+			{
+				// Bots are automatically assumed ready, to prevent confusion
+				screen.DrawTexture(readyico, true, column[0] / scale, (y - 1) / scale, DTA_VirtualWidthF, 320 / scale, DTA_VirtualHeightF, 200 / scale);
+			}
+
+			let thiscolor = GetRowColor(player, pnum == consoleplayer);
+			if (player.mo.ScoreIcon.isValid())
+			{
+				screen.DrawTexture(player.mo.ScoreIcon, true, column[0], y, DTA_CleanNoMove, true);
+			}
+			
+			drawTextScaled(displayFont, column[1], y, player.GetUserName(), scale, thiscolor);
+
+			if (deathmatch)
+			{
+				drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, cnt_frags[pnum], textcolor);
+				drawNumScaled(displayFont, column[3] + datacolwidth / 2, y, scale, cnt_deaths[pnum], textcolor);
+			}
+			else
+			{
+				drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, cnt_kills[pnum], textcolor);
+				drawNumScaled(displayFont, column[3] + datacolwidth / 2, y, scale, cnt_secret[pnum], textcolor);
+				drawNumScaled(displayFont, column[4] + datacolwidth / 2, y, scale, cnt_items[pnum], textcolor);
+
+				missed_kills -= cnt_kills[pnum];
+				missed_secrets -= cnt_secret[pnum];
+				missed_treasure -= cnt_items[pnum];
+			}
+			y += lineheight + ypadding;
+		}
+
+		if (!deathmatch)
+		{
+			// Draw "OTHER" line
+			drawTextScaled(displayFont, column[1], y, Stringtable.Localize("$SCORE_OTHER"), scale, Font.CR_DARKGRAY);
+			drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, cnt_otherkills, textcolor);
+			missed_kills -= cnt_otherkills;
+
+			y += lineheight + ypadding;
+
+			// Draw "MISSED" line
+			drawTextScaled(displayFont, column[1], y, Stringtable.Localize("$SCORE_MISSED"), scale, Font.CR_DARKGRAY);
+			drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, missed_kills, Font.CR_DARKGRAY);
+			drawNumScaled(displayFont, column[3] + datacolwidth / 2, y, scale, missed_secrets, Font.CR_DARKGRAY);
+			drawNumScaled(displayFont, column[4] + datacolwidth / 2, y, scale, missed_treasure, Font.CR_DARKGRAY);
+
+			y += lineheight + ypadding;
+
+			// Draw "TOTAL" line
+			drawTextScaled(displayFont, column[1], y, Stringtable.Localize("$SCORE_TOTAL"), scale, textcolor);
+			drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, wbs.maxkills, textcolor);
+			drawNumScaled(displayFont, column[3] + datacolwidth / 2, y, scale, wbs.maxsecret, textcolor);
+			drawNumScaled(displayFont, column[4] + datacolwidth / 2, y, scale, wbs.maxitems, textcolor);
+		}
+		else
+		{
+			// Draw "TOTAL" line
+			drawTextScaled(displayFont, column[1], y, Stringtable.Localize("$SCORE_TOTAL"), scale, textcolor);
+			drawNumScaled(displayFont, column[2] + datacolwidth / 2, y, scale, total_frags, textcolor);
+			drawNumScaled(displayFont, column[3] + datacolwidth / 2, y, scale, total_deaths, textcolor);
+		}
 	}
 }

@@ -306,6 +306,7 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicFont = HUDFont.Create("WOLFNUM", 0);
 		BigFont = HUDFont.Create("BIGFONT", 0);
 		mHUDFont = HUDFont.Create("SmallFont", 0);
+		ScoreboardFont = Font.GetFont("MiniFont");
 
 		handler = GameHandler(StaticEventHandler.Find("GameHandler"));
 

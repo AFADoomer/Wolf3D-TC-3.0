@@ -527,6 +527,47 @@ class WolfPlayer : PlayerPawn
 		}
 	}
 
+	override void GiveDeathmatchInventory()
+	{
+		GameHandler handler;
+		handler = GameHandler(StaticEventHandler.Find("GameHandler"));
+
+		if (handler)
+		{
+			for (int k = 0; k < handler.keys.Size(); k++)
+			{
+				let cls = (class<Key>)(handler.keys[k]);
+				if (cls)
+				{
+					if (handler.keys[k] is "YellowKeyLost" || handler.keys[k] is "BlueKeyLost") { continue; }
+					let keyobj = GetDefaultByType(handler.keys[k]);
+
+					if (keyobj.special1 != 0)
+					{
+						GiveInventoryType(cls);
+					}
+				}
+			}
+		}
+		else
+		{
+			for ( int i = 0; i < AllActorClasses.Size(); ++i)
+			{
+				let cls = (class<Key>)(AllActorClasses[i]);
+				if (cls)
+				{
+					if (AllActorClasses[i] is "YellowKeyLost" || AllActorClasses[i] is "BlueKeyLost") { continue; }
+					let keyobj = GetDefaultByType(cls);
+
+					if (keyobj.special1 != 0)
+					{
+						GiveInventoryType(cls);
+					}
+				}
+			}
+		}
+	}
+
 	override void CheckPitch()
 	{
 		if (!freelook) { pitch = 0.0; }
