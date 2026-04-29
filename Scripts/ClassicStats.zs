@@ -705,6 +705,11 @@ class ClassicStats : DoomStatusScreen
 		Screen.Dim(clr, alpha, int(pos.x), int(pos.y), int(size.x), int(size.y));
 	}
 
+	void DrawTextureScaled(TextureID tex, bool animate, double x, double y, double scale = 1.0, double imagescale = 1.0)
+	{
+		screen.DrawTexture(tex, animate, x / scale, y / scale, DTA_VirtualWidthF, 320 / scale, DTA_VirtualHeightF, 200 / scale, DTA_TopLeft, true, DTA_ScaleX, imagescale, DTA_ScaleY, imagescale);
+	}
+
 	void DrawScoreboard(int x, int y, int w = 79, int h = 86)
 	{
 		int lineheight = displayfont.GetHeight() * scale;
@@ -783,16 +788,14 @@ class ClassicStats : DoomStatusScreen
 			if (ScreenJobRunner.IsPlayerReady(pnum))
 			{
 				// Bots are automatically assumed ready, to prevent confusion
-				screen.DrawTexture(readyico, true, column[0] / scale, (y - 1) / scale, DTA_VirtualWidthF, 320 / scale, DTA_VirtualHeightF, 200 / scale);
+				DrawTextureScaled(readyico, true, column[0], y - ypadding / 2, scale);
+			}
+			else if (player.mo.ScoreIcon.isValid())
+			{
+				DrawTextureScaled(player.mo.ScoreIcon, true, column[0], y - ypadding / 2, scale, 0.5);
 			}
 
-			let thiscolor = GetRowColor(player, pnum == consoleplayer);
-			if (player.mo.ScoreIcon.isValid())
-			{
-				screen.DrawTexture(player.mo.ScoreIcon, true, column[0], y, DTA_CleanNoMove, true);
-			}
-			
-			drawTextScaled(displayFont, column[1], y, player.GetUserName(), scale, thiscolor);
+			drawTextScaled(displayFont, column[1], y, player.GetUserName(), scale, GetRowColor(player, pnum == consoleplayer));
 
 			if (deathmatch)
 			{
