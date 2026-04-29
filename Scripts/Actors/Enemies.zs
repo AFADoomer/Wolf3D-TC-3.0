@@ -1601,7 +1601,7 @@ class HitlerGhost : ClassicNazi
 		Missile:
 			WHGT E 4 A_FaceTarget;
 		Attack:
-			WHGT EEEEEEEE 4 A_SpawnProjectile(g_fastfireballs ? "FastGhostFireBall" : "GhostFireBall", 30, 0, 0);
+			WHGT EEEEEEEE 4 A_SpawnProjectile("GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
 			WHGT F 5 A_DeathDrop();
