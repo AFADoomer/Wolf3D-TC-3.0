@@ -64,7 +64,9 @@ class ClassicBase : Actor
 		FastSpeed 6; // Generic handling for supporting fast monsters 
 		BloodColor "FF 00 00";
 		DamageFactor "WolfNazi", 0.0;
+		DamageFactor "WolfNaziRocket", 0.0;
 		DamageFactor "WolfNaziFire", 0.0;
+		DamageFactor "WolfNaziSyringe", 0.0;
 	}
 
 	States
@@ -764,7 +766,7 @@ class ClassicBase : Actor
 	{
 		// Increase base damage if the enemy wasn't active
 		if (!bActive) { damage *= 2; }
-		
+
 		// Target attacker
 		target = source;
 		if (multiplayer) { targetswitchdelay = 70; } // Don't let the enemy change targets again for 2 seconds

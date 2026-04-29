@@ -298,8 +298,10 @@ Class BreakableColumn : StoneColumn
 		+SHOOTABLE
 		+NOBLOOD
 		DamageFactor "WolfNazi", 0.0;
+		DamageFactor "WolfNaziRocket", 0.0;
 		DamageFactor "WolfNaziFire", 0.0;
 		DamageFactor "Fire", 0.0;
+		DamageFactor "WolfNaziSyringe", 0.0;
 	}
 
 	States

@@ -25,7 +25,9 @@
 class WolfProjectile : Actor
 {
 	Class<Actor> smoke;
+	double lightradius;
 
+	Property LightRadius:lightradius;
 	Property smoke:smoke;
 
 	Default
@@ -33,9 +35,10 @@ class WolfProjectile : Actor
 		Projectile;
 		Radius 4;
 		Speed 16;
-		DamageType "WolfNazi";
+		DamageType "WolfNaziRocket";
 		RenderStyle "Translucent";
 		Alpha 1.0;
+		WolfProjectile.LightRadius 24.0;
 	}
 
 	virtual void SpawnSmoke()
@@ -43,7 +46,7 @@ class WolfProjectile : Actor
 		if (smoke) { Spawn(smoke, pos); }
 	}
 
-	virtual int WolfExplode(int additional = 0, bool damage = true, int flags = XF_HURTSOURCE, int blastradius = 0)
+	virtual int WolfExplode(int additional = 0, bool damage = true, int flags = 0, int blastradius = 0)
 	{
 		int amt = (GameHandler.WolfRandom() >> 3) + additional;
 
@@ -52,6 +55,25 @@ class WolfProjectile : Actor
 		if (damage) { A_Explode(amt, blastradius, flags); }
 
 		return amt;
+	}
+
+	override void PostBeginPlay()
+	{
+		if (target && (target.player || target.bFriendly))
+		{
+			String dmgtype = damagetype;
+			dmgtype.Substitute("WolfNazi", "");
+			damagetype = dmgtype;
+		}
+
+		Super.PostBeginPlay();
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (!vel.length() && !InStateSequence(CurState, FindState("Death"))) { SetStateLabel("Death"); }
 	}
 }
 
@@ -64,6 +86,7 @@ class WolfRocket : WolfProjectile
 		DeathSound "missile/hit";
 
 		WolfProjectile.Smoke "WolfRocketSmoke";
+		WolfProjectile.LightRadius 8.0;
 	}
 
 	States
@@ -73,8 +96,12 @@ class WolfRocket : WolfProjectile
 			ROCK A 1 Bright SpawnSmoke();
 			Loop;
 		Death:
-			ROCP A 4 Bright WolfExplode(30);
-			ROCP BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
+			ROCP A 3 Bright WolfExplode(30);
+			ROCP BC 3 Bright
+			{
+				if (!g_noblood) { A_FadeOut(0.33); }
+				lightradius /= alpha;
+			}
 			Stop;
 	}
 
@@ -82,7 +109,7 @@ class WolfRocket : WolfProjectile
 	{
 		Super.Tick();
 
-		Game.AttachLight(self, 8.0, 0x900000, (-12.0, 0, 0), DYNAMICLIGHT.LF_DONTLIGHTSELF);
+		Game.AttachLight(self, lightradius, 0x900000, (-12.0, 0, 0), DYNAMICLIGHT.LF_DONTLIGHTSELF);
 	}
 }
 
@@ -108,8 +135,12 @@ class WolfRocketLost : WolfRocketSoD
 			ROCK B 1 Bright SpawnSmoke();
 			Loop;
 		Death:
-			BAL4 A 4 Bright WolfExplode(30);
-			BAL4 BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
+			BAL4 A 3 Bright WolfExplode(30);
+			BAL4 BC 3  Bright
+			{
+				if (!g_noblood) { A_FadeOut(0.33); }
+				lightradius /= alpha;
+			}
 			Stop;
 	}
 
@@ -127,8 +158,12 @@ class WolfRocketPlayer : WolfRocket
 	States
 	{
 		Death:
-			ROCP A 4 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
-			ROCP BC 4 Bright { if (!g_noblood) { A_FadeOut(0.33); } }
+			ROCP A 3 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
+			ROCP BC 3  Bright
+			{
+				if (!g_noblood) { A_FadeOut(0.33); }
+				lightradius /= alpha;
+			}
 			Stop;
 	}
 }
@@ -165,9 +200,9 @@ class WolfRocketSmokeLost : WolfRocketSmoke
 	{
 		Spawn:
 			TNT1 A 3;
-			RTRL EFG 2;
+			RTRL EFG 2 { if (!g_noblood) { A_FadeOut(0.2); } }
 		Death:
-			RTRL H 2;
+			RTRL H 2 { if (!g_noblood) { A_FadeOut(0.2); } }
 			Stop;
 	}
 }
@@ -187,9 +222,6 @@ class Syringe : WolfProjectile
 		Spawn:
 			WB3P ABCD 3;
 			Loop;
-		XDeath:
-			TNT1 A 2 WolfExplode(20);
-			Stop;
 		Death:
 			SYRP A 2 {
 				bInvisible = g_noblood;
@@ -226,7 +258,11 @@ class GhostFireBall : WolfProjectile
 				scale.x *= RandomPick[GhostFireBallDeath](-1, 1);
 				WolfExplode(0, flags:0);
 			}
-			BALP BCD 4 Bright  { A_FadeOut(alpha / 2); }
+			BALP BCD 4 Bright
+			{
+				A_FadeOut(alpha / 2);
+				lightradius = 32.0 * alpha;
+			}
 			Stop;
 	}
 
@@ -245,9 +281,8 @@ class GhostFireBall : WolfProjectile
 	{
 		Super.Tick();
 
-		Game.AttachLight(self, 24.0, 0xA40000);
+		Game.AttachLight(self, lightradius, 0xA40000);
 	}
-
 }
 
 class WolfFlame : GhostFireball
@@ -261,10 +296,11 @@ class WolfFlame : GhostFireball
 
 class SoDFireballBase : WolfProjectile
 {
+	Color clr;
+
 	Default
 	{
 		DamageType "WolfNaziFire";
-		+MTHRUSPECIES
 	}
 
 	States
@@ -274,14 +310,12 @@ class SoDFireballBase : WolfProjectile
 			Loop;
 		Death:
 			"####" A 2 Bright WolfExplode(30);
-			"####" EEE 2 Bright
+			"####" EEEE 2 Bright
 			{
-				if (g_noblood) { bInvisible = true; }
-				else
-				{
-					A_FadeOut(0.25);
-					scale *= 1.1;
-				}
+				bInvisible = g_noblood;
+				lightradius = 64.0 * alpha;
+				A_FadeOut(0.2);
+				scale *= 1.1;
 			}
 			Stop;
 	}
@@ -301,6 +335,16 @@ class GreenBall : SoDFireballBase
 			ADBL A 0;
 			Goto Super::Spawn;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (health <= 0) { return; }
+
+		clr = 0x04C800;
+		Game.AttachLight(self, lightradius, clr);
+	}
 }
 
 //DI Fireball
@@ -316,5 +360,30 @@ class DIBall : SoDFireBallBase
 		Spawn:
 			DIBL A 0;
 			Goto Super::Spawn;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (health <= 0) { return; }
+
+		switch (frame)
+		{
+			case 0:
+				clr = 0x9800E4;
+			break;
+			case 1:
+				clr = 0x40FC40;
+			break;
+			case 2:
+				clr = 0x20B4B4;
+			break;
+			default:
+				clr = 0x2024FC;
+			break;
+		}
+
+		Game.AttachLight(self, lightradius, clr);
 	}
 }
