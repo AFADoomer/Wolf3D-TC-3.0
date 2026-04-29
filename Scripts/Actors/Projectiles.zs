@@ -32,7 +32,7 @@ class WolfProjectile : Actor
 	{
 		Projectile;
 		Radius 4;
-		Speed 14;
+		Speed 16;
 		DamageType "WolfNazi";
 		RenderStyle "Translucent";
 		Alpha 1.0;
@@ -234,9 +234,9 @@ class GhostFireBall : WolfProjectile
 	{
 		// The original fireball speed in Wolf3D was dependant on processor speed
 		// instead of gametics...  So fireballs were faster on slower computers -
-		// the defaulyt speed approximates the speed on a faster 
+		// the default speed approximates the speed on a faster 
 		// machine; the faster one is closer to the id-intended speed.
-		if (g_fastfireballs) { speed = 8; }
+		if (g_fastfireballs) { speed = 9; }
 
 		Super.BeginPlay();
 	}
@@ -270,12 +270,19 @@ class SoDFireballBase : WolfProjectile
 	States
 	{
 		Spawn:
-			TNT1 A 0;
-		Fly:
 			"####" ABCD 3 Bright;
 			Loop;
 		Death:
-			"####" ABCD 1 Bright WolfExplode(30);
+			"####" A 2 Bright WolfExplode(30);
+			"####" EEE 2 Bright
+			{
+				if (g_noblood) { bInvisible = true; }
+				else
+				{
+					A_FadeOut(0.25);
+					scale *= 1.1;
+				}
+			}
 			Stop;
 	}
 }
@@ -291,7 +298,8 @@ class GreenBall : SoDFireballBase
 	States
 	{
 		Spawn:
-			ADBL A 0 A_Jump(256, "Fly");
+			ADBL A 0;
+			Goto Super::Spawn;
 	}
 }
 
@@ -306,6 +314,7 @@ class DIBall : SoDFireBallBase
 	States
 	{
 		Spawn:
-			DIBL A 0 A_Jump(256, "Fly");
+			DIBL A 0;
+			Goto Super::Spawn;
 	}
 }

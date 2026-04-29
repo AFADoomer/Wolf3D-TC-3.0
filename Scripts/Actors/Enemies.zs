@@ -1018,6 +1018,10 @@ class ClassicNazi : ClassicBase
 
 class ClassicBoss : ClassicBase
 {
+	Class<Actor> projectile;
+
+	Property Projectile:projectile;
+
 	Default
 	{
 		//$Category Wolfenstein 3D/Enemies/Bosses
@@ -1522,6 +1526,7 @@ class DrSchabbs : ClassicBoss
 		ClassicBase.BaseSprite "WBO3";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 850, 950, 1550, 2400;
+		ClassicBoss.Projectile "Syringe";
 	}
 
 	States
@@ -1537,7 +1542,7 @@ class DrSchabbs : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 		Attack:
-			"####" F 5 A_SpawnProjectile("Syringe", 30, 18, 0);
+			"####" F 5 A_SpawnProjectile(projectile, 30, 18, 0);
 			Goto Chase;
 		Death:
 			"####" A 75 A_Scream;
@@ -1733,6 +1738,7 @@ class Giftmacher : ClassicBoss
 		ClassicBase.BaseSprite "WBO8";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 850, 950, 1050, 1200;
+		ClassicBoss.Projectile "WolfRocket";
 	}
 
 	States
@@ -1748,7 +1754,7 @@ class Giftmacher : ClassicBoss
 		Missile:
 			"####" E 15 A_FaceTarget;
 		Attack:
-			"####" F 5 A_SpawnProjectile("WolfRocket", 30, 13, 0);
+			"####" F 5 A_SpawnProjectile(projectile, 30, 13, 0);
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream;
@@ -1800,6 +1806,7 @@ class Fettgesicht : ClassicBoss
 		ClassicBase.BaseSprite "WBO5";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 850, 950, 1050, 1200;
+		ClassicBoss.Projectile "WolfRocket";
 	}
 
 	States
@@ -1816,7 +1823,7 @@ class Fettgesicht : ClassicBoss
 			"####" E 15 A_FaceTarget;
 			"####" F 5 A_FaceTarget;
 		Attack:
-			"####" G 5 A_SpawnProjectile("WolfRocket", 30, 13, 0);
+			"####" G 5 A_SpawnProjectile(projectile, 30, 13, 0);
 			"####" E 0 A_FaceTarget;
 			"####" HGH 5 A_NaziShoot();
 			Goto Chase;
@@ -2116,10 +2123,6 @@ class TheAxe : UberMutant
 
 class DeathKnight : ClassicBoss
 {
-	Class<Actor> projectile;
-
-	Property Projectile:projectile;
-
 	Default
 	{
 		//$Title Death Knight
@@ -2135,8 +2138,7 @@ class DeathKnight : ClassicBoss
 		ClassicBase.BaseSprite "WBO7";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 1250, 1350, 1450, 1600;
-
-		DeathKnight.Projectile "WolfRocketSoD";
+		ClassicBoss.Projectile "WolfRocketSoD";
 	}
 
 	States
@@ -2195,17 +2197,12 @@ class RobotDroid : DeathKnight
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LBO7";
-
-		DeathKnight.Projectile "WolfRocketLost";
+		ClassicBoss.Projectile "WolfRocketLost";
 	}
 }
 
 class AngelofDeath : ClassicBoss
 {
-	Class<Actor> ballclass;
-
-	Property BallClass:ballclass;
-
 	Default
 	{
 		//$Title Angel of Death
@@ -2222,7 +2219,7 @@ class AngelofDeath : ClassicBoss
 		ClassicBase.BaseSprite "WB10";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 1450, 1550, 1650, 2000;
-		AngelOfDeath.BallClass "GreenBall";
+		ClassicBoss.Projectile "GreenBall";
 	}
 
 	States
@@ -2239,15 +2236,15 @@ class AngelofDeath : ClassicBoss
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
 		Attack:
-			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 			"####" G 0 A_Jump(127, "Chase");
 			"####" G 5 A_FaceTarget;
 			"####" H 10 A_FaceTarget;
-			"####" G 5 A_SpawnProjectile(BallClass, 25, 13, 0);
+			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 		Tired:
 			"####" I 20;
 			"####" J 20 A_Pain;
@@ -2284,7 +2281,7 @@ class DevilIncarnate : AngelOfDeath
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LB10";
-		AngelOfDeath.BallClass "DIBall";
+		ClassicBoss.Projectile "DIBall";
 	}
 }
 
@@ -2302,6 +2299,7 @@ class BarnacleWilhelm : Fettgesicht
 		ClassicBase.BaseSprite "WBO9";
 		ClassicBase.ScoreAmount 5000;
 		ClassicBase.SkillHealth 950, 1050, 1150, 1300;
+		ClassicBoss.Projectile "WolfRocketSoD";
 	}
 
 	States
@@ -2330,6 +2328,7 @@ class ProfessorQuarkblitz : BarnacleWilhelm
 
 		+ClassicBase.Lost
 		ClassicBase.BaseSprite "LBO9";
+		ClassicBoss.Projectile "WolfRocketLost";
 	}
 }
 

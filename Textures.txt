@@ -1187,22 +1187,22 @@ Sprite ROCPB0, 64, 64 { Offset 32, 32 Patch WSPR0383, 0, 0 }
 Sprite ROCPC0, 64, 64 { Offset 32, 32 Patch WSPR0384, 0, 0 }
 
 //Spear Projectiles
-Sprite ADBLA0, 64, 64 { Offset 32, 32 Patch WSPR1322, 0, 0 }
-Sprite ADBLB0, 64, 64 { Offset 32, 32 Patch WSPR1323, 0, 0 }
-Sprite ADBLC0, 64, 64 { Offset 32, 32 Patch WSPR1324, 0, 0 }
-Sprite ADBLD0, 64, 64 { Offset 32, 32 Patch WSPR1325, 0, 0 }
+Sprite ADBLA0, 64, 64 { Offset 20, 26 Patch WSPR1322, 0, 0 }
+Sprite ADBLB0, 64, 64 { Offset 20, 26 Patch WSPR1323, 0, 0 }
+Sprite ADBLC0, 64, 64 { Offset 20, 26 Patch WSPR1324, 0, 0 }
+Sprite ADBLD0, 64, 64 { Offset 20, 26 Patch WSPR1325, 0, 0 }
 
-Sprite DIBLA0, 64, 64 { Offset 32, 32 Patch WSPR2322, 0, 0 }
-Sprite DIBLB0, 64, 64 { Offset 32, 32 Patch WSPR2323, 0, 0 }
-Sprite DIBLC0, 64, 64 { Offset 32, 32 Patch WSPR2324, 0, 0 }
-Sprite DIBLD0, 64, 64 { Offset 32, 32 Patch WSPR2325, 0, 0 }
+Sprite DIBLA0, 64, 64 { Offset 20, 26 Patch WSPR2322, 0, 0 }
+Sprite DIBLB0, 64, 64 { Offset 20, 26 Patch WSPR2323, 0, 0 }
+Sprite DIBLC0, 64, 64 { Offset 20, 26 Patch WSPR2324, 0, 0 }
+Sprite DIBLD0, 64, 64 { Offset 20, 26 Patch WSPR2325, 0, 0 }
 
 Sprite ROCKB2, 64, 64 { Offset 32, 32 Patch WSPR2293, 0, 0 }
 Sprite ROCKB3, 64, 64 { Offset 32, 32 Patch WSPR2294, 0, 0 }
 Sprite ROCKB4, 64, 64 { Offset 32, 32 Patch WSPR2295, 0, 0 }
-Sprite ROCKB8, 64, 64 { Offset 32, 32 Patch WSPR2296, 0, 0 }
-Sprite ROCKB7, 64, 64 { Offset 32, 32 Patch WSPR2297, 0, 0 }
-Sprite ROCKB6, 64, 64 { Offset 32, 32 Patch WSPR2298, 0, 0 }
+Sprite ROCKB8, 64, 64 { Offset 32, 32 Patch WSPR2297, 0, 0 }
+Sprite ROCKB7, 64, 64 { Offset 32, 32 Patch WSPR2298, 0, 0 }
+Sprite ROCKB6, 64, 64 { Offset 32, 32 Patch WSPR2299, 0, 0 }
 Sprite RTRLE0, 64, 64 { Offset 32, 32 Patch WSPR2300, 0, 0 }
 Sprite RTRLF0, 64, 64 { Offset 32, 32 Patch WSPR2301, 0, 0 }
 Sprite RTRLG0, 64, 64 { Offset 32, 32 Patch WSPR2302, 0, 0 }
