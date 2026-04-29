@@ -339,7 +339,7 @@ class WolfKnife : ClassicWeapon
 		Fire:
 			"####" B 3;
 			"####" C 3;
-			"####" D 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), 1, 0, "WolfPuff", meleesound:"weapons/wknife", misssound:"weapons/wknife");
+			"####" D 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), true, CPF_NOTURN, "WolfPuff", 64, meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" E 3;
 			"####" A 0 A_Jump(256, "Refire");
 	}
@@ -354,48 +354,30 @@ class WolfKnife : ClassicWeapon
 		}
 	}
 
-	// Specialized A_CustomPunch that doubles damage for non-alerted actors
-	action void A_WolfPunch(int damage, bool norandom = false, int flags = CPF_USEAMMO, class<Actor> pufftype = "BulletPuff", double range = 0, double lifesteal = 0, int lifestealmax = 0, class<BasicArmorBonus> armorbonustype = "ArmorBonus", sound MeleeSound = 0, sound MissSound = "")
+	// Specialized A_CustomPunch that eliminates unwanted Doom behavior
+	action void A_WolfPunch(int damage, bool norandom = true, int flags = CPF_USEAMMO, class<Actor> pufftype = "BulletPuff", double range = 0, double lifesteal = 0, int lifestealmax = 0, class<BasicArmorBonus> armorbonustype = "ArmorBonus", sound MeleeSound = 0, sound MissSound = "")
 	{
 		let player = self.player;
 		if (!player) return;
 
 		let weapon = player.ReadyWeapon;
 
-		double angle;
-		double pitch;
-		FTranslatedLineTarget t;
-		int			actualdamage;
-
-		if (!norandom)
-			damage *= random[cwpunch](1, 8);
-
-		angle = self.Angle + random2[cwpunch]() * (5.625 / 256);
 		if (range == 0) range = DEFMELEERANGE;
-		pitch = AimLineAttack (angle, range, t, 0., ALF_CHECK3D);
-
-		if (t.linetarget && ClassicBase(t.linetarget))
-		{
-			if (!ClassicBase(t.linetarget).bActive)
-			{
-				damage <<= 1; // Double damage for non-awake enemies
-				if (!(player.cheats & CF_NOTARGET)) { t.linetarget.SetStateLabel("See"); } // And wake up the enemy and their peers
-			}
-		}
-
+		if (!norandom) { damage *= random[cwpunch](1, 8); }
+		
+		FTranslatedLineTarget t;
+		double angle = self.angle;
+		double pitch = AimLineAttack(angle, range, t, 0., ALF_CHECK3D);
+		
 		// only use ammo when actually hitting something!
 		if ((flags & CPF_USEAMMO) && t.linetarget && weapon && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
-			if (!weapon.DepleteAmmo(weapon.bAltFire, true))
-				return;	// out of ammo
+			if (!weapon.DepleteAmmo(weapon.bAltFire, true)) { return; } // out of ammo
 		}
-
-		if (pufftype == NULL)
-			pufftype = 'BulletPuff';
-		int puffFlags = LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0);
-
+		
 		Actor puff;
-		[puff, actualdamage] = LineAttack (angle, range, pitch, damage, 'Melee', pufftype, puffFlags, t);
+		int actualdamage;
+		[puff, actualdamage] = LineAttack(angle, range, pitch, damage, 'Melee', pufftype, LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0), t);
 
 		if (!t.linetarget)
 		{
@@ -430,23 +412,15 @@ class WolfKnife : ClassicWeapon
 				}
 				else
 				{
-					GiveBody (int(actualdamage * lifesteal), lifestealmax);
+					GiveBody(int(actualdamage * lifesteal), lifestealmax);
 				}
 			}
-			if (weapon != NULL)
-			{
-				if (MeleeSound) A_StartSound(MeleeSound, CHAN_WEAPON);
-				else			A_StartSound(weapon.AttackSound, CHAN_WEAPON);
-			}
+			
+			if (MeleeSound || weapon) { A_StartSound(MeleeSound ? MeleeSound : weapon.AttackSound, CHAN_WEAPON); }
 
-			if (!(flags & CPF_NOTURN))
-			{
-				// turn to face target
-				self.Angle = t.angleFromSource;
-			}
-
-			if (flags & CPF_PULLIN) self.bJustAttacked = true;
-			if (flags & CPF_DAGGER) t.linetarget.DaggerAlert (self);
+			if (!(flags & CPF_NOTURN)) { self.Angle = t.angleFromSource; }
+			if (flags & CPF_PULLIN) { self.bJustAttacked = true; }
+			if (flags & CPF_DAGGER) { t.linetarget.DaggerAlert(self); }
 		}
 	}
 }
