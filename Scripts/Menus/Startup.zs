@@ -551,6 +551,7 @@ class Startup : GenericMenu
 				cursory = prompty;
 				cursorx = prompt.Length();
 
+				GameHandler.ChangeMusic("*");
 				Close();
 				break;
 			case MKEY_UP:
