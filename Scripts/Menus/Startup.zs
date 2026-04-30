@@ -471,7 +471,7 @@ class Startup : GenericMenu
 				if (selection < 0 || selection > 3) { return true; }
 
 				CVar sodvar = CVar.FindCVar("g_sod");
-				if (sodvar) { sodvar.SetInt(selection); }
+				if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(selection); }
 
 				SetMenu("IntroSlideShow", -1);
 				return true;
@@ -1219,7 +1219,7 @@ class Notice : WolfMenu
 
 	virtual void NextScreen()
 	{
-		initial.SetInt(0);
+		if (!multiplayer || players[consoleplayer].settings_controller) { initial.SetInt(0); }
 		Menu.SetMenu("LoadScreen");
 	}
 

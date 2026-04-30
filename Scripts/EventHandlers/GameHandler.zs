@@ -484,7 +484,7 @@ class Game
 		if (g_sod != ret && gamestate == GS_LEVEL && level.time == 2) // Set the value if we are in a game and it hasn't been set already by the startup menu
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(ret); }
+			if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(ret); }
 		}
 
 		return g_sod, ret;

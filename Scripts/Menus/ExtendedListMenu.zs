@@ -610,7 +610,7 @@ class GameMenu : IconListMenu
 		registered = TexMan.CheckForTexture("REGISTEREDOVERLAY", TexMan.Type_Any);
 
 		sodvar = CVar.FindCVar("g_sod");
-		if (sodvar) { sodvar.SetInt(-1); }
+		if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(-1); }
 
 		fadetarget = gametic;
 		fadealpha = 1.0;
@@ -745,7 +745,7 @@ class GameMenu : IconListMenu
 
 				RestorePlaceholderMarkers();
 
-				if (sodvar) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
+				if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
 
 				SetMenu("IntroSlideShow", -1);
 
