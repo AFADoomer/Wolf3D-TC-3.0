@@ -23,16 +23,25 @@
 class BossScreen : GenericMenu
 {
 	int ticcount;
+	Font DOSFont;
 
 	override void Init(Menu parent)
 	{
 		GameHandler.ChangeMusic("");
+
+		DOSFont = Font.GetFont("DOSFont");
 
 		Super.Init(parent);
 	}
 
 	override void Ticker()
 	{
+		if (!multiplayer)
+		{
+			Close();
+			Menu.SetMenu("Startup");
+		}
+
 		ticcount++;
 
 		Super.Ticker();
@@ -41,7 +50,11 @@ class BossScreen : GenericMenu
 	override void Drawer()
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-		screen.DrawText(NewSmallFont, Font.CR_GRAY, 0, 0, String.Format("%s%s", "C:\\>", ((ticcount % 40 < 20) ? "_" : "")));
+	
+		if (multiplayer)
+		{
+			screen.DrawText(DOSFont, Font.CR_GRAY, 0, 0, String.Format("%s%s", "C>", ((ticcount % 40 < 20) ? "_" : "")), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+		}
 	}	
 }
 
@@ -87,6 +100,7 @@ class Startup : GenericMenu
 	int instances;
 
 	bool noinput;
+	bool doboot;
 
 	override void Init(Menu parent)
 	{
@@ -98,7 +112,7 @@ class Startup : GenericMenu
 
 		DOSFont = Font.GetFont("DOSFont");
 
-		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (640, 400), (640, 400));
 
 		curstate = 0;
 		ticcount = 0;
@@ -110,6 +124,7 @@ class Startup : GenericMenu
 
 		curdir = NewNode(root, "C:", "", 134217728);
 		NewNode(curdir, "COMMAND", "COM", 47845, "11-11-1991   5:00a");
+		NewNode(curdir, "CONFIG", "SYS", 47845, "11-11-1991   5:00a");
 		DOSItem data = NewNode(curdir, "DATADIR");
 		curdir = NewNode(curdir, "GAMES");
 		curdir = NewNode(curdir, "WOLF3D");
@@ -127,23 +142,25 @@ class Startup : GenericMenu
 		{
 			String nm = Wads.GetLumpFullName(i);
 
-			if (nm != "" && nm.IndexOf("/") > -1 && Wads.FindLump(Wads.GetLumpName(i)))
+			if (nm != "" && Wads.FindLump(Wads.GetLumpName(i)))
 			{
 				NewNodeFromPath(data, Wads.GetLumpFullName(i), lump:i);
 			}
 		}
 
-		curdir = FindPath("C:\\Games\\Wolf3D");
+		curdir = FindPath("C:");
 
 		echo = true;
 		prompt = String.Format("%s>", GetPath(curdir));
 
 		Clear();
-	}
 
+		Print(prompt, nobreak:true);
+	}
+	
 	override void Ticker()
 	{
-		Boot();
+		if (doboot) { Boot(); }
 		ticcount++;
 
 		Super.Ticker();
@@ -228,8 +245,8 @@ class Startup : GenericMenu
 		charwidth = charwidth * width / 640;
 		lineheight = lineheight * height / 400;
 
-		int xoffset = (Screen.GetWidth() - width) / 2;
-		int yoffset = (Screen.GetHeight() - height) / 2;
+		int xoffset = 0;
+		int yoffset = 0;
 
 		double cratio = Screen.GetHeight() / height;
 		int cwidth = int(charwidth * cratio);
@@ -241,10 +258,10 @@ class Startup : GenericMenu
 			{
 				if (!(backgroundbuffer[r][c] ~== "\c[TrueBlack]�"))
 				{
-					screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), xoffset + c * charwidth - 1, yoffset + r * lineheight - 2, backgroundbuffer[r][c], DTA_CellX, cwidth + int(2 * cratio), DTA_CellY, int(cheight + 5 * cratio));
+					screen.DrawText(DOSFont, Font.FindFontColor("TrueBlack"), xoffset + c * charwidth - 1, yoffset + r * lineheight - 2, backgroundbuffer[r][c], DTA_CellX, cwidth + int(2 * cratio), DTA_CellY, int(cheight + 5 * cratio), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 				}
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, buffer[r][c]);
-				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, cursorbuffer[r][c]);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, buffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+				screen.DrawText(DOSFont, Font.FindFontColor("White"), xoffset + c * charwidth, yoffset + r * lineheight, cursorbuffer[r][c], DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 			}
 		}
 	}
@@ -346,6 +363,8 @@ class Startup : GenericMenu
 		switch(curstate)
 		{
 			case 0:
+				Clear();
+				history.Clear();
 				noinput = true;
 				Print(String.Format("%4i KB OK", clamp((ticcount - 70) * 20, 0, 1024)), 0, 1, true);
 				if (ticcount >= 140) { ticcount = 0; curstate++; }
@@ -380,6 +399,8 @@ class Startup : GenericMenu
 				break;
 			default:
 				noinput = false;
+				doboot = false;
+				curstate = 0;
 				break;
 		}
 	}
@@ -402,7 +423,7 @@ class Startup : GenericMenu
 				linecount++;
 			}
 
-			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.Mid(c, 1));
+			screen.DrawText(fnt, clr, (x + c - (linecount > 0)) * charwidth, (y + linecount) * lineheight, text.Mid(c, 1), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 		}
 	}
 
@@ -529,10 +550,12 @@ class Startup : GenericMenu
 				command = "";
 				cursory = prompty;
 				cursorx = prompt.Length();
+
+				Close();
 				break;
 			case MKEY_UP:
 				historyindex--;
-				if (historyindex >= 0)
+				if (historyindex < history.Size() && historyindex >= 0)
 				{
 					command = history[historyindex];
 				}
@@ -547,7 +570,7 @@ class Startup : GenericMenu
 			case MKEY_DOWN:
 				historyindex++;
 
-				if (historyindex >= history.Size())
+				if (!history.Size() || historyindex >= history.Size())
 				{
 					historyindex = history.Size();
 					command = "";
@@ -913,6 +936,10 @@ class Startup : GenericMenu
 		{
 			NewLine();
 		}
+		else if (tokens[0] ~== "%BOOT")
+		{
+			doboot = true;
+		}
 		else
 		{
 			if (!CheckCommand(tokens[0], parameters))
@@ -1025,7 +1052,7 @@ class Startup : GenericMenu
 		node.parent = parent;
 		node.title = title;
 		node.extension = extension;
-		node.size = size > 0 ? size : Random[DOSItem](1, 999999);
+		node.size = size > 0 ? size : CRandom[DOSItem](1, 999999);
 		node.date = GetDate(date);
 		node.lump = lump;
 
@@ -1080,7 +1107,7 @@ class Startup : GenericMenu
 		node.parent = parent;
 		node.title = file[0];
 		node.extension = (file.Size() > 1 ? file[1] : "");
-		node.size = size > 0 ? size : Random[DOSItem](1, 999999);
+		node.size = size > 0 ? size : CRandom[DOSItem](1, 999999);
 		node.date = GetDate(date);
 		node.lump = lump;
 
@@ -1091,21 +1118,25 @@ class Startup : GenericMenu
 
 	String GetDate(string input = "")
 	{
-		String temp = String.Format("%02i-%02i-%i  %2i:%02i%s", Random[RDate](1, 12), Random[RDate](1, 28), Random[RDate](1992, 1993), Random[RDate](1, 12), Random[RDate](0, 59), Random[RDate](0, 1) ? "a" : "p");
+		String temp = String.Format("%02i-%02i-%i  %2i:%02i%s", CRandom[RDate](1, 12), CRandom[RDate](1, 28), CRandom[RDate](1992, 1993), CRandom[RDate](1, 12), CRandom[RDate](0, 59), CRandom[RDate](0, 1) ? "a" : "p");
 
 		return input .. temp.mid(input.length());
 	}
 
 	bool, DOSItem FindChild(String title, String extension = "")
 	{
+		console.printf("Finding %s.%s", title, extension);
 		for (int i = 0; i < curdir.children.Size(); i++)
 		{
 			if (curdir.children[i].children.Size()) { continue; }
+
+console.printf("%s %s", curdir.children[i].title, title);
 
 			if (curdir.children[i].title ~== title)
 			{
 				if (extension.Length())
 				{
+					console.printf("%s %s", curdir.children[i].extension, extension);
 					if (curdir.children[i].extension ~== extension) { return true, curdir.children[i]; }
 				}
 				else { return true, curdir.children[i]; }
@@ -1230,7 +1261,7 @@ class Notice : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
-		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4); }
+		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400); }
 
 		PrintFullJustified(lines, maxwidth);
 	}
@@ -1281,7 +1312,7 @@ class Notice : WolfMenu
 						c == 0x0
 					)
 					{
-						screen.DrawText(BigFont, fntclr, x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+						screen.DrawText(BigFont, fntclr, x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 
 						if (c == 0x9) // Tab alignment
 						{
@@ -1304,7 +1335,7 @@ class Notice : WolfMenu
 			}
 			else
 			{	
-				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
+				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 			}
 		}
 	}
