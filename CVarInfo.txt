@@ -12,6 +12,7 @@ server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
 server int g_momentum = 0; // Use Doom-style movement
 server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
 server int g_nointro = 0; // Skip 'Get Psyched'
+server noarchive HandlerClass(LightVar) int g_lightlevel = -1; // Debug override for map light level
 server int g_placeholders = 1; // Enable dubious legality
 server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
 server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on startup

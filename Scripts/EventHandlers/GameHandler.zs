@@ -418,6 +418,13 @@ class GameHandler : StaticEventHandler
 			gamefiles.Clear();
 			CheckGameFiles(self);
 		}
+		else if (e.Name == "lightlevel" && !e.IsManual)
+		{
+			for (int s = 0; s < level.sectors.Size(); s++)
+			{
+				level.sectors[s].SetLightLevel(e.args[0]);
+			}
+		}
 	}
 
 	ui static void OpenConsole()
@@ -607,5 +614,18 @@ class DataHandler : StaticEventHandler
 		{
 			console.printf("PLAYPAL lump not found!");
 		}
+	}
+}
+
+class LightVar : CustomIntCVar
+{
+	override int ModifyValue(Name CVarName, int val)
+	{
+		if (val < 0) { val = 255; }
+		val = clamp(val, 0, 255);
+
+		EventHandler.SendNetworkEvent("lightlevel", val);
+
+		return val;
 	}
 }

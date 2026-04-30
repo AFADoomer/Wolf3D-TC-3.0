@@ -29,23 +29,38 @@ class WolfPostProcessor : LevelPostProcessor
 {
 	protected void Apply(Name checksum, String mapname)
 	{
-		CVar dynlights = CVar.FindCvar("g_dynamiclights");
+		bool darken;
 
 		// Bare-bones compatibility with Relighting mod...  Darken the maps so that 
 		// the dynamic lights show up and the mod has some chance of working properly
-		int relighting = Wads.CheckNumForFullName("zscript/hd_relighting.zs");
-		if (relighting > -1)
+		darken = Wads.CheckNumForFullName("zscript/hd_relighting.zs") > -1;
+
+		for (int s = 0; s < level.sectors.Size(); s++)
 		{
-			for (int sec = 0; sec < level.sectors.Size(); sec++)
-			{
-				if (level.sectors[sec].lightlevel == 255) { level.sectors[sec].SetLightLevel(192); }
-			}
+			let sec = level.sectors[s];
+
+			if (darken && sec.lightlevel == 255) { sec.SetLightLevel(192); }
 		}
-		else if (dynlights && dynlights.GetInt())
+
+		// Fix script activation lines that aren't marked properly if you used
+		// an older version of the map conversion tool
+		for (int l = 0; l < level.lines.Size(); l++)
 		{
-			for (int sec = 0; sec < level.sectors.Size(); sec++)
+			let ln = level.lines[l];
+
+			if (
+				ln &&
+				(
+					(ln.special >= 80 && ln.special <= 85) ||
+					ln.special == 226
+				) &&
+				ln.args[0] > 0 &&
+				!(ln.flags & Line.ML_TWOSIDED) &&
+				(ln.activation & SPAC_Cross) && 
+				!(ln.activation & SPAC_Use)
+			)
 			{
-				if (level.sectors[sec].lightlevel > 229) { level.sectors[sec].SetLightLevel(229); }
+				ln.activation |= SPAC_Use;
 			}
 		}
 
