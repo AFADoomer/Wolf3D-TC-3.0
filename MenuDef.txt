@@ -136,7 +136,6 @@ OptionMenu "TCOptions"
 	StaticText "$M_GAMEPLAYOPTIONS", 1
 	Option "$M_OPTIONSMOVEMENT",				"g_momentum", "YesNo"
 	Option "$M_OPTIONSFREELOOK",				"freelook", "YesNo"
-	Option "$M_OPTIONSFIREBALLS",			"g_fastfireballs", "YesNo"
 	Option "$M_OPTIONSCHEATS",				"goobers", "YesNo"
 	Slider "$M_OPTIONSMPENEMYBUFF",			"g_buffpercent", 0.0, 1.0, 0.05, 2
 	StaticText ""
@@ -145,7 +144,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSPUFFS",				"g_noblood", "YesNo"
 	Option "$M_OPTIONSUSEFLATS",			"g_useflats", "FlatStyle"
 	Option "$M_OPTIONSFADESTYLE",			"g_fadestyle", "YesNo"
-	Slider "$M_OPTIONSFADESPEED",			"g_fizzlespeed", 0.5, 4.0, 0.5, 1
+	Slider "$M_OPTIONSFADESPEED",			"g_fizzlespeed", 0.5, 4.0, 0.5, 1, "g_fadestyle", 1
 	Option "$M_OPTIONSVIEWBOB",				"g_viewbobscale", "YesNo"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
 	Option "$M_OPTIONSDYNAMICLIGHTS", 		"g_dynamiclights", "YesNo"
@@ -157,6 +156,11 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"
 	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
 	Option "$M_OPTIONSHUDRATIO",			"g_hudratio", "ForceRatios"
+	StaticText ""
+	StaticText "$M_COMPATABILITYOPTIONS", 1
+	Option "$M_OPTIONSFIREBALLS",			"g_fastfireballs", "YesNo"
+	Option "$M_OPTIONSPUSHWALLDIST",		"g_maxpushwallmove", "PushwallOptions"
+	Option "$M_OPTIONSDEAFGUARDDOORS",		"g_deafguarddoors", "YesNo"
 	StaticText ""
 	SafeCommand	"$M_OPTIONSRESET",			"g_resetdefaults"
 	SafeCommand	"$M_OPTIONSSAVE",			"writeini"
@@ -471,6 +475,12 @@ OptionValue "FlatStyle"
 	1, "$FLAT_MINIMAL"
 	2, "$FLAT_FLOORS"
 	3, "$FLAT_BOTH"
+}
+
+OptionValue "PushwallOptions"
+{
+	2, "Default (2 tiles)"
+	3, "3 tiles"
 }
 
 OptionMenu "MapMenu"

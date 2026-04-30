@@ -281,7 +281,8 @@ class GenericOptionMenu : OptionMenu
 			if
 			(
 				y >= item.y && y <= item.y + item.height &&
-				x >= item.x && x <= item.valueright
+				x >= item.x && x <= item.valueright ||
+				!item.item.isGrayed()
 			)
 			{
 				if (type == MOUSE_Release)
@@ -305,7 +306,7 @@ class GenericOptionMenu : OptionMenu
 
 				return true;
 			}
-			else
+			else if (!item.item.isGrayed())
 			{
 				if (item.item is "OptionMenuSliderBase" && type == MOUSE_Move)
 				{
@@ -327,7 +328,8 @@ class GenericOptionMenu : OptionMenu
 				if (
 					item.menu == GetCurrentMenu() &&
 					y >= item.y && y <= item.y + item.height &&
-					x >= item.x && x <= item.valueright
+					x >= item.x && x <= item.valueright &&
+					!item.item.isGrayed()
 				)
 				{
 					SetFocus(item.item);
@@ -350,21 +352,24 @@ class GenericOptionMenu : OptionMenu
 
 				if (
 					item &&
-					y >= item.y && y <= item.y + item.height
+					y >= item.y && y <= item.y + item.height &&
+					!item.item.isGrayed()
 				)
 				{
 					if (item.item is "OptionMenuSliderBase")
 					{
 						if (x >= item.valueleft && x <= item.valueright)
 						{
-							if (type == MOUSE_Release)
+							if (type == MOUSE_Click)
+							{
+								SetFocus(item.item);
+								SetSlider(item, x);
+							}
+							else if (type == MOUSE_Release)
 							{
 								ReleaseFocus();
+								SetSlider(item, x);
 							}
-
-							SetSlider(item, x);
-
-							return true;
 						}
 					}
 
@@ -399,7 +404,7 @@ class GenericOptionMenu : OptionMenu
 		if (breakwidth == -1) { breakwidth = int(CleanWidth_1 * scale.x / 2); }
 		else { breakwidth = int(breakwidth / CleanXfac_1 * scale.x); }
 
-		int fontheight = int((fnt.GetHeight() - 2) * CleanYfac_1 * scale.y);
+		int fontheight = int(fnt.GetHeight() * CleanYfac_1 * scale.y);
 		
 		int height = 0;
 		int overlay = grayed ? Color(128, 64, 64, 64) : 0;
@@ -463,20 +468,23 @@ class GenericOptionMenu : OptionMenu
 
 		this.mSliderShort = right + maxlen > screen.GetWidth();
 
+		Color clr = 0;
+		if (this.IsGrayed()) { clr = 0x777777; }
+
 		if (!this.mSliderShort)
 		{
-			DrawElement(x, cy, "Slider_L", 0, size);
-			for (int s = 1; s < 11; s++) { DrawElement(x + s * size.x, cy, "Slider_M", 0, size); }
-			DrawElement(x + 11 * size.x, cy, "Slider_R", 0, size);
-			DrawElement(x + 1 + int(ccur * (11 * size.x - 2) / range), cy, "Slider_H", 0, handlesize);
+			DrawElement(x, cy, "Slider_L", clr, size);
+			for (int s = 1; s < 11; s++) { DrawElement(x + s * size.x, cy, "Slider_M", clr, size); }
+			DrawElement(x + 11 * size.x, cy, "Slider_R", clr, size);
+			DrawElement(x + 1 + int(ccur * (11 * size.x - 2) / range), cy, "Slider_H", clr, handlesize);
 		}
 		else
 		{
 			// On 320x200 we need a shorter slider
-			DrawElement(x, cy, "Slider_L", 0, size);
-			for (int s = 1; s < 6; s++) { DrawElement(x + s * size.x, cy, "Slider_M", 0, size); }
-			DrawElement(x + 6 * size.x, cy, "Slider_R", 0, size);
-			DrawElement(x + 1 + int(ccur * (7 * size.x - 2) / range), cy, "Slider_H", 0, handlesize);
+			DrawElement(x, cy, "Slider_L", clr, size);
+			for (int s = 1; s < 6; s++) { DrawElement(x + s * size.x, cy, "Slider_M", clr, size); }
+			DrawElement(x + 6 * size.x, cy, "Slider_R", clr, size);
+			DrawElement(x + 1 + int(ccur * (7 * size.x - 2) / range), cy, "Slider_H", clr, handlesize);
 
 			right -= int(5 * size.x);
 		}
@@ -484,7 +492,7 @@ class GenericOptionMenu : OptionMenu
 		if (fracdigits >= 0 && right + maxlen <= screen.GetWidth())
 		{
 			textbuf = String.format(formater, cur);
-			DrawOptionText(textbuf, right + 4 * CleanXfac_1, y, fnt, HighlightColor());
+			DrawOptionText(textbuf, right + 4 * CleanXfac_1, y, fnt, HighlightColor(), this.IsGrayed());
 		}
 
 		return right;
@@ -499,7 +507,7 @@ class GenericOptionMenu : OptionMenu
 			x -= size.x / 2;
 			y += OptionMenuSettings.mLinespacing * CleanYfac_1 / 2 - size.y / 2;
 			screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
-			if (clr > 0) { screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_FillColor, clr, DTA_Alpha, 0.5 * alpha, DTA_ClipBottom, bottomclip); }
+			if (clr > 0) { 	screen.DrawTexture(tex, true, int(x), int(y), DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_Alpha, alpha, DTA_ClipBottom, bottomclip, DTA_FillColor, clr, DTA_LegacyRenderStyle, STYLE_Shaded); }
 		}
 	}
 
@@ -523,7 +531,7 @@ class GenericOptionMenu : OptionMenu
 		text = StringTable.Localize("$" .. lookup);
 		if (text == lookup) { return 0; }
 
-		return DrawOptionText(text, x, y, SmallFont, TextColor(), false, alpha, Screen.GetWidth() / 2);
+		return DrawOptionText(text, x, y, SmallFont, TextColor(), this.IsGrayed(), alpha, Screen.GetWidth() / 2);
 	}
 
 	virtual void DrawPath(String title, int x, int y, Font fnt = null)
@@ -539,7 +547,7 @@ class GenericOptionMenu : OptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
 
 		String Description;
 		int Key1, Key2;
@@ -600,7 +608,7 @@ class GenericOptionMenu : OptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
 
 		info.valueleft = x + spacing;
 
@@ -655,7 +663,7 @@ class GenericOptionMenu : OptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mLabel);
-		info.height = DrawOptionText(label, x, y, fnt, TitleColor());
+		info.height = DrawOptionText(label, x, y, fnt, TitleColor(), this.IsGrayed());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 		
@@ -669,7 +677,7 @@ class GenericOptionMenu : OptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, x, y, fnt, TitleColor());
+		info.height = DrawOptionText(label, x, y, fnt, TitleColor(), this.IsGrayed());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -687,7 +695,7 @@ class GenericOptionMenu : OptionMenu
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
 
-		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
 
 		if (this.mCVar != null)
 		{

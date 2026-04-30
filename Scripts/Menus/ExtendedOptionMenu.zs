@@ -600,11 +600,11 @@ class ExtendedOptionMenu : GenericOptionMenu
 			info.x = this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x;
 
 			DrawToHUD.DrawFrame("BU_D_", info.x, info.y - 2 * CleanYfac_1, info.width, 14 * CleanYfac_1, 0xa8a8a8, 1.0, 1.0, (CleanWidth_1, CleanHeight_1), DrawToHUD.TEX_MENU, 1.0);
-			info.height = DrawOptionText(label, info.x + info.width / 2 - OptionWidth(label, fnt) * CleanXfac_1 / 2, info.y, fnt, Font.FindFontColor("WolfMenuDarkGray"), scale:(1.0, 0.75));
+			info.height = DrawOptionText(label, info.x + info.width / 2 - OptionWidth(label, fnt) * CleanXfac_1 / 2, info.y, fnt, Font.FindFontColor("WolfMenuDarkGray"), this.IsGrayed(), scale:(1.0, 0.75));
 		}
 		else
 		{
-			info.height = DrawOptionText(label, info.x, info.y, fnt, TitleColor());
+			info.height = DrawOptionText(label, info.x, info.y, fnt, TitleColor(), this.IsGrayed());
 		}
 
 		info.valueleft = info.valueright = x + info.width;
@@ -619,7 +619,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) * CleanXfac_1 / 2 : x, y - 16, fnt, TitleColor());
+		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) * CleanXfac_1 / 2 : x, y - 16, fnt, TitleColor(), this.IsGrayed());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
 
@@ -639,7 +639,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), false, 1.0, breakwidth);
+		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
 		height = max(int(16 * CleanYfac_1), height);
 
 		KeyBindings binds;
