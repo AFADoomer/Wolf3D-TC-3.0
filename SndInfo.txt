@@ -154,9 +154,9 @@ green/die2				LSND0011
 green/die3				LSND0023
 green/die4				LSND0023
 green/die5				LSND0024
-green/die7				LSND0026
-green/die8				LSND0027
-green/die9				LSND0028
+green/die6				LSND0026
+green/die7				LSND0027
+green/die8				LSND0028
 
 green/sight				LSND0000
 $random green/death		{ green/die1 green/die2 green/die3 green/die4 green/die5 green/die6 green/die7 green/die8 }
