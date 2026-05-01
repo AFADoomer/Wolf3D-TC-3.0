@@ -799,7 +799,7 @@ class ParsedMap
 			noclip = false;
 
 			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(max(0, g_sod)); }
+			if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
 
 			TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
 			
