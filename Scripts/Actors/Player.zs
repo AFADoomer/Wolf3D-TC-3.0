@@ -24,9 +24,11 @@
 class WolfPlayer : PlayerPawn
 {
 	bool goobers, mutated, respawn, justdied;
-	int deathtick, respawntick, idletick;
+	int deathtick, respawntick, idletick, paintick;
 	double attackerangle;
 	Vector3 lastpos;
+	state IdleState, RunningState, AttackState, PainState;
+	Weapon curweap;
 
 	Default
 	{
@@ -68,34 +70,109 @@ class WolfPlayer : PlayerPawn
 	States
 	{
 		Spawn:
-			PLAY A 1;
+			"####" "#" 6;
+		Spawn.WolfMachinegun:
+			BJ3S A 6;
+			Loop;
+		Spawn.WolfKnife:
+			BJ1S A 6;
+			Loop;
+		Spawn.WolfPistol:
+			BJ2S A 6;
+			Loop;
+		Spawn.WolfChaingun:
+			BJ4S A 6;
+			Loop;
+		Spawn.WolfFlamethrower:
+			BJ5S A 6;
+			Loop;
+		Spawn.WolfRocketLauncher:
+			BJ6S A 6;
 			Loop;
 		See:
-			PLAY ABCD 4 A_JumpIf(!vel.x && !vel.y, "Spawn");
+		See.WolfMachinegun:
+			BJ3W ABCD 4;
 			Loop;
-		Missile:
-			PLAY E 12;
-			Goto Spawn;
+		See.WolfKnife:
+			BJ1W ABCD 4;
+			Loop;
+		See.WolfPistol:
+			BJ2W ABCD 4;
+			Loop;
+		See.WolfChaingun:
+			BJ4W ABCD 4;
+			Loop;
+		See.WolfFlamethrower:
+			BJ5W ABCD 4;
+			Loop;
+		See.WolfRocketLauncher:
+			BJ6W ABCD 4;
+			Loop;
 		Melee:
-			PLAY F 6 Bright;
-			Goto Missile;
+		Attack.WolfKnife:
+			BJ1A ABCD 3;
+			Goto Spawn;
+		Attack.WolfPistol:
+			BJ2A A 3;
+			BJ2A B 3 Bright;
+			BJ2A CD 3;
+			Goto Spawn;
+		Missile:
+		Attack.WolfMachineGun:
+			BJ3A A 3;
+			BJ3A B 3 Bright;
+			BJ3A CD 3;
+			Goto Spawn;
+		Attack.WolfChaingun:
+			BJ4A A 3;
+			BJ4A BC 3 Bright;
+			BJ4A D 3;
+			Goto Spawn;
+		Attack.WolfFlamethrower:
+			BJ5A ABCD 3 Bright;
+			Goto Spawn;
+		Attack.WolfRocketLauncher:
+			BJ6A BCD 3 Bright;
+			BJ6W AA 3;
+			Goto Spawn;
 		Pain:
-			PLAY G 4;
-			PLAY G 4 A_Pain;
+		Pain.WolfMachineGun:
+			BJ3P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ3P "#" 4 A_Pain;
+			Goto Spawn;
+		Pain.WolfKnife:
+			BJ1P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ1P "#" 4 A_Pain;
+			Goto Spawn;
+		Pain.WolfPistol:
+			BJ2P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ2P "#" 4 A_Pain;
+			Goto Spawn;
+		Pain.WolfChaingun:
+			BJ4P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ4P "#" 4 A_Pain;
+			Goto Spawn;
+		Pain.WolfFlamethrower:
+			BJ5P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ5P "#" 4 A_Pain;
+			Goto Spawn;
+		Pain.WolfRocketLauncher:
+			BJ6P A 4 { frame += RandomPick[pain](0, 1); }
+			BJ6P "#" 4 A_Pain;
 			Goto Spawn;
 		Death.WolfNaziSyringe:
-			PLAY H 0 { mutated = true; }
+			BJ0D A 0 { mutated = true; }
 		Death:
-			PLAY H 10;
-			PLAY H 0 A_PlayerScream();
+			BJ0D A 8;
+			BJ0D A 0 A_PlayerScream();
 		Death.Resume:
-			PLAY I 10;
-			PLAY J 10;
-			PLAY K 1 A_CheckPlayerDone();
+			BJ0D B 7;
+			BJ0D C 8;
+			BJ0D D 1 A_CheckPlayerDone();
 			Wait;
 		Death.Fire:
 		Death.WolfNaziFire:
-			PLAY H 0 {
+			BJ0D A 0 {
 				if (g_noblood)
 				{
 					SetStateLabel("Death");
@@ -106,18 +183,11 @@ class WolfPlayer : PlayerPawn
 				A_PlayerScream();
 				SpawnFlames();
 			}
-			PLAY H 6 A_SetTranslation("Ash25");
-			PLAY H 6 A_SetTranslation("Ash50");
-			PLAY H 6 A_SetTranslation("Ash75");
-			PLAY H 6 A_SetTranslation("Ash100");
+			BJ0D A 6 A_SetTranslation("Ash25");
+			BJ0D A 6 A_SetTranslation("Ash50");
+			BJ0D A 6 A_SetTranslation("Ash75");
+			BJ0D A 6 A_SetTranslation("Ash100");
 			Goto Death.Resume;
-		/*
-		// For future use?
-		XDeath:
-			PLAY LMN 6;
-			PLAY O -1;
-			Stop;
-		*/
 	}
 
 	override void PostBeginPlay()
@@ -153,25 +223,129 @@ class WolfPlayer : PlayerPawn
 		}
 	}
 
+	void RefreshSpriteStates()
+	{
+		IdleState = GetSpriteState("Spawn", true);
+		RunningState = GetSpriteState("See", true);
+
+		if (!IdleState) { IdleState = SpawnState; }
+		if (!RunningState) { RunningState = SeeState; }
+	}
+
+	// Reverse MeleeState and MissileState here so that they make sense
+	override void PlayAttacking()
+	{
+		if (MeleeState && !InStateSequence(CurState, MeleeState)) { SetState(MeleeState); }
+	}
+
+	override void PlayAttacking2()
+	{
+		if (MissileState && !InStateSequence(CurState, MissileState)) { SetState(MissileState); }
+	}
+
+	override void PlayIdle()
+	{
+		if (health <= 0) { return; }
+		if (!InStateSequence(CurState, IdleState)) { SetState(IdleState); }
+	}
+
+	override void PlayRunning()
+	{
+		if (!InStateSequence(CurState, RunningState)) { SetState(RunningState); }
+	}
+
+	State GetSpriteState(String prefix, bool strict = false)
+	{
+		if (!player || !player.ReadyWeapon) { return FindStateByString(prefix); }
+
+		String classname = player.ReadyWeapon.GetClassName();
+		if (classname.Mid(classname.length() - 4) ~== "Lost") { classname.Replace("Lost", ""); }
+
+		state found = FindStateByString(prefix .. "." .. classname, strict);
+
+		return found;
+	}
+
+	override void CheckWeaponChange()
+	{
+		Super.CheckWeaponChange();
+		
+		RefreshSpriteStates();
+	}
+
+	override bool ReactToDamage(Actor inflictor, Actor source, int damage, Name mod, int flags, int originaldamage)
+	{
+		bool ret = Super.ReactToDamage(inflictor, source, damage, mod, flags, originaldamage);
+
+		if (!ret || health <= 0) { return ret; }
+
+		paintick = 8;
+
+		// // Start by looking for damagetype-specific and weapon-specific frames (that likely will never exist)
+		// PainState = FindStateByString("Pain." .. player.ReadyWeapon.GetClassName() .. "." .. mod, true);
+		// if (PainState)
+		// {
+		// 	if (!InStateSequence(CurState, PainState)) { SetState(PainState); }
+		// 	return ret;
+		// }
+
+		// Otherwise, if there is a damagetype-specific pain state, it was set by the Super call, so don't change it
+		PainState = FindStateByString("Pain." .. mod, true);
+		if (PainState) { return ret; }
+		
+		// Otherwise look up weapon-specific pain frames
+		PainState = GetSpriteState("Pain", true);
+		if (PainState)
+		{
+			if (!InStateSequence(CurState, PainState)) { SetState(PainState); }
+		}
+
+		return ret;
+	}
+
+	override void FireWeapon(State stat)
+	{
+		let player = self.player;
+
+		let wpn = player.ReadyWeapon;
+		if (!wpn || !wpn.CheckAmmo(Weapon.PrimaryFire, true)) { return; }
+
+		player.WeaponState &= ~WF_WEAPONBOBBING;
+		
+		bool attacking = true;
+		
+		let cwpn = ClassicWeapon(wpn);
+		if (!cwpn)
+		{
+			if (!wpn.bMeleeWeapon) { PlayAttacking2(); }
+			else { PlayAttacking(); }
+		}
+
+		wpn.bAltFire = false;
+
+		if (!stat) { stat = wpn.GetAtkState(!!player.refire); }
+		player.SetPsprite(PSP_WEAPON, stat);
+		
+		if (!wpn.bNoAlert) { SoundAlert (self, false); }
+	}
+
 	override void MovePlayer(void)
 	{
-		CVar momentum = CVar.FindCVar("g_momentum");
 		CVar bobscale = CVar.GetCVar("g_viewbobscale", player);
 
-		if ((!momentum || !momentum.GetInt()) && pos.z == floorz)
+		Speed = Default.Speed;
+
+		if (!g_momentum && pos.z == floorz)
 		{
 			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
 			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
+		
+			if (vel.xy.length())
+			{
+				vel *= 0;
+				Speed = Default.Speed * 8;
+			}
 		}
-
-		if ((!momentum || !momentum.GetInt()) && pos.z == floorz && vel.xy.length())
-		{
-			if (!vel.xy.length()) { player.mo.PlayIdle(); }
-			vel *= 0;
-
-			Speed = Default.Speed * 8;
-		}
-		else { Speed = Default.Speed; }
 
 		Super.MovePlayer();
 	}
@@ -185,9 +359,32 @@ class WolfPlayer : PlayerPawn
 			ViewBob = Default.ViewBob * CVar.GetCVar("g_viewbobscale", player).GetFloat();
 		}
 
-		if (player.playerstate != PST_DEAD && !(player.cheats & CF_PREDICTING))
+		if (player.damagecount > 0) { player.damagecount--; }
+		if (paintick > 0) { paintick--; }
+
+		if (!player.ReadyWeapon || player.playerstate == PST_DEAD || health <= 0) { return; }
+
+		if (player.ReadyWeapon != curweap)
 		{
-			if (player.damagecount) { player.damagecount--; }
+			curweap = player.ReadyWeapon;
+			RefreshSpriteStates();
+		}
+
+		if (vel.xy.length()) { PlayRunning(); }
+		else if (!paintick) { PlayIdle(); }
+
+		let cwpn = ClassicWeapon(player.ReadyWeapon);
+		if (cwpn && cwpn.status == ClassicWeapon.Firing)
+		{
+			AttackState = GetSpriteState("Attack", true);
+			if (!AttackState) { AttackState = cwpn.bMeleeWeapon ? MeleeState : MissileState; }
+
+			let psp = player.GetPsprite(PSP_WEAPON);
+
+			state FireState = psp.caller.FindState("Fire");
+			int frameoffset = FireState.DistanceTo(psp.CurState);
+
+			if (frameoffset > -1) { SetState(AttackState + frameoffset); }
 		}
 	}
 

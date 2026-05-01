@@ -25,9 +25,18 @@ class ClassicWeapon : Weapon
 {
 	const WEAPON_OFFSET_Y = 14.4;
 
+	enum WeaponStates
+	{
+		Ready,
+		Firing,
+		Holding,
+	};
+
 	int flags;
+	WeaponStates status;
 
 	FlagDef DOGRIN:flags, 0;
+	FlagDef NOREFIRE:flags, 1;
 
 	Default
 	{
@@ -57,15 +66,21 @@ class ClassicWeapon : Weapon
 		Fire:
 			"####" "#" 1;
 			Goto Ready;
-		Refire:
-			"####" "#" 0  A_Refire;
-			"####" "#" 0 A_Jump (256, "Ready");
 		Hold:
 			"####" "#" 1;
-			"####" "#" 0 A_JumpIfInventory ("PowerStrength", 1, "Hold.Automatic");
-			"####" "#" 0 A_Jump (256, "Refire");
-		Hold.Automatic:
-			"####" "#" 0 A_Jump (256, "Fire");
+			"####" "#" 0 {
+				if (invoker.bNoRefire)
+				{
+					if (player && player.mo && player.mo.CheckInventory("PowerStrength", 1)) { invoker.bNoRefire = false; }
+					A_Refire("Hold");
+				}
+				else
+				{
+					A_Refire("Fire");
+				}
+			}
+			Goto Ready;
+
 	}
 
 	// Raise the weapon sprite immediately to the ready position
@@ -182,6 +197,90 @@ class ClassicWeapon : Weapon
 					WeaponScaleY = Default.WeaponScaleY * factor;
 				}
 			}
+		}
+	}
+
+	override void PSpriteTick(PSprite psp)
+	{
+		Super.PSpriteTick(psp);
+
+		if (!psp) { return; }
+
+		let wpn = ClassicWeapon(psp.caller);
+		if (!wpn) { return; }
+
+		if (wpn.bNoReFire && InStateSequence(psp.CurState, wpn.FindState("Hold"))) { wpn.status = Holding; }
+		else if (InStateSequence(psp.CurState, wpn.FindState("Fire"))) { wpn.status = Firing; }
+		else { wpn.status = Ready; }
+	}
+
+	// Specialized A_CustomPunch that eliminates unwanted Doom behavior
+	action void A_WolfPunch(int damage, bool norandom = true, int flags = CPF_USEAMMO, class<Actor> pufftype = "BulletPuff", double range = 0, double lifesteal = 0, int lifestealmax = 0, class<BasicArmorBonus> armorbonustype = "ArmorBonus", sound MeleeSound = 0, sound MissSound = "")
+	{
+		let player = self.player;
+		if (!player) return;
+
+		let weapon = player.ReadyWeapon;
+
+		if (range == 0) range = DEFMELEERANGE;
+		if (!norandom) { damage *= random[cwpunch](1, 8); }
+		
+		FTranslatedLineTarget t;
+		double angle = self.angle;
+		double pitch = AimLineAttack(angle, range, t, 0., ALF_CHECK3D);
+		
+		// only use ammo when actually hitting something!
+		if ((flags & CPF_USEAMMO) && t.linetarget && weapon && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
+		{
+			if (!weapon.DepleteAmmo(weapon.bAltFire, true)) { return; } // out of ammo
+		}
+		
+		Actor puff;
+		int actualdamage;
+		[puff, actualdamage] = LineAttack(angle, range, pitch, damage, 'Melee', pufftype, LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0), t);
+
+		if (!t.linetarget)
+		{
+			if (MissSound) A_StartSound(MissSound, CHAN_WEAPON);
+		}
+		else
+		{
+			if (lifesteal > 0 && !(t.linetarget.bDontDrain))
+			{
+				if (flags & CPF_STEALARMOR)
+				{
+					if (armorbonustype == NULL)
+					{
+						armorbonustype = 'ArmorBonus';
+					}
+					if (armorbonustype != NULL)
+					{
+						let armorbonus = BasicArmorBonus(Spawn(armorbonustype));
+						if (armorbonus)
+						{
+							armorbonus.SaveAmount *= int(actualdamage * lifesteal);
+							if (lifestealmax > 0) armorbonus.MaxSaveAmount = lifestealmax;
+							armorbonus.bDropped = true;
+							armorbonus.ClearCounters();
+
+							if (!armorbonus.CallTryPickup(self))
+							{
+								armorbonus.Destroy ();
+							}
+						}
+					}
+				}
+				else
+				{
+					GiveBody(int(actualdamage * lifesteal), lifestealmax);
+				}
+			}
+			
+			if (MeleeSound || weapon) { A_StartSound(MeleeSound ? MeleeSound : weapon.AttackSound, CHAN_WEAPON); }
+
+			if (!(flags & CPF_NOTURN)) { self.Angle = t.angleFromSource; }
+			if (flags & CPF_PULLIN) { self.bJustAttacked = true; }
+			if (flags & CPF_DAGGER) { t.linetarget.DaggerAlert(self); }
 		}
 	}
 }
@@ -326,6 +425,7 @@ class WolfKnife : ClassicWeapon
 		+Weapon.NOALERT
 		+Weapon.MELEEWEAPON
 		+Weapon.WIMPY_WEAPON
+		+ClassicWeapon.NOREFIRE
 	}
 
 	States
@@ -341,7 +441,8 @@ class WolfKnife : ClassicWeapon
 			"####" C 3;
 			"####" D 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), true, CPF_NOTURN, "WolfPuff", 64, meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" E 3;
-			"####" A 0 A_Jump(256, "Refire");
+			"####" A 0 A_Refire();
+			Goto Ready;
 	}
 
 	override void DoEffect()
@@ -351,76 +452,6 @@ class WolfKnife : ClassicWeapon
 		if (owner && owner.player && owner.player.ReadyWeapon == self)
 		{
 			adrenaline = !!owner.FindInventory("PowerStrength", true);
-		}
-	}
-
-	// Specialized A_CustomPunch that eliminates unwanted Doom behavior
-	action void A_WolfPunch(int damage, bool norandom = true, int flags = CPF_USEAMMO, class<Actor> pufftype = "BulletPuff", double range = 0, double lifesteal = 0, int lifestealmax = 0, class<BasicArmorBonus> armorbonustype = "ArmorBonus", sound MeleeSound = 0, sound MissSound = "")
-	{
-		let player = self.player;
-		if (!player) return;
-
-		let weapon = player.ReadyWeapon;
-
-		if (range == 0) range = DEFMELEERANGE;
-		if (!norandom) { damage *= random[cwpunch](1, 8); }
-		
-		FTranslatedLineTarget t;
-		double angle = self.angle;
-		double pitch = AimLineAttack(angle, range, t, 0., ALF_CHECK3D);
-		
-		// only use ammo when actually hitting something!
-		if ((flags & CPF_USEAMMO) && t.linetarget && weapon && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
-		{
-			if (!weapon.DepleteAmmo(weapon.bAltFire, true)) { return; } // out of ammo
-		}
-		
-		Actor puff;
-		int actualdamage;
-		[puff, actualdamage] = LineAttack(angle, range, pitch, damage, 'Melee', pufftype, LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0), t);
-
-		if (!t.linetarget)
-		{
-			if (MissSound) A_StartSound(MissSound, CHAN_WEAPON);
-		}
-		else
-		{
-			if (lifesteal > 0 && !(t.linetarget.bDontDrain))
-			{
-				if (flags & CPF_STEALARMOR)
-				{
-					if (armorbonustype == NULL)
-					{
-						armorbonustype = 'ArmorBonus';
-					}
-					if (armorbonustype != NULL)
-					{
-						let armorbonus = BasicArmorBonus(Spawn(armorbonustype));
-						if (armorbonus)
-						{
-							armorbonus.SaveAmount *= int(actualdamage * lifesteal);
-							if (lifestealmax > 0) armorbonus.MaxSaveAmount = lifestealmax;
-							armorbonus.bDropped = true;
-							armorbonus.ClearCounters();
-
-							if (!armorbonus.CallTryPickup(self))
-							{
-								armorbonus.Destroy ();
-							}
-						}
-					}
-				}
-				else
-				{
-					GiveBody(int(actualdamage * lifesteal), lifestealmax);
-				}
-			}
-			
-			if (MeleeSound || weapon) { A_StartSound(MeleeSound ? MeleeSound : weapon.AttackSound, CHAN_WEAPON); }
-
-			if (!(flags & CPF_NOTURN)) { self.Angle = t.angleFromSource; }
-			if (flags & CPF_PULLIN) { self.bJustAttacked = true; }
-			if (flags & CPF_DAGGER) { t.linetarget.DaggerAlert(self); }
 		}
 	}
 }
@@ -440,6 +471,7 @@ class WolfPistol : ClassicWeapon
 		Weapon.SelectionOrder 3;
 		Weapon.SlotNumber 2;
 		+Weapon.WIMPY_WEAPON
+		+ClassicWeapon.NOREFIRE
 	}
 
 	States
@@ -455,7 +487,8 @@ class WolfPistol : ClassicWeapon
 			"####" C 3 Bright;
 			"####" D 3 A_FireGun(2.0);
 			"####" E 3;
-			"####" A 0 A_Jump(256, "Refire");
+			"####" A 0 A_Refire();
+			Goto Ready;
 	}
 }
 
@@ -489,7 +522,7 @@ class WolfMachineGun : ClassicWeapon
 			"####" C 3 Bright;
 			"####" D 3 A_FireGun(3.0);
 			"####" E 3 A_ReFire();
-			"####" A 0 A_Jump(256, "Ready");
+			Goto Ready;
 	}
 }
 
@@ -523,9 +556,11 @@ class WolfChaingun : ClassicWeapon
 		Hold:
 			"####" C 3 Bright;
 			"####" D 3 Bright A_FireGun(4.0);
-			"####" "#" 0 A_FireGun(4.0);
-			"####" E 3 A_ReFire();
-			"####" A 0 A_Jump(256, "Ready");
+			"####" E 3 {
+				A_FireGun(4.0);
+				A_ReFire();
+			}
+			Goto Ready;
 	}
 }
 
@@ -693,7 +728,7 @@ class WolfFlameThrower : ClassicWeapon
 			WFLM B 2;
 		Hold:
 			WFLM CD 3 Bright A_FireProjectile("WolfFlame", 0, 1, 0, -8);
-			WFLM # 0 A_ReFire;
+			WFLM D 0 A_ReFire;
 			Goto Ready;
 	}
 }
@@ -774,8 +809,8 @@ class WolfRocketLauncher : ClassicWeapon
 		Fire:
 			WROC B 3;
 		Hold:
-			WROC B 2 Bright A_FireProjectile("WolfRocketPlayer", 0, 1, 0, -8);
-			WROC C 10;
+			WROC B 2;
+			WROC C 10 Bright A_FireProjectile("WolfRocketPlayer", 0, 1, 0, -8);
 			WROC D 25;
 			WROC D 5 A_ReFire;
 			Goto Ready;
