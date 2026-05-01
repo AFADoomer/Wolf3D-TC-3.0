@@ -27,7 +27,7 @@ class WolfPlayer : PlayerPawn
 	int deathtick, respawntick, idletick, paintick;
 	double attackerangle;
 	Vector3 lastpos;
-	state IdleState, RunningState, AttackState, PainState;
+	state IdleState, RunningState, AttackState;
 	Weapon curweap;
 
 	Default
@@ -227,9 +227,11 @@ class WolfPlayer : PlayerPawn
 	{
 		IdleState = GetSpriteState("Spawn", true);
 		RunningState = GetSpriteState("See", true);
+		AttackState = GetSpriteState("Attack", true);
 
 		if (!IdleState) { IdleState = SpawnState; }
 		if (!RunningState) { RunningState = SeeState; }
+		if (!AttackState) { AttackState = (player && player.ReadyWeapon && player.ReadyWeapon.bMeleeWeapon) ? MeleeState : MissileState; }
 	}
 
 	// Reverse MeleeState and MissileState here so that they make sense
@@ -278,6 +280,8 @@ class WolfPlayer : PlayerPawn
 		bool ret = Super.ReactToDamage(inflictor, source, damage, mod, flags, originaldamage);
 
 		if (!ret || health <= 0) { return ret; }
+
+		state PainState;
 
 		paintick = 8;
 
@@ -376,9 +380,6 @@ class WolfPlayer : PlayerPawn
 		let cwpn = ClassicWeapon(player.ReadyWeapon);
 		if (cwpn && cwpn.status == ClassicWeapon.Firing)
 		{
-			AttackState = GetSpriteState("Attack", true);
-			if (!AttackState) { AttackState = cwpn.bMeleeWeapon ? MeleeState : MissileState; }
-
 			let psp = player.GetPsprite(PSP_WEAPON);
 
 			state FireState = psp.caller.FindState("Fire");
