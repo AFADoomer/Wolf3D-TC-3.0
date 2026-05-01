@@ -104,6 +104,17 @@ class GameHandler : StaticEventHandler
 
 		e.Thing.TeleFogSourceType = "WolfTeleportOut";
 		e.Thing.TeleFogDestType = "WolfTeleportIn";
+
+		if (multiplayer && level.time > 5 && e.thing.player && e.thing.player.mo)
+		{ 
+			Actor.Spawn("WolfTeleportIn", e.thing.player.mo.pos);
+		}
+	}
+
+	override void PlayerDisconnected(PlayerEvent e)
+	{
+		PlayerInfo player = players[e.PlayerNumber];
+		if (player && player.mo) { Actor.Spawn("WolfTeleportOut", player.mo.pos); }
 	}
 
 	static void CheckGameFiles(GameHandler this)
