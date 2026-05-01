@@ -554,7 +554,7 @@ class ClassicStatusBar : WidgetStatusBar
 			}
 		}
 
-		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM);
+		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM, translation:int(CPlayer.mo.translation));
 
 		//Lives
 		if (lives < 0) { lives = LifeHandler.GetLives(CPlayer.mo); }
@@ -716,7 +716,7 @@ class ClassicStatusBar : WidgetStatusBar
 		}
 		else { texsize = (1.0, 1.0); }
 
-		DrawTexture(mugshot, (x, y), DI_ITEM_OFFSETS, scale:texsize);
+		DrawTexture(mugshot, (x, y), DI_ITEM_OFFSETS, scale:texsize, translation:int(CPlayer.mo.translation));
 	}
 
 	TextureID GetMugShot(int accuracy = 5, String face = "", int type = 0)
