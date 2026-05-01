@@ -161,7 +161,7 @@ OptionMenu "TCOptions"
 	StaticText "$M_COMPATABILITYOPTIONS", 1
 	Option "$M_OPTIONSFIREBALLS",			"g_fastfireballs", "YesNo"
 	Option "$M_OPTIONSPUSHWALLDIST",		"g_maxpushwallmove", "PushwallOptions"
-	Option "$M_OPTIONSDEAFGUARDDOORS",		"g_deafguarddoors", "YesNo"
+	Option "$M_OPTIONSDEAFGUARDDOORS",		"g_deafguarddoors", "DeafGuardTileOptions"
 	StaticText ""
 	SafeCommand	"$M_OPTIONSRESET",			"g_resetdefaults"
 	SafeCommand	"$M_OPTIONSSAVE",			"writeini"
@@ -482,6 +482,13 @@ OptionValue "PushwallOptions"
 {
 	2, "Default (2 tiles)"
 	3, "3 tiles"
+}
+
+OptionValue "DeafGuardTileOptions"
+{
+	0, "Off"
+	1, "When placed on one side"
+	2, "When placed on both sides"
 }
 
 OptionMenu "MapMenu"
