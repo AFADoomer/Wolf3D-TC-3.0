@@ -150,6 +150,9 @@ class ClassicWeapon : Weapon
 			}
 
 			SetYPosition();
+
+			let psp = owner.player.GetPSprite(PSP_WEAPON);
+			if (psp) { psp.translation = owner.translation; }
 		}
 	}
 
