@@ -1433,7 +1433,6 @@ class ListMenuItemWolfTextItem : ListMenuItem
 }
 
 // Same as above, but with alternate 'disabled' color scheme
-
 class ListMenuItemWolfTextItemDisabled : ListMenuItemWolfTextItem
 {
 	override void OnMenuCreated()
@@ -1446,5 +1445,16 @@ class ListMenuItemWolfTextItemDisabled : ListMenuItemWolfTextItem
 	override bool Selectable()
 	{
 		return false;
+	}
+}
+
+// Menu item that only shows in multiplayer games
+class ListMenuItemWolfMPTextItem : ListMenuItemWolfTextItem
+{
+	override void OnMenuCreated()
+	{
+		mEnabled = 	multiplayer;
+		
+		AllocateSpace();
 	}
 }

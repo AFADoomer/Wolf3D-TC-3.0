@@ -47,6 +47,7 @@ ListMenu "MainMenu"
 	TextItem "$M_NEW", "n", "PlayerclassMenu"
 	TextItem "$M_SOUND", "s", "SoundOptions"
 	TextItem "$M_OPTIONS", "c", "TCOptions"
+	WolfMPTextItem "$MNU_PLAYERSETUP", "p", "WolfNewPlayerMenu"
 	TextItem "$M_LOAD", "l", "LoadGameMenu"
 
 	WolfTextItemDisabled "$M_SAVE", "", "", 0
