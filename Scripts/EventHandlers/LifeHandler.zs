@@ -274,15 +274,20 @@ class LifeHandler : StaticEventHandler
 
 	override void WorldThingDied(WorldEvent e)
 	{
-		if (!e.thing.target || e.thing.target == e.thing) { return;} // Don't give points if you kill yourself
+		if (!e.thing.target || !e.thing.target.player || e.thing.target == e.thing) { return;} // Don't give points if you kill yourself or if the killer wasn't a player.
 
 		int amt;
 
 		if (e.thing is "ClassicBase") { amt = ClassicBase(e.thing).scoreamt; }
-		else if (e.thing is "PlayerPawn") { amt = 2500; }
+		else if (e.thing.player)
+		{
+			if (deathmatch) { amt = 2500; }
+			else { amt = -2500; }
+		}
 		else { amt = e.thing.SpawnHealth() * 10; }
 
-		e.thing.A_GiveToTarget("Score", amt);
+		if (amt > 0) { e.thing.A_GiveToTarget("Score", amt); }
+		else { e.thing.A_TakeFromTarget("Score", amt); }
 	}
 	
 	override void NetworkProcess(ConsoleEvent e)
