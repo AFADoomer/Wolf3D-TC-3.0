@@ -490,4 +490,14 @@ Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
 	SpawnForced ("BJFinaleRun", StartX, StartY, 32, 1, BitAngle);
 	Thing_Deactivate(1);
 	SetThingSpecial (1, 229, 0, 9, 1);
+
+	int ptid = ActivatorTID();
+	if (ptid == 0)
+	{
+		ptid = UniqueTID();
+		Thing_ChangeTID(0, ptid);
+	}
+
+	SetActivator(1);
+	SetPointer(AAPTR_MASTER, ptid);
 }

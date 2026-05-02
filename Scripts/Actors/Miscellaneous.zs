@@ -350,6 +350,13 @@ class BJFinaleRun : Actor
 			BJJU H -1;
 			Stop;
 	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+
+		if (master) { translation = master.translation; }
+	}
 }
 
 class Fire : Actor
