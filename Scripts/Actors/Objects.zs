@@ -59,7 +59,12 @@ class Score : StackableInventory
 		if (owner && amount >= lifeamount)
 		{
 			lifeamount += Default.lifeamount;
-			LifeHandler.GiveLife(owner);
+
+			if (deathmatch)
+			{
+				owner.GiveInventory("Life", 1);
+			}
+			else { LifeHandler.GiveLife(owner); }
 		}
 
 		Super.Tick();
