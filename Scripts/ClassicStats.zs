@@ -315,7 +315,7 @@ class ClassicStats : DoomStatusScreen
 					return;
 				}
 
-				if (style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
+				if (!multiplayer && (style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == ""))
 				{
 					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
@@ -334,7 +334,7 @@ class ClassicStats : DoomStatusScreen
 				if (multiplayer && !allbots) { sp_state++; }
 			}
 		}
-		else if (sp_state > 12) // Only happens in multiplayer
+		else if (sp_state == 14) // Press a key to advance in multiplayer
 		{
 			for (int i = 0; i < MAXPLAYERS; i++)
 			{
@@ -346,6 +346,16 @@ class ClassicStats : DoomStatusScreen
 				cnt_frags[i] = Plrs[i].fragcount;
 				cnt_deaths[i] = player_deaths[i];
 			}
+
+			if (
+				(players[consoleplayer].settings_controller && !ScreenJobRunner.IsPlayerReady(consoleplayer)) &&
+				(style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
+			)
+			{
+				EventHandler.SendNetworkEvent("openfinale", level.info.levelnum / 100);
+			}
+
+			sp_state++;
 		}
 		else if (sp_state & 1)
 		{

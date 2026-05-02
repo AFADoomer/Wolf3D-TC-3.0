@@ -444,6 +444,18 @@ class GameHandler : StaticEventHandler
 				level.sectors[s].SetLightLevel(e.args[0]);
 			}
 		}
+		else if (e.Name == "closemenus" && !e.IsManual)
+		{
+			EventHandler.SendInterfaceEvent(consoleplayer, "closemenus");
+		}
+		else if (e.Name == "openfinale" && !e.IsManual)
+		{
+			EventHandler.SendInterfaceEvent(consoleplayer, "openfinale", e.args[0]);
+		}
+		else if (e.Name == "setpage")
+		{
+			EventHandler.SendInterfaceEvent(consoleplayer, "setpage", e.args[0]);
+		}
 	}
 
 	override void InterfaceProcess(ConsoleEvent e)
@@ -457,6 +469,27 @@ class GameHandler : StaticEventHandler
 				Menu current = m;
 				m = m.mParentMenu;
 				current.Close();
+			}
+		}
+		else if (e.Name == "openfinale" && !e.IsManual)
+		{
+			if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
+			else { Menu.SetMenu("Episode" .. e.args[0] .. "End", -1); }
+		}
+		else if (e.Name == "setpage")
+		{
+			let m = Menu.GetCurrentMenu();
+
+			if (!m) { return; }
+
+			if (m is "SoDFinale")
+			{
+
+			}
+			else if (m is "TextScreenMenu")
+			{
+				TextScreenMenu(m).selected = e.args[0];
+				TextScreenMenu(m).mInfoTic = gametic;
 			}
 		}
 	}

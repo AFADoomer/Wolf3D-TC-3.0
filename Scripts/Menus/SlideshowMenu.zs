@@ -1242,7 +1242,6 @@ class TextScreenMenu : OptionMenu
 	int selected;
 	Vector2 padding;
 
-	int mScreen;
 	int mInfoTic;
 
 	Array<HelpInfo> PagesInfo;
@@ -1278,6 +1277,10 @@ class TextScreenMenu : OptionMenu
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
 	{
+		bool controlled = !!(self is "FinaleMenu" && multiplayer && !players[consoleplayer].settings_controller);
+		
+		if (controlled) { return false; }
+
 		if (mkey == MKEY_Back)
 		{
 			if (allowexit)
@@ -1288,7 +1291,10 @@ class TextScreenMenu : OptionMenu
 			{
 				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
 				{
-					if (multiplayer) { Menu.SetMenu("CloseMenu", -1); }
+					if (multiplayer)
+					{
+						EventHandler.SendNetworkEvent("closemenus");
+					}
 					else { Menu.SetMenu("HighScores", -1); }
 				}
 				else { Menu.SetMenu("MainMenu", -1); }
@@ -1311,12 +1317,22 @@ class TextScreenMenu : OptionMenu
 			selected = min(PagesInfo.Size() - 1, selected + 1);
 			mInfoTic = gametic;
 
+			if (multiplayer && self is "FinaleMenu")
+			{
+				EventHandler.SendNetworkEvent("setpage", selected);
+			}
+
 			return true;
 		}
 		else if (mkey == MKEY_Left)
 		{
 			selected = max(0, selected - 1);
 			mInfoTic = gametic;
+
+			if (multiplayer && self is "FinaleMenu")
+			{
+				EventHandler.SendNetworkEvent("setpage", selected);
+			}
 
 			return true;
 		}
