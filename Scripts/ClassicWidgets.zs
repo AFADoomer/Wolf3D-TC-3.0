@@ -511,7 +511,7 @@ class AmmoHealthWidget : Widget
 
 class LifeWidget : Widget
 {
-	TextureID lifetex;
+	TextureID lifetex, dmtex;
 
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
@@ -520,6 +520,7 @@ class LifeWidget : Widget
 		if (wdg)
 		{
 			wdg.lifetex = TexMan.CheckForTexture("I_LIFE", TexMan.Type_Any);
+			wdg.dmtex = TexMan.CheckForTexture("I_FRAG", TexMan.Type_Any);
 		}
 	}
 
@@ -529,8 +530,16 @@ class LifeWidget : Widget
 
 		Super.Draw();
 
-		DrawToHud.DrawTexture(lifetex, (pos.x + 12.5, pos.y - 2), alpha, flags:DrawToHUD.TEX_CENTERED);
-		DrawToHud.DrawText(String.Format("%3i", max(LifeHandler.GetLives(player.mo), 0)), (pos.x + 35, pos.y + 10), BigFont, alpha, shade:fontcolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_RIGHT);		
+		if (deathmatch)
+		{
+			DrawToHud.DrawTexture(dmtex, (pos.x + 12.5, pos.y - 2), alpha, flags:DrawToHUD.TEX_CENTERED);
+			DrawToHud.DrawText(String.Format("%3i", player.FragCount), (pos.x + 35, pos.y + 10), BigFont, alpha, shade:fontcolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_RIGHT);
+		}
+		else
+		{
+			DrawToHud.DrawTexture(lifetex, (pos.x + 12.5, pos.y - 2), alpha, flags:DrawToHUD.TEX_CENTERED);
+			DrawToHud.DrawText(String.Format("%3i", max(LifeHandler.GetLives(player.mo), 0)), (pos.x + 35, pos.y + 10), BigFont, alpha, shade:fontcolor, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_RIGHT);
+		}
 
 		return size;
 	}

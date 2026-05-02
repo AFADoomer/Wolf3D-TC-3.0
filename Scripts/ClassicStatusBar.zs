@@ -556,9 +556,17 @@ class ClassicStatusBar : WidgetStatusBar
 
 		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM, translation:int(CPlayer.mo.translation));
 
-		//Lives
-		if (lives < 0) { lives = LifeHandler.GetLives(CPlayer.mo); }
-		DrawString(ClassicFont, FormatNumber(max(lives, 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
+		if (deathmatch)
+		{
+			DrawImage("Frags", (117, 175), DI_SCREEN_CENTER_BOTTOM);
+			DrawString(ClassicFont, FormatNumber(CPlayer.FragCount), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
+		}
+		else
+		{
+			//Lives
+			if (lives < 0) { lives = LifeHandler.GetLives(CPlayer.mo); }
+			DrawString(ClassicFont, FormatNumber(max(lives, 0)), (116, 176), DI_TEXT_ALIGN_CENTER | DI_SCREEN_CENTER_BOTTOM);
+		}
 
 		//Level
 		int levelnum;
