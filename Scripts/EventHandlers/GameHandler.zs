@@ -105,9 +105,17 @@ class GameHandler : StaticEventHandler
 		e.Thing.TeleFogSourceType = "WolfTeleportOut";
 		e.Thing.TeleFogDestType = "WolfTeleportIn";
 
-		if (multiplayer && level.time > 5 && e.thing.player && e.thing.player.mo)
+		if (multiplayer && !deathmatch && level.time > 5 && e.thing.player)
 		{ 
 			Actor.Spawn("WolfTeleportIn", e.thing.player.mo.pos);
+		}
+	}
+
+	override void PlayerSpawned(PlayerEvent e)
+	{
+		if (e.PlayerNumber == consoleplayer)
+		{
+			EventHandler.SendInterfaceEvent(consoleplayer, "closemenus");
 		}
 	}
 
@@ -434,6 +442,21 @@ class GameHandler : StaticEventHandler
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				level.sectors[s].SetLightLevel(e.args[0]);
+			}
+		}
+	}
+
+	override void InterfaceProcess(ConsoleEvent e)
+	{
+		if (e.Name == "closemenus" && !e.IsManual)
+		{
+			let m = Menu.GetCurrentMenu();
+
+			while (m)
+			{
+				Menu current = m;
+				m = m.mParentMenu;
+				current.Close();
 			}
 		}
 	}

@@ -334,7 +334,7 @@ class ClassicStats : DoomStatusScreen
 				if (multiplayer && !allbots) { sp_state++; }
 			}
 		}
-		else if (sp_state > 12)
+		else if (sp_state > 12) // Only happens in multiplayer
 		{
 			for (int i = 0; i < MAXPLAYERS; i++)
 			{
