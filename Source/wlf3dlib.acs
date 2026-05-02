@@ -114,6 +114,9 @@ Script 4 (int type)
 		Terminate;
 	}
 
+	SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+	ScriptCall("Game", "LevelExitFreeze");
+
 	ACS_NamedExecuteWait("W_VictorySetup", 0, 0, 0, 64);
 		
 	Delay(1);

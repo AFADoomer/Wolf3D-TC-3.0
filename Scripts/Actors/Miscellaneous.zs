@@ -321,6 +321,7 @@ class BJFinaleRun : Actor
 		+FULLVOLDEATH
 		+INVULNERABLE
 		+NOTARGET
+		+NOTIMEFREEZE
 		+AMBUSH
 
 		Renderstyle "None";
