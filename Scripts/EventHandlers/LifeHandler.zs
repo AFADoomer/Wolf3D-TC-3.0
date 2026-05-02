@@ -230,6 +230,19 @@ class LifeHandler : StaticEventHandler
 
 	override void PlayerEntered(PlayerEvent e)
 	{
+		if (multiplayer && level.levelnum % 100 == 1 && !e.IsReturn)
+		{
+			lives[e.playernumber] = 3;
+			DoInventoryReset(e.playernumber);
+			
+			let score = players[e.playernumber].mo.FindInventory("Score");
+			if (score)
+			{
+				score.amount = 0;
+				Score(score).lifeamount = 40000;
+			}
+		}
+
 		if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
 		if (persistent)
 		{
