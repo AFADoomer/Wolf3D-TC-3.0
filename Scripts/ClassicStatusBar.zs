@@ -554,7 +554,9 @@ class ClassicStatusBar : WidgetStatusBar
 			}
 		}
 
-		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM, translation:int(CPlayer.mo.translation));
+		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM);
+
+		if (multiplayer) { DrawImage("Graphics/HUD/MugshotBack.png", (149, 196), DI_SCREEN_CENTER_BOTTOM, translation:int(CPlayer.mo.translation)); }
 
 		if (deathmatch)
 		{
@@ -724,7 +726,7 @@ class ClassicStatusBar : WidgetStatusBar
 		}
 		else { texsize = (1.0, 1.0); }
 
-		DrawTexture(mugshot, (x, y), DI_ITEM_OFFSETS, scale:texsize, translation:int(CPlayer.mo.translation));
+		DrawTexture(mugshot, (x, y), DI_ITEM_OFFSETS, scale:texsize);
 	}
 
 	TextureID GetMugShot(int accuracy = 5, String face = "", int type = 0)
