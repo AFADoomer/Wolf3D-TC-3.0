@@ -42,25 +42,45 @@ class WolfPostProcessor : LevelPostProcessor
 			if (darken && sec.lightlevel == 255) { sec.SetLightLevel(192); }
 		}
 
-		// Fix script activation lines that aren't marked properly if you used
-		// an older version of the map conversion tool
-		for (int l = 0; l < level.lines.Size(); l++)
+		if (!MapHandler.IsParsedMap())
 		{
-			let ln = level.lines[l];
-
-			if (
-				ln &&
-				(
-					(ln.special >= 80 && ln.special <= 85) ||
-					ln.special == 226
-				) &&
-				ln.args[0] > 0 &&
-				!(ln.flags & Line.ML_TWOSIDED) &&
-				(ln.activation & SPAC_Cross) && 
-				!(ln.activation & SPAC_Use)
-			)
+			for (int l = 0; l < level.lines.Size(); l++)
 			{
-				ln.activation |= SPAC_Use;
+				let ln = level.lines[l];
+				
+				// Fix script activation lines that aren't marked properly if you used
+				// an older version of the map conversion tool
+				if (
+					ln &&
+					(
+						(ln.special >= 80 && ln.special <= 85) ||
+						ln.special == 226
+					) &&
+					ln.args[0] > 0 &&
+					!(ln.flags & Line.ML_TWOSIDED) &&
+					(ln.activation & SPAC_Cross) && 
+					!(ln.activation & SPAC_Use)
+				)
+				{
+					ln.activation |= SPAC_Use;
+				}
+
+				// Translate older ACS script call "locks" to actual line locknumber
+				if (ln.special == 226 && (ln.args[0] == 1 || ln.args[0] == 2))
+				{
+					if (ln.args[4] == 5)
+					{
+						ln.activation &= ~SPAC_Use;
+						ln.activation &= ~SPAC_Cross;
+						ln.activation |= SPAC_MCross;
+					}
+					else if (ln.args[4])
+					{
+						ln.locknumber = 129 + ln.args[4];
+						console.printf("reset lock number %i to %i", ln.args[4], ln.locknumber);
+						ln.activation |= SPAC_Use;
+					}
+				}
 			}
 		}
 

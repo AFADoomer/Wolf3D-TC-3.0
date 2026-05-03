@@ -55,22 +55,23 @@ Script "InitializePlayer" (int playernum)
 
 		if (lives == -1 && justdied)
 		{
+			SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+
 			if (!multiplayer)
 			{
-				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 				ScriptCall("WolfMenu", "SetMenu", "HighScores");
 				ScriptCall("GameHandler", "ChangeMusic", "HITLWALTZ");
-				ScriptCall("ClassicStatusBar", "ClearFizzle");
 			}
 			else // In coop, running out of lives will give you back 3 lives, but wipe your score and clear your weapons/ammo!
 			{
 				ScriptCall("LifeHandler", "SetLives", 3);
 				ScriptCall("LifeHandler", "CleanInventory", true);
-				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 				TakeInventory("Score", 0x7FFFFFFF);
 				Delay(1);
-				SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			}
+			
+			SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+			ScriptCall("ClassicStatusBar", "ClearFizzle");
 		}
 		else
 		{
@@ -79,29 +80,19 @@ Script "InitializePlayer" (int playernum)
 				SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 				ScriptCall("ClassicStatusBar", "ReverseFizzle");
 
-				While (ScriptCall("ClassicStatusBar", "CheckFizzle")) { Delay(1); }
+				if (!multiplayer) { While (ScriptCall("ClassicStatusBar", "CheckFizzle")) { Delay(1); } }
 			}
-			else if (!GetCVar("g_nointro") && !multiplayer)
+			else if (!GetCVar("g_nointro"))
 			{
-				ScriptCall("WolfMenu", "SetMenu", "GetPsyched");
+				if (!multiplayer) { ScriptCall("WolfMenu", "SetMenu", "GetPsyched"); }
 				ScriptCall("ClassicStatusBar", "ClearFizzle");
 			}
 
-			ScriptCall("GameHandler", "ChangeMusic", "*");
+			if (!multiplayer) { ScriptCall("GameHandler", "ChangeMusic", "*"); }
 			SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 		}
 
 	}
-}
-
-Script 1 (int po, int dir, int lock)
-{
-	ACS_NamedExecuteAlways("W_DoSlidingDoor", 0, po, dir, lock);
-}
-
-Script 2 (int po, int dir)
-{
-	ACS_NamedExecuteAlways("W_DoSecretDoor", 0, po, dir);
 }
 
 Script 4 (int type)
@@ -160,6 +151,16 @@ Script 10 (int Type)
 	SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 }
 
+Script 1 (int po, int dir, int lock)
+{
+	ScriptCall("DoorHandler", "OpenDoor", po, dir);
+}
+
+Script 2 (int po, int dir)
+{
+	ScriptCall("DoorHandler", "OpenDoor", po, dir, -1, 4);
+}
+
 Script 15 (int WallID)
 {}
 
@@ -170,214 +171,6 @@ Script 27 (void)
 
 Script 601 (void)
 {}
-
-#define DOOR_CLOSED 0
-#define DOOR_FIRSTOPENING 1
-#define DOOR_OPENED 2
-#define DOOR_CLOSING 3
-#define DOOR_OPENING 4
-
-#define START_X 0
-#define START_Y 1
-#define END_X 2
-#define END_Y 3
-#define DOOR_STATE 4
-
-//Polyobject Doors
-Script "W_DoSlidingDoor" (int po, int dir, int lock)
-{
-	int index = po - 1;
-	bool bAccess = false;
-
-	if (polydoors[index][START_X] == 0 && polydoors[index][START_Y] == 0)
-	{
-		polydoors[index][START_X] = GetPolyObjX(po) >> 16;
-		polydoors[index][END_X] = polydoors[index][START_X];
-		polydoors[index][START_Y] = GetPolyObjY(po) >> 16;
-		polydoors[index][END_Y] = polydoors[index][START_Y];
-
-		if (dir == 1)
-		{
-			polydoors[index][END_Y] -= 64;
-		}
-		else if (dir == 2)
-		{
-			polydoors[index][END_X] += 64;
-		}
-	}
-
-	switch (lock)
-	{
-		case 1:
-			bAccess = CheckInventory("BlueKey") || CheckInventory("BlueKeyLost");
-			break;
-		case 2:
-			bAccess = CheckInventory("YellowKey") || CheckInventory("YellowKeyLost");
-			break;
-		case 5:
-			bAccess = !!(PlayerNumber() < 0 && polydoors[index][DOOR_STATE] == DOOR_CLOSED);
-			break;
-		default:
-			bAccess = true;
-			break;
-	}
-
-	if (!bAccess)
-	{
-		if (lock != 5) { ActivatorSound("*usefail", 127); }
-		Terminate;
-	}
-
-	int d = 0;
-
-	if (polydoors[index][DOOR_STATE] == DOOR_CLOSED || polydoors[index][DOOR_STATE] == DOOR_CLOSING)
-	{
-		if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/open2"); }
-		else { WolfDoorSound(po, "door/classic/open"); }
-
-		if (polydoors[index][DOOR_STATE] == DOOR_CLOSED) { polydoors[index][DOOR_STATE] = DOOR_FIRSTOPENING; }
-		else { polydoors[index][DOOR_STATE] = DOOR_OPENING; }
-
-		if (lock == 5 && PlayerNumber() < 0)
-		{
-			if (polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING || polydoors[index][DOOR_STATE] == DOOR_OPENING) { Thing_Deactivate(0); }
-			else { Terminate; }
-		}
-
-		PolyObj_Stop(po);
-		Polyobj_MoveTo(po, 16, polydoors[index][END_X], polydoors[index][END_Y]);
-
-		d = 0;
-		while (d <= 30 && (polydoors[index][DOOR_STATE] == DOOR_OPENING || polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING))
-		{
-			Delay(1);
-			d++;
-		}
-
-		if (
-			(polydoors[index][DOOR_STATE] == DOOR_OPENING || polydoors[index][DOOR_STATE] == DOOR_FIRSTOPENING) &&
-			GetPolyObjX(po) >> 16 == polydoors[index][END_X] && GetPolyObjY(po) >> 16 == polydoors[index][END_Y]
-		)
-		{
-			polydoors[index][DOOR_STATE] = DOOR_OPENED;
-		}
-		else
-		{ 
-			if (lock == 5 && PlayerNumber() < 0) { Thing_Activate(0); }
-			Terminate;
-		}
-
-		if (lock == 5 && PlayerNumber() < 0) { Thing_Activate(0); }
-
-		d = 0;
-		while (d <= 120 && polydoors[index][DOOR_STATE] == DOOR_OPENED)
-		{
-			Delay(1);
-			d++;
-		}
-
-		if (polydoors[index][DOOR_STATE] != DOOR_OPENED) { Terminate; }
-	}
-
-	if (polydoors[index][DOOR_STATE] == DOOR_OPENED || polydoors[index][DOOR_STATE] == DOOR_OPENING)
-	{
-		if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/close2"); }
-		else { WolfDoorSound(po, "door/classic/close"); }
-
-		polydoors[index][DOOR_STATE] = DOOR_CLOSING;
-
-		PolyObj_Stop(po);
-		Polyobj_MoveTo(po, 16, polydoors[index][START_X], polydoors[index][START_Y]);
-
-		d = 0;
-		while (d <= 30 && polydoors[index][DOOR_STATE] == DOOR_CLOSING)
-		{
-			Delay(1);
-			d++;
-		}
-
-		if (polydoors[index][DOOR_STATE] == DOOR_CLOSING && GetPolyObjX(po) >> 16 == polydoors[index][START_X] && GetPolyObjY(po) >> 16 == polydoors[index][START_Y])
-		{
-			polydoors[index][DOOR_STATE] = DOOR_CLOSED;
-		}
-	}
-}
-
-//Secret Doors
-Script "W_DoSecretDoor" (int po, int Angle)
-{
-	int intSpawnDist = 64.0;
-	int intMaxMove = GetCvar("g_maxpushwallmove");
-
-	If (intMaxMove == 0)
-	{
-		intMaxMove = 2;
-	}
-
-	If (!PushWalls[po] || (GetCvar("g_infinitepushwalls") == 1))
-	{
-		int PolyX = GetPolyObjX(po) + 24.0;
-		int PolyY = GetPolyObjY(po);
-
-		int originX, originY, destX, destY, moveX, moveY, intMoveDist;
-
-		moveX = 0;
-		moveY = 0;
-
-		Switch (Angle)
-		{
-			Case 0:
-				moveX = 1;
-			break;
-			Case 64:
-				moveY = 1;
-			break;
-			Case 128:
-				moveX = -1;
-			break;
-			Case 192:
-				moveY = -1;
-			break;
-		}
-
-		originX = PolyX + (32.0 * moveX);
-		originY = PolyY + (32.0 * moveY);
-
-		Spawn("Secret_Check", originX, originY, 0, 1900 + po, 0);
-
-		For (int i=1; i<=intMaxMove; i=i+1)
-		{
-			destX = originX + (moveX * 64.0 * i) - (32.0 * moveX);
-			destY = originY + (moveY * 64.0 * i) - (32.0 * moveY);
-
-			If (Spawn("Secret_Block", destX, destY, 0, 2000 + po, 0)) //Check if no object is in the way
-			{
-				If(CheckSight (2000 + po, 1900 + po, CSF_NOBLOCKALL)) //Check if destination is inside map
-					intMoveDist += 64.0;
-				Thing_Remove(2000 + po);
-			}
-		}
-		Thing_Remove(1900 + po);
-
-		If (intMoveDist > 0)
-		{
-			PushWalls[po] = 1;
-
-			PolyObj_Move(po, 8, Angle, intMoveDist/1.0);
-
-			if (GetCVar("g_sod") > 1) { WolfDoorSound(po, "door/secret2"); }
-			else { WolfDoorSound(po, "door/classic/secret"); }
-
-			PolyX = GetPolyObjX(po) + 24.0;
-			PolyY = GetPolyObjY(po);
-
-			If (SecretMarkers[WolfCoord(PolyX + (intMoveDist * moveX)) * 64 + WolfCoord(PolyY + (intMoveDist * moveY))] != 0)
-				PushWalls[po] = 0;
-		}
-
-		Thing_Remove(2000+po);
-	}
-}
 
 Script "W_PlayerDeath" DEATH //501
 {

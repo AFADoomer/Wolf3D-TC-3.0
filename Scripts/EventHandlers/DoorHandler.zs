@@ -47,6 +47,8 @@
 
 class DoorHandler: EventHandler
 {
+	bool pushed[256];
+
 	// This event handler adds Wolf3D-like behavior to sliding polyobject doors by
 	// intercepting linedef activations of Polyobj_SlideDoor action special and 
 	// using DoorEffector instead
@@ -429,50 +431,51 @@ class DoorEffector: PolyobjectEffector
 			for (m = 1; m <= g_maxpushwallmove; m++)
 			{
 				Vector2 spot = Polyobject.StartSpotPos + moveunit * m;
-				int t = MapHandler.TileAt(spot);
-				int a = MapHandler.ActorAt(spot);
 
 				bool blocked = false;
-				
-				if (a == 0x62) // Can't move through pushwalls - but make sure it's still there
+
+				if (MapHandler.IsParsedMap())
 				{
-					PolyobjectHandle ph = PolyobjectHandle.FindPolyobjAt(spot);
-					if (ph) { break; }
-				}
-				else if (t > 0 && t < 0x5A) { break; } // Can't move through solid walls
-				else if (t < 0x6A)
-				{
-					ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
-					PolyobjectHandle ph;
-					while (ph = PolyobjectHandle(it.Next()))
+					int t = MapHandler.TileAt(spot);
+					int a = MapHandler.ActorAt(spot);
+					
+					if (a == 0x7C) { break; } // Dead guard always blocks pushwalls
+					else if (a == 0x62) // Can't move through pushwalls - but make sure it's still there
 					{
-						if (ph.StartSpotPos == spot)
+						PolyobjectHandle ph = PolyobjectHandle.FindPolyobjAt(spot);
+						if (ph) { break; }
+					}
+					else if (t > 0 && t < 0x5A) { break; } // Can't move through solid walls
+					else if (t < 0x6A)
+					{
+						ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
+						PolyobjectHandle ph;
+						while (ph = PolyobjectHandle(it.Next()))
 						{
-							DoorEffector eff = DoorEffector(ph.FindEffector("DoorEffector"));
-							// Can't move through closed doors
-							if (!eff || eff.Status != DoorEffector.WDST_OPEN)
+							if (ph.StartSpotPos == spot)
 							{
-								blocked = true;
-								break;
+								DoorEffector eff = DoorEffector(ph.FindEffector("DoorEffector"));
+								// Can't move through closed doors
+								if (!eff || eff.Status != DoorEffector.WDST_OPEN)
+								{
+									blocked = true;
+									break;
+								}
 							}
 						}
 					}
+
+					if (blocked) { break; }
 				}
 
-				if (blocked) { break; }
+				BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, 0, 0, 32, false);
 				
-				if (a == 0x7C) { break; } // Dead guard always blocks pushwalls
-				else
+				while (it.Next())
 				{
-					BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, 0, 0, 32, false);
-					
-					while (it.Next())
+					if (it.thing.bSolid && abs(it.thing.pos.x - spot.x) <= 32 &&  abs(it.thing.pos.y - spot.y) <= 32)
 					{
-						if (it.thing.bSolid && abs(it.thing.pos.x - spot.x) <= 32 &&  abs(it.thing.pos.y - spot.y) <= 32)
-						{
-							blocked = true;
-							break;
-						}
+						blocked = true;
+						break;
 					}
 				}
 
@@ -490,6 +493,8 @@ class DoorEffector: PolyobjectEffector
 		}
 
 		Destination = Actor.AngleToVector(angle, distance) + Polyobject.StartSpotPos;
+		Destination.x = int(Destination.x);
+		Destination.y = int(Destination.y);
 
 		// We assume that any actor within a half-width radius is close enough to block the door
 		BlockRadius = distance / 2.0;
@@ -530,6 +535,8 @@ class DoorEffector: PolyobjectEffector
 					if (IsBlocked((dest, 0), 32, true))
 					{
 						Destination = PolyObject.StartSpotPos + moveunit * ceil(movedist / 64.0);
+						Destination.x = int(Destination.x);
+						Destination.y = int(Destination.y);
 						Level.ExecuteSpecial(Polyobj_Stop, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum);
 						Level.ExecuteSpecial(Polyobj_OR_MoveTo, Blocker, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, Speed, int(Destination.x), int(Destination.y));
 					}
@@ -557,20 +564,23 @@ class DoorEffector: PolyobjectEffector
 							}
 						}
 
-						let handler = MapHandler.Get();
-
-						if (handler)
+						if (MapHandler.IsParsedMap())
 						{
-							int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
-							for (int l = 0; l < PolyObject.Lines.Size(); l++)
-							{
-								let ln = PolyObject.lines[l];
+							let handler = MapHandler.Get();
 
-								for (int s = 0; s < 2; s++)
+							if (handler)
+							{
+								int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
+								for (int l = 0; l < PolyObject.Lines.Size(); l++)
 								{
-									if (ln.sidedef[s])
+									let ln = PolyObject.lines[l];
+
+									for (int s = 0; s < 2; s++)
 									{
-										ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
+										if (ln.sidedef[s])
+										{
+											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
+										}
 									}
 								}
 							}
@@ -578,40 +588,43 @@ class DoorEffector: PolyobjectEffector
 					}
 					else if (movedist == 64)
 					{
-						let handler = MapHandler.Get();
-
-						if (handler)
+						if (MapHandler.IsParsedMap())
 						{
-							Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.StartSpotPos);
-							int t = handler.curmap.TileAt(pos);
+							let handler = MapHandler.Get();
 
-							for (int l = 0; l < PolyObject.StartSector.Lines.Size(); l++)
+							if (handler)
 							{
-								let ln = PolyObject.StartSector.lines[l];
+								Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.StartSpotPos);
+								int t = handler.curmap.TileAt(pos);
 
-								if (ln.flags & Line.ML_TWOSIDED)
+								for (int l = 0; l < PolyObject.StartSector.Lines.Size(); l++)
 								{
-									if (t % 2 == 1 && ln.delta.x) { continue; }
-									if (t % 2 == 0 && ln.delta.y) { continue; }
-								}
+									let ln = PolyObject.StartSector.lines[l];
 
-								for (int s = 0; s < 2; s++)
-								{
-									if (ln.sidedef[s] && ln.sidedef[s].sector == PolyObject.StartSector)
+									if (ln.flags & Line.ML_TWOSIDED)
 									{
-										int tt = 0;
-										if (t % 2 == 1)
+										if (t % 2 == 1 && ln.delta.x) { continue; }
+										if (t % 2 == 0 && ln.delta.y) { continue; }
+									}
+
+									for (int s = 0; s < 2; s++)
+									{
+										if (ln.sidedef[s] && ln.sidedef[s].sector == PolyObject.StartSector)
 										{
-											if (ln.v1.p.x > PolyObject.StartSpotPos.x) { tt = handler.curmap.TileAt(pos + (1, 0)); }
-											else { tt = handler.curmap.TileAt(pos - (1, 0)); }
+											int tt = 0;
+											if (t % 2 == 1)
+											{
+												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { tt = handler.curmap.TileAt(pos + (1, 0)); }
+												else { tt = handler.curmap.TileAt(pos - (1, 0)); }
+											}
+											else
+											{
+												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { tt = handler.curmap.TileAt(pos - (0, 1)); }
+												else { tt = handler.curmap.TileAt(pos + (0, 1)); }
+											}
+											
+											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tt, (0, 0), ln));
 										}
-										else
-										{
-											if (ln.v1.p.y > PolyObject.StartSpotPos.y) { tt = handler.curmap.TileAt(pos - (0, 1)); }
-											else { tt = handler.curmap.TileAt(pos + (0, 1)); }
-										}
-										
-										ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tt, (0, 0), ln));
 									}
 								}
 							}
@@ -673,70 +686,74 @@ class DoorEffector: PolyobjectEffector
 
 			if (delay < 0) // Negative delay leaves the door open forever
 			{
-				PolyObject.StartSpotPos = Destination;
-
-				if (MapHandler.CheckPushwallAt(Destination)) // Unless there's another unused secret door spot at the destination
+				
+				if (MapHandler.IsParsedMap())
 				{
-					Destroy();
+					PolyObject.StartSpotPos = Destination;
 
-					if (g_highlightpushwalls)
+					if (MapHandler.CheckPushwallAt(Destination)) // Unless there's another unused secret door spot at the destination
 					{
-						for (int n = 0; n < PolyObject.Lines.Size(); n++)
-						{
-							let dln = PolyObject.Lines[n];
+						Destroy();
 
-							for (int s = 0; s < 2; s++)
+						if (g_highlightpushwalls)
+						{
+							for (int n = 0; n < PolyObject.Lines.Size(); n++)
 							{
-								if (dln.sidedef[s])
+								let dln = PolyObject.Lines[n];
+
+								for (int s = 0; s < 2; s++)
 								{
-									dln.sidedef[s].EnableAdditiveColor(side.mid, true);
+									if (dln.sidedef[s])
+									{
+										dln.sidedef[s].EnableAdditiveColor(side.mid, true);
+									}
 								}
 							}
 						}
 					}
-				}
 
-				PolyObject.StartSector = Level.PointInSector(Destination);
-				if (PolyObject.StartSector)
-				{
-					int t = MapHandler.TileAt(PolyObject.Origin);
-
-					if (t == 0x40 && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
+					PolyObject.StartSector = Level.PointInSector(Destination);
+					if (PolyObject.StartSector)
 					{
-						// Special handling for "disappearing pushwall"
-						Level.ExecuteSpecial(Polyobj_OR_MoveTo, null, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, 8192, -2176, 2176);
-					}
-					else
-					{
-						// Handling for secret door placed on top of regular door (door turns into a pushwall)
-						int gametype = MapHandler.GetGameType();
-						if (gametype < 0) { gametype = max(0, g_sod); }
+						int t = MapHandler.TileAt(PolyObject.Origin);
 
-						TextureID tex;
-
-						if (t >= 0x5A && t <= 0x65)
+						if (t == 0x40 && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
 						{
-							let handler = MapHandler.Get();
-
-							if (handler)
-							{
-								int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
-								tex = handler.curmap.GetTileTexture(t, (0, 0), null);
-							}
+							// Special handling for "disappearing pushwall"
+							Level.ExecuteSpecial(Polyobj_OR_MoveTo, null, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, 8192, -2176, 2176);
 						}
 						else
 						{
-							int game = gametype;
-							while (game > -1 && !tex.IsValid())
+							// Handling for secret door placed on top of regular door (door turns into a pushwall)
+							int gametype = MapHandler.GetGameType();
+							if (gametype < 0) { gametype = max(0, g_sod); }
+
+							TextureID tex;
+
+							if (t >= 0x5A && t <= 0x65)
 							{
-								String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, (t - 1) * 2);
-								tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
+								let handler = MapHandler.Get();
 
-								if (!tex.IsValid()) { game--; }
+								if (handler)
+								{
+									int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
+									tex = handler.curmap.GetTileTexture(t, (0, 0), null);
+								}
 							}
-						}
+							else
+							{
+								int game = gametype;
+								while (game > -1 && !tex.IsValid())
+								{
+									String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, (t - 1) * 2);
+									tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 
-						PolyObject.StartSector.SetTexture(Sector.floor, tex);
+									if (!tex.IsValid()) { game--; }
+								}
+							}
+
+							PolyObject.StartSector.SetTexture(Sector.floor, tex);
+						}
 					}
 				}
 			}

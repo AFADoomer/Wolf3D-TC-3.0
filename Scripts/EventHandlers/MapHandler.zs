@@ -468,6 +468,14 @@ class MapHandler : StaticEventHandler
 		return this.curmap;
 	}
 
+	static bool IsParsedMap()
+	{
+		MapHandler this = MapHandler.Get();
+		if (!this) { return false; }
+
+		return !!this.curmap;
+	}
+
 	static int GetGameType()
 	{
 		MapHandler this = MapHandler.Get();
