@@ -40,6 +40,7 @@ class WolfPlayer : PlayerPawn
 		PainChance 255;
 		Radius 16;
 		Speed 1;
+		Scale 0.93;
 
 		Player.DisplayName "BJ";
 		Player.Face "WLF";
