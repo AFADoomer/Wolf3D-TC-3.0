@@ -24,14 +24,13 @@ class PersistentLifeHandler : EventHandler
 {
 	int lives[MAXPLAYERS];
 	bool died[MAXPLAYERS];
-	bool fizzle[MAXPLAYERS];
 }
 
 class LifeHandler : StaticEventHandler
 {
 	int lives[MAXPLAYERS];
 	bool died[MAXPLAYERS];
-	bool fizzle[MAXPLAYERS];
+	
 	PersistentLifeHandler persistent;
 
 	ui static int GetLives(Actor p)
@@ -146,16 +145,6 @@ class LifeHandler : StaticEventHandler
 		this.SaveLifeData();
 	}
 
-	static bool CheckFizzle(int player = 0)
-	{
-		if (multiplayer) { return false; }
-
-		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
-		if (!this) { return false; }
-
-		return this.fizzle[player];
-	}
-
 	override void WorldLoaded(WorldEvent e)
 	{
 		int i = 0;
@@ -211,7 +200,6 @@ class LifeHandler : StaticEventHandler
 				{
 					persistent.lives[i] = lives[i];
 					persistent.died[i] = died[i];
-					persistent.fizzle[i] = fizzle[i];
 				}
 			}
 		}
@@ -302,24 +290,6 @@ class LifeHandler : StaticEventHandler
 					this.died[i] = false;
 				}
 
-				this.SaveLifeData();
-			}
-		}
-		else if (e.Name == "fizzle_on")
-		{
-			LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
-			if (this)
-			{
-				this.fizzle[e.Player] = true;
-				this.SaveLifeData();
-			}
-		}
-		else if (e.Name == "fizzle_off")
-		{
-			LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
-			if (this)
-			{
-				this.fizzle[e.Player] = false;
 				this.SaveLifeData();
 			}
 		}

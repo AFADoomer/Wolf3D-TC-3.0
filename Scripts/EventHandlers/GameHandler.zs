@@ -27,6 +27,7 @@ class GameHandler : StaticEventHandler
 	ui int uirandomcount;
 	Map<String, String> music;
 	Array< class<Key> > keys;
+	bool fizzle[MAXPLAYERS];
 
 	override void OnRegister()
 	{
@@ -456,6 +457,14 @@ class GameHandler : StaticEventHandler
 		{
 			EventHandler.SendInterfaceEvent(consoleplayer, "setpage", e.args[0]);
 		}
+		else if (e.Name == "fizzle_on")
+		{
+			fizzle[e.Player] = true;
+		}
+		else if (e.Name == "fizzle_off")
+		{
+			fizzle[e.Player] = false;
+		}
 	}
 
 	override void InterfaceProcess(ConsoleEvent e)
@@ -515,6 +524,18 @@ class GameHandler : StaticEventHandler
 	static Class<Actor> CheckForClass(String cls)
 	{
 		return (Class<Actor>)(cls);
+	}
+
+	static bool CheckFizzle(int player = -1)
+	{
+		if (multiplayer) { return false; }
+
+		if (player < 0) { player = consoleplayer; }
+
+		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+		if (!this) { return false; }
+
+		return this.fizzle[player];
 	}
 }
 

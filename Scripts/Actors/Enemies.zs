@@ -807,7 +807,7 @@ class ClassicNazi : ClassicBase
 			UNKN A 0;
 		Spawn.Stand:
 			"####" EEEEEE 4 {
-				if (bDormant || level.time < 2 || LifeHandler.CheckFizzle()) { return; }
+				if (bDormant || level.time < 2 || GameHandler.CheckFizzle()) { return; }
 				A_LookEx (0, 0, 0, 2048, 0, "See");
 			}
 			Loop;

@@ -379,11 +379,8 @@ class ClassicStatusBar : WidgetStatusBar
 
 		if (!pixel || !fizzleeffect)
 		{
-			EventHandler.SendNetworkEvent("fizzle_off");
 			return;
 		}
-
-		EventHandler.SendNetworkEvent("fizzle_on");
 
 		CVar fadestyle = CVar.GetCVar("g_fadestyle", CPlayer);
 		if ((fadestyle && fadestyle.GetInt()) || multiplayer) // Just use a normal fade
@@ -421,6 +418,8 @@ class ClassicStatusBar : WidgetStatusBar
 		{
 			fizzleindex = 0;
 			fizzleeffect = false;
+
+			EventHandler.SendNetworkEvent("fizzle_off");
 		}
 	}
 
@@ -436,6 +435,8 @@ class ClassicStatusBar : WidgetStatusBar
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || multiplayer) { return; }
 
 		if (!all && StatusBar.CPlayer.mo != caller) { return; }
+
+		if (!Off) { EventHandler.SendNetworkEvent("fizzle_on"); }
 
 		ClassicStatusBar(StatusBar).fizzleeffect = !Off;
 		ClassicStatusBar(StatusBar).fizzlecolor = clr;
@@ -455,6 +456,8 @@ class ClassicStatusBar : WidgetStatusBar
 
 	static void ClearFizzle(Actor caller)
 	{
+		EventHandler.SendNetworkEvent("fizzle_off");
+
 		DoFizzle(caller, 0, true);
 	}
 
