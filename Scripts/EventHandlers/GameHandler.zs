@@ -528,7 +528,7 @@ class GameHandler : StaticEventHandler
 
 	static bool CheckFizzle(int player = -1)
 	{
-		if (multiplayer) { return false; }
+		if (multiplayer) { return false; } // Always skip this check in multiplayer to avoid desynchs
 
 		if (player < 0) { player = consoleplayer; }
 
