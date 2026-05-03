@@ -77,7 +77,6 @@ class WolfPostProcessor : LevelPostProcessor
 					else if (ln.args[4])
 					{
 						ln.locknumber = 129 + ln.args[4];
-						console.printf("reset lock number %i to %i", ln.args[4], ln.locknumber);
 						ln.activation |= SPAC_Use;
 					}
 				}
