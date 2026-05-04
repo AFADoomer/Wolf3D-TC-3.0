@@ -88,7 +88,7 @@ class ClassicStats : DoomStatusScreen
 
 		if (!deathmatch) { dofrags = !!dofrags; }
 
-		cnt_pause = Thinker.TICRATE;
+		cnt_pause = GameTicRate;
 
 		if (gamestate == GS_FINALE) { GameHandler.ChangeMusic("URAHERO"); }
 
@@ -368,7 +368,7 @@ class ClassicStats : DoomStatusScreen
 			if (!--cnt_pause)
 			{
 				sp_state++;
-				cnt_pause = Thinker.TICRATE;
+				cnt_pause = GameTicRate;
 			}
 		}
 	}
@@ -455,7 +455,7 @@ class ClassicStats : DoomStatusScreen
 				if (info.partime > 0)
 				{ 
 					Write(24, 12, "$STATS_PAR", right);
-					WriteTime(26, 12, info.partime, true);
+					WriteTime(26, 12, info.partime * GameTicRate, true);
 				}
 
 				Write(29, 14, "$STATS_KILLRATIO", right);
@@ -552,7 +552,7 @@ class ClassicStats : DoomStatusScreen
 	{
 		if (t < 0) { return; }
 
-		if (altmethod) { t /= Thinker.TICRATE; }
+		if (altmethod) { t /= GameTicRate; }
 		else { t = Thinker.Tics2Seconds(t); }
 
 		int minutes = min(t / 60, 99);
@@ -678,7 +678,7 @@ class ClassicStats : DoomStatusScreen
 		}
 
 		if (Game.IsSoD() && info.levelnum % 100 == 21) { fadealpha = 0.0; }
-		else if (gametic > 35)
+		else if (gametic > GameTicRate)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}

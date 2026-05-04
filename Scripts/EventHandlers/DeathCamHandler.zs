@@ -46,7 +46,7 @@ class DeathCamHandler : EventHandler
 
 	override void RenderOverlay( RenderEvent e )
 	{
-		if (deathcam && draw && deathcamtex.IsValid() && size != (0, 0) && tick % 47 <= 35)
+		if (deathcam && draw && deathcamtex.IsValid() && size != (0, 0) && tick % 47 <= GameTicRate)
 		{
 			screen.DrawTexture(deathcamtex, true, 160 - size.x / 2, 4, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0);
 		}

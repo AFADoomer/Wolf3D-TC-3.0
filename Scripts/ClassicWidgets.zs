@@ -697,7 +697,7 @@ class InventoryWidget : Widget
 
 		if (player.mo.InvSel)
 		{
-			double mod = movetick / 35.0;
+			double mod = double(movetick) / GameTicRate;
 			double dirmod = 0;
 
 			double leftoffset = iconsize * smallscale / 2;
@@ -798,7 +798,7 @@ class InventoryWidget : Widget
 		}
 		else { movetick = min(35, movetick + movespeed); }
 
-		if (movetick == 35) { movedir = 0; }
+		if (movetick == GameTicRate) { movedir = 0; }
 
 		selectortick = max(0, selectortick - 2);
 
@@ -1284,7 +1284,7 @@ class Log ui
 				{
 					m = New("Log");
 					w.messages.Push(m);
-					m.tickertimeout = 35;
+					m.tickertimeout = GameTicRate;
 				}
 				else
 				{
@@ -1292,7 +1292,7 @@ class Log ui
 					if (!m.tickertimeout)
 					{
 						m.ticker = 6;
-						m.tickertimeout = 35;
+						m.tickertimeout = GameTicRate;
 					}
 				}
 
@@ -1332,7 +1332,7 @@ class Log ui
 					{
 						m = New("Log");
 						w.messages.Push(m);
-						m.tickertimeout = 35;
+						m.tickertimeout = GameTicRate;
 					}
 					else
 					{
@@ -1340,7 +1340,7 @@ class Log ui
 						if (!m.tickertimeout)
 						{
 							m.ticker = 6;
-							m.tickertimeout = 35;
+							m.tickertimeout = GameTicRate;
 						}
 					}
 
@@ -1432,7 +1432,7 @@ class LogWidget : Widget
 			{
 				if (!ZScriptTools.StripControlCodes(m.text).length()) { messages.Delete(i); continue; }
 
-				double holdtime = 35 * con_notifytime;
+				double holdtime = GameTicRate * con_notifytime;
 				double intime = 6.0;
 				double outtime = 6.0;
 
@@ -1570,7 +1570,7 @@ class SingleLogWidget : LogWidget
 			{
 				if (!ZScriptTools.StripControlCodes(m.text).length()) { messages.Delete(i); continue; }
 
-				double holdtime = 35 * con_notifytime;
+				double holdtime = GameTicRate * con_notifytime;
 				double intime = 6.0;
 				double outtime = 6.0;
 

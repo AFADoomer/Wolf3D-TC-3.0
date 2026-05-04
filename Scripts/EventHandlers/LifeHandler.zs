@@ -153,7 +153,7 @@ class LifeHandler : StaticEventHandler
 		{
 			if (!persistent) { persistent = PersistentLifeHandler(EventHandler.Find("PersistentLifeHandler")); }
 
-			if (level.time > 35) // If loading a save that (likely) wasn't an autosave, check for saved stats and copy them over if found
+			if (level.time > GameTicRate) // If loading a save that (likely) wasn't an autosave, check for saved stats and copy them over if found
 			{
 				if (persistent)
 				{

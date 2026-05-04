@@ -379,7 +379,7 @@ class BJFinaleRun : Actor
 				}
 			}
 		}
-		else if (age == 35) { SetStateLabel("Run"); }
+		else if (age == GameTicRate) { SetStateLabel("Run"); }
 		else if (age == 270) { Level.ExitLevel(0, false); }
 	}
 

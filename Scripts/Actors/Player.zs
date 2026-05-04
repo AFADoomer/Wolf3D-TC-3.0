@@ -214,7 +214,7 @@ class WolfPlayer : PlayerPawn
 
 			if (pos == lastpos)
 			{
-				if (idletick++ > 30 * 35 && ClassicStatusBar(StatusBar))
+				if (idletick++ > 30 * GameTicRate && ClassicStatusBar(StatusBar))
 				{
 					ClassicStatusBar(StatusBar).DoIdleFace(self);
 					idletick = 0;
@@ -403,7 +403,7 @@ class WolfPlayer : PlayerPawn
 		)
 		{ respawn = true; }
 
-		if (respawntick == 35)
+		if (respawntick == GameTicRate)
 		{
 			EventHandler.SendInterfaceEvent(consoleplayer, "fizzle", 0xFF0000, 0, 1920);
 		}

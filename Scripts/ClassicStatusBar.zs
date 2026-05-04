@@ -478,7 +478,7 @@ class ClassicStatusBar : WidgetStatusBar
 		if (players[consoleplayer].mo != caller) { return; }
 
 		ClassicStatusBar(StatusBar).staticmugshot = 2;
-		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + 35;
+		ClassicStatusBar(StatusBar).staticmugshottimer = gametic + GameTicRate;
 	}
 
 	play static void DoScream(Actor caller)

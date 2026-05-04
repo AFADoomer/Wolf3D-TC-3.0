@@ -759,7 +759,7 @@ class GameMenu : IconListMenu
 	{
 		Super.Ticker();
 
-		if (gametic <= 35) { fadealpha = 1.0; }
+		if (gametic <= GameTicRate) { fadealpha = 1.0; }
 	}
 
 	override int DisabledColor()
@@ -973,7 +973,7 @@ class ExtendedLoadMenu : LoadMenu
 	{
 		Super.Ticker();
 
-		if (gametic > 35)
+		if (gametic > GameTicRate)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}
@@ -1096,7 +1096,7 @@ class ExtendedSaveMenu : SaveMenu
 	{
 		Super.Ticker();
 
-		if (gametic > 35)
+		if (gametic > GameTicRate)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}
@@ -1180,7 +1180,7 @@ class ExtendedPlayerMenu : PlayerMenu
 	{
 		Super.Ticker();
 
-		if (gametic > 35)
+		if (gametic > GameTicRate)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}

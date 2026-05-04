@@ -420,7 +420,7 @@ class SoDEnd : OldHelpMenu
 					initial = false;
 					fadetarget = gametic + fadetime;
 					GameHandler.ChangeMusic("XTHEEND");
-					advancetime = gametic + 35 * 2;
+					advancetime = gametic + GameTicRate * 2;
 					break;
 				case 1:
 				case 2:
@@ -431,7 +431,7 @@ class SoDEnd : OldHelpMenu
 				case 3:
 					GameHandler.ChangeMusic("XTHEEND");
 					page = nextpage;
-					advancetime = gametic + 35 * 3;
+					advancetime = gametic + GameTicRate * 3;
 					break;
 				case 4:
 					GameHandler.ChangeMusic("URAHERO");
@@ -442,11 +442,11 @@ class SoDEnd : OldHelpMenu
 				case 5:
 					GameHandler.ChangeMusic("URAHERO");
 					fadetarget = gametic + fadetime;
-					advancetime = gametic + 35 * 10;
+					advancetime = gametic + GameTicRate * 10;
 					break;
 				case 6:
 					GameHandler.ChangeMusic("URAHERO");
-					advancetime = gametic + 35 * 10;
+					advancetime = gametic + GameTicRate * 10;
 					break;
 				case 7:
 				case 8:
@@ -630,7 +630,7 @@ class IntroSlideshow : WolfMenu
 					break;
 				case 2: // Press a key
 					current = startup2;
-					advancetime = (Game.IsSoD() ? gametic + 35 * 2 : 0);
+					advancetime = (Game.IsSoD() ? gametic + GameTicRate * 2 : 0);
 					break;
 				case 3: // Working...
 					advancetime = 5;
@@ -639,35 +639,35 @@ class IntroSlideshow : WolfMenu
 					GameHandler.ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
 					next = warning;
 					fadetarget = gametic + fadetime;
-					advancetime = gametic + 35 * 7;
+					advancetime = gametic + GameTicRate * 7;
 					break;
 				case 5: // Title picture
 					next = title;
 					fadetarget = gametic + fadetime;
-					advancetime = gametic + 35 * 15;
+					advancetime = gametic + GameTicRate * 15;
 					break;
 				case 6: // Credits
 					next = credits;
 					fadetarget = gametic + fadetime;
-					advancetime = gametic + 35 * 10;
+					advancetime = gametic + GameTicRate * 10;
 					break;
 				default: // Swap between title and credits after the initial run-through
 					fadetarget = gametic + fadetime;
 					if (current == title)
 					{
 						next = credits;
-						advancetime = gametic + 35 * 10;
+						advancetime = gametic + GameTicRate * 10;
 					}
 					else
 					{
 						next = title;
-						advancetime = gametic + 35 * 15;
+						advancetime = gametic + GameTicRate * 15;
 					}
 					break;
 			}
 		}
 
-		if (gametic > 35)
+		if (gametic > GameTicRate)
 		{
 			fadealpha = 1.0 - abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}
@@ -735,7 +735,7 @@ class IntroSlideShowLoop : IntroSlideShow
 
 		curscreen = 6;
 		current = title;
-		advancetime = gametic + 35 * 10;
+		advancetime = gametic + GameTicRate * 10;
 
 		GameHandler.ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
 	}
@@ -816,24 +816,24 @@ class LoadScreen : IntroSlideShow
 			switch (curscreen)
 			{
 				case 0: // Blank black screen
-					advancetime = gametic + 35;
+					advancetime = gametic + GameTicRate;
 					fadetarget = gametic + fadetime;
 					break;
 				case 1: // Background only
 					GameHandler.ChangeMusic("INTRO", 0, false);
-					advancetime = gametic + 35 * 4;
+					advancetime = gametic + GameTicRate * 4;
 					fadetarget = -1;
 					break;
 				case 2: // Game Title
-					advancetime = gametic + 35 * 5;
+					advancetime = gametic + GameTicRate * 5;
 					fadetarget = -1;
 					break;
 				case 3: // Powered by GZDoom
-					advancetime = gametic + 35 * 6;
+					advancetime = gametic + GameTicRate * 6;
 					fadetarget = gametic + fadetime;
 					break;
 				case 4: // 30 Years
-					advancetime = gametic + 35;
+					advancetime = gametic + GameTicRate;
 					fadetarget = gametic + fadetime;
 					break;
 				case 5:

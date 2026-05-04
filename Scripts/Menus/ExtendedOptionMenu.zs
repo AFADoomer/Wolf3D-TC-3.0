@@ -450,7 +450,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		Super.Ticker();
 
-		if (gametic > 35)
+		if (gametic > GameTicRate)
 		{
 			alpha = abs(clamp(double(fadetarget - gametic) / fadetime, -1.0, 1.0));
 		}

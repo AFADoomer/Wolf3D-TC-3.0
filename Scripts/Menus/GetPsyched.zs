@@ -203,7 +203,7 @@ class GetPsyched : WolfMenu
 			case 1:
 				ticcount++;
 				step = min(step + 12, 210);
-				if (ticcount == 35) { ticcount = 0; curstate++; }
+				if (ticcount == GameTicRate) { ticcount = 0; curstate++; }
 				break;
 			case 2:
 				ticcount++;

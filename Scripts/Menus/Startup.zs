@@ -1188,8 +1188,8 @@ class Notice : WolfMenu
 		bgalpha = 1.0;
 
 		fadespeed = 1.0;
-		delay = 35;
-		displaytime = 350;
+		delay = GameTicRate;
+		displaytime = GameTicRate * 10;
 
 		GenericMenu.Init(parent);
 
@@ -1245,14 +1245,14 @@ class Notice : WolfMenu
 
 			if (finished)
 			{
-				alpha = max(0.0, alpha - fadespeed / 35); // Fade out
-				if (alpha == 0.0) { bgalpha -= fadespeed / 35; }
+				alpha = max(0.0, alpha - fadespeed / GameTicRate); // Fade out
+				if (alpha == 0.0) { bgalpha -= fadespeed / GameTicRate; }
 				if (bgalpha < 1.0) { NextScreen(); }
 				else if (bgalpha <= 0) { Close(); }
 			}
 			else if (alpha < 1.0)
 			{
-				alpha += fadespeed / 35; // Fade in
+				alpha += fadespeed / GameTicRate; // Fade in
 			}
 		}
 
