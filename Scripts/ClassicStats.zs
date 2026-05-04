@@ -336,26 +336,32 @@ class ClassicStats : DoomStatusScreen
 		}
 		else if (sp_state == 14) // Press a key to advance in multiplayer
 		{
-			for (int i = 0; i < MAXPLAYERS; i++)
+			// if (
+			// 	(players[consoleplayer].settings_controller && !ScreenJobRunner.IsPlayerReady(consoleplayer)) &&
+			// 	(style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
+			// )
+			// {
+			// 	EventHandler.SendNetworkEvent("openfinale", level.info.levelnum / 100);
+			// }
+
+			if (ScreenJobRunner.IsPlayerReady(consoleplayer))
 			{
-				if (!playeringame[i]) { continue; }
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i]) { continue; }
 
-				cnt_kills[i] = Plrs[i].skills;
-				cnt_items[i] = Plrs[i].sitems;
-				cnt_secret[i] = Plrs[i].ssecret;
-				cnt_frags[i] = Plrs[i].fragcount;
-				cnt_deaths[i] = player_deaths[i];
+					cnt_kills[i] = Plrs[i].skills;
+					cnt_items[i] = Plrs[i].sitems;
+					cnt_secret[i] = Plrs[i].ssecret;
+					cnt_frags[i] = Plrs[i].fragcount;
+					cnt_deaths[i] = player_deaths[i];
+				}
+
+				if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
+				else { Menu.SetMenu("Episode" .. level.info.levelnum / 100 .. "End", -1); }
+
+				sp_state++;
 			}
-
-			if (
-				(players[consoleplayer].settings_controller && !ScreenJobRunner.IsPlayerReady(consoleplayer)) &&
-				(style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == "")
-			)
-			{
-				EventHandler.SendNetworkEvent("openfinale", level.info.levelnum / 100);
-			}
-
-			sp_state++;
 		}
 		else if (sp_state & 1)
 		{

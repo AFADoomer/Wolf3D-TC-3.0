@@ -1241,6 +1241,7 @@ class TextScreenMenu : OptionMenu
 	bool allowinput;
 	int selected;
 	Vector2 padding;
+	int timer;
 
 	int mInfoTic;
 
@@ -1273,13 +1274,15 @@ class TextScreenMenu : OptionMenu
 		if (border) { screen.DrawTexture(border, false, 0, 0, DTA_320x200, true); }
 
 		screen.DrawText(SmallFont, Font.FindFontColor("WolfDarkGold"), 213, 183, String.Format("pg %i of %i", selected + 1, PagesInfo.Size()), DTA_320x200, true);
+
+		if (netgame) { DrawReadiness(); }
 	}
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
 	{
-		bool controlled = !!(self is "FinaleMenu" && multiplayer && !players[consoleplayer].settings_controller);
+		// bool controlled = !!(self is "FinaleMenu" && multiplayer && !players[consoleplayer].settings_controller);
 		
-		if (controlled) { return false; }
+		// if (controlled) { return false; }
 
 		if (mkey == MKEY_Back)
 		{
@@ -1293,7 +1296,8 @@ class TextScreenMenu : OptionMenu
 				{
 					if (multiplayer)
 					{
-						EventHandler.SendNetworkEvent("closemenus");
+						Close();
+						// EventHandler.SendNetworkEvent("closemenus");
 					}
 					else { Menu.SetMenu("HighScores", -1); }
 				}
@@ -1317,10 +1321,10 @@ class TextScreenMenu : OptionMenu
 			selected = min(PagesInfo.Size() - 1, selected + 1);
 			mInfoTic = gametic;
 
-			if (multiplayer && self is "FinaleMenu")
-			{
-				EventHandler.SendNetworkEvent("setpage", selected);
-			}
+			// if (multiplayer && self is "FinaleMenu")
+			// {
+			// 	EventHandler.SendNetworkEvent("setpage", selected);
+			// }
 
 			return true;
 		}
@@ -1329,10 +1333,10 @@ class TextScreenMenu : OptionMenu
 			selected = max(0, selected - 1);
 			mInfoTic = gametic;
 
-			if (multiplayer && self is "FinaleMenu")
-			{
-				EventHandler.SendNetworkEvent("setpage", selected);
-			}
+			// if (multiplayer && self is "FinaleMenu")
+			// {
+			// 	EventHandler.SendNetworkEvent("setpage", selected);
+			// }
 
 			return true;
 		}
@@ -1428,6 +1432,52 @@ class TextScreenMenu : OptionMenu
 		}
 
 		return Super.OnUIEvent(ev);
+	}
+
+	virtual void DrawReadiness()
+	{
+		if (!netgame) { return; }
+
+		if (net_cutscenereadytype == 0)
+		{
+			int totalClients, readyClients;
+			for (int i; i < MAXPLAYERS; ++i)
+			{
+				if (!playerInGame[i] || players[i].Bot)
+					continue;
+
+				++totalClients;
+				readyClients += ScreenJobRunner.IsPlayerReady(i);
+			}
+
+			if (totalClients > 1)
+			{
+				TextureID readyico = TexMan.CheckForTexture("READYICO", TexMan.Type_MiscPatch);
+				Vector2 readysize = TexMan.GetScaledSize(readyico);
+
+				if (ScreenJobRunner.IsPlayerReady(consoleplayer))
+					Screen.DrawTexture(readyico, true, 0, 0, DTA_CleanNoMove, true, DTA_TopLeft, true);
+
+				Screen.DrawText(ConFont, Font.CR_UNTRANSLATED, (int(readysize.X) + 4) * CleanXFac, CleanYFac, String.Format("%d/%d", readyClients, totalClients), DTA_CleanNoMove, true);
+				int startTimer = ScreenJobRunner.GetReadyTimer();
+				if (startTimer > 0)
+				{
+					int col = Font.CR_UNTRANSLATED;
+					if (startTimer <= GameTicRate * 5)
+						col = Font.CR_RED;
+
+					Screen.DrawText(ConFont, col, 0, int(readysize.Y) * CleanYFac + CleanYFac, SystemTime.Format("%M:%S", int(ceil(double(startTimer) / GameTicRate))), DTA_CleanNoMove, true);
+				}
+			}
+		}
+
+		if (net_cutscenereadytype != 2 || consoleplayer == Net_Arbitrator)
+		{
+			string contTxt = StringTable.Localize("TXT_NETGAMELEVELSTART", false);
+			int xOfs = (Screen.GetWidth() - ConFont.StringWidth(contTxt) * CleanXFac) / 2;
+			int yOfs = Screen.GetHeight() - ConFont.GetHeight() * CleanYFac - CleanYFac;
+			Screen.DrawText(ConFont, Font.CR_GREEN, xOfs, yOfs, contTxt, DTA_CleanNoMove, true);
+		}
 	}
 }
 
