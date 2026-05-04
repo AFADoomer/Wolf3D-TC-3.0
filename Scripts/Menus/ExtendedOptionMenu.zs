@@ -341,6 +341,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		else if (ev.type == UIEvent.Type_Char)
 		{
 			int key = String.CharLower(ev.keyChar);
+			if (key == 32) { return false; }
 
 			int itemsNumber = mDesc.mItems.Size();
 			int direction = ev.IsAlt ? -1 : 1;
@@ -358,7 +359,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 				}
 			}
 			if (mDesc.mSelectedItem != startedat &&
-				(mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos || mDesc.mSelectedItem > source.VisBottom)
+				(mDesc.mSelectedItem <= mDesc.mScrollTop + mDesc.mScrollPos || mDesc.mSelectedItem > VisBottom)
 			)
 			{
 				int pagesize = source.VisBottom - mDesc.mScrollPos - mDesc.mScrollTop;
