@@ -311,6 +311,8 @@ class DeathCam : Actor
 // BJ victory run
 class BJFinaleRun : Actor
 {
+	Actor camera;
+
 	Default
 	{
 		MONSTER;
@@ -324,7 +326,6 @@ class BJFinaleRun : Actor
 		+NOTIMEFREEZE
 		+AMBUSH
 
-		Renderstyle "None";
 		Height 0;
 		Radius 0;
 		Speed 1.25;
@@ -335,15 +336,12 @@ class BJFinaleRun : Actor
 	States
 	{
 		Spawn:
-		Melee:
-		Missile:
-			BJJU AAABBBCCCDDD 2 A_Look;
+			TNT1 A 2;
 			Loop;
-		See: 
+		Run: 
 			BJJU ABCD 6 { Thrust(speed, angle); }
 			BJJU ABCD 6 { Thrust(speed, angle); }
 			BJJU ABCD 6 { Thrust(speed, angle); }
-		Death:
 		Jump:
 			BJJU EF 7;
 			BJJU G 7 A_Scream;
@@ -351,11 +349,97 @@ class BJFinaleRun : Actor
 			Stop;
 	}
 
-	override void PostBeginPlay()
+	override void Tick()
 	{
-		Super.PostBeginPlay();
+		Super.Tick();
 
-		if (master) { translation = master.translation; }
+		int age = GetAge();
+
+		if (age == 0)
+		{
+			camera = Spawn("MovingCamera", pos + (RotateVector((-96, 0), angle), 32.0));
+			if (camera)
+			{
+				camera.angle = angle;
+				camera.args[0] = 2;
+				camera.args[2] = 3;
+			}
+		}
+		else if (age == 1)
+		{
+			if (camera)
+			{
+				camera.Activate(self);
+
+				for (int i = 0; i < MAXPLAYERS; i++)
+				{
+					if (!playeringame[i] || players[i].bot) { continue; }
+		
+					players[i].camera = camera;
+				}
+			}
+		}
+		else if (age == 35) { SetStateLabel("Run"); }
+		else if (age == 270) { Level.ExitLevel(0, false); }
+	}
+
+	static void DoRun(Actor caller, int angle = 90)
+	{
+		if (!caller) { return; }
+
+		Vector3 pos = caller.pos;
+		caller.bInvisible = true;
+
+		Actor p;
+		p = Spawn("InterpolationPoint", pos + (RotateVector((-32, 0), angle), 32.0));
+		if (p)
+		{
+			p.angle = angle;
+			p.ChangeTID(2);
+			p.args[1] = 4;
+			p.args[3] = 3;
+		}
+
+		p = Spawn("InterpolationPoint", pos + (RotateVector((32, 0), angle), 32.0));
+		if (p)
+		{
+			p.angle = angle;
+			p.ChangeTID(3);
+			p.args[1] = 2;
+			p.args[3] = 4;
+		}
+
+		p = Spawn("InterpolationPoint", pos + (RotateVector((64, 0), angle), 32.0));
+		if (p)
+		{
+			p.angle = angle;
+			p.ChangeTID(4);
+			p.args[1] = 10;
+			p.args[3] = 5;
+		}
+
+		p = Spawn("InterpolationPoint", pos + (RotateVector((128, 0), angle), 32.0));
+		if (p)
+		{
+			p.angle = angle + 180;
+			p.ChangeTID(5);
+			p.args[1] = 6;
+			p.args[3] = 6;
+		}
+
+		p = Spawn("InterpolationPoint", pos + (RotateVector((232, 0), angle), 32.0));
+		if (p)
+		{
+			p.angle = angle + 180;
+			p.ChangeTID(6);
+		}
+
+		p = BJFinaleRun(Spawn("BJFinaleRun", pos));
+		if (p)
+		{
+			p.angle = angle;
+			p.translation = caller.translation;
+		}
 	}
 }
 

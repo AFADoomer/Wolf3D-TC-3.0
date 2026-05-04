@@ -95,23 +95,11 @@ Script 4 (int type)
 	SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 	ScriptCall("Game", "LevelExitFreeze");
 
-	ACS_NamedExecuteWait("W_VictorySetup", 0, 0, 0, 64);
-		
-	Delay(1);
+	ScriptCall("BJFinaleRun", "DoRun");
 
-	SetActorProperty(ActivatorTID(), APROP_RenderStyle, 0);
-	Thing_Activate (2);
-	ChangeCamera(2,1,0);
-	Delay(35);
-	SetActorProperty(1, APROP_RenderStyle, 1);
-	Thing_Activate (1);
-	Delay(200);
+	Delay(235);
 
 	FadeToBlack(5.0, 0.5, 0.0, 0);
-
-	Delay(18);
-
-	Exit_Normal(0);
 }
 
 Script 10 (int Type)
@@ -140,6 +128,9 @@ Script 10 (int Type)
 
 Script 1 (int po, int dir, int lock)
 {
+	if (dir == 2) { dir = 0; }
+	else if (dir == 1) { dir = 192; }
+
 	ScriptCall("DoorHandler", "OpenDoor", po, dir);
 }
 
@@ -153,131 +144,8 @@ Script 15 (int WallID)
 
 Script 27 (void)
 {
-	ACS_NamedExecuteAlways("W_DeathCam", 0);
+	ScriptCall("ClassicBoss", "DoDeathCam");
 }
 
 Script 601 (void)
 {}
-
-Script "W_PlayerDeath" DEATH //501
-{
-	//
-	// DenisBelmondo: don't let player slide when dying
-	//
-	SetActorVelocity(0, 0.0, 0.0, 0.0, false, true);
-
-	If (PlayerCount() == 1) { SetMusic(""); }
-
-	Delay(35);
-
-	ScriptCall("ClassicStatusBar", "DoFizzle", 0xFF0000);
-}
-
-Script "W_DeathCam" (void)
-{
-	SetPlayerProperty(1, 2, PROP_INVULNERABILITY);
-	SetPlayerProperty(1, 1, PROP_NOTARGET);
-	SetPlayerProperty (1, 1, PROP_TOTALLYFROZEN);
-
-	Delay(15);
-
-	// Fade out full screen green
-	ScriptCall("ClassicStatusBar", "DoFizzle", 0x0004040, false, 1, 1920, true);
-
-	Delay(35);
-
-	ScriptCall("Menu", "SetMenu", "DeathCamMessage");
-
-	Delay(70);
-
-	// Set Activator to Death Cam replay state
-	SetActorState (0, "Death.Cam", true);
-
-	Delay(70);
-	
-	// But only fade back in framed black
-	ChangeCamera(999, 1, 0);
-	ScriptCall("ClassicStatusBar", "ReverseFizzle", 0x000000, false, 0, 1920, true);
-
-	Delay(35);
-
-	Delay(6 * 35);
-
-	Exit_Normal(0);
-}
-
-Script "W_VictorySetup" (int StartX, int StartY, int BitAngle)
-{
-	If (StartX == 0 && StartY == 0)
-	{
-		StartX = GetActorX(0);
-		StartY = GetActorY(0);
-	}
-	Else
-	{
-		StartX = StartX * 1.0;
-		StartY = StartY * 1.0;
-	}
-
-	if (BitAngle == 0) { BitAngle = GetActorAngle(0) >> 8; }
-
-	int Angle = BitAngle << 8;
-
-	int OffsetX;
-	int OffsetY;
-
-	OffsetX = cos(Angle) * 32;
-	OffsetY = sin(Angle) * 32;
-
-	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 3, BitAngle);
-	SetThingSpecial (3, 0, 0, 2, 0, 4);
-
-	OffsetX = cos(Angle) * 64;
-	OffsetY = sin(Angle) * 64;
-
-	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 4, BitAngle);
-	SetThingSpecial (4, 0, 0, 10, 0, 5);
-
-	OffsetX = cos(Angle) * 128;
-	OffsetY = sin(Angle) * 128;
-
-	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 5, BitAngle + 128);
-	SetThingSpecial (5, 0, 0, 6, 0, 6);
-
-	OffsetX = cos(Angle) * 224;
-	OffsetY = sin(Angle) * 224;
-
-	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 6, BitAngle + 128);
-	SetThingSpecial (6, 0, 0, 0, 0, 0);
-
-	OffsetX = cos(Angle) * -32;
-	OffsetY = sin(Angle) * -32;
-
-	SpawnForced ("InterpolationPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 7, BitAngle);
-	SetThingSpecial (7, 0, 0, 4, 0, 3);
-
-	OffsetX = cos(Angle) * 224;
-	OffsetY = sin(Angle) * 224;
-
-	SpawnForced ("PatrolPoint", StartX + OffsetX, StartY + OffsetY, 32.0, 9, BitAngle);
-
-	OffsetX = cos(Angle) * -96;
-	OffsetY = sin(Angle) * -96;
-
-	SpawnForced ("MovingCamera", StartX + OffsetX, StartY + OffsetY, 32.0, 2, BitAngle);
-	SetThingSpecial (2, 0, 7, 0, 3);
-
-	SpawnForced ("BJFinaleRun", StartX, StartY, 32, 1, BitAngle);
-	Thing_Deactivate(1);
-	SetThingSpecial (1, 229, 0, 9, 1);
-
-	int ptid = ActivatorTID();
-	if (ptid == 0)
-	{
-		ptid = UniqueTID();
-		Thing_ChangeTID(0, ptid);
-	}
-
-	SetActivator(1);
-	SetPointer(AAPTR_MASTER, ptid);
-}

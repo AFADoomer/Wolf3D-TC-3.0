@@ -432,11 +432,9 @@ class ClassicStatusBar : WidgetStatusBar
 		return ClassicStatusBar(StatusBar).fizzleeffect;
 	}
 
-	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
+	static void DoFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
 	{
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || StatusBar.CPlayer.mo != caller || (!g_mpfizzle && multiplayer)) { return; }
-
-		if (!all && StatusBar.CPlayer.mo != caller) { return; }
 
 		if (!Off) { EventHandler.SendNetworkEvent("fizzle_on"); }
 
@@ -450,12 +448,12 @@ class ClassicStatusBar : WidgetStatusBar
 		ClassicStatusBar(StatusBar).fizzlespeed = speed;
 	}
 
-	static void ReverseFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920, bool all = false)
+	static void ReverseFizzle(Actor caller, color clr = 0xFF0000, bool Off = false, int layer = 0, int speed = 1920)
 	{
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || StatusBar.CPlayer.mo != caller || (!g_mpfizzle && multiplayer)) { return; }
 
 		ClassicStatusBar(StatusBar).fizzleindex = ClassicStatusBar(StatusBar).fizzlepoints.Size() - 1;
-		DoFizzle(caller, clr, Off, layer, -speed, all);
+		DoFizzle(caller, clr, Off, layer, -speed);
 	}
 
 	static void ClearFizzle(Actor caller)

@@ -74,7 +74,7 @@ class WolfPostProcessor : LevelPostProcessor
 						ln.activation &= ~SPAC_Cross;
 						ln.activation |= SPAC_MCross;
 					}
-					else if (ln.args[4])
+					else if (ln.args[4] > 0 && ln.args[4] < 3)
 					{
 						ln.locknumber = 129 + ln.args[4];
 						ln.activation |= SPAC_Use;

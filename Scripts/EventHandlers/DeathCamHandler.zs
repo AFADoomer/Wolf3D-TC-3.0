@@ -22,21 +22,23 @@
 
 class DeathCamHandler : EventHandler
 {
-	bool active;
-	TextureID deathcam;
+	TextureID deathcamtex;
 	Vector2 size;
+	Actor deathcam;
 
 	int tick;
+	bool draw;
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if (e.Thing is "DeathCam")
 		{
-			active = true;
-			deathcam = TexMan.CheckForTexture("DEATHCAM", TexMan.Type_Any);
-			if (deathcam)
+			deathcam = e.Thing;
+
+			deathcamtex = TexMan.CheckForTexture("DEATHCAM", TexMan.Type_Any);
+			if (deathcamtex.IsValid())
 			{
-				size = TexMan.GetScaledSize(deathcam);
+				size = TexMan.GetScaledSize(deathcamtex);
 				size *= 2;
 			}
 		}
@@ -44,14 +46,40 @@ class DeathCamHandler : EventHandler
 
 	override void RenderOverlay( RenderEvent e )
 	{
-		if (active && deathcam && size != (0, 0) && tick <= 35)
+		if (deathcam && draw && deathcamtex.IsValid() && size != (0, 0) && tick % 47 <= 35)
 		{
-			screen.DrawTexture(deathcam, true, 160 - size.x / 2, 4, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0);
+			screen.DrawTexture(deathcamtex, true, 160 - size.x / 2, 4, DTA_320x200, true, DTA_DestWidth, int(size.x), DTA_DestHeight, int(size.y), DTA_TopOffset, 0, DTA_LeftOffset, 0);
 		}
 	}
 
 	override void WorldTick()
 	{
-		if (active) { tick = (tick + 1) % 47; }
+		if (deathcam)
+		{
+			switch (tick)
+			{
+				case 25:
+					EventHandler.SendInterfaceEvent(consoleplayer, "fizzle", 0x004040, 1, 1920);
+					break;
+				case 60:
+					Menu.SetMenu("DeathCamMessage");
+					break;
+				case 130:
+					draw = true;
+					if (deathcam.master) { deathcam.master.SetStateLabel("Death.Cam"); } 
+					break;
+				case 200:
+					players[consoleplayer].camera = deathcam;
+					EventHandler.SendInterfaceEvent(consoleplayer, "fizzle", 0x0, 0, -1920);
+					break;
+				case 445:
+					Level.ExitLevel(0, false);
+					break;
+				default:
+					break;
+			}
+
+			tick++;
+		}
 	}
 }

@@ -126,6 +126,12 @@ class GameHandler : StaticEventHandler
 		if (player && player.mo) { Actor.Spawn("WolfTeleportOut", player.mo.pos); }
 	}
 
+	override void PlayerDied(PlayerEvent e)
+	{
+		players[e.PlayerNumber].mo.vel *= 0;
+		if (!multiplayer) { S_ChangeMusic("", 0, true, false); }
+	}
+
 	static void CheckGameFiles(GameHandler this)
 	{
 		Console.PrintF(StringTable.Localize("$TXT_CHECKFILE"));
@@ -485,7 +491,7 @@ class GameHandler : StaticEventHandler
 			if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
 			else { Menu.SetMenu("Episode" .. e.args[0] .. "End", -1); }
 		}
-		else if (e.Name == "setpage")
+		else if (e.Name == "setpage" && !e.IsManual)
 		{
 			let m = Menu.GetCurrentMenu();
 
@@ -500,6 +506,21 @@ class GameHandler : StaticEventHandler
 				TextScreenMenu(m).selected = e.args[0];
 				TextScreenMenu(m).mInfoTic = gametic;
 			}
+		}
+		else if (e.Name == "fizzle" && !e.IsManual)
+		{
+			let bar = ClassicStatusBar(StatusBar);
+			if (!bar) { return; }
+
+			if (e.args[2] >= 0) { bar.DoFizzle(players[consoleplayer].mo, e.args[0], false, e.args[1], e.args[2]); }
+			else { bar.ReverseFizzle(players[consoleplayer].mo, e.args[0], false, e.args[1], -e.args[2]); }
+		}
+		else if (e.Name == "clearfizzle")
+		{
+			let bar = ClassicStatusBar(StatusBar);
+			if (!bar) { return; }
+
+			bar.DoFizzle(players[consoleplayer].mo, 0, true);
 		}
 	}
 

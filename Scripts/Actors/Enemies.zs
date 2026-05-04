@@ -1055,6 +1055,29 @@ class ClassicBoss : ClassicBase
 
 		SetStateLabel("Spawn.Stand");
 	}
+
+	virtual void DeathCam()
+	{
+		if (target) { A_Face(target); }
+
+		Vector3 camoffset = (RotateVector((64, 0), angle), 32.0);
+
+		Actor cam = Spawn("DeathCam", pos + camoffset);
+		if (cam)
+		{
+			cam.master = self;
+			cam.A_Face(self);
+
+			A_Face(cam);
+		}
+	}
+
+	static void DoDeathCam(Actor mo)
+	{
+		if (!mo || !ClassicBoss(mo)) { return; }
+
+		ClassicBoss(mo).DeathCam();
+	}
 }
 
 class Dog : ClassicNazi
@@ -1557,8 +1580,7 @@ class DrSchabbs : ClassicBoss
 			Stop;
 		Death.Cam:
 			"####" K 5 A_FaceTarget;
-			"####" K 5 RemoveEnemies();
-			"####" K 60 A_SpawnItemEx("DeathCam", -64.0, 0, 32.0, 0, 0, 0, 180.0, 0, 0, 999);
+			"####" K 65 RemoveEnemies();
 			"####" A 60;
 			"####" A 60 A_Scream;
 			"####" HIJK 5;
@@ -1708,14 +1730,13 @@ class Hitler : ClassicBoss
 			"####" A 70 A_Scream;
 			"####" JK 5 A_Pain;
 			"####" LMNO 5;
-			"####" P 5 A_BossDeath;
+			"####" P 5 A_BossDeath();
 		Dead:
 			"####" Q -1;
 			Stop;
 		Death.Cam:
 			"####" Q 5 A_FaceTarget;
-			"####" Q 5 RemoveEnemies();
-			"####" Q 60 A_SpawnItemEx("DeathCam", -64.0, 0, 32.0, 0, 0, 0, 180.0, 0, 0, 999);
+			"####" Q 65 RemoveEnemies();
 			"####" A 60;
 			"####" A 70 A_Scream;
 			"####" J 5 A_Pain;
@@ -1767,8 +1788,7 @@ class Giftmacher : ClassicBoss
 			Stop;
 		Death.Cam:
 			"####" J 5 A_FaceTarget;
-			"####" J 5 RemoveEnemies();
-			"####" J 60 A_SpawnItemEx("DeathCam", -64.0, 0, 32.0, 0, 0, 0, 180.0, 0, 0, 999);
+			"####" J 65 RemoveEnemies();
 			"####" A 60;
 			"####" A 70 A_Scream;
 			"####" GHI 5;
@@ -1839,8 +1859,7 @@ class Fettgesicht : ClassicBoss
 			Stop;
 		Death.Cam:
 			"####" M 5 A_FaceTarget;
-			"####" M 5 RemoveEnemies();
-			"####" M 60 A_SpawnItemEx("DeathCam", -64.0, 0, 32.0, 0, 0, 0, 180.0, 0, 0, 999);
+			"####" M 65 RemoveEnemies();
 			"####" A 60;
 			"####" A 70 A_Scream;
 			"####" JK 5;

@@ -403,6 +403,11 @@ class WolfPlayer : PlayerPawn
 		)
 		{ respawn = true; }
 
+		if (respawntick == 35)
+		{
+			EventHandler.SendInterfaceEvent(consoleplayer, "fizzle", 0xFF0000, 0, 1920);
+		}
+
 		if (player.attacker && player.attacker != self)
 		{
 			if (!attackerangle) { attackerangle = deltaangle(angle, AngleTo(player.attacker)); }
