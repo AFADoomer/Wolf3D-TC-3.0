@@ -1,19 +1,6 @@
 #library "WLF3DLIB"
 #include "zcommon.acs"
 
-int polydoors[255][5];
-int	PushWalls[255];
-int	intPushWallMoveDist = 128.0;
-global int 18:SecretMarkers[];
-
-Function int WolfCoord(int intCoord)
-{
-	int intReturn = 0;
-	intCoord = intCoord / 1.0;
-	intCoord = (intCoord + 4096 - 32) / 64;
-	return intCoord;
-}
-
 Function void FadeToBlack (int holdTime, int inTime, int outTime, int font)
 {
 	SetHudSize(320, 200, 1);
