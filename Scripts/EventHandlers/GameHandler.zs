@@ -444,18 +444,21 @@ class GameHandler : StaticEventHandler
 			gamefiles.Clear();
 			CheckGameFiles(self);
 		}
-		else if (e.Name == "lightlevel" && !e.IsManual)
+
+		if (e.IsManual) { return; }
+
+		if (e.Name == "lightlevel")
 		{
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				level.sectors[s].SetLightLevel(e.args[0]);
 			}
 		}
-		else if (e.Name == "closemenus" && !e.IsManual)
+		else if (e.Name == "closemenus")
 		{
 			EventHandler.SendInterfaceEvent(consoleplayer, "closemenus");
 		}
-		else if (e.Name == "openfinale" && !e.IsManual)
+		else if (e.Name == "openfinale")
 		{
 			EventHandler.SendInterfaceEvent(consoleplayer, "openfinale", e.args[0]);
 		}
@@ -471,11 +474,72 @@ class GameHandler : StaticEventHandler
 		{
 			fizzle[e.Player] = false;
 		}
+		else if (e.Name == "updatedoorgraphics")
+		{
+			for (int i = 0; i < level.lines.Size(); i++)
+			{
+				let ln = level.lines[i];
+				if (!ln.locknumber) { continue; }
+
+				if (!e.args[0])
+				{
+					TextureID tex = TexMan.CheckForTexture((ln.delta.x ? "Patches/Walls/WALL0104.png" : "Patches/Walls/WALL0105.png"), TexMan.Type_Any);
+					if (!tex.IsValid()) { return; }
+
+					for (int s = 0; s < 2; s++)
+					{
+						let sd = ln.sidedef[s];
+						if (!sd) { continue; }
+
+						for (int l = 0; l < 3; l++)
+						{
+							TextureID curtex = sd.GetTexture(l);
+							if (curtex.IsValid()) { sd.SetTexture(l, tex); }
+						}
+					}
+				}
+				else
+				{
+					int lock = ln.locknumber - 59;
+
+					// Compatibility for wad versions
+					if (ln.locknumber == 130) { lock = 2; }
+					else if (ln.locknumber == 131) { lock = 1; }
+
+					String texpath = String.Format("WLF%iLK%i", max(0, g_sod), lock);
+
+					TextureID tex = TexMan.CheckForTexture((ln.delta.x ? String.Format("%sG", texpath) : String.Format("%sF", texpath)), TexMan.Type_Any);
+					if (!tex.IsValid()) { return; }
+
+					for (int s = 0; s < 2; s++)
+					{
+						let sd = ln.sidedef[s];
+						if (!sd) { continue; }
+
+						for (int l = 0; l < 3; l++)
+						{
+							TextureID curtex = sd.GetTexture(l);
+							if (curtex.IsValid()) { sd.SetTexture(l, tex); }
+						}
+					}
+				}
+			}
+		}
 	}
 
 	override void InterfaceProcess(ConsoleEvent e)
 	{
-		if (e.Name == "closemenus" && !e.IsManual)
+		if (e.Name == "clearfizzle")
+		{
+			let bar = ClassicStatusBar(StatusBar);
+			if (!bar) { return; }
+
+			bar.DoFizzle(players[consoleplayer].mo, 0, true);
+		}
+
+ 		if (e.IsManual) { return; }
+
+		if (e.Name == "closemenus")
 		{
 			let m = Menu.GetCurrentMenu();
 
@@ -486,12 +550,12 @@ class GameHandler : StaticEventHandler
 				current.Close();
 			}
 		}
-		else if (e.Name == "openfinale" && !e.IsManual)
+		else if (e.Name == "openfinale")
 		{
 			if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
 			else { Menu.SetMenu("Episode" .. e.args[0] .. "End", -1); }
 		}
-		else if (e.Name == "setpage" && !e.IsManual)
+		else if (e.Name == "setpage")
 		{
 			let m = Menu.GetCurrentMenu();
 
@@ -507,20 +571,13 @@ class GameHandler : StaticEventHandler
 				TextScreenMenu(m).mInfoTic = gametic;
 			}
 		}
-		else if (e.Name == "fizzle" && !e.IsManual)
+		else if (e.Name == "fizzle")
 		{
 			let bar = ClassicStatusBar(StatusBar);
 			if (!bar) { return; }
 
 			if (e.args[2] >= 0) { bar.DoFizzle(players[consoleplayer].mo, e.args[0], false, e.args[1], e.args[2]); }
 			else { bar.ReverseFizzle(players[consoleplayer].mo, e.args[0], false, e.args[1], -e.args[2]); }
-		}
-		else if (e.Name == "clearfizzle")
-		{
-			let bar = ClassicStatusBar(StatusBar);
-			if (!bar) { return; }
-
-			bar.DoFizzle(players[consoleplayer].mo, 0, true);
 		}
 	}
 
@@ -734,6 +791,16 @@ class LightVar : CustomIntCVar
 		val = clamp(val, 0, 255);
 
 		EventHandler.SendNetworkEvent("lightlevel", val);
+
+		return val;
+	}
+}
+
+class LockColors : CustomBoolCVar
+{
+	override bool ModifyValue(Name CVarName, bool val)
+	{
+		EventHandler.SendNetworkEvent("updatedoorgraphics", val);
 
 		return val;
 	}
