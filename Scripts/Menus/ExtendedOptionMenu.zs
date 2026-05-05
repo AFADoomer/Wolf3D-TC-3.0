@@ -558,9 +558,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 			int fontheight = OptionMenuSettings.mLinespacing * 3 / 4;
 
-			int height = 0;
 			String label = Stringtable.Localize(this.mLabel);
-			height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
+			int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
 
 			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
 
@@ -638,9 +637,8 @@ class ExtendedOptionMenu : GenericOptionMenu
 		info.x = x;
 		info.y = y;
 
-		int height = 0;
 		String label = Stringtable.Localize(this.mLabel);
-		height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
 		height = max(int(16 * CleanYfac_1), height);
 
 		KeyBindings binds;
