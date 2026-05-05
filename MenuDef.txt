@@ -152,6 +152,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSMUSICSTYLE",			"g_musicstyle", "MusicStyle"
 	Option "$M_OPTIONSROTATIONSPRITES",		"g_userotations", "YesNo"
 	Option "$M_OPTIONSDOORKEYCOLORS",		"g_usedoorkeycolors", "YesNo"
+	Option "$M_OPTIONSTRANLSLATEWPN",		"g_translatewpnsprites", "YesNo"
 	StaticText ""
 	StaticText "$M_HUDOPTIONS", 1
 	Option "$M_OPTIONSBORDER",				"g_borderstyle", "BorderStyle"

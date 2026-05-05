@@ -24,6 +24,7 @@
 class ClassicWeapon : Weapon
 {
 	const WEAPON_OFFSET_Y = 14.4;
+	CVar translatehud;
 
 	enum WeaponStates
 	{
@@ -152,7 +153,13 @@ class ClassicWeapon : Weapon
 			SetYPosition();
 
 			let psp = owner.player.GetPSprite(PSP_WEAPON);
-			if (psp) { psp.translation = owner.translation; }
+			if (psp)
+			{
+				if (!translatehud) { translatehud = CVar.FindCVar("g_translatewpnsprites"); }
+				
+				if (translatehud && translatehud.GetInt()) { psp.translation = owner.translation; }
+				else { psp.translation = Translate.GetID("DefaultGray"); }
+			}
 		}
 	}
 

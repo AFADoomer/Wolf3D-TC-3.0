@@ -24,6 +24,7 @@ user int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf ac
 user int g_musicstyle = 0; // MUS or MIDI music - 0 = MUS, 1 = MIDI
 server int g_userotations = 0; // Use additional sprite rotations if they are available
 server int g_usedoorkeycolors = 0; // Show color of locked doors' locks on their texture
+user int g_translatewpnsprites = 1; // Use player's color to recolor weapon sprite sleeves
 
 // HUD
 user int g_borderstyle = 0; // Style of screen border

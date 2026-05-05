@@ -54,7 +54,7 @@ class WolfPlayer : PlayerPawn
 		Player.ViewHeight 32;
 		Player.WeaponSlot 1, "WolfKnife";
 
-		Player.ColorRange 96, 112;
+		Player.ColorRange 0x60, 0x6F;
 		Player.ColorSet 0, "$TXT_COLOR_ORIGINAL", 0x10, 0x1F, 0x15;
 		Player.ColorSet 1, "$TXT_COLOR_RED", 0x20, 0x2F, 0x22;
 		Player.ColorSet 2, "$TXT_COLOR_ORANGE", 0x38, 0x3F, 0x3B;
