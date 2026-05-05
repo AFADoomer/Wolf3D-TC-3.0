@@ -827,7 +827,7 @@ class WolfRocketLauncher : ClassicWeapon
 	}
 }
 
-class WolfBackpack : Backpack
+class WolfBackpack : BackpackItem
 {
 	Default
 	{

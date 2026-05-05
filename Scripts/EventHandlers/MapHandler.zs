@@ -894,8 +894,9 @@ class ParsedMap
 					{
 						// Spawn the actor
 						Class<Actor> spawnclass = am.GetString("Class", true);
+						let it = GetDefaultByType(spawnclass);
 
-						if (spawnclass)
+						if (spawnclass && it.ShouldSpawn())
 						{
 							mo = Actor.Spawn(spawnclass, (sec.centerspot, 0));
 							if (mo)

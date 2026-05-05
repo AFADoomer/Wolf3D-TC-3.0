@@ -40,6 +40,8 @@ gameinfo
 	MessageboxClass = "ClassicMessageBox"
 	
 	pickupcolor = "FF F8 00"
+
+	BackpackType = "WolfBackpack"
 }
 
 // Skill Definitions

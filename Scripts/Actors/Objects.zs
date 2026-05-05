@@ -697,7 +697,7 @@ class FirstAidKit : Health
 	}
 }
 
-class WolfBerserk : Berserk
+class WolfBerserk : CustomInventory
 {
 	Default
 	{
@@ -706,9 +706,10 @@ class WolfBerserk : Berserk
 		//$Color 1
 		//$NotAngled
 
+		+COUNTITEM
+		+Inventory.ALWAYSPICKUP
 		+Inventory.AUTOACTIVATE
-		Inventory.Amount 25;
-		Inventory.MaxAmount 100;
+		+Inventory.BIGPOWERUP
 		Inventory.PickupSound "pickups/berserk";
 		Inventory.PickupMessage "";
 	}
@@ -718,6 +719,12 @@ class WolfBerserk : Berserk
 		Spawn:
 			WSTR A -1;
 			Loop;
+		Pickup:
+			TNT1 A 0 {
+				A_GiveInventory("PowerStrength");
+				if ((!deathmatch && !alwaysapplydmflags) || !sv_nohealth) { A_GiveInventory("Health", 100); }
+			}
+			Stop;
 	}	
 }
 
@@ -848,6 +855,7 @@ class Life : CustomInventory
 
 		+COUNTITEM
 		+Inventory.AUTOACTIVATE
+		+Inventory.BIGPOWERUP
 		+Inventory.NEVERLOCAL
 		Inventory.Amount 1;
 		Inventory.MaxAmount 0;
@@ -862,7 +870,7 @@ class Life : CustomInventory
 			Loop;
 		Pickup:
 			LIFE A 0 {
-				A_GiveInventory("Health", 100);
+				if ((!deathmatch && !alwaysapplydmflags) || !sv_nohealth) { A_GiveInventory("Health", 100); }
 				A_GiveInventory("WolfClip", 25);
 
 				LifeHandler.GiveLife(self);
@@ -883,6 +891,7 @@ class BoneswithBlood : Health
 		//$NotAngled
 
 		+Inventory.AUTOACTIVATE
+		-Inventory.ISHEALTH
 		Inventory.Amount 1;
 		Inventory.MaxAmount 11;
 		Inventory.PickupSound "slurpie";
@@ -893,6 +902,13 @@ class BoneswithBlood : Health
 		Spawn:
 			HLTH B -1;
 			Loop;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+
+		if ((deathmatch || alwaysapplydmflags) && sv_nohealth) { bSpecial = false; }
 	}
 }
 
