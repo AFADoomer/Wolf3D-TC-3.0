@@ -686,7 +686,6 @@ class DoorEffector: PolyobjectEffector
 
 			if (delay < 0) // Negative delay leaves the door open forever
 			{
-				
 				if (MapHandler.IsParsedMap())
 				{
 					PolyObject.StartSpotPos = Destination;
@@ -705,6 +704,7 @@ class DoorEffector: PolyobjectEffector
 								{
 									if (dln.sidedef[s])
 									{
+										dln.sidedef[s].SetAdditiveColor(side.mid, g_highlightpushwalls != 0x110000 ? g_highlightpushwalls : 0x3F3700);
 										dln.sidedef[s].EnableAdditiveColor(side.mid, true);
 									}
 								}

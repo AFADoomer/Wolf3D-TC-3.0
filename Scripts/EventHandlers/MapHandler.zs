@@ -1028,7 +1028,7 @@ class ParsedMap
 								{
 									if (dln.sidedef[s])
 									{
-										dln.sidedef[s].SetAdditiveColor(side.mid, 0x3F3700);
+										dln.sidedef[s].SetAdditiveColor(side.mid, g_highlightpushwalls != 0x110000 ? g_highlightpushwalls : 0x3F3700);
 										if (g_highlightpushwalls) { dln.sidedef[s].EnableAdditiveColor(side.mid, true); }
 									}
 								}

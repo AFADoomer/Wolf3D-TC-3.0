@@ -83,6 +83,8 @@ class GameHandler : StaticEventHandler
 
 			level.nextmap = nextmap;
 		}
+
+		if (!MapHAndler.IsParsedMap()) { EventHandler.SendNetworkEvent("highlightpushwalls", g_highlightpushwalls); }
 	}
 
 	override void WorldTick()
@@ -547,6 +549,52 @@ class GameHandler : StaticEventHandler
 				}
 			}
 		}
+		else if (e.Name == "highlightpushwalls")
+		{
+			let it = PolyobjectIterator.Create();
+
+			PolyobjectHandle po;
+			while ((po = it.Next()))
+			{
+				DoorEffector eff = DoorEffector(po.FindEffector("DoorEffector"));
+				if (eff && eff.Status == DoorEffector.WDST_OPEN) { continue; }
+
+				bool pushwall = false;
+				for (int l = 0; l < po.lines.Size() && !pushwall; l++)
+				{
+					let ln = po.lines[l];
+					switch (ln.special)
+					{
+						case 8: // PolyObj_DoorSlide
+							if (ln.args[4] == -1) { pushwall = true; }
+							break;
+						case 226: // Old ACS scripts
+							if (ln.args[0] == 2) { pushwall = true; }
+							break;
+						default:
+							continue;
+							break;
+					}
+				}
+
+				if (!pushwall) { continue; }
+
+				for (int l = 0; l < po.lines.Size(); l++)
+				{
+					let ln = po.lines[l];
+
+					for (int s = 0; s < 2; s++)
+					{
+						if (ln.sidedef[s])
+						{
+							ln.sidedef[s].SetAdditiveColor(side.mid, e.args[0] != 0x110000 ? e.args[0] : 0x3F3700);
+							ln.sidedef[s].EnableAdditiveColor(side.mid, !!e.args[0]);
+						}
+					}
+
+				}
+			}
+		}
 	}
 
 	override void InterfaceProcess(ConsoleEvent e)
@@ -823,6 +871,16 @@ class LockColors : CustomBoolCVar
 	override bool ModifyValue(Name CVarName, bool val)
 	{
 		EventHandler.SendNetworkEvent("updatedoorgraphics", val);
+
+		return val;
+	}
+}
+
+class PushwallHighlight : CustomColorCVar
+{
+	override Color ModifyValue(Name CVarName, color val)
+	{
+		EventHandler.SendNetworkEvent("highlightpushwalls", val);
 
 		return val;
 	}

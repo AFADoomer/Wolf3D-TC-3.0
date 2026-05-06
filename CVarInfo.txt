@@ -1,47 +1,47 @@
-server int g_initial = 1; // Show initial disclaimer message
+server bool g_initial = true; // Show initial disclaimer message
 
 server noarchive int g_sod = -2; // What game should this be
 
 // Gameplay
-server int g_momentum = 0; // Use Doom-style movement
-server noarchive cheat int goobers = 0; // Turn Wolf-style cheats on
+server bool g_momentum = false; // Use Doom-style movement
+server noarchive cheat bool goobers = false; // Turn Wolf-style cheats on
 server float g_buffpercent = 0.15; // Per-player multiplier of enemy health used in multiplayer
 
 // Compatibility
-server int g_fastfireballs = 1; // More accurate Fake Hitler fireballs
+server bool g_fastfireballs = true; // More accurate Fake Hitler fireballs
 server int g_maxpushwallmove = 2; // Pushwall move distance in 64x64 blocks
 server int g_deafguarddoors = 2; // Enable deaf guard tiles making doors transparent - 0 = Off, 1 = only require one side, 2 = require both sides
 
 // Cosmetic
-server int g_nointro = 0; // Skip 'Get Psyched'
-server int g_noblood = 1; // Hide blood, bullet puffs, and other additional effects
+server bool g_nointro = false; // Skip 'Get Psyched'
+server bool g_noblood = true; // Hide blood, bullet puffs, and other additional effects
 user int g_useflats = 0; // Use textured floors/ceilings - 0 = Off, 1 = Minimalist, 2 = Minimalist ceiling, textured floors, 3 = Textured floors and ceilings
 user int g_fadestyle = 0; // Use fizzle effect (processor intensive) or standard fade
 user float g_fizzlespeed = 1.0; // Speed modifier for fizzle effect
 user float g_viewbobscale = 0.0; // Scale amount of Doom-style weapon/view bob
-user int g_menubackstyle = 0; // Choose if pressing Esc in menu closes the menu (Doom stlye) or quits game (Wolf stlye)
-user int g_dynamiclights = 0; // Enable minimal dynamic lights on select Wolf actors
+user int g_menubackstyle = 0; // Choose if pressing Esc in menu closes the menu (Doom style) or quits game (Wolf style)
+user bool g_dynamiclights = false; // Enable minimal dynamic lights on select Wolf actors
 user int g_musicstyle = 0; // MUS or MIDI music - 0 = MUS, 1 = MIDI
-server int g_userotations = 0; // Use additional sprite rotations if they are available
+server bool g_userotations = false; // Use additional sprite rotations if they are available
 server HandlerClass(LockColors) bool g_usedoorkeycolors = false; // Show color of locked doors' locks on their texture
-user int g_translatewpnsprites = 1; // Use player's color to recolor weapon sprite sleeves
+user bool g_translatewpnsprites = true; // Use player's color to recolor weapon sprite sleeves
 
 // HUD
 user int g_borderstyle = 0; // Style of screen border
 user int g_hudratio = 0; // Force fullscreen hud to draw at a specific ratio
 
 // Debug or internal use
-server int g_debugtextscreens = 0; // Draw debug info on some text screens
-user int g_defaultlog = 0; // Use the GZDoom console output
-server int g_defaultmenus = 0; // Use the default GZDoom option menus
-server noarchive int g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
+server bool g_debugtextscreens = false; // Draw debug info on some text screens
+user bool g_defaultlog = false; // Use the GZDoom console output
+server bool g_defaultmenus = false; // Use the default GZDoom option menus
+server cheat noarchive HandlerClass(PushwallHighlight) color g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
 server noarchive HandlerClass(LightVar) int g_lightlevel = -1; // Debug override for map light level
-server int g_placeholders = 1; // Enable dubious legality
+server bool g_placeholders = true; // Enable dubious legality
 server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
-server int g_showhashes = 0; // Show md5 hashes of detected GAMEMAPS files on startup
-server int g_singlestartpushwalls = 1; // Pushwall start spots can only be used once
+server bool g_showhashes = false; // Show md5 hashes of detected GAMEMAPS files on startup
+server bool g_singlestartpushwalls = true; // Pushwall start spots can only be used once
 server int g_warpskill = 2; // Skill variable used in map select screen
-server int g_mpfizzle = 0; // Fizzle in mutliplayer
+server bool g_mpfizzle = false; // Fizzle in mutliplayer
 
 // Default high score entries
 //  Wolf3D
