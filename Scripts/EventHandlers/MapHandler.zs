@@ -470,10 +470,7 @@ class MapHandler : StaticEventHandler
 
 	static bool IsParsedMap()
 	{
-		MapHandler this = MapHandler.Get();
-		if (!this) { return false; }
-
-		return !!this.curmap;
+		return (level.mapname ~== "Level");
 	}
 
 	static int GetGameType()

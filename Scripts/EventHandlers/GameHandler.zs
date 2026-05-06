@@ -481,46 +481,68 @@ class GameHandler : StaticEventHandler
 				let ln = level.lines[i];
 				if (!ln.locknumber) { continue; }
 
+				int lock = ln.locknumber - 59;
+
+				// Compatibility for wad versions
+				if (ln.locknumber == 130) { lock = 2; }
+				else if (ln.locknumber == 131) { lock = 1; }
+
+				String texpath = String.Format("WLF%iLK%i", max(0, g_sod), lock);
+
+				TextureID tex;
+
 				if (!e.args[0])
 				{
-					TextureID tex = TexMan.CheckForTexture((ln.delta.x ? "Patches/Walls/WALL0104.png" : "Patches/Walls/WALL0105.png"), TexMan.Type_Any);
-					if (!tex.IsValid()) { return; }
-
-					for (int s = 0; s < 2; s++)
+					if (MapHandler.IsParsedMap())
 					{
-						let sd = ln.sidedef[s];
-						if (!sd) { continue; }
-
-						for (int l = 0; l < 3; l++)
+						tex = TexMan.CheckForTexture((ln.delta.x ? String.Format("%sC", texpath) : String.Format("%sB", texpath)), TexMan.Type_Any);
+					}
+					else
+					{
+						if (ln.delta.x)
 						{
-							TextureID curtex = sd.GetTexture(l);
-							if (curtex.IsValid()) { sd.SetTexture(l, tex); }
+							if (ln.v1.p.x > ln.v2.p.x) { tex = TexMan.CheckForTexture(String.Format("%sA", texpath), TexMan.Type_Any); }
+							else { tex = TexMan.CheckForTexture(String.Format("%sC", texpath), TexMan.Type_Any); }
+						}
+						else
+						{
+							if (ln.v1.p.y > ln.v2.p.y) { tex = TexMan.CheckForTexture(String.Format("%sB", texpath), TexMan.Type_Any); }
+							else { tex = TexMan.CheckForTexture(String.Format("%sD", texpath), TexMan.Type_Any); }
 						}
 					}
 				}
 				else
 				{
-					int lock = ln.locknumber - 59;
-
-					// Compatibility for wad versions
-					if (ln.locknumber == 130) { lock = 2; }
-					else if (ln.locknumber == 131) { lock = 1; }
-
-					String texpath = String.Format("WLF%iLK%i", max(0, g_sod), lock);
-
-					TextureID tex = TexMan.CheckForTexture((ln.delta.x ? String.Format("%sG", texpath) : String.Format("%sF", texpath)), TexMan.Type_Any);
-					if (!tex.IsValid()) { return; }
-
-					for (int s = 0; s < 2; s++)
+					if (MapHandler.IsParsedMap())
 					{
-						let sd = ln.sidedef[s];
-						if (!sd) { continue; }
-
-						for (int l = 0; l < 3; l++)
+						tex = TexMan.CheckForTexture((ln.delta.x ? String.Format("%sG", texpath) : String.Format("%sF", texpath)), TexMan.Type_Any);
+					}
+					else
+					{
+						if (ln.delta.x)
 						{
-							TextureID curtex = sd.GetTexture(l);
-							if (curtex.IsValid()) { sd.SetTexture(l, tex); }
+							if (ln.v1.p.x > ln.v2.p.x) { tex = TexMan.CheckForTexture(String.Format("%sE", texpath), TexMan.Type_Any); }
+							else { tex = TexMan.CheckForTexture(String.Format("%sG", texpath), TexMan.Type_Any); }
 						}
+						else
+						{
+							if (ln.v1.p.y > ln.v2.p.y) { tex = TexMan.CheckForTexture(String.Format("%sF", texpath), TexMan.Type_Any); }
+							else { tex = TexMan.CheckForTexture(String.Format("%sH", texpath), TexMan.Type_Any); }
+						}
+					}
+				}
+
+				if (!tex.IsValid()) { continue; }
+
+				for (int s = 0; s < 2; s++)
+				{
+					let sd = ln.sidedef[s];
+					if (!sd) { continue; }
+
+					for (int l = 0; l < 3; l++)
+					{
+						TextureID curtex = sd.GetTexture(l);
+						if (curtex.IsValid()) { sd.SetTexture(l, tex); }
 					}
 				}
 			}

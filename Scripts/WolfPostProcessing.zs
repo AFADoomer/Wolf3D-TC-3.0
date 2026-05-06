@@ -47,24 +47,9 @@ class WolfPostProcessor : LevelPostProcessor
 			for (int l = 0; l < level.lines.Size(); l++)
 			{
 				let ln = level.lines[l];
-				
-				// Fix script activation lines that aren't marked properly if you used
-				// an older version of the map conversion tool
-				if (
-					ln &&
-					(
-						(ln.special >= 80 && ln.special <= 85) ||
-						ln.special == 226
-					) &&
-					ln.args[0] > 0 &&
-					!(ln.flags & Line.ML_TWOSIDED) &&
-					(ln.activation & SPAC_Cross) && 
-					!(ln.activation & SPAC_Use)
-				)
-				{
-					ln.activation |= SPAC_Use;
-				}
 
+				if (!ln) { continue; }
+				
 				// Translate older ACS script call "locks" to actual line locknumber
 				if (ln.special == 226 && (ln.args[0] == 1 || ln.args[0] == 2))
 				{
@@ -80,6 +65,22 @@ class WolfPostProcessor : LevelPostProcessor
 						ln.activation |= SPAC_Use;
 					}
 				}
+				// Fix script activation lines that aren't marked properly if you used
+				// an older version of the map conversion tool
+				else if (
+					(
+						(ln.special >= 80 && ln.special <= 85) ||
+						ln.special == 226
+					) &&
+					ln.args[0] > 0 &&
+					!(ln.flags & Line.ML_TWOSIDED) &&
+					(ln.activation & SPAC_Cross) && 
+					!(ln.activation & SPAC_Use)
+				)
+				{
+					ln.activation |= SPAC_Use;
+				}
+
 			}
 		}
 
