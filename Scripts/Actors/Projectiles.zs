@@ -292,6 +292,11 @@ class WolfFlame : GhostFireball
 		DamageType "Fire";
 		Speed 25;
 	}
+
+	override void PostBeginPlay()
+	{
+		WolfProjectile.BeginPlay();
+	}
 }
 
 class SoDFireballBase : WolfProjectile
