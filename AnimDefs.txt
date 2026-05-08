@@ -55,7 +55,7 @@ pic "Graphics/ReadySmall2.png" tics 5
 pic "Graphics/ReadySmall.png" tics 30
 
 // Console background
-canvastexture "CONBACK" 1024 768
+canvastexture "CONBACK" 1280 800
 /*
 // Texture canvases
 canvastexture "Patches/Walls/WALL0000.png" 64 64

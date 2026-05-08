@@ -56,30 +56,56 @@ class ConsoleHandler : StaticEventHandler
 		console.printf("\c[Gold]" .. gamestring);
 	}
 
+	// Modified from v_draw.cpp
+	ui int GetConScale(int altval)
+	{
+		int scaleval;
+
+		int h = Screen.GetHeight();
+		int w = Screen.GetWidth();
+
+		if (altval > 0) { scaleval = (altval + 1) / 2; }
+		else if (uiscale == 0)
+		{
+			// Default should try to scale to 1280x720
+			int vscale = h / 720;
+			int hscale = w / 1280;
+
+			scaleval = max(1, min(vscale, hscale));
+		}
+		else { scaleval = (uiscale + 1) / 2; }
+
+		// block scales that result in something larger than the current screen.
+		int vmax = h / 400;
+		int hmax = w / 640;
+		int max = max(vmax, hmax);
+
+		return max(1, min(scaleval, max));
+	}
+
 	ui void UpdateCanvas()
 	{
 		Canvas conbackcanvas = TexMan.GetCanvas("CONBACK");
 		if (conbackcanvas)
 		{
-			int w = 1024;
-			int h = 768;
-
-			double fontscale;
-			if (con_scale == 0)
-			{
-				fontscale = max(0.5, int(CleanYFac_1 / 2.0));
-			}
-			else
-			{
-				fontscale = max(0.5, int((clamp(con_scale, 1, 10) - 1) / 2.0));
-			}
-
 			Font fnt = SmallFont;
+			
+			int w = 1280;
+			int h = 800;
 
-			int fontheight = fnt.GetHeight();
-			int fontwidth = fnt.StringWidth("0");
+			int confontheight = NewConsoleFont.GetHeight();
 
-			double wscale = (4.0 / 3.0) / Screen.GetAspectRatio();
+			int lines = (Screen.GetHeight() / GetConScale(con_scale) - confontheight * 2) / confontheight;
+			int lineheight = h / lines;
+			
+			double fontscale = double(lineheight) / fnt.GetHeight();
+
+			// Round to nearest negative power of two or integer for clean scaling
+			if (fontscale <= 0.0625) { fontscale = 0.0625; }
+			else if (fontscale <= 0.125) { fontscale = 0.125; }
+			else if (fontscale <= 0.25) { fontscale = 0.25; }
+			else if (fontscale <= 0.5) { fontscale = 0.5; }
+			else { fontscale = Round(fontscale); }
 
 			conbackcanvas.Clear(0, 0, w, h, 0x000000);
 
@@ -98,12 +124,21 @@ class ConsoleHandler : StaticEventHandler
 			if (logo.IsValid())
 			{
 				Vector2 size = TexMan.GetScaledSize(logo);
-				conbackcanvas.DrawTexture(logo, true, w - size.x * wscale, h - size.y - fontheight * 1.5, DTA_ScaleX, wscale);
+				conbackcanvas.DrawTexture(logo, true, w - size.x, h - size.y - lineheight);
 			}
 
-			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, h - fontheight * fontscale - 3, gamestring, DTA_ScaleX, wscale * fontscale, DTA_ScaleY, fontscale);
+			conbackcanvas.DrawText(fnt, Font.FindFontColor("TrueWhite"), 3, h - lineheight - 6, gamestring, DTA_ScaleX, fontscale, DTA_ScaleY, fontscale);
 
-			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, v >= 0 ? v ? 0xDDDD00 : 0xDD0000 : 0xDDDDDD);
+			Color clr = 0xDDDDDD;
+
+			if (multiplayer) { clr = players[consoleplayer].GetDisplayColor(); }
+			else if (v >= 0)
+			{
+				if (v) { clr = 0x0000DD; }
+				else { clr = 0xDD0000; }
+			}
+
+			conbackcanvas.DrawThickLine(0, h - 2, w, h - 2, size, clr);
 			conbackcanvas.DrawLine(0, h - 1, w, h - 1, 0x000000, 128);
 		}
 	}
