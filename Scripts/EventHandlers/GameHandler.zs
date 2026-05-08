@@ -696,7 +696,7 @@ class Game
 		{
 			MapHandler this = MapHandler.Get();
 			if (!this || !this.curmap) { ret = max(0, g_sod); }
-			else { ret = this.curmap.gametype < 0 ? g_sod : this.curmap.gametype; }
+			else { ret = this.curmap.gametype < 0 ? max(0, g_sod) : this.curmap.gametype; }
 		}
 		else
 		{
