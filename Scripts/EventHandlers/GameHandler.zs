@@ -84,7 +84,7 @@ class GameHandler : StaticEventHandler
 			level.nextmap = nextmap;
 		}
 
-		if (!MapHAndler.IsParsedMap()) { EventHandler.SendNetworkEvent("highlightpushwalls", g_highlightpushwalls); }
+		if (!MapHandler.IsParsedMap()) { EventHandler.SendNetworkEvent("highlightpushwalls", g_highlightpushwalls); }
 	}
 
 	override void WorldTick()
