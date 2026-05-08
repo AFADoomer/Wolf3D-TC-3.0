@@ -1634,7 +1634,7 @@ class MapMenu : TextScreenMenu
 		VisiblePages.Clear();
 
 		// Create the entry list
-		for (int p = 0; p < PagesInfo.Size() - 1; p++)
+		for (int p = 0; p < PagesInfo.Size(); p++)
 		{
 			let page = PagesInfo[p];
 
