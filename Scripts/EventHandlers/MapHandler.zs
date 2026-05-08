@@ -932,7 +932,16 @@ class ParsedMap
 				let sec = level.sectors[s];
 
 				// If this sector is out of range, continue
-				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096) { continue; }
+				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096)
+				{
+					for (int l = 0; l < sec.lines.Size(); l++)
+					{
+						let ln = sec.lines[l];
+						ln.flags |= Line.ML_DONTDRAW; // Don't draw lines on the automap for out-of-range sectors (usually unused doors)
+					}
+
+					continue;
+				}
 
 				// Don't draw lines between sectors that are collapsed
 				int edges = 0;
@@ -1064,6 +1073,8 @@ class ParsedMap
 									{
 										ln.locknumber = 60 + (t - 0x5C) / 2;
 									}
+
+									if (ln.locknumber) { ln.flags &= ~Line.ML_DONTDRAW; }
 								}
 							}
 						}
@@ -1128,6 +1139,8 @@ class ParsedMap
 									}
 								}
 							}
+
+							ln.flags &= ~Line.ML_DONTDRAW;
 						}
 					}
 
