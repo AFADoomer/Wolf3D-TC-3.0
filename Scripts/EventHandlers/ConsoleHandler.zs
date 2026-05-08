@@ -42,14 +42,17 @@ class ConsoleHandler : StaticEventHandler
 			{
 				tag = String.Format("\c[Gold]%s", lines[1]);
 				tag.Replace("-", " ");
+
+				Array<String> words;
+				tag.Split(words, " ");
 				
-				gamestring.AppendFormat(" %s", tag);
+				gamestring.AppendFormat(" %s", words[0]);
 
 				// Show the last commit's hash if this is a beta release
-				//if (tag.IndexOf("beta") > -1)
-				//{ 
-					gamestring.AppendFormat(" \c[Yellow]%s", lines[0].Left(7));
-				//}
+				if (tag.IndexOf("beta") > -1 || tag.IndexOf("dev") > -1)
+				{ 
+					gamestring.AppendFormat(" \c[Yellow]build %s", lines[0].Left(7));
+				}
 			}
 		}
 
