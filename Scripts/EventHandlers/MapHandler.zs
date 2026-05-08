@@ -219,11 +219,18 @@ class MapHandler : StaticEventHandler
 			let entry = entries[d];
 			if (entry.name ~== "Planes")
 			{
-				let d = DataFile.Find(datafiles, "Custom Maps", mapname);
+				int container = Wads.GetLumpContainer(lump);
+				String containername = Wads.GetContainerName(container);
+				containername.Replace(".wad", "");
+				containername.Replace(".pk3", "");
+				containername.Replace(".pk7", "");
+
+				let d = DataFile.Find(datafiles, containername, mapname);
 				d.path = mapname;
 				d.lump = lump;
 
 				Array<int> temp;
+				parsedmaps.gametype = -1; // Play as Wolf, but allow setting via CVar
 				parsedmaps.ReadGameMaps(entry.data, 0, temp, d);
 			}
 		}
@@ -1596,7 +1603,6 @@ class WolfMapParser
 				planeoffsets[1] = planeoffsets[0] + planesizes[0];
 
 				newmap.mapnum = 1000 + custommapcount++;
-				//newmap.mapname = String.Format("%s (%s)", newmap.mapname, d.path);
 
 				for (int p = 0; p < 2; p++)
 				{
