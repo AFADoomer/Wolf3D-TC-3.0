@@ -767,7 +767,7 @@ class ClassicBase : Actor
 		// Increase base damage if the enemy wasn't active
 		if (!bActive) { damage *= 2; }
 
-		if (source.IsHostile())
+		if (IsHostile(source))
 		{
 			// Target attacker
 			target = source;
