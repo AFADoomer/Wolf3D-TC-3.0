@@ -122,6 +122,12 @@ class GameHandler : StaticEventHandler
 		}
 	}
 
+	override void PlayerEntered(PlayerEvent e)
+	{
+		PlayerInfo player = players[e.PlayerNumber];
+		if (player && player.mo) { player.mo.bInvisible = false; }
+	}
+
 	override void PlayerDisconnected(PlayerEvent e)
 	{
 		PlayerInfo player = players[e.PlayerNumber];
