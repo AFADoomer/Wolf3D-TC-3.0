@@ -132,6 +132,8 @@ class ReplacementHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
+		if (e.IsSaveGame || e.IsReopen) { return; }
+
 		useflats = CVar.FindCVar("g_useflats");
 		useflatsval[consoleplayer] = useflats.GetInt();
 

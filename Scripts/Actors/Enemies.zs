@@ -767,9 +767,12 @@ class ClassicBase : Actor
 		// Increase base damage if the enemy wasn't active
 		if (!bActive) { damage *= 2; }
 
-		// Target attacker
-		target = source;
-		if (multiplayer) { targetswitchdelay = 70; } // Don't let the enemy change targets again for 2 seconds
+		if (source.IsHostile())
+		{
+			// Target attacker
+			target = source;
+			if (multiplayer) { targetswitchdelay = 70; } // Don't let the enemy change targets again for 2 seconds
+		}
 
 		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
 	}
@@ -954,10 +957,10 @@ class ClassicNazi : ClassicBase
 			Loop;
 		Pain:
 			"####" A 0 A_JumpIf(health % 1, "Pain.Alt");
-			"####" F 5 A_Pain;
+			"####" F 5 A_Pain();
 			"####" A 0 A_Jump(256, "Chase");
 		Pain.Alt:
-			"####" J 5 A_Pain;
+			"####" J 5 A_Pain();
 			"####" A 0 A_Jump(256, "Chase");
 		Death:
 			"####" A 0 A_DeathDrop();
@@ -1078,6 +1081,24 @@ class ClassicBoss : ClassicBase
 
 		ClassicBoss(mo).DeathCam();
 	}
+
+	virtual void A_WolfBossDeath()
+	{
+		A_BossDeath();
+
+		if (MapHandler.IsParsedMap() && !GetDropItems())
+		{
+			MapHandler handler = MapHandler.Get();
+			
+			if (handler && handler.curmap)
+			{
+				String mapname = handler.curmap.mapname;
+				mapname = mapname.MakeUpper();
+
+				if (mapname.IndexOf("BOSS") > -1) { DoDeathCam(self); }
+			}
+		}
+	}
 }
 
 class Dog : ClassicNazi
@@ -1118,8 +1139,8 @@ class Dog : ClassicNazi
 			"####" AAAABBBBCCCCDDDD 1 A_LookEx (0, 0, 0, 2048, 0, "See");
 			Loop;
 		Melee:
-			"####" E 0 A_Stop;
-			"####" EF 5 A_FaceTarget;
+			"####" E 0 A_Stop();
+			"####" EF 5 A_FaceTarget();
 		Attack:
 			"####" G 5 A_CustomMeleeAttack(GameHandler.WolfRandom() < 180 ? GameHandler.WolfRandom() >> 4 : 0);
 			"####" EA 5;
@@ -1192,8 +1213,8 @@ class Guard : ClassicNazi
 	States
 	{
 		Missile:
-			"####" # 0 A_Stop;
-			"####" GH 10 A_FaceTarget;
+			"####" # 0 A_Stop();
+			"####" GH 10 A_FaceTarget();
 		Attack:
 			"####" I 10 A_NaziShoot();
 			Goto Chase;
@@ -1264,15 +1285,15 @@ class SS : ClassicNazi
 	States
 	{
 		Missile:
-			"####" A 0 A_Stop;
-			"####" GH 10 A_FaceTarget;
+			"####" A 0 A_Stop();
+			"####" GH 10 A_FaceTarget();
 		Attack:
 			"####" I 5 A_NaziShoot(0.666);
-			"####" H 5 A_FaceTarget;
+			"####" H 5 A_FaceTarget();
 			"####" I 5 A_NaziShoot(0.666);
-			"####" H 5 A_FaceTarget;
+			"####" H 5 A_FaceTarget();
 			"####" I 5 A_NaziShoot(0.666);
-			"####" H 5 A_FaceTarget;
+			"####" H 5 A_FaceTarget();
 			"####" I 5 A_NaziShoot(0.666);
 			Goto Chase;
 	}
@@ -1344,11 +1365,11 @@ class Mutant : ClassicNazi
 	States
 	{
 		Missile:
-			"####" A 0 A_Stop;
-			"####" G 3 A_FaceTarget;
+			"####" A 0 A_Stop();
+			"####" G 3 A_FaceTarget();
 		Attack:
 			"####" H 10 A_NaziShoot();
-			"####" I 5 A_FaceTarget;
+			"####" I 5 A_FaceTarget();
 			"####" P 10 A_NaziShoot();
 			"####" A 0 A_JumpIfCloser(64.0, "Missile");
 			Goto Chase;
@@ -1421,9 +1442,9 @@ class Officer : ClassicNazi
 	States
 	{
 		Missile:
-			"####" A 0 A_Stop;
-			"####" G 3 A_FaceTarget;
-			"####" H 10 A_FaceTarget;
+			"####" A 0 A_Stop();
+			"####" G 3 A_FaceTarget();
+			"####" H 10 A_FaceTarget();
 		Attack:
 			"####" I 5 A_NaziShoot();
 			Goto Chase;
@@ -1508,8 +1529,8 @@ class HansGrosse : ClassicBoss
 			"####" DDDD 1 A_NaziChase(null, "Missile");
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
-			"####" F 5 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
+			"####" F 5 A_FaceTarget();
 		Attack:
 			"####" GFGFGE 5 A_NaziShoot(0.666);
 			"####" A 0 A_JumpIfCloser(64, "Missile");
@@ -1517,8 +1538,8 @@ class HansGrosse : ClassicBoss
 		Death:
 			"####" H 3 A_DeathDrop();
 			"####" H 4;
-			"####" I 8 A_Scream;
-			"####" J 7 A_BossDeath;
+			"####" I 8 A_Scream();
+			"####" J 7 A_WolfBossDeath();
 		Dead:
 			"####" K -1;
 			Stop;
@@ -1565,24 +1586,24 @@ class DrSchabbs : ClassicBoss
 			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
 		Attack:
 			"####" F 5 A_SpawnProjectile(projectile, 30, 18, 0);
 			Goto Chase;
 		Death:
-			"####" A 75 A_Scream;
+			"####" A 75 A_Scream();
 			"####" H 5;
 			"####" I 5;
 			"####" J 5;
-			"####" K 5 A_BossDeath;
+			"####" K 5 A_WolfBossDeath();
 		Dead:
 			"####" K -1;
 			Stop;
 		Death.Cam:
-			"####" K 5 A_FaceTarget;
+			"####" K 5 A_FaceTarget();
 			"####" K 65 RemoveEnemies();
 			"####" A 60;
-			"####" A 60 A_Scream;
+			"####" A 60 A_Scream();
 			"####" HIJK 5;
 			"####" K -1;
 			Stop;
@@ -1629,13 +1650,13 @@ class HitlerGhost : ClassicNazi
 			WHGT DDDD 1 A_NaziChase(chance:4);
 			Loop;
 		Missile:
-			WHGT E 4 A_FaceTarget;
+			WHGT E 4 A_FaceTarget();
 		Attack:
 			WHGT EEEEEEEE 4 A_SpawnProjectile("GhostFireBall", 30, 0, 0);
 			Goto Chase;
 		Death:
 			WHGT F 5 A_DeathDrop();
-			WHGT G 5 A_Scream;
+			WHGT G 5 A_Scream();
 			WHGT HIJ 5;
 		Dead:
 			WHGT K -1;
@@ -1672,22 +1693,22 @@ class HitlerMech : ClassicBoss
 	{
 		Chase:
 			"####" AAAAA 1 A_NaziChase();
-			"####" AAA 1 A_Pain;
+			"####" AAA 1 A_Pain();
 			"####" BBBB 1 A_NaziChase();
 			"####" CCCCC 1 A_NaziChase();
-			"####" CCC 1 A_Pain;
+			"####" CCC 1 A_Pain();
 			"####" DDDD 1 A_NaziChase();
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
-			"####" F 5 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
+			"####" F 5 A_FaceTarget();
 			"####" GFGF 5 A_NaziShoot();
 			Goto Chase;
 		Death:
-			"####" H 5 A_Scream;
+			"####" H 5 A_Scream();
 			"####" IJ 5;
 			"####" K 0 A_SpawnItemEx("Hitler");
-			"####" K 1 A_BossDeath;
+			"####" K 1 A_WolfBossDeath();
 			"####" K -1;
 			Stop;
 	}
@@ -1721,25 +1742,25 @@ class Hitler : ClassicBoss
 			"####" D 1 A_NaziChase();
 			Loop;
 		Missile:
-			"####" G 15 A_FaceTarget;
-			"####" H 5 A_FaceTarget;
+			"####" G 15 A_FaceTarget();
+			"####" H 5 A_FaceTarget();
 		Attack:
 			"####" IHIH 5 A_NaziShoot();
 			Goto Chase;
 		Death:
-			"####" A 70 A_Scream;
-			"####" JK 5 A_Pain;
+			"####" A 70 A_Scream();
+			"####" JK 5 A_Pain();
 			"####" LMNO 5;
-			"####" P 5 A_BossDeath();
+			"####" P 5 A_WolfBossDeath();
 		Dead:
 			"####" Q -1;
 			Stop;
 		Death.Cam:
-			"####" Q 5 A_FaceTarget;
+			"####" Q 5 A_FaceTarget();
 			"####" Q 65 RemoveEnemies();
 			"####" A 60;
-			"####" A 70 A_Scream;
-			"####" J 5 A_Pain;
+			"####" A 70 A_Scream();
+			"####" J 5 A_Pain();
 			"####" KLMNOP 5;
 			"####" Q -1;
 			Stop;
@@ -1775,22 +1796,22 @@ class Giftmacher : ClassicBoss
 			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
 		Attack:
 			"####" F 5 A_SpawnProjectile(projectile, 30, 13, 0);
 			Goto Chase;
 		Death:
-			"####" A 70 A_Scream;
+			"####" A 70 A_Scream();
 			"####" GHI 5;
-			"####" J 1 A_BossDeath;
+			"####" J 1 A_WolfBossDeath();
 		Dead:
 			"####" J -1;
 			Stop;
 		Death.Cam:
-			"####" J 5 A_FaceTarget;
+			"####" J 5 A_FaceTarget();
 			"####" J 65 RemoveEnemies();
 			"####" A 60;
-			"####" A 70 A_Scream;
+			"####" A 70 A_Scream();
 			"####" GHI 5;
 			"####" J -1;
 			Stop;
@@ -1842,26 +1863,26 @@ class Fettgesicht : ClassicBoss
 			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
-			"####" F 5 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
+			"####" F 5 A_FaceTarget();
 		Attack:
 			"####" G 5 A_SpawnProjectile(projectile, 30, 13, 0);
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			"####" HGH 5 A_NaziShoot();
 			Goto Chase;
 		Death:
-			"####" A 70 A_Scream;
+			"####" A 70 A_Scream();
 			"####" JK 5;
 			"####" L 1;
-			"####" L 4 A_BossDeath;
+			"####" L 4 A_WolfBossDeath();
 		Dead:
 			"####" M -1;
 			Stop;
 		Death.Cam:
-			"####" M 5 A_FaceTarget;
+			"####" M 5 A_FaceTarget();
 			"####" M 65 RemoveEnemies();
 			"####" A 60;
-			"####" A 70 A_Scream;
+			"####" A 70 A_Scream();
 			"####" JK 5;
 			"####" L 5;
 			"####" M -1;
@@ -1903,7 +1924,7 @@ class PacManGhost : ClassicBase
 			"####" AAAAABBBBB 1 A_NaziChase();
 			Loop;
 		Melee:
-			"####" A 0 A_FaceTarget;
+			"####" A 0 A_FaceTarget();
 			"####" AAAAABBBBB 1 A_CustomMeleeAttack(MeleeDamage, "", "", "WolfNazi", false);
 			Goto Chase;
 		Dead:
@@ -1995,10 +2016,10 @@ class TransGrosse : HansGrosse
 	{
 		Death:
 			"####" A 0 A_DeathDrop();
-			"####" A 53 A_Scream;
+			"####" A 53 A_Scream();
 			"####" H 7;
 			"####" I 8;
-			"####" J 7 A_BossDeath;
+			"####" J 7 A_WolfBossDeath();
 			"####" K -1;
 			Stop;
 		Death.Fire:
@@ -2037,10 +2058,10 @@ class SubmarineWilly : HansGrosse
 	{
 		Death:
 			"####" A 0 A_DeathDrop();
-			"####" A 53 A_Scream;
+			"####" A 53 A_Scream();
 			"####" H 7;
 			"####" I 8;
-			"####" J 7 A_BossDeath;
+			"####" J 7 A_WolfBossDeath();
 			"####" K -1 ;
 			Stop;
 		Death.Fire:
@@ -2087,26 +2108,26 @@ class UberMutant : ClassicBoss
 			"####" DDDD 1 A_NaziChase();
 			Loop;
 		Missile:
-			"####" E 15 A_FaceTarget;
+			"####" E 15 A_FaceTarget();
 		Attack:
 			"####" F 6 A_NaziShoot();
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			"####" G 6 A_NaziShoot();
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			"####" H 6 A_NaziShoot();
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			"####" G 6 A_NaziShoot();
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			"####" F 6 A_NaziShoot();
-			"####" E 0 A_FaceTarget;
+			"####" E 0 A_FaceTarget();
 			Goto Chase;
 		Death:
-			"####" A 36 A_Scream;
+			"####" A 36 A_Scream();
 			"####" I 4 A_DeathDrop();
 			"####" I 3;
 			"####" J 8;
 			"####" K 7;
-			"####" L 8 A_BossDeath;
+			"####" L 8 A_WolfBossDeath();
 		Dead:
 			"####" M -1;
 			Stop;
@@ -2173,19 +2194,19 @@ class DeathKnight : ClassicBoss
 			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
-			"####" F 15 A_FaceTarget;
+			"####" F 15 A_FaceTarget();
 		Attack:
 			"####" G 5 A_SpawnProjectile(projectile, 48, 15, 4, CMF_AIMDIRECTION);
 			"####" I 5 A_NaziShoot();
-			"####" I 0 A_FaceTarget;
+			"####" I 0 A_FaceTarget();
 			"####" H 5 A_SpawnProjectile(projectile, 48, -15, -4, CMF_AIMDIRECTION);
 			"####" I 5 A_NaziShoot();
 			Goto Chase;
 		Death:
-			"####" A 53 A_Scream;
+			"####" A 53 A_Scream();
 			"####" K 5 A_DeathDrop();
 			"####" LMNO 5;
-			"####" P 5 A_BossDeath;
+			"####" P 5 A_WolfBossDeath();
 		Dead:
 			"####" Q -1;
 			Stop;
@@ -2254,34 +2275,34 @@ class AngelofDeath : ClassicBoss
 			"####" DDDD 1 A_NaziChase(chance:16);
 			Loop;
 		Missile:
-			"####" G 5 A_FaceTarget;
-			"####" H 10 A_FaceTarget;
+			"####" G 5 A_FaceTarget();
+			"####" H 10 A_FaceTarget();
 		Attack:
 			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 			"####" G 0 A_Jump(127, "Chase");
-			"####" G 5 A_FaceTarget;
-			"####" H 10 A_FaceTarget;
+			"####" G 5 A_FaceTarget();
+			"####" H 10 A_FaceTarget();
 			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 			"####" G 0 A_Jump(127, "Chase");
-			"####" G 5 A_FaceTarget;
-			"####" H 10 A_FaceTarget;
+			"####" G 5 A_FaceTarget();
+			"####" H 10 A_FaceTarget();
 			"####" G 5 A_SpawnProjectile(projectile, 26, 20, 0);
 		Tired:
 			"####" I 20;
-			"####" J 20 A_Pain;
+			"####" J 20 A_Pain();
 			"####" I 20;
-			"####" J 20 A_Pain;
+			"####" J 20 A_Pain();
 			"####" I 20;
-			"####" J 20 A_Pain;
+			"####" J 20 A_Pain();
 			"####" I 20;
-			"####" I 0 A_Pain;
+			"####" I 0 A_Pain();
 			Goto Chase;
 		Death:
-			"####" A 52 A_Scream;
+			"####" A 52 A_Scream();
 			"####" K 5;
 			"####" L 5 A_StartSound("slurpie");
 			"####" MNOP 5;
-			"####" Q 5 A_BossDeath;
+			"####" Q 5 A_WolfBossDeath();
 		Dead:
 			"####" R -1;
 			Stop;
@@ -2326,10 +2347,10 @@ class BarnacleWilhelm : Fettgesicht
 	States
 	{
 		Death:
-			"####" A 35 A_Scream;
+			"####" A 35 A_Scream();
 			"####" J 5 A_DeathDrop();
 			"####" K 5;
-			"####" L 5 A_BossDeath;
+			"####" L 5 A_WolfBossDeath();
 		Dead:
 			"####" M -1;
 			Stop;
@@ -2392,7 +2413,7 @@ class WolfSpectre : ClassicNazi
 			"####" AAAAABBBBBCCCCCDDDDD 1 A_NaziChase();
 			Loop;
 		Melee:
-			"####" A 0 A_FaceTarget;
+			"####" A 0 A_FaceTarget();
 		Attack:
 			"####" ABCD 2 A_CustomMeleeAttack(MeleeDamage, "", "", "WolfNazi", false);
 			Goto Chase;
@@ -2403,7 +2424,7 @@ class WolfSpectre : ClassicNazi
 			"####" H 160;
 			"####" A 0 A_SetSolid;
 			"####" A 0 A_SetShootable;
-			"####" A 0 A_Pain;
+			"####" A 0 A_Pain();
 			Goto Chase;
 		Death:
 		Dead:

@@ -585,6 +585,14 @@ class ClassicStatusBar : WidgetStatusBar
 		if (curmap) { levelnum = curmap.mapnum; }
 		else { levelnum = level.levelnum; }
 
+		if (!Game.IsSoD())
+		{
+			levelnum = levelnum % 10;
+			if (levelnum == 0) { levelnum = 10; }
+			
+			levelnumstring = String.Format("%i", levelnum);
+		}
+
 		if (levelnum > 100)
 		{
 			levelnumstring = String.Format("%i", levelnum % 100);
