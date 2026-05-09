@@ -152,6 +152,8 @@ episode SOD01 { name = "$EP_SOD" }
 episode SD201 { name = "$EP_SD2" }
 episode SD301 { name = "$EP_SD3" }
 
+episode LEVEL {}
+
 // Episode 1
 
 map E1L1 "$FLOOR_1"

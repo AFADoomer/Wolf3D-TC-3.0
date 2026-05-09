@@ -150,7 +150,7 @@ class MapHandler : StaticEventHandler
 		if (developer) { console.printf("Parsing map data..."); }
 
 		// Parse the demo map first
-		let d = DataFile.Find(datafiles, "Custom Maps", "Data/EditorThings.map");
+		let d = DataFile.Find(datafiles, "Standalone Maps", "Data/EditorThings.map");
 		WolfMapParser.Parse(parsedmaps, d);
 
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
@@ -259,11 +259,14 @@ class MapHandler : StaticEventHandler
 
 			queuedmap = parsedmaps.GetMapData(mapname, datafile);
 
-			level.ChangeLevel("Level");
-
-			if (mapname == "Wolf3D TC Test")
+			if (gamestate == GS_LEVEL)
 			{
-				console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname_with_underscores>\c-' to load a specific map.", e.Name);
+				level.ChangeLevel("Level");
+
+				if (mapname == "Wolf3D TC Test")
+				{
+					console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname_with_underscores>\c-' to load a specific map.", e.Name);
+				}
 			}
 		}
 		else if (e.Name == "listmaps")
@@ -292,7 +295,22 @@ class MapHandler : StaticEventHandler
 				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
 				if (curmap.info.nextmap.length()) { level.nextmap = curmap.info.nextmap; }
 				if (curmap.info.nextsecretmap.length()) { level.nextsecretmap = curmap.info.nextsecretmap; }
-				S_ChangeMusic(curmap.info.music);
+
+				String IMFname = curmap.info.music;
+
+				CVar stylevar = CVar.FindCVar("g_musicstyle");
+				if (stylevar && !stylevar.GetInt()) { S_ChangeMusic(IMFname); }
+				else
+				{
+					GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+					if (!this) { S_ChangeMusic(IMFname); }
+					else
+					{
+						String song = this.music.GetIfExists(IMFname);
+						if (song.length()) { S_ChangeMusic(song); }
+						else { S_ChangeMusic(IMFname); }
+					}
+				}
 			}
 			else
 			{
@@ -583,6 +601,23 @@ class MapHandler : StaticEventHandler
 				}
 			}
 		}
+	}
+
+	ui static int CountParsedMaps(bool all = false)
+	{
+		MapHandler this = MapHandler.Get();
+		if (!this || !this.parsedmaps || !this.parsedmaps.maps.Size()) { return 0; }
+
+		if (all) { return this.parsedmaps.maps.Size(); }
+
+		int count = 0; 
+		for (int m = 0; m < this.parsedmaps.maps.Size(); m++)
+		{
+			if (this.parsedmaps.maps[m].mapname ~== "Wolf3D TC Test") { continue; } // Don't count the demo map
+			if (this.parsedmaps.maps[m].gametype == -1) { count++; }
+		}
+
+		return count;
 	}
 }
 
@@ -1670,7 +1705,7 @@ class WolfMapParser
 
 		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
-			if (maps[m].mapname ~== mapname && maps[m].datafile.gametitle == "Custom Maps") { return maps[m]; }
+			if (maps[m].mapname ~== mapname && maps[m].datafile.gametitle == "Standalone Maps") { return maps[m]; }
 		}
 
 		return null;

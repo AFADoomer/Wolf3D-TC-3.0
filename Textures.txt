@@ -1516,6 +1516,12 @@ Texture GAME4, 48, 24
 	Graphic Frame, 0, 0
 }
 
+Texture GAME5, 48, 24
+{
+	Graphic "Graphics/Menu/CustomMaps.png", 0, 0
+	Graphic Frame, 0, 0
+}
+
 // High Score screen images
 Texture M_LEVEL, 32, 8 { Patch WVGA0038, 0, 0 }
 Texture M_NAME, 32, 8 { Patch WVGA0039, 0, 0 }

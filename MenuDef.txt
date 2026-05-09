@@ -30,6 +30,7 @@ ListMenu "GameMenu"
 	GameSelection "$EP_SOD", "s", ""
 	GameSelection "$EP_SD2", "r", ""
 	GameSelection "$EP_SD3", "u", ""
+	TextItemCentered "$EP_CUSTOM", "e", "MapMenu"
 
 	Class "GameMenu"
 }

@@ -151,7 +151,7 @@ class ExtendedListMenu : ListMenu
 		fadetarget = gametic;
 		fadetime = 12;
 
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
+		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod > -1 ? Game.IsSoD() ? 0x000088 : 0x880000 : 0x000000); }
 		else if (!mParentMenu)
 		{
 			if (
@@ -235,6 +235,7 @@ class ExtendedListMenu : ListMenu
 
 			if (exittimeout >= fadetime)
 			{
+				exitmenu = false;
 				RestorePlaceholderMarkers();
 				GameHandler.ChangeMusic("*");
 				Close();
@@ -327,7 +328,7 @@ class ExtendedListMenu : ListMenu
 								EventHandler.SendNetworkEvent("resetdeaths");
 							}
 
-							if (itemaction == "StartGame" || itemaction == "StartGameConfirm" || itemaction == "HelpMenu")
+							if (itemaction == "StartGame" || itemaction == "StartGameConfirm" || itemaction == "HelpMenu" || itemaction == "MapMenu")
 							{
 								fadecolor = 0x000000;
 							}
@@ -350,14 +351,11 @@ class ExtendedListMenu : ListMenu
 
 	override void OnReturn()
 	{
-		if (!nodim)
-		{
-			fadetarget = gametic;
-			GetPlaceholders();
-		}
+		fadetarget = gametic;
+		GetPlaceholders();
 		initialalpha = 1.0;
 		nodim = false;
-		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+		fadecolor = (g_sod > -1 ? Game.IsSoD() ? 0x000088 : 0x880000 : 0x000000);
 	}
 
 	void GetPlaceholders()
@@ -604,7 +602,7 @@ class GameMenu : IconListMenu
 	override void Init(Menu parent, ListMenuDescriptor desc)
 	{
 		Super.Init(parent, desc);
-		controls = TexMan.CheckForTexture("M_CNTRLS", TexMan.Type_Any);
+		controls = TexMan.CheckForTexture("M_GCNTRLS", TexMan.Type_Any);
 		demo = TexMan.CheckForTexture("DEMOOVERLAY", TexMan.Type_Any);
 		shareware = TexMan.CheckForTexture("SHAREWAREOVERLAY", TexMan.Type_Any);
 		registered = TexMan.CheckForTexture("REGISTEREDOVERLAY", TexMan.Type_Any);
@@ -637,7 +635,15 @@ class GameMenu : IconListMenu
 			screen.DrawTexture(controls, true, screen.GetWidth() / 2 - size.x * CleanXfac / 2, screen.GetHeight() - size.y * CleanyFac, DTA_CleanNoMove, true, DTA_DestWidth, int(size.x * CleanXfac), DTA_DestHeight, int(size.y * CleanYfac), DTA_Alpha, 1.0, DTA_Desaturate, 255);
 		}
 
-		for(int i=0;i<mDesc.mItems.Size(); i++)
+		CVar alwaysshow = CVar.FindCVar("g_alwaysshowexternalmaps");
+		bool hasparsedmaps = !!MapHandler.CountParsedMaps(alwaysshow && alwaysshow.GetInt());
+
+		for(int i = 6; i < mDesc.mItems.Size(); i++)
+		{
+			mDesc.mItems[i].mEnabled = hasparsedmaps;
+		}
+
+		for(int i = 0; i < mDesc.mItems.Size(); i++)
 		{
 			if (mDesc.mSelectedItem == i)
 			{
@@ -646,6 +652,12 @@ class GameMenu : IconListMenu
 			}
 
 			if (mDesc.mItems[i].mEnabled) mDesc.mItems[i].Draw(mDesc.mSelectedItem == i, mDesc);
+
+			if (i > 2)
+			{
+				mDesc.mItems[i].SetY(mDesc.mItems[i - 1].GetY() + mDesc.mLinespacing - (hasparsedmaps ? 9 : 0)); // Offset y position for each remaining entry after the first one
+			}
+
 		}
 		Menu.Drawer();
 
@@ -663,7 +675,7 @@ class GameMenu : IconListMenu
 
 		for (int i = 0; i < mDesc.mItems.Size(); i++)
 		{
-			if (mDesc.mItems[i].Selectable() && mDesc.mItems[i].GetAction() == '')
+			if (mDesc.mItems[i].Selectable())
 			{
 				itemindex++;
 
@@ -743,13 +755,14 @@ class GameMenu : IconListMenu
 					return false;
 				}
 
-				RestorePlaceholderMarkers();
+				if (mDesc.mItems[mDesc.mSelectedItem] is "ListMenuItemGameSelection")
+				{
+					if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
 
-				if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
+					SetMenu("IntroSlideShow", -1);
 
-				SetMenu("IntroSlideShow", -1);
-
-				return true;
+					return true;
+				}
 		}
 
 		return Super.MenuEvent(mkey, fromcontroller);
@@ -769,6 +782,21 @@ class GameMenu : IconListMenu
 }
 
 class ListMenuItemGameSelection : ListMenuItemTextItem
+{
+	override void Draw(bool selected, ListMenuDescriptor desc)
+	{
+		let fnt = menuDelegate.PickFont(mFont);
+		String title = StringTable.Localize(mText);
+
+		BrokenLines lines = fnt.BreakLines(title, CleanWidth_1);
+
+		int offset = fnt.GetHeight() / 2 - ((lines.count() - 1) * fnt.GetHeight()) / 2;
+
+		DrawText(desc, fnt, selected ? mColorSelected : mColor, mXpos, mYpos + offset, title);
+	}
+}
+
+class ListMenuItemTextItemCentered : ListMenuItemTextItem
 {
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{

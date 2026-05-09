@@ -1306,8 +1306,8 @@ class TextScreenMenu : OptionMenu
 
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
-				if (!mParentMenu) { S_ChangeMusic(level.music); }
-				else { S_ChangeMusic("WONDERIN"); }
+				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
+				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
 
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
@@ -1591,11 +1591,6 @@ class MapMenu : TextScreenMenu
 
 		CalculatePositions();
 
-		if (gamestate != GS_FINALE)
-		{
-			GameHandler.ChangeMusic("*");
-		}
-
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 	}
 
@@ -1677,7 +1672,7 @@ class MapMenu : TextScreenMenu
 
 		// Draw the title
 		String pagetitle = StringTable.Localize("$M_MAPSELECT");
-		screen.DrawText(titlefont, Font.FindFontColor("Palette6C"), 160 - titlefont.StringWidth(pagetitle) / 2, padding.y, pagetitle, DTA_320x200, true);
+		screen.DrawText(titlefont, Font.FindFontColor("White"), 160 - titlefont.StringWidth(pagetitle) / 2, padding.y, pagetitle, DTA_320x200, true);
 
 		// If there aren't any pages, stop here
 		if (!VisiblePages.Size()) { return; }
@@ -1698,7 +1693,7 @@ class MapMenu : TextScreenMenu
 			// Draw each entry
 			String title = page.title;
 			String indicator = " ";
-			if (page.children.Size()) { indicator = (page.childrenhidden ? "🢓" : "🢒"); }
+			if (page.children.Size()) { indicator = "\c[WolfMenuYellow]" .. (page.childrenhidden ? "🢓" : "🢒"); }
 			title = String.Format("%s%s%s", title.left(page.tier), indicator, title.mid(page.tier));
 
 			screen.DrawText(textfont, Font.FindFontColor("WolfMenuLightGrey"), page.pos.x, page.pos.y, title, DTA_320x200, true, DTA_ClipTop, int(page.realboxpos.y), DTA_ClipBottom, int(drawbottom), DTA_ClipRight, int(page.realpos.x + realcellsize.x));
@@ -1842,8 +1837,9 @@ class MapMenu : TextScreenMenu
 
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
-				if (!mParentMenu) { S_ChangeMusic(level.music); }
-				else { S_ChangeMusic("WONDERIN"); }
+				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
+				else if (mParentMenu is "GameMenu") { GameHandler.ChangeMusic("SALUTE"); }
+				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
 
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
@@ -1906,7 +1902,10 @@ class MapMenu : TextScreenMenu
 
 					String queuecmd = String.Format("initialize:%s:%s", ZScriptTools.GetText(m.title), ZScriptTools.GetText(m.d.path));
 					EventHandler.SendNetworkEvent(queuecmd);
-					Close();
+
+					if (gamestate != GS_LEVEL) { StartGameDirect(true, false, "WolfPlayer", 9, skill); }
+
+					Menu.SetMenu("CloseMenu", -1);
 				}
 				break;
 			default:
@@ -1939,10 +1938,6 @@ class MapMenu : TextScreenMenu
 		if (selected == 0)
 		{
 			scrollpos = 0;
-		}
-		else if (selected == lastentry)
-		{
-			scrollpos = maxscroll;
 		}
 		else if (selected * cellsize.y < scrollpos)
 		{
