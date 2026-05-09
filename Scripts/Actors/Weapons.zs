@@ -66,7 +66,7 @@ class ClassicWeapon : Weapon
 			Loop;
 		Fire:
 			"####" "#" 1;
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 		Hold:
 			"####" "#" 1;
 			"####" "#" 0 {
@@ -80,7 +80,7 @@ class ClassicWeapon : Weapon
 					A_Refire("Fire");
 				}
 			}
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 
 	}
 
@@ -452,7 +452,7 @@ class WolfKnife : ClassicWeapon
 			"####" D 3 A_WolfPunch(GameHandler.WolfRandom() >> (invoker.adrenaline ? 1 : 4), true, CPF_NOTURN, "WolfPuff", 64, meleesound:"weapons/wknife", misssound:"weapons/wknife");
 			"####" E 3;
 			"####" A 0 A_Refire();
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 	}
 
 	override void DoEffect()
@@ -498,7 +498,7 @@ class WolfPistol : ClassicWeapon
 			"####" D 3 A_FireGun(2.0);
 			"####" E 3;
 			"####" A 0 A_Refire();
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 	}
 }
 
@@ -532,7 +532,7 @@ class WolfMachineGun : ClassicWeapon
 			"####" C 3 Bright;
 			"####" D 3 A_FireGun(3.0);
 			"####" E 3 A_ReFire();
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 	}
 }
 
@@ -570,7 +570,7 @@ class WolfChaingun : ClassicWeapon
 				A_FireGun(4.0);
 				A_ReFire();
 			}
-			Goto Ready;
+			"####" "#" 0 A_Jump(256, "Ready");
 	}
 }
 
