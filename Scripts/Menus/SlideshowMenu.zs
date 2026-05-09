@@ -630,10 +630,10 @@ class IntroSlideshow : WolfMenu
 					break;
 				case 2: // Press a key
 					current = startup2;
-					advancetime = (Game.IsSoD() ? gametic + GameTicRate * 2 : 0);
+					advancetime = Game.IsSoD() ? gametic + GameTicRate * 2 : 0;
 					break;
 				case 3: // Working...
-					advancetime = 5;
+					advancetime = gametic + 20;
 					break;
 				case 4: // Start demo loop
 					GameHandler.ChangeMusic(Game.IsSoD() ? "XTOWER2" : "NAZI_NOR");
@@ -683,7 +683,7 @@ class IntroSlideshow : WolfMenu
 	{
 		if (mkey && fadetarget < gametic)
 		{
-			inputtic = gametic;
+			inputtic = gametic + 1;
 			curscreen++;
 
 			if (curscreen > 5) { Menu.SetMenu("MainMenu", -1); }
