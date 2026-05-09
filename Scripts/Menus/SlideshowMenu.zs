@@ -592,7 +592,7 @@ class IntroSlideshow : WolfMenu
 			}
 
 			if (use_mouse) { screen.DrawTexture(selected, false, 164, 82, DTA_320x200, true); }
-			if (use_joystick) { screen.DrawTexture(selected, false, 164, 106, DTA_320x200, true); }
+			if (use_joystick) { screen.DrawTexture(selected, false, 164, 105, DTA_320x200, true); }
 		}
 		else if (current == warning)
 		{
