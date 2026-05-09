@@ -1150,17 +1150,17 @@ class JaguarHUD : AltHUD
 
 		Inventory bkey = CPlayer.mo.FindInventory("BlueKey");
 		if (!bkey) { bkey = CPlayer.mo.FindInventory("BlueKeyLost"); }
-		if (bkey)
-		{
-			DrawImageToBox(bkey.AltHudIcon, 86, hudheight - 39, 24, 24, 1.0);
-		}
+		if (bkey) { DrawImageToBox(bkey.AltHudIcon, 86, hudheight - 39, 24, 24, 1.0); }
+
+		Inventory rkey = CPlayer.mo.FindInventory("RedKey");
+		if (rkey) { DrawImageToBox(rkey.AltHudIcon, 102, hudheight - 39, 24, 24, 1.0); }
 
 		Inventory ykey = CPlayer.mo.FindInventory("YellowKey");
 		if (!ykey) { ykey = CPlayer.mo.FindInventory("YellowKeyLost"); }
-		if (ykey)
-		{
-			DrawImageToBox(ykey.AltHudIcon, hudwidth - 108, hudheight - 39, 24, 24, 1.0);
-		}
+		if (ykey) { DrawImageToBox(ykey.AltHudIcon, hudwidth - 108, hudheight - 39, 24, 24, 1.0); }
+
+		Inventory gkey = CPlayer.mo.FindInventory("GreenKey");
+		if (gkey) { DrawImageToBox(gkey.AltHudIcon, hudwidth - 124, hudheight - 39, 24, 24, 1.0); }
 	}
 
 	override void DrawAutomap(PlayerInfo CPlayer)

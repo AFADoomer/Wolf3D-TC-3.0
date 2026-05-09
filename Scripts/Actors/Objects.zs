@@ -587,6 +587,7 @@ class RedKey : Wolf3DKey
 	{
 		//$Title Key (Red)
 		//$Color 4
+		Inventory.AltHUDIcon "I_RKEY";
 		Inventory.Icon "I_RKEY_T";
 		Wolf3DKey.LockNumber 62;
 		+NOTDMATCH
@@ -606,6 +607,7 @@ class GreenKey : Wolf3DKey
 	{
 		//$Title Key (Green)
 		//$Color 2
+		Inventory.AltHUDIcon "I_GKEY";
 		Inventory.Icon "I_GKEY_T";
 		Wolf3DKey.LockNumber 63;
 		+NOTDMATCH

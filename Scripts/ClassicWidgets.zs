@@ -569,7 +569,7 @@ class KeyWidget : Widget
 
 		for (let j = player.mo.Inv; j != null; j = j.Inv)
 		{
-			if (screenblocks < 11 || automapactive) { continue; }
+			if (screenblocks < 11 || automapactive || (hud_althud && j is "Wolf3DKey")) { continue; }
 			if (j is "Key" && j.Icon.IsValid())
 			{
 				[texscale, texsize] = ZScriptTools.ScaleTextureTo(j.icon, iconsize);
@@ -597,7 +597,7 @@ class KeyWidget : Widget
 
 		for (let i = player.mo.Inv; i != null; i = i.Inv)
 		{
-			if (screenblocks < 11 || automapactive) { continue; }
+			if (screenblocks < 11 || automapactive || (hud_althud && i is "Wolf3DKey")) { continue; }
 			if (i is "Key" && i.Icon.IsValid())
 			{
 				[texscale, texsize] = ZScriptTools.ScaleTextureTo(i.icon, iconsize);
