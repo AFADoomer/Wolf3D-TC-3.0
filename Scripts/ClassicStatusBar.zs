@@ -554,9 +554,9 @@ class ClassicStatusBar : WidgetStatusBar
 				[coords.x, coords.y, size.x, size.y] = Statusbar.StatusbarToRealCoords(0, 200 - RelTop, 320, RelTop);
 
 				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
-				if ((!st_scale && screenblocks == 10) || automapactive)
+				if (screenblocks == 10 || automapactive)
 				{
-					DrawImage("WBRD_B", (160, 200 - RelTop), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(windowsize.x, 1.0));
+					DrawImage("WBRD_B", ((coords.x + size.x) / 2, viewport.y + viewportsize.y - 1), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(screensize.x / 3, 1.0));
 				}
 			}
 		}
