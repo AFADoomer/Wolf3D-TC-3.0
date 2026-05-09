@@ -290,10 +290,10 @@ class WolfFlame : GhostFireball
 	Default
 	{
 		DamageType "Fire";
-		Speed 25;
+		Speed 20;
 	}
 
-	override void PostBeginPlay()
+	override void BeginPlay()
 	{
 		WolfProjectile.BeginPlay();
 	}
