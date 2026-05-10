@@ -1,6 +1,6 @@
 server bool g_initial = true; // Show initial disclaimer message
 
-server noarchive int g_sod = -2; // What game should this be
+server noarchive HandlerClass(SoDVarChange) int g_sod = -2; // What game should this be
 
 // Gameplay
 server bool g_momentum = false; // Use Doom-style movement

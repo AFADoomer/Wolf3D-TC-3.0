@@ -277,6 +277,10 @@ class MapHandler : StaticEventHandler
 				console.printf("'%s' (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
+		else if (e.Name == "updatestyle")
+		{
+			InitializeParsedMap(e.args[0], false);
+		}
 	}
 
 	override void WorldLoaded(WorldEvent e)
@@ -286,42 +290,65 @@ class MapHandler : StaticEventHandler
 		if (level.mapname ~== "Level" && queuedmap)
 		{
 			curmap = queuedmap;
-			curmap.Initialize();
-			activatedfloors.Clear();
-			activatedpushwalls.Clear();
 
-			if (curmap.info)
-			{
-				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
-				if (curmap.info.nextmap.length()) { level.nextmap = curmap.info.nextmap; }
-				if (curmap.info.nextsecretmap.length()) { level.nextsecretmap = curmap.info.nextsecretmap; }
+			CVar sodvar = CVar.FindCVar("g_sod");
+			if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
 
-				String IMFname = curmap.info.music;
-
-				CVar stylevar = CVar.FindCVar("g_musicstyle");
-				if (stylevar && !stylevar.GetInt()) { S_ChangeMusic(IMFname); }
-				else
-				{
-					GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
-					if (!this) { S_ChangeMusic(IMFname); }
-					else
-					{
-						String song = this.music.GetIfExists(IMFname);
-						if (song.length()) { S_ChangeMusic(song); }
-						else { S_ChangeMusic(IMFname); }
-					}
-				}
-			}
-			else
-			{
-				console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", g_sod <= 0 ? "DarkRed" : "Gold", curmap.mapname);
-				level.nextmap = level.nextsecretmap = level.mapname;
-			}
+			InitializeParsedMap(g_sod);
 		}
 		else
 		{
 			queuedmap = null;
 			curmap = null;
+		}
+	}
+
+	void InitializeParsedMap(int style = -1, bool initial = true)
+	{
+		if (!curmap) { return; }
+
+		if (style < 0) { style = max(0, g_sod); }
+
+		curmap.Initialize(style, initial);
+
+		if (initial)
+		{
+			activatedfloors.Clear();
+			activatedpushwalls.Clear();
+		}
+
+		if (curmap.info)
+		{
+			console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", style <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
+			
+			String nextmap = curmap.info.nextmap;
+			if (nextmap.length() && nextmap.left(6) != "enDSeQ")
+			{
+				LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+				if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
+				level.nextmap = "Level";
+			}
+
+			String IMFname = curmap.info.music;
+
+			CVar stylevar = CVar.FindCVar("g_musicstyle");
+			if (stylevar && !stylevar.GetInt()) { S_ChangeMusic(IMFname); }
+			else
+			{
+				GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
+				if (!this) { S_ChangeMusic(IMFname); }
+				else
+				{
+					String song = this.music.GetIfExists(IMFname);
+					if (song.length()) { S_ChangeMusic(song); }
+					else { S_ChangeMusic(IMFname); }
+				}
+			}
+		}
+		else
+		{
+			console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", style <= 0 ? "DarkRed" : "Gold", curmap.mapname);
+			level.nextmap = level.nextsecretmap = level.mapname;
 		}
 	}
 	
@@ -339,24 +366,12 @@ class MapHandler : StaticEventHandler
 				if (sidedef.sector.CenterFloor() == e.Thing.cursector.CenterFloor()) { side = s; }
 			}
 
-			String nextmap = ln.args[2] == 10 ? level.nextsecretmap : level.nextmap;
-
-			if (nextmap ~== "Level")
+			if (ln.args[2] == 10) // Secret map trigger
 			{
-				// If this is a custom map with no corresponding MAPINFO, just loop this map
-				queuedmap = curmap;
-			}
-			else if (nextmap.left(6) == "enDSeQ" || nextmap == "")
-			{
-				// End of episode/game
-			}
-			else
-			{
-				LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+				LevelInfo nextinfo = LevelInfo.FindLevelInfo(curmap.info.nextsecretmap);
 				if (nextinfo)
 				{
-					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum);
-					level.nextmap = level.nextsecretmap = "Level";
+					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path);
 				}
 			}
 		}
@@ -836,17 +851,16 @@ class ParsedMap
 		return length;
 	}
 
-	play void Initialize()
+	play void Initialize(int style = -1, bool initial = true)
 	{
+		if (style < 0) { style = max(0, g_sod); }
+
 		if (level.mapname ~== "Level")
 		{
 			MapHandler handler = MapHandler.Get();
 
 			voidspace.Clear();
 			noclip = false;
-
-			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
 
 			TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
 			
@@ -875,19 +889,22 @@ class ParsedMap
 					startspot = sec.centerspot;
 					double angle = 90 - (a - 0x13) * 90;
 
-					for (int i = 0; i < MAXPLAYERS; i++)
+					if (initial)
 					{
-						if (playeringame[i])
+						for (int i = 0; i < MAXPLAYERS; i++)
 						{
-							if (!deathmatch && i == 0)
+							if (playeringame[i])
 							{
-								players[0].mo.SetOrigin((startspot, 0), false);
-								players[0].mo.angle = angle;
-							}
-							else
-							{
-								players[i].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), false);
-								players[i].mo.angle = deathmatch ? int(ceil(GameHandler.WolfRandom() / 64)) * 90 : angle;
+								if (!deathmatch && i == 0)
+								{
+									players[0].mo.SetOrigin((startspot, 0), false);
+									players[0].mo.angle = angle;
+								}
+								else
+								{
+									players[i].mo.SetOrigin((GetNextSpot(startspot, angle, 0, deathmatch), 0), false);
+									players[i].mo.angle = deathmatch ? int(ceil(GameHandler.WolfRandom() / 64)) * 90 : angle;
+								}
 							}
 						}
 					}
@@ -908,7 +925,7 @@ class ParsedMap
 						ln.flags &= ~Line.ML_TWOSIDED;
 						ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
 
-						TextureID tex = GetTexture(pos, ln);
+						TextureID tex = GetTexture(pos, ln, style);
 
 						for (int s = 0; s < 2; s++)
 						{
@@ -920,14 +937,14 @@ class ParsedMap
 					}
 
 					// Set the floor texture to the wall texture so they show up on the automap
-					sec.SetTexture(Sector.floor, GetTexture(pos));
+					sec.SetTexture(Sector.floor, GetTexture(pos, null, style));
 				}
 
 				// Spawn actors
 				if (a > 0)
 				{
 					Actor mo;
-					ParsedValue am = ActorMap.GetActor(handler.actormaps, max(0, g_sod), a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+					ParsedValue am = ActorMap.GetActor(handler.actormaps, style, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
 
 					if (am)
 					{
@@ -1154,7 +1171,7 @@ class ParsedMap
 									// Set the doors to colored variants if the CVar is set
 									if (g_usedoorkeycolors)
 									{
-										String texpath = String.Format("WLF%iLK%i", gametype > 0 ? gametype : max(0, g_sod), ln.locknumber - 59);
+										String texpath = String.Format("WLF%iLK%i", gametype > 0 ? gametype : style, ln.locknumber - 59);
 										if (ln.delta.x) { texpath = String.Format("%sG", texpath); }
 										else { texpath = String.Format("%sF", texpath); }
 
@@ -1168,7 +1185,7 @@ class ParsedMap
 									if (ln.sidedef[s])
 									{
 										if (locked && tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
-										else { ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln)); }
+										else { ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln, style)); }
 									}
 								}
 							}
@@ -1185,7 +1202,7 @@ class ParsedMap
 							sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
 							Level.total_secrets++;
 
-							sec.SetTexture(Sector.floor, GetTexture(pos));
+							sec.SetTexture(Sector.floor, GetTexture(pos, null, style));
 						}
 					}
 				}
@@ -1233,7 +1250,7 @@ class ParsedMap
 
 						if (ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())
 						{
-							TextureID tex = GetTexture(pos, ln);
+							TextureID tex = GetTexture(pos, ln, style);
 							for (int s = 0; s < 2; s++)
 							{
 								if (ln.sidedef[s])
@@ -1250,7 +1267,7 @@ class ParsedMap
 							Sector texsec = (ln.frontsector == sec) ? ln.backsector : ln.frontsector;
 							Vector2 texpos = (texsec ? texsec.CenterSpot : (-4096, 4096));
 							texpos = ParsedMap.CoordsToGrid(texpos);
-							TextureID tex = GetTexture(texpos, ln);
+							TextureID tex = GetTexture(texpos, ln, style);
 
 							for (int s = 0; s < 2; s++)
 							{
@@ -1271,6 +1288,17 @@ class ParsedMap
 
 	LevelInfo GetInfo()
 	{
+		int num = mapnum;
+
+		if (num >= 1000)
+		{
+
+		}
+		else if (num > 700)
+		{
+			num += (gametype - 1) * 100; // Adjust map numbers for lost episodes
+		}
+
 		for (int i = 0; i < LevelInfo.GetLevelInfoCount(); i++)
 		{
 			LevelInfo info = LevelInfo.GetLevelInfo(i);
@@ -1280,17 +1308,20 @@ class ParsedMap
 		return null;
 	}
 
-	TextureID GetTexture(Vector2 pos, Line ln = null)
+	TextureID GetTexture(Vector2 pos, Line ln = null, int style = -1)
 	{
+		if (style < 0) { style = max(0, g_sod); }
+
 		int t = TileAt(pos);
 
-		return GetTileTexture(t, pos, ln);
+		return GetTileTexture(t, pos, ln, style);
 	}
 
-	TextureID GetTileTexture(int t, Vector2 pos, Line ln = null)
+	TextureID GetTileTexture(int t, Vector2 pos, Line ln = null, int style = -1)
 	{
-		int game = gametype;
-		if (game <= 0) { game = max(0, g_sod); }
+		int game = style;
+		if (game < 0) { game = gametype; }
+		if (game < 0) { game = max(0, g_sod); }
 
 		// Special handling for doors
 		if (game < 4)

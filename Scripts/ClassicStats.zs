@@ -594,11 +594,14 @@ class ClassicStats : DoomStatusScreen
 		if (curmap) { info = curmap.GetInfo(); }
 		if (!info) { info = level.info; }
 
+		String levelname = StringTable.Localize(info.levelname, false);
 		// Use the local level structure which can be overridden by hubs
-		Array<String> levelname;
-		info.levelname.Split(levelname, ": "); // Use the portion of the name after the colon, if there is one.
+		Array<String> levelnames;
+		levelname.Split(levelnames, ": "); // Use the portion of the name after the colon, if there is one.
+		lnametexts[0] = levelnames[levelnames.Size() - 1];
 
-		lnametexts[0] = levelname[levelname.Size() - 1];
+		if (lnametexts[0] ~== "Wolfenstein 3D") { lnametexts[0] = curmap.mapname; }
+
 		lnametexts[1] = wbstartstruct.nextname;
 
 		int levelnum = info.levelnum % 100;

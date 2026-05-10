@@ -452,6 +452,19 @@ class GameHandler : StaticEventHandler
 			gamefiles.Clear();
 			CheckGameFiles(self);
 		}
+		else if (e.Name ~== "texinfo")
+		{
+			PlayerPawn mo = PlayerPawn(players[consoleplayer].mo);
+			if (!mo) { return; }
+
+			FLineTraceData trace;
+			mo.LineTrace(mo.angle, mo.UseRange * 3, mo.pitch, TRF_THRUACTORS, players[consoleplayer].viewheight, 0.0, 0.0, trace);
+
+			TextureID tex = trace.HitTexture;
+			if (!tex.IsValid()) { return; }
+			
+			console.printf(TexMan.GetName(tex));
+		}
 
 		if (e.IsManual) { return; }
 
@@ -723,12 +736,6 @@ class Game
 			}
 		}
 
-		if (g_sod != ret && gamestate == GS_LEVEL && level.time == 2) // Set the value if we are in a game and it hasn't been set already by the startup menu
-		{
-			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(ret); }
-		}
-
 		return g_sod, ret;
 	}
 
@@ -887,6 +894,20 @@ class PushwallHighlight : CustomColorCVar
 	override Color ModifyValue(Name CVarName, color val)
 	{
 		EventHandler.SendNetworkEvent("highlightpushwalls", val);
+
+		return val;
+	}
+}
+
+class SoDVarChange : CustomIntCVar
+{
+	override int ModifyValue(Name CVarName, int val)
+	{
+		if (gamestate != GS_LEVEL) { return val; }
+
+		if (val < 0) { val = 0; }
+
+		EventHandler.SendNetworkEvent("updatestyle", val);
 
 		return val;
 	}
