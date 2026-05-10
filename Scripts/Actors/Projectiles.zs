@@ -234,8 +234,8 @@ class Syringe : WolfProjectile
 	}
 }
 
-// Hitler Ghost Fireballs 
-class GhostFireBall : WolfProjectile
+// Fake Hitler Fireballs 
+class FakeHitlerFireBall : WolfProjectile
 {
 	Default
 	{
@@ -254,8 +254,8 @@ class GhostFireBall : WolfProjectile
 		Death:
 			BALP A 4 Bright {
 				bInvisible = g_noblood;
-				roll = Random[GhostFireBallDeath](0, 7) * 45;
-				scale.x *= RandomPick[GhostFireBallDeath](-1, 1);
+				roll = Random[FakeHitlerFireBallDeath](0, 7) * 45;
+				scale.x *= RandomPick[FakeHitlerFireBallDeath](-1, 1);
 				WolfExplode(0, flags:0);
 			}
 			BALP BCD 4 Bright
@@ -285,7 +285,7 @@ class GhostFireBall : WolfProjectile
 	}
 }
 
-class WolfFlame : GhostFireball
+class WolfFlame : FakeHitlerFireball
 {
 	Default
 	{

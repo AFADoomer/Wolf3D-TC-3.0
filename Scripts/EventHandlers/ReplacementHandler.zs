@@ -92,7 +92,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'DoomImp': e.replacement = "Mutant"; break;
 			case 'BaronofHell': e.replacement = "GretelGrosse"; break;
 			case 'Cacodemon':
-			case 'PainElemental': e.replacement = "HitlerGhost"; break;
+			case 'PainElemental': e.replacement = "FakeHitler"; break;
 			case 'ChaingunGuy': e.replacement = "Officer"; break;
 			case 'HellKnight': e.replacement = "HansGrosse"; break;
 			case 'Arachnotron': e.replacement = "TransGrosse"; break;
@@ -117,7 +117,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'SS': e.replacee = "ShotgunGuy"; break;
 			case 'Mutant': e.replacee = "DoomImp"; break;
 			case 'GretelGrosse': e.replacee = "BaronofHell"; break;
-			case 'HitlerGhost': e.replacee = "Cacodemon"; break;
+			case 'FakeHitler': e.replacee = "Cacodemon"; break;
 			case 'Officer': e.replacee = "ChaingunGuy"; break;
 			case 'HansGrosse': e.replacee = "HellKnight"; break;
 			case 'TransGrosse': e.replacee = "Arachnotron"; break;

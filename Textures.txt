@@ -1154,7 +1154,7 @@ Sprite WBO3I0, 64, 64 { Offset 32, 64 Patch WSPR0314, 0, 0 }
 Sprite WBO3J0, 64, 64 { Offset 32, 64 Patch WSPR0315, 0, 0 }
 Sprite WBO3K0, 64, 64 { Offset 32, 64 Patch WSPR0316, 0, 0 }
 
-// Hitler Ghost
+// Fake Hitler
 Sprite WHGTA1, 64, 64 { Offset 32, 64 Patch WSPR0321, 0, 0 }
 Sprite WHGTB1, 64, 64 { Offset 32, 64 Patch WSPR0322, 0, 0 }
 Sprite WHGTC1, 64, 64 { Offset 32, 64 Patch WSPR0323, 0, 0 }

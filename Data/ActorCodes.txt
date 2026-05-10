@@ -143,7 +143,7 @@ Default // Wolf3D with SoD bosses
 	157 = "Officer", 3, 90, 1;
 	158 = "Officer", 3, 180, 1;
 	159 = "Officer", 3, 270, 1;
-	160 = "HitlerGhost";
+	160 = "FakeHitler";
 	161 = "DeathKnight";
 	162 = "SS", 3, 0, 0;
 	163 = "SS", 3, 90, 0;

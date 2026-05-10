@@ -189,7 +189,7 @@ hans/death				WSND0009
 schabbs/sight			WSND0025
 schabbs/death			WSND0024
 
-// Hitler Ghost
+// Fake Hitler
 hgst/sight				WSND0023
 hgst/death				WSND0026
 

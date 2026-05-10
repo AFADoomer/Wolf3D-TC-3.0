@@ -1195,7 +1195,7 @@ DoomEdNums
 	22205=MBatLost
 
 	// Special Enemies
-	20160=HitlerGhost
+	20160=FakeHitler
 
 	21106=WolfSpectre
 	22106=WolfGhost
