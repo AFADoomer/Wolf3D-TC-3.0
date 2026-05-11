@@ -261,7 +261,7 @@ class MapHandler : StaticEventHandler
 
 			if (gamestate == GS_LEVEL)
 			{
-				level.ChangeLevel("Level");
+				level.ChangeLevel("Level", 0, 0, g_warpskill);
 
 				if (mapname == "Wolf3D TC Test")
 				{
@@ -279,7 +279,7 @@ class MapHandler : StaticEventHandler
 		}
 		else if (e.Name == "updatestyle")
 		{
-			InitializeParsedMap(e.args[0], false);
+			if (e.args[0] >= 0) { InitializeParsedMap(e.args[0], false); }
 		}
 	}
 
@@ -291,8 +291,11 @@ class MapHandler : StaticEventHandler
 		{
 			curmap = queuedmap;
 
-			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
+			if (g_sod < 0)
+			{
+				CVar sodvar = CVar.FindCVar("g_sod");
+				if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
+			}
 
 			InitializeParsedMap(g_sod);
 		}
@@ -316,6 +319,8 @@ class MapHandler : StaticEventHandler
 			activatedfloors.Clear();
 			activatedpushwalls.Clear();
 		}
+
+		if (!initial) { return; }
 
 		if (curmap.info)
 		{

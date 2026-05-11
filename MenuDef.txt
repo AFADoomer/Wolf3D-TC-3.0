@@ -495,10 +495,25 @@ OptionValue "DeafGuardTileOptions"
 
 OptionMenu "MapMenu"
 {
-//	ImageSlider "$M_GAME", "GAME", "g_sod", 1, 5, 1
-//	ImageSlider "$M_SKILL2", "SKILL", "g_warpskill", 1, 5, 1
-
 	Class "MapMenu"
+	Option "$M_GAME",		"g_sod", "Games"
+	Option "$M_SKILL",		"g_warpskill", "Skills"
+}
+
+OptionValue "Games"
+{
+	0, "$TYPE_WOLF"
+	1, "$TYPE_SOD"
+	2, "$TYPE_SD2"
+	3, "$TYPE_SD3"
+}
+
+OptionValue "Skills"
+{
+	1, "$SK_1"
+	2, "$SK_2"
+	3, "$SK_3"
+	4, "$SK_4"
 }
 
 OptionMenu "HelpMenu"

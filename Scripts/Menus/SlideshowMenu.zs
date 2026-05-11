@@ -1232,7 +1232,7 @@ class HighScores : WolfMenu
 	}
 }
 
-class TextScreenMenu : OptionMenu
+class TextScreenMenu : ExtendedOptionMenu
 {
 	TextureID border;
 	Vector2 dimcoords, dimsize;
@@ -1483,7 +1483,8 @@ class TextScreenMenu : OptionMenu
 
 class MapMenu : TextScreenMenu
 {
-	double alpha;
+	ExtendedOptionMenu generic;
+
 	int h, w;
 
 	Font titlefont, textfont, captionfont;
@@ -1492,6 +1493,7 @@ class MapMenu : TextScreenMenu
 	int drawbottom;
 	int scrollpos, maxscroll, scrollamt;
 	int topoffset, bottomoffset;
+	bool active;
 
 	Vector2 cellsize, realcellsize;
 	Vector2 scale;
@@ -1500,13 +1502,17 @@ class MapMenu : TextScreenMenu
 	ScrollBar scroll;
 
 	Array<int> VisiblePages;
-	MapHandler handler;
+	MapHandler maphandler;
+
+	CVar gamevar;
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
-		OptionMenu.Init(parent, desc);
+		ExtendedOptionMenu.Init(parent, desc);
 
 		border = TexMan.CheckForTexture("Graphics/Menu/MapSelectBackground.png", TexMan.Type_Any);
+		cursor0 = TexMan.CheckForTexture("Graphics/ReadyIco.png", TexMan.Type_Any);
+		cursor1 = TexMan.CheckForTexture("Graphics/ReadyIco2.png", TexMan.Type_Any);
 
 		mMouseCapture = true;
 		allowexit = true;
@@ -1518,24 +1524,24 @@ class MapMenu : TextScreenMenu
 		h = 200;
 		w = 320;
 
-		// Set frame padding and draw offsets
-		padding = (4, 4);
-		topoffset = 16;
-		bottomoffset = 0;
-		
-		// Set cell size for index entries
-		cellsize = (299, 12);
-
 		// Set the fonts
 		titlefont = BigFont;
 		textfont = SmallFont;
 		captionfont = SmallFont;
 
+		// Set frame padding and draw offsets
+		padding = (4, 4);
+		topoffset = padding.y + titlefont.GetHeight() + padding.y + double(OptionMenuSettings.mLinespacing * mDesc.mItems.Size()) / CleanYFac_1;
+		bottomoffset = 0;
+		
+		// Set cell size for index entries
+		cellsize = (299, 12);
+
 		// Font height used by entry content (captionfont)
 		lineheight = max(captionfont.GetHeight(), 7);
 
 		// Parse the data file and store it into an array
-		handler = MapHandler.Get();
+		maphandler = MapHandler.Get();
 		GetMapData();
 
 		MapDataInfo parent, last;
@@ -1592,6 +1598,9 @@ class MapMenu : TextScreenMenu
 		CalculatePositions();
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
+
+		gamevar = CVar.FindCVar("g_sod");
+		if (gamevar) { gamevar.SetInt(0); }
 	}
 
 	void CalculatePositions()
@@ -1618,6 +1627,7 @@ class MapMenu : TextScreenMenu
 
 	override void Ticker()
 	{
+		if (generic) { generic.Ticker(); }
 		Super.Ticker();
 
 		if (screensize.x != Screen.GetWidth() || screensize.y != Screen.GetHeight())
@@ -1660,6 +1670,29 @@ class MapMenu : TextScreenMenu
 			scroll.scrollpos = scrollpos;
 			scroll.maxscroll = maxscroll;
 		}
+
+		let selection = MapDataInfo(PagesInfo[VisiblePages[selected]]);
+
+		if (gamevar && selection.map && selection.map.gametype > -1)
+		{
+			gamevar.SetInt(selection.map.gametype);
+			mDesc.mItems[0].mGrayCheck = gamevar;
+			mDesc.mItems[0].mGrayCheckVal = selection.map.gametype;
+		}
+		else
+		{
+			mDesc.mItems[0].mEnabled = true;
+			mDesc.mItems[0].mGrayCheck = null;
+		}
+	}
+
+	void DrawControls(int ytop = 0)
+	{
+		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
+		int lastrow = screen.GetHeight() - fontheight * 2;
+		int x = 160 + (Screen.GetWidth() / 2 - max(620, Screen.GetWidth() * 2 / 3) / 2);
+
+		GenericOptionMenu.DrawMenu(x, 35, Font.GetFont("BigFont"), ytop, lastrow);
 	}
 
 	override void Drawer()
@@ -1668,11 +1701,15 @@ class MapMenu : TextScreenMenu
 		screen.Dim(0x282828, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 		if (border) { screen.DrawTexture(border, false, 160, 100, DTA_320x200, true, DTA_CenterOffset, true); }
 
-		OptionMenu.Drawer();
-
 		// Draw the title
 		String pagetitle = StringTable.Localize("$M_MAPSELECT");
 		screen.DrawText(titlefont, Font.FindFontColor("White"), 160 - titlefont.StringWidth(pagetitle) / 2, padding.y, pagetitle, DTA_320x200, true);
+
+		double factor = Screen.GetHeight() / 200.0;
+		int y = int(factor * (padding.y + titlefont.GetHeight()));
+		y += int(factor * padding.y);
+
+		DrawControls(y);
 
 		// If there aren't any pages, stop here
 		if (!VisiblePages.Size()) { return; }
@@ -1685,7 +1722,7 @@ class MapMenu : TextScreenMenu
 			if (page.realpos.y >= drawbottom || page.realpos.y + page.size.y <= page.realboxpos.y) { continue; }
 
 			// Draw shading behind the selected entry
-			if (p == selected)
+			if (active && p == selected)
 			{
 				screen.Dim(0xF, 0.25, int(page.realpos.x), int(page.realpos.y), int(page.size.x + (maxscroll ? 0 : 13 * scale.x)), int(page.size.y));
 			}
@@ -1710,9 +1747,6 @@ class MapMenu : TextScreenMenu
 			if (!PagesInfo[VisiblePages[selected]].spans.Size()) { DrawText(PagesInfo[PagesInfo.Size() - 1], textx, texty, captionfont); }
 			else { DrawText(PagesInfo[VisiblePages[selected]], textx, texty, captionfont); }
 		}
-
-		// Draw page number
-		// screen.DrawText(captionfont, Font.FindFontColor("Palette07"), 270, 189, String.Format("pg %i of %i", selected + 1, VisiblePages.Size() - 1), DTA_320x200, true);
 
 		// Draw the scrollbar
 		if (scroll && maxscroll) { scroll.Draw(); }
@@ -1744,8 +1778,18 @@ class MapMenu : TextScreenMenu
 
 			if (entry)
 			{
-				if (selected == entry.index) { entry.Clicked(); }
-				else { selected = entry.index; }
+				active = true;
+				mDesc.mSelectedItem = -1;
+				
+				if (selected == entry.index)
+				{
+					return MenuEvent(MKEY_Enter, true);
+				}
+				else
+				{
+					selected = entry.index;
+					entry.Clicked();
+				}
 
 				if (entry.size.y < realcellsize.y)
 				{
@@ -1763,6 +1807,10 @@ class MapMenu : TextScreenMenu
 				}
 
 				return true;
+			}
+			else
+			{
+				active = false;
 			}
 
 			if (scroll)
@@ -1801,23 +1849,49 @@ class MapMenu : TextScreenMenu
 			if (scroll && scroll.capture) { scroll.capture = false; }
 		}
 
-		return true;
+		return ExtendedOptionMenu.MouseEvent(type, mx, my);
 	}
 	
 	override bool OnUIEvent(UIEvent ev)
 	{
-		if (ev.type == UIEvent.Type_WheelUp)
+		if (ev.Type == UIEvent.Type_KeyDown)
 		{
-			if (!maxscroll) { scrollpos = 0; return true; }
-			scrollpos = max(0, scrollpos - scrollamt);
-			return true;
+			switch (ev.KeyChar)
+			{
+				case UIEvent.Key_Tab:
+					if (active)
+					{
+						active = false;
+						mDesc.mSelectedItem = FirstSelectable();
+					}
+					else
+					{
+						active = true;
+						mFocusControl = null;
+						mDesc.mSelectedItem = -1;
+						SetScrollPosition();
+					}
+					return true;
+			}
 		}
-		else if (ev.type == UIEvent.Type_WheelDown)
+
+		if (active)
 		{
-			if (!maxscroll) { scrollpos = 0; return true; }
-			scrollpos = min(maxscroll, scrollpos + scrollamt);
-			return true;
+			if (ev.type == UIEvent.Type_WheelUp)
+			{
+				if (!maxscroll) { scrollpos = 0; return true; }
+				scrollpos = max(0, scrollpos - scrollamt);
+				return true;
+			}
+			else if (ev.type == UIEvent.Type_WheelDown)
+			{
+				if (!maxscroll) { scrollpos = 0; return true; }
+				scrollpos = min(maxscroll, scrollpos + scrollamt);
+				return true;
+			}
 		}
+
+		if (generic && generic.OnUIEvent(ev)) { return true; }
 		return Super.OnUIEvent(ev);
 	}
 
@@ -1834,14 +1908,14 @@ class MapMenu : TextScreenMenu
 				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
 				else { Menu.SetMenu("MainMenu", -1); }
 			}
-
+			
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
 				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
 				else if (mParentMenu is "GameMenu") { GameHandler.ChangeMusic("SALUTE"); }
 				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
-
+			
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
 			return true;
 		}
@@ -1851,65 +1925,117 @@ class MapMenu : TextScreenMenu
 		int startedAt = selected;
 		int pageamt = int(contentheight / cellsize.y);
 
-		switch (mkey)
+		if (!active)
 		{
-			case MKEY_Left:
-				if (PagesInfo[VisiblePages[selected]].children.Size() && !PagesInfo[VisiblePages[selected]].childrenhidden)
-				{
-					PagesInfo[VisiblePages[selected]].Clicked(0);
-					maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() - PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
-				}
-				else if (PagesInfo[VisiblePages[selected]].parent)
-				{
-					PagesInfo[VisiblePages[selected]].parent.Clicked(0);
-					selected = PagesInfo[VisiblePages[selected]].parent.index;
-				}
-				break;
-			case MKEY_Up:
-				selected--;
-				break;
-			case MKEY_Right:
-				if (PagesInfo[VisiblePages[selected]].children.Size())
-				{
-					if (PagesInfo[VisiblePages[selected]].childrenhidden)
+			switch (mkey)
+			{
+				case MKEY_Down:
+					if (mDesc.mSelectedItem + 1 > mDesc.mItems.Size() - 1)
 					{
-						PagesInfo[VisiblePages[selected]].Clicked(1);
-						maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() + PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
+						active = true;
+						selected = 0;
+						mFocusControl = null;
+						mDesc.mSelectedItem = -1;
+						SetScrollPosition();
 					}
 					else
 					{
-						selected = PagesInfo[VisiblePages[selected]].children[0].index;
+						return ExtendedOptionMenu.MenuEvent(mkey, fromcontroller);
 					}
-				}
-				break;
-			case MKEY_Down:
-				selected++;
-				break;
-			case MKEY_PageUp:
-				selected -= pageamt;
-				break;
-			case MKEY_PageDown:
-				selected += pageamt;
-				break;
-			case MKEY_Enter:
-				if (PagesInfo[VisiblePages[selected]].children.Size())
-				{
-					PagesInfo[VisiblePages[selected]].Clicked();
-				}
-				else
-				{
-					MapDataInfo m = MapDataInfo(PagesInfo[VisiblePages[selected]]);
+					break;
+				case MKEY_Up:
+					if (mDesc.mSelectedItem - 1 < 0)
+					{
+						active = true;
+						selected = VisiblePages.Size() - 1;
+						mFocusControl = null;
+						mDesc.mSelectedItem = -1;
+						SetScrollPosition();
+					}
+					else
+					{
+						return ExtendedOptionMenu.MenuEvent(mkey, fromcontroller);
+					}
+					break;
+				default:
+					if (mDesc.mSelectedItem >= 0 && mDesc.mItems[mDesc.mSelectedItem].MenuEvent(mkey, fromcontroller)) return true;
+					return ExtendedOptionMenu.MenuEvent(mkey, fromcontroller);
+					break;
+			}
+		}
+		else
+		{
+			switch (mkey)
+			{
+				case MKEY_Left:
+					if (PagesInfo[VisiblePages[selected]].children.Size() && !PagesInfo[VisiblePages[selected]].childrenhidden)
+					{
+						PagesInfo[VisiblePages[selected]].Clicked(0);
+						maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() - PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
+					}
+					else if (PagesInfo[VisiblePages[selected]].parent)
+					{
+						PagesInfo[VisiblePages[selected]].parent.Clicked(0);
+						selected = PagesInfo[VisiblePages[selected]].parent.index;
+					}
+					break;
+				case MKEY_Up:
+					selected--;
+					if (selected < 0)
+					{
+						active = false;
+						mDesc.mSelectedItem = mDesc.mItems.Size() - 1;
+					}
+					break;
+				case MKEY_Right:
+					if (PagesInfo[VisiblePages[selected]].children.Size())
+					{
+						if (PagesInfo[VisiblePages[selected]].childrenhidden)
+						{
+							PagesInfo[VisiblePages[selected]].Clicked(1);
+							maxscroll = max(0, int(cellsize.y * (VisiblePages.Size() + PagesInfo[VisiblePages[selected]].children.Size()) - contentheight));
+						}
+						else
+						{
+							selected = PagesInfo[VisiblePages[selected]].children[0].index;
+						}
+					}
+					break;
+				case MKEY_Down:
+					selected++;
+					if (selected > VisiblePages.Size() - 1)
+					{
+						active = false;
+						mDesc.mSelectedItem = FirstSelectable();
+					}
+					break;
+				case MKEY_PageUp:
+					selected -= pageamt;
+					break;
+				case MKEY_PageDown:
+					selected += pageamt;
+					break;
+				case MKEY_Enter:
+					if (PagesInfo[VisiblePages[selected]].children.Size())
+					{
+						PagesInfo[VisiblePages[selected]].Clicked();
+					}
+					else
+					{
+						MapDataInfo m = MapDataInfo(PagesInfo[VisiblePages[selected]]);
 
-					String queuecmd = String.Format("initialize:%s:%s", ZScriptTools.GetText(m.title), ZScriptTools.GetText(m.d.path));
-					EventHandler.SendNetworkEvent(queuecmd);
+						String queuecmd = String.Format("initialize:%s:%s", ZScriptTools.GetText(m.title), ZScriptTools.GetText(m.d.path));
+						EventHandler.SendNetworkEvent(queuecmd);
 
-					if (gamestate != GS_LEVEL) { StartGameDirect(true, false, "WolfPlayer", 9, skill); }
+						if (gamestate != GS_LEVEL) { StartGameDirect(true, false, "WolfPlayer", 9, g_warpskill); }
 
-					Menu.SetMenu("CloseMenu", -1);
-				}
-				break;
-			default:
-				return Super.MenuEvent(mkey, fromcontroller);
+						Menu.SetMenu("CloseMenu", -1);
+					}
+					break;
+				default:
+					if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
+					return ExtendedOptionMenu.MenuEvent(mkey, fromcontroller);
+			}
 		}
 
 		SetScrollPosition();
@@ -1953,11 +2079,11 @@ class MapMenu : TextScreenMenu
 
 	void GetMapData()
 	{
-		if (!handler || !handler.datafiles.Size()) { return; }
+		if (!maphandler || !maphandler.datafiles.Size()) { return; }
 
-		for (int d = 0; d < handler.datafiles.Size(); d++)
+		for (int d = 0; d < maphandler.datafiles.Size(); d++)
 		{
-			let gamefile = handler.datafiles[d];
+			let gamefile = maphandler.datafiles[d];
 
 			String gamefiledata = String.Format("^P\n^I0%s\n$PATH\n\n", ZScriptTools.GetText(gamefile.gametitle));
 			let h = MapDataInfo.Create(gamefiledata, lineheight, gamefile);
@@ -2664,7 +2790,10 @@ class MapDataInfo : HelpInfo
 		}
 		else
 		{
-			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, padding.y + y + lineheight, StringTable.Localize(map.info.levelname, false) .. "\n \c[Gray]" .. title, DTA_320x200, true);
+			int liney = y + padding.y + lineheight;
+			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, liney, StringTable.Localize(map.info.levelname, false), DTA_320x200, true);
+			liney += lineheight;
+			screen.DrawText(fnt, Font.FindFontColor("Gray"), x + 4, liney, title, DTA_320x200, true);
 		}
 
 		if (map)
@@ -2705,7 +2834,6 @@ class MapDataInfo : HelpInfo
 				}
 			}
 		}
-
 	}
 }
 
@@ -2716,75 +2844,5 @@ class HelpMenu : TextScreenMenu
 		InitCommon(parent, desc);
 
 		ParseFile(GameHandler.GameFilePresent("WL3", true) ? "data/helpregistered.txt" : "data/help.txt");
-	}
-}
-
-class OptionMenuItemVariableText : OptionMenuItem 
-{
-	int mColor;
-
-	OptionMenuItemVariableText Init(String label, Name command, int cr = -1)
-	{
-		Super.Init(label, command, true);
-
-		mColor = OptionMenuSettings.mFontColor;
-		if ((cr & 0xffff0000) == 0x12340000) mColor = cr & 0xffff;
-		else if (cr > 0) mColor = OptionMenuSettings.mFontColorHeader;
-		return self;
-	}
-
-	OptionMenuItemVariableText InitDirect(String label, Name command, int cr)
-	{
-		Super.Init(label, command, true);
-		mColor = cr;
-		return self;
-	}
-
-	override int Draw(OptionMenuDescriptor desc, int y, int indent, bool selected)
-	{
-		String txt = StringTable.Localize(String.Format("$%s%i", mLabel, g_warpskill));
-		int w = Menu.OptionWidth(txt) * CleanXfac_1;
-		int x = (screen.GetWidth() - w) / 2;
-		drawText(x, y, mColor, txt);
-		return -1;
-	}
-
-	override bool Selectable()
-	{
-		return false;
-	}
-}
-
-class OptionMenuItemImageSlider : OptionMenuSliderBase
-{
-	transient CVar mCVar;
-	String prefix;
-
-	OptionMenuItemImageSlider Init(String label, String texprefix, Name command, double min, double max, double step, CVar graycheck = NULL, int graycheckVal = 0)
-	{
-		Super.Init(label, min, max, step, -1, command, graycheck, graycheckVal);
-		prefix = texprefix;
-		mCVar = CVar.FindCVar(command);
-		return self;
-	}
-
-	override double GetSliderValue()
-	{
-		if (mCVar != null)
-		{
-			return mCVar.GetFloat();
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-	override void SetSliderValue(double val)
-	{
-		if (mCVar != null)
-		{
-			mCVar.SetFloat(val);
-		}
 	}
 }

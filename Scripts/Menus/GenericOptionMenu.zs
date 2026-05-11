@@ -123,6 +123,7 @@ class GenericOptionMenu : OptionMenu
 	virtual void DrawMenu(int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
 	{
 		if (!fnt) { fnt = SmallFont; }
+		if (!source) { source = self; }
 
 		int x = left;
 		int y = (scrolltop ? scrolltop : OptionMenuSettings.mLinespacing * 4 / 3) + OptionMenuSettings.mLinespacing;
