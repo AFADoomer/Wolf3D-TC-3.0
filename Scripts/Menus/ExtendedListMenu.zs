@@ -328,8 +328,23 @@ class ExtendedListMenu : ListMenu
 
 							return false;
 						}
-						else 
-						if (
+						else if (itemaction && itemaction == "MapMenu")
+						{
+							CVar alwaysshow = CVar.FindCVar("g_alwaysshowexternalmaps");
+
+							if (!MapHandler.CountParsedMaps(alwaysshow && alwaysshow.GetInt()))
+							{
+								String message = "$NOCUSTOMMAPS";
+
+								MenuSound("menu/alert");
+								//StartMessage(StringTable.Localize(message));
+								ClassicMessageBox.PrintMessage(message, "BG_", 0x8c8c8c);
+
+								return false;
+							}
+							else if (mDesc.mItems[mDesc.mSelectedItem].Activate()) { MenuSound("menu/select"); }
+						}
+						else if (
 							itemaction &&
 							!(
 								itemaction == "QuitMenu" ||
@@ -655,14 +670,6 @@ class GameMenu : IconListMenu
 			screen.DrawTexture(controls, true, screen.GetWidth() / 2 - size.x * CleanXfac / 2, screen.GetHeight() - size.y * CleanyFac, DTA_CleanNoMove, true, DTA_DestWidth, int(size.x * CleanXfac), DTA_DestHeight, int(size.y * CleanYfac), DTA_Alpha, 1.0, DTA_Desaturate, 255);
 		}
 
-		CVar alwaysshow = CVar.FindCVar("g_alwaysshowexternalmaps");
-		bool hasparsedmaps = !!MapHandler.CountParsedMaps(alwaysshow && alwaysshow.GetInt());
-
-		for(int i = 6; i < mDesc.mItems.Size(); i++)
-		{
-			mDesc.mItems[i].mEnabled = hasparsedmaps;
-		}
-
 		for(int i = 0; i < mDesc.mItems.Size(); i++)
 		{
 			if (mDesc.mSelectedItem == i)
@@ -672,12 +679,6 @@ class GameMenu : IconListMenu
 			}
 
 			if (mDesc.mItems[i].mEnabled) mDesc.mItems[i].Draw(mDesc.mSelectedItem == i, mDesc);
-
-			if (i > 2)
-			{
-				mDesc.mItems[i].SetY(mDesc.mItems[i - 1].GetY() + mDesc.mLinespacing - (hasparsedmaps ? 9 : 0)); // Offset y position for each remaining entry after the first one
-			}
-
 		}
 		Menu.Drawer();
 

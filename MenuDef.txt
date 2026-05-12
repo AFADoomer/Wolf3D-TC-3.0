@@ -14,7 +14,7 @@ DefaultOptionMenu
 
 ListMenu "GameMenu"
 {
-	Linespacing 38
+	Linespacing 29
 	Selector "Selector", -10, -6
 
 	Font "BigFont", "TrueWhite"
