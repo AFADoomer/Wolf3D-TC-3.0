@@ -567,14 +567,17 @@ class MapHandler : StaticEventHandler
 		return this.curmap.info.music;
 	}
 
-	static int TileAt(Vector2 pos)
+	static int TileAt(Vector2 pos, ParsedMap curmap = null)
 	{
 		MapHandler this = MapHandler.Get();
-		if (!this || !this.curmap) { return -1; }
+		if (!this) { return -1; }
+
+		if (!curmap) { curmap = this.curmap; }
+		if (!curmap) { return -1; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
-		return this.curmap.TileAt(pos);
+		return curmap.TileAt(pos);
 	}
 
 	static int ActorAt(Vector2 pos)

@@ -463,7 +463,7 @@ class GameHandler : StaticEventHandler
 			TextureID tex = trace.HitTexture;
 			if (!tex.IsValid()) { return; }
 			
-			console.printf(TexMan.GetName(tex));
+			console.printf("Line %i has texture %s", trace.HitLine.Index(), TexMan.GetName(tex));
 		}
 
 		if (e.IsManual) { return; }
