@@ -283,6 +283,33 @@ class MapHandler : StaticEventHandler
 		}
 	}
 
+	override void WorldTick()
+	{
+		// Check for noclipping players; allow them to see through void space
+		// by clearing sidedef flags that normally block rendering
+		//
+		// We are assuming that if they are noclipping, they don't care about
+		// seeing parts of the map that they shouldn't actually be able to see
+		if (!(level.mapname ~== "Level") || !curmap || curmap.noclip || level.time % 10) { return; } // only check every 10 tics for performance
+
+		for (int p = 0; p < MAXPLAYERS; p++)
+		{
+			if (playeringame[p] && players[p].cheats & CF_NOCLIP)
+			{
+				curmap.noclip = true;
+				break;
+			}
+
+			return;
+		}
+		
+		for (int s = 0; s < level.sides.Size(); s++)
+		{
+			let side = level.sides[s];
+			if (side) { side.flags &= ~Side.WALLF_BLOCKRENDERING; }
+		}
+	}
+
 	override void WorldLoaded(WorldEvent e)
 	{
 		if (e.IsSaveGame) { return; }
@@ -1043,7 +1070,11 @@ class ParsedMap
 
 					for (int s = 0; s < 2; s++)
 					{
-						if (!ln.sidedef[s] || ln.sidedef[s].sector.CenterCeiling() - ln.sidedef[s].sector.CenterFloor() == 0) { solid++; }
+						if (!ln.sidedef[s] || ln.sidedef[s].sector.CenterCeiling() - ln.sidedef[s].sector.CenterFloor() == 0)
+						{
+							solid++;
+							if (ln.sidedef[s]) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
+						}
 					}
 
 					if (solid > 1)
@@ -1108,7 +1139,14 @@ class ParsedMap
 									let ln = level.lines[l];
 									if (ln.v1 == current)
 									{
-										if (door.Lines.Find(ln) == door.Lines.Size()) { door.Lines.Push(ln); }
+										if (door.Lines.Find(ln) == door.Lines.Size())
+										{
+											for (int s = 0; s < 2; s++)
+											{
+												if (ln.sidedef[s]) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
+											}
+											door.Lines.Push(ln);
+										}
 										current = ln.v2;
 										count = 0;
 										break;
@@ -1128,6 +1166,7 @@ class ParsedMap
 								{
 									if (dln.sidedef[s])
 									{
+										dln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING;
 										dln.sidedef[s].SetAdditiveColor(side.mid, g_highlightpushwalls != 0x110000 ? g_highlightpushwalls : 0x3F3700);
 										if (g_highlightpushwalls) { dln.sidedef[s].EnableAdditiveColor(side.mid, true); }
 									}
