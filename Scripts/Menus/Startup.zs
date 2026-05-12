@@ -1199,7 +1199,7 @@ class Notice : WolfMenu
 
 	virtual void Initialize()
 	{
-		SetupText("$NOTICE", BigFont, "WolfMenuYellow");
+		SetupText("$NOTICE", BigFont, "Palette47");
 	}
 
 	virtual void SetupText(String input, font fnt, String fontcolor = "L")
@@ -1262,7 +1262,7 @@ class Notice : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
-		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400); }
+		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4, DTA_VirtualWidth, w, DTA_VirtualHeight, h); }
 
 		PrintFullJustified(lines, maxwidth);
 	}
@@ -1313,7 +1313,7 @@ class Notice : WolfMenu
 						c == 0x0
 					)
 					{
-						screen.DrawText(BigFont, fntclr, x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+						screen.DrawText(BigFont, fntclr, x + textx, y + lineheight * t, temp, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
 
 						if (c == 0x9) // Tab alignment
 						{
@@ -1336,7 +1336,7 @@ class Notice : WolfMenu
 			}
 			else
 			{	
-				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha, DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
+				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
 			}
 		}
 	}
@@ -1353,7 +1353,7 @@ class GamemapsMessage : Notice
 
 	override void Initialize()
 	{
-		SetupText("$NOGAMEMAPS", BigFont, "WolfMenuYellow");
+		SetupText("$NOGAMEMAPS", BigFont, "Palette47");
 	}
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
