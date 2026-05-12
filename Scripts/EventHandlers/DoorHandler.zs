@@ -722,6 +722,25 @@ class DoorEffector: PolyobjectEffector
 							// Special handling for "disappearing pushwall"
 							Level.ExecuteSpecial(Polyobj_OR_MoveTo, null, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, 8192, -2176, 2176);
 						}
+						else if (t == 0x15)
+						{
+							// Keep treating elevator walls as pushwalls if there's a pushwall marker on the current tile
+							if (!MapHandler.CheckPushwallAt(Destination))
+							{
+								// Otherwise, change the lines to activate the elevator
+								for (int l = 0; l < PolyObject.Lines.Size(); l++)
+								{
+									let ln = PolyObject.Lines[l];
+									if (ln.delta.x) { continue; }
+
+									ln.special = 80;
+									ln.args[0] = 10;
+									for (int i = 1; i < 5; i++) { ln.args[i] = 0; }
+
+									ln.activation = SPAC_Use | SPAC_UseBack;
+								}
+							}
+						}
 						else
 						{
 							// Handling for secret door placed on top of regular door (door turns into a pushwall)
