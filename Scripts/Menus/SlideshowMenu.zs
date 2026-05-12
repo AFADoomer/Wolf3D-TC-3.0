@@ -2808,7 +2808,7 @@ class MapDataInfo : HelpInfo
 				for (int h = 0; h < map.height; h++)
 				{
 					int val = map.TileAt((w, h));
-					if (val < 0x6A)
+					if (val < 0x6A && val > 0)
 					{
 						int l = map.TileAt((w - 1, h));
 						int r = map.TileAt((w + 1, h));
@@ -2816,16 +2816,16 @@ class MapDataInfo : HelpInfo
 						int b = map.TileAt((w, h + 1));
 
 						if (
-							l > 0x6A && l < 0x90 || 
-							r > 0x6A && r < 0x90 || 
-							a > 0x6A && a < 0x90 || 
-							b > 0x6A && b < 0x90
+							l > 0x6A && l < 0x90 || l == 0 ||
+							r > 0x6A && r < 0x90 || r == 0 ||
+							a > 0x6A && a < 0x90 || a == 0 ||
+							b > 0x6A && b < 0x90 || b == 0
 						)
 						{
 							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 						}
 					}
-					else if (val > 0x6A && val < 0x90)
+					else if (val > 0x6A && val < 0x90 || val == 0)
 					{
 						tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
