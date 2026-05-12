@@ -290,9 +290,7 @@ class MapHandler : StaticEventHandler
 		if (g_sod < 0)
 		{
 			CVar sodvar = CVar.FindCVar("g_sod");
-			if (sodvar) { sodvar.SetInt(max(0, g_sod)); 
-			console.printf("set to min 0");
-			}
+			if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
 		}
 
 		if (level.mapname ~== "Level" && queuedmap)
