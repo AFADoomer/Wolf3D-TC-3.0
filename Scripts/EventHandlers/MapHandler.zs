@@ -132,7 +132,7 @@ class MapHandler : StaticEventHandler
 {
 	WolfMapParser parsedmaps;
 	Array<DataFile> datafiles;
-	ParsedMap curmap, queuedmap;
+	ParsedMap curmap, queuedmap, secretmapnext;
 	Array<int> activatedfloors;
 	Array<int> activatedpushwalls;
 	ParsedValue actormaps;
@@ -325,12 +325,21 @@ class MapHandler : StaticEventHandler
 		{
 			console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", style <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
 			
-			String nextmap = curmap.info.nextmap;
-			if (nextmap.length() && nextmap.left(6) != "enDSeQ")
+			if (secretmapnext)
 			{
-				LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
-				if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
+				queuedmap = secretmapnext;
+				secretmapnext = null;
 				level.nextmap = "Level";
+			}
+			else
+			{
+				String nextmap = curmap.info.nextmap;
+				if (nextmap.length() && nextmap.left(6) != "enDSeQ")
+				{
+					LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+					if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
+					level.nextmap = "Level";
+				}
 			}
 
 			String IMFname = curmap.info.music;
@@ -372,11 +381,36 @@ class MapHandler : StaticEventHandler
 
 			if (ln.args[2] == 10) // Secret map trigger
 			{
-				LevelInfo nextinfo = LevelInfo.FindLevelInfo(curmap.info.nextsecretmap);
-				if (nextinfo)
+				LevelInfo nextinfo;
+				
+				if (curmap.info.nextsecretmap.length())
 				{
-					queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path);
+					nextinfo = LevelInfo.FindLevelInfo(curmap.info.nextsecretmap);
 				}
+				else
+				{
+					console.printf("\c[Red]Secret exit does not match orginal game!\n\c-Attempting proper level progression...");
+
+					int levelnum = int(curmap.mapnum / 100) * 100;
+					if (Game.IsSoD())
+					{
+						int check = curmap.mapnum % 100;
+
+						// This is essentially a guess - who knows how mods have changed level progression...
+						if (check < 12) { levelnum += 19; }
+						else { levelnum += 20; }
+					}
+					else
+					{
+						// Secret map is always 10 unless someone made some executable changes
+						levelnum += 10;
+					}
+
+					nextinfo = LevelInfo.FindLevelByNum(levelnum);
+					secretmapnext = queuedmap; // Remember the normal next map so that the secret level's exit can return to it
+				}
+				
+				if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
 			}
 		}
 	}

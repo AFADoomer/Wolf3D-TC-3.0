@@ -331,8 +331,9 @@ class ExtendedListMenu : ListMenu
 						else if (itemaction && itemaction == "MapMenu")
 						{
 							CVar alwaysshow = CVar.FindCVar("g_alwaysshowexternalmaps");
+							int count = MapHandler.CountParsedMaps(alwaysshow && alwaysshow.GetInt());
 
-							if (!MapHandler.CountParsedMaps(alwaysshow && alwaysshow.GetInt()))
+							if (count <= 1)
 							{
 								String message = "$NOCUSTOMMAPS";
 
