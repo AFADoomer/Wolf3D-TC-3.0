@@ -927,7 +927,7 @@ class HighScores : WolfMenu
 		fadetime = 12;
 		fadetarget = fadestart;
 		fadealpha = 1.0;
-		fadecolor = (Game.IsSoD() ? 0x000000 : 0x880000);
+		fadecolor = Game.GetFadeColor(self);
 
 		title = TexMan.CheckForTexture((Game.IsSoD() ? "SSCORES" : "SCORES"), TexMan.Type_Any);
 		nametitle = TexMan.CheckForTexture("M_NAME", TexMan.Type_Any);
@@ -990,7 +990,7 @@ class HighScores : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
+		screen.Dim(fadecolor, 1.0, int(dimcoords.x), int(dimcoords.y), int(dimsize.x), int(dimsize.y));
 
 		double ratio = screen.GetHeight() / 200.;
 
@@ -1686,13 +1686,13 @@ class MapMenu : TextScreenMenu
 		}
 	}
 
-	void DrawControls(int ytop = 0)
+	void DrawControls(int ytop = 0, double scale = 1.5)
 	{
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 		int lastrow = screen.GetHeight() - fontheight * 2;
 		int x = 160 + (Screen.GetWidth() / 2 - max(620, Screen.GetWidth() * 2 / 3) / 2);
 
-		GenericOptionMenu.DrawMenu(x, 35, Font.GetFont("BigFont"), ytop, lastrow);
+		GenericOptionMenu.DrawMenu(x, 35, Font.GetFont("BigFont"), ytop, lastrow, scale);
 	}
 
 	override void Drawer()
@@ -1906,6 +1906,7 @@ class MapMenu : TextScreenMenu
 			else
 			{
 				if (gamestate == GS_FINALE || gamestate == GS_CUTSCENE) { Menu.SetMenu("HighScores", -1); }
+				else if (mParentMenu is "GameMenu") { Menu.SetMenu("MainMenu", -1); }
 				else { Menu.SetMenu("MainMenu", -1); }
 			}
 			
@@ -1915,6 +1916,8 @@ class MapMenu : TextScreenMenu
 				else if (mParentMenu is "GameMenu") { GameHandler.ChangeMusic("SALUTE"); }
 				else { GameHandler.ChangeMusic("WONDERIN"); }
 			}
+
+			if (mParentMenu is "GameMenu") { if (gamevar) { gamevar.SetInt(-1); } }
 			
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
 			return true;

@@ -287,16 +287,17 @@ class MapHandler : StaticEventHandler
 	{
 		if (e.IsSaveGame) { return; }
 
+		if (g_sod < 0)
+		{
+			CVar sodvar = CVar.FindCVar("g_sod");
+			if (sodvar) { sodvar.SetInt(max(0, g_sod)); 
+			console.printf("set to min 0");
+			}
+		}
+
 		if (level.mapname ~== "Level" && queuedmap)
 		{
 			curmap = queuedmap;
-
-			if (g_sod < 0)
-			{
-				CVar sodvar = CVar.FindCVar("g_sod");
-				if (sodvar) { sodvar.SetInt(max(0, g_sod)); }
-			}
-
 			InitializeParsedMap(g_sod);
 		}
 		else

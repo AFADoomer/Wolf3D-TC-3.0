@@ -120,7 +120,7 @@ class GenericOptionMenu : OptionMenu
 		return generic;
 	}
 
-	virtual void DrawMenu(int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0)
+	virtual void DrawMenu(int left = 0, int spacing = 0, Font fnt = null, int scrolltop = 0, int scrollheight = 0, double scale = 1.0)
 	{
 		if (!fnt) { fnt = SmallFont; }
 		if (!source) { source = self; }
@@ -128,7 +128,7 @@ class GenericOptionMenu : OptionMenu
 		int x = left;
 		int y = (scrolltop ? scrolltop : OptionMenuSettings.mLinespacing * 4 / 3) + OptionMenuSettings.mLinespacing;
 		
-		if (mDesc.mTitle.Length())
+		if (mDesc.mTitle.Length() * scale)
 		{
 			Menu parent = mParentMenu;
 
@@ -152,22 +152,11 @@ class GenericOptionMenu : OptionMenu
 
 		mDesc.mDrawTop = y;
 
-		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
+		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight() * scale;
 		int lastrow = scrollheight ? scrollheight : screen.GetHeight() - y;
-		bottomclip = lastrow + (BigFont.GetHeight() + 1) * CleanYfac_1;
+		bottomclip = lastrow + (BigFont.GetHeight() + 1) * CleanYfac_1 * scale;
 
-		int indent = x + spacing;
-
-		if (columnwidth > -1) { indent = columnwidth; }
-		else
-		{
-			for (int j = 0; j < source.mDesc.mItems.Size(); j++)
-			{
-				indent = columnwidth = max(indent, OptionWidth(Stringtable.Localize(mDesc.mItems[j].mLabel), fnt));
-			}
-		}
-
-		indent += columnspacing;
+		int indent = columnwidth = Screen.GetWidth() / 2 - x;
 
 		int enableditems;
 		for (int k = 0; k < mDesc.mItems.Size(); k++)
@@ -177,7 +166,7 @@ class GenericOptionMenu : OptionMenu
 
 		for (int l = 0; l < mDesc.mItems.Size(); l++)
 		{
-			ItemInfo i = DrawItemType(mDesc.mItems[l], -0x7FFFFFFF,  -0x7FFFFFFF, indent, fnt);
+			ItemInfo i = DrawItemType(mDesc.mItems[l], -0x7FFFFFFF,  -0x7FFFFFFF, indent, fnt, false, scale);
 		}
 
 		int i, r;
@@ -191,7 +180,7 @@ class GenericOptionMenu : OptionMenu
 				else if (i < 0) { i = FirstSelectable(); }
 			}
 
-			ItemInfo info = DrawItemType(mDesc.mItems[i], x, y, indent, fnt, mDesc.mSelectedItem == i);
+			ItemInfo info = DrawItemType(mDesc.mItems[i], x, y, indent, fnt, mDesc.mSelectedItem == i, scale);
 
 			if (info)
 			{ 
@@ -207,59 +196,59 @@ class GenericOptionMenu : OptionMenu
 		DrawScrollArrows(x - 34, ytop - 4 * CleanYfac_1, lastrow - 4 * CleanYfac_1);
 	}
 
-	virtual ItemInfo DrawItemType(OptionMenuItem item, int x, int y, int indent, Font fnt, bool isSelected = false)
+	virtual ItemInfo DrawItemType(OptionMenuItem item, int x, int y, int indent, Font fnt, bool isSelected = false, double scale = 1.0)
 	{
 		if (item.mEnabled)
 		{
 			if (isSelected && item.Selectable())
 			{
-				DrawCursor(x - 12 * CleanXfac_1, y);
-				DrawCaption(item);
+				DrawCursor(x - 12 * CleanXfac_1, y, scale);
+				DrawCaption(item, scale);
 			}
 
 			if (item is "OptionMenuItemControlBase")
 			{
-				return DrawControl(OptionMenuItemControlBase(item), x, y, indent, fnt, isSelected, columnwidth);
+				return DrawControl(OptionMenuItemControlBase(item), x, y, indent, fnt, isSelected, columnwidth, scale);
 			}
 			else if (item is "OptionMenuItemOptionBase")
 			{
-				return DrawOption(OptionMenuItemOptionBase(item), x, y, indent, fnt, isSelected, columnwidth);
+				return DrawOption(OptionMenuItemOptionBase(item), x, y, indent, fnt, isSelected, columnwidth, scale);
 			}
 			else if (item is "OptionMenuSliderBase")
 			{
-				return DrawSlider(OptionMenuSliderBase(item), x, y, indent, fnt, isSelected, breakwidth:columnwidth);
+				return DrawSlider(OptionMenuSliderBase(item), x, y, indent, fnt, isSelected, breakwidth:columnwidth, scale:scale);
 			}
 			else if (item is "OptionMenuItemStaticTextSwitchable")
 			{
-				return DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable(item), x, y, fnt);
+				return DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable(item), x, y, fnt, scale);
 			}
 			else if (item is "OptionMenuItemColorPicker")
 			{
-				return DrawColorPicker(item, x, y, indent, fnt, isSelected, columnwidth);
+				return DrawColorPicker(item, x, y, indent, fnt, isSelected, columnwidth, scale);
 			}
 			else if (item is "OptionMenuItemStaticText")
 			{
-				return DrawStaticText(OptionMenuItemStaticText(item), x, y, fnt);
+				return DrawStaticText(OptionMenuItemStaticText(item), x, y, fnt, scale);
 			}
 			else if (item is "OptionMenuFieldBase")
 			{
-				return DrawField(OptionMenuFieldBase(item), x, y, indent, fnt, isSelected);
+				return DrawField(OptionMenuFieldBase(item), x, y, indent, fnt, isSelected, scale);
 			}
 			else if (item is "OptionMenuItemCommand")
 			{
-				return DrawCommand(item, x, y, fnt, isSelected, columnwidth);
+				return DrawCommand(item, x, y, fnt, isSelected, columnwidth, scale);
 			}
 			else if (item is "OptionMenuItemJoyConfigMenu")
 			{
-				return DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu(item), x, y, indent, fnt, isSelected, columnwidth);
+				return DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu(item), x, y, indent, fnt, isSelected, columnwidth, scale);
 			}
 			else if (item is "OptionMenuItemSubmenu")
 			{
-				return DrawSubmenu(OptionMenuItemSubmenu(item), x, y, indent, fnt, isSelected, columnwidth);
+				return DrawSubmenu(OptionMenuItemSubmenu(item), x, y, indent, fnt, isSelected, columnwidth, scale);
 			}
 			else
 			{
-				return DrawItem(item, x, y, fnt, isSelected, columnwidth);
+				return DrawItem(item, x, y, fnt, isSelected, columnwidth, scale);
 			}
 		}
 
@@ -427,15 +416,15 @@ class GenericOptionMenu : OptionMenu
 		return max(height, OptionMenuSettings.mLinespacing);
 	}
 
-	int DrawValue(String text, int x, int y, int spacing, Font fnt, int color, bool grayed = false, int breakwidth = -1)
+	int DrawValue(String text, int x, int y, int spacing, Font fnt, int color, bool grayed = false, int breakwidth = -1, double scale = 1.0)
 	{
-		return DrawOptionText(text, x + spacing, y, fnt, color, grayed, 1.0, breakwidth);
+		return DrawOptionText(text, x + spacing, y, fnt, color, grayed, 1.0, breakwidth, (scale, scale));
 	}
 
-	int DrawSliderElements(OptionMenuSliderBase this, int x, int y, int spacing, Font fnt, double min, double max, double cur, int fracdigits, Vector2 size = (16, 16), Vector2 handlesize = (-1, -1), bool grayed = false)
+	int DrawSliderElements(OptionMenuSliderBase this, int x, int y, int spacing, Font fnt, double min, double max, double cur, int fracdigits, Vector2 size = (16, 16), Vector2 handlesize = (-1, -1), bool grayed = false, double scale = 1.0)
 	{
-		size.x *= CleanXfac_1;
-		size.y *= CleanYfac_1;
+		size.x *= CleanXfac_1 * scale;
+		size.y *= CleanYfac_1 * scale;
 
 		if (handlesize == (-1, -1)) { handlesize = size; }
 		else
@@ -519,7 +508,7 @@ class GenericOptionMenu : OptionMenu
 		return fnt.StringWidth(s);
 	}
 
-	virtual int DrawCaption(OptionMenuItem this)
+	virtual int DrawCaption(OptionMenuItem this, double scale = 1.0)
 	{
 		int x = 10;
 		int y = 10;
@@ -534,22 +523,22 @@ class GenericOptionMenu : OptionMenu
 		text = StringTable.Localize("$" .. lookup);
 		if (text == lookup) { return 0; }
 
-		return DrawOptionText(text, x, y, SmallFont, TextColor(), this.IsGrayed(), alpha, Screen.GetWidth() / 2);
+		return DrawOptionText(text, x, y, SmallFont, TextColor(), this.IsGrayed(), alpha, Screen.GetWidth() / 2, (scale, scale));
 	}
 
-	virtual void DrawPath(String title, int x, int y, Font fnt = null)
+	virtual void DrawPath(String title, int x, int y, Font fnt = null, double scale = 1.0)
 	{
-		DrawOptionText(title, x + 10, 20, fnt, TitleColor());
+		DrawOptionText(title, x + 10, 20, fnt, TitleColor(), scale:(scale, scale));
 	}
 
-	virtual ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
 		info.y = y;
 
 		String label = Stringtable.Localize(this.mLabel);
-		int height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth, (scale, scale));
 
 		String Description;
 		int Key1, Key2;
@@ -563,37 +552,37 @@ class GenericOptionMenu : OptionMenu
 		info.width = spacing + OptionWidth(description, fnt);
 		info.valueright = x + info.width;
 
-		height = max(DrawValue(description, x, y, spacing, fnt, HighlightColor()), height);
+		height = max(DrawValue(description, x, y, spacing, fnt, HighlightColor(), scale:scale), height);
 
 		info.height = height;
 
 		return info;
 	}
 
-	virtual ItemInfo DrawOption(OptionMenuItemOptionBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawOption(OptionMenuItemOptionBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
 		info.y = y;
 
 		String label = Stringtable.Localize(this.mLabel);
-		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth, (scale, scale));
 
 		int Selection = this.GetSelection();
 		String text = StringTable.Localize(OptionValues.GetText(this.mValues, Selection));
 		if (text.Length() == 0) text = "Unknown";
 
 		info.valueleft = x + spacing;
-		info.width = spacing + OptionWidth(text, fnt);
+		info.width = spacing + OptionWidth(text, fnt) * scale;
 		info.valueright = x + info.width;
 
 		if (this is "os_AnyOrAllOption")
 		{
-			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, ValueColor(), this.isGrayed()), height);	
+			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, ValueColor(), this.isGrayed(), scale:scale), height);	
 		}
 		else
 		{
-			height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), this.isGrayed()), height);
+			height = max(DrawValue(text, x, y, spacing, fnt, ValueColor(), this.isGrayed(), scale:scale), height);
 		}
 
 		info.height = height;
@@ -601,7 +590,7 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawSlider(OptionMenuSliderBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, Vector2 size = (16, 16), Vector2 handlesize = (-1, -1), int breakwidth = -1)
+	virtual ItemInfo DrawSlider(OptionMenuSliderBase this, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, Vector2 size = (16, 16), Vector2 handlesize = (-1, -1), int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
@@ -659,7 +648,7 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawStaticText(OptionMenuItemStaticText this, int x, int y, Font fnt = null)
+	virtual ItemInfo DrawStaticText(OptionMenuItemStaticText this, int x, int y, Font fnt = null, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
@@ -673,7 +662,7 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable this, int x, int y, Font fnt = null)
+	virtual ItemInfo DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable this, int x, int y, Font fnt = null, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
@@ -687,7 +676,7 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawColorPicker(out OptionMenuItem item, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawColorPicker(out OptionMenuItem item, int x, int y, int spacing = 20, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		OptionMenuItemColorPicker this = OptionMenuItemColorPicker(item);
 
@@ -728,7 +717,7 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawItem(OptionMenuItem item, int x, int y, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawItem(OptionMenuItem item, int x, int y, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(item);
 		info.x = x;
@@ -742,12 +731,12 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawCommand(OptionMenuItem item, int x, int y, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawCommand(OptionMenuItem item, int x, int y, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		return DrawItem(item, x, y, fnt, isSelected, breakwidth);
 	}
 
-	virtual ItemInfo DrawField(OptionMenuFieldBase item, int x, int y, int spacing, Font fnt = null, bool isSelected = false)
+	virtual ItemInfo DrawField(OptionMenuFieldBase item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(item);
 		info.x = x;
@@ -798,14 +787,14 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawJoyConfigMenu(OptionMenuItemJoyConfigMenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(item);
 		info.x = x;
 		info.y = y;
 
 		String label = Stringtable.Localize(item.mLabel);
-		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth, (scale, scale));
 
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
@@ -828,14 +817,14 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual ItemInfo DrawSubmenu(OptionMenuItemSubmenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1)
+	virtual ItemInfo DrawSubmenu(OptionMenuItemSubmenu item, int x, int y, int spacing, Font fnt = null, bool isSelected = false, int breakwidth = -1, double scale = 1.0)
 	{
 		ItemInfo info = MenuHandler.FindItem(item);
 		info.x = x;
 		info.y = y;
 
 		String label = Stringtable.Localize(item.mLabel);
-		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), false, 1.0, breakwidth, (scale, scale));
 
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
@@ -879,21 +868,21 @@ class GenericOptionMenu : OptionMenu
 		return info;
 	}
 
-	virtual void DrawCursor(int x, int y)
+	virtual void DrawCursor(int x, int y, double scale = 1.0)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawText(NewSmallFont, SelectionColor(true), x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true, DTA_ClipBottom, bottomclip);
+		screen.DrawText(NewSmallFont, SelectionColor(true), x, y, "►", DTA_Alpha, cursoralpha * alpha, DTA_CleanNoMove_1, true, DTA_ClipBottom, bottomclip, DTA_ScaleX, scale, DTA_ScaleY, scale);
 	}
 
-	virtual void DrawScrollArrows(int x, int ytop, int ybottom)
+	virtual void DrawScrollArrows(int x, int ytop, int ybottom, double scale = 1.0)
 	{
 		if (CanScrollUp)
 		{
-			screen.DrawText(NewSmallFont, SelectionColor(true), x, ytop, "▲", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, SelectionColor(true), x, ytop, "▲", DTA_Alpha, alpha, DTA_ScaleX, scale, DTA_ScaleY, scale);
 		}
 		if (CanScrollDown)
 		{
-			screen.DrawText(NewSmallFont, SelectionColor(true), x, ybottom, "▼", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, SelectionColor(true), x, ybottom, "▼", DTA_Alpha, alpha, DTA_ScaleX, scale, DTA_ScaleY, scale);
 		}
 	}
 

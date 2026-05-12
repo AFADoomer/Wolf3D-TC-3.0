@@ -69,7 +69,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		fadetime = 12;
 		fadetarget = gametic;
 
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000); }
+		if (!mParentMenu || !(mParentMenu is "IntroSlideshow")) { fadecolor = Game.GetFadeColor(self); }
 
 		nodim = true;
 		DontDim = true;
@@ -83,7 +83,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		if (!nodim) { fadetarget = gametic; }
 		nodim = false;
-		fadecolor = 0x880000;
+		fadecolor = Game.GetFadeColor(self);
 	}
 
 	override bool MenuEvent (int mkey, bool fromcontroller)
@@ -270,14 +270,14 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 						SetMenu("WolfJoystickConfigMenu");
 
-						fadecolor = 0x880000;
+						fadecolor = Game.GetFadeColor(self);
 						MenuSound("menu/select");
 						fadetarget = gametic + fadetime;
 
 						return true;
 					}
 
-					fadecolor = 0x880000;
+					fadecolor = Game.GetFadeColor(self);
 					activated = mDesc.mItems[mDesc.mSelectedItem];
 					MenuSound("menu/select");
 					fadetarget = gametic + fadetime;
@@ -388,7 +388,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 	override void DrawMenu(int left, int spacing, Font fnt, int scrolltop, int scrollheight)
 	{
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(fadecolor, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
@@ -535,7 +535,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	// Don't draw menu path
 	override void DrawPath(String title, int x, int y, Font fnt) {}
 
-	override ItemInfo DrawOption(OptionMenuItemOptionBase this, int x, int y, int spacing, Font fnt, bool isSelected, int breakwidth)
+	override ItemInfo DrawOption(OptionMenuItemOptionBase this, int x, int y, int spacing, Font fnt, bool isSelected, int breakwidth, double scale)
 	{
 		int selectstate = -1;
 
@@ -556,15 +556,15 @@ class ExtendedOptionMenu : GenericOptionMenu
 			info.x = x;
 			info.y = y;
 
-			int fontheight = OptionMenuSettings.mLinespacing * 3 / 4;
+			int fontheight = OptionMenuSettings.mLinespacing * 3 / 4 * scale;
 
 			String label = Stringtable.Localize(this.mLabel);
-			int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth);
+			int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), this.isGrayed(), 1.0, breakwidth, (scale, scale));
 
-			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, fontheight * CleanYfac_1, DTA_DestWidth, (3 * fontheight) * CleanXfac_1, DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
+			screen.DrawTexture(selectstate ? select1 : select0, true, x + spacing, y + 1, DTA_DestHeight, int(fontheight * CleanYfac_1 * scale), DTA_DestWidth, int((3 * fontheight) * CleanXfac_1 * scale), DTA_Alpha, alpha, DTA_ClipBottom, bottomclip);
 
 			info.valueleft = x + spacing;
-			info.width = OptionWidth(label, fnt) + spacing + 3 * fontheight;
+			info.width = (OptionWidth(label, fnt) + spacing + 3 * fontheight) * scale;
 			info.valueright = info.valueleft + 3 * fontheight;
 			info.height = max(height, fontheight);
 
@@ -572,11 +572,11 @@ class ExtendedOptionMenu : GenericOptionMenu
 		}
 		else
 		{
-			return Super.DrawOption(this, x, y, spacing, fnt, isSelected, breakwidth);
+			return Super.DrawOption(this, x, y, spacing, fnt, isSelected, breakwidth, scale);
 		}
 	}
 
-	override ItemInfo DrawStaticText(OptionMenuItemStaticText this, int x, int y, Font fnt)
+	override ItemInfo DrawStaticText(OptionMenuItemStaticText this, int x, int y, Font fnt, double scale)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 
@@ -590,21 +590,21 @@ class ExtendedOptionMenu : GenericOptionMenu
 			if (i < mDesc.mScrollTop) { return null; }
 		}
 
-		info.width = OptionWidth(label, fnt);
-		info.x = this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x;
+		info.width = OptionWidth(label, fnt) * scale;
+		info.x = (this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x);
 		info.y = y;
 
 		if (this.mCentered && ZScriptTools.Trim(label).length())
 		{
-			info.width = max(OptionWidth(label, fnt) + 16, Game.IsSoD() ? 0 : 136) * CleanXfac_1;
+			info.width = max(OptionWidth(label, fnt) + 16, Game.IsSoD() ? 0 : 136) * CleanXfac_1 * scale;
 			info.x = this.mCentered ? Screen.GetWidth() / 2 - info.width / 2 : x;
 
-			DrawToHUD.DrawFrame("BU_D_", info.x, info.y - 2 * CleanYfac_1, info.width, 14 * CleanYfac_1, 0xa8a8a8, 1.0, 1.0, (CleanWidth_1, CleanHeight_1), DrawToHUD.TEX_MENU, 1.0);
-			info.height = DrawOptionText(label, info.x + info.width / 2 - OptionWidth(label, fnt) * CleanXfac_1 / 2, info.y, fnt, Font.FindFontColor("WolfMenuDarkGray"), this.IsGrayed(), scale:(1.0, 0.75));
+			DrawToHUD.DrawFrame("BU_D_", info.x, info.y - 2 * CleanYfac_1 * scale, info.width, 14 * CleanYfac_1 * scale, 0xa8a8a8, 1.0, 1.0, (CleanWidth_1, CleanHeight_1), DrawToHUD.TEX_MENU, scale);
+			info.height = DrawOptionText(label, info.x + info.width / 2 - OptionWidth(label, fnt) * CleanXfac_1 / 2, info.y, fnt, Font.FindFontColor("WolfMenuDarkGray"), this.IsGrayed(), scale:(1.0, 0.75) * scale);
 		}
 		else
 		{
-			info.height = DrawOptionText(label, info.x, info.y, fnt, TitleColor(), this.IsGrayed());
+			info.height = DrawOptionText(label, info.x, info.y, fnt, TitleColor(), this.IsGrayed(), scale:(scale, scale));
 		}
 
 		info.valueleft = info.valueright = x + info.width;
@@ -612,33 +612,33 @@ class ExtendedOptionMenu : GenericOptionMenu
 		return info;
 	}
 
-	override ItemInfo DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable this, int x, int y, Font fnt)
+	override ItemInfo DrawStaticTextSwitchable(OptionMenuItemStaticTextSwitchable this, int x, int y, Font fnt, double scale)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
 		info.y = y;
 
 		String label = StringTable.Localize(this.mCurrent ? this.mAltText : this.mLabel);
-		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) * CleanXfac_1 / 2 : x, y - 16, fnt, TitleColor(), this.IsGrayed());
-		info.width = OptionWidth(label, fnt);
+		info.height = DrawOptionText(label, this.mCentered ? Screen.GetWidth() / 2 - fnt.StringWidth(label) * CleanXfac_1 / 2 : x, y - 16, fnt, TitleColor(), this.IsGrayed(), scale:(scale, scale));
+		info.width = OptionWidth(label, fnt) * scale;
 		info.valueleft = info.valueright = x + info.width;
 
 		return info;
 	}
 
-	override ItemInfo DrawSlider(OptionMenuSliderBase this, int x, int y, int spacing, Font fnt, bool isSelected, Vector2 size, Vector2 handlesize, int breakwidth)
+	override ItemInfo DrawSlider(OptionMenuSliderBase this, int x, int y, int spacing, Font fnt, bool isSelected, Vector2 size, Vector2 handlesize, int breakwidth, double scale)
 	{
-		return Super.DrawSlider(this, x, y, spacing, fnt, isSelected, (16, 8), (8, 14), breakwidth);
+		return Super.DrawSlider(this, x, y, spacing, fnt, isSelected, (16, 8), (8, 14), breakwidth, scale);
 	}
 
-	override ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing, Font fnt, bool isSelected, int breakwidth)
+	override ItemInfo DrawControl(OptionMenuItemControlBase this, int x, int y, int spacing, Font fnt, bool isSelected, int breakwidth, double scale)
 	{
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
 		info.y = y;
 
 		String label = Stringtable.Localize(this.mLabel);
-		int height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth);
+		int height = DrawOptionText(label, x, y, fnt, this.mWaiting ? HighlightColor() : SelectionColor(isSelected), this.IsGrayed(), 1.0, breakwidth, (scale, scale));
 		height = max(int(16 * CleanYfac_1), height);
 
 		KeyBindings binds;
@@ -648,7 +648,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		if (y + height <= bottomclip + 1)
 		{
-			info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft, y + (OptionMenu.OptionHeight() / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), 1.0, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
+			info.width = spacing + DrawToHUD.DrawCommandButtons((info.valueleft, y + (OptionMenu.OptionHeight() / 2)), this.GetAction(), 1.0, (CleanWidth_1, CleanHeight_1), scale, Button.BTN_MIDDLE | Button.BTN_MENU, binds);
 		}
 
 		info.valueright = x + info.width;
@@ -657,23 +657,23 @@ class ExtendedOptionMenu : GenericOptionMenu
 		return info;
 	}
 
-	override void DrawCursor(int x, int y)
+	override void DrawCursor(int x, int y, double scale)
 	{
 		double cursoralpha = sin(Menu.MenuTime() * 10) / 2 + 0.5;
-		screen.DrawTexture(cursor0, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha, DTA_CleanNoMove_1, true);
-		screen.DrawTexture(cursor1, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha * cursoralpha, DTA_CleanNoMove_1, true);
+		screen.DrawTexture(cursor0, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha, DTA_CleanNoMove_1, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
+		screen.DrawTexture(cursor1, true, x - 16 * CleanXfac_1, y, DTA_Alpha, alpha * cursoralpha, DTA_CleanNoMove_1, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
 	}
 
-	override void DrawScrollArrows(int x, int ytop, int ybottom)
+	override void DrawScrollArrows(int x, int ytop, int ybottom, double scale)
 	{
 		if (!source) { source = self; }
 		if (source.CanScrollUp)
 		{
-			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ytop, "▲", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ytop, "▲", DTA_Alpha, alpha, DTA_ScaleX, scale, DTA_ScaleY, scale);
 		}
 		if (source.CanScrollDown)
 		{
-			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ybottom, "▼", DTA_Alpha, alpha);
+			screen.DrawText(NewSmallFont, TitleColor(), x - 32 * CleanXfac_1, ybottom, "▼", DTA_Alpha, alpha, DTA_ScaleX, scale, DTA_ScaleY, scale);
 		}
 	}
 

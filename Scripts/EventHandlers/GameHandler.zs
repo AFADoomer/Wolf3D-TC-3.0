@@ -755,6 +755,14 @@ class Game
 		return false;
 	}
 
+	ui static Color GetFadeColor(Menu m = null)
+	{
+		if (m is "GameMenu") { return 0x0; }
+
+		if (Game.IsSoD()) { return 0x000088; }
+		else { return 0x880000; }
+	}
+
 	play static void AttachLight(Actor mo, int radius = 32, color clr = 0xFFFFFF, Vector3 offset = (0, 0, 0), int flags = 0, int inner = 10, int outer = 35, int angle = 0)
 	{
 		CVar dynlights = CVar.FindCvar("g_dynamiclights");

@@ -151,8 +151,9 @@ class ExtendedListMenu : ListMenu
 		fadetarget = gametic;
 		fadetime = 12;
 
-		if (mParentMenu && !(mParentMenu is "IntroSlideshow")) { fadecolor = (g_sod > -1 ? Game.IsSoD() ? 0x000088 : 0x880000 : 0x000000); }
-		else if (!mParentMenu)
+		fadecolor = Game.GetFadeColor(self);
+
+		if (!mParentMenu)
 		{
 			if (
 				!ClassicStatusBar(StatusBar) ||
@@ -178,7 +179,8 @@ class ExtendedListMenu : ListMenu
 			return;
 		}
 
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (!fadecolor) { fadecolor = Game.GetFadeColor(self); }
+		screen.Dim(fadecolor, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 		mDesc.mSelector = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
 		if (Game.IsSoD())
 		{
@@ -313,7 +315,20 @@ class ExtendedListMenu : ListMenu
 					else
 					{
 						let itemaction = mDesc.mItems[mDesc.mSelectedItem].GetAction();
+						
+						if (itemaction && itemaction == "PlayerclassMenu" && multiplayer)
+						{
+							String message = "$NEWGAME";
 
+							MenuDescriptor next = MenuDescriptor.GetDescriptor(itemaction);
+							if (next) { message = next.mNetgameMessage; }
+
+							MenuSound("menu/alert");
+							StartMessage(StringTable.Localize(message));
+
+							return false;
+						}
+						else 
 						if (
 							itemaction &&
 							!(
@@ -334,7 +349,7 @@ class ExtendedListMenu : ListMenu
 							}
 							else
 							{
-								fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+								fadecolor = Game.GetFadeColor(self);
 							}
 							fadetarget = gametic + fadetime;
 							activated = mDesc.mItems[mDesc.mSelectedItem];
@@ -351,11 +366,16 @@ class ExtendedListMenu : ListMenu
 
 	override void OnReturn()
 	{
-		fadetarget = gametic;
 		GetPlaceholders();
-		initialalpha = 1.0;
+
+		if (!nodim)
+		{
+			fadetarget = gametic;
+			initialalpha = 1.0;
+		}
 		nodim = false;
-		fadecolor = (g_sod > -1 ? Game.IsSoD() ? 0x000088 : 0x880000 : 0x000000);
+
+		fadecolor = Game.GetFadeColor(self);
 	}
 
 	void GetPlaceholders()
@@ -953,7 +973,7 @@ class ExtendedLoadMenu : LoadMenu
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+		fadecolor = Game.GetFadeColor(self);
 
 		GameHandler.ChangeMusic("WONDERIN");
 	}
@@ -979,7 +999,7 @@ class ExtendedLoadMenu : LoadMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(fadecolor, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
@@ -1076,7 +1096,7 @@ class ExtendedSaveMenu : SaveMenu
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+		fadecolor = Game.GetFadeColor(self);
 		
 		GameHandler.ChangeMusic("WONDERIN");
 	}
@@ -1102,7 +1122,7 @@ class ExtendedSaveMenu : SaveMenu
 			initialalpha = fadealpha;
 		}
 
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(fadecolor, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
@@ -1192,12 +1212,12 @@ class ExtendedPlayerMenu : PlayerMenu
 		fadetime = 12;
 		fadetarget = gametic;
 		fadealpha = 1.0;
-		fadecolor = (Game.IsSoD() ? 0x000088 : 0x880000);
+		fadecolor = Game.GetFadeColor(self);
 	}
 
 	override void Drawer()
 	{
-		screen.Dim((Game.IsSoD() ? 0x000088 : 0x880000), 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		screen.Dim(fadecolor, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
 		ListMenu.Drawer();
 
