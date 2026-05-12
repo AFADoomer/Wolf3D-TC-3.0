@@ -277,7 +277,7 @@ class MapHandler : StaticEventHandler
 				console.printf("'%s' (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
-		else if (e.Name == "updatestyle")
+		else if (e.Name == "updatestyle" && !e.IsManual)
 		{
 			if (e.args[0] >= 0) { InitializeParsedMap(e.args[0], false); }
 		}
@@ -290,7 +290,7 @@ class MapHandler : StaticEventHandler
 		//
 		// We are assuming that if they are noclipping, they don't care about
 		// seeing parts of the map that they shouldn't actually be able to see
-		if (!(level.mapname ~== "Level") || !curmap || curmap.noclip || level.time % 10) { return; } // only check every 10 tics for performance
+		if (!(level.mapname ~== "Level") || !curmap || curmap.noclip || level.time % 35) { return; } // only check every 35 tics for performance
 
 		for (int p = 0; p < MAXPLAYERS; p++)
 		{
