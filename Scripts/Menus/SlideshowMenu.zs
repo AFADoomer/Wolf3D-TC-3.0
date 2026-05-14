@@ -1508,6 +1508,12 @@ class MapMenu : TextScreenMenu
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
+		if (multiplayer && !players[consoleplayer].settings_controller)
+		{
+			console.printF(StringTable.Localize("$TXT_NETGAMEMAPCHANGE"));
+			return;
+		}
+
 		ExtendedOptionMenu.Init(parent, desc);
 
 		border = TexMan.CheckForTexture("Graphics/Menu/MapSelectBackground.png", TexMan.Type_Any);
@@ -1625,6 +1631,8 @@ class MapMenu : TextScreenMenu
 
 	override void Ticker()
 	{
+		if (multiplayer && !players[consoleplayer].settings_controller) { Close(); return; }
+
 		if (generic) { generic.Ticker(); }
 		Super.Ticker();
 
@@ -1686,15 +1694,31 @@ class MapMenu : TextScreenMenu
 
 	void DrawControls(int ytop = 0, double scale = 1.5)
 	{
-		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
+		int fontheight = (titlefont.GetHeight() + 1);
 		int lastrow = screen.GetHeight() - fontheight * 2;
-		int x = 160 + (Screen.GetWidth() / 2 - max(620, Screen.GetWidth() * 2 / 3) / 2);
 
-		GenericOptionMenu.DrawMenu(x, 35, Font.GetFont("BigFont"), ytop, lastrow, scale);
+		int w = 0;
+		for (int i = 0; i < mDesc.mItems.Size(); i++)
+		{
+			let item = mDesc.mItems[i];
+			if (!item || !item.mEnabled) { continue; }
+
+			String label = Stringtable.Localize(item.mLabel);
+			w = max(w, titlefont.StringWidth(label) * CleanXFac_1);
+		}
+
+		w += 20 * CleanXFac_1;
+		w *= scale;
+
+		int x = Screen.GetWidth() / 2 - w;
+
+		GenericOptionMenu.DrawMenu(x, w, titlefont, ytop, lastrow, scale);
 	}
 
 	override void Drawer()
 	{
+		if (multiplayer && !players[consoleplayer].settings_controller) { return; }
+
 		// Fill in the background
 		screen.Dim(0x282828, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 		if (border) { screen.DrawTexture(border, false, 160, 100, DTA_320x200, true, DTA_CenterOffset, true); }
@@ -1703,11 +1727,10 @@ class MapMenu : TextScreenMenu
 		String pagetitle = StringTable.Localize("$M_MAPSELECT");
 		screen.DrawText(titlefont, Font.FindFontColor("White"), 160 - titlefont.StringWidth(pagetitle) / 2, padding.y, pagetitle, DTA_320x200, true);
 
-		double factor = Screen.GetHeight() / 200.0;
-		int y = int(factor * (padding.y + titlefont.GetHeight()));
-		y += int(factor * padding.y);
+		double y = (padding.y + titlefont.GetHeight()) * CleanYFac;
+		y += (padding.y + smallfont.GetHeight()) * CleanYFac;
 
-		DrawControls(y);
+		DrawControls(y, 1.25);
 
 		// If there aren't any pages, stop here
 		if (!VisiblePages.Size()) { return; }
