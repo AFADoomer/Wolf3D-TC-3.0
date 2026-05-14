@@ -1530,9 +1530,9 @@ class MapMenu : TextScreenMenu
 		captionfont = SmallFont;
 
 		// Set frame padding and draw offsets
-		padding = (4, 4);
-		topoffset = padding.y + titlefont.GetHeight() + padding.y + double(OptionMenuSettings.mLinespacing * mDesc.mItems.Size()) / CleanYFac_1;
-		bottomoffset = 0;
+		padding = (4, 2);
+		topoffset = 40; // Hard-coding these to match the background image
+		bottomoffset = 62;
 		
 		// Set cell size for index entries
 		cellsize = (299, 12);
@@ -1608,7 +1608,7 @@ class MapMenu : TextScreenMenu
 		scale = (CleanXFac, CleanYFac);
 		
 		// Calculate the usable content area bounds
-		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset - 60);
+		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset);
 
 		Vector2 realpos, realsize;
 		[realpos, realsize] = Screen.VirtualToRealCoords((padding.x, padding.y + topoffset), (w - 2 * padding.x, contentheight), (w, h));
@@ -1618,11 +1618,9 @@ class MapMenu : TextScreenMenu
 		Vector2 temp;
 		[temp, realcellsize] = Screen.VirtualToRealCoords((0, 0), cellsize, (w, h));
 
-		maxscroll = int(cellsize.y * (PagesInfo.Size() - 2) - contentheight);
-
 		// Initialize the scrollbar
 		if (scroll) { scroll.Destroy(); }
-		scroll = Scroll.Init(int(realpos.x + realcellsize.x + 2 * scale.x), int(realpos.y), int(12 * scale.x), int(realsize.y), maxscroll);
+		scroll = Scroll.Init(int(realpos.x + realcellsize.x + 2 * scale.x), int(realpos.y), int(12 * scale.x), int(realsize.y));
 	}
 
 	override void Ticker()
@@ -1661,14 +1659,14 @@ class MapMenu : TextScreenMenu
 		}
 
 		maxscroll = max(0, int(cellsize.y * VisiblePages.Size() - contentheight));
-		if (!maxscroll) { scrollpos = 0; }
+		if (scrollpos > maxscroll) { scrollpos = maxscroll; }
 
 		// Update the scrollbar
 		if (scroll)
 		{
 			scroll.alpha = alpha;
-			scroll.scrollpos = scrollpos;
-			scroll.maxscroll = maxscroll;
+			scroll.scrollpos = scrollpos * CleanYFac_1;
+			scroll.maxscroll = maxscroll * CleanYFac_1;
 		}
 
 		let selection = MapDataInfo(PagesInfo[VisiblePages[selected]]);
@@ -2124,7 +2122,7 @@ class ScrollBar ui
 
 	TextureID up, down, scroll_t, scroll_m, scroll_b, scroll_s;
 
-	ScrollBar Init(int x, int y, int w, int h, int maxscroll)
+	ScrollBar Init(int x, int y, int w, int h, int maxscroll = 0)
 	{
 		ScrollBar s = New("ScrollBar");
 
@@ -2150,8 +2148,11 @@ class ScrollBar ui
 
 	void Draw()
 	{
-		double scrollblocksize = double(h - elementsize * 3) / max(1, maxscroll);
-		int scrollbarsize = int(clamp(scrollblocksize, 0, h / elementsize - 2));
+		int scrollheight = h - elementsize * 2;
+		maxscroll = max(1, maxscroll);
+		int scrollbarsize = max(1, scrollheight / maxscroll);
+		int barsize = elementsize * scrollbarsize;
+		double scrollblocksize = double(scrollheight - barsize) / maxscroll;
 
 		Screen.Dim(0x0, 0.5, x, y, w, h);
 
@@ -2163,8 +2164,9 @@ class ScrollBar ui
 		}
 		else
 		{
-			blocktop = y + elementsize + min(int(scrollblocksize * scrollpos), h - elementsize * (2 + scrollbarsize));
-			blockbottom = blocktop + elementsize * scrollbarsize;
+			blocktop = y + elementsize + min(int(scrollblocksize * scrollpos), scrollheight - barsize);
+			blockbottom = min(y + h - elementsize, blocktop + barsize);
+			
 			for (int b = 0; b < scrollbarsize; b++)
 			{
 				if (b == 0)
