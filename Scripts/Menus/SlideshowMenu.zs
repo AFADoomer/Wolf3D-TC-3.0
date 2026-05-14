@@ -2771,6 +2771,7 @@ class MapDataInfo : HelpInfo
 {
 	DataFile d;
 	ParsedMap map;
+	Font minifont;
 
 	static MapDataInfo Create(String page, int lineheight, DataFile d)
 	{
@@ -2779,6 +2780,8 @@ class MapDataInfo : HelpInfo
 		h.lineheight = lineheight;
 		h.d = d;
 		h.defaultcolor = "\c[White]";
+
+		h.minifont = Font.GetFont("MiniFont");
 
 		h.ParseLines();
 
@@ -2789,20 +2792,60 @@ class MapDataInfo : HelpInfo
 	{
 		String title = ZScriptTools.GetText(title);
 
+		int liney = y + padding.y + lineheight;
+
 		if (!map || !map.info)
 		{
-			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, padding.y + y + lineheight, title, DTA_320x200, true);
+			screen.DrawText(fnt, Font.FindFontColor("TrueWhite"), x + 4, liney, title, DTA_320x200, true);
 		}
 		else
 		{
-			int liney = y + padding.y + lineheight;
-			screen.DrawText(fnt, Font.FindFontColor("White"), x + 4, liney, StringTable.Localize(map.info.levelname, false), DTA_320x200, true);
-			liney += lineheight;
-			screen.DrawText(fnt, Font.FindFontColor("Gray"), x + 4, liney, title, DTA_320x200, true);
+			int fntclr = Font.FindFontColor("TrueWhite");
+			if (map.gametype > -1) { fntclr = map.gametype ? Font.FindFontColor("Palette48") : Font.FindFontColor("Palette27"); }
+
+
+			screen.DrawText(fnt, fntclr, x + 4, liney, StringTable.Localize(map.info.levelname, false), DTA_320x200, true);
+
+			liney += lineheight + padding.y;
+			screen.DrawText(minifont, Font.FindFontColor("Palette13"), x + 4, liney, title, DTA_320x200, true);
+
+			if (map.gametype > -1)
+			{
+				String par = " " .. StringTable.Localize("$PAR") .. ":";
+				String music = " " .. StringTable.Localize("$TXT_MUSIC") .. ":";
+
+				int width = max(minifont.StringWidth(par), minifont.StringWidth(music)) + 14;
+
+				liney += lineheight;
+				String partime = String.Format("%d:%02d", map.info.partime / 60, map.info.partime % 60);
+				screen.DrawText(minifont, Font.FindFontColor("Palette16"), x + 4, liney, par, DTA_320x200, true);
+				screen.DrawText(minifont, Font.FindFontColor("Palette16"), x + width, liney, partime, DTA_320x200, true);
+
+				liney += lineheight;
+				screen.DrawText(minifont, Font.FindFontColor("Palette16"), x + 4, liney, music, DTA_320x200, true);
+				screen.DrawText(minifont, Font.FindFontColor("Palette16"), x + width, liney, map.info.music, DTA_320x200, true);
+			}
 		}
 
 		if (map)
 		{
+			liney = 200 - padding.y * 2 - lineheight;//y + padding.y * 2 + lineheight * 5 + lineheight / 2;
+
+			String path = Wads.GetLumpFullName(map.lump);
+			if (!(path ~== map.datafile.gametitle))
+			{
+				int clump = Wads.GetLumpContainer(map.lump);
+				String container = Wads.GetContainerName(clump);
+				if (!(container ~== path))
+				{
+					path = Wads.GetLumpFullPath(map.lump);
+					path.Substitute(":", " > ");
+				}
+				screen.DrawText(minifont, Font.FindFontColor("Palette16"), x + 4, liney, path, DTA_320x200, true);
+			}
+
+			y += padding.y + 1;
+
 			TextureID tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 			double scale = 64.0 / map.height;
 			for (int w = 0; w < map.width; w++)
@@ -2824,17 +2867,17 @@ class MapDataInfo : HelpInfo
 							b > 0x6A && b < 0x90 || b == 0
 						)
 						{
-							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 						}
 					}
 					else if (val > 0x6A && val < 0x90 || val == 0)
 					{
 						tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
-						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
 					else if (val > 0x95)
 					{
-						screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + 1.5 * lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+						screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
 				}
 			}

@@ -231,7 +231,7 @@ class MapHandler : StaticEventHandler
 
 				Array<int> temp;
 				parsedmaps.gametype = -1; // Play as Wolf, but allow setting via CVar
-				parsedmaps.ReadGameMaps(entry.data, 0, temp, d);
+				parsedmaps.ReadGameMaps(entry.data, 0, temp, d, lump);
 			}
 		}
 	}
@@ -719,6 +719,7 @@ class ParsedMap
 	bool noclip;
 	Vector2 startspot;
 	String hash;
+	int lump;
 
 	int TileAt(Vector2 pos)
 	{
@@ -1651,7 +1652,7 @@ class WolfMapParser
 		int encoding;
 		Array<int> addresses;
 		if (headlump > -1) { parsedmaps.ReadMapHead(Wads.ReadLump(headlump), encoding, addresses); }
-		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses, d);
+		parsedmaps.ReadGameMaps(Wads.ReadLump(mapslump), encoding, addresses, d, mapslump);
 	}
 
 	void ReadMapHead(String content, out int encoding, in out Array<int> addresses)
@@ -1675,8 +1676,9 @@ class WolfMapParser
 		FloEdit,
 	};
 
-	void ReadGameMaps(String content, int encoding, Array<int> addresses, Datafile d)
+	void ReadGameMaps(String content, int encoding, Array<int> addresses, Datafile d, int lump = -1)
 	{
+		
 		maptypes type = GameMaps;
 		if (!addresses.Size())
 		{
@@ -1710,6 +1712,7 @@ class WolfMapParser
 
 			ParsedMap newmap = New("ParsedMap");
 			newmap.datafile = d;
+			newmap.lump = lump;
 			
 			int planeoffsets[4];
 			int planesizes[4];
