@@ -2795,6 +2795,7 @@ class MapDataInfo : HelpInfo
 	DataFile d;
 	ParsedMap map;
 	Font minifont;
+	MapHandler handler;
 
 	static MapDataInfo Create(String page, int lineheight, DataFile d)
 	{
@@ -2805,6 +2806,8 @@ class MapDataInfo : HelpInfo
 		h.defaultcolor = "\c[White]";
 
 		h.minifont = Font.GetFont("MiniFont");
+
+		h.handler = MapHandler.Get();
 
 		h.ParseLines();
 
@@ -2870,6 +2873,7 @@ class MapDataInfo : HelpInfo
 			y += padding.y + 1;
 
 			TextureID tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
+			TextureID highlighttex = TexMan.CheckForTexture("Graphics/Menu/MapCellFrame.png", TexMan.Type_Any);
 			double scale = 64.0 / map.height;
 			for (int w = 0; w < map.width; w++)
 			{
@@ -2891,16 +2895,49 @@ class MapDataInfo : HelpInfo
 						)
 						{
 							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+
+							if (val == 0x15)
+							{
+								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFF0000);
+							}
 						}
 					}
-					else if (val > 0x6A && val < 0x90 || val == 0)
+					else if (val >= 0x6A && val < 0x90 || val == 0)
 					{
-						tex = TexMan.CheckForTexture("Floor", TexMan.Type_Any);
 						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
 					else if (val > 0x95)
 					{
 						screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+					}
+
+					int a = map.ActorAt((w, h));
+					if (a == 0x62 && g_highlightpushwalls)
+					{
+						screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFFFF00);
+					}
+					else
+					{
+						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_sod, a, g_warpskill);
+
+						if (am)
+						{
+							// Spawn the actor
+							Class<Actor> spawnclass = am.GetString("Class", true);
+							let it = GetDefaultByType(spawnclass);
+
+							TextureID sprtex;
+
+							if (it is "ClassicBase")
+							{
+								String basesprite = ClassicBase(it).basesprite;
+								sprtex = TexMan.CheckForTexture(basesprite .. "A0", TexMan.Type_Any);
+								if (!sprtex.IsValid()) { sprtex = TexMan.CheckForTexture(basesprite .. "A1", TexMan.Type_Any); }
+							}
+							if (!sprtex.IsValid()) { sprtex = it.SpawnState.GetSpriteTexture(0); }
+
+							if (sprtex.IsValid()) { screen.DrawTexture(sprtex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333); }
+						}
 					}
 				}
 			}
