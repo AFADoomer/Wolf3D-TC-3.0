@@ -768,10 +768,11 @@ class Game
 		CVar dynlights = CVar.FindCvar("g_dynamiclights");
 		if (dynlights && dynlights.GetInt())
 		{
-			mo.A_AttachLight("Light", DynamicLight.PointLight, clr, radius, radius, DYNAMICLIGHT.LF_ATTENUATE | (flags & ~DYNAMICLIGHT.LF_SPOT), offset);
+			mo.A_AttachLight("Trigger", DynamicLight.PointLight, 0x00808080, 16, 0);
+			mo.A_AttachLight("Light", DynamicLight.PointLight, clr, radius, 0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_DONTLIGHTSELF | (flags & ~DYNAMICLIGHT.LF_SPOT), offset);
 			if (flags & DYNAMICLIGHT.LF_SPOT)
 			{
-				mo.A_AttachLight("DownLight", DynamicLight.PointLight, clr, int(radius * 1.5), int(radius * 1.5), DYNAMICLIGHT.LF_ATTENUATE | flags, offset, 0, inner, outer, angle);
+				mo.A_AttachLight("DownLight", DynamicLight.PointLight, clr, int(radius * 1.5), int(radius * 1.5), DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_DONTLIGHTSELF | flags, offset, 0, inner, outer, angle);
 			}
 		}
 		else

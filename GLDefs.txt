@@ -455,12 +455,3 @@ HardwareShader Texture "I_CLIP_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest
 HardwareShader Texture "I_GAS_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" Define CLIPHEIGHT = 0.5 }
 HardwareShader Texture "I_ROCKET_O" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Shadows/I_ROCKET_O" Define CLIPHEIGHT = 0.5 }
 
-// Brightmaps for light sprites
-Brightmap Sprite LIT1A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT2A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT3A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT4A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT6A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT7A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LIT8A0 { map "Materials/Brightmaps/Bright.png" }
-Brightmap Sprite LITRA0 { map "Materials/Brightmaps/Bright.png" }

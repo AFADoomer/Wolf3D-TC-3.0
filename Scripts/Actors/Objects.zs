@@ -230,7 +230,7 @@ class HangingChandelier : ClassicDecoration
 	{
 		Super.Tick();
 
-		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
+		Game.AttachLight(self, 34.0, "White", (0, 0, 54), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 }
 
@@ -436,7 +436,7 @@ class GreenCeilingLight : ClassicDecoration
 	{
 		Super.Tick();
 
-		Game.AttachLight(self, 34.0, "White", (0, 0, 55), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
+		Game.AttachLight(self, 34.0, "White", (0, 0, 54), DYNAMICLIGHT.LF_SPOT, 10, 35, 90);
 	}
 }
 
