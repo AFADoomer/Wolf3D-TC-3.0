@@ -496,7 +496,7 @@ OptionValue "DeafGuardTileOptions"
 OptionMenu "MapMenu"
 {
 	Class "MapMenu"
-	Option "$M_GAME",		"g_sod", "Games"
+	Option "$M_GAME",		"g_warpsod", "Games"
 	Option "$M_SKILL",		"g_warpskill", "Skills"
 }
 

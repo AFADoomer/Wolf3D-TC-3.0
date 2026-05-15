@@ -1504,7 +1504,7 @@ class MapMenu : TextScreenMenu
 	Array<int> VisiblePages;
 	MapHandler maphandler;
 
-	CVar gamevar;
+	CVar gamevar, realgamevar;
 
 	override void Init(Menu parent, OptionMenuDescriptor desc)
 	{
@@ -1605,8 +1605,10 @@ class MapMenu : TextScreenMenu
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
-		gamevar = CVar.FindCVar("g_sod");
+		gamevar = CVar.FindCVar("g_warpsod");
 		if (gamevar) { gamevar.SetInt(0); }
+
+		realgamevar = CVar.FindCVar("g_sod");
 	}
 
 	void CalculatePositions()
@@ -1681,7 +1683,7 @@ class MapMenu : TextScreenMenu
 
 		if (gamevar && selection.map && selection.map.gametype > -1)
 		{
-			gamevar.SetInt(selection.map.gametype);
+			if (g_warpsod != selection.map.gametype) { gamevar.SetInt(selection.map.gametype); }
 			mDesc.mItems[0].mGrayCheck = gamevar;
 			mDesc.mItems[0].mGrayCheckVal = selection.map.gametype;
 		}
@@ -2047,6 +2049,8 @@ class MapMenu : TextScreenMenu
 					else
 					{
 						MapDataInfo m = MapDataInfo(PagesInfo[VisiblePages[selected]]);
+
+						realgamevar.SetInt(gamevar.GetInt());
 
 						String queuecmd = String.Format("initialize:%s:%s", ZScriptTools.GetText(m.title), ZScriptTools.GetText(m.d.path));
 						EventHandler.SendNetworkEvent(queuecmd);
@@ -2894,7 +2898,7 @@ class MapDataInfo : HelpInfo
 							b > 0x6A && b < 0x90 || b == 0
 						)
 						{
-							screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+							screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 
 							if (val == 0x15)
 							{
@@ -2908,7 +2912,7 @@ class MapDataInfo : HelpInfo
 					}
 					else if (val > 0x95)
 					{
-						screen.DrawTexture(map.GetTexture((w, h)), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
+						screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
 
 					int a = map.ActorAt((w, h));
@@ -2918,7 +2922,7 @@ class MapDataInfo : HelpInfo
 					}
 					else
 					{
-						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_sod, a, g_warpskill);
+						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_warpsod, a, g_warpskill);
 
 						if (am)
 						{

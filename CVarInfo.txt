@@ -40,6 +40,7 @@ server bool g_placeholders = true; // Enable dubious legality
 server int g_replacenativeactors = 1; // Replace native Doom enemies and items - 0 = Off, 1 = All, 2 = Items only
 server bool g_showhashes = false; // Show md5 hashes of detected GAMEMAPS files on startup
 server bool g_singlestartpushwalls = true; // Pushwall start spots can only be used once
+server int g_warpsod = 0; // Game type variable used in map select screen
 server int g_warpskill = 2; // Skill variable used in map select screen
 server bool g_mpfizzle = false; // Fizzle in mutliplayer
 user bool g_alwaysshowexternalmaps = false; // Always show externally loaded maps entry on the game selection screen
