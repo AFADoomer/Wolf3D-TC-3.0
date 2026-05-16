@@ -1926,8 +1926,9 @@ class ElectrofieldLost : NaziFlag
 	States
 	{
 		Spawn:
-			GZMO A -1;
-			Stop;
+			GZMO AB 5;
+			Loop;
+	}
 	}
 }
 
@@ -2007,8 +2008,8 @@ class HLabTableLost : ClassicDecoration
 	States
 	{
 		Spawn:
-			TAB5 A -1;
-			Stop;
+			TAB5 AB 5;
+			Loop;
 	}
 }
 

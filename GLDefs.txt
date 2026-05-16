@@ -389,9 +389,11 @@ HardwareShader Sprite "BAR4A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Tex
 HardwareShader Sprite "WEL3A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/WEL3A0.png" }
 HardwareShader Sprite "WEL4A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/WEL3A0.png" }
 HardwareShader Sprite "GZMOA0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
+HardwareShader Sprite "GZMOB0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 HardwareShader Sprite "LIT7A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/LIT6A0.png" }
 HardwareShader Sprite "LIT8A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/LIT8A0.png" }
 HardwareShader Sprite "TAB5A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/TAB5A0.png" }
+HardwareShader Sprite "TAB5B0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/TAB5A0.png" }
 HardwareShader Sprite "BAR5A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" Define CLIPHEIGHT = 58 }
 HardwareShader Sprite "PIPEA0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 HardwareShader Sprite "DEVSA0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/DEVSA0.png" }
