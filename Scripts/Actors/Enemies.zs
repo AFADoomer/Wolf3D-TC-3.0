@@ -169,7 +169,7 @@ class ClassicBase : Actor
 		if (bNerfWhenReplaced)
 		{
 			// Nerf certain enemies if they're not in a Wolf3D map
-			if (level.levelnum < 100 && level.levelnum > 999 && floorpic != TexMan.CheckForTexture("FLOOR", TexMan.Type_Any)) { health /= 3; }
+			if ((handler && !handler.IsParsedMap()) || level.cluster != -1) { health /= 3; }
 		}
 
 		AttackState = FindState("Attack");
@@ -1627,7 +1627,6 @@ class FakeHitler : ClassicNazi
 		+FLOAT
 		+JUSTHIT
 		+AMBUSH
-		+LOOKALLAROUND
 		+ClassicBase.NerfWhenReplaced
 		+ClassicBase.OptionalRotations
 

@@ -86,7 +86,7 @@ defaultmap
 	NoCrouch
 	NoJump
 	No_Grinding_Polyobj
-	Cluster = 1
+	Cluster = -1
 	sky1 = "CEILING"
 }
 
