@@ -2883,50 +2883,62 @@ class MapDataInfo : HelpInfo
 			{
 				for (int h = 0; h < map.height; h++)
 				{
-					int val = map.TileAt((w, h));
-					if (val < 0x6A && val > 0)
+					int t = map.TileAt((w, h));
+					int a = map.ActorAt((w, h));
+
+					if (t < 0x6A && t > 0)
 					{
 						int l = map.TileAt((w - 1, h));
 						int r = map.TileAt((w + 1, h));
-						int a = map.TileAt((w, h - 1));
-						int b = map.TileAt((w, h + 1));
+						int u = map.TileAt((w, h - 1));
+						int d = map.TileAt((w, h + 1));
 
 						if (
 							l > 0x6A && l < 0x90 || l == 0 ||
 							r > 0x6A && r < 0x90 || r == 0 ||
-							a > 0x6A && a < 0x90 || a == 0 ||
-							b > 0x6A && b < 0x90 || b == 0
+							u > 0x6A && u < 0x90 || u == 0 ||
+							d > 0x6A && d < 0x90 || d == 0
 						)
 						{
 							screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 
-							if (val == 0x15)
+							if (
+								t == 0x15 && 
+								(
+									l > 0x6A && l < 0x90 || l == 0 ||
+									r > 0x6A && r < 0x90 || r == 0
+								)
+							)
 							{
 								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFF0000);
 							}
+							
+							if (a == 0x62 && g_highlightpushwalls)
+							{
+								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFFFF00);
+							}
 						}
 					}
-					else if (val >= 0x6A && val < 0x90 || val == 0)
+					else if (t >= 0x6A && t < 0x90 || t == 0)
 					{
 						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
-					else if (val > 0x95)
+					else if (t > 0x95)
 					{
 						screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
 
-					int a = map.ActorAt((w, h));
-					if (a == 0x62 && g_highlightpushwalls)
+					if (a >= 0x13 && a <= 0x16)
 					{
-						screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFFFF00);
+						TextureID starttex = TexMan.CheckForTexture("Graphics/Menu/MapSpot.png", TexMan.Type_Any);;
+						if (starttex.IsValid()) { screen.DrawTexture(starttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0x00FF00); }
 					}
-					else
+					else if (a > 0)
 					{
 						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_warpsod, a, g_warpskill);
 
 						if (am)
 						{
-							// Spawn the actor
 							Class<Actor> spawnclass = am.GetString("Class", true);
 							let it = GetDefaultByType(spawnclass);
 
