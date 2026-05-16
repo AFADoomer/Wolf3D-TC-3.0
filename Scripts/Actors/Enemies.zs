@@ -44,6 +44,7 @@ class ClassicBase : Actor
 	FlagDef Active:baseflags, 2;
 	FlagDef Run:baseflags, 3;
 	FlagDef OptionalRotations:baseflags, 4;
+	FlagDef DeafandBlind:baseflags, 5;
 
 	Default
 	{
@@ -810,7 +811,7 @@ class ClassicNazi : ClassicBase
 			UNKN A 0;
 		Spawn.Stand:
 			"####" EEEEEE 4 {
-				if (bDormant || level.time < 2 || GameHandler.CheckFizzle()) { return; }
+				if (bDormant || bDeafandBlind || level.time < 2 || GameHandler.CheckFizzle()) { return; }
 				A_LookEx (0, 0, 0, 2048, 0, "See");
 			}
 			Loop;
@@ -1049,7 +1050,10 @@ class ClassicBoss : ClassicBase
 		Spawn:
 			UNKN A 0;
 		Spawn.Stand:
-			"####" A 5 A_Look();
+			"####" A 5 {
+				if (bDormant || bDeafandBlind || level.time < 2 || GameHandler.CheckFizzle()) { return; }
+				A_Look();
+			}
 			Loop;
 	}
 

@@ -1028,13 +1028,15 @@ class ParsedMap
 							{
 								// Align the actor
 								mo.angle = am.GetInt("Angle");
-								
+
 								// Assign a TID matching the floor code for alerting reasons
 								// (Recreate's Wolf's ability to alert actors elsewhere 
 								// in the map if they share the same floor code)
 								if (t == 0x6A)  // Deaf Guard Floor Code
 								{
 									mo.bAmbush = true;
+
+									if (ClassicBoss(mo)) { ClassicBoss(mo).bDeafandBlind = true; } // Recreate blind-and-deaf bosses bug
 
 									// Look at nearby tiles to find the closest floor code
 									t = TileAt(pos + (1, 0));
