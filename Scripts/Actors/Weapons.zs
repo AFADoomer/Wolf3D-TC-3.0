@@ -155,7 +155,7 @@ class ClassicWeapon : Weapon
 			let psp = owner.player.GetPSprite(PSP_WEAPON);
 			if (psp)
 			{
-				if (!translatehud) { translatehud = CVar.FindCVar("g_translatewpnsprites"); }
+				if (!translatehud) { translatehud = CVar.GetCVar("g_translatewpnsprites", owner.player); }
 				
 				if (translatehud && translatehud.GetInt()) { psp.translation = owner.translation; }
 				else { psp.translation = Translate.GetID("DefaultGray"); }

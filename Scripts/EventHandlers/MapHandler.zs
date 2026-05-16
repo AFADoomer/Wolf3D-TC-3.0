@@ -371,7 +371,7 @@ class MapHandler : StaticEventHandler
 
 			String IMFname = curmap.info.music;
 
-			CVar stylevar = CVar.FindCVar("g_musicstyle");
+			CVar stylevar = CVar.GetCVar("g_musicstyle", players[consoleplayer]);
 			if (stylevar && !stylevar.GetInt()) { S_ChangeMusic(IMFname); }
 			else
 			{

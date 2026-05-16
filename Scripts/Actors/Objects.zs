@@ -193,7 +193,7 @@ class FloorLamp : ClassicDecoration
 
 	override void PostBeginPlay()
 	{
-		dynlights = CVar.FindCVar("g_dynamiclights");
+		dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
 
 		Super.PostBeginPlay();
 	}

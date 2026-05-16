@@ -426,7 +426,7 @@ class GameHandler : StaticEventHandler
 
 	ui static String GetMusic(String IMFname)
 	{
-		CVar stylevar = CVar.FindCVar("g_musicstyle");
+		CVar stylevar = CVar.GetCVar("g_musicstyle", players[consoleplayer]);
 		if (stylevar && !stylevar.GetInt()) { return IMFname; }
 
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
