@@ -1059,6 +1059,11 @@ class ParsedMap
 			{
 				let sec = level.sectors[s];
 
+				Vector2 pos = CoordsToGrid(sec.centerspot);
+				
+				int t = TileAt(pos);
+				int a = ActorAt(pos);
+
 				// If this sector is out of range, continue
 				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096) { continue; }
 
@@ -1074,7 +1079,7 @@ class ParsedMap
 						if (!ln.sidedef[s] || ln.sidedef[s].sector.CenterCeiling() - ln.sidedef[s].sector.CenterFloor() == 0)
 						{
 							solid++;
-							if (ln.sidedef[s]) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
+							if (ln.sidedef[s] && !a) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
 						}
 					}
 
@@ -1084,8 +1089,6 @@ class ParsedMap
 						edges++;
 					}
 				}
-
-				Vector2 pos = CoordsToGrid(sec.centerspot);
 
 				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
 
@@ -1111,9 +1114,6 @@ class ParsedMap
 
 					voidspace.Push(sec);
 				}
-
-				int t = TileAt(pos);
-				int a = ActorAt(pos);
 
 				// Handle texturing of doors and door frames
 				if ((t >= 0x5A && t <= 0x65) || a == 0x62)

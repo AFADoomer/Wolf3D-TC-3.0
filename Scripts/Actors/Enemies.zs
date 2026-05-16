@@ -866,6 +866,7 @@ class ClassicNazi : ClassicBase
 										else
 										{
 											ln.sidedef[s].SetTexture(side.mid, TexMan.CheckForTexture("-", TexMan.Type_Any));
+											ln.sidedef[s].flags &= ~Side.WALLF_BLOCKRENDERING;
 										}
 									}
 								}
