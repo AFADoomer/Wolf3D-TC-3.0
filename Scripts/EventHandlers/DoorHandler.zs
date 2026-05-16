@@ -535,11 +535,12 @@ class DoorEffector: PolyobjectEffector
 				}
 
 				PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(PolyObject.StartSpotPos);
+				TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
+
 				if (door && door != PolyObject)
 				{
 					if (movedist == 0)
 					{
-						TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
 						for (int l = 0; l < door.Lines.Size(); l++)
 						{
 							let ln = door.lines[l];
@@ -552,28 +553,6 @@ class DoorEffector: PolyobjectEffector
 								if (ln.sidedef[s])
 								{
 									ln.sidedef[s].SetTexture(side.mid, nulltex);
-								}
-							}
-						}
-
-						if (MapHandler.IsParsedMap())
-						{
-							let handler = MapHandler.Get();
-
-							if (handler)
-							{
-								int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
-								for (int l = 0; l < PolyObject.Lines.Size(); l++)
-								{
-									let ln = PolyObject.lines[l];
-
-									for (int s = 0; s < 2; s++)
-									{
-										if (ln.sidedef[s])
-										{
-											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
-										}
-									}
 								}
 							}
 						}
@@ -618,6 +597,52 @@ class DoorEffector: PolyobjectEffector
 											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tt, (0, 0), ln));
 										}
 									}
+								}
+							}
+						}
+					}
+				}
+
+				// Always reset the secret door's textures when it's first opened
+				if (MapHandler.IsParsedMap())
+				{
+					let handler = MapHandler.Get();
+
+					if (handler)
+					{
+						Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.Origin);
+						int t = handler.curmap.TileAt(pos);
+						if (door && door != Polyobject) { t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos)); }
+						for (int l = 0; l < PolyObject.Lines.Size(); l++)
+						{
+							let ln = PolyObject.lines[l];
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s])
+								{
+									ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
+								}
+							}
+						}
+					}
+				}
+
+				// Always clear any overlapping door lines when the secret door is first opened
+				if (door && door.StartSector && MapHandler.IsParsedMap())
+				{
+					let handler = MapHandler.Get();
+
+					if (handler)
+					{
+						for (int l = 0; l < door.StartSector.lines.Size(); l++)
+						{
+							let ln = door.StartSector.lines[l];
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s] && ln.backsector && ln.backsector.CenterFloor() == ln.frontsector.CenterFloor())
+								{
+									ln.sidedef[s].SetTexture(side.mid, nulltex);
 								}
 							}
 						}

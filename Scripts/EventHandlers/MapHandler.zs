@@ -1250,11 +1250,8 @@ class ParsedMap
 							if (ln.special == 8 || a == 0x62)
 							{
 								TextureID tex;
-								bool locked = false;
-
 								if (t >= 0x5C && t <= 0x63)
 								{
-									locked = true;
 									if (ln.special == 8) { ln.locknumber = 60 + (t - 0x5C) / 2; }
 
 									// Set the doors to colored variants if the CVar is set
@@ -1268,13 +1265,37 @@ class ParsedMap
 									}
 								}
 
+								// If it's a secret door
+								if (a == 0x62 && t < 0x5A)
+								{
+									// Check the neighboring tile for this line
+									int n = 0;
+									if (ln.delta.x == 0)
+									{
+										if (ln.v1.p.x > door.StartSpotPos.x) { n = TileAt(pos + (1, 0)); }
+										else { n = TileAt(pos - (1, 0)); }
+									}
+									else if (ln.delta.y == 0)
+									{
+										if (ln.v1.p.y > door.StartSpotPos.y) { n = TileAt(pos - (0, 1)); }
+										else { n = TileAt(pos + (0, 1)); }
+									}
+
+									// If it's a door frame, texture this line to match
+									if (n >= 0x5A && n <= 0x65)
+									{
+										Vector2 gridpos = ParsedMap.CoordsToGrid(door.StartSpotPos);
+										tex = GetTileTexture(0x41, (0, 0), ln);
+									}
+								}
+
 								// Set door textures
 								for (int s = 0; s < 2; s++)
 								{
 									if (ln.sidedef[s])
 									{
-										if (locked && tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
-										else { ln.sidedef[s].SetTexture(side.mid, GetTexture(pos, ln, style)); }
+										if (!tex.IsValid()) { tex = GetTexture(pos, ln, style); }
+										if (tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
 									}
 								}
 							}
