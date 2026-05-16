@@ -25,6 +25,7 @@ user int g_musicstyle = 0; // MUS or MIDI music - 0 = MUS, 1 = MIDI
 server bool g_userotations = false; // Use additional sprite rotations if they are available
 server HandlerClass(LockColors) bool g_usedoorkeycolors = false; // Show color of locked doors' locks on their texture
 user bool g_translatewpnsprites = true; // Use player's color to recolor weapon sprite sleeves
+user bool g_wallhitsounds = false; // Use player's color to recolor weapon sprite sleeves
 
 // HUD
 user int g_borderstyle = 0; // Style of screen border

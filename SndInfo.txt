@@ -90,6 +90,8 @@ weapons/wpistol2		LSND0005
 weapons/wmachinegun2	LSND0004
 weapons/wchaingun2		LSND0006
 
+bj/hitwall			WALL
+
 // Enemy weapons
 shots/burst				WSND0011
 shots/single			WSND0021

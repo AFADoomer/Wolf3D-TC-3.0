@@ -24,11 +24,12 @@
 class WolfPlayer : PlayerPawn
 {
 	bool goobers, mutated, respawn, justdied;
-	int deathtick, respawntick, idletick, paintick;
+	int deathtick, respawntick, idletick, paintick, wallhittick;
 	double attackerangle;
 	Vector3 lastpos;
 	state IdleState, RunningState, AttackState;
 	Weapon curweap;
+	CVar wallhitsounds;
 
 	Default
 	{
@@ -193,7 +194,12 @@ class WolfPlayer : PlayerPawn
 
 	override void PostBeginPlay()
 	{
-		if (player) { player.cheats |= CF_INSTANTWEAPSWITCH; }
+		if (player)
+		{
+			player.cheats |= CF_INSTANTWEAPSWITCH;
+			wallhitsounds = CVar.GetCVar("g_wallhitsounds", player);
+		}
+
 		if (!Default.bNoBlood) { bNoBlood = g_noblood; }
 
 		Super.PostBeginPlay();
@@ -202,8 +208,6 @@ class WolfPlayer : PlayerPawn
 	override void Tick()
 	{
 		if (!player) { return; }
-
-		lastpos = pos;
 
 		Super.Tick();
 
@@ -352,7 +356,102 @@ class WolfPlayer : PlayerPawn
 			}
 		}
 
-		Super.MovePlayer();
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+
+		// [RH] 180-degree turn overrides all other yaws
+		if (player.turnticks)
+		{
+			player.turnticks--;
+			A_SetAngle(Angle + (180. / TURN180_TICKS), SPF_INTERPOLATE);
+		}
+		else
+		{
+			Angle += cmd.yaw * (360./65536.);
+		}
+
+		player.onground = (pos.z <= floorz) || bOnMobj || bMBFBouncer || (player.cheats & CF_NOCLIP2);
+
+		// killough 10/98:
+		//
+		// We must apply thrust to the player and bobbing separately, to avoid
+		// anomalies. The thrust applied to bobbing is always the same strength on
+		// ice, because the player still "works just as hard" to move, while the
+		// thrust applied to the movement varies with 'movefactor'.
+
+		if (cmd.forwardmove | cmd.sidemove)
+		{
+			double forwardmove, sidemove;
+			double bobfactor;
+			double friction, movefactor;
+			double fm, sm;
+
+			[friction, movefactor] = GetFriction();
+			bobfactor = friction < ORIG_FRICTION ? movefactor : ORIG_FRICTION_FACTOR;
+			if (!player.onground && !bNoGravity && !waterlevel)
+			{
+				// [RH] allow very limited movement if not on ground.
+				// [AA] but also allow authors to override it.
+				ApplyAirControl(movefactor, bobfactor);
+			}
+
+			fm = cmd.forwardmove;
+			sm = cmd.sidemove;
+			[fm, sm] = TweakSpeeds (fm, sm);
+			fm *= Speed / 256;
+			sm *= Speed / 256;
+
+			// When crouching, speed and bobbing have to be reduced
+			if (CanCrouch() && player.crouchfactor != 1)
+			{
+				fm *= player.crouchfactor;
+				sm *= player.crouchfactor;
+				bobfactor *= player.crouchfactor;
+			}
+
+			forwardmove = fm * movefactor * (35 / TICRATE);
+			sidemove = sm * movefactor * (35 / TICRATE);
+
+			if (forwardmove)
+			{
+				Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
+				ForwardThrust(forwardmove, Angle);
+			}
+			if (sidemove)
+			{
+				let a = Angle - 90;
+				Bob(a, cmd.sidemove * bobfactor / 256., false);
+				Thrust(sidemove, a);
+			}
+
+			if (!(player.cheats & CF_PREDICTING) && (forwardmove != 0 || sidemove != 0))
+			{
+				PlayRunning ();
+			}
+
+			if (player.cheats & CF_REVERTPLEASE)
+			{
+				player.cheats &= ~CF_REVERTPLEASE;
+				player.camera = player.mo;
+			}
+
+			if (wallhitsounds.GetBool())
+			{
+				Vector2 realvel = RotateVector(pos.xy - lastpos.xy, -angle);
+				int speeddelta = int(abs(vel.xy.length() - realvel.length()));
+
+				if (speeddelta)
+				{
+					if (wallhittick++ > 1) { A_StartSound("bj/hitwall", CHAN_AUTO, CHANF_LOCAL, 1.0, ATTN_NONE); }
+				}
+				else
+				{
+					wallhittick = 0;
+				}
+			}
+
+			lastpos = pos;
+		}
 	}
 
 	override void PlayerThink()

@@ -150,6 +150,7 @@ OptionMenu "TCOptions"
 	Option "$M_OPTIONSUSEFLATS",			"g_useflats", "FlatStyle"
 	Option "$M_OPTIONSMENUBACK",			"g_menubackstyle", "BackStyle"
 	Option "$M_OPTIONSMUSICSTYLE",			"g_musicstyle", "MusicStyle"
+	Option "$M_OPTIONSHITWALLSND",			"g_wallhitsounds", "YesNo"
 	StaticText ""
 	StaticText "$M_HUDOPTIONS", 1
 	Option "$M_OPTIONSHUDSTYLE",			"hud_althud", "YesNo"
