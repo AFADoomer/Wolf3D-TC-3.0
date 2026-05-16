@@ -868,7 +868,7 @@ class Life : CustomInventory
 	States
 	{
 		Spawn:
-			LIFE A -1;
+			LIFE A -1 Bright;
 			Loop;
 		Pickup:
 			LIFE A 0 {
@@ -1929,6 +1929,12 @@ class ElectrofieldLost : NaziFlag
 			GZMO AB 5;
 			Loop;
 	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		Game.AttachLight(self, 48.0, 0x5454FC, (0, 0, 48), 0);
 	}
 }
 
