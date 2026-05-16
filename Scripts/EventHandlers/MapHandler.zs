@@ -1142,9 +1142,15 @@ class ParsedMap
 									{
 										if (door.Lines.Find(ln) == door.Lines.Size())
 										{
-											for (int s = 0; s < 2; s++)
+											if (
+												(t >= 0x5A && t <= 0x65 && a != 0x62) ||
+												(a == 0x62 && !(t >= 0x5A && t <= 0x65))
+											)
 											{
-												if (ln.sidedef[s]) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
+												for (int s = 0; s < 2; s++)
+												{
+													if (ln.sidedef[s]) { ln.sidedef[s].flags |= Side.WALLF_BLOCKRENDERING; }
+												}
 											}
 											door.Lines.Push(ln);
 										}
