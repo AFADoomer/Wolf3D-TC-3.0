@@ -23,8 +23,6 @@
 // Handle swapping out items if a custom SoD or Lost Episodes map is loaded with Wolf3D, or vice versa.
 // Can be toggled by setting 'g_sod' CVar and restarting map
 
-const MAXDOORS = 14;
-
 class WolfPostProcessor : LevelPostProcessor
 {
 	protected void Apply(Name checksum, String mapname)
