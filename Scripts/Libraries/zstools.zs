@@ -308,7 +308,10 @@ class ZScriptTools
 	static String BestTextColor(Color clr)
 	{
 		DataHandler data = DataHandler(StaticEventHandler.Find("DataHandler"));
-		if (!data) { return "L"; }
+		if (!data) { return "-"; }
+
+		if (clr == 0x000000) { return "[TrueBlack]"; }
+		else if (clr == 0xFFFFFF) { return "[TrueWhite]"; }
 
 		int bestcolor = 0;
 		int bestdist = 257 * 257 + 257 * 257 + 257 * 257;

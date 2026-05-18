@@ -27,68 +27,77 @@ class GraphicsHandler : StaticEventHandler
 
 	override void OnRegister()
 	{
-		//ParseGraphics();
+		ParseGraphics();
 	}
 
 	void ParseGraphics()
 	{
+		bool parsed = false;
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
 		{
 			String lumpname = Wads.GetLumpFullName(l);
-			String shortlumpname = Wads.GetLumpName(l);
-			if (shortlumpname ~== "vswap")
+			lumpname = lumpname.MakeUpper();
+			if (lumpname.IndexOf("VSWAP.") > -1)
 			{
+				parsed = true;
 				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
 				WolfGraphicParser.Parse(parsedgraphics, e);
 			}
 		}
+
+		if (!parsed)
+		{
+			DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
+			ParsedValue data = handler.graphicdata.Find("Default");
+
+			ParsedValue texturenames = data.Find("Textures");
+
+			for (int t = 0; t < texturenames.children.Size(); t++)
+			{
+				ParsedValue texture = texturenames.children[t];
+				if (texture.children.Size())
+				{
+					for (int c = 0; c < texture.children.Size(); c++)
+					{
+						bool flip = false;
+						if (texture.children[c].children.Size())
+						{
+							for (int p = 0; p < texture.children[c].children.Size(); p++)
+							{
+								if (texture.children[c].children[p].keyname ~== "Flip") { flip = true; }
+							}
+						}
+
+						String texname = FileReader.StripQuotes(texture.children[c].keyname);
+						String shortname = texname.Mid(texname.RightIndexOf("/") + 1);
+						shortname.Replace(".png", "");
+
+						Canvas currentcanvas = TexMan.GetCanvas(texname);
+						if (!currentcanvas) { continue; }
+
+						currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
+
+						TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_WallPatch);
+						if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0, DTA_FlipX, flip); }
+					}
+				}
+				else
+				{
+					String texname = FileReader.StripQuotes(texture.children[0].keyname);
+					String shortname = texname.Mid(texname.RightIndexOf("/") + 1);
+					shortname.Replace(".png", "");
+
+					Canvas currentcanvas = TexMan.GetCanvas(texname);
+					if (!currentcanvas) { continue; }
+
+					currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
+
+					TextureID tex = TexMan.CheckForTexture(texname, TexMan.Type_WallPatch);
+					if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0); }
+				}
+			}
+		}
 	}
-
-	// void ParseActorMaps()
-	// {
-	// 	console.printf("Parsing actor data...");
-
-	// 	actormaps = FileReader.Parse("Data/ActorCodes.txt");
-			
-	// 	for (int d = 0; d < actormaps.children.Size(); d++)
-	// 	{
-	// 		let gamedata = actormaps.children[d];
-			
-	// 		for (int e = 0; e < gamedata.children.Size(); e++)
-	// 		{
-	// 			let entry = gamedata.children[e];
-
-	// 			String value = entry.value;
-
-	// 			Array<String> values;
-	// 			value.split(values, ",");
-	// 			if (!values.Size()) { values.Push(value); }
-		
-	// 			ParsedValue m;
-	// 			m = entry.AddKey(true);
-	// 			m.keyname = "Class";
-	// 			m.value = ZScriptTools.Trim(values[0]);
-
-	// 			m = entry.AddKey(true);
-	// 			m.keyname = "Skill";
-	// 			if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
-	// 			else { m.value = "-1"; }
-				
-	// 			m = entry.AddKey(true);
-	// 			m.keyname = "Angle";
-	// 			if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
-	// 			else { m.value = "90"; }
-
-	// 			m = entry.AddKey(true);
-	// 			m.keyname = "Patrolling";
-	// 			if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
-	// 			else { m.value = "0"; }
-
-	// 			entry.value = "";
-	// 		}
-	// 	}
-	// }
-
 
 	static clearscope GraphicsHandler Get()
 	{
@@ -218,10 +227,10 @@ class WolfGraphicParser
 		if (!data) { data = handler.graphicdata.Find("Default"); }
 
 		ParsedValue texturenames = data.Find("Textures");
-		ParsedValue spritenames = data.Find("Sprites");
+		// ParsedValue spritenames = data.Find("Sprites");
 
 		int wallcount = 0;
-		int spritecount = 0;
+		// int spritecount = 0;
 
 		int sizereadoffset = readoffset + d.chunkcount * 4;
 
@@ -273,28 +282,28 @@ class WolfGraphicParser
 
 				d.graphics.Push(newgraphic);
 			}
-			else if (a < d.spriteaddress + 32) //d.soundaddress)
-			{
-				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
-				newgraphic.Parse(true);
+			// else if (a < d.soundaddress)
+			// {
+			// 	newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
+			// 	newgraphic.Parse(true);
 				
-				if (a - wallcount < spritenames.children.Size())
-				{
-					newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
-					CreateGraphic(newgraphic, flip:true);
-				}
-				else
-				{
-					newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
-					CreateGraphic(newgraphic, flip:true);
-				}
+			// 	if (spritenames && a - wallcount < spritenames.children.Size())
+			// 	{
+			// 		newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
+			// 		CreateGraphic(newgraphic, flip:true);
+			// 	}
+			// 	else
+			// 	{
+			// 		newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
+			// 		CreateGraphic(newgraphic, flip:true);
+			// 	}
 			
-				//DumpGraphicToConsole(newgraphic);
+			// 	if (a - wallcount < 8) { DumpGraphicToConsole(newgraphic); }
 
-				spritecount++;
+			// 	spritecount++;
 
-				d.graphics.Push(newgraphic);
-			}
+			// 	d.graphics.Push(newgraphic);
+			// }
 		}
 	}
 
@@ -337,8 +346,8 @@ class WolfGraphicParser
 		String typename = "graphic"; 
 		if (currentcanvas)
 		{
-			//currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
-			//currentcanvas.Dim(Color(152, 0, 136), 1.0, 0, 0, 64, 64);
+			currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
+			currentcanvas.Dim(Color(152, 0, 136), 1.0, 0, 0, 64, 64);
 
 			for (int p = 0; p < graphic.posts.Size(); p++)
 			{
@@ -350,7 +359,7 @@ class WolfGraphicParser
 				}
 			}
 
-			console.printf("Writing %s: %s (offset 0x%x, size %d)", typename, graphic.graphicname, graphic.position, graphic.size);
+			if (developer) { console.printf("Writing %s: %s (offset 0x%x, size %d)", typename, graphic.graphicname, graphic.position, graphic.size); }
 
 			return currentcanvas;
 		}
