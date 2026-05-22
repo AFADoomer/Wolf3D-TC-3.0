@@ -22,12 +22,134 @@
 
 Class TileInfo
 {
-	int id;
-	TextureID tex[2];
-	int scriptaction;
-	int args[5];
-	String ActorFlags;
-	bool directional;
+	enum TileFlags
+	{
+		TILE_DIRECTIONAL = 1,
+		TILE_AMBUSH = 2,
+		TILE_SECRETEXIT = 4,
+		TILE_FLOOR = 8,
+		TILE_WALL = 16,
+		TILE_FONT = 32,
+		TILE_SOLID = TILE_WALL | TILE_FONT,
+		TILE_DOOR = 64,
+		TILE_DOORFRAME = 128,
+		TILE_INVALID = 256,
+	};
+
+	uint id;
+	String tex[2], alttex[2];
+	uint special;
+	uint args[5];
+	uint key;
+	uint flags;
+
+	void ParsePattern(ParsedValue tiledata)
+	{
+		String match = tiledata.GetString("Pattern");
+		if (!match.length()) { return; }
+
+		if (flags & TileInfo.TILE_FONT)
+		{
+			tex[0] = FileReader.StripQuotes(match);
+			return;
+		}
+
+		Array<String> patterns;
+		match.Split(patterns, ",");
+
+		if (patterns.Size() > 1)
+		{
+			tex[0] = String.Format(patterns[0], id);
+			tex[1] = String.Format(patterns[1], id);
+		}
+		else
+		{
+			tex[0] = String.Format(patterns[0], (id - 1) * 2);
+			tex[1] = String.Format(patterns[0], (id - 1) * 2 + 1);
+		}
+
+		tex[0] = FileReader.StripQuotes(tex[0]);
+		tex[1] = FileReader.StripQuotes(tex[1]);
+	}
+
+	void ParseAltPattern(ParsedValue tiledata)
+	{
+		String match = tiledata.GetString("AltPattern", true);
+		if (!match.length()) { return; }
+
+		match.Substitute("\"", "");
+
+		Array<String> patterns;
+		match.Split(patterns, ",");
+
+		if (patterns.Size() < 2) { return; }
+		
+		if (!key)
+		{
+			alttex[0] = patterns[0];
+			alttex[1] = patterns[1];
+
+			alttex[0] = FileReader.StripQuotes(alttex[0]);
+			alttex[1] = FileReader.StripQuotes(alttex[1]);
+			return;
+		}
+
+		alttex[0] = String.Format(patterns[0], key);
+		alttex[1] = String.Format(patterns[1], key);
+
+		alttex[0] = FileReader.StripQuotes(alttex[0]);
+		alttex[1] = FileReader.StripQuotes(alttex[1]);
+	}
+
+	void ParseFlags(ParsedValue tiledata)
+	{
+		String match = tiledata.GetString("Flags");
+		if (!match.length()) { return; }
+
+		Array<String> flagvalues;
+		match.Split(flagvalues, "|");
+
+		for (int f = 0; f < flagvalues.Size(); f++)
+		{
+			String flag = flagvalues[f];
+		
+			if (flag ~== "Directional") { flags |= TileInfo.TILE_DIRECTIONAL; }
+			else if (flag ~== "Ambush") { flags |= TileInfo.TILE_AMBUSH; }
+			else if (flag ~== "SecretExit") { flags |= TileInfo.TILE_SECRETEXIT; }
+			else if (flag ~== "Floor") { flags |= TileInfo.TILE_FLOOR; }
+			else if (flag ~== "Wall") { flags |= TileInfo.TILE_WALL; }
+			else if (flag ~== "Font") { flags |= TileInfo.TILE_FONT; }
+			else if (flag ~== "Door") { flags |= TileInfo.TILE_DOOR; }
+			else if (flag ~== "DoorFrame") { flags |= TileInfo.TILE_DOORFRAME; }
+			else if (flag ~== "Invalid") { flags |= TileInfo.TILE_INVALID; }
+		}
+	}
+
+	void ParseKey(ParsedValue tiledata)
+	{
+		key = tiledata.GetInt("Key");
+		if (!key) { return; }
+
+		alttex[0] = String.Format(alttex[0], key);
+		alttex[1] = String.Format(alttex[1], key);
+	}
+	
+	void ParseSpecial(ParsedValue tiledata)
+	{
+		String match = tiledata.GetString("Special");
+		if (!match.length()) { return; }
+
+		Array<String> specialstring;
+		match.Split(specialstring, ",");
+
+		if (specialstring.Size() == 0) { return; }
+		special = specialstring[0].ToInt();
+
+		for (int i = 1; i < specialstring.Size() && i < 5; i++)
+		{
+			args[i - 1] = specialstring[i].ToInt();
+		}
+	}
 }
 
 Class GameTileInfo
@@ -35,44 +157,84 @@ Class GameTileInfo
 	String gamename;
 	Array<TileInfo> Tiles;
 
-	TileInfo Add(ParsedValue tiledata)
+	void ParseTileInfo(ParsedValue tiledata)
 	{
-//		for (int d = 0; d < tiledata.children.Size(); d++)
-//		{
-//			let tiletype = tiledata.children[d];
+		if (!tiledata.children.Size()) { return; }
 
-			let walldata = tiledata.Find("Walls");
-
-			// console.printf(tiledata.keyname .. " - " .. walldata.keyname);
-
+		ParsedValue tiledefault = tiledata.Find("Default");
+		if (tiledefault)
+		{
 			Array<int> tilerange;
-			walldata.GetNumberList("Tiles", tilerange);
+			tiledefault.GetNumberList("Tiles", tilerange);
 
-			// for (int i = 0; i < tilerange.Size(); i++)
-			// {
-			// 	// console.printF("%x", tilerange[i]);
-			// }
+			if (tilerange.Size())
+			{
+				for (int i = 0; i < tilerange.Size(); i++)
+				{
+					TileInfo tile = GetTile(tilerange[i]);
 
+					tile.ParseKey(tiledefault);
+					tile.ParseFlags(tiledefault);
+					tile.ParsePattern(tiledefault);
+					tile.ParseAltPattern(tiledefault);
+					tile.ParseSpecial(tiledefault);
+				}
+			}
+		}
 
+		for (int d = 0; d < tiledata.children.Size(); d++)
+		{
+			let tiles = tiledata.children[d];
+			if (!tiles || tiles == tiledefault) { continue; }
 
-			let floordata = tiledata.Find("Floors");
-			let doordata = tiledata.Find("Doors");
-			let commentdata = tiledata.Find("Comments");
+			int tileindex = (tiles.keyname).ToInt();
 
+			if (tileindex > 0)
+			{
+				TileInfo tile = GetTile(tileindex);
 
-			// for (int e = 0; e < walldata.children.Size(); e++)
-			// {
-			// 	let tileinfo = tiletype.children[e];
-			// 	String tilerange = tileinfo.GetString("Tiles");
-			// 	String tilerange = tileinfo.GetString("Tiles");
-			// 	console.printf(walldata.children[e].keyname)DumpData();
-			// }
-//		}
+				tile.ParseKey(tiles);
+				tile.ParseFlags(tiles);
+				tile.ParsePattern(tiles);
+				tile.ParseAltPattern(tiles);
+				tile.ParseSpecial(tiles);
+			}
+
+			ParseTileInfo(tiles);
+		}
+	}
+
+	TileInfo GetTile(int index)
+	{
+		if (Tiles.Size() <= index) { Tiles.Resize(index + 1); }
+		if (!Tiles[index])
+		{
+			Tiles[index] = New("TileInfo");
+			Tiles[index].id = index;
+		}
+
+		return Tiles[index];
+	}
+
+	TileInfo GetSpecialTile(int type)
+	{
+		for (int t = 0; t < Tiles.Size(); t++)
+		{
+			TileInfo tile = Tiles[t];
+			if (tile && tile.flags & type) { return tile; }
+		}
 
 		return null;
 	}
 
-	static GameTileInfo Find(in out Array<GameTileInfo> tilemaps, String gamename)
+	void Add(ParsedValue tiledata)
+	{
+		gamename = tiledata.keyname;
+
+		ParseTileInfo(tiledata);
+	}
+
+	static GameTileInfo Find(in out Array<GameTileInfo> tilemaps, String gamename, bool create = false)
 	{
 		GameTileInfo tilemap;
 
@@ -82,11 +244,42 @@ Class GameTileInfo
 			if (tilemap && tilemap.gamename ~== gamename) { return tilemap; }
 		}
 
+		if (!create) { return null; }
+
 		tilemap = New("GameTileInfo");
 		tilemap.gamename = gamename;
 		tilemaps.Push(tilemap);
 
 		return tilemap;
+	}
+
+	static TileInfo GetTileInfo(Array<GameTileInfo> tilemaps, String gamename, int tileid)
+	{
+		if (tileid < 0) { return null; }
+
+		GameTileInfo tilemap = Find(tilemaps, gamename);
+		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { tilemap = Find(tilemaps, "Default"); }
+		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { return null; }
+
+		return tilemap.Tiles[tileid];
+	}
+
+	static TileInfo GetSpecialTileInfo(Array<GameTileInfo> tilemaps, String gamename, int type)
+	{
+		if (type <= 0) { return null; }
+
+		TileInfo tile;
+		GameTileInfo tilemap;
+		
+		tilemap = Find(tilemaps, gamename);
+		if (tilemap)
+		{
+			tile = tilemap.GetSpecialTile(type);
+			if (tile) { return tile; }
+		}
+
+		tilemap = Find(tilemaps, "Default");
+		return tilemap.GetSpecialTile(type);
 	}
 }
 
@@ -522,41 +715,8 @@ class MapHandler : StaticEventHandler
 		{
 			let gamedata = tilemapdata.children[d];
 
-			GameTileInfo gametiles = GameTileInfo.Find(tilemaps, gamedata.keyname);
+			GameTileInfo gametiles = GameTileInfo.Find(tilemaps, gamedata.keyname, true);
 			gametiles.Add(gamedata);
-
-		// 	for (int e = 0; e < gamedata.children.Size(); e++)
-		// 	{
-		// 		let entry = gamedata.children[e];
-
-		// 		String value = entry.value;
-
-		// 		Array<String> values;
-		// 		value.split(values, ",");
-		// 		if (!values.Size()) { values.Push(value); }
-		
-		// 		ParsedValue m;
-		// 		m = entry.AddKey(true);
-		// 		m.keyname = "Class";
-		// 		m.value = ZScriptTools.Trim(values[0]);
-
-		// 		m = entry.AddKey(true);
-		// 		m.keyname = "Skill";
-		// 		if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
-		// 		else { m.value = "-1"; }
-				
-		// 		m = entry.AddKey(true);
-		// 		m.keyname = "Angle";
-		// 		if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
-		// 		else { m.value = "90"; }
-
-		// 		m = entry.AddKey(true);
-		// 		m.keyname = "Patrolling";
-		// 		if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
-		// 		else { m.value = "0"; }
-
-		// 		entry.value = "";
-		// 	}
 		}
 	}
 
@@ -594,17 +754,21 @@ class MapHandler : StaticEventHandler
 		return this.curmap.info.music;
 	}
 
-	static int TileAt(Vector2 pos, ParsedMap curmap = null)
+	static int, TileInfo TileAt(Vector2 pos, ParsedMap curmap = null)
 	{
 		MapHandler this = MapHandler.Get();
-		if (!this) { return -1; }
+		if (!this || !this.curmap) { return -1, null; }
 
 		if (!curmap) { curmap = this.curmap; }
-		if (!curmap) { return -1; }
+		if (!curmap) { return -1, null; }
 
 		pos = ParsedMap.CoordsToGrid(pos);
 
-		return curmap.TileAt(pos);
+		TileInfo tile;
+		int t;
+		[t, tile] = curmap.TileAt(pos);
+
+		return t, tile;
 	}
 
 	static int ActorAt(Vector2 pos)
@@ -650,9 +814,11 @@ class MapHandler : StaticEventHandler
 		MapHandler this = MapHandler.Get();
 		if (!this) { return; }
 
-		int floor = MapHandler.TileAt(pos);
+		TileInfo tile;
+		int floor;
+		[floor, tile] = MapHandler.TileAt(pos);
 
-		if (floor > 0x65 && this.activatedfloors.Find(floor) == this.activatedfloors.Size())
+		if ((tile.flags & TileInfo.TILE_FLOOR) && this.activatedfloors.Find(floor) == this.activatedfloors.Size())
 		{
 			this.activatedfloors.Push(floor);
 
@@ -721,14 +887,48 @@ class ParsedMap
 	String hash;
 	int lump;
 
-	int TileAt(Vector2 pos)
+	int, TileInfo TileAt(Vector2 pos, int style = -1)
 	{
-		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) { return -1; }
+		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) { return -1, null; }
 
 		int index = int(pos.y * width + pos.x);
-		if (index < 0 || index >= planes[0].Size()) { return -1; } // Map edges return an invalid tile, but not "nothing"
+		if (index < 0 || index >= planes[0].Size()) { return -1, null; } // Map edges return an invalid tile, but not "nothing"
 
-		return planes[0][index];
+		let this = MapHandler.Get();
+
+		if (style < 0) { style = gametype; }
+		if (style < 0) { style = max(0, g_sod); }
+
+		return planes[0][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style), planes[0][index]) : null;
+	}
+
+	TileInfo TileAtIndex(int index, int style = -1)
+	{
+		let this = MapHandler.Get();
+		if (index < 0 || !this) { return null; }
+
+		if (style < 0) { style = gametype; }
+		if (style < 0) { style = max(0, g_sod); }
+
+		return GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style), index);
+	}
+
+	static String GetGameName(int gametype)
+	{
+		switch (gametype)
+		{
+			case 3:
+				return "SD3";
+			case 2:
+				return "SD2";
+			case 1:
+				return "SD1";
+			case 0:
+			default:
+				return "Default";
+		}
+
+		return "Default";
 	}
 
 	int ActorAt(Vector2 pos)
@@ -950,7 +1150,9 @@ class ParsedMap
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
 
-				int t = TileAt(pos);
+				TileInfo tile;
+				int t;
+				[t, tile] = TileAt(pos);
 				int a = ActorAt(pos);
 
 				if (a >= 0x13 && a <= 0x16)
@@ -981,7 +1183,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((t == -1 || t > 0 && (t < 0x5A || t > 0x8F)) && (a == 0 || (a > 0x59 && a < 0x62)))
+				if ((tile && tile.flags & TileInfo.TILE_SOLID) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
 					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, 0, true);
@@ -1032,18 +1234,19 @@ class ParsedMap
 								// Assign a TID matching the floor code for alerting reasons
 								// (Recreate's Wolf's ability to alert actors elsewhere 
 								// in the map if they share the same floor code)
-								if (t == 0x6A)  // Deaf Guard Floor Code
+								if (tile.flags & TileInfo.TILE_AMBUSH)  // Deaf Guard Floor Code
 								{
 									mo.bAmbush = true;
 
 									if (ClassicBoss(mo)) { ClassicBoss(mo).bDeafandBlind = true; } // Recreate blind-and-deaf bosses bug
 
 									// Look at nearby tiles to find the closest floor code
-									t = TileAt(pos + (1, 0));
-									if (t < 0x6B) { t = TileAt(pos - (1, 0)); }
-									if (t < 0x6B) { t = TileAt(pos + (0, 1)); }
-									if (t < 0x6B) { t = TileAt(pos - (0, 1)); }
-									if (t < 0x6B) { t = 0; } // Fall back to not assigning a TID
+									TileInfo tile;
+									[t, tile] = TileAt(pos + (1, 0));
+									if (!(tile.flags & TileInfo.TILE_FLOOR)) { [t, tile] = TileAt(pos - (1, 0)); }
+									if (!(tile.flags & TileInfo.TILE_FLOOR)) { [t, tile] = TileAt(pos + (0, 1)); }
+									if (!(tile.flags & TileInfo.TILE_FLOOR)) { [t, tile] = TileAt(pos - (0, 1)); }
+									if (!(tile.flags & TileInfo.TILE_FLOOR)) { t = 0; } // Fall back to not assigning a TID
 								}
 								
 								mo.ChangeTID(t);
@@ -1063,7 +1266,9 @@ class ParsedMap
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
 				
-				int t = TileAt(pos);
+				TileInfo tile;
+				int t;
+				[t, tile] = TileAt(pos);
 				int a = ActorAt(pos);
 
 				// If this sector is out of range, continue
@@ -1095,7 +1300,7 @@ class ParsedMap
 				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
 
 				// Set the floor and ceiling for collapsed sectors to "-"
-				if (edges == sec.lines.Size() && !accessible && TileAt(pos) < 0x96)
+				if (edges == sec.lines.Size() && !accessible && tile && !(tile.flags & TileInfo.TILE_FONT))
 				{
 					sec.SetTexture(Sector.floor, nulltex);
 					sec.SetTexture(Sector.ceiling, nulltex);
@@ -1118,7 +1323,7 @@ class ParsedMap
 				}
 
 				// Handle texturing of doors and door frames
-				if ((t >= 0x5A && t <= 0x65) || a == 0x62)
+				if ((tile && tile.flags & TileInfo.TILE_DOOR) || a == 0x62)
 				{
 					PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
 					if (door)
@@ -1145,8 +1350,9 @@ class ParsedMap
 										if (door.Lines.Find(ln) == door.Lines.Size())
 										{
 											if (
-												(t >= 0x5A && t <= 0x65 && a != 0x62) ||
-												(a == 0x62 && !(t >= 0x5A && t <= 0x65))
+												tile &&
+												((tile.flags & TileInfo.TILE_DOOR) && a != 0x62) ||
+												(a == 0x62 && !(tile.flags & TileInfo.TILE_DOOR))
 											)
 											{
 												for (int s = 0; s < 2; s++)
@@ -1165,7 +1371,7 @@ class ParsedMap
 							}
 						}
 
-						if (t < 0x5A && a == 0x62)
+						if ((tile && tile.flags & TileInfo.TILE_WALL) && a == 0x62)
 						{
 							for (int n = 0; n < door.Lines.Size(); n++)
 							{
@@ -1208,18 +1414,17 @@ class ParsedMap
 									ln.activation = SPAC_Use | SPAC_UseBack | SPAC_UseThrough;
 									ln.flags |= Line.ML_REPEAT_SPECIAL;
 
-									if (t >= 0x5C && t <= 0x63)
+									if (tile && tile.key)
 									{
-										ln.locknumber = 60 + (t - 0x5C) / 2;
+										ln.locknumber = 59 + tile.key;
+										ln.flags &= ~Line.ML_DONTDRAW;
 									}
-
-									if (ln.locknumber) { ln.flags &= ~Line.ML_DONTDRAW; }
 								}
 							}
 						}
 
 						// If this line borders a secret door, continue
-						if (t < 0x5A || t > 0x65 && a == 0x62) { continue; }
+						if (tile && !(tile.flags & TileInfo.TILE_DOOR) && a == 0x62) { continue; }
 
 						// If this line is an entryway, continue
 						if (ln.flags & Line.ML_TWOSIDED)
@@ -1229,14 +1434,21 @@ class ParsedMap
 						}
 
 						// Don't add door frames if Deaf Guard tiles meet the threshhold
-						if (CheckDoorTiles(pos)) { continue; }
+						if (g_deafguarddoors > 0)
+						{
+							TileInfo checktile;
+							TextureID c;
+							[c, checktile] = GetSpecialTileTexture(TileInfo.TILE_AMBUSH);
+
+							if (CheckDoorTiles(pos, checktile.id) >= g_deafguarddoors) { continue; }
+						}
 
 						// Set door frame textures on the sides
 						for (int s = 0; s < 2; s++)
 						{
 							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 							{
-								ln.sidedef[s].SetTexture(side.mid, GetTileTexture(0x41, pos, ln));
+								ln.sidedef[s].SetTexture(side.mid, GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, pos, ln));
 							}
 						}
 					}
@@ -1250,42 +1462,41 @@ class ParsedMap
 							if (ln.special == 8 || a == 0x62)
 							{
 								TextureID tex;
-								if (t >= 0x5C && t <= 0x63)
+								if (tile && tile.key)
 								{
-									if (ln.special == 8) { ln.locknumber = 60 + (t - 0x5C) / 2; }
+									ln.locknumber = 59 + tile.key;
 
+									String texpath;
+								
 									// Set the doors to colored variants if the CVar is set
-									if (g_usedoorkeycolors)
-									{
-										String texpath = String.Format("WLF%iLK%i", gametype > 0 ? gametype : style, ln.locknumber - 59);
-										if (ln.delta.x) { texpath = String.Format("%sG", texpath); }
-										else { texpath = String.Format("%sF", texpath); }
-
-										tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
-									}
+									if (ln.delta.x) { texpath = g_usedoorkeycolors ? tile.alttex[0] : tile.tex[0]; }
+									else { texpath = g_usedoorkeycolors ? tile.alttex[1] : tile.tex[1]; }
+									
+									tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 								}
 
 								// If it's a secret door
-								if (a == 0x62 && t < 0x5A)
+								if (a == 0x62 && (tile && tile.flags & TileInfo.TILE_WALL))
 								{
 									// Check the neighboring tile for this line
+									TileInfo ntile;
 									int n = 0;
 									if (ln.delta.x == 0)
 									{
-										if (ln.v1.p.x > door.StartSpotPos.x) { n = TileAt(pos + (1, 0)); }
-										else { n = TileAt(pos - (1, 0)); }
+										if (ln.v1.p.x > door.StartSpotPos.x) { [n, ntile] = TileAt(pos + (1, 0)); }
+										else { [n, ntile] = TileAt(pos - (1, 0)); }
 									}
 									else if (ln.delta.y == 0)
 									{
-										if (ln.v1.p.y > door.StartSpotPos.y) { n = TileAt(pos - (0, 1)); }
-										else { n = TileAt(pos + (0, 1)); }
+										if (ln.v1.p.y > door.StartSpotPos.y) { [n, ntile] = TileAt(pos - (0, 1)); }
+										else { [n, ntile] = TileAt(pos + (0, 1)); }
 									}
 
 									// If it's a door frame, texture this line to match
-									if (n >= 0x5A && n <= 0x65)
+									if (ntile && ntile.flags & TileInfo.TILE_DOOR)
 									{
 										Vector2 gridpos = ParsedMap.CoordsToGrid(door.StartSpotPos);
-										tex = GetTileTexture(0x41, (0, 0), ln);
+										tex = GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, (0, 0), ln);
 									}
 								}
 
@@ -1295,7 +1506,10 @@ class ParsedMap
 									if (ln.sidedef[s])
 									{
 										if (!tex.IsValid()) { tex = GetTexture(pos, ln, style); }
-										if (tex.IsValid()) { ln.sidedef[s].SetTexture(side.mid, tex); }
+										if (tex.IsValid())
+										{
+											ln.sidedef[s].SetTexture(side.mid, tex);
+										}
 									}
 								}
 							}
@@ -1307,7 +1521,7 @@ class ParsedMap
 					// If this was a secret door, flag it as a secret and set the floor texture for the automap
 					if (a == 0x62)
 					{
-						if (t < 0x5A)
+						if ((tile && tile.flags & TileInfo.TILE_WALL))
 						{
 							sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
 							Level.total_secrets++;
@@ -1316,17 +1530,32 @@ class ParsedMap
 						}
 					}
 				}
-				else if (t == 0x15) // Elevator switch
+				else if ((tile && tile.special)) // Elevator switch
 				{
-					bool secret = (TileAt(pos + (1, 0)) == 0x6B || TileAt(pos - (1, 0)) == 0x6B);
+					bool secret;
+
+					TileInfo specialtile = tile;
+					int s;
+					[s, specialtile] = TileAt(pos + (1, 0));
+					if (specialtile && specialtile.flags & TileInfo.TILE_SECRETEXIT) { secret = true; }
+					else
+					{
+						[s, specialtile] = TileAt(pos - (1, 0));
+						if (specialtile && specialtile.flags & TileInfo.TILE_SECRETEXIT) { secret = true; }
+					}
+
 					for (int l = 0; l < sec.lines.Size(); l++)
 					{
 						let ln = sec.lines[l];
 						if (ln.delta.x || (ln.frontsector && ln.backsector && ln.frontsector.CenterFloor() == ln.backsector.CenterFloor())) { continue; }
 
-						ln.special = 80;
-						ln.args[0] = 10;
-						ln.args[2] = secret ? 10 : 0;
+						ln.special = tile.special;
+						for (int a = 0; a < 5; a++)
+						{
+							ln.args[a] = tile.args[a];
+						}
+
+						if (ln.special == 80 && ln.args[0] == 10 && secret) { ln.args[2] = 10; }
 
 						ln.activation = SPAC_Use | SPAC_UseBack;
 					}
@@ -1349,7 +1578,7 @@ class ParsedMap
 				}
 
 				// Set wall textures for walls with things spawned inside of them
-				if (t > 0 && t < 0x5A && (a > 0 && a != 0x62))
+				if (tile && tile.flags & TileInfo.TILE_WALL && (a > 0 && a != 0x62))
 				{
 					// Make lines blocking and set textures
 					for (int l = 0; l < sec.lines.Size(); l++)
@@ -1422,77 +1651,75 @@ class ParsedMap
 	{
 		if (style < 0) { style = max(0, g_sod); }
 
-		int t = TileAt(pos);
+		TileInfo tile;
+		int t;
+		[t, tile] = TileAt(pos, style);
 
-		return GetTileTexture(t, pos, ln, style);
+		TextureID tex = GetTileTexture(tile, pos, ln);
+
+		if (!tex.IsValid()) { return TexMan.CheckForTexture("Black", TexMan.Type_Any); }
+
+		return tex;
 	}
 
-	TextureID GetTileTexture(int t, Vector2 pos, Line ln = null, int style = -1)
+	TextureID, TileInfo GetSpecialTileTexture(int type, Vector2 pos = (0, 0), Line ln = null, int style = -1)
 	{
-		int game = style;
-		if (game < 0) { game = gametype; }
-		if (game < 0) { game = max(0, g_sod); }
+		let this = MapHandler.Get();
+		if (!this) { return null, null; }
 
-		// Special handling for doors
-		if (game < 4)
+		if (style < 0) { style = gametype; }
+		if (style < 0) { style = max(0, g_sod); }
+
+		TileInfo tile = GameTileInfo.GetSpecialTileInfo(this.tilemaps, GetGameName(style), type);
+		if (!tile) { return null, null; }
+
+		return GetTileTexture(tile, pos, ln), tile;
+	}
+
+	TextureID GetTileTexture(TileInfo tile, Vector2 pos, Line ln = null)
+	{
+		if (!tile) { return TexMan.CheckForTexture("Black", TexMan.Type_Any); }
+
+		String texname;
+
+		if (!ln)
 		{
-			if (t >= 0x5A && t <= 0x6A || t == 0x41)
+			texname = tile.tex[0];
+			
+			if (tile && tile.flags & TileInfo.TILE_DIRECTIONAL) // Landscape and Elevator walls show alternate walls on map as appropriate
 			{
-				// Use standard Wolf3D door/doorframe images in SoD; offset as appropriate for mission packs
-				game = game <= 1 ? 0 : game;
-
-				if (t == 0x41)  { t = game == 0 ? 0x33 : 0x41; }
-				else if (t >= 0x5A && t <= 0x5B) { t = game == 0 ? 0x32 : 0x40; }
-				else if (t >= 0x5C && t <= 0x63) { t = game == 0 ? 0x35 : 0x43; }
-				else if (t >= 0x64 && t <= 0x65) { t = game == 0 ? 0x34 : 0x42; }
+				TileInfo left, right;
+				int l, r;
+				[l, left] = TileAt(pos - (1, 0));
+				[r, right] = TileAt(pos + (1, 0));
+				
+				if (left && left.flags & TileInfo.TILE_FLOOR || right && right.flags & TileInfo.TILE_FLOOR) { texname = tile.tex[1]; }
 			}
 		}
-
-		int tiletex = (!ln || ln.delta.x) ? (t - 1) * 2 : (t - 1) * 2 + 1;
-
-		if (game < 4)
+		else
 		{
-			if (tiletex == 42) { tiletex = 40; }
-			if (!ln)
-			{
-				if (tiletex == 30 || tiletex == 40) // Landscape and Elevator walls show alternate walls on map as appropriate
-				{
-					int l = TileAt(pos - (1, 0));
-					int r = TileAt(pos + (1, 0));
-
-					if (l > 0x65 && l < 0x90 || r > 0x65 && r < 0x90) { tiletex++; }
-				}
-			}
+			texname = (ln.delta.x) ? tile.tex[0] : tile.tex[1];
 		}
 
-		TextureID tex;
-
-		while (game > -1 && !tex.IsValid())
-		{
-			// Note: SD3 texture order is mapped onto SD2 textures via TEXTURES definitions
-			String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, tiletex);
-			tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
-
-			if (!tex.IsValid()) { game--; }
-		}
+		TextureID tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
 
 		if (!tex.IsValid())
 		{
 			switch (gametype)
 			{
-				case 4:
-					if (t > 0xD0) { t -= 0x13C; }
-					else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any); }
-					else { return tex; }
-					break;
+				// case 4:
+				// 	if (t > 0xD0) { t -= 0x13C; }
+				// 	else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any); }
+				// 	else { return tex; }
+				// 	break;
 				default:
-					String texpath = String.Format("Patches/Walls/Wall%i000.png", g_sod == 1 ? 0 : max(0, g_sod));
-					if (t <= 0x95) { return TexMan.CheckForTexture(texpath, TexMan.Type_Any); }
+					TileInfo defaulttile = TileAtIndex(0);
+					if (tile && !(tile.flags & TileInfo.TILE_FONT)) { return TexMan.CheckForTexture(defaulttile.tex[0], TexMan.Type_Any); }
 					break;
 			}
 
 			int c = 0;
-			switch (t)
+			switch (tile.id)
 			{
 				case 0xCA: // Space
 					break;
@@ -1530,17 +1757,19 @@ class ParsedMap
 					c = 0x7C;
 					break;
 				default:
-					if (t < 0xB0) { c = 0x41 + (t - 0x96); } // Uppercase letters
-					else if (t < 0xCA) { c = 0x61 + (t - 0xB0); } // Lowercase letters
-					else if (t < 0xDA) { c = 0x30 + (t - 0xD0); } // Numbers
+					if (tile.id < 0xB0) { c = 0x41 + (tile.id - 0x96); } // Uppercase letters
+					else if (tile.id < 0xCA) { c = 0x61 + (tile.id - 0xB0); } // Lowercase letters
+					else if (tile.id < 0xDA) { c = 0x30 + (tile.id - 0xD0); } // Numbers
 					break;
 			}
 	
 			if (c > 0)
 			{
-				tex = TexMan.CheckForTexture(String.Format("Fonts/Tiles/%04x.png", c), TexMan.Type_Any);
+				tex = TexMan.CheckForTexture(String.Format(tile.tex[0], c), TexMan.Type_Any);
 			}
 		}
+
+		if (!tex.IsValid()) { return TexMan.CheckForTexture("Black", TexMan.Type_Any); }
 
 		return tex;
 	}
@@ -1559,9 +1788,11 @@ class ParsedMap
 				for (int y = row; y < 64; y++) // Look for an empty tile
 				{
 					Vector2 gridpos = (column, Random[dmstart](0, 1) ? y : 63 - y); // Start from the botton randomly
-					int t = TileAt(gridpos);
+					TileInfo tile;
+					int t;
+					[t, tile] = TileAt(gridpos);
 
-					bool blocked = (t != 0 && t < 0x6A); // Walls keep you from spawning
+					bool blocked = (tile && tile.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR); // Walls keep you from spawning
 					if (!blocked) { blocked = !!FindBlockingActor(GridToCoords(gridpos)); } // And so do blocking actors
 
 					if (!blocked) { return GridToCoords(gridpos); } // But if you're not blocked, spawn here
@@ -1579,9 +1810,11 @@ class ParsedMap
 
 		if (gridpos.x > 64 || gridpos.y > 64 || gridpos.x < 0 || gridpos.y < 0) { return pos; }
 
-		int t = TileAt(gridpos);
+		TileInfo tile;
+		int t;
+		[t, tile] = TileAt(gridpos);
 
-		bool blocked = (t != 0 && t < 0x6A);
+		bool blocked = (tile && tile.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR);
 		if (!blocked) { blocked = !!FindBlockingActor(pos + offset * 64); }
 		if (blocked) { return GetNextSpot(pos, angle, ++iter); }
 		
@@ -1600,14 +1833,13 @@ class ParsedMap
 	}
 
 	// Check for tiles on either side of doors
-	// Check against g_deafguardoors CVar amount if checking for Deaf Guard tiles (default)
-	int CheckDoorTiles(Vector2 spot, int tile = 0x6A, int tile2 = -1)
+	int CheckDoorTiles(Vector2 spot, int tilecheck1, int tilecheck2 = -1)
 	{ 
-		if (tile == 0x6A && g_deafguarddoors == 0) { return 0; }
-
-		int t = TileAt(spot);
+		TileInfo tile;
+		int t;
+		[t, tile] = TileAt(spot);
 		int a = ActorAt(spot);
-		if (t < 0x5A || t > 0x65) { return 0; }
+		if (tile && !(tile.flags & TileInfo.TILE_DOOR)) { return 0; }
 
 		int t1, t2;
 		int tilecount = 0;
@@ -1623,11 +1855,9 @@ class ParsedMap
 			t2 = TileAt(spot + (0, 1));
 		}
 
-		tilecount += (t1 == tile && (tile2 < 0 ? 1 : t2 == tile2)) + (t2 == tile && (tile2 < 0 ? 1 : t1 == tile2));
+		tilecount += (t1 == tilecheck1 && (tilecheck2 < 0 ? 1 : t2 == tilecheck2)) + (t2 == tilecheck1 && (tilecheck2 < 0 ? 1 : t1 == tilecheck2));
 
-		if (tile != 0x6A) { return tilecount; }
-
-		return !!(tilecount >= g_deafguarddoors);
+		return tilecount;
 	}
 
 	int CountDoors(Vector2 pos)
@@ -1638,8 +1868,10 @@ class ParsedMap
 		{
 			for (int x = 0; x < 64; x++)
 			{
-				int t = TileAt((x, y));
-				count += (t >= 0x5A && t <= 0x65);
+				TileInfo tile;
+				int t;
+				[t, tile] = TileAt((x, y));
+				count += (tile && tile.flags & TileInfo.TILE_DOOR);
 
 				if (y == pos.y && x + 1 == pos.x) { break; }
 			}

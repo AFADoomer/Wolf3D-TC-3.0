@@ -156,16 +156,18 @@ class WolfPostProcessor : LevelPostProcessor
 						else if (ln.v1.p.y < ln.v2.p.y) { x1 -= 32; x2 += 32; }
 					}
 
-					int t1 = handler.TileAt((x1, y1), handler.queuedmap);
-					int t2 = handler.TileAt((x2, y2), handler.queuedmap);
+					TileInfo tile1, tile2;
+					int t1, t2;
+					[t1, tile1] = handler.TileAt((x1, y1), handler.queuedmap);
+					[t2, tile2] = handler.TileAt((x2, y2), handler.queuedmap);
 
-					if (t1 < 0x6A && t1 < 0x6A) { continue; } // Void space; ignore
-					else if (t1 < 0x6A) // t2 is floor, t1 is a wall
+					if (tile1 && tile1.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR && tile2 && tile2.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) { continue; } // Void space; ignore
+					else if (tile1 && tile1.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) // t2 is floor, t1 is a wall
 					{
 						if (y1 > y2 || x1 > x2) { continue; }
 						FlipLineCompletely(ln.Index());
 					}
-					else if (t2 < 0x6A) // t1 is floor, t2 is a wall
+					else if (tile2 && tile2.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) // t1 is floor, t2 is a wall
 					{
 						if (y1 < y2 || x1 < x2) { continue; }
 						FlipLineCompletely(ln.Index());
@@ -198,19 +200,30 @@ class WolfPostProcessor : LevelPostProcessor
 					for (int x = 0; x < 64; x++)
 					{
 						int a = handler.queuedmap.ActorAt((x, y));
-						int t = handler.queuedmap.TileAt((x, y));
+						TileInfo tile;
+						int t;
+						[t, tile] = handler.queuedmap.TileAt((x, y));
 
-						if ((t < 0x5A || t > 0x65) && a != 0x62) { continue; }
+						if (tile && !(tile.flags & TileInfo.TILE_DOOR) && a != 0x62) { continue; }
 
 						Vector2 pos = ParsedMap.GridToCoords((x, y));
 						int doortype = -1; // Invalid door type
 
-						if (t >= 0x5A && t <= 0x65 && !handler.queuedmap.CheckDoorTiles((x, y)))
+						if (tile && tile.flags & TileInfo.TILE_DOOR)
 						{
 							doortype = !!(t % 2); // E/W or N/S
+
+							if (g_deafguarddoors > 0)
+							{
+								TileInfo checktile;
+								TextureID c;
+								[c, checktile] = handler.queuedmap.GetSpecialTileTexture(TileInfo.TILE_AMBUSH);
+
+								if (handler.queuedmap.CheckDoorTiles((x, y), checktile.id) >= g_deafguarddoors) { doortype = -1; }
+							}
 						}
 
-						if (t > 0 && t < 0x6A && a == 0x62) // Pushwall
+						if (tile && !(tile.flags & TileInfo.TILE_FLOOR) && a == 0x62) // Pushwall
 						{
 							// Special handling for secret door placed on top of normal door
 							if (doortype > -1)

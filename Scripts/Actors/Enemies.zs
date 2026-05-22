@@ -830,10 +830,12 @@ class ClassicNazi : ClassicBase
 					Vector2 newpos = ParsedMap.CoordsToGrid(nextsector.CenterSpot);
 
 					bool blocked = false;
-					int t = handler.TileAt(nextsector.CenterSpot);
+					TileInfo tile;
+					int t;
+					[t, tile] = handler.TileAt(nextsector.CenterSpot);
 					int a = handler.ActorAt(nextsector.CenterSpot);
 
-					if (t > 0 && t < 0x5A)
+					if (tile && tile.flags & TileInfo.TILE_WALL)
 					{
 						// Special handling to recreate holo-wall engine bug
 						if (initial)

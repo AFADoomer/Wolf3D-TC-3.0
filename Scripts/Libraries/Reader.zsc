@@ -129,7 +129,7 @@ class ParsedValue
 		Array<String> temp;
 		list.Split(temp, ",");
 
-		if (!temp.Size())
+		if (temp.Size() < 2)
 		{
 			GetRange(list, output);
 			return;
@@ -147,7 +147,7 @@ class ParsedValue
 		Array<String> temp;
 		range.Split(temp, "-");
 
-		if (!temp.Size())
+		if (temp.Size() < 2)
 		{
 			output.Push(GetInteger(range));
 			return;

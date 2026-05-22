@@ -428,7 +428,9 @@ class DoorEffector: PolyobjectEffector
 
 				if (MapHandler.IsParsedMap())
 				{
-					int t = MapHandler.TileAt(spot);
+					TileInfo tile;
+					int t;
+					[t, tile] = MapHandler.TileAt(spot);
 					int a = MapHandler.ActorAt(spot);
 					
 					if (a == 0x7C) { break; } // Dead guard always blocks pushwalls
@@ -437,8 +439,8 @@ class DoorEffector: PolyobjectEffector
 						PolyobjectHandle ph = PolyobjectHandle.FindPolyobjAt(spot);
 						if (ph) { break; }
 					}
-					else if (t > 0 && t < 0x5A) { break; } // Can't move through solid walls
-					else if (t < 0x6A)
+					else if (tile && tile.flags & TileInfo.TILE_SOLID) { break; } // Can't move through solid walls
+					else if (tile && tile.flags & TileInfo.TILE_DOOR)
 					{
 						ThinkerIterator it = ThinkerIterator.Create('PolyobjectHandle');
 						PolyobjectHandle ph;
@@ -582,19 +584,20 @@ class DoorEffector: PolyobjectEffector
 									{
 										if (ln.sidedef[s] && ln.sidedef[s].sector == PolyObject.StartSector)
 										{
-											int tt = 0;
+											TileInfo tile;
+											int tt;
 											if (t % 2 == 1)
 											{
-												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { tt = handler.curmap.TileAt(pos + (1, 0)); }
-												else { tt = handler.curmap.TileAt(pos - (1, 0)); }
+												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { [tt, tile] = handler.curmap.TileAt(pos + (1, 0)); }
+												else { [tt, tile] = handler.curmap.TileAt(pos - (1, 0)); }
 											}
 											else
 											{
-												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { tt = handler.curmap.TileAt(pos - (0, 1)); }
-												else { tt = handler.curmap.TileAt(pos + (0, 1)); }
+												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, tile] = handler.curmap.TileAt(pos - (0, 1)); }
+												else { [tt, tile] = handler.curmap.TileAt(pos + (0, 1)); }
 											}
 											
-											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tt, (0, 0), ln));
+											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tile, (0, 0), ln));
 										}
 									}
 								}
@@ -611,8 +614,15 @@ class DoorEffector: PolyobjectEffector
 					if (handler)
 					{
 						Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.Origin);
-						int t = handler.curmap.TileAt(pos);
-						if (door && door != Polyobject) { t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos)); }
+						TileInfo tile;
+						int t;
+						[t, tile] = handler.curmap.TileAt(pos);
+						if (door && door != Polyobject)
+						{
+							t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
+							tile = handler.curmap.TileAtIndex(t - 1);
+						}
+
 						for (int l = 0; l < PolyObject.Lines.Size(); l++)
 						{
 							let ln = PolyObject.lines[l];
@@ -621,7 +631,7 @@ class DoorEffector: PolyobjectEffector
 							{
 								if (ln.sidedef[s])
 								{
-									ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(t, (0, 0), ln));
+									ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tile, (0, 0), ln));
 								}
 							}
 						}
@@ -740,14 +750,16 @@ class DoorEffector: PolyobjectEffector
 					PolyObject.StartSector = Level.PointInSector(Destination);
 					if (PolyObject.StartSector)
 					{
-						int t = MapHandler.TileAt(PolyObject.Origin);
+						TileInfo tile;
+						int t;
+						[t, tile] = MapHandler.TileAt(PolyObject.Origin);
 
-						if (t == 0x40 && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
+						if (tile && (tile.flags & TileInfo.TILE_INVALID) && Level.Vec2Diff(PolyObject.Origin, PolyObject.StartSpotPos).length() > 64)
 						{
 							// Special handling for "disappearing pushwall"
 							Level.ExecuteSpecial(Polyobj_OR_MoveTo, null, PolyObject.StartLine, Line.Front, PolyObject.PolyobjectNum, 8192, -2176, 2176);
 						}
-						else if (t == 0x15)
+						else if (tile && tile.special)
 						{
 							// Keep treating elevator walls as pushwalls if there's a pushwall marker on the current tile
 							if (!MapHandler.CheckPushwallAt(Destination))
@@ -774,14 +786,15 @@ class DoorEffector: PolyobjectEffector
 
 							TextureID tex;
 
-							if (t >= 0x5A && t <= 0x65)
+							if (tile && tile.flags & TileInfo.TILE_DOOR)
 							{
 								let handler = MapHandler.Get();
 
 								if (handler)
 								{
 									int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
-									tex = handler.curmap.GetTileTexture(t, (0, 0), null);
+									TileInfo tile = handler.curmap.TileAtIndex(t);
+									tex = handler.curmap.GetTileTexture(tile, (0, 0), null);
 								}
 							}
 							else

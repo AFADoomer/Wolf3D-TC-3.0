@@ -2883,32 +2883,30 @@ class MapDataInfo : HelpInfo
 			{
 				for (int h = 0; h < map.height; h++)
 				{
-					int t = map.TileAt((w, h));
+					TileInfo tile;
+					int t;
+					[t, tile] = map.TileAt((w, h));
 					int a = map.ActorAt((w, h));
 
-					if (t < 0x6A && t > 0)
+					if (tile && !(tile.flags & TileInfo.TILE_FLOOR))
 					{
-						int l = map.TileAt((w - 1, h));
-						int r = map.TileAt((w + 1, h));
-						int u = map.TileAt((w, h - 1));
-						int d = map.TileAt((w, h + 1));
+						TileInfo left, right, up, down;
+						int l, r, u, d;
+						[l, left] = map.TileAt((w - 1, h));
+						[r, right] = map.TileAt((w + 1, h));
+						[u, up] = map.TileAt((w, h - 1));
+						[d, down] = map.TileAt((w, h + 1));
 
 						if (
-							l > 0x6A && l < 0x90 || l == 0 ||
-							r > 0x6A && r < 0x90 || r == 0 ||
-							u > 0x6A && u < 0x90 || u == 0 ||
-							d > 0x6A && d < 0x90 || d == 0
+							(left && left.flags & (TileInfo.TILE_FLOOR | TileInfo.TILE_DOOR)) ||
+							(right && right.flags & (TileInfo.TILE_FLOOR | TileInfo.TILE_DOOR)) ||
+							(up && up.flags & (TileInfo.TILE_FLOOR | TileInfo.TILE_DOOR)) ||
+							(down && down.flags & (TileInfo.TILE_FLOOR | TileInfo.TILE_DOOR))
 						)
 						{
 							screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 
-							if (
-								t == 0x15 && 
-								(
-									l > 0x6A && l < 0x90 || l == 0 ||
-									r > 0x6A && r < 0x90 || r == 0
-								)
-							)
+							if (tile && tile.special)
 							{
 								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFF0000);
 							}
@@ -2919,11 +2917,11 @@ class MapDataInfo : HelpInfo
 							}
 						}
 					}
-					else if (t >= 0x6A && t < 0x90 || t == 0)
+					else if (tile && tile.flags & TileInfo.TILE_FLOOR)
 					{
 						screen.DrawTexture(tex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
-					else if (t > 0x95)
+					else if (tile && tile.flags & TileInfo.TILE_FONT)
 					{
 						screen.DrawTexture(map.GetTexture((w, h), null, g_warpsod), false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333);
 					}
