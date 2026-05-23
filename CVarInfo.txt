@@ -45,6 +45,7 @@ server int g_warpsod = 0; // Game type variable used in map select screen
 server int g_warpskill = 2; // Skill variable used in map select screen
 server bool g_mpfizzle = false; // Fizzle in mutliplayer
 user bool g_alwaysshowexternalmaps = false; // Always show externally loaded maps entry on the game selection screen
+server noarchive string g_forcetilemap = ""; // Force a specific tilemap to be used; will break maps if doors/triggers/etc. don't match
 
 // Default high score entries
 //  Wolf3D

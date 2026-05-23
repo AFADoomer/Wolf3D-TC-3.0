@@ -25,6 +25,8 @@
 
 Default // Wolf3D
 {
+	Palette = "Wolf3D.pal";
+
 	Textures
 	{
 		0	

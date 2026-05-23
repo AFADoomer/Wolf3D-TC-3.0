@@ -160,10 +160,10 @@ class ParsedGraphic
 	Array<GraphicPost> posts;
 	Canvas graphiccanvas;
 
-	void Parse(bool expand = false)
+	void Parse(Array<Color> palette, bool expand = false)
 	{
-		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
-		
+		if (!palette.Size()) { return; }
+
 		if (expand)
 		{
 			int readoffset;
@@ -196,7 +196,7 @@ class ParsedGraphic
 					for (int r = top; r < bottom; ++r)
 					{
 						int paletteindex = data.ByteAt(start + r);
-						post.data.Push(handler.palette[paletteindex]);
+						post.data.Push(palette[paletteindex]);
 					}
 				}
 			}
@@ -211,7 +211,7 @@ class ParsedGraphic
 				for (int y = 0; y < 64; y++)
 				{
 					int paletteindex = data.ByteAt(x * 64 + y);
-					post.data.Push(handler.palette[paletteindex]);
+					post.data.Push(palette[paletteindex]);
 				}
 			}
 		}
@@ -232,7 +232,6 @@ class WolfGraphicParser
 
 		if (graphicslump == -1) { return; }
 
-		String game = d.path.Mid(d.path.length() - 3);
 		d.content = Wads.ReadLump(graphicslump);
 
 		int readoffset = 0;
@@ -258,6 +257,7 @@ class WolfGraphicParser
 			data = handler.GetGraphicMap(gamename);
 		}
 
+		ParsedValue palettepath = data.Find("Palette");
 		ParsedValue texturenames = data.Find("Textures");
 		ParsedValue spritenames = data.Find("Sprites");
 
@@ -269,6 +269,13 @@ class WolfGraphicParser
 		// let spriteoffsets = new("Shape2DTransform");
 		// spriteoffsets.Translate((-32, 64));
 
+		Array<Color> palette;
+		
+		if (palettepath)
+		{
+			DataHandler.ParsePalette(FileReader.StripQuotes(palettepath.value), palette);
+		}
+
 		for (int a = 0; a < d.soundaddress; a++)
 		{
 			ParsedGraphic newgraphic = New("ParsedGraphic");
@@ -279,7 +286,7 @@ class WolfGraphicParser
 			if (a < d.spriteaddress)
 			{
 				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
-				newgraphic.Parse();
+				newgraphic.Parse(palette);
 
 				if (a < texturenames.children.Size())
 				{
@@ -327,7 +334,7 @@ class WolfGraphicParser
 			// else if (a < d.soundaddress)
 			// {
 			// 	newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
-			// 	newgraphic.Parse(true);
+			// 	newgraphic.Parse(palette, true);
 
 			// 	Canvas graphic;
 				
@@ -404,8 +411,6 @@ class WolfGraphicParser
 					currentcanvas.Dim(post.data[d], 1.0, post.column, flip ? 63 - y++ : y++, 1, 1);
 				}
 			}
-
-			if (developer) { console.printf("Writing %s: %s (offset 0x%x, size %d)", typename, canvasname, graphic.position, graphic.size); }
 
 			return currentcanvas;
 		}

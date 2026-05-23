@@ -845,7 +845,7 @@ class DataHandler : StaticEventHandler
 			if (lumpname.IndexOf("data/graphicmaps/") > -1)
 			{
 				ParsedValue graphicmapdata = FileReader.Parse(lumpname);
-				if (developer) { console.printf("Parsing %s graphic data from '%s'...", graphicmapdata.children[0].keyname, lumpname); }
+				if (developer) { console.printf(" Parsing %s graphic data from '%s'...", graphicmapdata.children[0].keyname, lumpname); }
 
 				for (int d = 0; d < graphicmapdata.children.Size(); d++)
 				{
@@ -853,57 +853,55 @@ class DataHandler : StaticEventHandler
 				}
 			}
 		}
-
-		ParsePalette();
 	}
 
 	clearscope ParsedValue GetGraphicMap(String gamename)
 	{
-		ParsedValue data;
-		
 		for (int g = 0; g < graphicmaps.Size(); g++)
 		{
-			if (graphicmaps[g].keyname == gamename)
+			if (graphicmaps[g].keyname ~== gamename)
 			{
-				data = graphicmaps[g];
-				break;
+				return graphicmaps[g];
 			}
 		}
 
-		return data;
+		return null;
 	}
 
-	void ParsePalette()
+	static clearscope void ParsePalette(String path, out Array<Color> palette)
 	{
-		int lump = Wads.CheckNumForFullName("Wolf3D.pal");
+		if (!path.length()) { path = "Wolf3D.pal"; }
 
-		if (lump > -1)
+		int lump = Wads.CheckNumForFullName("Data/Palettes/" .. path);
+
+		if (lump == -1)
 		{
-			ScriptScanner sc = New("ScriptScanner");
-
-			sc.OpenLumpNum(lump);
-			sc.MustGetString();
-			sc.MustGetNumber();
-			sc.MustGetNumber();
-
-			int colors = min(256, sc.Number);
-
-			for (int i = 0; i < colors; i++)
-			{
-				sc.MustGetNumber();
-				palette[i].r = sc.Number;
-				sc.MustGetNumber();
-				palette[i].g = sc.Number;
-				sc.MustGetNumber();
-				palette[i].b = sc.Number;
-			}
-
-			sc.Close();
+			console.printf("Palette lump '%s' not found!", path);
+			return;
 		}
-		else
+
+		ScriptScanner sc = New("ScriptScanner");
+
+		sc.OpenLumpNum(lump);
+		sc.MustGetString();
+		sc.MustGetNumber();
+		sc.MustGetNumber();
+
+		int colors = min(256, sc.Number);
+
+		palette.Resize(colors);
+
+		for (int i = 0; i < colors; i++)
 		{
-			console.printf("PLAYPAL lump not found!");
+			sc.MustGetNumber();
+			palette[i].r = sc.Number;
+			sc.MustGetNumber();
+			palette[i].g = sc.Number;
+			sc.MustGetNumber();
+			palette[i].b = sc.Number;
 		}
+
+		sc.Close();
 	}
 }
 

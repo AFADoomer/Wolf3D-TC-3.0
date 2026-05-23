@@ -34,13 +34,14 @@ Class TileInfo
 		TILE_DOOR = 64,
 		TILE_DOORFRAME = 128,
 		TILE_INVALID = 256,
+		TILE_MATCHKEY = 512,
 	};
 
 	uint id;
 	String tex[2], alttex[2];
 	uint special;
 	uint args[5];
-	uint key;
+	int key;
 	uint flags;
 
 	void ParsePattern(ParsedValue tiledata)
@@ -111,7 +112,7 @@ Class TileInfo
 
 		for (int f = 0; f < flagvalues.Size(); f++)
 		{
-			String flag = flagvalues[f];
+			String flag = ZScriptTools.Trim(flagvalues[f]);
 		
 			if (flag ~== "Directional") { flags |= TileInfo.TILE_DIRECTIONAL; }
 			else if (flag ~== "Ambush") { flags |= TileInfo.TILE_AMBUSH; }
@@ -122,13 +123,14 @@ Class TileInfo
 			else if (flag ~== "Door") { flags |= TileInfo.TILE_DOOR; }
 			else if (flag ~== "DoorFrame") { flags |= TileInfo.TILE_DOORFRAME; }
 			else if (flag ~== "Invalid") { flags |= TileInfo.TILE_INVALID; }
+			else if (flag ~== "MatchKey") { flags |= TileInfo.TILE_MATCHKEY; }
 		}
 	}
 
 	void ParseKey(ParsedValue tiledata)
 	{
 		key = tiledata.GetInt("Key");
-		if (!key) { return; }
+		if (key <= 0) { return; }
 
 		alttex[0] = String.Format(alttex[0], key);
 		alttex[1] = String.Format(alttex[1], key);
@@ -216,12 +218,14 @@ Class GameTileInfo
 		return Tiles[index];
 	}
 
-	TileInfo GetSpecialTile(int type)
+	TileInfo GetSpecialTile(int type, int parameter = 0)
 	{
 		for (int t = 0; t < Tiles.Size(); t++)
 		{
 			TileInfo tile = Tiles[t];
-			if (tile && tile.flags & type) { return tile; }
+			if (!tile || !(tile.flags & type)) { continue; }
+			if (!(tile.flags & TileInfo.TILE_MATCHKEY)) { return tile; }
+			if (tile.key == parameter) { return tile; }
 		}
 
 		return null;
@@ -258,13 +262,14 @@ Class GameTileInfo
 		if (tileid < 0) { return null; }
 
 		GameTileInfo tilemap = Find(tilemaps, gamename);
+
 		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { tilemap = Find(tilemaps, "Default"); }
 		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { return null; }
 
 		return tilemap.Tiles[tileid];
 	}
 
-	static TileInfo GetSpecialTileInfo(Array<GameTileInfo> tilemaps, String gamename, int type)
+	static TileInfo GetSpecialTileInfo(Array<GameTileInfo> tilemaps, String gamename, int type, int parameter)
 	{
 		if (type <= 0) { return null; }
 
@@ -274,7 +279,7 @@ Class GameTileInfo
 		tilemap = Find(tilemaps, gamename);
 		if (tilemap)
 		{
-			tile = tilemap.GetSpecialTile(type);
+			tile = tilemap.GetSpecialTile(type, parameter);
 			if (tile) { return tile; }
 		}
 
@@ -718,7 +723,7 @@ class MapHandler : StaticEventHandler
 			if (lumpname.IndexOf("data/tilecodes/") > -1)
 			{
 				ParsedValue tilemapdata = FileReader.Parse(lumpname);
-				if (developer) { console.printf("Parsing %s tile data from '%s'...", tilemapdata.children[0].keyname, lumpname); }
+				if (developer) { console.printf(" Parsing %s tile data from '%s'...", tilemapdata.children[0].keyname, lumpname); }
 
 				for (int d = 0; d < tilemapdata.children.Size(); d++)
 				{
@@ -891,6 +896,7 @@ class ParsedMap
 	LevelInfo info;
 	int mapnum;
 	int gametype;
+	String extension;
 	String signature;
 	int width;
 	int height;
@@ -912,7 +918,7 @@ class ParsedMap
 
 		if (style < 0) { style = max(0, g_sod); }
 
-		return planes[0][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style), planes[0][index]) : null;
+		return planes[0][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), planes[0][index]) : null;
 	}
 
 	TileInfo TileAtIndex(int index, int style = -1)
@@ -922,11 +928,19 @@ class ParsedMap
 
 		if (style < 0) { style = max(0, g_sod); }
 
-		return GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style), index);
+		return GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), index);
 	}
 
-	static String GetGameName(int gametype)
+	static String GetGameName(int gametype, String extension = "")
 	{
+		if (g_forcetilemap.length()) { extension = g_forcetilemap; }
+
+		if (extension.length())
+		{
+			DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
+			if (handler && handler.GetGraphicMap(extension)) { return extension; }
+		}
+
 		switch (gametype)
 		{
 			case 3:
@@ -937,7 +951,6 @@ class ParsedMap
 				return "SD1";
 			case 0:
 			default:
-				return "Default";
 		}
 
 		return "Default";
@@ -1166,7 +1179,7 @@ class ParsedMap
 				[t, tile] = TileAt(pos);
 				int a = ActorAt(pos);
 
-				if (a >= 0x13 && a <= 0x16)
+				if (a >= 0x01 && a <= 0x16)
 				{
 					startspot = sec.centerspot;
 					double angle = 90 - (a - 0x13) * 90;
@@ -1452,9 +1465,9 @@ class ParsedMap
 									ln.activation = SPAC_Use | SPAC_UseBack | SPAC_UseThrough;
 									ln.flags |= Line.ML_REPEAT_SPECIAL;
 
-									if (tile && tile.key)
+									if (tile && max(0, tile.key))
 									{
-										ln.locknumber = 59 + tile.key;
+										ln.locknumber = 59 + max(0, tile.key);
 										ln.flags &= ~Line.ML_DONTDRAW;
 									}
 								}
@@ -1486,7 +1499,7 @@ class ParsedMap
 						{
 							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 							{
-								ln.sidedef[s].SetTexture(side.mid, GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, pos, ln));
+								ln.sidedef[s].SetTexture(side.mid, GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, pos, ln, -1, tile.key));
 							}
 						}
 					}
@@ -1500,9 +1513,9 @@ class ParsedMap
 							if (ln.special == 8 || a == 0x62)
 							{
 								TextureID tex;
-								if (tile && tile.key)
+								if (tile && max(0, tile.key))
 								{
-									ln.locknumber = 59 + tile.key;
+									ln.locknumber = 59 + max(0, tile.key);
 
 									String texpath;
 								
@@ -1534,7 +1547,7 @@ class ParsedMap
 									if (ntile && ntile.flags & TileInfo.TILE_DOOR)
 									{
 										Vector2 gridpos = ParsedMap.CoordsToGrid(door.StartSpotPos);
-										tex = GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, (0, 0), ln);
+										tex = GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, (0, 0), ln, ntile.key);
 									}
 								}
 
@@ -1705,14 +1718,14 @@ class ParsedMap
 		return tex;
 	}
 
-	TextureID, TileInfo GetSpecialTileTexture(int type, Vector2 pos = (0, 0), Line ln = null, int style = -1)
+	TextureID, TileInfo GetSpecialTileTexture(int type, Vector2 pos = (0, 0), Line ln = null, int style = -1, int parameter = 0)
 	{
 		let this = MapHandler.Get();
 		if (!this) { return null, null; }
 
 		if (style < 0) { style = max(0, g_sod); }
 
-		TileInfo tile = GameTileInfo.GetSpecialTileInfo(this.tilemaps, GetGameName(style), type);
+		TileInfo tile = GameTileInfo.GetSpecialTileInfo(this.tilemaps, GetGameName(style, extension), type, parameter);
 		if (!tile) { return null, null; }
 
 		return GetTileTexture(tile, pos, ln), tile;
@@ -1925,6 +1938,7 @@ class WolfMapParser
 {
 	Array<ParsedMap> maps;
 	int gametype;
+	String extension;
 	int custommapcount;
 
 	static void Parse(in out WolfMapParser parsedmaps, in out DataFile d)
@@ -1949,6 +1963,8 @@ class WolfMapParser
 		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
 		else if (game ~== "BS1" || game ~== "BS6") { parsedmaps.gametype = 4; }
 		else { parsedmaps.gametype = -1; } // Play as Wolf, but allow setting via CVar
+
+		parsedmaps.extension = game;
 
 		int encoding;
 		Array<int> addresses;
@@ -2103,6 +2119,7 @@ class WolfMapParser
 			newmap.hash = MD5.hash(content.Mid(planeoffsets[0], planesizes[0] + planesizes[1]));
 			
 			newmap.gametype = gametype;
+			newmap.extension = extension;
 			newmap.info = newmap.GetInfo();
 
 			d.maps.Push(newmap);

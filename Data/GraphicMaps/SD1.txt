@@ -1,5 +1,7 @@
 SD1
 {
+	Palette = "Spear.pal";
+
 	Textures
 	{
 		"Patches/Walls/WALL1000.png";
