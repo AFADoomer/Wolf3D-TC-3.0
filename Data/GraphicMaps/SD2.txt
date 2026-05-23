@@ -1,0 +1,216 @@
+SD2
+{
+	Textures
+	{
+		"Patches/Walls/WALL2000.png;"
+		"Patches/Walls/WALL2001.png;"
+		"Patches/Walls/WALL2002.png;"
+		"Patches/Walls/WALL2003.png;"
+		"Patches/Walls/WALL2004.png;"
+		"Patches/Walls/WALL2005.png;"
+		"Patches/Walls/WALL2006.png;"
+		"Patches/Walls/WALL2007.png;"
+		"Patches/Walls/WALL2008.png;"
+		"Patches/Walls/WALL2009.png;"
+		"Patches/Walls/WALL2010.png;"
+		"Patches/Walls/WALL2011.png;"
+		"Patches/Walls/WALL2012.png;"
+		"Patches/Walls/WALL2013.png;"
+		"Patches/Walls/WALL2014.png;"
+		"Patches/Walls/WALL2015.png;"
+		"Patches/Walls/WALL2016.png;"
+		"Patches/Walls/WALL2017.png;"
+		"Patches/Walls/WALL2018.png;"
+		"Patches/Walls/WALL2019.png;"
+		"Patches/Walls/WALL2020.png;"
+		"Patches/Walls/WALL2021.png;"
+		"Patches/Walls/WALL2022.png;"
+		"Patches/Walls/WALL2023.png;"
+		"Patches/Walls/WALL2024.png;"
+		"Patches/Walls/WALL2025.png;"
+		"Patches/Walls/WALL2026.png;"
+		"Patches/Walls/WALL2027.png;"
+		"Patches/Walls/WALL2028.png;"
+		"Patches/Walls/WALL2029.png;"
+		"Patches/Walls/WALL2030.png;"
+		"Patches/Walls/WALL2031.png;"
+		"Patches/Walls/WALL2032.png;"
+		"Patches/Walls/WALL2033.png;"
+		"Patches/Walls/WALL2034.png;"
+		"Patches/Walls/WALL2035.png;"
+		"Patches/Walls/WALL2036.png;"
+		"Patches/Walls/WALL2037.png;"
+		"Patches/Walls/WALL2038.png;"
+		"Patches/Walls/WALL2039.png;"
+		"Patches/Walls/WALL2040.png;"
+		"Patches/Walls/WALL2041.png;"
+		"Patches/Walls/WALL2042.png;"
+		"Patches/Walls/WALL2043.png;"
+		"Patches/Walls/WALL2044.png;"
+		"Patches/Walls/WALL2045.png;"
+		"Patches/Walls/WALL2046.png;"
+		"Patches/Walls/WALL2047.png;"
+		"Patches/Walls/WALL2048.png;"
+		"Patches/Walls/WALL2049.png;"
+		"Patches/Walls/WALL2050.png;"
+		"Patches/Walls/WALL2051.png;"
+		"Patches/Walls/WALL2052.png;"
+		"Patches/Walls/WALL2053.png;"
+		"Patches/Walls/WALL2054.png;"
+		"Patches/Walls/WALL2055.png;"
+		"Patches/Walls/WALL2056.png;"
+		"Patches/Walls/WALL2057.png;"
+		"Patches/Walls/WALL2058.png;"
+		"Patches/Walls/WALL2059.png;"
+		"Patches/Walls/WALL2060.png;"
+		"Patches/Walls/WALL2061.png;"
+		"Patches/Walls/WALL2062.png;"
+		"Patches/Walls/WALL2063.png;"
+		"Patches/Walls/WALL2064.png;"
+		"Patches/Walls/WALL2065.png;"
+		"Patches/Walls/WALL2066.png;"
+		"Patches/Walls/WALL2067.png;"
+		"Patches/Walls/WALL2068.png;"
+		"Patches/Walls/WALL2069.png;"
+		"Patches/Walls/WALL2070.png;"
+		"Patches/Walls/WALL2071.png;"
+		"Patches/Walls/WALL2072.png;"
+		"Patches/Walls/WALL2073.png;"
+		"Patches/Walls/WALL2074.png;"
+		"Patches/Walls/WALL2075.png;"
+		"Patches/Walls/WALL2076.png;"
+		"Patches/Walls/WALL2077.png;"
+		"Patches/Walls/WALL2078.png;"
+		"Patches/Walls/WALL2079.png;"
+		"Patches/Walls/WALL2080.png;"
+		"Patches/Walls/WALL2081.png;"
+		"Patches/Walls/WALL2082.png;"
+		"Patches/Walls/WALL2083.png;"
+		"Patches/Walls/WALL2084.png;"
+		"Patches/Walls/WALL2085.png;"
+		"Patches/Walls/WALL2086.png;"
+		"Patches/Walls/WALL2087.png;"
+		"Patches/Walls/WALL2088.png;"
+		"Patches/Walls/WALL2089.png;"
+		"Patches/Walls/WALL2090.png;"
+		"Patches/Walls/WALL2091.png;"
+		"Patches/Walls/WALL2092.png;"
+		"Patches/Walls/WALL2093.png;"
+		"Patches/Walls/WALL2094.png;"
+		"Patches/Walls/WALL2095.png;"
+		"Patches/Walls/WALL2096.png;"
+		"Patches/Walls/WALL2097.png;"
+		"Patches/Walls/WALL2098.png;"
+		"Patches/Walls/WALL2099.png;"
+		"Patches/Walls/WALL2100.png;"
+		"Patches/Walls/WALL2101.png;"
+		"Patches/Walls/WALL2102.png;"
+		"Patches/Walls/WALL2103.png;"
+		"Patches/Walls/WALL2104.png;"
+		"Patches/Walls/WALL2105.png;"
+		"Patches/Walls/WALL2106.png;"
+		"Patches/Walls/WALL2107.png;"
+		"Patches/Walls/WALL2108.png;"
+		"Patches/Walls/WALL2109.png;"
+		"Patches/Walls/WALL2110.png;"
+		"Patches/Walls/WALL2111.png;"
+		"Patches/Walls/WALL2112.png;"
+		"Patches/Walls/WALL2113.png;"
+		"Patches/Walls/WALL2114.png;"
+		"Patches/Walls/WALL2115.png;"
+		"Patches/Walls/WALL2116.png;"
+		"Patches/Walls/WALL2117.png;"
+		"Patches/Walls/WALL2118.png;"
+		"Patches/Walls/WALL2119.png;"
+		"Patches/Walls/WALL2120.png;"
+		"Patches/Walls/WALL2121.png;"
+		"Patches/Walls/WALL2122.png;"
+		"Patches/Walls/WALL2123.png;"
+		"Patches/Walls/WALL2124.png;"
+		"Patches/Walls/WALL2125.png;"
+
+		126
+		{	
+			"Patches/Walls/WALL2126.png";
+			"WLF2DORA" { Flip; }
+			"WLF2DORA" { Flip; }
+			"WLF2DORC";
+			"WLF2DORC";
+		}
+				
+		127
+		{	
+			"Patches/Walls/WALL2127.png";
+			"WLF2DORB";
+			"WLF2DORB";
+			"WLF2DORD" { Flip; }
+			"WLF2DORD" { Flip; }
+			
+		}
+				
+		128
+		{	
+			"Patches/Walls/WALL2128.png";
+			"WLF2JMBA";
+			"WLF2JMBA";
+			"WLF2JMBC" { Flip; }
+			"WLF2JMBC" { Flip; }
+			
+		}
+				
+		129	
+		{	
+			"Patches/Walls/WALL2129.png";
+			"WLF2JMBB";
+			"WLF2JMBB";
+			"WLF2JMBD" { Flip; }
+			"WLF2JMBD" { Flip; }
+			
+		}
+				
+		130
+		{	
+			"Patches/Walls/WALL2130.png";
+			"WLF2ELEA" { Flip; }
+			"WLF2ELEA" { Flip; }
+			"WLF2ELEC";
+			"WLF2ELEC";
+		}
+				
+		131
+		{	
+			"Patches/Walls/WALL2131.png";
+			"WLF2ELEB";
+			"WLF2ELEB";
+			"WLF2ELED" { Flip; }
+			"WLF2ELED" { Flip; }
+			
+		}
+				
+		132
+		{	
+			"Patches/Walls/WALL2132.png";
+			"WLF2LK1A" { Flip; }
+			"WLF2LK1A" { Flip; }
+			"WLF2LK1C";
+			"WLF2LK1C";
+			"WLF2LK2A" { Flip; }
+			"WLF2LK2A" { Flip; }
+			"WLF2LK2C";
+			"WLF2LK2C";
+		}
+				
+		133
+		{	
+			"Patches/Walls/WALL2133.png";
+			"WLF2LK1B";
+			"WLF2LK1B";
+			"WLF2LK1D" { Flip; }
+			"WLF2LK1D" { Flip; }
+			"WLF2LK2B";
+			"WLF2LK2B";
+			"WLF2LK2D" { Flip; }
+			"WLF2LK2D" { Flip; }
+		}	
+	}
+}

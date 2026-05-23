@@ -695,7 +695,7 @@ class MapHandler : StaticEventHandler
 				m = entry.AddKey(true);
 				m.keyname = "Angle";
 				if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
-				else { m.value = "90"; }
+				else { m.value = "270"; }
 
 				m = entry.AddKey(true);
 				m.keyname = "Patrolling";

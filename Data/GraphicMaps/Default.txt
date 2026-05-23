@@ -2,7 +2,7 @@
 	Texture names assigned to VSWAP lumps
 
 	Format:
-	Extension // (e.g., SOD, SD2, SD3; All others/unknown get assigned to 'Default')
+	Extension // (e.g., SD1, SD2, SD3; All others/unknown get assigned to 'Default')
 	{
 		Textures
 		{
@@ -699,10 +699,58 @@ Default // Wolf3D
 			"WLF1LK2D" { Flip; }
 		}	
 	}
+
+	Sprites
+	{
+		"DEMO";
+		"DEATHCAM";
+		"POL1A0";
+		"BARLC0";
+		"TAB1A0";
+		"LIT1A0";
+		"LIT3A0";
+		"HNG1A0";
+		"HLTHC0";
+		"COLWA0";
+		"PLT1A0";
+		"BONCA0";
+		"SINKA0";
+		"PLT2A0";
+		"VASEC0";
+		"TAB2A0";
+		"LIT5A0";
+		"POT1A0";
+		"KNIGA0";
+		"CAG1A0";
+		"CAG2A0";
+		"POB1A0";
+		"KEYSA0";
+		"KEYSB0";
+		"BED1A0";
+		"BASKA0";
+		"HLTHD0";
+		"HLTHE0";
+		"CCLIA0";
+		"CMGUP0";
+		"CCGUP0";
+		"TRECA0";
+		"TRECC0";
+		"TRECD0";
+		"TRECB0";
+		"LIFEA0";
+		"HLTHB0";
+		"BAR2A0";
+		"WEL1A0";
+		"WEL2A0";
+		"HLTHA0";
+		"FLACA0";
+		"POB3A0";
+		"POB2C0";
+		"POB5A0";
+		"POB4A0";
+		"POT2A0";
+		"STOVA0";
+		"SPECA0";
+		"VINEA0";
+	}
 }
-
-// SoD
-
-// SD2
-
-// SD3

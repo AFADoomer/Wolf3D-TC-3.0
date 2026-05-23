@@ -32,23 +32,13 @@ class GraphicsHandler : StaticEventHandler
 
 	void ParseGraphics()
 	{
-		bool parsed = false;
-		for (int l = 0; l < Wads.GetNumLumps(); l++)
+		// Load default graphics
+		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
+		
+		for (int g = 0; g < handler.graphicmaps.Size(); g++)
 		{
-			String lumpname = Wads.GetLumpFullName(l);
-			lumpname = lumpname.MakeUpper();
-			if (lumpname.IndexOf("VSWAP.") > -1)
-			{
-				parsed = true;
-				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
-				WolfGraphicParser.Parse(parsedgraphics, e);
-			}
-		}
-
-		if (!parsed)
-		{
-			DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
-			ParsedValue data = handler.graphicdata.Find("Default");
+			ParsedValue data = handler.graphicmaps[g];
+			if (!data) { continue; }
 
 			ParsedValue texturenames = data.Find("Textures");
 
@@ -83,7 +73,7 @@ class GraphicsHandler : StaticEventHandler
 				}
 				else
 				{
-					String texname = FileReader.StripQuotes(texture.children[0].keyname);
+					String texname = FileReader.StripQuotes(texture.keyname);
 					String shortname = texname.Mid(texname.RightIndexOf("/") + 1);
 					shortname.Replace(".png", "");
 
@@ -95,6 +85,18 @@ class GraphicsHandler : StaticEventHandler
 					TextureID tex = TexMan.CheckForTexture(texname, TexMan.Type_WallPatch);
 					if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0); }
 				}
+			}
+		}
+
+		// Parse any loaded VSWAP files
+		for (int l = 0; l < Wads.GetNumLumps(); l++)
+		{
+			String lumpname = Wads.GetLumpFullName(l);
+			lumpname = lumpname.MakeUpper();
+			if (lumpname.IndexOf("VSWAP.") > -1)
+			{
+				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
+				WolfGraphicParser.Parse(parsedgraphics, e);
 			}
 		}
 	}
@@ -221,18 +223,26 @@ class WolfGraphicParser
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
 
 		String content = d.content;
-		String game = d.path.Mid(d.path.length() - 3);
+		String gamename = d.path.Mid(d.path.length() - 3);
+		if (gamename ~== "SOD") { gamename = "SD1"; }
 
-		ParsedValue data = handler.graphicdata.Find(game);
-		if (!data) { data = handler.graphicdata.Find("Default"); }
+		ParsedValue data = handler.GetGraphicMap(gamename);
+		if (!data)
+		{
+			gamename = ParsedMap.GetGameName(max(0, g_sod));
+			data = handler.GetGraphicMap(gamename);
+		}
 
 		ParsedValue texturenames = data.Find("Textures");
-		// ParsedValue spritenames = data.Find("Sprites");
+		ParsedValue spritenames = data.Find("Sprites");
 
 		int wallcount = 0;
-		// int spritecount = 0;
+		int spritecount = 0;
 
 		int sizereadoffset = readoffset + d.chunkcount * 4;
+
+		// let spriteoffsets = new("Shape2DTransform");
+		// spriteoffsets.Translate((-32, 64));
 
 		for (int a = 0; a < d.soundaddress; a++)
 		{
@@ -286,19 +296,23 @@ class WolfGraphicParser
 			// {
 			// 	newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
 			// 	newgraphic.Parse(true);
+
+			// 	Canvas graphic;
 				
 			// 	if (spritenames && a - wallcount < spritenames.children.Size())
 			// 	{
 			// 		newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
-			// 		CreateGraphic(newgraphic, flip:true);
+			// 		graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
 			// 	}
 			// 	else
 			// 	{
 			// 		newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
-			// 		CreateGraphic(newgraphic, flip:true);
+			// 		graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
 			// 	}
 			
-			// 	if (a - wallcount < 8) { DumpGraphicToConsole(newgraphic); }
+			// 	graphic.SetTransform(spriteoffsets);
+
+			// 	if (a - wallcount == 3) { DumpGraphicToConsole(newgraphic); }
 
 			// 	spritecount++;
 
@@ -359,12 +373,12 @@ class WolfGraphicParser
 				}
 			}
 
-			if (developer) { console.printf("Writing %s: %s (offset 0x%x, size %d)", typename, graphic.graphicname, graphic.position, graphic.size); }
+			if (developer) { console.printf("Writing %s: %s (offset 0x%x, size %d)", typename, canvasname, graphic.position, graphic.size); }
 
 			return currentcanvas;
 		}
 
-		console.printf("\c[Yellow]Unable to write %s: %s (offset 0x%x, size %d)!", typename, graphic.graphicname, graphic.position, graphic.size);
+		console.printf("\c[Yellow]Unable to write %s: %s (offset 0x%x, size %d)!", typename, canvasname, graphic.position, graphic.size);
 
 		return null;
 	}

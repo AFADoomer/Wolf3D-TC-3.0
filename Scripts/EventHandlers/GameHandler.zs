@@ -809,7 +809,7 @@ class Game
 class DataHandler : StaticEventHandler
 {
 	ParsedValue textcolordata;
-	ParsedValue graphicdata;
+	Array<ParsedValue> graphicmaps;
 	Color palette[256];
 
 	override void OnRegister()
@@ -836,9 +836,41 @@ class DataHandler : StaticEventHandler
 			}
 		}
 
-		graphicdata = FileReader.Parse("data/graphicmap.txt", true);
+		if (developer) { console.printf("Parsing VSWAP graphic mapping data..."); }
+
+		for (int l = 0; l < Wads.GetNumLumps(); l++)
+		{
+			String lumpname = Wads.GetLumpFullName(l);
+			lumpname = lumpname.MakeLower();
+			if (lumpname.IndexOf("data/graphicmaps/") > -1)
+			{
+				ParsedValue graphicmapdata = FileReader.Parse(lumpname);
+				if (developer) { console.printf("Parsing %s graphic data from '%s'...", graphicmapdata.children[0].keyname, lumpname); }
+
+				for (int d = 0; d < graphicmapdata.children.Size(); d++)
+				{
+					graphicmaps.Push(graphicmapdata.children[d]);
+				}
+			}
+		}
 
 		ParsePalette();
+	}
+
+	clearscope ParsedValue GetGraphicMap(String gamename)
+	{
+		ParsedValue data;
+		
+		for (int g = 0; g < graphicmaps.Size(); g++)
+		{
+			if (graphicmaps[g].keyname == gamename)
+			{
+				data = graphicmaps[g];
+				break;
+			}
+		}
+
+		return data;
 	}
 
 	void ParsePalette()
