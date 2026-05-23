@@ -103,11 +103,9 @@ class PolyMoveHandler: EventHandler
 			PolyMoveEffector eff = New("PolyMoveEffector");
 			po.AddEffector(eff);
 
-			if (po.StartLine.special == Polyobj_ExplicitLine)
-			{
-				po.Lines.Push(po.StartLine);
-			}
-			else
+			po.Lines.Push(po.StartLine);
+			
+			if (po.StartLine.special != Polyobj_ExplicitLine)
 			{
 				// Find all lines that belong to this polyobject
 				Sector sec = po.StartLine.frontsector;
