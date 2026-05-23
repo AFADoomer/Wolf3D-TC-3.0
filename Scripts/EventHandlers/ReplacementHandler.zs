@@ -22,7 +22,6 @@
 
 class ReplacementHandler : StaticEventHandler
 {
-	int useflatsval[MAXPLAYERS];
 	transient CVar useflats;
 
 	override void CheckReplacement(ReplaceEvent e)
@@ -135,24 +134,13 @@ class ReplacementHandler : StaticEventHandler
 		if (e.IsSaveGame || e.IsReopen) { return; }
 
 		useflats = CVar.FindCVar("g_useflats");
-		useflatsval[consoleplayer] = useflats.GetInt();
-
-		if (useflatsval[consoleplayer]) { CheckFlats(); }
+		CheckFlats(useflats.GetInt());
 	}
 
-	override void WorldTick()
+	void CheckFlats(int val = -1)
 	{
-		if (!useflats || useflatsval[consoleplayer] != useflats.GetInt())
-		{
-			if (!useflats) { useflats = CVar.FindCVar("g_useflats"); }
-			useflatsval[consoleplayer] = useflats.GetInt();
+		if (val == -1) { val = useflats.GetInt(); }
 
-			CheckFlats();
-		}
-	}
-
-	void CheckFlats()
-	{
 		int levelnum;
 		ParsedMap queuedmap;
 		MapHandler handler = MapHandler.Get();
@@ -163,7 +151,7 @@ class ReplacementHandler : StaticEventHandler
 		}
 		else { levelnum = level.levelnum; }
 
-		if (useflatsval[consoleplayer] < 4 && levelnum <= 100) { return; }
+		if (val < 4 && levelnum <= 100) { return; }
 
 		static const String WolfCeilings[] = {"1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "BF", "4E", "4E", "4E", "1D", "8D", "4E", "1D", "2D", "1D", "8D", "1D", "1D", "1D", "1D", "1D", "2D", "DD", "1D", "1D", "98", "1D", "9D", "2D", "DD", "DD", "9D", "2D", "4D", "1D", "DD", "7D", "1D", "2D", "2D", "DD", "D7", "1D", "1D", "1D", "2D", "1D", "1D", "1D", "1D", "DD", "DD", "7D", "DD", "DD", "DD"};
 		static const String SoDCeilings[] = {"6F", "4F", "1D", "DE", "DF", "2E", "7F", "9E", "AE", "7F", "1D", "DE", "DF", "DE", "DF", "DE", "E1", "DC", "2E", "1D", "DC"};
@@ -180,26 +168,21 @@ class ReplacementHandler : StaticEventHandler
  
 		TextureID floortex, ceiltex;
 
-		if (useflats && useflats.GetInt())
+		switch (val)
 		{
-			int val = useflats.GetInt() % 4;
-			if (val == 3)
-			{
+			case 3:
 				floorname = "FLOOR" .. (levelnum / 5) % 8;
 				ceilname = "CEIL" .. levelnum % 7;
-			}
-			else
-			{
-				if (val == 2)
-				{
-					floorname = "FLOOR" .. (levelnum / 5) % 8;
-				}
-				else
-				{
-					floorname = "FLOORDEF";
-				}
+				break;
+			case 2:
+				floorname = "FLOOR" .. (levelnum / 5) % 8;
 				ceilname = "CEIL" .. ceilname;
-			}
+				break;
+			case 1:
+				floorname = "FLOORDEF";
+				ceilname = "CEIL" .. ceilname;
+			default:
+				break;
 		}
 
 		ChangeFlat(0, ceilname);
@@ -221,6 +204,16 @@ class ReplacementHandler : StaticEventHandler
 			{
 				Level.sectors[s].SetTexture(which, tex);
 			}
+		}
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.IsManual)  {return; }
+
+		if (e.Name == "updateflatstyle")
+		{
+			CheckFlats(e.args[0]);
 		}
 	}
 }

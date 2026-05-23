@@ -15,7 +15,7 @@ server int g_deafguarddoors = 2; // Enable deaf guard tiles making doors transpa
 // Cosmetic
 server bool g_nointro = false; // Skip 'Get Psyched'
 server bool g_noblood = true; // Hide blood, bullet puffs, and other additional effects
-user int g_useflats = 0; // Use textured floors/ceilings - 0 = Off, 1 = Minimalist, 2 = Minimalist ceiling, textured floors, 3 = Textured floors and ceilings
+user HandlerClass(FlatStyle) int g_useflats = 0; // Use textured floors/ceilings - 0 = Off, 1 = Minimalist, 2 = Minimalist ceiling, textured floors, 3 = Textured floors and ceilings
 user int g_fadestyle = 0; // Use fizzle effect (processor intensive) or standard fade
 user float g_fizzlespeed = 1.0; // Speed modifier for fizzle effect
 user float g_viewbobscale = 0.0; // Scale amount of Doom-style weapon/view bob

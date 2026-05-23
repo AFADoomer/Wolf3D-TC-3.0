@@ -949,6 +949,17 @@ class SoDVarChange : CustomIntCVar
 		if (val < 0) { val = 0; }
 
 		EventHandler.SendNetworkEvent("updatestyle", val);
+		EventHandler.SendNetworkEvent("updateflatstyle", -1);
+
+		return val;
+	}
+}
+
+class FlatStyle : CustomIntCVar
+{
+	override int ModifyValue(Name CVarName, int val)
+	{
+		EventHandler.SendNetworkEvent("updateflatstyle", val);
 
 		return val;
 	}
