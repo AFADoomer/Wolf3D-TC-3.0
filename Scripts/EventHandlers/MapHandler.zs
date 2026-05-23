@@ -767,10 +767,13 @@ class MapHandler : StaticEventHandler
 
 	static int, TileInfo TileAt(Vector2 pos, ParsedMap curmap = null)
 	{
-		MapHandler this = MapHandler.Get();
-		if (!this || !this.curmap) { return -1, null; }
+		if (!curmap)
+		{
+			MapHandler this = MapHandler.Get();
+			if (!this) { return -1, null; }
 
-		if (!curmap) { curmap = this.curmap; }
+			curmap = this.curmap;
+		}
 		if (!curmap) { return -1, null; }
 
 		pos = ParsedMap.CoordsToGrid(pos);

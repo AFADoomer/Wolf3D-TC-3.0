@@ -145,12 +145,12 @@ class WolfPostProcessor : LevelPostProcessor
 					x1 = x2 = int((ln.v1.p.x + ln.v2.p.x) / 2);
 					y1 = y2 = int((ln.v1.p.y + ln.v2.p.y) / 2);
 
-					if (ln.v1.p.y == ln.v2.p.y)
+					if (!ln.delta.y)
 					{
 						if (ln.v1.p.x > ln.v2.p.x) { y1 -= 32; y2 += 32; }
 						else if (ln.v1.p.x < ln.v2.p.x) { y1 += 32; y2 -= 32; }	
 					}
-					else if (ln.v1.p.x == ln.v2.p.x)
+					else if (!ln.delta.x)
 					{
 						if (ln.v1.p.y > ln.v2.p.y) { x1 += 32; x2 -= 32; }
 						else if (ln.v1.p.y < ln.v2.p.y) { x1 -= 32; x2 += 32; }

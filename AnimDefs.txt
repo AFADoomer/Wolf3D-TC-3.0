@@ -1,36 +1,3 @@
-// Elevator Switch
-switch WLF0015B
-on sound switches/elevator
-pic WLF0016B tics 0
-
-switch WLF2015B
-on sound switches/elevator2
-pic WLF2016B tics 0
-
-switch "Patches/Walls/WALL0041.png"
-on sound switches/elevator
-pic "Patches/Walls/WALL0043.png" tics 0
-
-switch "Patches/Walls/WALL0043.png"
-on sound switches/elevator
-pic "Patches/Walls/WALL0041.png" tics 0
-
-switch "Patches/Walls/WALL2041.png"
-on sound switches/elevator2
-pic "Patches/Walls/WALL2043.png" tics 0
-
-switch "Patches/Walls/WALL2043.png"
-on sound switches/elevator2
-pic "Patches/Walls/WALL2041.png" tics 0
-
-switch "Patches/Walls/WALL3041.png"
-on sound switches/elevator2
-pic "Patches/Walls/WALL3043.png" tics 0
-
-switch "Patches/Walls/WALL3043.png"
-on sound switches/elevator2
-pic "Patches/Walls/WALL3041.png" tics 0
-
 // Menu cursor
 texture M_SEL1
 pic M_SEL1 tics 4
@@ -1227,3 +1194,28 @@ canvastexture "WLF1LK2A" 64 64
 canvastexture "WLF1LK2B" 64 64
 canvastexture "WLF1LK2C" 64 64
 canvastexture "WLF1LK2D" 64 64
+
+// Elevator Switches
+switch WLF0015B
+on sound switches/elevator
+pic WLF0016B tics 0
+
+switch WLF2015B
+on sound switches/elevator2
+pic WLF2016B tics 0
+
+switch "Patches/Walls/WALL0041.png"
+on sound switches/elevator
+pic "Patches/Walls/WALL0043.png" tics 0
+
+switch "Patches/Walls/WALL1041.png"
+on sound switches/elevator
+pic "Patches/Walls/WALL1043.png" tics 0
+
+switch "Patches/Walls/WALL2041.png"
+on sound switches/elevator2
+pic "Patches/Walls/WALL2043.png" tics 0
+
+switch "Patches/Walls/WALL3041.png"
+on sound switches/elevator2
+pic "Patches/Walls/WALL3043.png" tics 0
