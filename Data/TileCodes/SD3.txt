@@ -1,0 +1,127 @@
+SD3
+{
+	Walls
+	{
+		Default
+		{
+			Tiles = 0x01-0x59;
+			Pattern = "Patches/Walls/Wall3%03i.png";
+			Flags = Wall;
+		}
+				
+		0x15
+		{
+			Special = 80, 10;
+			Flags = Directional;
+		}
+
+		0x16
+		{
+			Flags = Directional;
+		}
+
+		0x40
+		{
+			Flags = Invalid;
+		}
+
+		0x40
+		{
+			Pattern = "Patches/Walls/Wall2126.png", "Patches/Walls/Wall2127.png";
+		}
+
+		0x41
+		{
+			Pattern = "Patches/Walls/Wall2128.png", "Patches/Walls/Wall2129.png";
+			Flags = DoorFrame;
+		}
+
+		0x42
+		{
+			Pattern = "Patches/Walls/Wall2130.png", "Patches/Walls/Wall2131.png";
+		}
+
+		0x43
+		{
+			Pattern = "Patches/Walls/Wall2132.png", "Patches/Walls/Wall2133.png";
+		}
+
+		0x55
+		{
+			Pattern = "Patches/Walls/Wall2040.png", "Patches/Walls/Wall2041.png";
+			Flags = Directional;
+		}
+	}
+
+	Doors
+	{
+		Default
+		{
+			Tiles = 0x5A, 0x5B;
+			Pattern = "Patches/Walls/Wall3126.png", "Patches/Walls/Wall3127.png";
+			Flags = Door;
+		}
+
+		Locked
+		{
+			Default
+			{
+				Tiles = 0x5C-0x63;
+				Pattern = "Patches/Walls/Wall3132.png", "Patches/Walls/Wall3133.png";
+				AltPattern = "WLF3LK%iG", "WLF3LK%iF";
+				Flags = Door;
+			}
+
+			0x5C
+			{
+				Key = 1;
+			}
+
+			0x5D
+			{
+				Key = 1;
+			}
+
+			0x5E
+			{
+				Key = 2;
+			}
+
+			0x5F
+			{
+				Key = 2;
+			}
+
+			0x60
+			{
+				Key = 3;
+			}
+
+			0x61
+			{
+				Key = 3;
+			}
+
+			0x62
+			{
+				Key = 4;
+			}
+
+			0x63
+			{
+				Key = 4;
+			}
+		}
+
+		Elevator
+		{
+			Default
+			{
+				Tiles = 0x64, 0x65;
+				Pattern = "Patches/Walls/Wall3130.png", "Patches/Walls/Wall3131.png";
+				Flags = Door;
+			}
+		}
+	}
+}
+

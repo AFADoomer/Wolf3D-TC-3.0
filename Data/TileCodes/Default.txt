@@ -1,0 +1,139 @@
+Default
+{
+	Walls
+	{
+		Default
+		{
+			Tiles = 0x01-0x59, 0x66-0x69;
+			Pattern = "Patches/Walls/Wall0%03i.png";
+			Flags = Wall;
+		}
+
+		0x15
+		{
+			Special = 80, 10;
+			Flags = Directional;
+		}
+
+		0x16
+		{
+			Flags = Directional;
+		}
+
+		0x33
+		{
+			Flags = DoorFrame;
+		}
+
+		0x40
+		{
+			Flags = Invalid;
+		}
+
+		0x55
+		{
+			Pattern = "Patches/Walls/Wall0040.png", "Patches/Walls/Wall0041.png";
+			Flags = Directional;
+		}
+	}
+
+	Floors
+	{
+		Default
+		{
+			Tiles = 0x00, 0x6A-0x8F;
+			Flags = Floor;
+		}
+
+		0x6A
+		{
+			Flags = Ambush;
+		}
+
+		0x6B
+		{
+			Flags = SecretExit;
+		}
+	}
+
+	Doors
+	{
+		Default
+		{
+			Tiles = 0x5A, 0x5B;
+			Pattern = "Patches/Walls/Wall0098.png", "Patches/Walls/Wall0099.png";
+			Flags = Door;
+		}
+
+		Locked
+		{
+			Default
+			{
+				Tiles = 0x5C-0x63;
+				Pattern = "Patches/Walls/Wall0104.png", "Patches/Walls/Wall0105.png";
+				AltPattern = "WLF0LK%iG", "WLF0LK%iF";
+				Flags = Door;
+			}
+
+			0x5C
+			{
+				Key = 1;
+			}
+
+			0x5D
+			{
+				Key = 1;
+			}
+
+			0x5E
+			{
+				Key = 2;
+			}
+
+			0x5F
+			{
+				Key = 2;
+			}
+
+			0x60
+			{
+				Key = 3;
+			}
+
+			0x61
+			{
+				Key = 3;
+			}
+
+			0x62
+			{
+				Key = 4;
+			}
+
+			0x63
+			{
+				Key = 4;
+			}
+		}
+
+		Elevator
+		{
+			Default
+			{
+				Tiles = 0x64, 0x65;
+				Pattern = "Patches/Walls/Wall0102.png", "Patches/Walls/Wall0103.png";
+				Flags = Door;
+			}
+		}
+	}
+
+	Comments
+	{
+		Default
+		{
+			Tiles = 0x96-0xE3;
+			Pattern = "Fonts/Tiles/%04x.png";
+			Flags = Font;
+		}
+	}
+}

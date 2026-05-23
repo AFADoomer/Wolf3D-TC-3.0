@@ -567,8 +567,10 @@ class DoorEffector: PolyobjectEffector
 
 							if (handler)
 							{
-								Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.StartSpotPos);
-								int t = handler.curmap.TileAt(pos);
+								Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.Origin);
+								TileInfo tile;
+								int t;
+								[t, tile] = handler.curmap.TileAt(pos);
 
 								for (int l = 0; l < PolyObject.StartSector.Lines.Size(); l++)
 								{
@@ -576,28 +578,28 @@ class DoorEffector: PolyobjectEffector
 
 									if (ln.flags & Line.ML_TWOSIDED)
 									{
-										if (t % 2 == 1 && ln.delta.x) { continue; }
-										if (t % 2 == 0 && ln.delta.y) { continue; }
+										if (tile.id % 2 == 1 && ln.delta.x) { continue; }
+										if (tile.id % 2 == 0 && ln.delta.y) { continue; }
 									}
 
 									for (int s = 0; s < 2; s++)
 									{
 										if (ln.sidedef[s] && ln.sidedef[s].sector == PolyObject.StartSector)
 										{
-											TileInfo tile;
+											TileInfo nexttile;
 											int tt;
-											if (t % 2 == 1)
+											if (tile.id % 2 == 1)
 											{
-												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { [tt, tile] = handler.curmap.TileAt(pos + (1, 0)); }
-												else { [tt, tile] = handler.curmap.TileAt(pos - (1, 0)); }
+												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { [tt, nexttile] = handler.curmap.TileAt(pos + (1, 0), max(0, g_sod)); }
+												else { [tt, nexttile] = handler.curmap.TileAt(pos - (1, 0), max(0, g_sod)); }
 											}
 											else
 											{
-												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, tile] = handler.curmap.TileAt(pos - (0, 1)); }
-												else { [tt, tile] = handler.curmap.TileAt(pos + (0, 1)); }
+												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, nexttile] = handler.curmap.TileAt(pos - (0, 1), max(0, g_sod)); }
+												else { [tt, nexttile] = handler.curmap.TileAt(pos + (0, 1), max(0, g_sod)); }
 											}
 											
-											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(tile, (0, 0), ln));
+											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(nexttile, (0, 0), ln));
 										}
 									}
 								}
@@ -616,11 +618,12 @@ class DoorEffector: PolyobjectEffector
 						Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.Origin);
 						TileInfo tile;
 						int t;
-						[t, tile] = handler.curmap.TileAt(pos);
+						[t, tile] = handler.curmap.TileAt(pos, max(0, g_sod));
+
 						if (door && door != Polyobject)
 						{
 							t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
-							tile = handler.curmap.TileAtIndex(t - 1);
+							tile = handler.curmap.TileAtIndex(t - 1, max(0, g_sod));
 						}
 
 						for (int l = 0; l < PolyObject.Lines.Size(); l++)
@@ -781,32 +784,19 @@ class DoorEffector: PolyobjectEffector
 						else
 						{
 							// Handling for secret door placed on top of regular door (door turns into a pushwall)
-							int gametype = MapHandler.GetGameType();
-							if (gametype < 0) { gametype = max(0, g_sod); }
-
 							TextureID tex;
 
-							if (tile && tile.flags & TileInfo.TILE_DOOR)
-							{
-								let handler = MapHandler.Get();
+							let handler = MapHandler.Get();
 
-								if (handler)
+							if (tile && handler)
+							{
+								if (tile.flags & TileInfo.TILE_DOOR)
 								{
 									int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
-									TileInfo tile = handler.curmap.TileAtIndex(t);
-									tex = handler.curmap.GetTileTexture(tile, (0, 0), null);
+									TileInfo tile = handler.curmap.TileAtIndex(t, max(0, g_sod));
 								}
-							}
-							else
-							{
-								int game = gametype;
-								while (game > -1 && !tex.IsValid())
-								{
-									String texpath = String.Format("Patches/Walls/Wall%i%03i.png", game, (t - 1) * 2);
-									tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 
-									if (!tex.IsValid()) { game--; }
-								}
+								tex = handler.curmap.GetTexture(ParsedMap.CoordsToGrid(PolyObject.Origin));
 							}
 
 							PolyObject.StartSector.SetTexture(Sector.floor, tex);

@@ -1,0 +1,57 @@
+SD1
+{
+	Walls
+	{
+		Default
+		{
+			Tiles = 0x01-0x59;
+			Pattern = "Patches/Walls/Wall1%03i.png";
+			Flags = Wall;
+		}
+		
+		0x15
+		{
+			Special = 80, 10;
+			Pattern = "Patches/Walls/Wall0%03i.png";
+			Flags = Directional;
+		}
+
+		0x16
+		{
+			Pattern = "Patches/Walls/Wall0%03i.png";
+			Flags = Directional;
+		}
+
+		0x40
+		{
+			Flags = Invalid;
+		}
+
+		0x40
+		{
+			Pattern = "Patches/Walls/Wall0098.png", "Patches/Walls/Wall0099.png";
+		}
+
+		0x41
+		{
+			Pattern = "Patches/Walls/Wall0100.png", "Patches/Walls/Wall0101.png";
+			Flags = DoorFrame;
+		}
+
+		0x42
+		{
+			Pattern = "Patches/Walls/Wall0102.png", "Patches/Walls/Wall0103.png";
+		}
+
+		0x43
+		{
+			Pattern = "Patches/Walls/Wall0104.png", "Patches/Walls/Wall0105.png";
+		}
+
+		0x55
+		{
+			Pattern = "Patches/Walls/Wall0040.png", "Patches/Walls/Wall0041.png";
+			Flags = Directional;
+		}
+	}
+}
