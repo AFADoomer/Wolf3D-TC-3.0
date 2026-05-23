@@ -24,6 +24,7 @@ class GraphicsHandler : StaticEventHandler
 {
 	WolfGraphicParser parsedgraphics;
 	Array<GraphicDataFile> datafiles;
+	Array<String> touchedcanvas;
 
 	override void OnRegister()
 	{
@@ -67,8 +68,10 @@ class GraphicsHandler : StaticEventHandler
 
 						currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
 
-						TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_WallPatch);
+						TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_Any);
 						if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0, DTA_FlipX, flip); }
+
+						touchedcanvas.Push(texname);
 					}
 				}
 				else
@@ -82,8 +85,10 @@ class GraphicsHandler : StaticEventHandler
 
 					currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
 
-					TextureID tex = TexMan.CheckForTexture(texname, TexMan.Type_WallPatch);
+					TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_Any);
 					if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0); }
+
+					touchedcanvas.Push(texname);
 				}
 			}
 		}
@@ -96,9 +101,29 @@ class GraphicsHandler : StaticEventHandler
 			if (lumpname.IndexOf("VSWAP.") > -1)
 			{
 				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
-				WolfGraphicParser.Parse(parsedgraphics, e);
+				WolfGraphicParser.Parse(parsedgraphics, e, touchedcanvas);
 			}
 		}
+	}
+
+	static clearscope bool CheckTouched(String texname)
+	{
+		if (!texname.length()) { return false; }
+
+		texname = texname.MakeUpper();
+
+		let handler = GraphicsHandler.Get();
+		if (!handler) { return false; }
+
+		for (int c = 0; c < handler.touchedcanvas.Size(); c++)
+		{
+			String current = handler.touchedcanvas[c];
+			if (!current.length()) { continue; }
+
+			if (current ~== texname) { return true; }
+		}
+
+		return false;
 	}
 
 	static clearscope GraphicsHandler Get()
@@ -195,7 +220,7 @@ class ParsedGraphic
 
 class WolfGraphicParser
 {
-	static void Parse(in out WolfGraphicParser parsedgraphics, in out GraphicDataFile d)
+	static void Parse(in out WolfGraphicParser parsedgraphics, in out GraphicDataFile d, in out Array<String> touchedcanvas)
 	{
 		int graphicslump = -1;
 
@@ -215,10 +240,10 @@ class WolfGraphicParser
 		[d.spriteaddress, readoffset] = WolfMapParser.GetLittleEndian(d.content, readoffset, 2);
 		[d.soundaddress, readoffset] = WolfMapParser.GetLittleEndian(d.content, readoffset, 2);
 
-		parsedgraphics.ReadGraphics(d, readoffset);
+		parsedgraphics.ReadGraphics(d, readoffset, touchedcanvas);
 	}
 
-	void ReadGraphics(GraphicDataFile d, int readoffset)
+	void ReadGraphics(GraphicDataFile d, int readoffset, in out Array<String> touchedcanvas)
 	{
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
 
@@ -273,19 +298,26 @@ class WolfGraphicParser
 								}
 							}
 
-							CreateGraphic(newgraphic, FileReader.StripQuotes(texture.children[t].keyname), flip);
+							String canvasname = FileReader.StripQuotes(texture.children[t].keyname);
+							CreateGraphic(newgraphic, canvasname, flip);
+							
+							touchedcanvas.push(canvasname);
 						}
 					}
 					else
 					{
 						newgraphic.graphicname = FileReader.StripQuotes(texturenames.children[a].keyname);
 						CreateGraphic(newgraphic);
+						
+						touchedcanvas.push(newgraphic.graphicname);
 					}
 				}
 				else
 				{
 					newgraphic.graphicname = String.Format("Patches/Walls/WALL%i%03i.png", 0, a);
 					CreateGraphic(newgraphic);
+					
+					touchedcanvas.push(newgraphic.graphicname);
 				}
 				
 				wallcount++;

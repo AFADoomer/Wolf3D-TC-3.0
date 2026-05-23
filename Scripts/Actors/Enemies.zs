@@ -855,7 +855,7 @@ class ClassicNazi : ClassicBase
 								Sector texsec = (ln.frontsector == nextsector) ? ln.backsector : ln.frontsector;
 								Vector2 texpos = (texsec ? texsec.CenterSpot : (-4096, 4096));
 								texpos = ParsedMap.CoordsToGrid(texpos);
-								TextureID tex = handler.curmap.GetTexture(texpos, ln, max(0, g_sod));
+								TextureID tex = handler.curmap.GetTexture(texpos, ln);
 
 								for (int s = 0; s < 2; s++)
 								{

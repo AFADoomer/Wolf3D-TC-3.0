@@ -590,13 +590,13 @@ class DoorEffector: PolyobjectEffector
 											int tt;
 											if (tile.id % 2 == 1)
 											{
-												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { [tt, nexttile] = handler.curmap.TileAt(pos + (1, 0), max(0, g_sod)); }
-												else { [tt, nexttile] = handler.curmap.TileAt(pos - (1, 0), max(0, g_sod)); }
+												if (ln.v1.p.x > PolyObject.StartSpotPos.x) { [tt, nexttile] = handler.curmap.TileAt(pos + (1, 0)); }
+												else { [tt, nexttile] = handler.curmap.TileAt(pos - (1, 0)); }
 											}
 											else
 											{
-												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, nexttile] = handler.curmap.TileAt(pos - (0, 1), max(0, g_sod)); }
-												else { [tt, nexttile] = handler.curmap.TileAt(pos + (0, 1), max(0, g_sod)); }
+												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, nexttile] = handler.curmap.TileAt(pos - (0, 1)); }
+												else { [tt, nexttile] = handler.curmap.TileAt(pos + (0, 1)); }
 											}
 											
 											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(nexttile, (0, 0), ln));
@@ -618,12 +618,12 @@ class DoorEffector: PolyobjectEffector
 						Vector2 pos = ParsedMap.CoordsToGrid(PolyObject.Origin);
 						TileInfo tile;
 						int t;
-						[t, tile] = handler.curmap.TileAt(pos, max(0, g_sod));
+						[t, tile] = handler.curmap.TileAt(pos);
 
 						if (door && door != Polyobject)
 						{
 							t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
-							tile = handler.curmap.TileAtIndex(t - 1, max(0, g_sod));
+							tile = handler.curmap.TileAtIndex(t - 1);
 						}
 
 						for (int l = 0; l < PolyObject.Lines.Size(); l++)
@@ -793,7 +793,7 @@ class DoorEffector: PolyobjectEffector
 								if (tile.flags & TileInfo.TILE_DOOR)
 								{
 									int t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.Origin));
-									TileInfo tile = handler.curmap.TileAtIndex(t, max(0, g_sod));
+									TileInfo tile = handler.curmap.TileAtIndex(t);
 								}
 
 								tex = handler.curmap.GetTexture(ParsedMap.CoordsToGrid(PolyObject.Origin));

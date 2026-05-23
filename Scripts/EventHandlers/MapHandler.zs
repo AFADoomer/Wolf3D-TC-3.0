@@ -907,7 +907,6 @@ class ParsedMap
 
 		let this = MapHandler.Get();
 
-		if (style < 0) { style = gametype; }
 		if (style < 0) { style = max(0, g_sod); }
 
 		return planes[0][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style), planes[0][index]) : null;
@@ -1195,29 +1194,55 @@ class ParsedMap
 				if ((!tile || tile.flags & TileInfo.TILE_SOLID) && (a == 0 || (a > 0x59 && a < 0x62)))
 				{
 					// Collapse the sector height
-					sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, 0, true);
-
-					// Make lines blocking and set textures
-					for (int l = 0; l < sec.lines.Size(); l++)
+					if (tile && !(tile.flags & TileInfo.TILE_FONT) && !GraphicsHandler.CheckTouched(tile.tex[0]))
 					{
-						let ln = sec.lines[l];
+						sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling() - 64), 0, -1, false, true);
 
-						ln.flags &= ~Line.ML_TWOSIDED;
-						ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
-
-						TextureID tex = GetTexture(pos, ln, style);
-
-						for (int s = 0; s < 2; s++)
+						TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
+						for (int l = 0; l < sec.lines.Size(); l++)
 						{
-							if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
+							let ln = sec.lines[l];
+
+							ln.flags |= Line.ML_TWOSIDED;
+							ln.flags &= ~(Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK);
+
+
+							for (int s = 0; s < 2; s++)
 							{
-								ln.sidedef[s].SetTexture(side.mid, tex);
+								if (ln.sidedef[s])
+								{
+									if (ln.sidedef[s].sector != sec) { ln.sidedef[s].SetTexture(side.mid, nulltex); }
+									ln.sidedef[s].flags &= ~Side.WALLF_BLOCKRENDERING;
+								}
 							}
 						}
 					}
+					else
+					{
+						sec.MoveFloor(256, sec.floorplane.PointToDist(sec.centerspot, sec.CenterCeiling()), 0, 1, false, true);
 
-					// Set the floor texture to the wall texture so they show up on the automap
-					sec.SetTexture(Sector.floor, GetTexture(pos, null, style));
+						// Make lines blocking and set textures
+						for (int l = 0; l < sec.lines.Size(); l++)
+						{
+							let ln = sec.lines[l];
+
+							ln.flags &= ~Line.ML_TWOSIDED;
+							ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
+
+							TextureID tex = GetTexture(pos, ln, style);
+
+							for (int s = 0; s < 2; s++)
+							{
+								if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
+								{
+									ln.sidedef[s].SetTexture(side.mid, tex);
+								}
+							}
+						}
+
+						// Set the floor texture to the wall texture so they show up on the automap
+						sec.SetTexture(Sector.floor, GetTexture(pos, null, style));
+					}
 				}
 
 				// Spawn actors
@@ -1277,7 +1302,7 @@ class ParsedMap
 				
 				TileInfo tile;
 				int t;
-				[t, tile] = TileAt(pos, max(0, g_sod));
+				[t, tile] = TileAt(pos);
 				int a = ActorAt(pos);
 
 				// If this sector is out of range, continue
@@ -1717,7 +1742,7 @@ class ParsedMap
 
 		TextureID tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
 
-		if (!tex.IsValid())
+		if (!tex.IsValid() || !GraphicsHandler.CheckTouched(texname))
 		{
 			switch (gametype)
 			{
