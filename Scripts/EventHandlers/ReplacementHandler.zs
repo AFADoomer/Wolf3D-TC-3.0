@@ -33,7 +33,7 @@ class ReplacementHandler : StaticEventHandler
 			// Weapons
 			case 'Chainsaw': e.replacement = "Life"; break;
 			case 'Pistol': e.replacement = "WolfPistol"; break;
-			case 'SuperShotgun': 
+			case 'SuperShotgun':
 			case 'Shotgun': e.replacement = "WolfMachineGun"; break;
 			case 'Chaingun': e.replacement = "WolfChainGun"; break;
 			case 'RocketLauncher': e.replacement = "WolfRocketLauncher"; break;
@@ -43,7 +43,7 @@ class ReplacementHandler : StaticEventHandler
 			// Ammo
 			case 'Clip':
 			case 'Shell': e.replacement = "WolfClip"; break;
-			case 'ClipBox': 
+			case 'ClipBox':
 			case 'ShellBox': e.replacement = "WolfClipBox"; break;
 			case 'RocketAmmo': e.replacement = "WolfRocketPickup"; break;
 			case 'RocketBox': e.replacement = "WolfRocketCrate"; break;
@@ -62,7 +62,7 @@ class ReplacementHandler : StaticEventHandler
 			case 'SoulSphere':
 			case 'MegaSphere': e.replacement = "Life"; break;
 			case 'Berserk': e.replacement = "WolfBerserk"; break;
-			
+
 			// Other
 			case 'ExplosiveBarrel': e.replacement = "ExplosiveOilDrum"; break;
 			case 'Backpack': e.replacement = "WolfBackpack"; break;
@@ -165,7 +165,7 @@ class ReplacementHandler : StaticEventHandler
 
 		if (gamemode > 0) { ceilname = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
 		else { ceilname = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
- 
+
 		TextureID floortex, ceiltex;
 
 		switch (val)

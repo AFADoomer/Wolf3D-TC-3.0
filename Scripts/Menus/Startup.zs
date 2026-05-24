@@ -50,12 +50,12 @@ class BossScreen : GenericMenu
 	override void Drawer()
 	{
 		screen.Dim(0, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-	
+
 		if (multiplayer)
 		{
 			screen.DrawText(DOSFont, Font.CR_GRAY, 0, 0, String.Format("%s%s", "C>", ((ticcount % 40 < 20) ? "_" : "")), DTA_VirtualWidth, 640, DTA_VirtualHeight, 400);
 		}
-	}	
+	}
 }
 
 class DOSItem
@@ -157,7 +157,7 @@ class Startup : GenericMenu
 
 		Print(prompt, nobreak:true);
 	}
-	
+
 	override void Ticker()
 	{
 		if (doboot) { Boot(); }
@@ -286,7 +286,7 @@ class Startup : GenericMenu
 			for (int r = 0; r < 25; r++)
 			{
 				for (int c = 0; c < 80; c++)
-				{	
+				{
 					backgroundbuffer[r][c] = backgroundbuffer[r + amt][c];
 					buffer[r][c] = buffer[r + amt][c];
 					cursorbuffer[r][c] = cursorbuffer[r + amt][c];
@@ -314,7 +314,7 @@ class Startup : GenericMenu
 		for (int r = cursory; r < 25; r++)
 		{
 			for (int c = 0; c < 79; c++)
-			{	
+			{
 				if (r == cursory && c >= cursorx || r > cursory)
 				{
 					backgroundbuffer[r][c] = backgroundbuffer[r][c + 1];
@@ -333,7 +333,7 @@ class Startup : GenericMenu
 		for (int r = cursory; r < 25; r++)
 		{
 			for (int c = 78; c > 0; c--)
-			{	
+			{
 				if (r == cursory && c >= cursorx || r > cursory)
 				{
 					backgroundbuffer[r][c + 1] = backgroundbuffer[r][c];
@@ -484,7 +484,7 @@ class Startup : GenericMenu
 		}
 
 		return false;
-	}	
+	}
 
 	override bool MenuEvent(int mkey, bool fromcontroller)
 	{
@@ -492,7 +492,7 @@ class Startup : GenericMenu
 		{
 			case MKEY_ENTER:
 				if (command.length())
-				{ 
+				{
 					history.Push(command);
 					historyindex = history.Size();
 					ParseCommand(command .. "\n");
@@ -543,7 +543,7 @@ class Startup : GenericMenu
 				for (int r = prompty; r < 25; r++)
 				{
 					for (uint c = 0; c < 80; c++)
-					{	
+					{
 						if (r == prompty && c >= prompt.Length() || r > prompty) { buffer[r][c] = ""; }
 					}
 				}
@@ -598,7 +598,7 @@ class Startup : GenericMenu
 		input = input.MakeUpper();
 
 		for (uint i = 0; i < input.Length(); i++)
-		{		
+		{
 			int index = input.Mid(i, 1).ToInt();
 
 			if (!(input.Mid(i, 1) == "0") && !index)
@@ -632,7 +632,7 @@ class Startup : GenericMenu
 			if (!path) { path = item.title .. (item.extension.length() ? item.extension : ""); }
 			else { path = item.title .. (item.extension.length() ? item.extension : "") .. "\x5C" .. path; }
 
-			item = item.parent;	
+			item = item.parent;
 		}
 
 		return path;
@@ -713,7 +713,7 @@ class Startup : GenericMenu
 			}
 		}
 
-		return curnode, same;	
+		return curnode, same;
 	}
 
 	void ParseCommand(String command)
@@ -1335,7 +1335,7 @@ class Notice : WolfMenu
 				}
 			}
 			else
-			{	
+			{
 				screen.DrawText (BigFont, fntclr, x, y + lineheight * t, line, DTA_VirtualWidth, w, DTA_VirtualHeight, h, DTA_Alpha, alpha);
 			}
 		}

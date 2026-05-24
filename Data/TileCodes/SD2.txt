@@ -8,7 +8,7 @@ SD2
 			Pattern = "Patches/Walls/Wall2%03i.png";
 			Flags = Wall;
 		}
-				
+
 		0x15
 		{
 			Special = 80, 10;

@@ -20,7 +20,7 @@ class PolyobjectHandlePostProcessor: LevelPostProcessor
 
       // Create a PolyobjectHandle
       PolyobjectHandle handle = PolyobjectHandle.Create();
-      
+
       // Get polyobject number from StartSpot angle
       handle.PolyobjectNum = GetThingAngle(i);
 
@@ -56,7 +56,7 @@ class PolyobjectHandlePostProcessor: LevelPostProcessor
       int pobjhandleindex = pobjnums.Find(pobjnum);
       if (pobjhandleindex >= pobjnums.Size())
         continue;  // Polyobject doesn't have a corresponding StartSpot
-      
+
       PolyobjectHandle handle = pobjhandles[pobjhandleindex];
 
       // Get mirror polyobject number

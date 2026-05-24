@@ -35,7 +35,7 @@ class GraphicsHandler : StaticEventHandler
 	{
 		// Load default graphics
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
-		
+
 		for (int g = 0; g < handler.graphicmaps.Size(); g++)
 		{
 			ParsedValue data = handler.graphicmaps[g];
@@ -270,7 +270,7 @@ class WolfGraphicParser
 		// spriteoffsets.Translate((-32, 64));
 
 		Array<Color> palette;
-		
+
 		if (palettepath)
 		{
 			DataHandler.ParsePalette(FileReader.StripQuotes(palettepath.value), palette);
@@ -307,7 +307,7 @@ class WolfGraphicParser
 
 							String canvasname = FileReader.StripQuotes(texture.children[t].keyname);
 							CreateGraphic(newgraphic, canvasname, flip);
-							
+
 							touchedcanvas.push(canvasname);
 						}
 					}
@@ -315,7 +315,7 @@ class WolfGraphicParser
 					{
 						newgraphic.graphicname = FileReader.StripQuotes(texturenames.children[a].keyname);
 						CreateGraphic(newgraphic);
-						
+
 						touchedcanvas.push(newgraphic.graphicname);
 					}
 				}
@@ -323,10 +323,10 @@ class WolfGraphicParser
 				{
 					newgraphic.graphicname = String.Format("Patches/Walls/WALL%i%03i.png", 0, a);
 					CreateGraphic(newgraphic);
-					
+
 					touchedcanvas.push(newgraphic.graphicname);
 				}
-				
+
 				wallcount++;
 
 				d.graphics.Push(newgraphic);
@@ -383,7 +383,7 @@ class WolfGraphicParser
 				int index = c * 64 + r;
 				row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), "██");
 			}
-			
+
 			console.printf(row);
 			row = "";
 		}

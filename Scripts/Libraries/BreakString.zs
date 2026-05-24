@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-// BrokenLines-alike class with the same functions for accessing string info to 
+// BrokenLines-alike class with the same functions for accessing string info to
 // allow easier insertion into existing code with minimal changes
 class BrokenString : Object
 {
@@ -163,7 +163,7 @@ class BrokenString : Object
 					lastcolor = currentcolor;
 				}
 
-				String printcolor = currentcolor;				
+				String printcolor = currentcolor;
 				if (colorindex > wordindex) { printcolor = lastcolor; } // Make sure the color change didn't happen after the last known space
 				printcolor = printcolor.length() > 1 ? "[" .. printcolor .. "]" : printcolor; // Handle named colors
 

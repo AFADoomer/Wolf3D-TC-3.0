@@ -30,7 +30,7 @@ class LifeHandler : StaticEventHandler
 {
 	int lives[MAXPLAYERS];
 	bool died[MAXPLAYERS];
-	
+
 	PersistentLifeHandler persistent;
 
 	ui static int GetLives(Actor p)
@@ -222,7 +222,7 @@ class LifeHandler : StaticEventHandler
 		{
 			lives[e.playernumber] = 3;
 			DoInventoryReset(e.playernumber);
-			
+
 			let score = players[e.playernumber].mo.FindInventory("Score");
 			if (score)
 			{
@@ -277,7 +277,7 @@ class LifeHandler : StaticEventHandler
 		if (amt > 0) { e.thing.A_GiveToTarget("Score", amt); }
 		else { e.thing.A_TakeFromTarget("Score", amt); }
 	}
-	
+
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		if (e.Name == "resetdeaths")

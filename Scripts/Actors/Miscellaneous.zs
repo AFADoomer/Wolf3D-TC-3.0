@@ -91,7 +91,7 @@ class SecretMarker : Actor
 	{
 		if (bDormant) { level.total_secrets++; }
 
-		bDormant = false; 
+		bDormant = false;
 		touchRange = Default.touchRange; // Allow resetting touch deactivation by re-activating the actor
 		SetStateLabel("Active");
 	}
@@ -167,7 +167,7 @@ class Turn : SwitchableDecoration
 				if (target && ClassicBase(target) && !ClassicBase(target).bActive)
 				{
 					if (target.health <= 0) { return;}
-					
+
 					target.SetStateLabel("Spawn.Stand");
 					target.SetOrigin(pos, true);
 					target.vel *= 0;
@@ -338,7 +338,7 @@ class BJFinaleRun : Actor
 		Spawn:
 			TNT1 A 2;
 			Loop;
-		Run: 
+		Run:
 			BJJU ABCD 6 { Thrust(speed, angle); }
 			BJJU ABCD 6 { Thrust(speed, angle); }
 			BJJU ABCD 6 { Thrust(speed, angle); }
@@ -374,7 +374,7 @@ class BJFinaleRun : Actor
 				for (int i = 0; i < MAXPLAYERS; i++)
 				{
 					if (!playeringame[i] || players[i].bot) { continue; }
-		
+
 					players[i].camera = camera;
 				}
 			}
@@ -584,7 +584,7 @@ class WolfTeleportIn : Actor replaces TeleportFog
 	{
 		Spawn:
 			TELE ABCDEFG 5 Bright { Game.AttachLight(self, int(8 + sin(frame * 180 / 4.0) * 24), 0x5bf9f9, (0, 0, 32)); }
-			Stop; 
+			Stop;
 	}
 
 	override void PostBeginPlay()

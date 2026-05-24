@@ -132,65 +132,65 @@ SD1
 		"Patches/Walls/WALL1125.png";
 
 		126
-		{	
+		{
 			"Patches/Walls/WALL1126.png";
 			"WLF1DORA" { Flip; }
 			"WLF1DORA" { Flip; }
 			"WLF1DORC";
 			"WLF1DORC";
 		}
-				
+
 		127
-		{	
+		{
 			"Patches/Walls/WALL1127.png";
 			"WLF1DORB";
 			"WLF1DORB";
 			"WLF1DORD" { Flip; }
 			"WLF1DORD" { Flip; }
-			
+
 		}
-				
+
 		128
-		{	
+		{
 			"Patches/Walls/WALL1128.png";
 			"WLF1JMBA";
 			"WLF1JMBA";
 			"WLF1JMBC" { Flip; }
 			"WLF1JMBC" { Flip; }
-			
+
 		}
-				
-		129	
-		{	
+
+		129
+		{
 			"Patches/Walls/WALL1129.png";
 			"WLF1JMBB";
 			"WLF1JMBB";
 			"WLF1JMBD" { Flip; }
 			"WLF1JMBD" { Flip; }
-			
+
 		}
-				
+
 		130
-		{	
+		{
 			"Patches/Walls/WALL1130.png";
 			"WLF1ELEA" { Flip; }
 			"WLF1ELEA" { Flip; }
 			"WLF1ELEC";
 			"WLF1ELEC";
 		}
-				
+
 		131
-		{	
+		{
 			"Patches/Walls/WALL1131.png";
 			"WLF1ELEB";
 			"WLF1ELEB";
 			"WLF1ELED" { Flip; }
 			"WLF1ELED" { Flip; }
-			
+
 		}
-				
+
 		132
-		{	
+		{
 			"Patches/Walls/WALL1132.png";
 			"WLF1LK1A" { Flip; }
 			"WLF1LK1A" { Flip; }
@@ -201,9 +201,9 @@ SD1
 			"WLF1LK2C";
 			"WLF1LK2C";
 		}
-				
+
 		133
-		{	
+		{
 			"Patches/Walls/WALL1133.png";
 			"WLF1LK1B";
 			"WLF1LK1B";
@@ -213,6 +213,6 @@ SD1
 			"WLF1LK2B";
 			"WLF1LK2D" { Flip; }
 			"WLF1LK2D" { Flip; }
-		}	
+		}
 	}
 }

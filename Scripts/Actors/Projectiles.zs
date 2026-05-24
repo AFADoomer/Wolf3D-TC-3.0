@@ -234,7 +234,7 @@ class Syringe : WolfProjectile
 	}
 }
 
-// Fake Hitler Fireballs 
+// Fake Hitler Fireballs
 class FakeHitlerFireBall : WolfProjectile
 {
 	Default
@@ -270,7 +270,7 @@ class FakeHitlerFireBall : WolfProjectile
 	{
 		// The original fireball speed in Wolf3D was dependant on processor speed
 		// instead of gametics...  So fireballs were faster on slower computers -
-		// the default speed approximates the speed on a faster 
+		// the default speed approximates the speed on a faster
 		// machine; the faster one is closer to the id-intended speed.
 		if (g_fastfireballs) { speed = 9; }
 

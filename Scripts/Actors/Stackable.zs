@@ -23,10 +23,10 @@
 /*
 
   Base class that allows you to set up Inventory items of different classes that add their
-  amounts up in a single inventory item, just like ammunition.  
+  amounts up in a single inventory item, just like ammunition.
 
   Lots of code derived from existing code in the Ammo class...  So much so that it's almost not
-  worth it.  All you have to do to emulate this behavior is to inherit from Ammo instead of 
+  worth it.  All you have to do to emulate this behavior is to inherit from Ammo instead of
   Inventory and add "Ammo.BackpackAmount 0;" and "+INVENTORY.IGNORESKILL" to your base class.
 */
 
@@ -60,7 +60,7 @@ class StackableInventory : Inventory
 				{
 					Amount += item.Amount;
 				}
-			
+
 				if (Amount > MaxAmount && !sv_unlimited_pickup)
 				{
 					Amount = MaxAmount;

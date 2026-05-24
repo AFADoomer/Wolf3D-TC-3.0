@@ -56,7 +56,7 @@ Script "InitializePlayer" (int playernum)
 				TakeInventory("Score", 0x7FFFFFFF);
 				Delay(1);
 			}
-			
+
 			SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 			ScriptCall("ClassicStatusBar", "ClearFizzle");
 		}

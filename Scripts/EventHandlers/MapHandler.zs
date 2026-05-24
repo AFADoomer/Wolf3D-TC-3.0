@@ -84,7 +84,7 @@ Class TileInfo
 		match.Split(patterns, ",");
 
 		if (patterns.Size() < 2) { return; }
-		
+
 		if (!key)
 		{
 			alttex[0] = patterns[0];
@@ -113,7 +113,7 @@ Class TileInfo
 		for (int f = 0; f < flagvalues.Size(); f++)
 		{
 			String flag = ZScriptTools.Trim(flagvalues[f]);
-		
+
 			if (flag ~== "Directional") { flags |= TileInfo.TILE_DIRECTIONAL; }
 			else if (flag ~== "Ambush") { flags |= TileInfo.TILE_AMBUSH; }
 			else if (flag ~== "SecretExit") { flags |= TileInfo.TILE_SECRETEXIT; }
@@ -135,7 +135,7 @@ Class TileInfo
 		alttex[0] = String.Format(alttex[0], key);
 		alttex[1] = String.Format(alttex[1], key);
 	}
-	
+
 	void ParseSpecial(ParsedValue tiledata)
 	{
 		String match = tiledata.GetString("Special");
@@ -275,7 +275,7 @@ Class GameTileInfo
 
 		TileInfo tile;
 		GameTileInfo tilemap;
-		
+
 		tilemap = Find(tilemaps, gamename);
 		if (tilemap)
 		{
@@ -285,7 +285,7 @@ Class GameTileInfo
 
 		tilemap = Find(tilemaps, "Default");
 		if (tilemap) { return tilemap.GetSpecialTile(type); }
-		
+
 		return null;
 	}
 }
@@ -502,7 +502,7 @@ class MapHandler : StaticEventHandler
 
 			return;
 		}
-		
+
 		for (int s = 0; s < level.sides.Size(); s++)
 		{
 			let side = level.sides[s];
@@ -551,7 +551,7 @@ class MapHandler : StaticEventHandler
 		if (curmap.info)
 		{
 			console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", style <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
-			
+
 			if (secretmapnext)
 			{
 				queuedmap = secretmapnext;
@@ -591,7 +591,7 @@ class MapHandler : StaticEventHandler
 			level.nextmap = level.nextsecretmap = level.mapname;
 		}
 	}
-	
+
 	override void WorldLinePreActivated(WorldEvent e)
 	{
 		if (level.mapname ~== "Level")
@@ -609,7 +609,7 @@ class MapHandler : StaticEventHandler
 			if (ln.args[2] == 10) // Secret map trigger
 			{
 				LevelInfo nextinfo;
-				
+
 				if (curmap.info.nextsecretmap.length())
 				{
 					nextinfo = LevelInfo.FindLevelInfo(curmap.info.nextsecretmap);
@@ -636,7 +636,7 @@ class MapHandler : StaticEventHandler
 					nextinfo = LevelInfo.FindLevelByNum(levelnum);
 					secretmapnext = queuedmap; // Remember the normal next map so that the secret level's exit can return to it
 				}
-				
+
 				if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
 			}
 		}
@@ -672,11 +672,11 @@ class MapHandler : StaticEventHandler
 		if (developer) { console.printf("Parsing actor data..."); }
 
 		actormaps = FileReader.Parse("Data/ActorCodes.txt");
-			
+
 		for (int d = 0; d < actormaps.children.Size(); d++)
 		{
 			let gamedata = actormaps.children[d];
-			
+
 			for (int e = 0; e < gamedata.children.Size(); e++)
 			{
 				let entry = gamedata.children[e];
@@ -686,7 +686,7 @@ class MapHandler : StaticEventHandler
 				Array<String> values;
 				value.split(values, ",");
 				if (!values.Size()) { values.Push(value); }
-		
+
 				ParsedValue m;
 				m = entry.AddKey(true);
 				m.keyname = "Class";
@@ -696,7 +696,7 @@ class MapHandler : StaticEventHandler
 				m.keyname = "Skill";
 				if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
 				else { m.value = "-1"; }
-				
+
 				m = entry.AddKey(true);
 				m.keyname = "Angle";
 				if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
@@ -878,7 +878,7 @@ class MapHandler : StaticEventHandler
 
 		if (all) { return this.parsedmaps.maps.Size(); }
 
-		int count = 0; 
+		int count = 0;
 		for (int m = 0; m < this.parsedmaps.maps.Size(); m++)
 		{
 			if (this.parsedmaps.maps[m].mapname ~== "Wolf3D TC Test") { continue; } // Don't count the demo map
@@ -1156,7 +1156,7 @@ class ParsedMap
 			noclip = false;
 
 			TextureID nulltex = TexMan.CheckForTexture("-", TexMan.Type_Any);
-			
+
 			for (int s = 0; s < level.sectors.Size(); s++)
 			{
 				Sector sec = level.sectors[s];
@@ -1282,7 +1282,7 @@ class ParsedMap
 								mo.angle = am.GetInt("Angle");
 
 								// Assign a TID matching the floor code for alerting reasons
-								// (Recreate's Wolf's ability to alert actors elsewhere 
+								// (Recreate's Wolf's ability to alert actors elsewhere
 								// in the map if they share the same floor code)
 								if (tile && tile.flags & TileInfo.TILE_AMBUSH)  // Deaf Guard Floor Code
 								{
@@ -1298,7 +1298,7 @@ class ParsedMap
 									if (tile && !(tile.flags & TileInfo.TILE_FLOOR)) { [t, tile] = TileAt(pos - (0, 1)); }
 									if (tile && !(tile.flags & TileInfo.TILE_FLOOR)) { t = 0; } // Fall back to not assigning a TID
 								}
-								
+
 								mo.ChangeTID(t);
 								mo.bDropped = false;
 
@@ -1315,7 +1315,7 @@ class ParsedMap
 				let sec = level.sectors[s];
 
 				Vector2 pos = CoordsToGrid(sec.centerspot);
-				
+
 				TileInfo tile;
 				int t;
 				[t, tile] = TileAt(pos);
@@ -1373,7 +1373,7 @@ class ParsedMap
 				}
 
 				PolyobjectHandle door = PolyobjectHandle.FindPolyobjAt(sec.CenterSpot);
-				
+
 				// Handle texturing of doors and door frames
 				if ((tile && tile.flags & TileInfo.TILE_DOOR) || a == 0x62 || door)
 				{
@@ -1518,11 +1518,11 @@ class ParsedMap
 									ln.locknumber = 59 + max(0, tile.key);
 
 									String texpath;
-								
+
 									// Set the doors to colored variants if the CVar is set
 									if (ln.delta.x) { texpath = g_usedoorkeycolors ? tile.alttex[0] : tile.tex[0]; }
 									else { texpath = g_usedoorkeycolors ? tile.alttex[1] : tile.tex[1]; }
-									
+
 									tex = TexMan.CheckForTexture(texpath, TexMan.Type_Any);
 								}
 
@@ -1577,7 +1577,7 @@ class ParsedMap
 								sec.flags |= Sector.SECF_SECRET | Sector.SECF_WASSECRET;
 								Level.total_secrets++;
 							}
-	
+
 							if (tile && !(tile.flags & TileInfo.TILE_DOOR)) { sec.SetTexture(Sector.floor, GetTexture(ParsedMap.CoordsToGrid(door.Origin), null, style)); }
 						}
 						else if (ActorAt(CoordsToGrid(door.Origin)) == 0x62)
@@ -1657,7 +1657,7 @@ class ParsedMap
 										ln.sidedef[s].SetTexture(side.mid, tex);
 									}
 								}
-							}	
+							}
 						}
 						else
 						{
@@ -1740,14 +1740,14 @@ class ParsedMap
 		if (!ln)
 		{
 			texname = tile.tex[0];
-			
+
 			if (tile && tile.flags & TileInfo.TILE_DIRECTIONAL) // Landscape and Elevator walls show alternate walls on map as appropriate
 			{
 				TileInfo left, right;
 				int l, r;
 				[l, left] = TileAt(pos - (1, 0));
 				[r, right] = TileAt(pos + (1, 0));
-				
+
 				if (left && left.flags & TileInfo.TILE_FLOOR || right && right.flags & TileInfo.TILE_FLOOR) { texname = tile.tex[1]; }
 			}
 		}
@@ -1817,7 +1817,7 @@ class ParsedMap
 					else if (tile.id < 0xDA) { c = 0x30 + (tile.id - 0xD0); } // Numbers
 					break;
 			}
-	
+
 			if (c > 0)
 			{
 				tex = TexMan.CheckForTexture(String.Format(tile.tex[0], c), TexMan.Type_Any);
@@ -1837,7 +1837,7 @@ class ParsedMap
 			{
 				int column = Random[dmstart](1, 63); // Random column
 				int row = Random[dmstart](1, 63); // Random row
-				
+
 				for (int y = row; y < 64; y++) // Look for an empty tile
 				{
 					Vector2 gridpos = (column, Random[dmstart](0, 1) ? y : 63 - y); // Start from the botton randomly
@@ -1870,7 +1870,7 @@ class ParsedMap
 		bool blocked = (tile && tile.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR);
 		if (!blocked) { blocked = !!FindBlockingActor(pos + offset * 64); }
 		if (blocked) { return GetNextSpot(pos, angle, ++iter); }
-		
+
 		return pos + offset * 64;
 	}
 
@@ -1887,7 +1887,7 @@ class ParsedMap
 
 	// Check for tiles on either side of doors
 	int CheckDoorTiles(Vector2 spot, int tilecheck1, int tilecheck2 = -1)
-	{ 
+	{
 		TileInfo tile;
 		int t;
 		[t, tile] = TileAt(spot);
@@ -2029,7 +2029,7 @@ class WolfMapParser
 			ParsedMap newmap = New("ParsedMap");
 			newmap.datafile = d;
 			newmap.lump = lump;
-			
+
 			int planeoffsets[4];
 			int planesizes[4];
 
@@ -2117,7 +2117,7 @@ class WolfMapParser
 			}
 
 			newmap.hash = MD5.hash(content.Mid(planeoffsets[0], planesizes[0] + planesizes[1]));
-			
+
 			newmap.gametype = gametype;
 			newmap.extension = extension;
 			newmap.info = newmap.GetInfo();

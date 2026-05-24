@@ -45,12 +45,12 @@ class ConsoleHandler : StaticEventHandler
 
 				Array<String> words;
 				tag.Split(words, " ");
-				
+
 				gamestring.AppendFormat(" %s", words[0]);
 
 				// Show the last commit's hash if this is a beta release
 				if (tag.IndexOf("beta") > -1 || tag.IndexOf("dev") > -1)
-				{ 
+				{
 					gamestring.AppendFormat(" \c[Yellow]build %s", lines[0].Left(7));
 				}
 			}
@@ -92,7 +92,7 @@ class ConsoleHandler : StaticEventHandler
 		if (conbackcanvas)
 		{
 			Font fnt = SmallFont;
-			
+
 			int w = 1280;
 			int h = 800;
 
@@ -100,7 +100,7 @@ class ConsoleHandler : StaticEventHandler
 
 			int lines = (Screen.GetHeight() / GetConScale(con_scale) - confontheight * 2) / confontheight;
 			int lineheight = h / lines;
-			
+
 			double fontscale = double(lineheight) / fnt.GetHeight();
 
 			// Round to nearest negative power of two or integer for clean scaling

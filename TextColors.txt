@@ -66,17 +66,17 @@ Console:
 
 WolfDarkGold
 {
-	#404000 #404000 
+	#404000 #404000
 }
 
 WolfStartupGreen
 {
-	#54FC54 #54FC54 
+	#54FC54 #54FC54
 }
 
 WolfStartupYellow
 {
-	#FCFC54 #FCFC54 
+	#FCFC54 #FCFC54
 }
 
 DOSBlue 	{ #0000AA #0000AA Console: #0000AA #0000AA 0 256 }
@@ -847,7 +847,7 @@ Flat:
 	#047C00
 }
 
-Palette6B WolfMenuEpisodeDisable 
+Palette6B WolfMenuEpisodeDisable
 {
 	#047000 #047000
 Flat:

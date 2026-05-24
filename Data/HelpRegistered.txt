@@ -54,7 +54,7 @@ If you don't, at least you'll go out in a blaze of glory!
 ^c7eCONTROLS
 ^c00
 In Wolfenstein 3-D, you can use the keyboard, mouse, joystick, or Gravis PC Gamepad.
- 
+
 To move around the menus, use the arrow keys to move from item to item, then press ^c6eEnter ^c00to select that item.  ^c6eEsc ^c00always backs out.  You can press the first letter of a menu item to go to that item.
 
 Or use the mouse, joystick, or Gamepad-- they work, too!
@@ -256,7 +256,7 @@ Call (414) 789-4210 with your modem to join the fun on Exec-PC!
 ^PAGE 28
 ^c7eFOREIGN CUSTOMERS
 
-^c00The following screens list our dealers outside the United States: Australia, Canada and the United Kingdom.  These are official Apogee dealers with the latest games and updates.    
+^c00The following screens list our dealers outside the United States: Australia, Canada and the United Kingdom.  These are official Apogee dealers with the latest games and updates.
 
 If your country is not listed, you may order directly from Apogee by phone:
 
@@ -355,7 +355,7 @@ TRILOGY PRICE:	$85 (including shipping, etc.)
 
 Use Visa, Mastercard, Amex, Diners.
 ^PAGE35
-^c7eDANISH CUSTOMERS	
+^c7eDANISH CUSTOMERS
 ^c00
 	Prof. Shareware Danmark
 	Benlose Skel 4 G
@@ -410,7 +410,7 @@ Kevin Cloud, Computer Artist: "...and Tim thought I'd be back in two weeks!  Ha!
 
 "Goodbye, Galaxy!": $35 for two episodes
 
-"Aliens Ate My BabySitter!": $35 
+"Aliens Ate My BabySitter!": $35
 (That's our commercial game.)
 
 Super Keen Fun Pack: $90 (for all 6)

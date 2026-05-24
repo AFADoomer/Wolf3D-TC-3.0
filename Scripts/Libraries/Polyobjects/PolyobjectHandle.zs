@@ -65,7 +65,7 @@ class PolyobjectHandle: Thinker
 	static PolyobjectHandle Create()
 	{
 		PolyobjectHandle po = PolyobjectHandle(new('PolyobjectHandle'));
-		// Sets the underlying Thinker StatNum to 127 so that LastPos, LastAngle etc. get 
+		// Sets the underlying Thinker StatNum to 127 so that LastPos, LastAngle etc. get
 		// updated after all the other thinkers.
 		po.ChangeStatNum(127);
 
@@ -102,7 +102,7 @@ class PolyobjectHandle: Thinker
 		return NULL;
 	}
 
-	// Adds effector to the end of current effector list 
+	// Adds effector to the end of current effector list
 	void AddEffector(PolyobjectEffector effector)
 	{
 		effector.Polyobject = self;
@@ -274,7 +274,7 @@ class PolyobjectHandle: Thinker
 		return Actor.DeltaAngle(StartAngle, lineangle);
 	}
 
-	// Returns current polyobject startspot position 
+	// Returns current polyobject startspot position
 	Vector2 GetPos()
 	{
 		let spotdelta = StartSpotPos - VertexStartingPos[0];
@@ -331,7 +331,7 @@ class PolyobjectHandle: Thinker
 
 	// Moves the polyobject to specified location, with specified speed, and plays the
 	// specified sound of its sound sequence
-	// (i.e. for a door sound sequence, sndseqmode 0 plays the open sound, 1 plays the 
+	// (i.e. for a door sound sequence, sndseqmode 0 plays the open sound, 1 plays the
 	// closing sound)
 	void MoveTo(Actor activator, Vector2 dest, int Speed, int sndseqmode = 0)
 	{

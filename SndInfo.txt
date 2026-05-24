@@ -224,7 +224,7 @@ willy/sight				LSND0029
 willy/death				LSND0030
 
 // Ubermutant
-$alias uber/sight		NULL 
+$alias uber/sight		NULL
 uber/death				SSND0033
 
 // The Axe

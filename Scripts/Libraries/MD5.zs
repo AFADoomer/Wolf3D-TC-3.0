@@ -30,10 +30,10 @@
 // by 3saster
 //
 // A class that returns a string containing the MD5 of an input string, using
-// the Hash method. In particular, this is designed to hash the result of the 
-// output of Wads.ReadLump. The "trunc" variable ignores the last "letter" of 
-// the input before hashing; this is because ReadLump adds a null character 
-// to the array. If you are not hashing the result of ReadLump, you will 
+// the Hash method. In particular, this is designed to hash the result of the
+// output of Wads.ReadLump. The "trunc" variable ignores the last "letter" of
+// the input before hashing; this is because ReadLump adds a null character
+// to the array. If you are not hashing the result of ReadLump, you will
 // likely want to set that variable to false.
 //
 // You are welcome to to use this in your mods, no need to ask for permission,
@@ -65,9 +65,9 @@ Class MD5
 			r += ((x>>i) & 0xFF) << (24-i);
 		return r;
 	}
-	
+
 	static string Hash(string key, bool trunc = true)
-	{	
+	{
 		// Cut the last letter off, since readLump adds a null character to the string,
 		// causing the hash obtained to not match the actual hash of the file (in older versions of GZDoom)
 		if(trunc)
@@ -80,7 +80,7 @@ Class MD5
 		               5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,  5,  9, 14, 20,
 		               4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,  4, 11, 16, 23,
 		               6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21,  6, 10, 15, 21 };
-					
+
 		// Constants
 		uint K[64] = { 0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 		               0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -98,27 +98,27 @@ Class MD5
 		               0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
 		               0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 		               0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391 };
-							   
+
 		// Initialize variables:
 		uint a0 = 0x67452301;   // A
 		uint b0 = 0xefcdab89;   // B
 		uint c0 = 0x98badcfe;   // C
 		uint d0 = 0x10325476;   // D
-		
+
 		// Turn string to byte array
 		Array<uint> input;
 		for(uint i=0; i < key.length(); i++)
 		{
 			input.push(key.ByteAt(i));
 		}
-		
+
 		// Padding - add a single 1 bit, then add zeros until the number of bytes is 56 mod 64
 		input.push(0x80);
 		while( input.size()%64 != 56 )
 		{
 			input.push(0x00);
 		}
-		
+
 		// Pad the remaining 8 bytes with the original message length in little endian
 		uint strLen = 8*key.length();
 		for(uint i=0; i<8; i++)
@@ -126,13 +126,13 @@ Class MD5
 			input.push(strLen & 0xFF);
 			strLen >>= 8;
 		}
-		
+
 		// Swap endianess of each byte
 		for(uint i=0; i < uint(input.size()); i++)
 		{
 			input[i] = swapByte(input[i]);
 		}
-		
+
 		// Break into 64 byte chunks
 		for(uint front=0; front < uint(input.size()); front += 64)
 		{
@@ -140,7 +140,7 @@ Class MD5
 			Array<uint> M;
 			for(int k=0; k<64; k += 4)
 			{
-				M.push( 
+				M.push(
 				          ( swapByte(input[front + k + 0]) << 0 ) +
 					      ( swapByte(input[front + k + 1]) << 8 ) +
 					      ( swapByte(input[front + k + 2]) << 16) +
@@ -152,10 +152,10 @@ Class MD5
 			uint B = b0;
 			uint C = c0;
 			uint D = d0;
-			
+
 			uint f;
 			uint g;
-			
+
 			// Main Loop
 			for(uint i=0; i<64; i++)
 			{
@@ -179,7 +179,7 @@ Class MD5
 					f = I(B,C,D);
 					g = (7*i)%16;
 				}
-				
+
 				f = f + A + K[i] + M[g];
 				A = D;
 				D = C;
@@ -192,7 +192,7 @@ Class MD5
 			c0 += C;
 			d0 += D;
 		}
-		
+
 		return string.format("%08x%08x%08x%08x",swapWord(a0),swapWord(b0),swapWord(c0),swapWord(d0));
 	}
 }

@@ -101,7 +101,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		{
 		case MKEY_Back:
 			if (gamestate != GS_FINALE)
-			{ 
+			{
 				fadetarget = gametic + fadetime;
 				exitmenu = true;
 			}
@@ -122,13 +122,13 @@ class ExtendedOptionMenu : GenericOptionMenu
 					mDesc.mScrollPos = MAX(mDesc.mSelectedItem - mDesc.mScrollTop - 1, 0);
 				}
 
-				if (mDesc.mSelectedItem < 0) 
+				if (mDesc.mSelectedItem < 0)
 				{
 					// Figure out how many lines of text fit on the menu
 					int y = mDesc.mDrawTop;
 
 					int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
-							
+
 					int ytop = y + mDesc.mScrollTop * fontheight;
 					int lastrow = screen.GetHeight() - fontheight * 2;
 					int maxheight = lastrow - ytop;
@@ -175,7 +175,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 					mDesc.mScrollPos++;
 					source.VisBottom++;
 				}
-				if (mDesc.mSelectedItem >= mDesc.mItems.Size()) 
+				if (mDesc.mSelectedItem >= mDesc.mItems.Size())
 				{
 					if (startedAt == -1)
 					{
@@ -291,7 +291,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 				}
 			}
 		default:
-			if (mDesc.mSelectedItem >= 0 && 
+			if (mDesc.mSelectedItem >= 0 &&
 				mDesc.mItems[mDesc.mSelectedItem].MenuEvent(mkey, fromcontroller)) return true;
 			return Super.MenuEvent(mkey, fromcontroller);
 		}
@@ -427,7 +427,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		}
 
 		mDesc.mDrawTop = y;
-		
+
 		int fontheight = (BigFont.GetHeight() + 1) * CleanYfac_1;
 
 		int ytop = y + mDesc.mScrollTop * BigFont.GetHeight();
@@ -438,7 +438,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 
 		int x = left + DrawFrame(framewidth, lastrow - y, -y);
 		leftedge = x;
-		
+
 		x += 32 * CleanXfac_1;
 
 		screen.Dim(fadecolor, 1.0 - alpha, 0, 0, screen.GetWidth(), screen.GetHeight());
@@ -492,7 +492,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		int x = Screen.GetWidth() / 2 - w / 2;
 		int y;
-		
+
 		if (yoffset < 0) { y = -yOffset; }
 		else { y = Screen.GetHeight() / 2 - 100 * CleanYfac + yOffset; }
 
@@ -731,7 +731,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 		text = lookup;
 		text = StringTable.Localize("$" .. lookup);
 		if (text == lookup) { return 0; }
-		
+
 		int lineheight = SmallFont.GetHeight();
 		screen.DrawText (SmallFont, Font.FindFontColor("WolfMenuYellowBright"), leftedge, screen.GetHeight() - lineheight * 2.5, text);
 
@@ -753,7 +753,7 @@ class OptionMenuItemBox : OptionMenuItem
 
 		return self;
 	}
-	
+
 	override int Draw(OptionMenuDescriptor desc, int ypos, int indent, bool selected)
 	{
 		w = int(inputw * CleanXfac);
@@ -870,7 +870,7 @@ class WolfNewPlayerMenu : NewPlayerMenu
 		else { generic = ExtendedOptionMenu(GenericOptionMenu.Draw(self, "ExtendedOptionMenu")); }
 
 		mPlayerDisplay.Drawer(false);
-		
+
 		int x = screen.GetWidth()/(CleanXfac_1*2) + PLAYERDISPLAY_X + PLAYERDISPLAY_W/2;
 		int y = PLAYERDISPLAY_Y + 5;
 		String str = Stringtable.Localize("$PLYRMNU_PRESSSPACE");
@@ -881,7 +881,7 @@ class WolfNewPlayerMenu : NewPlayerMenu
 
 		Menu.Drawer();
 	}
-	
+
 	override void Ticker()
 	{
 		if (generic) { generic.Ticker(); }
@@ -892,7 +892,7 @@ class WolfNewPlayerMenu : NewPlayerMenu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -932,7 +932,7 @@ class WolfJoystickConfigMenu : JoystickConfigMenu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -975,7 +975,7 @@ class WolfGameplayMenu : GameplayMenu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1018,7 +1018,7 @@ class WolfCompatibilityMenu : CompatibilityMenu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1058,7 +1058,7 @@ class WolfGLTextureGLOptions : GLTextureGLOptions
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1098,7 +1098,7 @@ class WolfReverbEdit : ReverbEdit
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1138,7 +1138,7 @@ class WolfReverbSelect : ReverbSelect
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1178,7 +1178,7 @@ class WolfReverbSave : ReverbSave
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1215,7 +1215,7 @@ class WolfColorPickerMenu : ColorPickerMenu
 
 		if (h > fh) h = fh;
 		else if (h < 4) return;	// no space to draw it.
-		
+
 		int indent = (screen.GetWidth() / 2);
 		int p = 0;
 
@@ -1229,7 +1229,7 @@ class WolfColorPickerMenu : ColorPickerMenu
 			for (x1 = 0; x1 < 16; ++x1)
 			{
 				screen.Clear (box_x, box_y, box_x + w, box_y + h, 0, p);
-				if ((mDesc.mSelectedItem == mStartItem+7) && 
+				if ((mDesc.mSelectedItem == mStartItem+7) &&
 					(/*p == CurrColorIndex ||*/ (i == mGridPosY && x1 == mGridPosX)))
 				{
 					int r, g, b;
@@ -1282,7 +1282,7 @@ class WolfColorPickerMenu : ColorPickerMenu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 
@@ -1322,7 +1322,7 @@ class WolfOS_Menu : OS_Menu
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (generic) { return generic.MenuEvent(mkey, fromcontroller); }
-		
+
 		return Super.MenuEvent(mkey, fromcontroller);
 	}
 

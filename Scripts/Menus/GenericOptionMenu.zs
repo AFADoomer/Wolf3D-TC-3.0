@@ -127,7 +127,7 @@ class GenericOptionMenu : OptionMenu
 
 		int x = left;
 		int y = (scrolltop ? scrolltop : OptionMenuSettings.mLinespacing * 4 / 3) + OptionMenuSettings.mLinespacing;
-		
+
 		if (mDesc.mTitle.Length() * scale)
 		{
 			Menu parent = mParentMenu;
@@ -183,7 +183,7 @@ class GenericOptionMenu : OptionMenu
 			ItemInfo info = DrawItemType(mDesc.mItems[i], x, y, indent, fnt, mDesc.mSelectedItem == i, scale);
 
 			if (info)
-			{ 
+			{
 				y += info.height;
 				if (y <= lastrow) { r = i; }
 			}
@@ -319,7 +319,7 @@ class GenericOptionMenu : OptionMenu
 					item.menu == GetCurrentMenu() &&
 					y >= item.y && y <= item.y + item.height &&
 					x >= item.x && x <= item.valueright &&
-					!item.item.isGrayed() && 
+					!item.item.isGrayed() &&
 					!(item.item is "OptionMenuItemPlayerColorSlider" && players[consoleplayer].GetColorSet() > -1)
 				)
 				{
@@ -397,7 +397,7 @@ class GenericOptionMenu : OptionMenu
 		else { breakwidth = int(breakwidth / CleanXfac_1 * scale.x); }
 
 		int fontheight = int(fnt.GetHeight() * CleanYfac_1 * scale.y);
-		
+
 		int height = 0;
 		int overlay = grayed ? Color(128, 64, 64, 64) : 0;
 
@@ -432,7 +432,7 @@ class GenericOptionMenu : OptionMenu
 			handlesize.x *= CleanXfac_1;
 			handlesize.y *= CleanYfac_1;
 		}
-		
+
 		x += int(spacing + size.x / 2);
 
 		String formater;
@@ -578,7 +578,7 @@ class GenericOptionMenu : OptionMenu
 
 		if (this is "os_AnyOrAllOption")
 		{
-			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, ValueColor(), this.isGrayed(), scale:scale), height);	
+			height = max(DrawValue(text, x + fnt.StringWidth(label), y, spacing, fnt, ValueColor(), this.isGrayed(), scale:scale), height);
 		}
 		else
 		{
@@ -595,13 +595,13 @@ class GenericOptionMenu : OptionMenu
 		ItemInfo info = MenuHandler.FindItem(this);
 		info.x = x;
 		info.y = y;
-		
+
 		bool grayed = this.IsGrayed();
 		if (this is "OptionMenuItemPlayerColorSlider" && players[consoleplayer].GetColorSet() > -1) { grayed = true; }
-		
+
 		String label = Stringtable.Localize(this.mLabel);
 		int height = DrawOptionText(label, x, y, fnt, SelectionColor(isSelected), grayed, 1.0, breakwidth);
-		
+
 		info.valueleft = x + spacing;
 
 		if (this is "OptionMenuItemScaleSlider")
@@ -658,7 +658,7 @@ class GenericOptionMenu : OptionMenu
 		info.height = DrawOptionText(label, x, y, fnt, TitleColor(), this.IsGrayed());
 		info.width = OptionWidth(label, fnt);
 		info.valueleft = info.valueright = x + info.width;
-		
+
 		return info;
 	}
 
@@ -924,11 +924,11 @@ class GenericOptionMenuItemColorPicker : OptionMenuItemColorPicker
 		if (mCVar != null)
 		{
 			Menu.MenuSound("menu/choose");
-			
+
 			// This code is a bit complicated because it should allow subclassing the
 			// colorpicker menu.
 			// New color pickers must inherit from the internal one to work here.
-			
+
 			let desc = MenuDescriptor.GetDescriptor('ColorpickerMenu');
 			if (desc != NULL && (desc.mClass == null || desc.mClass is "ColorPickerMenu"))
 			{
@@ -955,7 +955,7 @@ class GenericNewPlayerMenu : NewPlayerMenu
 		GenericOptionMenu.Draw(self, "GenericOptionMenu", 20, 20, Font.GetFont("BigFont"));
 
 		mPlayerDisplay.Drawer(false);
-		
+
 		int x = screen.GetWidth()/(CleanXfac_1*2) + PLAYERDISPLAY_X + PLAYERDISPLAY_W/2;
 		int y = PLAYERDISPLAY_Y + PLAYERDISPLAY_H + 5;
 		String str = Stringtable.Localize("$PLYRMNU_PRESSSPACE");
@@ -1043,7 +1043,7 @@ class GenericColorPickerMenu : ColorPickerMenu
 
 		if (h > fh) h = fh;
 		else if (h < 4) return;	// no space to draw it.
-		
+
 		int indent = (screen.GetWidth() / 2);
 		int p = 0;
 
@@ -1057,7 +1057,7 @@ class GenericColorPickerMenu : ColorPickerMenu
 			for (x1 = 0; x1 < 16; ++x1)
 			{
 				screen.Clear (box_x, box_y, box_x + w, box_y + h, 0, p);
-				if ((mDesc.mSelectedItem == mStartItem+7) && 
+				if ((mDesc.mSelectedItem == mStartItem+7) &&
 					(/*p == CurrColorIndex ||*/ (i == mGridPosY && x1 == mGridPosX)))
 				{
 					int r, g, b;

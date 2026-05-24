@@ -179,7 +179,7 @@ class ClassicStats : DoomStatusScreen
 		{
 			acceleratestage = 0;
 			sp_state = 11;
-			
+
 			bonus = timeleft * PAR_AMOUNT;
 
 			if (multiplayer)
@@ -265,7 +265,7 @@ class ClassicStats : DoomStatusScreen
 			for (int i = 0; i < MAXPLAYERS; i++)
 			{
 				if (!playeringame[i]) { continue; }
-				
+
 				if (deathmatch) { UpdateCounter(cnt_deaths[i], player_deaths[i], 0, p:i); }
 				else { UpdateCounter(cnt_secret[i], multiplayer ? Plrs[i].ssecret : stats.secretcount, style == normal ? stats.totalsecrets : 0, p:i); }
 			}
@@ -281,7 +281,7 @@ class ClassicStats : DoomStatusScreen
 				for (int i = 0; i < MAXPLAYERS; i++)
 				{
 					if (!playeringame[i]) { continue; }
-				
+
 					UpdateCounter(cnt_items[i], multiplayer ? Plrs[i].sitems : stats.itemcount, style == normal ? stats.totalitems : 0, p:i);
 				}
 			}
@@ -293,7 +293,7 @@ class ClassicStats : DoomStatusScreen
 				for (int i = 0; i < MAXPLAYERS; i++)
 				{
 					if (!playeringame[i]) { continue; }
-				
+
 					AddPoints(bonus, i);
 				}
 
@@ -376,13 +376,13 @@ class ClassicStats : DoomStatusScreen
 	void UpdateCounter(out int current, int count, int max = 0, int step = 2, int freq = 5, int p = -1)
 	{
 		if (p == -1) { p = me; }
-		
+
 		if (intermissioncounter)
 		{
 			if (count)
 			{
 				current += step;
-				
+
 				if (!(bcnt % freq)) { PlaySound("stats/bonuscount"); }
 			}
 			else { current = 0; }
@@ -453,7 +453,7 @@ class ClassicStats : DoomStatusScreen
 				WriteTime(26, 10, Plrs[me].stime);
 
 				if (info.partime > 0)
-				{ 
+				{
 					Write(24, 12, "$STATS_PAR", right);
 					WriteTime(26, 12, info.partime * GameTicRate, true);
 				}
@@ -584,8 +584,8 @@ class ClassicStats : DoomStatusScreen
 		ClassicFont = Font.GetFont("WOLFNUM");
 
 		Breathe[0] = TexMan.CheckForTexture("BREATHE0", TexMan.Type_Any);
-		Breathe[1] = TexMan.CheckForTexture("BREATHE1", TexMan.Type_Any); 
-		BJFinal =  TexMan.CheckForTexture("BJFinal", TexMan.Type_Any); 
+		Breathe[1] = TexMan.CheckForTexture("BREATHE1", TexMan.Type_Any);
+		BJFinal =  TexMan.CheckForTexture("BJFinal", TexMan.Type_Any);
 
 		points = GetScore();
 		lives = LifeHandler.GetLives(players[me].mo);
@@ -607,7 +607,7 @@ class ClassicStats : DoomStatusScreen
 		int levelnum = info.levelnum % 100;
 
 		if (wbs.next == "") { style = finale; }
-		else if 
+		else if
 		(
 			(Game.IsSoD() && levelnum > 18) ||
 			(info.levelnum > 100 && levelnum == 10)
@@ -659,8 +659,8 @@ class ClassicStats : DoomStatusScreen
 	override void Ticker(void)
 	{
 		// counter for general background animation
-		bcnt++;  
-	
+		bcnt++;
+
 		if (bcnt == 1)
 		{
 			GameHandler.ChangeMusic("ENDLEVEL");
@@ -671,7 +671,7 @@ class ClassicStats : DoomStatusScreen
 			case StatCount:
 				updateStats();
 				break;
-		
+
 			case NoState:
 				updateNoState();
 				break;
@@ -752,14 +752,14 @@ class ClassicStats : DoomStatusScreen
 		int datacolwidth;
 		if (deathmatch) { datacolwidth = max(titlefont.StringWidth(text_deaths), titlefont.StringWidth(text_frags)) * scale; }
 		else { datacolwidth = displayfont.StringWidth("0000") * scale; }
-		
+
 		int maxnamewidth, maxscorewidth, maxiconheight;
 		[maxnamewidth, maxscorewidth, maxiconheight] = GetPlayerWidths();
-			
+
 		TextureID readyico = TexMan.CheckForTexture("Graphics/ReadySmall.png", TexMan.Type_Any);
 		Vector2 readysize = TexMan.GetScaledSize(readyico) * scale;
 		Vector2 readyoffset = TexMan.GetScaledOffset(readyico) * scale;
-		
+
 		maxnamewidth = w - datacolwidth * (deathmatch ? 2 : 3) - xpadding * 2 - readysize.x;
 		maxscorewidth = max(maxscorewidth, readysize.x);
 

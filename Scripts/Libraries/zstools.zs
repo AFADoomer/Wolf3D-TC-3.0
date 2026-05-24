@@ -77,7 +77,7 @@ class ZScriptTools
 			case 0x000C:
 			case 0x000D:
 			case 0x0020:
-			case 0x0085: 
+			case 0x0085:
 			case 0x00A0:
 			case 0x1680:
 			case 0x2000:
@@ -342,7 +342,7 @@ class ZScriptTools
 		input = input.MakeUpper();
 
 		for (uint i = 0; i < input.Length(); i++)
-		{		
+		{
 			int index = input.Mid(i, 1).ToInt();
 
 			if (!(input.Mid(i, 1) == "0") && !index)
@@ -445,7 +445,7 @@ class ZScriptTools
 				(current.v1.p.x > mo.pos.x + radius && current.v2.p.x > mo.pos.x + radius) ||
 				(current.v1.p.x < mo.pos.x - radius && current.v2.p.x < mo.pos.x - radius) ||
 				(current.v1.p.y > mo.pos.y + radius && current.v2.p.y > mo.pos.y + radius) ||
-				(current.v1.p.y < mo.pos.y - radius && current.v2.p.y < mo.pos.y - radius) 
+				(current.v1.p.y < mo.pos.y - radius && current.v2.p.y < mo.pos.y - radius)
 			) { continue; }
 
 			// Find the line that is closest to the actor's center point
@@ -460,7 +460,7 @@ class ZScriptTools
 			}
 		}
 
-		return linedef, dist, projection;		
+		return linedef, dist, projection;
 	}
 
 	play static Line AlignToLine(Actor mo, double offsetamount = 0.1)

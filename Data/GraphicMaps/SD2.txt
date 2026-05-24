@@ -1,7 +1,7 @@
 SD2
 {
 	Palette = "Spear.pal";
-	
+
 	Textures
 	{
 		"Patches/Walls/WALL2000.png";
@@ -132,65 +132,65 @@ SD2
 		"Patches/Walls/WALL2125.png";
 
 		126
-		{	
+		{
 			"Patches/Walls/WALL2126.png";
 			"WLF2DORA" { Flip; }
 			"WLF2DORA" { Flip; }
 			"WLF2DORC";
 			"WLF2DORC";
 		}
-				
+
 		127
-		{	
+		{
 			"Patches/Walls/WALL2127.png";
 			"WLF2DORB";
 			"WLF2DORB";
 			"WLF2DORD" { Flip; }
 			"WLF2DORD" { Flip; }
-			
+
 		}
-				
+
 		128
-		{	
+		{
 			"Patches/Walls/WALL2128.png";
 			"WLF2JMBA";
 			"WLF2JMBA";
 			"WLF2JMBC" { Flip; }
 			"WLF2JMBC" { Flip; }
-			
+
 		}
-				
-		129	
-		{	
+
+		129
+		{
 			"Patches/Walls/WALL2129.png";
 			"WLF2JMBB";
 			"WLF2JMBB";
 			"WLF2JMBD" { Flip; }
 			"WLF2JMBD" { Flip; }
-			
+
 		}
-				
+
 		130
-		{	
+		{
 			"Patches/Walls/WALL2130.png";
 			"WLF2ELEA" { Flip; }
 			"WLF2ELEA" { Flip; }
 			"WLF2ELEC";
 			"WLF2ELEC";
 		}
-				
+
 		131
-		{	
+		{
 			"Patches/Walls/WALL2131.png";
 			"WLF2ELEB";
 			"WLF2ELEB";
 			"WLF2ELED" { Flip; }
 			"WLF2ELED" { Flip; }
-			
+
 		}
-				
+
 		132
-		{	
+		{
 			"Patches/Walls/WALL2132.png";
 			"WLF2LK1A" { Flip; }
 			"WLF2LK1A" { Flip; }
@@ -201,9 +201,9 @@ SD2
 			"WLF2LK2C";
 			"WLF2LK2C";
 		}
-				
+
 		133
-		{	
+		{
 			"Patches/Walls/WALL2133.png";
 			"WLF2LK1B";
 			"WLF2LK1B";
@@ -213,6 +213,6 @@ SD2
 			"WLF2LK2B";
 			"WLF2LK2D" { Flip; }
 			"WLF2LK2D" { Flip; }
-		}	
+		}
 	}
 }

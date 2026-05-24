@@ -25,20 +25,20 @@
   ListMenu extension that allows for menus in the style of Wolf3D's episode and
   skill selection screens.
 
-  This code implements two new ListItem classes: 
+  This code implements two new ListItem classes:
 	IconListMenu
-	- Adds an image to the left of each menu entry, resulting in a menu that 
+	- Adds an image to the left of each menu entry, resulting in a menu that
 	  looks similar to the Wolf3D episode selection menu
 	- Also handles automatically offsetting the selection cursor
 
 	StaticIconListMenu
-	- Adds an image to the center-right of the entire menu, similar to the one 
+	- Adds an image to the center-right of the entire menu, similar to the one
 	  seen on the Wolf3D skill selection menu
 	- Automatically calculates position and offsets based on the number and size
 	  of the entries in the menu
 
-  Both of these classes also add the ability to cause menu entries to generate a 
-  popup message similar to Wolf3D shareware's "Click Read This to find out how to 
+  Both of these classes also add the ability to cause menu entries to generate a
+  popup message similar to Wolf3D shareware's "Click Read This to find out how to
   order" message.
 
   To use these classes, they must be set up in MENUDEF by setting the class of
@@ -59,31 +59,31 @@
 		}
 
   Once this is done, you must add the appropriate images and/or LANGUAGE lump
-  entries to your mod. Note that if your image is taller than one line of the 
+  entries to your mod. Note that if your image is taller than one line of the
   menu font's text, you will also need to adjust Linespacing in MENUDEFS, since
-  Episode properties aren't exported to ZScript (yet?). 
+  Episode properties aren't exported to ZScript (yet?).
 
   All additional menu content must follows a specific naming convention!
 
   The name of the menu (with "Menu" removed from the end) is used as the base
   of all lookup strings (So, "Episode", "Skill", etc.).  The number of the menu
-  item (1st item is 1, 2nd item is 2, etc.) is used as the index (this also 
+  item (1st item is 1, 2nd item is 2, etc.) is used as the index (this also
   means that if you re-order your menu items, you'll need to rename your images
   and LANGUAGE entries as well).
 
     Lookup Strings Used:
-	Icon Images (Texture name lookup):	
+	Icon Images (Texture name lookup):
 	[Lookup Base][index] 	   	Example: EPISODE1, SKILL2, etc.
 
 	Popup Text (LANGUAGE lookup):
 	[Lookup Base][index]MESSAGE	Example: EPISODE1MESSAGE, SKILL5MESSAGE
 
-  Images will automatically be used if they are present.  If you do not 
-  provide an image or string for a menu item, then the menu entry will appear 
-  as it normally would in a standard ListMenu (though spacing and offsets may 
+  Images will automatically be used if they are present.  If you do not
+  provide an image or string for a menu item, then the menu entry will appear
+  as it normally would in a standard ListMenu (though spacing and offsets may
   still be affected if other icons are present).
 
-  Popup messages are handled slightly differently.  In order to set up a popup 
+  Popup messages are handled slightly differently.  In order to set up a popup
   message, you must add "[Optional]" to the beginning of your episode's name
   in MAPINFO:
 
@@ -92,11 +92,11 @@
 			name = "[Optional]The Clash of Faith"
 		}
 
-  The "[Optional]" portion of the name will be stripped off when the episode 
+  The "[Optional]" portion of the name will be stripped off when the episode
   select screen is rendered, but is used as a flag internally by this code.
 
-  If you add "[Optional]" to the episode name but do not include an 
-  EPISODExMESSAGE string in LANGUAGE, the code will attempt to look up the 
+  If you add "[Optional]" to the episode name but do not include an
+  EPISODExMESSAGE string in LANGUAGE, the code will attempt to look up the
   SWSTRING string as a fallback.  If that string is empty, no message will be
   displayed.
 
@@ -315,7 +315,7 @@ class ExtendedListMenu : ListMenu
 					else
 					{
 						let itemaction = mDesc.mItems[mDesc.mSelectedItem].GetAction();
-						
+
 						if (itemaction && itemaction == "PlayerclassMenu" && multiplayer)
 						{
 							String message = "$NEWGAME";
@@ -408,7 +408,7 @@ class ExtendedListMenu : ListMenu
 			filecheck = "";
 
 			if (
-				mDesc.mItems[i] is "ListMenuItemTextItem" && 
+				mDesc.mItems[i] is "ListMenuItemTextItem" &&
 				(
 					mDesc.mItems[i].GetAction() == "SkillMenu" ||
 					"" .. mDesc.mItems[i].GetAction() == ""
@@ -591,7 +591,7 @@ class IconListMenu : ExtendedListMenu
 
 					// Use the center of the image for positioning
 					drawx -= texsize.x / 2;
-					drawy -= texsize.y / 2; 
+					drawy -= texsize.y / 2;
 
 					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, 1.0);
 				}
@@ -905,7 +905,7 @@ class StaticIconListMenu : ExtendedListMenu
 
 		double fontheight = mDesc.mFont.GetHeight();
 
-		int itemindex = 1;	
+		int itemindex = 1;
 		for (int i = 0; i < index; i++)
 		{
 			if (mDesc.mItems[i].Selectable())
@@ -920,14 +920,14 @@ class StaticIconListMenu : ExtendedListMenu
 		{
 			Vector2 texsize = TexMan.GetScaledSize(tex);
 
-			// Default to Wolf3D-style positioning, roughly vertically centered on the skill list, 
+			// Default to Wolf3D-style positioning, roughly vertically centered on the skill list,
 			//  horizontally centered between the screen edge and the longest of the middle skill names.
 			if (x == -1) { x = (320 + iconOffset) / 2; }
 			if (y == -1) { y = mDesc.mYpos + (listsize * mDesc.mLinespacing) / 2 - 4; }
 
 			// Use the center of the image for positioning
 			x -= texsize.x / 2;
-			y -= texsize.y / 2; 
+			y -= texsize.y / 2;
 
 			screen.DrawTexture(tex, false, x, y, DTA_Clean, true, DTA_Alpha, alpha);
 		}
@@ -1099,7 +1099,7 @@ class ExtendedSaveMenu : SaveMenu
 		fadetarget = gametic;
 		fadealpha = 1.0;
 		fadecolor = Game.GetFadeColor(self);
-		
+
 		GameHandler.ChangeMusic("WONDERIN");
 	}
 
@@ -1186,7 +1186,7 @@ class ExtendedSaveMenu : SaveMenu
 		}
 		return Super.OnUIEvent(ev);
 	}
-	
+
 	override bool MenuEvent (int mkey, bool fromcontroller)
 	{
 		if (Super.MenuEvent(mkey, fromcontroller))
@@ -1249,7 +1249,7 @@ class ListMenuItemBox : ListMenuItem
 		inputh = height;
 		yoffset = offset;
 	}
-	
+
 	override void Drawer(bool selected)
 	{
 		w = int(inputw * CleanXfac);
@@ -1274,10 +1274,10 @@ class ListMenuItemBox : ListMenuItem
 				(
 					ListMenu(current) &&
 					ListMenu(current).mDesc.mMenuName == "Mainmenu"
-				) || 
+				) ||
 				(
 					current is "MessageBoxMenu" &&
-					ListMenu(current.mParentMenu) && 
+					ListMenu(current.mParentMenu) &&
 					ListMenu(current.mParentMenu).mDesc.mMenuName == "Mainmenu"
 				)
 			) { h -= 13 * CleanYfac; }
@@ -1396,23 +1396,23 @@ class ListMenuItemWolfTextItem : ListMenuItem
 	{
 		return mEnabled && y >= mYpos && y < mYpos + mHeight;	// no x check here
 	}
-	
+
 	override bool Selectable()
 	{
 		return mEnabled;
 	}
 
 	override bool CheckHotkey(int c)
-	{ 
+	{
 		return c > 0 && c == mHotkey;
 	}
-	
+
 	override bool Activate()
 	{
 		Menu.SetMenu(mAction, mParam);
 		return true;
 	}
-	
+
 	override bool MouseEvent(int type, int x, int y)
 	{
 		if (type == Menu.MOUSE_Release)
@@ -1425,7 +1425,7 @@ class ListMenuItemWolfTextItem : ListMenuItem
 		}
 		return false;
 	}
-	
+
 	override Name, int GetAction()
 	{
 		return mAction, mParam;
@@ -1435,10 +1435,10 @@ class ListMenuItemWolfTextItem : ListMenuItem
 	{
 		screen.DrawText(mFont, selected ? mColorSelected : mColor, mXpos, mYpos, mText, DTA_Clean, true, DTA_Alpha, alpha);
 	}
-	
+
 	override int GetWidth()
 	{
-		return max(1, mFont.StringWidth(StringTable.Localize(mText))); 
+		return max(1, mFont.StringWidth(StringTable.Localize(mText)));
 	}
 
 	override void OnMenuCreated()
@@ -1454,7 +1454,7 @@ class ListMenuItemWolfTextItem : ListMenuItem
 			mEnabled =	(mSoD == 1 && Game.IsSoD()) ||
 						(!mSoD && !Game.IsSoD());
 		}
-		
+
 		AllocateSpace();
 	}
 
@@ -1476,7 +1476,7 @@ class ListMenuItemWolfTextItem : ListMenuItem
 			}
 			else
 			{
-				descriptor.mItems[i].mYpos = descriptor.mItems[lastenabled].mYpos + mHeight * (i - index) + mHeight * mEnabled; 
+				descriptor.mItems[i].mYpos = descriptor.mItems[lastenabled].mYpos + mHeight * (i - index) + mHeight * mEnabled;
 			}
 		}
 	}
@@ -1504,7 +1504,7 @@ class ListMenuItemWolfMPTextItem : ListMenuItemWolfTextItem
 	override void OnMenuCreated()
 	{
 		mEnabled = 	multiplayer;
-		
+
 		AllocateSpace();
 	}
 }

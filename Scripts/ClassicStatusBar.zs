@@ -56,7 +56,7 @@ class WidgetStatusBar : BaseStatusBar
 
 		int hudratio = hudratiovar.GetInt();
 		double ratio;
-		
+
 		switch (hudratio)
 		{
 			// These match the built-in ratios currently defined in the ForceRatios option value
@@ -175,7 +175,7 @@ class WidgetStatusBar : BaseStatusBar
 		TextureID texture;
 		Vector2 applyscale;
 		[texture, applyscale] = GetIcon(item, flags, false);
-		
+
 		if (texture.IsValid())
 		{
 			if ((flags & DI_DIMDEPLETED) && item.Amount <= 0) flags |= DI_DIM;
@@ -426,7 +426,7 @@ class ClassicStatusBar : WidgetStatusBar
 	static bool CheckFizzle(Actor caller)
 	{
 		if (multiplayer) { return false; } // Always skip this check in multiplayer to avoid desynchs
-		
+
 		if (!StatusBar || !ClassicStatusBar(StatusBar) || !StatusBar.CPlayer || !StatusBar.CPlayer.mo || StatusBar.CPlayer.mo != caller) { return false; }
 
 		return ClassicStatusBar(StatusBar).fizzleeffect;
@@ -589,7 +589,7 @@ class ClassicStatusBar : WidgetStatusBar
 		{
 			levelnum = levelnum % 10;
 			if (levelnum == 0) { levelnum = 10; }
-			
+
 			levelnumstring = String.Format("%i", levelnum);
 		}
 
@@ -617,9 +617,9 @@ class ClassicStatusBar : WidgetStatusBar
 		for (int kt = 0; kt < Key.GetKeyTypeCount(); kt++)
 		{
 			let keytype = Key.GetKeyType(kt);
-			let key = GetDefaultByType(keytype); 
+			let key = GetDefaultByType(keytype);
 			if (
-				keytype.IsAbstract() || 
+				keytype.IsAbstract() ||
 				handler.keys.Find(keytype) == handler.keys.Size() ||
 				!key.icon ||
 				!key.icon.IsValid()
@@ -706,7 +706,7 @@ class ClassicStatusBar : WidgetStatusBar
 
 		let keytype = Key.GetKeyType(k);
 		if (!keytype) { return; }
-		
+
 		let key = CPlayer.mo.FindInventory(keytype);
 		if (!key) { return; }
 
@@ -770,7 +770,7 @@ class ClassicStatusBar : WidgetStatusBar
 					mugshot = face .. "GOD" .. index;
 				}
 			}
-	
+
 			if (!mugshot.length())
 			{
 				switch (type)
@@ -803,7 +803,7 @@ class ClassicStatusBar : WidgetStatusBar
 			}
 		}
 
-		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any); 
+		return TexMan.CheckForTexture(mugshot, TexMan.Type_Any);
 	}
 
 	override Ammo, Ammo, int, int GetWeaponAmmo()
@@ -1076,7 +1076,7 @@ class ClassicStatusBar : WidgetStatusBar
 				console.printfex(PRINT_LOG, outline);
 			}
 
-			processed = true; 
+			processed = true;
 		}
 
 		return processed;

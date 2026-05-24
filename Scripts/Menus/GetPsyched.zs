@@ -61,9 +61,9 @@ class WolfMenu : GenericMenu
 					(ev.type == UIEvent.Type_LButtonDown && keys[i] == "Mouse1") ||
 					(ev.type == UIEvent.Type_RButtonDown && keys[i] == "Mouse2") ||
 					(ev.type == UIEvent.Type_MButtonDown && keys[i] == "Mouse3") ||
-					(ev.type == UIEvent.Type_WheelUp && keys[i] == "MWheelUp") || 
-					(ev.type == UIEvent.Type_WheelDown && keys[i] == "MWheelDown") || 
-					(ev.type == UIEvent.Type_WheelLeft && keys[i] == "MWheelLeft") || 
+					(ev.type == UIEvent.Type_WheelUp && keys[i] == "MWheelUp") ||
+					(ev.type == UIEvent.Type_WheelDown && keys[i] == "MWheelDown") ||
+					(ev.type == UIEvent.Type_WheelLeft && keys[i] == "MWheelLeft") ||
 					(ev.type == UIEvent.Type_WheelRight && keys[i] == "MWheelRight") ||
 					(ev.keychar == UIEvent.Key_PgDn && keys[i] == "PgDn") ||
 					(ev.keychar == UIEvent.Key_PgUp && keys[i] == "PgUp") ||

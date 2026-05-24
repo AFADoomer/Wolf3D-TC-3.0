@@ -1611,7 +1611,7 @@ Texture M_SEL2, 24, 16 { Patch WVGA0012, 0, 0 }
 Texture M_CNTRLS, 104, 16 { Patch WVGA0018, 0, 0 }
 Texture "M_OPTIONS", 152, 48
 {
-	Patch WVGA0010, 0, 0 
+	Patch WVGA0010, 0, 0
 	Patch WVGA0026, 0, 0
 }
 Texture M_CUSTOM, 152, 48 { Patch WVGA0027, 0, 0 }
@@ -1623,9 +1623,9 @@ Texture M_SELCT1, 24, 8 { Patch WVGA0014, 0, 0 }
 // Title Sequence
 Texture TITLEPIC, 320, 200 { Patch WVGA0087, 0, 0 }
 Texture STITLEPI, 320, 200 { Graphic "Graphics/Title/SpearTitle.png", 0, 0 }
-Texture SDTITLEP, 320, 200 
+Texture SDTITLEP, 320, 200
 {
-	Graphic "Graphics/Title/SpearTitle.png", 0, 0 
+	Graphic "Graphics/Title/SpearTitle.png", 0, 0
 	Patch "Patches/Title/SoDDemoTitle.png", 0, 0
 }
 

@@ -108,7 +108,7 @@ class ParsedValue
 		{
 			c = clr.ToInt();
 		}
-		
+
 		c %= 0x1000000;
 
 		int r = c / 0x10000;
@@ -134,7 +134,7 @@ class ParsedValue
 			GetRange(list, output);
 			return;
 		}
-		
+
 		for (int r = 0; r < temp.Size(); r++)
 		{
 			GetRange(temp[r], output);
@@ -152,7 +152,7 @@ class ParsedValue
 			output.Push(GetInteger(range));
 			return;
 		}
-		
+
 		int start = GetInteger(temp[0]);
 		int end = GetInteger(temp[1]);
 
@@ -164,7 +164,7 @@ class ParsedValue
 		val = ZScriptTools.Trim(val);
 
 		if (val.Left(2) ~== "0x") { return ZScriptTools.HexStrToInt(val.Mid(2)); }
-		
+
 		return val.ToInt();
 	}
 

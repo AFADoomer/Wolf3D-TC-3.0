@@ -2,7 +2,7 @@ class PolyobjectEffector: Thinker abstract
 {
   // Base abstract class for Polyobject Effectors
   // Polyobject Effectors affect how a polyobject behaves.
-  // Polyobject Effectors contain a pointer to the next Effector of a polyobject, 
+  // Polyobject Effectors contain a pointer to the next Effector of a polyobject,
   // forming a circular linked list.
   // To add an effector to a polyobject, call AddEffector() on a PolyobjectHandle.
   // To remove an effector, simply call Destroy() on it.

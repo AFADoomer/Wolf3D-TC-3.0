@@ -352,7 +352,7 @@ HardwareShader Sprite "WTRKA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Te
 HardwareShader Sprite "TRECI0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 HardwareShader Sprite "WMAPA0" { Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 
-/// Lost Episodes 
+/// Lost Episodes
 HardwareShader Sprite "BAR3A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 HardwareShader Sprite "TAB3A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/Auto.png" }
 HardwareShader Sprite "LIT2A0" {Shader "Shaders/Shadows.fp" DisableAlphaTest Texture shadow "Materials/Shadows/LIT2A0.png" }

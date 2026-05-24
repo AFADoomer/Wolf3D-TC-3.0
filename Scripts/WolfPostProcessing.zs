@@ -29,7 +29,7 @@ class WolfPostProcessor : LevelPostProcessor
 	{
 		bool darken;
 
-		// Bare-bones compatibility with Relighting mod...  Darken the maps so that 
+		// Bare-bones compatibility with Relighting mod...  Darken the maps so that
 		// the dynamic lights show up and the mod has some chance of working properly
 		darken = Wads.CheckNumForFullName("zscript/hd_relighting.zs") > -1;
 
@@ -47,7 +47,7 @@ class WolfPostProcessor : LevelPostProcessor
 				let ln = level.lines[l];
 
 				if (!ln) { continue; }
-				
+
 				// Translate older ACS script call "locks" to actual line locknumber
 				if (ln.special == 226 && (ln.args[0] == 1 || ln.args[0] == 2))
 				{
@@ -72,7 +72,7 @@ class WolfPostProcessor : LevelPostProcessor
 					) &&
 					ln.args[0] > 0 &&
 					!(ln.flags & Line.ML_TWOSIDED) &&
-					(ln.activation & SPAC_Cross) && 
+					(ln.activation & SPAC_Cross) &&
 					!(ln.activation & SPAC_Use)
 				)
 				{
@@ -101,8 +101,8 @@ class WolfPostProcessor : LevelPostProcessor
 		ParseActorTranslations(translations);
 		uint count = GetThingCount();
 		int g, temp;
-		[temp, g] = Game.IsSod(); 
-	
+		[temp, g] = Game.IsSod();
+
 		for (uint i = 0; i < count; i++)
 		{
 			uint e = GetThingEdNum(i);
@@ -132,11 +132,11 @@ class WolfPostProcessor : LevelPostProcessor
 		if (handler && level.mapname ~== "Level")
 		{
 			if (!handler.queuedmap) { handler.queuedmap = handler.parsedmaps.GetMapData("Wolf3D TC Test"); }
-			
+
 			if (handler.queuedmap)
 			{
-				// Make sure that lines that will be exposed to the player face the 
-				// inside of the map (so that all animated switches work properly) 
+				// Make sure that lines that will be exposed to the player face the
+				// inside of the map (so that all animated switches work properly)
 				for (int l = 0; l < level.lines.Size(); l++)
 				{
 					Line ln = level.lines[l];
@@ -148,7 +148,7 @@ class WolfPostProcessor : LevelPostProcessor
 					if (!ln.delta.y)
 					{
 						if (ln.v1.p.x > ln.v2.p.x) { y1 -= 32; y2 += 32; }
-						else if (ln.v1.p.x < ln.v2.p.x) { y1 += 32; y2 -= 32; }	
+						else if (ln.v1.p.x < ln.v2.p.x) { y1 += 32; y2 -= 32; }
 					}
 					else if (!ln.delta.x)
 					{

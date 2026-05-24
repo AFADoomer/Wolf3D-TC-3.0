@@ -21,8 +21,8 @@
  */
 
 // Use an overlay texture to alpha mask an existing texture
-//  Used to transform Wolf3D sprite shadows into translucent pixels so that they 
-//  map onto any surface/floor texture, not just the original flat gray.  
+//  Used to transform Wolf3D sprite shadows into translucent pixels so that they
+//  map onto any surface/floor texture, not just the original flat gray.
 
 // Mac shadow color approximation
 //const vec4 shadowcolor = vec4(0.23, 0.18, 0.09, 2.0);
@@ -30,7 +30,7 @@
 // PC shadow color
 const vec4 shadowcolor = vec4(0.0, 0.0, 0.0, 1.0);
 
-// Approximation of Wolf3D's lightest 'cast light' pixel color 
+// Approximation of Wolf3D's lightest 'cast light' pixel color
 const vec4 lightcolor = vec4(0.816, 0.816, 0.816, 0.816);
 
 const vec4 transparent = vec4(152.0 / 255, 0, 136.0 / 255, 1.0);
@@ -74,7 +74,7 @@ vec4 ProcessAlphaMap(inout Material material)
 
 	if (shadowmap.a == 0.0) { return color; }
 
-	// Calculate an alpha to approximate original shade/appearance on 
+	// Calculate an alpha to approximate original shade/appearance on
 	// the default Wolf3D floor color
 	float alpha = 2.0 * mix(0.0, 1.0, maxshade - shadowmap.r) * color.a;
 

@@ -64,7 +64,7 @@ class Widget ui
 			w = Widget(New(type));
 			w.widgetname = widgetname;
 			w.priority = priority;
-		
+
 			int insertat = WidgetStatusBar(StatusBar).widgets.Size();
 
 			for (int g = 0; g < insertat; g++)
@@ -103,7 +103,7 @@ class Widget ui
 	static Widget Find(String widgetname, int start = 0)
 	{
 		if (!WidgetStatusBar(StatusBar)) { return null; }
-		
+
 		for (int a = start; a < WidgetStatusBar(StatusBar).widgets.Size(); a++)
 		{
 			if (WidgetStatusBar(StatusBar).widgets[a].widgetname == widgetname) { return WidgetStatusBar(StatusBar).widgets[a]; }
@@ -129,7 +129,7 @@ class Widget ui
 	static Widget FindBase(int anchor, int priority)
 	{
 		if (!WidgetStatusBar(StatusBar)) { return null; }
-	
+
 		for (int a = 0; a < WidgetStatusBar(StatusBar).widgets.Size(); a++)
 		{
 			let w = WidgetStatusBar(StatusBar).widgets[a];
@@ -241,7 +241,7 @@ class Widget ui
 
 			if (anchor & WDG_BOTTOM && screenblocks < 11) { relpos.y += st_scale ? 55 : 22;	}
 			else { relpos.y += ypos; }
-			
+
 			pos.y = setpos.y + relpos.y;
 		}
 		else { pos.y = relpos.y; }
@@ -263,12 +263,12 @@ class Widget ui
 	virtual bool IsVisible()
 	{
 		if (
-			WidgetStatusBar(StatusBar) && 
-			WidgetStatusBar(StatusBar).barstate == StatusBar.HUD_Fullscreen && 
+			WidgetStatusBar(StatusBar) &&
+			WidgetStatusBar(StatusBar).barstate == StatusBar.HUD_Fullscreen &&
 			!automapactive &&
 			!hud_althud
 		) { return true; }
-		
+
 		return false;
 	}
 
@@ -475,7 +475,7 @@ class AmmoHealthWidget : Widget
 		//Armor
 		if (armor != null && armor.Amount > 0)
 		{
-			[texscale, texsize] = ZScriptTools.ScaleTextureTo(armor.icon, iconsize);	
+			[texscale, texsize] = ZScriptTools.ScaleTextureTo(armor.icon, iconsize);
 			DrawToHud.DrawTexture(armor.icon, (pos.x + 73, yoffset + iconsize / 2 - 1), alpha, desttexsize:texsize);
 			DrawToHud.DrawText(String.Format("%3i", StatusBar.GetArmorAmount()), (pos.x + size.x, yoffset), BigFont, alpha, shade:fontcolor, ZScriptTools.STR_RIGHT | ZScriptTools.STR_FIXEDWIDTH);
 		}
@@ -631,7 +631,7 @@ class ScoreWidget : Widget
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
 		ScoreWidget wdg = ScoreWidget(Widget.Init("ScoreWidget", widgetname, anchor, 0, priority, pos, zindex));
-		
+
 		if (wdg)
 		{
 			wdg.margin[2] = 3;
@@ -676,7 +676,7 @@ class InventoryWidget : Widget
 	override bool IsVisible()
 	{
 		if (screenblocks < 12) { return true; }
-		
+
 		return false;
 	}
 
@@ -868,7 +868,7 @@ class PuzzleItemWidget : Widget
 	static void Init(String widgetname, int anchor = 0, int priority = 0, Vector2 pos = (0, 0), int zindex = 0)
 	{
 		PuzzleItemWidget wdg = PuzzleItemWidget(Widget.Init("PuzzleItemWidget", widgetname, anchor, 0, priority, pos, zindex));
-				
+
 		if (wdg)
 		{
 			wdg.iconsize = 26;
@@ -889,7 +889,7 @@ class PuzzleItemWidget : Widget
 	override void DoTick(int index)
 	{
 		Vector2 hudscale = Statusbar.GetHudScale();
-		
+
 		if (screenblocks < 11)
 		{
 			maxrows = 6;
@@ -952,7 +952,7 @@ class AmmoWidget : Widget
 		ammotypes.Clear();
 
 		// Some logic adapted from the engine's alt_hud.zs here
-		for (int k = 0; k < PlayerPawn.NUM_WEAPON_SLOTS; k++) 
+		for (int k = 0; k < PlayerPawn.NUM_WEAPON_SLOTS; k++)
 		{
 			int slotsize = player.weapons.SlotSize(k);
 
@@ -1115,10 +1115,10 @@ class PositionWidget : Widget
 		{
 			String mapname = curmap ? curmap.mapname : level.mapname.MakeUpper();
 			DrawToHud.DrawText(mapname, (x + width - BigFont.StringWidth(mapname) * scale, y), BigFont, alpha, scale, shade:Font.CR_RED, flags:ZScriptTools.STR_TOP | ZScriptTools.STR_LEFT);
-			
+
 			y += int(BigFont.GetHeight() * scale);
 		}
-		
+
 		for (int i = 0; i < 3; y += height, ++i)
 		{
 			double v = i == 0 ? playerpos.x : i == 1 ? playerpos.y : playerpos.z;
@@ -1555,7 +1555,7 @@ class SingleLogWidget : LogWidget
 	override void DoTick(int index)
 	{
 		SetFont();
-	
+
 		if (messages.Size() > maxlines)
 		{
 			int delta = max(0, messages.Size() - maxlines);
@@ -1800,7 +1800,7 @@ class AutomapWidget : Widget
 		if (
 			automapactive
 		) { return true; }
-		
+
 		return false;
 	}
 
@@ -1862,7 +1862,7 @@ class AutomapWidget : Widget
 		}
 
 		String levelname;
-		
+
 		if (info) { levelname = StringTable.Localize(info.levelname, false); }
 		else if (curmap && level.mapname ~== "Level") { levelname = curmap.mapname; }
 		else { levelname = level.levelname; }

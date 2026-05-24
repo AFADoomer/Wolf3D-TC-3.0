@@ -690,7 +690,7 @@ class IntroSlideshow : WolfMenu
 
 			return true;
 		}
-	
+
 		return false;
 	}
 
@@ -715,7 +715,7 @@ class IntroSlideshow : WolfMenu
 
 				return false;
 			}
-			
+
 			return MenuEvent(MKEY_Enter, true);
 		}
 		else if (ev.type > UIEvent.Type_FirstMouseEvent)
@@ -810,7 +810,7 @@ class LoadScreen : IntroSlideShow
 		{
 			actiontick++;
 		}
-	
+
 		if (inputtic == gametic)
 		{
 			switch (curscreen)
@@ -886,7 +886,7 @@ class LoadScreen : IntroSlideShow
 			}
 			return true;
 		}
-	
+
 		return false;
 	}
 }
@@ -1036,7 +1036,7 @@ class HighScores : WolfMenu
 			let printit = mInput.GetText() .. ((gametic % 30 < 15) ? SmallFont.GetCursor() : "");
 			screen.DrawText (SmallFont, Font.FindFontColor("TrueWhite"), 32, 76 + 16 * inputindex, printit, DTA_320x200, true);
 		}
- 
+
 		screen.Dim(fadecolor, fadealpha, 0, 0, screen.GetWidth(), screen.GetHeight());
 	}
 
@@ -1133,16 +1133,16 @@ class HighScores : WolfMenu
 	String Encode(String s, int v = 0)
 	{
 		String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-		String r = ""; 
-		String p = ""; 
+		String r = "";
+		String p = "";
 		uint c = s.Length() % 3;
 
 		if (c)
 		{
 			for (; c < 3; c++)
-			{ 
-				p = p .. '='; 
-				s = s .. "\0"; 
+			{
+				p = p .. '=';
+				s = s .. "\0";
 			}
 		}
 
@@ -1160,8 +1160,8 @@ class HighScores : WolfMenu
 	{
 		String base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-		String p = (s.Mid(s.Length() - 1, 1) == '=' ? (s.Mid(s.Length() - 2, 1) == '=' ? "AA" : "A") : ""); 
-		String r = ""; 
+		String p = (s.Mid(s.Length() - 1, 1) == '=' ? (s.Mid(s.Length() - 2, 1) == '=' ? "AA" : "A") : "");
+		String r = "";
 		s = s.Mid(0, s.Length() - p.Length()) .. p;
 
 		for (uint c = 0; c < s.Length(); c += 4)
@@ -1281,7 +1281,7 @@ class TextScreenMenu : ExtendedOptionMenu
 	override bool MenuEvent(int mkey, bool fromcontroller)
 	{
 		// bool controlled = !!(self is "FinaleMenu" && multiplayer && !players[consoleplayer].settings_controller);
-		
+
 		// if (controlled) { return false; }
 
 		if (mkey == MKEY_Back)
@@ -1403,7 +1403,7 @@ class TextScreenMenu : ExtendedOptionMenu
 			{
 				screen.DrawText(NewSmallFont, Font.FindFontColor("Cyan"), padding.x + c - (NewSmallFont.StringWidth(num) * scale / 2), texty - 6, num, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
 				screen.DrawText(NewSmallFont, Font.FindFontColor("Purple"), padding.x + c - (NewSmallFont.StringWidth(gnum) * scale / 2), texty + 1, gnum, DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
-				
+
 			}
 			screen.DrawText(NewSmallFont, Font.FindFontColor("White"), padding.x + c - (NewSmallFont.StringWidth("╵") * scale / 2), texty + 7, "╵", DTA_320x200, true, DTA_ScaleX, scale, DTA_ScaleY, scale);
 		}
@@ -1488,7 +1488,7 @@ class MapMenu : TextScreenMenu
 	int h, w;
 
 	Font titlefont, textfont, captionfont;
-	
+
 	int contentheight;
 	int drawbottom;
 	int scrollpos, maxscroll, scrollamt;
@@ -1539,7 +1539,7 @@ class MapMenu : TextScreenMenu
 		padding = (4, 2);
 		topoffset = 40; // Hard-coding these to match the background image
 		bottomoffset = 62;
-		
+
 		// Set cell size for index entries
 		cellsize = (299, 12);
 
@@ -1583,10 +1583,10 @@ class MapMenu : TextScreenMenu
 				h.parent = parent;
 				if (h.parent.childrenhidden)
 				{
-					h.childrenhidden = true; 
+					h.childrenhidden = true;
 					h.hidden = true;
 				}
-				
+
 				h.path = String.Format("%s%s \c[Palette7E]> %s%s", h.defaultcolor, parent.path, h.defaultcolor, ZScriptTools.Trim(h.title));
 
 				if (parent) { parent.children.Push(h); }
@@ -1614,7 +1614,7 @@ class MapMenu : TextScreenMenu
 	void CalculatePositions()
 	{
 		scale = (CleanXFac, CleanYFac);
-		
+
 		// Calculate the usable content area bounds
 		contentheight = int(h - 2 * padding.y - topoffset - bottomoffset);
 
@@ -1803,7 +1803,7 @@ class MapMenu : TextScreenMenu
 			{
 				active = true;
 				mDesc.mSelectedItem = -1;
-				
+
 				if (selected == entry.index)
 				{
 					return MenuEvent(MKEY_Enter, true);
@@ -1874,7 +1874,7 @@ class MapMenu : TextScreenMenu
 
 		return ExtendedOptionMenu.MouseEvent(type, mx, my);
 	}
-	
+
 	override bool OnUIEvent(UIEvent ev)
 	{
 		if (ev.Type == UIEvent.Type_KeyDown)
@@ -1932,7 +1932,7 @@ class MapMenu : TextScreenMenu
 				else if (mParentMenu is "GameMenu") { Menu.SetMenu("MainMenu", -1); }
 				else { Menu.SetMenu("MainMenu", -1); }
 			}
-			
+
 			if (gamestate != GS_FINALE && gamestate != GS_CUTSCENE)
 			{
 				if (!mParentMenu) { GameHandler.ChangeMusic(level.music); }
@@ -1941,7 +1941,7 @@ class MapMenu : TextScreenMenu
 			}
 
 			if (mParentMenu is "GameMenu") { if (gamevar) { gamevar.SetInt(-1); } }
-			
+
 			MenuSound (GetCurrentMenu() != null? "menu/backup" : "menu/clear");
 			return true;
 		}
@@ -2129,7 +2129,7 @@ class MapMenu : TextScreenMenu
 				String mapdata = String.Format("^P\n^I1!%s\n$PATH\n\n", parsedmap.mapname);
 				let n = MapDataInfo.Create(mapdata, lineheight, gamefile);
 				n.map = parsedmap;
-		
+
 				PagesInfo.Push(n);
 			}
 		}
@@ -2161,7 +2161,7 @@ class ScrollBar ui
 			s.scroll_m = TexMan.CheckForTexture("graphics/menu/scroll_m.png", TexMan.Type_Any);
 			s.scroll_b = TexMan.CheckForTexture("graphics/menu/scroll_b.png", TexMan.Type_Any);
 			s.scroll_s = TexMan.CheckForTexture("graphics/menu/scroll_s.png", TexMan.Type_Any);
-	
+
 			s.x = x;
 			s.y = y;
 			s.w = w;
@@ -2193,7 +2193,7 @@ class ScrollBar ui
 		{
 			blocktop = y + elementsize + min(int(scrollblocksize * scrollpos), scrollheight - barsize);
 			blockbottom = min(y + h - elementsize, blocktop + barsize);
-			
+
 			for (int b = 0; b < scrollbarsize; b++)
 			{
 				if (b == 0)
@@ -2486,7 +2486,7 @@ class HelpInfo
 								i = j + fontname.length();
 							}
 							break;
-						// Insert a graphic...  
+						// Insert a graphic...
 						// First looks for the lump by graphic number x as "SLIDEGx", then
 						// falls back to looking for graphic by name/path
 						case 0x47: // G
@@ -2721,7 +2721,7 @@ class HelpInfo
 			let span = spans[s];
 			Font spanfnt = span.fnt ? span.fnt : fnt;
 			screen.DrawText(span.fnt, Font.FindFontColor("TrueBlack"), x + span.x, padding.y + y + span.y * lineheight, span.content, DTA_320x200, true);
-			
+
 			// Draw line x/y coordinates if they aren't at default for that line
 			if (g_DebugTextScreens && (span.x - padding.x))
 			{
@@ -2910,7 +2910,7 @@ class MapDataInfo : HelpInfo
 							{
 								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFF0000);
 							}
-							
+
 							if (a == 0x62 && g_highlightpushwalls)
 							{
 								screen.DrawTexture(highlighttex, false, x + 310 - map.width * scale + w * scale, y + lineheight + h * scale * 0.83333, DTA_320x200, true, DTA_TopOffset, 0, DTA_LeftOffset, 0, DTA_DestWidthF, scale, DTA_DestHeightF, scale * 0.83333, DTA_FillColor, 0xFFFF00);

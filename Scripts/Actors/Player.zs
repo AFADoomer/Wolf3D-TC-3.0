@@ -276,7 +276,7 @@ class WolfPlayer : PlayerPawn
 	override void CheckWeaponChange()
 	{
 		Super.CheckWeaponChange();
-		
+
 		RefreshSpriteStates();
 	}
 
@@ -301,7 +301,7 @@ class WolfPlayer : PlayerPawn
 		// Otherwise, if there is a damagetype-specific pain state, it was set by the Super call, so don't change it
 		PainState = FindStateByString("Pain." .. mod, true);
 		if (PainState) { return ret; }
-		
+
 		// Otherwise look up weapon-specific pain frames
 		PainState = GetSpriteState("Pain", true);
 		if (PainState)
@@ -320,9 +320,9 @@ class WolfPlayer : PlayerPawn
 		if (!wpn || !wpn.CheckAmmo(Weapon.PrimaryFire, true)) { return; }
 
 		player.WeaponState &= ~WF_WEAPONBOBBING;
-		
+
 		bool attacking = true;
-		
+
 		let cwpn = ClassicWeapon(wpn);
 		if (!cwpn)
 		{
@@ -334,7 +334,7 @@ class WolfPlayer : PlayerPawn
 
 		if (!stat) { stat = wpn.GetAtkState(!!player.refire); }
 		player.SetPsprite(PSP_WEAPON, stat);
-		
+
 		if (!wpn.bNoAlert) { SoundAlert (self, false); }
 	}
 
@@ -348,7 +348,7 @@ class WolfPlayer : PlayerPawn
 		{
 			// Stop screen bobbing if the player is stopped or if no weapon bob is enabled
 			if (!vel.length() || (!bobscale || !bobscale.GetFloat())) { player.vel = (0, 0); }
-		
+
 			if (vel.xy.length())
 			{
 				vel *= 0;
@@ -787,9 +787,9 @@ class WolfPlayer : PlayerPawn
 			if (
 				gamemode > 1 &&
 				(
-					classname ~== "WolfKnife" || 
-					classname ~== "WolfPistol" || 
-					classname ~== "WolfMachineGun" || 
+					classname ~== "WolfKnife" ||
+					classname ~== "WolfPistol" ||
+					classname ~== "WolfMachineGun" ||
 					classname ~== "WolfChaingun"
 				)
 			)

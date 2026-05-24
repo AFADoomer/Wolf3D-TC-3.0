@@ -133,7 +133,7 @@ class MapStatsHandler : StaticEventHandler
 		{
 			l.pos[consoleplayer] = players[consoleplayer].mo.pos;
 		}
-		
+
 		if (l.levelnum % 100 == 10) { l.timebonusamt = 30; }
 		else { l.timebonusamt = level.partime > 0 ? max(level.partime - Thinker.Tics2Seconds(level.maptime), 0) : 0;}
 
@@ -170,13 +170,13 @@ class MapStatsHandler : StaticEventHandler
 
 			// Turn the stats off if you move...
 			if (
-				cp && 
+				cp &&
 				(
-					cp.cmd.forwardmove || 
-					cp.cmd.sidemove || 
+					cp.cmd.forwardmove ||
+					cp.cmd.sidemove ||
 					(
 						cp.cmd.buttons & BT_CROUCH ||
-						cp.cmd.buttons & BT_JUMP 
+						cp.cmd.buttons & BT_JUMP
 					)
 				)
 			)
@@ -236,7 +236,7 @@ class MapStatsHandler : StaticEventHandler
 				}
 			}
 		}
-	
+
 		SaveLevelData();
 	}
 
@@ -481,7 +481,7 @@ class MapStatsHandler : StaticEventHandler
 	ui String PadString(String input, uint digits)
 	{
 		While (input.Length() < digits)
-		{	
+		{
 			input = " " .. input;
 		}
 

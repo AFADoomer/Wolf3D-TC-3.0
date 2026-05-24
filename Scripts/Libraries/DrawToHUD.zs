@@ -22,7 +22,7 @@
 
 /*
 
-	Helper function to translate HUD-style coordinates to screen-space coordinates so 
+	Helper function to translate HUD-style coordinates to screen-space coordinates so
 	that you can use Screen drawing functions to draw elements that align with the HUD.
 
 	TranslatetoHUDCoordinates takes two parameters:
@@ -375,7 +375,7 @@ class DrawToHUD
 	static ui void DrawFrame(String prefix, int x, int y, double w, double h, color fillclr = 0x0, double alpha = 1.0, double fillalpha = -1, Vector2 destsize = (-1, -1), int flags = TEX_DEFAULT, double scale = 1.0)
 	{
 		bool fullscreen = !(flags & TEX_FIXED);
-		
+
 		TextureID top = TexMan.CheckForTexture(prefix .. "T");
 		TextureID bottom = TexMan.CheckForTexture(prefix .. "B");
 		TextureID left = TexMan.CheckForTexture(prefix .. "L");
@@ -709,7 +709,7 @@ class DrawToHUD
 			// Allow key names to be translated by prefixing them with KEY_ (e.g., "KEY_Mouse2", "KEY_Ctrl")
 			// and defining the appropriate entry in the LANGUAGE lump.  This also allows defining more
 			// aesthetic names for keys (e.g., KEY_PAD_START will show "Start" instead of "Pad_Start")
-			// These override generated names 
+			// These override generated names
 			String prettylabel = StringTable.Localize("$KEY_" .. keys[k]);
 			if (!(prettylabel == "KEY_" .. keys[k])) { label = prettylabel; }
 
@@ -754,7 +754,7 @@ class DrawToHUD
 				else if (keys[k] == "UpArrow") { label = "▴"; }
 				else if (keys[k] == "DownArrow") { label = "▾"; }
 				else if (keys[k] == "Space") { label = "     Space     "; }
-				
+
 				b = Button.Create(label, KeyLabelFont, icon, buttonscale, bkg, fntcolor, fillcolor, margin, bkgalpha, bkgfillalpha);
 			}
 
@@ -896,7 +896,7 @@ class Button
 	{
 		if (!fnt) { fnt = Font.GetFont("MiniFont"); }
 		if (!fnt) { fnt = SmallFont; }
-		
+
 		return max(int(minheight * scale), int(fnt.GetHeight() * scale + margin * 2 * scale));
 	}
 

@@ -38,7 +38,7 @@ class GameHandler : StaticEventHandler
 	override void WorldLoaded(WorldEvent e)
 	{
 		keys.Clear();
-	
+
 		Array<int> locks;
 		for (int l = 0; l < level.lines.Size(); l++)
 		{
@@ -100,7 +100,7 @@ class GameHandler : StaticEventHandler
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if (e.thing is "Key")
-		{ 
+		{
 			class<Key> keytype = (class<Key>)(e.Thing.GetClass());
 			if (keys.Find(keytype) == keys.Size()) { keys.Push(keytype); }
 		}
@@ -109,7 +109,7 @@ class GameHandler : StaticEventHandler
 		e.Thing.TeleFogDestType = "WolfTeleportIn";
 
 		if (multiplayer && !deathmatch && level.time > 5 && e.thing.player)
-		{ 
+		{
 			Actor.Spawn("WolfTeleportIn", e.thing.player.mo.pos);
 		}
 	}
@@ -247,10 +247,10 @@ class GameHandler : StaticEventHandler
 				}
 
 				if (!(ext ~== filename.Mid(filename.length() - 3)))
-				{ 
+				{
 					message = StringTable.Localize("$TXT_DUPLICATEFILE");
 					message.replace("%s", filename);
-				
+
 					console.printf(message .. "GAMEMAPS." .. ext);
 				}
 			}
@@ -264,7 +264,7 @@ class GameHandler : StaticEventHandler
 		}
 	}
 
-	// This is unreliable and causes crashes if it gets called before 
+	// This is unreliable and causes crashes if it gets called before
 	// video initializes properly (e.g., with +map command line)
 /*
 	override void PlayerSpawned(PlayerEvent e)
@@ -398,7 +398,7 @@ class GameHandler : StaticEventHandler
 		if (this)
 		{
 			this.uirandomcount = (++this.uirandomcount) % 256;
-			return min + (rnd_table[this.uirandomcount] % (max - min + 1)); 
+			return min + (rnd_table[this.uirandomcount] % (max - min + 1));
 		}
 		return Random[WolfRandom](min, max);
 	}
@@ -462,7 +462,7 @@ class GameHandler : StaticEventHandler
 
 			TextureID tex = trace.HitTexture;
 			if (!tex.IsValid()) { return; }
-			
+
 			console.printf("Line %i has texture %s", trace.HitLine.Index(), TexMan.GetName(tex));
 		}
 
@@ -674,7 +674,7 @@ class GameHandler : StaticEventHandler
 	{
 		// HACK: This will break if the console command to open the console ever changes
 		Menu.SetMenu("TCOptions");
-							
+
 		let m = OptionMenu(Menu.GetCurrentMenu());
 		if (m)
 		{

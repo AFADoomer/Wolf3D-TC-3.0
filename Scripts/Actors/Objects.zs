@@ -727,7 +727,7 @@ class WolfBerserk : CustomInventory
 				if ((!deathmatch && !alwaysapplydmflags) || !sv_nohealth) { A_GiveInventory("Health", 100); }
 			}
 			Stop;
-	}	
+	}
 }
 
 class JeweledCross : Score
@@ -1460,7 +1460,7 @@ class PlantLost : Plant
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Plant (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1476,7 +1476,7 @@ class SkeletonLost : Skeleton
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Skeleton (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1492,7 +1492,7 @@ class PileofSkullsLost : Sink
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Gore (Pile of Skulls, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1508,7 +1508,7 @@ class BrownPlantLost : PlantinVase
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Plant (Brown, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1524,7 +1524,7 @@ class VaseLost : Vase
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Vase (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1540,7 +1540,7 @@ class TableLost : Table
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Table (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1556,7 +1556,7 @@ class GreenCeilingLightLost : GreenCeilingLight
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Ceiling Light (Green, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1572,7 +1572,7 @@ class CagewithBloodLost : ClassicDecoration
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Cage (Blood, Lost)
 	}
-	
+
 	Default
 	{
 		+SPAWNCEILING
@@ -1595,7 +1595,7 @@ class SuitofArmorLost : SuitofArmor
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Suit of Armor (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1611,7 +1611,7 @@ class EmptyCageLost : EmptyCage
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Cage (Empty, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1627,7 +1627,7 @@ class BrokenCageLost : Cage
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Cage (Broken, Lost)
 	}
-	
+
 	Default
 	{
 		+SPAWNCEILING
@@ -1650,7 +1650,7 @@ class Bones1Lost : Bones
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Crushed Bones 4 (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1666,7 +1666,7 @@ class YellowKeyLost : YellowKey
 		//$Category Wolfenstein 3D/Items/Keys/Lost Episodes
 		//$Title Key (Gold, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1682,7 +1682,7 @@ class BlueKeyLost : BlueKey
 		//$Category Wolfenstein 3D/Items/Keys/Lost Episodes
 		//$Title Key (Silver, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1698,7 +1698,7 @@ class CageWithSkullsLost : Bed
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Cage (with skulls, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1714,7 +1714,7 @@ class DeadRatLost : Basket
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Dead Rat (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1730,7 +1730,7 @@ class PlateofFoodLost : PlateOfFood
 		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
 		//$Title Plate of Food (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1746,7 +1746,7 @@ class FirstAidKitLost : FirstAidKit
 		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
 		//$Title First Aid Kit (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1762,7 +1762,7 @@ class RadioLost : JeweledCross
 		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
 		//$Title Radio (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1778,7 +1778,7 @@ class ShellLost : Chalice
 		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
 		//$Title Shell (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1794,7 +1794,7 @@ class TimerLost : Chest
 		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
 		//$Title Timer (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1810,7 +1810,7 @@ class BombLost : Crown
 		//$Category Wolfenstein 3D/Items/Treasure/Lost Episodes
 		//$Title Bomb (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1826,7 +1826,7 @@ class LifeLost : Life
 		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
 		//$Title Life (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1842,7 +1842,7 @@ class BoneswithBloodLost : BoneswithBlood
 		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
 		//$Title Pool of Blood (with bones, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1858,7 +1858,7 @@ class WoodBarrelLost : WoodBarrel
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Barrel (Wooden, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1874,7 +1874,7 @@ class WellwithWaterLost : WellwithWater
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Well (with water, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1890,7 +1890,7 @@ class DryWellLost : DryWell
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Well (dry, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1906,7 +1906,7 @@ class PoolofBloodLost : PoolofBlood
 		//$Category Wolfenstein 3D/Items/Health/Lost Episodes
 		//$Title Pool of Blood (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1922,7 +1922,7 @@ class ElectrofieldLost : NaziFlag
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Electro-Field (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1961,7 +1961,7 @@ class Bones2Lost : CrushedBones1
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Crushed Bones 1 (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1977,7 +1977,7 @@ class LightBulbLost : GreenCeilingLight
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Lightbulb (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1993,7 +1993,7 @@ class SlimeLost : CrushedBody
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Pool of Slime (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2010,7 +2010,7 @@ class HLabTableLost : ClassicDecoration
 		//$Title Lab Table (Lost)
 		Height 64;
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2026,7 +2026,7 @@ class RadioactiveBarrelLost  : Stove
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Barrel (Radioactive, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2042,7 +2042,7 @@ class PipeLost : SpearRack
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Pipe (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2058,7 +2058,7 @@ class BubblesLost : HangingVines
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Bubbles (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2074,7 +2074,7 @@ class DeadGuardLost : DeadGuard
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Dead Guard (Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2090,7 +2090,7 @@ class DemonStatueLost: BrownColumn
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Statue (Demon, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2106,7 +2106,7 @@ class BJWasHereLost : Truck
 		//$Category Wolfenstein 3D/Decorations/Lost Episodes
 		//$Title Sign (BJ was here, Lost)
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -2129,7 +2129,7 @@ class SpearofDestinyLost : SpearofDestiny
 		Spawn:
 			SOFD B -1;
 			Loop;
-	}	
+	}
 }
 
 // Placeholder assigned to obsolete thing IDs generated by map conversion utility
@@ -2140,7 +2140,7 @@ class CompatibilityPlaceholder : Actor
 		Spawn:
 			TNT1 A 1;
 			Stop;
-	}		
+	}
 }
 
 class MoldyCheese : Health

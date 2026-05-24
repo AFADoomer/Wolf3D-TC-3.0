@@ -29,7 +29,7 @@
 	Blue Key (was lock 1 in ACS)
 
   For paired/mirrored doors, all activation lines should have the same polyobject set in Arg 0,
-  and that polyobject should have the second polyobject's number in the 'Mirror Polyobject Number' 
+  and that polyobject should have the second polyobject's number in the 'Mirror Polyobject Number'
   field of its start line.
 
   Sounds are configured using the 'Sound Number' argument on the polyobject's start line:
@@ -50,7 +50,7 @@ class DoorHandler: EventHandler
 	bool pushed[256];
 
 	// This event handler adds Wolf3D-like behavior to sliding polyobject doors by
-	// intercepting linedef activations of Polyobj_SlideDoor action special and 
+	// intercepting linedef activations of Polyobj_SlideDoor action special and
 	// using DoorEffector instead
 	override void WorldLinePreActivated(WorldEvent e)
 	{
@@ -77,7 +77,7 @@ class DoorHandler: EventHandler
 	{
 		if (!polynum) { return; }
 
-		// Get the handle to the activated polyobject 
+		// Get the handle to the activated polyobject
 		PolyobjectHandle po = PolyobjectHandle.FindPolyobj(polynum);
 		if (!po) { return; }
 
@@ -141,7 +141,7 @@ class DoorHandler: EventHandler
 							VertexInRange(sln.v2, ln.v2)
 						) ||
 						(
-							VertexInRange(sln.v1, ln.v2) && 
+							VertexInRange(sln.v1, ln.v2) &&
 							VertexInRange(sln.v2, ln.v1)
 						)
 					)
@@ -159,9 +159,9 @@ class DoorHandler: EventHandler
 	static bool VertexInRange(Vertex v1, Vertex v2, int r = 32)
 	{
 		if (
-			v1.p.x <= v2.p.x + r && 
+			v1.p.x <= v2.p.x + r &&
 			v1.p.x >= v2.p.x - r &&
-			v1.p.y <= v2.p.y + r && 
+			v1.p.y <= v2.p.y + r &&
 			v1.p.y >= v2.p.y - r
 		) { return true; }
 
@@ -248,7 +248,7 @@ class DoorEffector: PolyobjectEffector
 		}
 		else { Status = WDST_OPENING; }
 
-		Counter = Delay; // Reset the countdown 
+		Counter = Delay; // Reset the countdown
 
 		// Move the polyobject to destination
 		Polyobject.MoveTo(Activator, Destination, Speed, 0);  // SNDSEQ sound 0 for opening
@@ -319,7 +319,7 @@ class DoorEffector: PolyobjectEffector
 			// closely enough to the door's actual width (e.g., with large double doors)
 			return (BlockRadius + a.Radius > (CenterSpot.xy - a.Pos.xy).Length());
 		}
-		
+
 		return false;
 	}
 
@@ -432,7 +432,7 @@ class DoorEffector: PolyobjectEffector
 					int t;
 					[t, tile] = MapHandler.TileAt(spot);
 					int a = MapHandler.ActorAt(spot);
-					
+
 					if (a == 0x7C) { break; } // Dead guard always blocks pushwalls
 					else if (a == 0x62) // Can't move through pushwalls - but make sure it's still there
 					{
@@ -463,7 +463,7 @@ class DoorEffector: PolyobjectEffector
 				}
 
 				BlockThingsIterator it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, 0, 0, 32, false);
-				
+
 				while (it.Next())
 				{
 					if (it.thing.bSolid && abs(it.thing.pos.x - spot.x) <= 32 &&  abs(it.thing.pos.y - spot.y) <= 32)
@@ -520,11 +520,11 @@ class DoorEffector: PolyobjectEffector
 				// Re-check at intervals for the pushwall being blocked...
 				Vector2 pos = PolyObject.GetPos();
 				int movedist = int((pos - PolyObject.StartSpotPos).length());
-	
+
 				if (movedist % 16 == 0)
 				{
 					Vector2 moveunit = Actor.AngleToVector(angle, 64);
-				
+
 					Vector2 dest = pos + moveunit;
 					if (IsBlocked((dest, 0), 32, true))
 					{
@@ -598,7 +598,7 @@ class DoorEffector: PolyobjectEffector
 												if (ln.v1.p.y > PolyObject.StartSpotPos.y) { [tt, nexttile] = handler.curmap.TileAt(pos - (0, 1)); }
 												else { [tt, nexttile] = handler.curmap.TileAt(pos + (0, 1)); }
 											}
-											
+
 											ln.sidedef[s].SetTexture(side.mid, handler.curmap.GetTileTexture(nexttile, (0, 0), ln));
 										}
 									}

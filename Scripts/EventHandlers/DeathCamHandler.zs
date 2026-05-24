@@ -66,7 +66,7 @@ class DeathCamHandler : EventHandler
 					break;
 				case 130:
 					draw = true;
-					if (deathcam.master) { deathcam.master.SetStateLabel("Death.Cam"); } 
+					if (deathcam.master) { deathcam.master.SetStateLabel("Death.Cam"); }
 					break;
 				case 200:
 					players[consoleplayer].camera = deathcam;

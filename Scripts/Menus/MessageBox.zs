@@ -175,7 +175,7 @@ class ClassicMessageBox : MessageBoxMenu
 		if (blinktime > -1 && gametic > blinktime)
 		{
 			if (cursor == "_") { cursor = ""; }
-			else { cursor = "_"; }	
+			else { cursor = "_"; }
 
 			blinktime = gametic + 5;
 		}

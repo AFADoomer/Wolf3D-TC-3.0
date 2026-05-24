@@ -7,8 +7,8 @@
 		Textures
 		{
 			"TEXPATH";
-			"Texture/Path.png"; 
-			
+			"Texture/Path.png";
+
 			*or*
 
 			1 // Blocks are assumed to be *in lump order*.  Number/name is for convenience and grouping only
@@ -29,654 +29,654 @@ Default // Wolf3D
 
 	Textures
 	{
-		0	
-		{	
+		0
+		{
 			"Patches/Walls/WALL0000.png";
 			"WLF0001A";
 		}
 
-		1	
-		{	
+		1
+		{
 			"Patches/Walls/WALL0001.png";
 			"WLF0001B";
 		}
-	
-		2	
-		{	
+
+		2
+		{
 			"Patches/Walls/WALL0002.png";
 			"WLF0002A";
 		}
-				
-		3	
-		{	
+
+		3
+		{
 			"Patches/Walls/WALL0003.png";
 			"WLF0002B";
 		}
-				
-		4	
-		{	
+
+		4
+		{
 			"Patches/Walls/WALL0004.png";
 			"WLF0003A";
 		}
-				
-		5	
-		{	
+
+		5
+		{
 			"Patches/Walls/WALL0005.png";
 			"WLF0003B";
 		}
-				
-		6	
-		{	
+
+		6
+		{
 			"Patches/Walls/WALL0006.png";
 			"WLF0004A";
 		}
-				
-		7	
-		{	
+
+		7
+		{
 			"Patches/Walls/WALL0007.png";
 			"WLF0004B";
 		}
-				
-		8	
-		{	
+
+		8
+		{
 			"Patches/Walls/WALL0008.png";
 			"WLF0005A";
 		}
-				
-		9	
-		{	
+
+		9
+		{
 			"Patches/Walls/WALL0009.png";
 			"WLF0005B";
 		}
-				
-		10	
-		{	
+
+		10
+		{
 			"Patches/Walls/WALL0010.png";
 			"WLF0006A";
 		}
-				
-		11	
-		{	
+
+		11
+		{
 			"Patches/Walls/WALL0011.png";
 			"WLF0006B";
 		}
-				
-		12	
-		{	
+
+		12
+		{
 			"Patches/Walls/WALL0012.png";
 			"WLF0007A";
 		}
-				
-		13	
-		{	
+
+		13
+		{
 			"Patches/Walls/WALL0013.png";
 			"WLF0007B";
 		}
-				
-		14	
-		{	
+
+		14
+		{
 			"Patches/Walls/WALL0014.png";
 			"WLF0008A";
 		}
-				
-		15	
-		{	
+
+		15
+		{
 			"Patches/Walls/WALL0015.png";
 			"WLF0008B";
 		}
-				
-		16	
-		{	
+
+		16
+		{
 			"Patches/Walls/WALL0016.png";
 			"WLF0009A";
 		}
-				
-		17	
-		{	
+
+		17
+		{
 			"Patches/Walls/WALL0017.png";
 			"WLF0009B";
 		}
-				
-		18	
-		{	
+
+		18
+		{
 			"Patches/Walls/WALL0018.png";
 			"WLF000AA";
 		}
-				
-		19	
-		{	
+
+		19
+		{
 			"Patches/Walls/WALL0019.png";
 			"WLF000AB";
 		}
-				
-		20	
-		{	
+
+		20
+		{
 			"Patches/Walls/WALL0020.png";
 			"WLF000BA";
 		}
-				
-		21	
-		{	
+
+		21
+		{
 			"Patches/Walls/WALL0021.png";
 			"WLF000BB";
 		}
-				
-		22	
-		{	
+
+		22
+		{
 			"Patches/Walls/WALL0022.png";
 			"WLF000CA";
 		}
-				
-		23	
-		{	
+
+		23
+		{
 			"Patches/Walls/WALL0023.png";
 			"WLF000CB";
 		}
-				
-		24	
-		{	
+
+		24
+		{
 			"Patches/Walls/WALL0024.png";
 			"WLF000DA";
 		}
-				
-		25	
-		{	
+
+		25
+		{
 			"Patches/Walls/WALL0025.png";
 			"WLF000DB";
 		}
-				
-		26	
-		{	
+
+		26
+		{
 			"Patches/Walls/WALL0026.png";
 			"WLF000EA";
 		}
-				
-		27	
-		{	
+
+		27
+		{
 			"Patches/Walls/WALL0027.png";
 			"WLF000EB";
 		}
-				
-		28	
-		{	
+
+		28
+		{
 			"Patches/Walls/WALL0028.png";
 			"WLF000FA";
 		}
-				
-		29	
-		{	
+
+		29
+		{
 			"Patches/Walls/WALL0029.png";
 			"WLF000FB";
 		}
-				
-		30	
-		{	
+
+		30
+		{
 			"Patches/Walls/WALL0030.png";
 			"WLF0010A";
 		}
-				
-		31	
-		{	
+
+		31
+		{
 			"Patches/Walls/WALL0031.png";
 			"WLF0010B";
 		}
-				
-		32	
-		{	
+
+		32
+		{
 			"Patches/Walls/WALL0032.png";
 			"WLF0011A";
 		}
-				
-		33	
-		{	
+
+		33
+		{
 			"Patches/Walls/WALL0033.png";
 			"WLF0011B";
 		}
-				
-		34	
-		{	
+
+		34
+		{
 			"Patches/Walls/WALL0034.png";
 			"WLF0012A";
 		}
-				
-		35	
-		{	
+
+		35
+		{
 			"Patches/Walls/WALL0035.png";
 			"WLF0012B";
 		}
-				
-		36	
-		{	
+
+		36
+		{
 			"Patches/Walls/WALL0036.png";
 			"WLF0013A";
 		}
-				
-		37	
-		{	
+
+		37
+		{
 			"Patches/Walls/WALL0037.png";
 			"WLF0013B";
 		}
-				
-		38	
-		{	
+
+		38
+		{
 			"Patches/Walls/WALL0038.png";
 			"WLF0014A";
 		}
-				
-		39	
-		{	
+
+		39
+		{
 			"Patches/Walls/WALL0039.png";
 			"WLF0014B";
 		}
-				
-		40	
-		{	
+
+		40
+		{
 			"Patches/Walls/WALL0040.png";
 			"WLF0015A";
 		}
-				
-		41	
-		{	
+
+		41
+		{
 			"Patches/Walls/WALL0041.png";
 			"WLF0015B";
 		}
-				
-		42	
-		{	
+
+		42
+		{
 			"Patches/Walls/WALL0042.png";
 			"WLF0016A";
 		}
-				
-		43	
-		{	
+
+		43
+		{
 			"Patches/Walls/WALL0043.png";
 			"WLF0016B";
 		}
-				
-		44	
-		{	
+
+		44
+		{
 			"Patches/Walls/WALL0044.png";
 			"WLF0017A";
 		}
-				
-		45	
-		{	
+
+		45
+		{
 			"Patches/Walls/WALL0045.png";
 			"WLF0017B";
 		}
-				
-		46	
-		{	
+
+		46
+		{
 			"Patches/Walls/WALL0046.png";
 			"WLF0018A";
 		}
-				
-		47	
-		{	
+
+		47
+		{
 			"Patches/Walls/WALL0047.png";
 			"WLF0018B";
 		}
-				
-		48	
-		{	
+
+		48
+		{
 			"Patches/Walls/WALL0048.png";
 			"WLF0019A";
 		}
-				
-		49	
-		{	
+
+		49
+		{
 			"Patches/Walls/WALL0049.png";
 			"WLF0019B";
 		}
-				
-		50	
-		{	
+
+		50
+		{
 			"Patches/Walls/WALL0050.png";
 			"WLF001AA";
 		}
-				
-		51	
-		{	
+
+		51
+		{
 			"Patches/Walls/WALL0051.png";
 			"WLF001AB";
 		}
-				
-		52	
-		{	
+
+		52
+		{
 			"Patches/Walls/WALL0052.png";
 			"WLF001BA";
 		}
-				
-		53	
-		{	
+
+		53
+		{
 			"Patches/Walls/WALL0053.png";
 			"WLF001BB";
 		}
-				
-		54	
-		{	
+
+		54
+		{
 			"Patches/Walls/WALL0054.png";
 			"WLF001CA";
 		}
-				
-		55	
-		{	
+
+		55
+		{
 			"Patches/Walls/WALL0055.png";
 			"WLF001CB";
 		}
-				
-		56	
-		{	
+
+		56
+		{
 			"Patches/Walls/WALL0056.png";
 			"WLF001DA";
 		}
-				
-		57	
-		{	
+
+		57
+		{
 			"Patches/Walls/WALL0057.png";
 			"WLF001DB";
 		}
-				
-		58	
-		{	
+
+		58
+		{
 			"Patches/Walls/WALL0058.png";
 			"WLF001EA";
 		}
-				
-		59	
-		{	
+
+		59
+		{
 			"Patches/Walls/WALL0059.png";
 			"WLF001EB";
 		}
-				
-		60	
-		{	
+
+		60
+		{
 			"Patches/Walls/WALL0060.png";
 			"WLF001FA";
 		}
-				
-		61	
-		{	
+
+		61
+		{
 			"Patches/Walls/WALL0061.png";
 			"WLF001FB";
 		}
-				
-		62	
-		{	
+
+		62
+		{
 			"Patches/Walls/WALL0062.png";
 			"WLF0020A";
 		}
-				
-		63	
-		{	
+
+		63
+		{
 			"Patches/Walls/WALL0063.png";
 			"WLF0020B";
 		}
-				
-		64	
-		{	
+
+		64
+		{
 			"Patches/Walls/WALL0064.png";
 			"WLF0021A";
 		}
-				
-		65	
-		{	
+
+		65
+		{
 			"Patches/Walls/WALL0065.png";
 			"WLF0021B";
 		}
-				
-		66	
-		{	
+
+		66
+		{
 			"Patches/Walls/WALL0066.png";
 			"WLF0022A";
 		}
-				
-		67	
-		{	
+
+		67
+		{
 			"Patches/Walls/WALL0067.png";
 			"WLF0022B";
 		}
-				
-		68	
-		{	
+
+		68
+		{
 			"Patches/Walls/WALL0068.png";
 			"WLF0023A";
 		}
-				
-		69	
-		{	
+
+		69
+		{
 			"Patches/Walls/WALL0069.png";
 			"WLF0023B";
 		}
-				
-		70	
-		{	
+
+		70
+		{
 			"Patches/Walls/WALL0070.png";
 			"WLF0024A";
 		}
-				
-		71	
-		{	
+
+		71
+		{
 			"Patches/Walls/WALL0071.png";
 			"WLF0024B";
 		}
-				
-		72	
-		{	
+
+		72
+		{
 			"Patches/Walls/WALL0072.png";
 			"WLF0025A";
 		}
-				
-		73	
-		{	
+
+		73
+		{
 			"Patches/Walls/WALL0073.png";
 			"WLF0025B";
 		}
-				
-		74	
-		{	
+
+		74
+		{
 			"Patches/Walls/WALL0074.png";
 			"WLF0026A";
 		}
-				
-		75	
-		{	
+
+		75
+		{
 			"Patches/Walls/WALL0075.png";
 			"WLF0026B";
 		}
-				
-		76	
-		{	
+
+		76
+		{
 			"Patches/Walls/WALL0076.png";
 			"WLF0027A";
 		}
-				
-		77	
-		{	
+
+		77
+		{
 			"Patches/Walls/WALL0077.png";
 			"WLF0027B";
 		}
-				
-		78	
-		{	
+
+		78
+		{
 			"Patches/Walls/WALL0078.png";
 			"WLF0028A";
 		}
-				
-		79	
-		{	
+
+		79
+		{
 			"Patches/Walls/WALL0079.png";
 			"WLF0028B";
 		}
-				
-		80	
-		{	
+
+		80
+		{
 			"Patches/Walls/WALL0080.png";
 			"WLF0029A";
 		}
-				
-		81	
-		{	
+
+		81
+		{
 			"Patches/Walls/WALL0081.png";
 			"WLF0029B";
 		}
-				
-		82	
-		{	
+
+		82
+		{
 			"Patches/Walls/WALL0082.png";
 			"WLF002AA";
 		}
-				
-		83	
-		{	
+
+		83
+		{
 			"Patches/Walls/WALL0083.png";
 			"WLF002AB";
 		}
-				
-		84	
-		{	
+
+		84
+		{
 			"Patches/Walls/WALL0084.png";
 			"WLF002BA";
 		}
-				
-		85	
-		{	
+
+		85
+		{
 			"Patches/Walls/WALL0085.png";
 			"WLF002BB";
 		}
-				
-		86	
-		{	
+
+		86
+		{
 			"Patches/Walls/WALL0086.png";
 			"WLF002CA";
 		}
-				
-		87	
-		{	
+
+		87
+		{
 			"Patches/Walls/WALL0087.png";
 			"WLF002CB";
 		}
-				
-		88	
-		{	
+
+		88
+		{
 			"Patches/Walls/WALL0088.png";
 			"WLF002DA";
 		}
-				
-		89	
-		{	
+
+		89
+		{
 			"Patches/Walls/WALL0089.png";
 			"WLF002DB";
 		}
-				
-		90	
-		{	
+
+		90
+		{
 			"Patches/Walls/WALL0090.png";
 			"WLF002EA";
 		}
-				
-		91	
-		{	
+
+		91
+		{
 			"Patches/Walls/WALL0091.png";
 			"WLF002EB";
 		}
-				
-		92	
-		{	
+
+		92
+		{
 			"Patches/Walls/WALL0092.png";
 			"WLF002FA";
 		}
-				
-		93	
-		{	
+
+		93
+		{
 			"Patches/Walls/WALL0093.png";
 			"WLF002FB";
 		}
-				
-		94	
-		{	
+
+		94
+		{
 			"Patches/Walls/WALL0094.png";
 			"WLF0030A";
 		}
-				
-		95	
-		{	
+
+		95
+		{
 			"Patches/Walls/WALL0095.png";
 			"WLF0030B";
 		}
-				
-		96	
-		{	
+
+		96
+		{
 			"Patches/Walls/WALL0096.png";
 			"WLF0031A";
 		}
-				
-		97	
-		{	
+
+		97
+		{
 			"Patches/Walls/WALL0097.png";
 			"WLF0031B";
 		}
-				
-		98	
-		{	
+
+		98
+		{
 			"Patches/Walls/WALL0098.png";
 			"WLF0DORA" { Flip; }
 			"WLF1DORA" { Flip; }
 			"WLF0DORC";
 			"WLF1DORC";
 		}
-				
-		99	
-		{	
+
+		99
+		{
 			"Patches/Walls/WALL0099.png";
 			"WLF0DORB";
 			"WLF1DORB";
 			"WLF0DORD" { Flip; }
 			"WLF1DORD" { Flip; }
-			
+
 		}
-				
-		100	
-		{	
+
+		100
+		{
 			"Patches/Walls/WALL0100.png";
 			"WLF0JMBA";
 			"WLF1JMBA";
 			"WLF0JMBC" { Flip; }
 			"WLF1JMBC" { Flip; }
-			
+
 		}
-				
-		101	
-		{	
+
+		101
+		{
 			"Patches/Walls/WALL0101.png";
 			"WLF0JMBB";
 			"WLF1JMBB";
 			"WLF0JMBD" { Flip; }
 			"WLF1JMBD" { Flip; }
-			
+
 		}
-				
-		102	
-		{	
+
+		102
+		{
 			"Patches/Walls/WALL0102.png";
 			"WLF0ELEA" { Flip; }
 			"WLF1ELEA" { Flip; }
 			"WLF0ELEC";
 			"WLF1ELEC";
 		}
-				
-		103	
-		{	
+
+		103
+		{
 			"Patches/Walls/WALL0103.png";
 			"WLF0ELEB";
 			"WLF1ELEB";
 			"WLF0ELED" { Flip; }
 			"WLF1ELED" { Flip; }
-			
+
 		}
-				
-		104	
-		{	
+
+		104
+		{
 			"Patches/Walls/WALL0104.png";
 			"WLF0LK1A" { Flip; }
 			"WLF1LK1A" { Flip; }
@@ -687,9 +687,9 @@ Default // Wolf3D
 			"WLF0LK2C";
 			"WLF1LK2C";
 		}
-				
-		105	
-		{	
+
+		105
+		{
 			"Patches/Walls/WALL0105.png";
 			"WLF0LK1B";
 			"WLF1LK1B";
@@ -699,7 +699,7 @@ Default // Wolf3D
 			"WLF1LK2B";
 			"WLF0LK2D" { Flip; }
 			"WLF1LK2D" { Flip; }
-		}	
+		}
 	}
 
 	Sprites

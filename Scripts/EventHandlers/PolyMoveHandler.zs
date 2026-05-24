@@ -30,7 +30,7 @@ class ThingInfo
 	static ThingInfo Add(Array<ThingInfo> things, Actor mo)
 	{
 		if (!mo) { return null; }
-		
+
 		for (int t = 0; t < things.Size(); t++)
 		{
 			if (things[t].thing == mo) { return things[t]; }
@@ -104,7 +104,7 @@ class PolyMoveHandler: EventHandler
 			po.AddEffector(eff);
 
 			po.Lines.Push(po.StartLine);
-			
+
 			if (po.StartLine.special != Polyobj_ExplicitLine)
 			{
 				// Find all lines that belong to this polyobject
@@ -140,10 +140,10 @@ class PolyMoveHandler: EventHandler
 
 		if (mo.bMissile || mo.bNoSector || mo.bNoInteraction) { return; }
 		if (!(mo.bWallSprite)) { return; }
-		
+
 		PolyobjectHandle po = CheckForPolyobject(mo);
 		if (!po) { return; }
-		
+
 		PolyMoveEffector eff = PolyMoveEffector(po.FindEffector("PolyMoveEffector"));
 		if (!eff) { return; }
 

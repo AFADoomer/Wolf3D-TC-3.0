@@ -156,7 +156,7 @@ class ClassicWeapon : Weapon
 			if (psp)
 			{
 				if (!translatehud) { translatehud = CVar.GetCVar("g_translatewpnsprites", owner.player); }
-				
+
 				if (translatehud && translatehud.GetInt()) { psp.translation = owner.translation; }
 				else { psp.translation = Translate.GetID("DefaultGray"); }
 			}
@@ -234,17 +234,17 @@ class ClassicWeapon : Weapon
 
 		if (range == 0) range = DEFMELEERANGE;
 		if (!norandom) { damage *= random[cwpunch](1, 8); }
-		
+
 		FTranslatedLineTarget t;
 		double angle = self.angle;
 		double pitch = AimLineAttack(angle, range, t, 0., ALF_CHECK3D);
-		
+
 		// only use ammo when actually hitting something!
 		if ((flags & CPF_USEAMMO) && t.linetarget && weapon && stateinfo != null && stateinfo.mStateType == STATE_Psprite)
 		{
 			if (!weapon.DepleteAmmo(weapon.bAltFire, true)) { return; } // out of ammo
 		}
-		
+
 		Actor puff;
 		int actualdamage;
 		[puff, actualdamage] = LineAttack(angle, range, pitch, damage, 'Melee', pufftype, LAF_ISMELEEATTACK | ((flags & CPF_NORANDOMPUFFZ) ? LAF_NORANDOMPUFFZ : 0), t);
@@ -285,7 +285,7 @@ class ClassicWeapon : Weapon
 					GiveBody(int(actualdamage * lifesteal), lifestealmax);
 				}
 			}
-			
+
 			if (MeleeSound || weapon) { A_StartSound(MeleeSound ? MeleeSound : weapon.AttackSound, CHAN_WEAPON); }
 
 			if (!(flags & CPF_NOTURN)) { self.Angle = t.angleFromSource; }

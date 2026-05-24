@@ -1,11 +1,11 @@
 // Translation table for Wolfenstein map things to GZDoom actor classes
-// 
+//
 // Format of entries:
 //   ID = "Class", Skill, Angle, Patrolling
 //
 // Classes 'fall back' to previous entry, so if only Wolf3D is defined, all games will use that
 //
-// All SoD-only actors are defined at Wolf3D level to allow modding/mapping flexibility.  They technically 
+// All SoD-only actors are defined at Wolf3D level to allow modding/mapping flexibility.  They technically
 // are cross-game compatible, but the code in the Wolf engine was #ifdef'ed out between versions
 
 Default // Wolf3D with SoD bosses
@@ -223,7 +223,7 @@ Default // Wolf3D with SoD bosses
 
 SD1
 {
-	// Objects	
+	// Objects
 	33 = "SkullsonStick";
 	38 = "BloodyCage";
 	45 = "CageofSkulls";
@@ -416,5 +416,5 @@ SD3
 
 BS
 {
-	
+
 }

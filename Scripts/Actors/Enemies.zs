@@ -62,7 +62,7 @@ class ClassicBase : Actor
 		Mass 10000;
 		DeathHeight 0;
 		Painchance 256;
-		FastSpeed 6; // Generic handling for supporting fast monsters 
+		FastSpeed 6; // Generic handling for supporting fast monsters
 		BloodColor "FF 00 00";
 		DamageFactor "WolfNazi", 0.0;
 		DamageFactor "WolfNaziRocket", 0.0;
@@ -163,7 +163,7 @@ class ClassicBase : Actor
 		}
 
 		StartHealth = health;
- 
+
 		if (!Default.bNoBlood) { bNoBlood = g_noblood; }
 
 		if (bNerfWhenReplaced)
@@ -193,7 +193,7 @@ class ClassicBase : Actor
 		Super.Tick();
 
 		if (
-			!multiplayer && 
+			!multiplayer &&
 			(bOptionalRotations || InStateSequence(CurState, MissileState) || InStateSequence(CurState, ResolveState("Pain"))) &&
 			!g_userotations
 		)
@@ -216,7 +216,7 @@ class ClassicBase : Actor
 		double dist = target ? Distance2D(target) : 0x7FFFFFFF;
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
-			// Loop through all players in the game and target the closest one that is alive and visible within 45 degrees of the enemy's facing angle. 
+			// Loop through all players in the game and target the closest one that is alive and visible within 45 degrees of the enemy's facing angle.
 			if (playeringame[i] && players[i].mo.health > 0 && absangle(angle, AngleTo(players[i].mo)) < 45 && CheckSight(players[i].mo))
 			{
 				double pdist = Distance2D(players[i].mo);
@@ -265,7 +265,7 @@ class ClassicBase : Actor
 				return;
 			}
 			else if (
-				curmissile && 
+				curmissile &&
 				(
 					GameHandler.WolfRandom() < chance || // Some boss enemies and fake Hitler
 					(
@@ -304,7 +304,7 @@ class ClassicBase : Actor
 				if (bCanUseWalls && BlockingLine.activation & SPAC_MUse)
 				{
 					BlockingLine.Activate(self, 0, SPAC_Use);
-					
+
 					frame = 4;
 					tics = 25;
 
@@ -347,7 +347,7 @@ class ClassicBase : Actor
 		Vector2 absdelta;
 		absdelta.x = abs(delta.x);
 		absdelta.y = abs(delta.y);
-	
+
 		if (absdelta.x > absdelta.y)
 		{
 			temp = d[0];
@@ -398,7 +398,7 @@ class ClassicBase : Actor
 		olddir = movedir;
 		turnaround = opposite[movedir];
 		[delta, d[0], d[1]] = GetDirections();
-		
+
 		Vector2 absdelta;
 		absdelta.x = abs(delta.x);
 		absdelta.y = abs(delta.y);
@@ -520,7 +520,7 @@ class ClassicBase : Actor
 
 		int d[2];
 		Vector2 delta;
-		
+
 		[delta, d[0], d[1]] = GetDirections();
 
 		if (d[0] != DI_NODIR && d[1] != DI_NODIR)
@@ -660,7 +660,7 @@ class ClassicBase : Actor
 		// Lower hitchance for enemies that are in the player's FOV (hard-coded to 45 degrees right/left)
 		double targetangle = target.AngleTo(self);
 		int multiplier = absangle(target.angle, targetangle) < 45 ? 16 : 8;
-		
+
 		// Lower hitchance based on distance
 		hitchance -= dist * multiplier;
 
@@ -822,7 +822,7 @@ class ClassicNazi : ClassicBase
 					SetStateLabel("TurnAround");
 					return;
 				}
-				
+
 				if (handler && handler.curmap)
 				{
 					bool initial = (level.time < 30);
@@ -880,7 +880,7 @@ class ClassicNazi : ClassicBase
 							blocked = true;
 						}
 					}
-				
+
 					if (a)
 					{
 						BlockThingsIterator it = BlockThingsIterator.CreateFromPos(nextsector.CenterSpot.x, nextsector.CenterSpot.y, pos.z, 64, 32, false);
@@ -1008,7 +1008,7 @@ class ClassicNazi : ClassicBase
 			if (bCanUseWalls && BlockingLine.activation & SPAC_MUse)
 			{
 				BlockingLine.Activate(self, 0, SPAC_Use);
-				
+
 				frame = 4;
 				tics = 25;
 				BlockingLine = null;
@@ -1096,7 +1096,7 @@ class ClassicBoss : ClassicBase
 		if (MapHandler.IsParsedMap() && !GetDropItems())
 		{
 			MapHandler handler = MapHandler.Get();
-			
+
 			if (handler && handler.curmap)
 			{
 				String mapname = handler.curmap.mapname;
@@ -1177,7 +1177,7 @@ class Dog : ClassicNazi
 	override bool CanCollideWith(Actor other, bool passive)
 	{
 		if (other is "Dog" && other.InStateSequence(other.curState, other.MeleeState)) { return false; }
-		
+
 		return Super.CanCollideWith(other, passive);
 	}
 }
@@ -1641,7 +1641,7 @@ class FakeHitler : ClassicNazi
 		ClassicBase.ScoreAmount 2000;
 		ClassicBase.SkillHealth 200, 300, 400, 500;
 	}
-	
+
 	States
 	{
 		Spawn:
@@ -1941,7 +1941,7 @@ class PacManGhost : ClassicBase
 	override bool CanCollideWith(Actor other, bool passive)
 	{
 		if (other.bIsMonster) { return false; }
-		
+
 		return Super.CanCollideWith(other, passive);
 	}
 }
