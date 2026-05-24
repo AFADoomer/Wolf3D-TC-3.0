@@ -54,9 +54,6 @@ vec4 ProcessAlphaMap(inout Material material)
 #else
 	float shadowclip = 1.0 - 10.0 / size.y;
 #endif
-
-	if (color == transparent) { color.a = 0.0; }
-
 	if (vTexCoord.t < shadowclip) { return color; }
 
 	vec4 shadowmap = texture(shadow, vTexCoord.st);

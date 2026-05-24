@@ -95,6 +95,29 @@ class GameHandler : StaticEventHandler
 			if (keys.Size() < 2) { if (keys.Find("YellowKey") == keys.Size() && keys.Find("YellowKeyLost") == keys.Size()) { keys.Push("YellowKey"); } }
 			if (keys.Size() < 2) { if (keys.Find("BlueKey") == keys.Size() && keys.Find("BlueKeyLost") == keys.Size()) { keys.Push("BlueKey"); } }
 		}
+
+		if (!MapHandler.IsParsedMap()) { return; }
+
+		for (int s = 0; s < level.sectors.Size(); s++)
+		{
+			let sec = level.sectors[s];
+			if (!sec || !sec.thinglist) { continue; }
+
+			Actor thing = sec.thinglist;
+			while (thing)
+			{
+				TextureID tex = thing.CurState.GetSpriteTexture(0);
+				String texname = TexMan.GetName(tex);
+
+				if (TexMan.GetCanvas(texname, TexMan.Type_Any))
+				{
+					thing.SpriteOffset.x = -32;
+					thing.SpriteOffset.y = -64;
+				}
+
+				thing = thing.snext;
+			}
+		}
 	}
 
 	override void WorldThingSpawned(WorldEvent e)

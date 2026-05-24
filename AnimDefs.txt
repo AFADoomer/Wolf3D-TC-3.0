@@ -282,6 +282,57 @@ canvastexture "Patches/Walls/WALL0253.png" 64 64
 canvastexture "Patches/Walls/WALL0254.png" 64 64
 canvastexture "Patches/Walls/WALL0255.png" 64 64
 
+canvastexture "DEMO" 64 64 worldpanning translucent
+canvastexture "DEATHCAM" 64 64 worldpanning translucent
+canvastexture "POL1A0" 64 64 worldpanning translucent
+canvastexture "BARLC0" 64 64 worldpanning translucent
+canvastexture "TAB1A0" 64 64 worldpanning translucent
+canvastexture "LIT1A0" 64 64 worldpanning translucent
+canvastexture "LIT3A0" 64 64 worldpanning translucent
+canvastexture "HNG1A0" 64 64 worldpanning translucent
+canvastexture "HLTHC0" 64 64 worldpanning translucent
+canvastexture "COLWA0" 64 64 worldpanning translucent
+canvastexture "PLT1A0" 64 64 worldpanning translucent
+canvastexture "BONCA0" 64 64 worldpanning translucent
+canvastexture "SINKA0" 64 64 worldpanning translucent
+canvastexture "PLT2A0" 64 64 worldpanning translucent
+canvastexture "VASEC0" 64 64 worldpanning translucent
+canvastexture "TAB2A0" 64 64 worldpanning translucent
+canvastexture "LIT5A0" 64 64 worldpanning translucent
+canvastexture "POT1A0" 64 64 worldpanning translucent
+canvastexture "KNIGA0" 64 64 worldpanning translucent
+canvastexture "CAG1A0" 64 64 worldpanning translucent
+canvastexture "CAG2A0" 64 64 worldpanning translucent
+canvastexture "POB1A0" 64 64 worldpanning translucent
+canvastexture "KEYSA0" 64 64 worldpanning translucent
+canvastexture "KEYSB0" 64 64 worldpanning translucent
+canvastexture "BED1A0" 64 64 worldpanning translucent
+canvastexture "BASKA0" 64 64 worldpanning translucent
+canvastexture "HLTHD0" 64 64 worldpanning translucent
+canvastexture "HLTHE0" 64 64 worldpanning translucent
+canvastexture "CCLIA0" 64 64 worldpanning translucent
+canvastexture "CMGUP0" 64 64 worldpanning translucent
+canvastexture "CCGUP0" 64 64 worldpanning translucent
+canvastexture "TRECA0" 64 64 worldpanning translucent
+canvastexture "TRECC0" 64 64 worldpanning translucent
+canvastexture "TRECD0" 64 64 worldpanning translucent
+canvastexture "TRECB0" 64 64 worldpanning translucent
+canvastexture "LIFEA0" 64 64 worldpanning translucent
+canvastexture "HLTHB0" 64 64 worldpanning translucent
+canvastexture "BAR2A0" 64 64 worldpanning translucent
+canvastexture "WEL1A0" 64 64 worldpanning translucent
+canvastexture "WEL2A0" 64 64 worldpanning translucent
+canvastexture "HLTHA0" 64 64 worldpanning translucent
+canvastexture "FLACA0" 64 64 worldpanning translucent
+canvastexture "POB3A0" 64 64 worldpanning translucent
+canvastexture "POB2C0" 64 64 worldpanning translucent
+canvastexture "POB5A0" 64 64 worldpanning translucent
+canvastexture "POB4A0" 64 64 worldpanning translucent
+canvastexture "POT2A0" 64 64 worldpanning translucent
+canvastexture "STOVA0" 64 64 worldpanning translucent
+canvastexture "SPECA0" 64 64 worldpanning translucent
+canvastexture "VINEA0" 64 64 worldpanning translucent
+
 canvastexture "Patches/Walls/WALL1000.png" 64 64
 canvastexture "Patches/Walls/WALL1001.png" 64 64
 canvastexture "Patches/Walls/WALL1002.png" 64 64

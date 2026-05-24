@@ -166,36 +166,38 @@ class ParsedGraphic
 
 		if (expand)
 		{
-			int readoffset;
-			int firstcolumn, lastcolumn;
+			uint readoffset;
+			uint firstcolumn, lastcolumn;
 			uint instructionoffset;
 
 			[firstcolumn, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
 			[lastcolumn, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
 
-			for (int c = firstcolumn; c <= lastcolumn; ++c)
+			for (uint c = firstcolumn; c <= lastcolumn; ++c)
 			{
 				[instructionoffset, readoffset] = WolfMapParser.GetLittleEndian(data, readoffset, 2);
-				uint linecmds = instructionoffset;
 
-				int start, bottom, top;
-				while (linecmds < data.length())
+				int start;
+				uint bottom, top;
+				while (instructionoffset < data.length())
 				{
-					[bottom, linecmds] = WolfMapParser.GetLittleEndian(data, linecmds, 2);
+					[bottom, instructionoffset] = WolfMapParser.GetLittleEndian(data, instructionoffset, 2);
 					if (bottom == 0) { break; }
 
-					[start, linecmds] = WolfMapParser.GetLittleEndian(data, linecmds, 2);
-					[top, linecmds] = WolfMapParser.GetLittleEndian(data, linecmds, 2);
+					[start, instructionoffset] = WolfMapParser.GetLittleEndian(data, instructionoffset, 2);
+					[top, instructionoffset] = WolfMapParser.GetLittleEndian(data, instructionoffset, 2);
 
 					top /= 2;
 					bottom /= 2;
 
+					if (start > 0x7FFF) { start = -(0xFFFF - start + 1); } // Convert to signed integer
+
 					let post = GraphicPost.Create(c, top, bottom);
 					posts.Push(post);
 
-					for (int r = top; r < bottom; ++r)
+					for (uint r = top; r < bottom; ++r)
 					{
-						int paletteindex = data.ByteAt(start + r);
+						uint paletteindex = data.ByteAt(start + r);
 						post.data.Push(palette[paletteindex]);
 					}
 				}
@@ -203,12 +205,12 @@ class ParsedGraphic
 		}
 		else
 		{
-			for (int x = 0; x < 64; x++)
+			for (uint x = 0; x < 64; x++)
 			{
 				let post = GraphicPost.Create(x);
 				posts.Push(post);
-				
-				for (int y = 0; y < 64; y++)
+
+				for (uint y = 0; y < 64; y++)
 				{
 					int paletteindex = data.ByteAt(x * 64 + y);
 					post.data.Push(palette[paletteindex]);
@@ -265,9 +267,6 @@ class WolfGraphicParser
 		int spritecount = 0;
 
 		int sizereadoffset = readoffset + d.chunkcount * 4;
-
-		// let spriteoffsets = new("Shape2DTransform");
-		// spriteoffsets.Translate((-32, 64));
 
 		Array<Color> palette;
 
@@ -331,36 +330,33 @@ class WolfGraphicParser
 
 				d.graphics.Push(newgraphic);
 			}
-			// else if (a < d.soundaddress)
-			// {
-			// 	newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
-			// 	newgraphic.Parse(palette, true);
+			else if (a < d.soundaddress)
+			{
+				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
 
-			// 	Canvas graphic;
-				
-			// 	if (spritenames && a - wallcount < spritenames.children.Size())
-			// 	{
-			// 		newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
-			// 		graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
-			// 	}
-			// 	else
-			// 	{
-			// 		newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
-			// 		graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
-			// 	}
-			
-			// 	graphic.SetTransform(spriteoffsets);
+				Canvas graphic;
 
-			// 	if (a - wallcount == 3) { DumpGraphicToConsole(newgraphic); }
+				if (spritenames && a - wallcount < spritenames.children.Size())
+				{
+					newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
+					newgraphic.Parse(palette, true);
+					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
+				}
+				else
+				{
+					newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
+					newgraphic.Parse(palette, true);
+					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
+				}
 
-			// 	spritecount++;
+				spritecount++;
 
-			// 	d.graphics.Push(newgraphic);
-			// }
+				d.graphics.Push(newgraphic);
+			}
 		}
 	}
 
-	static void DumpGraphicToConsole(ParsedGraphic graphic)
+	static void DumpGraphicToConsole(ParsedGraphic graphic, bool halt = false)
 	{
 		Color data[64][64];
 		for (int x = 0; x < 64; x++) { for (int y = 0; y < 64; y++) { data[x][y] = Color(152, 0, 136); } }
@@ -381,12 +377,16 @@ class WolfGraphicParser
 			for (int c = 0; c < 64; c++)
 			{
 				int index = c * 64 + r;
-				row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), "██");
+				Color colorindex = data[c][r];
+				if (colorindex == Color(152, 0, 136)) { row.AppendFormat(" "); }
+				else { row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), "█"); }
 			}
 
 			console.printf(row);
 			row = "";
 		}
+
+		if (halt) { ThrowAbortException("Halting..."); }
 	}
 
 	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", bool flip = false)
@@ -396,28 +396,19 @@ class WolfGraphicParser
 		Canvas currentcanvas = TexMan.GetCanvas(canvasname);
 		if (!currentcanvas) { return null; }
 
-		String typename = "graphic"; 
-		if (currentcanvas)
+		currentcanvas.Dim(Color(152, 0, 136), 0.0, 0, 0, 64, 64, overwritealpha:true);
+
+		for (int p = 0; p < graphic.posts.Size(); p++)
 		{
-			currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
-			currentcanvas.Dim(Color(152, 0, 136), 1.0, 0, 0, 64, 64);
-
-			for (int p = 0; p < graphic.posts.Size(); p++)
+			let post = graphic.posts[p];
+			int y = post.start;
+			for (int d = 0; d < post.data.Size(); d++)
 			{
-				let post = graphic.posts[p];
-				int y = post.start;
-				for (int d = 0; d < post.data.Size(); d++)
-				{
-					currentcanvas.Dim(post.data[d], 1.0, post.column, flip ? 63 - y++ : y++, 1, 1);
-				}
+				currentcanvas.Dim(post.data[d], 1.0, post.column, flip ? 63 - y++ : y++, 1, 1, overwritealpha:true);
 			}
-
-			return currentcanvas;
 		}
 
-		console.printf("\c[Yellow]Unable to write %s: %s (offset 0x%x, size %d)!", typename, canvasname, graphic.position, graphic.size);
-
-		return null;
+		return currentcanvas;
 	}
 
 	static int, int GetLittleEndian(String input, int offset = 0, int count = 2)
