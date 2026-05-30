@@ -168,6 +168,28 @@ class WolfRocketPlayer : WolfRocket
 	}
 }
 
+class WolfRocketLostPlayer : WolfRocketLost
+{
+	Default
+	{
+		+RANDOMIZE
+		Speed 20;
+		DamageType "Rocket";
+	}
+
+	States
+	{
+		Death:
+			BAL4 A 3 Bright WolfExplode(100, true, XF_HURTSOURCE, 64);
+			BAL4 BC 3  Bright
+			{
+				if (!g_noblood) { A_FadeOut(0.33); }
+				lightradius /= alpha;
+			}
+			Stop;
+	}
+}
+
 class WolfRocketSmoke : Actor
 {
 	Default

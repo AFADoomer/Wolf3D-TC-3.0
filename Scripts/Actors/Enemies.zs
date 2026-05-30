@@ -811,13 +811,13 @@ class ClassicNazi : ClassicBase
 			UNKN A 0;
 		Spawn.Stand:
 			"####" EEEEEE 4 {
-				if (bDormant || bDeafandBlind || level.time < 2 || GameHandler.CheckFizzle()) { return; }
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
 				A_LookEx (0, 0, 0, 2048, 0, "See");
 			}
 			Loop;
 		Spawn.PatrolNoClip:
 			"####" # 0 {
-				if (level.time > 30 && angle % 90 != 45)
+				if (GetAge() > 30 && angle % 90 != 45)
 				{
 					SetStateLabel("TurnAround");
 					return;
@@ -825,7 +825,7 @@ class ClassicNazi : ClassicBase
 
 				if (handler && handler.curmap)
 				{
-					bool initial = (level.time < 30);
+					bool initial = (GetAge() < 30);
 					sector nextsector = Level.PointInSector((pos.xy + RotateVector((48, 0), angle)));
 					Vector2 newpos = ParsedMap.CoordsToGrid(nextsector.CenterSpot);
 
@@ -1053,7 +1053,7 @@ class ClassicBoss : ClassicBase
 			UNKN A 0;
 		Spawn.Stand:
 			"####" A 5 {
-				if (bDormant || bDeafandBlind || level.time < 2 || GameHandler.CheckFizzle()) { return; }
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
 				A_Look();
 			}
 			Loop;

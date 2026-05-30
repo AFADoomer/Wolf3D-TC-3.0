@@ -820,7 +820,7 @@ class WolfRocketLauncher : ClassicWeapon
 			WROC B 3;
 		Hold:
 			WROC B 2;
-			WROC C 10 Bright A_FireProjectile("WolfRocketPlayer", 0, 1, 0, -8);
+			WROC C 10 Bright A_FireProjectile(g_sod < 2 ? "WolfRocketPlayer" : "WolfRocketLostPlayer", 0, 1, 0, -8);
 			WROC D 25;
 			WROC D 5 A_ReFire;
 			Goto Ready;
