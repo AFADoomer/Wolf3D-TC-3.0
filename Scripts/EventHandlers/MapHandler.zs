@@ -462,11 +462,6 @@ class MapHandler : StaticEventHandler
 			if (gamestate == GS_LEVEL)
 			{
 				level.ChangeLevel("Level", 0, 0, g_warpskill);
-
-				if (mapname == "Wolf3D TC Test")
-				{
-					console.printf("Use '\c[Yellow]netevent listmaps\c-' to see available maps.\nUse '\c[Yellow]netevent initialize:<mapname_with_underscores>\c-' to load a specific map.", e.Name);
-				}
 			}
 		}
 		else if (e.Name == "listmaps")
@@ -477,7 +472,17 @@ class MapHandler : StaticEventHandler
 				console.printf("'%s' (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
-		else if (e.Name == "updatestyle" && !e.IsManual)
+		else if (e.Name == "reloadtextures")
+		{
+			let handler = GraphicsHandler.Get();
+			if (!handler) { return; }
+
+			handler.ParseGraphics();
+		}
+
+		if (e.IsManual) { return; }
+
+		if (e.Name == "updatestyle")
 		{
 			if (e.args[0] >= 0) { InitializeParsedMap(e.args[0], false); }
 		}
@@ -837,7 +842,7 @@ class MapHandler : StaticEventHandler
 		int floor;
 		[floor, tile] = MapHandler.TileAt(pos);
 
-		if ((tile.flags & TileInfo.TILE_FLOOR) && this.activatedfloors.Find(floor) == this.activatedfloors.Size())
+		if ((tile && tile.flags & TileInfo.TILE_FLOOR) && this.activatedfloors.Find(floor) == this.activatedfloors.Size())
 		{
 			this.activatedfloors.Push(floor);
 
@@ -1958,7 +1963,7 @@ class WolfMapParser
 
 		String game = d.path.Mid(d.path.length() - 3);
 		if (game ~== "WL1" || game ~== "WL3" || game ~== "WL6") { parsedmaps.gametype = 0; }
-		else if (game ~== "SOD" || game ~== "SD1") { parsedmaps.gametype = 1; }
+		else if (game ~== "SOD" || game ~== "SD1" || game ~== "SDM") { parsedmaps.gametype = 1; }
 		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
 		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
 		else if (game ~== "BS1" || game ~== "BS6") { parsedmaps.gametype = 4; }
@@ -2205,9 +2210,16 @@ class DataFile
 
 			String hash = MD5.hash(Wads.ReadLump(d.lump));
 
-			if (hash == "30fecd7cce6bc70402651ec922d2da3d")
+			if (
+				hash == "D50DFC66596C00622CF5731A7A071858" || // v1.1 Shareware
+				hash == "F0BEDEB1BA51BAAB557328693665ADE2" || // v1.2 Shareware
+				hash == "30fecd7cce6bc70402651ec922d2da3d" // 1.4 Shareware
+			)
 			{ d.gametitle = "Wolfenstein 3D Shareware"; }
-			if (hash == "cec494930f3ac0545563cbd23cd611d6") // v1.2
+			if (
+				hash == "8B6CE9EAD4AF23119D4FE3F1EB6BD47B" || // v1.2
+				hash == "8D9F2C0F47E02D405A6B785217679299" // v1.4
+			)
 			{ d.gametitle = "Wolfenstein 3D (Episodes 1-3)"; }
 			else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
 			{ d.gametitle = "Wolfenstein 3D v1.1"; }
@@ -2249,7 +2261,7 @@ class DataFile
 				else if (ext == "wl3") { d.gametitle = "Wolfenstein 3D (Episodes 1-3) (Modified)"; }
 				else if (ext == "wl1") { d.gametitle = "Wolfenstein 3D Shareware (Modified)"; }
 				else if (ext == "sdm") { d.gametitle = "Spear of Destiny Demo (Modified)"; }
-				else if (ext == "sod" || ext == "sd1") { d.gametitle = "Spear of Destiny (Modified)"; }
+				else if (ext == "sod" || ext == "sd1" || ext == "sdm") { d.gametitle = "Spear of Destiny (Modified)"; }
 				else if (ext == "sd2") { d.gametitle = "Return to Danger (Modified)"; }
 				else if (ext == "sd3") { d.gametitle = "The Ultimate Challenge (Modified)"; }
 				else if (ext == "bs1")

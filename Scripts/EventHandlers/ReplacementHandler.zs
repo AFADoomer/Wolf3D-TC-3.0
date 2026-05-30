@@ -185,10 +185,17 @@ class ReplacementHandler : StaticEventHandler
 				break;
 		}
 
-		ChangeFlat(0, ceilname);
-		ChangeFlat(800, ceilname);
-		ChangeFlat(0, floorname, sector.floor);
-		ChangeFlat(800, floorname, sector.floor);
+		ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
+		floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
+
+		for (int s = 0; s < level.sectors.Size(); s++)
+		{
+			let sec = level.sectors[s];
+			if (!sec || sec.CenterFloor() == sec.CenterCeiling()) { continue; }
+
+			if (ceiltex.IsValid()) { sec.SetTexture(sector.ceiling, ceiltex); }
+			if (floortex.IsValid()) { sec.SetTexture(sector.floor, floortex); }
+		}
 	}
 
 	static void ChangeFlat(int tag, String texname, int which = sector.ceiling)

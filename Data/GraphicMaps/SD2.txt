@@ -4,139 +4,767 @@ SD2
 
 	Textures
 	{
-		"Patches/Walls/WALL2000.png";
-		"Patches/Walls/WALL2001.png";
-		"Patches/Walls/WALL2002.png";
-		"Patches/Walls/WALL2003.png";
-		"Patches/Walls/WALL2004.png";
-		"Patches/Walls/WALL2005.png";
-		"Patches/Walls/WALL2006.png";
-		"Patches/Walls/WALL2007.png";
-		"Patches/Walls/WALL2008.png";
-		"Patches/Walls/WALL2009.png";
-		"Patches/Walls/WALL2010.png";
-		"Patches/Walls/WALL2011.png";
-		"Patches/Walls/WALL2012.png";
-		"Patches/Walls/WALL2013.png";
-		"Patches/Walls/WALL2014.png";
-		"Patches/Walls/WALL2015.png";
-		"Patches/Walls/WALL2016.png";
-		"Patches/Walls/WALL2017.png";
-		"Patches/Walls/WALL2018.png";
-		"Patches/Walls/WALL2019.png";
-		"Patches/Walls/WALL2020.png";
-		"Patches/Walls/WALL2021.png";
-		"Patches/Walls/WALL2022.png";
-		"Patches/Walls/WALL2023.png";
-		"Patches/Walls/WALL2024.png";
-		"Patches/Walls/WALL2025.png";
-		"Patches/Walls/WALL2026.png";
-		"Patches/Walls/WALL2027.png";
-		"Patches/Walls/WALL2028.png";
-		"Patches/Walls/WALL2029.png";
-		"Patches/Walls/WALL2030.png";
-		"Patches/Walls/WALL2031.png";
-		"Patches/Walls/WALL2032.png";
-		"Patches/Walls/WALL2033.png";
-		"Patches/Walls/WALL2034.png";
-		"Patches/Walls/WALL2035.png";
-		"Patches/Walls/WALL2036.png";
-		"Patches/Walls/WALL2037.png";
-		"Patches/Walls/WALL2038.png";
-		"Patches/Walls/WALL2039.png";
-		"Patches/Walls/WALL2040.png";
-		"Patches/Walls/WALL2041.png";
-		"Patches/Walls/WALL2042.png";
-		"Patches/Walls/WALL2043.png";
-		"Patches/Walls/WALL2044.png";
-		"Patches/Walls/WALL2045.png";
-		"Patches/Walls/WALL2046.png";
-		"Patches/Walls/WALL2047.png";
-		"Patches/Walls/WALL2048.png";
-		"Patches/Walls/WALL2049.png";
-		"Patches/Walls/WALL2050.png";
-		"Patches/Walls/WALL2051.png";
-		"Patches/Walls/WALL2052.png";
-		"Patches/Walls/WALL2053.png";
-		"Patches/Walls/WALL2054.png";
-		"Patches/Walls/WALL2055.png";
-		"Patches/Walls/WALL2056.png";
-		"Patches/Walls/WALL2057.png";
-		"Patches/Walls/WALL2058.png";
-		"Patches/Walls/WALL2059.png";
-		"Patches/Walls/WALL2060.png";
-		"Patches/Walls/WALL2061.png";
-		"Patches/Walls/WALL2062.png";
-		"Patches/Walls/WALL2063.png";
-		"Patches/Walls/WALL2064.png";
-		"Patches/Walls/WALL2065.png";
-		"Patches/Walls/WALL2066.png";
-		"Patches/Walls/WALL2067.png";
-		"Patches/Walls/WALL2068.png";
-		"Patches/Walls/WALL2069.png";
-		"Patches/Walls/WALL2070.png";
-		"Patches/Walls/WALL2071.png";
-		"Patches/Walls/WALL2072.png";
-		"Patches/Walls/WALL2073.png";
-		"Patches/Walls/WALL2074.png";
-		"Patches/Walls/WALL2075.png";
-		"Patches/Walls/WALL2076.png";
-		"Patches/Walls/WALL2077.png";
-		"Patches/Walls/WALL2078.png";
-		"Patches/Walls/WALL2079.png";
-		"Patches/Walls/WALL2080.png";
-		"Patches/Walls/WALL2081.png";
-		"Patches/Walls/WALL2082.png";
-		"Patches/Walls/WALL2083.png";
-		"Patches/Walls/WALL2084.png";
-		"Patches/Walls/WALL2085.png";
-		"Patches/Walls/WALL2086.png";
-		"Patches/Walls/WALL2087.png";
-		"Patches/Walls/WALL2088.png";
-		"Patches/Walls/WALL2089.png";
-		"Patches/Walls/WALL2090.png";
-		"Patches/Walls/WALL2091.png";
-		"Patches/Walls/WALL2092.png";
-		"Patches/Walls/WALL2093.png";
-		"Patches/Walls/WALL2094.png";
-		"Patches/Walls/WALL2095.png";
-		"Patches/Walls/WALL2096.png";
-		"Patches/Walls/WALL2097.png";
-		"Patches/Walls/WALL2098.png";
-		"Patches/Walls/WALL2099.png";
-		"Patches/Walls/WALL2100.png";
-		"Patches/Walls/WALL2101.png";
-		"Patches/Walls/WALL2102.png";
-		"Patches/Walls/WALL2103.png";
-		"Patches/Walls/WALL2104.png";
-		"Patches/Walls/WALL2105.png";
-		"Patches/Walls/WALL2106.png";
-		"Patches/Walls/WALL2107.png";
-		"Patches/Walls/WALL2108.png";
-		"Patches/Walls/WALL2109.png";
-		"Patches/Walls/WALL2110.png";
-		"Patches/Walls/WALL2111.png";
-		"Patches/Walls/WALL2112.png";
-		"Patches/Walls/WALL2113.png";
-		"Patches/Walls/WALL2114.png";
-		"Patches/Walls/WALL2115.png";
-		"Patches/Walls/WALL2116.png";
-		"Patches/Walls/WALL2117.png";
-		"Patches/Walls/WALL2118.png";
-		"Patches/Walls/WALL2119.png";
-		"Patches/Walls/WALL2120.png";
-		"Patches/Walls/WALL2121.png";
-		"Patches/Walls/WALL2122.png";
-		"Patches/Walls/WALL2123.png";
-		"Patches/Walls/WALL2124.png";
-		"Patches/Walls/WALL2125.png";
+		0
+		{
+			"Patches/Walls/WALL2000.png";
+			"WLF2001A";
+		}
+
+		1
+		{
+			"Patches/Walls/WALL2001.png";
+			"WLF2001B";
+		}
+
+		2
+		{
+			"Patches/Walls/WALL2002.png";
+			"WLF2002A";
+		}
+
+		3
+		{
+			"Patches/Walls/WALL2003.png";
+			"WLF2002B";
+		}
+
+		4
+		{
+			"Patches/Walls/WALL2004.png";
+			"WLF2003A";
+		}
+
+		5
+		{
+			"Patches/Walls/WALL2005.png";
+			"WLF2003B";
+		}
+
+		6
+		{
+			"Patches/Walls/WALL2006.png";
+			"WLF2004A";
+		}
+
+		7
+		{
+			"Patches/Walls/WALL2007.png";
+			"WLF2004B";
+		}
+
+		8
+		{
+			"Patches/Walls/WALL2008.png";
+			"WLF2005A";
+		}
+
+		9
+		{
+			"Patches/Walls/WALL2009.png";
+			"WLF2005B";
+		}
+
+
+		10{
+			"Patches/Walls/WALL2010.png";
+			"WLF2006A";
+		}
+
+		11
+		{
+			"Patches/Walls/WALL2011.png";
+			"WLF2006B";
+		}
+
+		12
+		{
+			"Patches/Walls/WALL2012.png";
+			"WLF2007A";
+		}
+
+		13
+		{
+			"Patches/Walls/WALL2013.png";
+			"WLF2007B";
+		}
+
+		14
+		{
+			"Patches/Walls/WALL2014.png";
+			"WLF2008A";
+		}
+
+		15
+		{
+			"Patches/Walls/WALL2015.png";
+			"WLF2008B";
+		}
+
+		16
+		{
+			"Patches/Walls/WALL2016.png";
+			"WLF2009A";
+		}
+
+		17
+		{
+			"Patches/Walls/WALL2017.png";
+			"WLF2009B";
+		}
+
+		18
+		{
+			"Patches/Walls/WALL2018.png";
+			"WLF200AA";
+		}
+
+		19
+		{
+			"Patches/Walls/WALL2019.png";
+			"WLF200AB";
+		}
+
+		20
+		{
+			"Patches/Walls/WALL2020.png";
+			"WLF200BA";
+		}
+
+		21
+		{
+			"Patches/Walls/WALL2021.png";
+			"WLF200BB";
+		}
+
+		22
+		{
+			"Patches/Walls/WALL2022.png";
+			"WLF200CA";
+		}
+
+		23
+		{
+			"Patches/Walls/WALL2023.png";
+			"WLF200CB";
+		}
+
+		24
+		{
+			"Patches/Walls/WALL2024.png";
+			"WLF200DA";
+		}
+
+		25
+		{
+			"Patches/Walls/WALL2025.png";
+			"WLF200DB";
+		}
+
+		26
+		{
+			"Patches/Walls/WALL2026.png";
+			"WLF200EA";
+		}
+
+		27
+		{
+			"Patches/Walls/WALL2027.png";
+			"WLF200EB";
+		}
+
+		28
+		{
+			"Patches/Walls/WALL2028.png";
+			"WLF200FA";
+		}
+
+		29
+		{
+			"Patches/Walls/WALL2029.png";
+			"WLF200FB";
+		}
+
+		30
+		{
+			"Patches/Walls/WALL2030.png";
+			"WLF2010A";
+		}
+
+		31
+		{
+			"Patches/Walls/WALL2031.png";
+			"WLF2010B";
+		}
+
+		32
+		{
+			"Patches/Walls/WALL2032.png";
+			"WLF2011A";
+		}
+
+		33
+		{
+			"Patches/Walls/WALL2033.png";
+			"WLF2011B";
+		}
+
+		34
+		{
+			"Patches/Walls/WALL2034.png";
+			"WLF2012A";
+		}
+
+		35
+		{
+			"Patches/Walls/WALL2035.png";
+			"WLF2012B";
+		}
+
+		36
+		{
+			"Patches/Walls/WALL2036.png";
+			"WLF2013A";
+		}
+
+		37
+		{
+			"Patches/Walls/WALL2037.png";
+			"WLF2013B";
+		}
+
+		38
+		{
+			"Patches/Walls/WALL2038.png";
+			"WLF2014A";
+		}
+
+		39
+		{
+			"Patches/Walls/WALL2039.png";
+			"WLF2014B";
+		}
+
+		40
+		{
+			"Patches/Walls/WALL2040.png";
+			"WLF2015A";
+		}
+
+		41
+		{
+			"Patches/Walls/WALL2041.png";
+			"WLF2015B";
+			"WLF2055B";
+		}
+
+		42
+		{
+			"Patches/Walls/WALL2042.png";
+			"WLF2016A";
+		}
+
+		43
+		{
+			"Patches/Walls/WALL2043.png";
+			"WLF2016B";
+		}
+
+		44
+		{
+			"Patches/Walls/WALL2044.png";
+			"WLF2017A";
+		}
+
+		45
+		{
+			"Patches/Walls/WALL2045.png";
+			"WLF2017B";
+		}
+
+		46
+		{
+			"Patches/Walls/WALL2046.png";
+			"WLF2018A";
+		}
+
+		47
+		{
+			"Patches/Walls/WALL2047.png";
+			"WLF2018B";
+		}
+
+		48
+		{
+			"Patches/Walls/WALL2048.png";
+			"WLF2019A";
+		}
+
+		49
+		{
+			"Patches/Walls/WALL2049.png";
+			"WLF2019B";
+		}
+
+		50
+		{
+			"Patches/Walls/WALL2050.png";
+			"WLF201AA";
+		}
+
+		51
+		{
+			"Patches/Walls/WALL2051.png";
+			"WLF201AB";
+		}
+
+		52
+		{
+			"Patches/Walls/WALL2052.png";
+			"WLF201BA";
+		}
+
+		53
+		{
+			"Patches/Walls/WALL2053.png";
+			"WLF201BB";
+		}
+
+		54
+		{
+			"Patches/Walls/WALL2054.png";
+			"WLF201CA";
+		}
+
+		55
+		{
+			"Patches/Walls/WALL2055.png";
+			"WLF201CB";
+		}
+
+		56
+		{
+			"Patches/Walls/WALL2056.png";
+			"WLF201DA";
+		}
+
+		57
+		{
+			"Patches/Walls/WALL2057.png";
+			"WLF201DB";
+		}
+
+		58
+		{
+			"Patches/Walls/WALL2058.png";
+			"WLF201EA";
+		}
+
+		59
+		{
+			"Patches/Walls/WALL2059.png";
+			"WLF201EB";
+		}
+
+		60
+		{
+			"Patches/Walls/WALL2060.png";
+			"WLF201FA";
+		}
+
+		61
+		{
+			"Patches/Walls/WALL2061.png";
+			"WLF201FB";
+		}
+
+		62
+		{
+			"Patches/Walls/WALL2062.png";
+			"WLF2020A";
+		}
+
+		63
+		{
+			"Patches/Walls/WALL2063.png";
+			"WLF2020B";
+		}
+
+		64
+		{
+			"Patches/Walls/WALL2064.png";
+			"WLF2021A";
+		}
+
+		65
+		{
+			"Patches/Walls/WALL2065.png";
+			"WLF2021B";
+		}
+
+		66
+		{
+			"Patches/Walls/WALL2066.png";
+			"WLF2022A";
+		}
+
+		67
+		{
+			"Patches/Walls/WALL2067.png";
+			"WLF2022B";
+		}
+
+		68
+		{
+			"Patches/Walls/WALL2068.png";
+			"WLF2023A";
+		}
+
+		69
+		{
+			"Patches/Walls/WALL2069.png";
+			"WLF2023B";
+		}
+
+		70
+		{
+			"Patches/Walls/WALL2070.png";
+			"WLF2024A";
+		}
+
+		71
+		{
+			"Patches/Walls/WALL2071.png";
+			"WLF2024B";
+		}
+
+		72
+		{
+			"Patches/Walls/WALL2072.png";
+			"WLF2025A";
+		}
+
+		73
+		{
+			"Patches/Walls/WALL2073.png";
+			"WLF2025B";
+		}
+
+		74
+		{
+			"Patches/Walls/WALL2074.png";
+			"WLF2026A";
+		}
+
+		75
+		{
+			"Patches/Walls/WALL2075.png";
+			"WLF2026B";
+		}
+
+		76
+		{
+			"Patches/Walls/WALL2076.png";
+			"WLF2027A";
+		}
+
+		77
+		{
+			"Patches/Walls/WALL2077.png";
+			"WLF2027B";
+		}
+
+		78
+		{
+			"Patches/Walls/WALL2078.png";
+			"WLF2028A";
+		}
+
+		79
+		{
+			"Patches/Walls/WALL2079.png";
+			"WLF2028B";
+		}
+
+		80
+		{
+			"Patches/Walls/WALL2080.png";
+			"WLF2029A";
+		}
+
+		81
+		{
+			"Patches/Walls/WALL2081.png";
+			"WLF2029B";
+		}
+
+		82
+		{
+			"Patches/Walls/WALL2082.png";
+			"WLF202AA";
+		}
+
+		83
+		{
+			"Patches/Walls/WALL2083.png";
+			"WLF202AB";
+		}
+
+		84
+		{
+			"Patches/Walls/WALL2084.png";
+			"WLF202BA";
+		}
+
+		85
+		{
+			"Patches/Walls/WALL2085.png";
+			"WLF202BB";
+		}
+
+		86
+		{
+			"Patches/Walls/WALL2086.png";
+			"WLF202CA";
+		}
+
+		87
+		{
+			"Patches/Walls/WALL2087.png";
+			"WLF202CB";
+		}
+
+		88
+		{
+			"Patches/Walls/WALL2088.png";
+			"WLF202DA";
+		}
+
+		89
+		{
+			"Patches/Walls/WALL2089.png";
+			"WLF202DB";
+		}
+
+		90
+		{
+			"Patches/Walls/WALL2090.png";
+			"WLF202EA";
+		}
+
+		91
+		{
+			"Patches/Walls/WALL2091.png";
+			"WLF202EB";
+		}
+
+		92
+		{
+			"Patches/Walls/WALL2092.png";
+			"WLF202FA";
+		}
+
+		93
+		{
+			"Patches/Walls/WALL2093.png";
+			"WLF202FB";
+		}
+
+		94
+		{
+			"Patches/Walls/WALL2094.png";
+			"WLF2030A";
+		}
+
+		95
+		{
+			"Patches/Walls/WALL2095.png";
+			"WLF2030B";
+		}
+
+		96
+		{
+			"Patches/Walls/WALL2096.png";
+			"WLF2031A";
+		}
+
+		97
+		{
+			"Patches/Walls/WALL2097.png";
+			"WLF2031B";
+		}
+
+		98
+		{
+			"Patches/Walls/WALL2098.png";
+			"WLF2032A";
+		}
+
+		99
+		{
+			"Patches/Walls/WALL2099.png";
+			"WLF2032B";
+		}
+
+		100
+		{
+			"Patches/Walls/WALL2100.png";
+			"WLF2033A";
+		}
+
+		101
+		{
+			"Patches/Walls/WALL2101.png";
+			"WLF2033B";
+		}
+
+		102
+		{
+			"Patches/Walls/WALL2102.png";
+			"WLF2034A";
+		}
+
+		103
+		{
+			"Patches/Walls/WALL2103.png";
+			"WLF2034B";
+		}
+
+		104
+		{
+			"Patches/Walls/WALL2104.png";
+			"WLF2035A";
+		}
+
+		105
+		{
+			"Patches/Walls/WALL2105.png";
+			"WLF2035B";
+		}
+
+		106
+		{
+			"Patches/Walls/WALL2106.png";
+			"WLF2036A";
+		}
+
+		107
+		{
+			"Patches/Walls/WALL2107.png";
+			"WLF2036B";
+		}
+
+		108
+		{
+			"Patches/Walls/WALL2108.png";
+			"WLF2037A";
+		}
+
+		109
+		{
+			"Patches/Walls/WALL2109.png";
+			"WLF2037B";
+		}
+
+		110
+		{
+			"Patches/Walls/WALL2110.png";
+			"WLF2038A";
+		}
+
+		111
+		{
+			"Patches/Walls/WALL2111.png";
+			"WLF2038B";
+		}
+
+		112
+		{
+			"Patches/Walls/WALL2112.png";
+			"WLF2039A";
+		}
+
+		113
+		{
+			"Patches/Walls/WALL2113.png";
+			"WLF2039B";
+		}
+
+		114
+		{
+			"Patches/Walls/WALL2114.png";
+			"WLF203AA";
+		}
+
+		115
+		{
+			"Patches/Walls/WALL2115.png";
+			"WLF203AB";
+		}
+
+		116
+		{
+			"Patches/Walls/WALL2116.png";
+			"WLF203BA";
+		}
+
+		117
+		{
+			"Patches/Walls/WALL2117.png";
+			"WLF203BB";
+		}
+
+		118
+		{
+			"Patches/Walls/WALL2118.png";
+			"WLF203CA";
+		}
+
+		119
+		{
+			"Patches/Walls/WALL2119.png";
+			"WLF203CB";
+		}
+
+		120
+		{
+			"Patches/Walls/WALL2120.png";
+			"WLF203DA";
+		}
+
+		121
+		{
+			"Patches/Walls/WALL2121.png";
+			"WLF203DB";
+		}
+
+		122
+		{
+			"Patches/Walls/WALL2122.png";
+			"WLF203EA";
+		}
+
+		123
+		{
+			"Patches/Walls/WALL2123.png";
+			"WLF203EB";
+		}
+
+		124
+		{
+			"Patches/Walls/WALL2124.png";
+			"WLF203FA";
+		}
+
+		125
+		{
+			"Patches/Walls/WALL2125.png";
+			"WLF203FB";
+		}
 
 		126
 		{
 			"Patches/Walls/WALL2126.png";
 			"WLF2DORA" { Flip; }
-			"WLF2DORA" { Flip; }
-			"WLF2DORC";
 			"WLF2DORC";
 		}
 
@@ -144,8 +772,6 @@ SD2
 		{
 			"Patches/Walls/WALL2127.png";
 			"WLF2DORB";
-			"WLF2DORB";
-			"WLF2DORD" { Flip; }
 			"WLF2DORD" { Flip; }
 
 		}
@@ -154,8 +780,6 @@ SD2
 		{
 			"Patches/Walls/WALL2128.png";
 			"WLF2JMBA";
-			"WLF2JMBA";
-			"WLF2JMBC" { Flip; }
 			"WLF2JMBC" { Flip; }
 
 		}
@@ -164,8 +788,6 @@ SD2
 		{
 			"Patches/Walls/WALL2129.png";
 			"WLF2JMBB";
-			"WLF2JMBB";
-			"WLF2JMBD" { Flip; }
 			"WLF2JMBD" { Flip; }
 
 		}
@@ -174,8 +796,6 @@ SD2
 		{
 			"Patches/Walls/WALL2130.png";
 			"WLF2ELEA" { Flip; }
-			"WLF2ELEA" { Flip; }
-			"WLF2ELEC";
 			"WLF2ELEC";
 		}
 
@@ -183,8 +803,6 @@ SD2
 		{
 			"Patches/Walls/WALL2131.png";
 			"WLF2ELEB";
-			"WLF2ELEB";
-			"WLF2ELED" { Flip; }
 			"WLF2ELED" { Flip; }
 
 		}
@@ -193,12 +811,8 @@ SD2
 		{
 			"Patches/Walls/WALL2132.png";
 			"WLF2LK1A" { Flip; }
-			"WLF2LK1A" { Flip; }
-			"WLF2LK1C";
 			"WLF2LK1C";
 			"WLF2LK2A" { Flip; }
-			"WLF2LK2A" { Flip; }
-			"WLF2LK2C";
 			"WLF2LK2C";
 		}
 
@@ -206,13 +820,434 @@ SD2
 		{
 			"Patches/Walls/WALL2133.png";
 			"WLF2LK1B";
-			"WLF2LK1B";
-			"WLF2LK1D" { Flip; }
 			"WLF2LK1D" { Flip; }
 			"WLF2LK2B";
-			"WLF2LK2B";
-			"WLF2LK2D" { Flip; }
 			"WLF2LK2D" { Flip; }
 		}
+	}
+
+	Sprites
+	{
+		"DEMO2";
+		"DEATHCA2";
+		"POL2A0";
+		"BAR3A0";
+		"TAB3A0";
+		"LIT2A0";
+		"LIT4A0";
+		"HNG2A0";
+		"HLTHH0";
+		"PILWA0";
+		"PLT3A0";
+		"BONEB0";
+		"POSKA0";
+		"PLT4A0";
+		"VAS2A0";
+		"TAB4A0";
+		"LIT6A0";
+		"CAG6A0";
+		"KNIGB0";
+		"CAG3A0";
+		"CAG4A0";
+		"POB6A0";
+		"KEYSC0";
+		"KEYSD0";
+		"CAG5A0";
+		"DRATA0";
+		"HLTHI0";
+		"HLTHJ0";
+		"WCLIB0";
+		"MGUNU0";
+		"CGUNU0";
+		"TREAE0";
+		"TREAG0";
+		"TREAH0";
+		"TREAF0";
+		"LIFEB0";
+		"HLTHG0";
+		"BAR4A0";
+		"WEL3A0";
+		"WEL4A0";
+		"HLTHF0";
+		"GZMOA0";
+		"LIT7A0";
+		"POB7A0";
+		"LIT8A0";
+		"GGOOA0";
+		"TAB5A0";
+		"BAR5A0";
+		"PIPEA0";
+		"BUBLA0";
+		"DEVSA0";
+		"WAMMB0";
+		"BJWHA0";
+		"SOFDB0";
+		"WGRNE1";
+		"WGRNE2";
+		"WGRNE3";
+		"WGRNE4";
+		"WGRNE5";
+		"WGRNE6";
+		"WGRNE7";
+		"WGRNE8";
+		"WGRNA1";
+		"WGRNA2";
+		"WGRNA3";
+		"WGRNA4";
+		"WGRNA5";
+		"WGRNA6";
+		"WGRNA7";
+		"WGRNA8";
+		"WGRNB1";
+		"WGRNB2";
+		"WGRNB3";
+		"WGRNB4";
+		"WGRNB5";
+		"WGRNB6";
+		"WGRNB7";
+		"WGRNB8";
+		"WGRNC1";
+		"WGRNC2";
+		"WGRNC3";
+		"WGRNC4";
+		"WGRNC5";
+		"WGRNC6";
+		"WGRNC7";
+		"WGRNC8";
+		"WGRND1";
+		"WGRND2";
+		"WGRND3";
+		"WGRND4";
+		"WGRND5";
+		"WGRND6";
+		"WGRND7";
+		"WGRND8";
+		"WGRNJ0";
+		"WGRNK0";
+		"WGRNL0";
+		"WGRNM0";
+		"WGRNF0";
+		"WGRNN0";
+		"WGRNG0";
+		"WGRNH0";
+		"WGRNI0";
+		"WDOBA1";
+		"WDOBA2";
+		"WDOBA3";
+		"WDOBA4";
+		"WDOBA5";
+		"WDOBA6";
+		"WDOBA7";
+		"WDOBA8";
+		"WDOBB1";
+		"WDOBB2";
+		"WDOBB3";
+		"WDOBB4";
+		"WDOBB5";
+		"WDOBB6";
+		"WDOBB7";
+		"WDOBB8";
+		"WDOBC1";
+		"WDOBC2";
+		"WDOBC3";
+		"WDOBC4";
+		"WDOBC5";
+		"WDOBC6";
+		"WDOBC7";
+		"WDOBC8";
+		"WDOBD1";
+		"WDOBD2";
+		"WDOBD3";
+		"WDOBD4";
+		"WDOBD5";
+		"WDOBD6";
+		"WDOBD7";
+		"WDOBD8";
+		"WDOBH0";
+		"WDOBI0";
+		"WDOBJ0";
+		"WDOBK0";
+		"WDOBE0";
+		"WDOBF0";
+		"WDOBG0";
+		"WBLAE1";
+		"WBLAE2";
+		"WBLAE3";
+		"WBLAE4";
+		"WBLAE5";
+		"WBLAE6";
+		"WBLAE7";
+		"WBLAE8";
+		"WBLAA1";
+		"WBLAA2";
+		"WBLAA3";
+		"WBLAA4";
+		"WBLAA5";
+		"WBLAA6";
+		"WBLAA7";
+		"WBLAA8";
+		"WBLAB1";
+		"WBLAB2";
+		"WBLAB3";
+		"WBLAB4";
+		"WBLAB5";
+		"WBLAB6";
+		"WBLAB7";
+		"WBLAB8";
+		"WBLAC1";
+		"WBLAC2";
+		"WBLAC3";
+		"WBLAC4";
+		"WBLAC5";
+		"WBLAC6";
+		"WBLAC7";
+		"WBLAC8";
+		"WBLAD1";
+		"WBLAD2";
+		"WBLAD3";
+		"WBLAD4";
+		"WBLAD5";
+		"WBLAD6";
+		"WBLAD7";
+		"WBLAD8";
+		"WBLAJ0";
+		"WBLAK0";
+		"WBLAL0";
+		"WBLAM0";
+		"WBLAF0";
+		"WBLAN0";
+		"WBLAG0";
+		"WBLAH0";
+		"WBLAI0";
+		"WBATE1";
+		"WBATE2";
+		"WBATE3";
+		"WBATE4";
+		"WBATE5";
+		"WBATE6";
+		"WBATE7";
+		"WBATE8";
+		"WBATA1";
+		"WBATA2";
+		"WBATA3";
+		"WBATA4";
+		"WBATA5";
+		"WBATA6";
+		"WBATA7";
+		"WBATA8";
+		"WBATB1";
+		"WBATB2";
+		"WBATB3";
+		"WBATB4";
+		"WBATB5";
+		"WBATB6";
+		"WBATB7";
+		"WBATB8";
+		"WBATC1";
+		"WBATC2";
+		"WBATC3";
+		"WBATC4";
+		"WBATC5";
+		"WBATC6";
+		"WBATC7";
+		"WBATC8";
+		"WBATD1";
+		"WBATD2";
+		"WBATD3";
+		"WBATD4";
+		"WBATD5";
+		"WBATD6";
+		"WBATD7";
+		"WBATD8";
+		"WBATJ0";
+		"WBATK0";
+		"WBATL0";
+		"WBATM0";
+		"WBATF0";
+		"WBATN0";
+		"WBATO0";
+		"WBATG0";
+		"WBATH0";
+		"WBATI0";
+		"WBATP0";
+		"WWH2E1";
+		"WWH2E2";
+		"WWH2E3";
+		"WWH2E4";
+		"WWH2E5";
+		"WWH2E6";
+		"WWH2E7";
+		"WWH2E8";
+		"WWH2A1";
+		"WWH2A2";
+		"WWH2A3";
+		"WWH2A4";
+		"WWH2A5";
+		"WWH2A6";
+		"WWH2A7";
+		"WWH2A8";
+		"WWH2B1";
+		"WWH2B2";
+		"WWH2B3";
+		"WWH2B4";
+		"WWH2B5";
+		"WWH2B6";
+		"WWH2B7";
+		"WWH2B8";
+		"WWH2C1";
+		"WWH2C2";
+		"WWH2C3";
+		"WWH2C4";
+		"WWH2C5";
+		"WWH2C6";
+		"WWH2C7";
+		"WWH2C8";
+		"WWH2D1";
+		"WWH2D2";
+		"WWH2D3";
+		"WWH2D4";
+		"WWH2D5";
+		"WWH2D6";
+		"WWH2D7";
+		"WWH2D8";
+		"WWH2J0";
+		"WWH2K0";
+		"WWH2L0";
+		"WWH2M0";
+		"WWH2F0";
+		"WWH2N0";
+		"WWH2O0";
+		"WWH2G0";
+		"WWH2H0";
+		"WWH2I0";
+		"ROCKB1";
+		"ROCKB2";
+		"ROCKB3";
+		"ROCKB4";
+		"ROCKB8";
+		"ROCKB7";
+		"ROCKB6";
+		"ROCKB5";
+		"RTRLE0";
+		"RTRLF0";
+		"RTRLG0";
+		"RTRLH0";
+		"BAL4A0";
+		"BAL4B0";
+		"BAL4C0";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"DIBLA0";
+		"DIBLB0";
+		"DIBLC0";
+		"DIBLD0";
+		"LBO2A1";
+		"LBO2B1";
+		"LBO2C1";
+		"LBO2D1";
+		"LBO2E1";
+		"LBO2F1";
+		"LBO2G1";
+		"LBO2H0";
+		"LBO2I0";
+		"LBO2J0";
+		"LBO2K0";
+		"LBO9A1";
+		"LBO9B1";
+		"LBO9C1";
+		"LBO9D1";
+		"LBO9E1";
+		"LBO9F1";
+		"LBO9G1";
+		"LBO9H1";
+		"LBO9J0";
+		"LBO9K0";
+		"LBO9L0";
+		"LBO9M0";
+		"LBO6A0";
+		"LBO6B0";
+		"LBO6C0";
+		"LBO6D0";
+		"LBO6E0";
+		"LBO6F0";
+		"LBO6G0";
+		"LBO6H0";
+		"LBO6I0";
+		"LBO6J0";
+		"LBO6K0";
+		"LBO6L0";
+		"LBO6M0";
+		"LBO7A0";
+		"LBO7B0";
+		"LBO7C0";
+		"LBO7D0";
+		"LBO7F0";
+		"LBO7G0";
+		"LBO7H0";
+		"LBO7I0";
+		"LBO7K0";
+		"LBO7L0";
+		"LBO7M0";
+		"LBO7N0";
+		"LBO7O0";
+		"LBO7P0";
+		"LBO7Q0";
+		"LSPEA0";
+		"LSPEB0";
+		"LSPEC0";
+		"LSPED0";
+		"LSPEE0";
+		"LSPEF0";
+		"LSPEG0";
+		"LSPEH0";
+		"LB10A0";
+		"LB10B0";
+		"LB10C0";
+		"LB10D0";
+		"LB10G0";
+		"LB10H0";
+		"LB10I0";
+		"LB10J0";
+		"LB10K0";
+		"LB10L0";
+		"LB10M0";
+		"LB10N0";
+		"LB10O0";
+		"LB10P0";
+		"LB10Q0";
+		"LB10R0";
+		"KNILA0";
+		"KNILB0";
+		"KNILC0";
+		"KNILD0";
+		"KNILE0";
+		"LUGLA0";
+		"LUGLB0";
+		"LUGLC0";
+		"LUGLD0";
+		"LUGLE0";
+		"MGULA0";
+		"MGULB0";
+		"MGULC0";
+		"MGULD0";
+		"MGULE0";
+		"CGULA0";
+		"CGULB0";
+		"CGULC0";
+		"CGULD0";
+		"CGULE0";
 	}
 }

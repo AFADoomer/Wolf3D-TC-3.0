@@ -997,14 +997,14 @@ class AardwolfSign : ClassicDecoration
 {
 	Default
 	{
-		//$Title Sign (Aardwolf)
+		//$Title Crushed Bones 2 (Solid - Aardwolf Sign)
 		Height 64;
 	}
 
 	States
 	{
 		Spawn:
-			AARD A -1;
+			POB3 A -1;
 			Stop;
 	}
 }
@@ -1036,7 +1036,7 @@ class CrushedBones2 : ClassicDecoration
 	States
 	{
 		Spawn:
-			POB3 A -1;
+			POB5 A -1;
 			Stop;
 	}
 }

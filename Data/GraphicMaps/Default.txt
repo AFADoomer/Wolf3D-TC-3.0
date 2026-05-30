@@ -621,18 +621,14 @@ Default // Wolf3D
 		{
 			"Patches/Walls/WALL0098.png";
 			"WLF0DORA" { Flip; }
-			"WLF1DORA" { Flip; }
 			"WLF0DORC";
-			"WLF1DORC";
 		}
 
 		99
 		{
 			"Patches/Walls/WALL0099.png";
 			"WLF0DORB";
-			"WLF1DORB";
 			"WLF0DORD" { Flip; }
-			"WLF1DORD" { Flip; }
 
 		}
 
@@ -640,9 +636,7 @@ Default // Wolf3D
 		{
 			"Patches/Walls/WALL0100.png";
 			"WLF0JMBA";
-			"WLF1JMBA";
 			"WLF0JMBC" { Flip; }
-			"WLF1JMBC" { Flip; }
 
 		}
 
@@ -650,9 +644,7 @@ Default // Wolf3D
 		{
 			"Patches/Walls/WALL0101.png";
 			"WLF0JMBB";
-			"WLF1JMBB";
 			"WLF0JMBD" { Flip; }
-			"WLF1JMBD" { Flip; }
 
 		}
 
@@ -660,18 +652,14 @@ Default // Wolf3D
 		{
 			"Patches/Walls/WALL0102.png";
 			"WLF0ELEA" { Flip; }
-			"WLF1ELEA" { Flip; }
 			"WLF0ELEC";
-			"WLF1ELEC";
 		}
 
 		103
 		{
 			"Patches/Walls/WALL0103.png";
 			"WLF0ELEB";
-			"WLF1ELEB";
 			"WLF0ELED" { Flip; }
-			"WLF1ELED" { Flip; }
 
 		}
 
@@ -679,26 +667,18 @@ Default // Wolf3D
 		{
 			"Patches/Walls/WALL0104.png";
 			"WLF0LK1A" { Flip; }
-			"WLF1LK1A" { Flip; }
 			"WLF0LK1C";
-			"WLF1LK1C";
 			"WLF0LK2A" { Flip; }
-			"WLF1LK2A" { Flip; }
 			"WLF0LK2C";
-			"WLF1LK2C";
 		}
 
 		105
 		{
 			"Patches/Walls/WALL0105.png";
 			"WLF0LK1B";
-			"WLF1LK1B";
 			"WLF0LK1D" { Flip; }
-			"WLF1LK1D" { Flip; }
 			"WLF0LK2B";
-			"WLF1LK2B";
 			"WLF0LK2D" { Flip; }
-			"WLF1LK2D" { Flip; }
 		}
 	}
 
@@ -754,5 +734,391 @@ Default // Wolf3D
 		"STOVA0";
 		"SPECA0";
 		"VINEA0";
+		"WBRNE1";
+		"WBRNE2";
+		"WBRNE3";
+		"WBRNE4";
+		"WBRNE5";
+		"WBRNE6";
+		"WBRNE7";
+		"WBRNE8";
+		"WBRNA1";
+		"WBRNA2";
+		"WBRNA3";
+		"WBRNA4";
+		"WBRNA5";
+		"WBRNA6";
+		"WBRNA7";
+		"WBRNA8";
+		"WBRNB1";
+		"WBRNB2";
+		"WBRNB3";
+		"WBRNB4";
+		"WBRNB5";
+		"WBRNB6";
+		"WBRNB7";
+		"WBRNB8";
+		"WBRNC1";
+		"WBRNC2";
+		"WBRNC3";
+		"WBRNC4";
+		"WBRNC5";
+		"WBRNC6";
+		"WBRNC7";
+		"WBRNC8";
+		"WBRND1";
+		"WBRND2";
+		"WBRND3";
+		"WBRND4";
+		"WBRND5";
+		"WBRND6";
+		"WBRND7";
+		"WBRND8";
+		"WBRNJ1";
+		"WBRNK0";
+		"WBRNL0";
+		"WBRNM0";
+		"WBRNF1";
+		"WBRNN0";
+		"WBRNG1";
+		"WBRNH1";
+		"WBRNI1";
+		"WDOGA1";
+		"WDOGA2";
+		"WDOGA3";
+		"WDOGA4";
+		"WDOGA5";
+		"WDOGA6";
+		"WDOGA7";
+		"WDOGA8";
+		"WDOGB1";
+		"WDOGB2";
+		"WDOGB3";
+		"WDOGB4";
+		"WDOGB5";
+		"WDOGB6";
+		"WDOGB7";
+		"WDOGB8";
+		"WDOGC1";
+		"WDOGC2";
+		"WDOGC3";
+		"WDOGC4";
+		"WDOGC5";
+		"WDOGC6";
+		"WDOGC7";
+		"WDOGC8";
+		"WDOGD1";
+		"WDOGD2";
+		"WDOGD3";
+		"WDOGD4";
+		"WDOGD5";
+		"WDOGD6";
+		"WDOGD7";
+		"WDOGD8";
+		"WDOGH0";
+		"WDOGI0";
+		"WDOGJ0";
+		"WDOGK0";
+		"WDOGE1";
+		"WDOGF1";
+		"WDOGG1";
+		"WBLUE1";
+		"WBLUE2";
+		"WBLUE3";
+		"WBLUE4";
+		"WBLUE5";
+		"WBLUE6";
+		"WBLUE7";
+		"WBLUE8";
+		"WBLUA1";
+		"WBLUA2";
+		"WBLUA3";
+		"WBLUA4";
+		"WBLUA5";
+		"WBLUA6";
+		"WBLUA7";
+		"WBLUA8";
+		"WBLUB1";
+		"WBLUB2";
+		"WBLUB3";
+		"WBLUB4";
+		"WBLUB5";
+		"WBLUB6";
+		"WBLUB7";
+		"WBLUB8";
+		"WBLUC1";
+		"WBLUC2";
+		"WBLUC3";
+		"WBLUC4";
+		"WBLUC5";
+		"WBLUC6";
+		"WBLUC7";
+		"WBLUC8";
+		"WBLUD1";
+		"WBLUD2";
+		"WBLUD3";
+		"WBLUD4";
+		"WBLUD5";
+		"WBLUD6";
+		"WBLUD7";
+		"WBLUD8";
+		"WBLUJ1";
+		"WBLUK0";
+		"WBLUL0";
+		"WBLUM0";
+		"WBLUF1";
+		"WBLUN0";
+		"WBLUG1";
+		"WBLUH1";
+		"WBLUI1";
+		"WMUTE1";
+		"WMUTE2";
+		"WMUTE3";
+		"WMUTE4";
+		"WMUTE5";
+		"WMUTE6";
+		"WMUTE7";
+		"WMUTE8";
+		"WMUTA1";
+		"WMUTA2";
+		"WMUTA3";
+		"WMUTA4";
+		"WMUTA5";
+		"WMUTA6";
+		"WMUTA7";
+		"WMUTA8";
+		"WMUTB1";
+		"WMUTB2";
+		"WMUTB3";
+		"WMUTB4";
+		"WMUTB5";
+		"WMUTB6";
+		"WMUTB7";
+		"WMUTB8";
+		"WMUTC1";
+		"WMUTC2";
+		"WMUTC3";
+		"WMUTC4";
+		"WMUTC5";
+		"WMUTC6";
+		"WMUTC7";
+		"WMUTC8";
+		"WMUTD1";
+		"WMUTD2";
+		"WMUTD3";
+		"WMUTD4";
+		"WMUTD5";
+		"WMUTD6";
+		"WMUTD7";
+		"WMUTD8";
+		"WMUTJ1";
+		"WMUTK0";
+		"WMUTL0";
+		"WMUTM0";
+		"WMUTF1";
+		"WMUTN0";
+		"WMUTO0";
+		"WMUTG1";
+		"WMUTH1";
+		"WMUTI1";
+		"WMUTP1";
+		"WWHTE1";
+		"WWHTE2";
+		"WWHTE3";
+		"WWHTE4";
+		"WWHTE5";
+		"WWHTE6";
+		"WWHTE7";
+		"WWHTE8";
+		"WWHTA1";
+		"WWHTA2";
+		"WWHTA3";
+		"WWHTA4";
+		"WWHTA5";
+		"WWHTA6";
+		"WWHTA7";
+		"WWHTA8";
+		"WWHTB1";
+		"WWHTB2";
+		"WWHTB3";
+		"WWHTB4";
+		"WWHTB5";
+		"WWHTB6";
+		"WWHTB7";
+		"WWHTB8";
+		"WWHTC1";
+		"WWHTC2";
+		"WWHTC3";
+		"WWHTC4";
+		"WWHTC5";
+		"WWHTC6";
+		"WWHTC7";
+		"WWHTC8";
+		"WWHTD1";
+		"WWHTD2";
+		"WWHTD3";
+		"WWHTD4";
+		"WWHTD5";
+		"WWHTD6";
+		"WWHTD7";
+		"WWHTD8";
+		"WWHTJ1";
+		"WWHTK0";
+		"WWHTL0";
+		"WWHTM0";
+		"WWHTF1";
+		"WWHTN0";
+		"WWHTO0";
+		"WWHTG1";
+		"WWHTH1";
+		"WWHTI1";
+		"GHO1A0";
+		"GHO1B0";
+		"GHO2A0";
+		"GHO2B0";
+		"GHO3A0";
+		"GHO3B0";
+		"GHO0A0";
+		"GHO0B0";
+		"WBOSA1";
+		"WBOSB1";
+		"WBOSC1";
+		"WBOSD1";
+		"WBOSE1";
+		"WBOSF1";
+		"WBOSG1";
+		"WBOSK0";
+		"WBOSH0";
+		"WBOSI0";
+		"WBOSJ0";
+		"WBO3A1";
+		"WBO3B1";
+		"WBO3C1";
+		"WBO3D1";
+		"WBO3E1";
+		"WBO3F1";
+		"WBO3H0";
+		"WBO3I0";
+		"WBO3J0";
+		"WBO3K0";
+		"WB3PA0";
+		"WB3PB0";
+		"WB3PC0";
+		"WB3PD0";
+		"WHGTA1";
+		"WHGTB1";
+		"WHGTC1";
+		"WHGTD1";
+		"WHGTE1";
+		"BAL3A0";
+		"BAL3B0";
+		"WHGTF0";
+		"WHGTG0";
+		"WHGTH0";
+		"WHGTI0";
+		"WHGTJ0";
+		"WHGTK0";
+		"WHR1A1";
+		"WHR1B1";
+		"WHR1C1";
+		"WHR1D1";
+		"WHR1E1";
+		"WHR1F1";
+		"WHR1G1";
+		"WHR1K0";
+		"WHR1H0";
+		"WHR1I0";
+		"WHR1J0";
+		"WHR2A1";
+		"WHR2B1";
+		"WHR2C1";
+		"WHR2D1";
+		"WHR2G1";
+		"WHR2H1";
+		"WHR2I1";
+		"WHR2Q0";
+		"WHR2J0";
+		"WHR2K0";
+		"WHR2L0";
+		"WHR2M0";
+		"WHR2N0";
+		"WHR2O0";
+		"WHR2P0";
+		"WBO8A1";
+		"WBO8B1";
+		"WBO8C1";
+		"WBO8D1";
+		"WBO8E1";
+		"WBO8F1";
+		"WBO8G0";
+		"WBO8H0";
+		"WBO8I0";
+		"WBO8J0";
+		"ROCKA1";
+		"ROCKA2";
+		"ROCKA3";
+		"ROCKA4";
+		"ROCKA8";
+		"ROCKA7";
+		"ROCKA6";
+		"ROCKA5";
+		"RTRLA0";
+		"RTRLB0";
+		"RTRLC0";
+		"RTRLD0";
+		"ROCPA0";
+		"ROCPB0";
+		"ROCPC0";
+		"WBO4A1";
+		"WBO4B1";
+		"WBO4C1";
+		"WBO4D1";
+		"WBO4E1";
+		"WBO4F1";
+		"WBO4G1";
+		"WBO4K0";
+		"WBO4H0";
+		"WBO4I0";
+		"WBO4J0";
+		"WBO5A1";
+		"WBO5B1";
+		"WBO5C1";
+		"WBO5D1";
+		"WBO5E1";
+		"WBO5F1";
+		"WBO5G1";
+		"WBO5H1";
+		"WBO5J0";
+		"WBO5K0";
+		"WBO5L0";
+		"WBO5M0";
+		"BJJUA0";
+		"BJJUB0";
+		"BJJUC0";
+		"BJJUD0";
+		"BJJUE0";
+		"BJJUF0";
+		"BJJUG0";
+		"BJJUH0";
+		"CKNIA0";
+		"CKNIB0";
+		"CKNIC0";
+		"CKNID0";
+		"CKNIE0";
+		"CLUGA0";
+		"CLUGB0";
+		"CLUGC0";
+		"CLUGD0";
+		"CLUGE0";
+		"CMGUA0";
+		"CMGUB0";
+		"CMGUC0";
+		"CMGUD0";
+		"CMGUE0";
+		"CCGUA0";
+		"CCGUB0";
+		"CCGUC0";
+		"CCGUD0";
+		"CCGUE0";
 	}
 }
