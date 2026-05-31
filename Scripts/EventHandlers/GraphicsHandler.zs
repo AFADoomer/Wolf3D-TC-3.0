@@ -273,7 +273,7 @@ class WolfGraphicParser
 				}
 				else
 				{
-					newgraphic.graphicname = String.Format("%s/WALL%04i.png", gamename, a);
+					newgraphic.graphicname = String.Format("Wolf3D/WALL%04i.png", a);
 					CreateGraphic(newgraphic);
 
 					touchedcanvas.push(newgraphic.graphicname);
@@ -318,12 +318,16 @@ class WolfGraphicParser
 						CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
 					}
 				}
-				else
-				{
-					newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
-					newgraphic.Parse(palette, true);
-					CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
-				}
+
+				int num = a - wallcount;
+				int frame = 0x41 + num % 26;
+				num /= 26;
+				newgraphic.graphicname = String.Format("W%03i%c0", num, frame);
+				newgraphic.Parse(palette, true);
+				CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
+
+				touchedcanvas.push(newgraphic.graphicname);
+
 				spritecount++;
 
 				d.graphics.Push(newgraphic);

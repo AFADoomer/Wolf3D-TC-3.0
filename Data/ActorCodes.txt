@@ -219,6 +219,7 @@ Default // Wolf3D with SoD bosses
 	257 = "Mutant", 4, 90, 1;
 	258 = "Mutant", 4, 180, 1;
 	259 = "Mutant", 4, 270, 1;
+	65535 = "ActorDisplay";
 }
 
 SD1

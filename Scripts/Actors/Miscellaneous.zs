@@ -601,3 +601,37 @@ class WolfTeleportOut : WolfTeleportIn
 		ActiveSound "Teleport/Out";
 	}
 }
+
+class ActorDisplay : Actor
+{
+	String texname;
+	TextureID tex;
+	int switchtime;
+	int index;
+
+	States
+	{
+		Spawn:
+			UNKN A -1;
+			Stop;
+	}
+
+	override void Tick()
+	{
+		Super.Tick();
+
+		if (level.time > switchtime)
+		{
+			int frame = 0x41 + index % 26;
+			int num = index++ / 26;
+
+			texname = String.Format("W%03i%c0", num, frame);
+
+			tex = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+			if (tex.IsValid() && GraphicsHandler.CheckTouched(texname)) { picnum = tex; }
+			else { index = 0; }
+
+			switchtime = level.time + 2;
+		}
+	}
+}
