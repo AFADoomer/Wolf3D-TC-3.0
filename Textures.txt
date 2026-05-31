@@ -648,550 +648,550 @@ Graphic SHAREWAREOVERLAY, 64, 24 { // Half-scale, used to tag Wolf3D Shareware m
 }
 
 // Objects and Items
-Sprite POL1A0, 64, 64 { Offset 32, 64 }
-Sprite BARLC0, 64, 64 { Offset 32, 64 }
-Sprite TAB1A0, 64, 64 { Offset 32, 64 }
-Sprite LIT1A0, 64, 64 { Offset 32, 64 }
-Sprite LIT3A0, 64, 64 { Offset 32, 64 }
-Sprite HNG1A0, 64, 64 { Offset 32, 64 }
-Sprite HLTHC0, 64, 64 { Offset 32, 64 }
-Sprite COLWA0, 64, 64 { Offset 32, 64 }
-Sprite PLT1A0, 64, 64 { Offset 32, 64 }
-Sprite BONCA0, 64, 64 { Offset 32, 64 }
-Sprite SINKA0, 64, 64 { Offset 32, 64 }
-Sprite PLT2A0, 64, 64 { Offset 32, 64 }
-Sprite VASEC0, 64, 64 { Offset 32, 64 }
-Sprite TAB2A0, 64, 64 { Offset 32, 64 }
-Sprite LIT5A0, 64, 64 { Offset 32, 64 }
-Sprite POT1A0, 64, 64 { Offset 32, 64 }
-Sprite KNIGA0, 64, 64 { Offset 32, 64 }
-Sprite CAG1A0, 64, 64 { Offset 32, 64 }
-Sprite CAG2A0, 64, 64 { Offset 32, 64 }
-Sprite POB1A0, 64, 64 { Offset 32, 64 }
-Sprite KEYSA0, 64, 64 { Offset 32, 64 }
-Sprite KEYSB0, 64, 64 { Offset 32, 64 }
-Sprite BED1A0, 64, 64 { Offset 32, 64 }
-Sprite BASKA0, 64, 64 { Offset 32, 64 }
-Sprite HLTHD0, 64, 64 { Offset 32, 64 }
-Sprite HLTHE0, 64, 64 { Offset 32, 64 }
-Sprite CCLIA0, 64, 64 { Offset 32, 64 }
-Sprite CMGUP0, 64, 64 { Offset 32, 64 }
-Sprite CCGUP0, 64, 64 { Offset 32, 64 }
-Sprite TRECA0, 64, 64 { Offset 32, 64 }
-Sprite TRECC0, 64, 64 { Offset 32, 64 }
-Sprite TRECD0, 64, 64 { Offset 32, 64 }
-Sprite TRECB0, 64, 64 { Offset 32, 64 }
-Sprite LIFEA0, 64, 64 { Offset 32, 64 }
-Sprite HLTHB0, 64, 64 { Offset 32, 64 }
-Sprite BAR2A0, 64, 64 { Offset 32, 64 }
-Sprite WEL1A0, 64, 64 { Offset 32, 64 }
-Sprite WEL2A0, 64, 64 { Offset 32, 64 }
-Sprite HLTHA0, 64, 64 { Offset 32, 64 }
-Sprite FLACA0, 64, 64 { Offset 32, 64 }
-Sprite POB3A0, 64, 64 { Offset 32, 64 }
-Sprite POB2C0, 64, 64 { Offset 32, 64 }
-Sprite POB5A0, 64, 64 { Offset 32, 64 }
-Sprite POB4A0, 64, 64 { Offset 32, 64 }
-Sprite POT2A0, 64, 64 { Offset 32, 64 }
-Sprite STOVA0, 64, 64 { Offset 32, 64 }
-Sprite SPECA0, 64, 64 { Offset 32, 64 }
-Sprite VINEA0, 64, 64 { Offset 32, 64 }
+Sprite POL1A0, 64, 64 { }
+Sprite BARLC0, 64, 64 { }
+Sprite TAB1A0, 64, 64 { }
+Sprite LIT1A0, 64, 64 { }
+Sprite LIT3A0, 64, 64 { }
+Sprite HNG1A0, 64, 64 { }
+Sprite HLTHC0, 64, 64 { }
+Sprite COLWA0, 64, 64 { }
+Sprite PLT1A0, 64, 64 { }
+Sprite BONCA0, 64, 64 { }
+Sprite SINKA0, 64, 64 { }
+Sprite PLT2A0, 64, 64 { }
+Sprite VASEC0, 64, 64 { }
+Sprite TAB2A0, 64, 64 { }
+Sprite LIT5A0, 64, 64 { }
+Sprite POT1A0, 64, 64 { }
+Sprite KNIGA0, 64, 64 { }
+Sprite CAG1A0, 64, 64 { }
+Sprite CAG2A0, 64, 64 { }
+Sprite POB1A0, 64, 64 { }
+Sprite KEYSA0, 64, 64 { }
+Sprite KEYSB0, 64, 64 { }
+Sprite BED1A0, 64, 64 { }
+Sprite BASKA0, 64, 64 { }
+Sprite HLTHD0, 64, 64 { }
+Sprite HLTHE0, 64, 64 { }
+Sprite CCLIA0, 64, 64 { }
+Sprite CMGUP0, 64, 64 { }
+Sprite CCGUP0, 64, 64 { }
+Sprite TRECA0, 64, 64 { }
+Sprite TRECC0, 64, 64 { }
+Sprite TRECD0, 64, 64 { }
+Sprite TRECB0, 64, 64 { }
+Sprite LIFEA0, 64, 64 { }
+Sprite HLTHB0, 64, 64 { }
+Sprite BAR2A0, 64, 64 { }
+Sprite WEL1A0, 64, 64 { }
+Sprite WEL2A0, 64, 64 { }
+Sprite HLTHA0, 64, 64 { }
+Sprite FLACA0, 64, 64 { }
+Sprite POB3A0, 64, 64 { }
+Sprite POB2C0, 64, 64 { }
+Sprite POB5A0, 64, 64 { }
+Sprite POB4A0, 64, 64 { }
+Sprite POT2A0, 64, 64 { }
+Sprite STOVA0, 64, 64 { }
+Sprite SPECA0, 64, 64 { }
+Sprite VINEA0, 64, 64 { }
 
 //SoD-Specific Items
-Sprite HEL3A0, 64, 64 { Offset 32, 64 }
-Sprite HEL4A0, 64, 64 { Offset 32, 64 }
-Sprite HEL2A0, 64, 64 { Offset 32, 64 }
-Sprite LITRA0, 64, 64 { Offset 32, 64 }
-Sprite HEL1A0, 64, 64 { Offset 32, 64 }
-Sprite HEL5A0, 64, 64 { Offset 32, 64 }
-Sprite ADTHA0, 64, 64 { Offset 32, 64 }
-Sprite COL2A0, 64, 64 { Offset 32, 64 }
-Sprite WAMMA0, 64, 64 { Offset 32, 64 }
-Sprite WTRKA0, 64, 64 { Offset 32, 64 }
-Sprite SOFDA0, 64, 64 { Offset 32, 64 }
+Sprite HEL3A0, 64, 64 { }
+Sprite HEL4A0, 64, 64 { }
+Sprite HEL2A0, 64, 64 { }
+Sprite LITRA0, 64, 64 { }
+Sprite HEL1A0, 64, 64 { }
+Sprite HEL5A0, 64, 64 { }
+Sprite ADTHA0, 64, 64 { }
+Sprite COL2A0, 64, 64 { }
+Sprite WAMMA0, 64, 64 { }
+Sprite WTRKA0, 64, 64 { }
+Sprite SOFDA0, 64, 64 { }
 
 //Lost Episodes
-Sprite POL2A0, 64, 64 { Offset 32, 64 }
-Sprite BAR3A0, 64, 64 { Offset 32, 64 }
-Sprite TAB3A0, 64, 64 { Offset 32, 64 }
-Sprite LIT2A0, 64, 64 { Offset 32, 64 }
-Sprite LIT4A0, 64, 64 { Offset 32, 64 }
-Sprite HNG2A0, 64, 64 { Offset 32, 64 }
-Sprite HLTHH0, 64, 64 { Offset 32, 64 }
-Sprite PILWA0, 64, 64 { Offset 32, 64 }
-Sprite PLT3A0, 64, 64 { Offset 32, 64 }
-Sprite BONEB0, 64, 64 { Offset 32, 64 }
-Sprite POSKA0, 64, 64 { Offset 32, 64 }
-Sprite PLT4A0, 64, 64 { Offset 32, 64 }
-Sprite VAS2A0, 64, 64 { Offset 32, 64 }
-Sprite TAB4A0, 64, 64 { Offset 32, 64 }
-Sprite LIT6A0, 64, 64 { Offset 32, 64 }
-Sprite CAG6A0, 64, 64 { Offset 32, 64 }
-Sprite KNIGB0, 64, 64 { Offset 32, 64 }
-Sprite CAG3A0, 64, 64 { Offset 32, 64 }
-Sprite CAG4A0, 64, 64 { Offset 32, 64 }
-Sprite POB6A0, 64, 64 { Offset 32, 64 }
-Sprite KEYSC0, 64, 64 { Offset 32, 64 }
-Sprite KEYSD0, 64, 64 { Offset 32, 64 }
-Sprite CAG5A0, 64, 64 { Offset 32, 64 }
-Sprite DRATA0, 64, 64 { Offset 32, 64 }
-Sprite HLTHI0, 64, 64 { Offset 32, 64 }
-Sprite HLTHJ0, 64, 64 { Offset 32, 64 }
-Sprite WCLIB0, 64, 64 { Offset 32, 64 }
-Sprite MGUNU0, 64, 64 { Offset 32, 64 }
-Sprite CGUNU0, 64, 64 { Offset 32, 64 }
-Sprite TREAE0, 64, 64 { Offset 32, 64 }
-Sprite TREAG0, 64, 64 { Offset 32, 64 }
-Sprite TREAH0, 64, 64 { Offset 32, 64 }
-Sprite TREAF0, 64, 64 { Offset 32, 64 }
-Sprite LIFEB0, 64, 64 { Offset 32, 64 }
-Sprite HLTHG0, 64, 64 { Offset 32, 64 }
-Sprite BAR4A0, 64, 64 { Offset 32, 64 }
-Sprite WEL3A0, 64, 64 { Offset 32, 64 }
-Sprite WEL4A0, 64, 64 { Offset 32, 64 }
-Sprite HLTHF0, 64, 64 { Offset 32, 64 }
-Sprite GZMOA0, 64, 64 { Offset 32, 64 }
-Sprite LIT7A0, 64, 64 { Offset 32, 64 }
-Sprite POB7A0, 64, 64 { Offset 32, 64 }
-Sprite LIT8A0, 64, 64 { Offset 32, 64 }
-Sprite GGOOA0, 64, 64 { Offset 32, 64 }
-Sprite TAB5A0, 64, 64 { Offset 32, 64 }
-Sprite BAR5A0, 64, 64 { Offset 32, 64 }
-Sprite PIPEA0, 64, 64 { Offset 32, 64 }
-Sprite BUBLA0, 64, 64 { Offset 32, 64 }
-Sprite DEVSA0, 64, 64 { Offset 32, 64 }
-Sprite WAMMB0, 64, 64 { Offset 32, 64 }
-Sprite BJWHA0, 64, 64 { Offset 32, 64 }
-Sprite SOFDB0, 64, 64 { Offset 32, 64 }
+Sprite POL2A0, 64, 64 { }
+Sprite BAR3A0, 64, 64 { }
+Sprite TAB3A0, 64, 64 { }
+Sprite LIT2A0, 64, 64 { }
+Sprite LIT4A0, 64, 64 { }
+Sprite HNG2A0, 64, 64 { }
+Sprite HLTHH0, 64, 64 { }
+Sprite PILWA0, 64, 64 { }
+Sprite PLT3A0, 64, 64 { }
+Sprite BONEB0, 64, 64 { }
+Sprite POSKA0, 64, 64 { }
+Sprite PLT4A0, 64, 64 { }
+Sprite VAS2A0, 64, 64 { }
+Sprite TAB4A0, 64, 64 { }
+Sprite LIT6A0, 64, 64 { }
+Sprite CAG6A0, 64, 64 { }
+Sprite KNIGB0, 64, 64 { }
+Sprite CAG3A0, 64, 64 { }
+Sprite CAG4A0, 64, 64 { }
+Sprite POB6A0, 64, 64 { }
+Sprite KEYSC0, 64, 64 { }
+Sprite KEYSD0, 64, 64 { }
+Sprite CAG5A0, 64, 64 { }
+Sprite DRATA0, 64, 64 { }
+Sprite HLTHI0, 64, 64 { }
+Sprite HLTHJ0, 64, 64 { }
+Sprite WCLIB0, 64, 64 { }
+Sprite MGUNU0, 64, 64 { }
+Sprite CGUNU0, 64, 64 { }
+Sprite TREAE0, 64, 64 { }
+Sprite TREAG0, 64, 64 { }
+Sprite TREAH0, 64, 64 { }
+Sprite TREAF0, 64, 64 { }
+Sprite LIFEB0, 64, 64 { }
+Sprite HLTHG0, 64, 64 { }
+Sprite BAR4A0, 64, 64 { }
+Sprite WEL3A0, 64, 64 { }
+Sprite WEL4A0, 64, 64 { }
+Sprite HLTHF0, 64, 64 { }
+Sprite GZMOA0, 64, 64 { }
+Sprite LIT7A0, 64, 64 { }
+Sprite POB7A0, 64, 64 { }
+Sprite LIT8A0, 64, 64 { }
+Sprite GGOOA0, 64, 64 { }
+Sprite TAB5A0, 64, 64 { }
+Sprite BAR5A0, 64, 64 { }
+Sprite PIPEA0, 64, 64 { }
+Sprite BUBLA0, 64, 64 { }
+Sprite DEVSA0, 64, 64 { }
+Sprite WAMMB0, 64, 64 { }
+Sprite BJWHA0, 64, 64 { }
+Sprite SOFDB0, 64, 64 { }
 
 // Guard
-Sprite WBRNE1, 64, 64 { Offset 32, 64 }
-Sprite WBRNE2, 64, 64 { Offset 32, 64 }
-Sprite WBRNE3, 64, 64 { Offset 32, 64 }
-Sprite WBRNE4, 64, 64 { Offset 32, 64 }
-Sprite WBRNE5, 64, 64 { Offset 32, 64 }
-Sprite WBRNE6, 64, 64 { Offset 32, 64 }
-Sprite WBRNE7, 64, 64 { Offset 32, 64 }
-Sprite WBRNE8, 64, 64 { Offset 32, 64 }
-Sprite WBRNA1, 64, 64 { Offset 32, 64 }
-Sprite WBRNA2, 64, 64 { Offset 32, 64 }
-Sprite WBRNA3, 64, 64 { Offset 32, 64 }
-Sprite WBRNA4, 64, 64 { Offset 32, 64 }
-Sprite WBRNA5, 64, 64 { Offset 32, 64 }
-Sprite WBRNA6, 64, 64 { Offset 32, 64 }
-Sprite WBRNA7, 64, 64 { Offset 32, 64 }
-Sprite WBRNA8, 64, 64 { Offset 32, 64 }
-Sprite WBRNB1, 64, 64 { Offset 32, 64 }
-Sprite WBRNB2, 64, 64 { Offset 32, 64 }
-Sprite WBRNB3, 64, 64 { Offset 32, 64 }
-Sprite WBRNB4, 64, 64 { Offset 32, 64 }
-Sprite WBRNB5, 64, 64 { Offset 32, 64 }
-Sprite WBRNB6, 64, 64 { Offset 32, 64 }
-Sprite WBRNB7, 64, 64 { Offset 32, 64 }
-Sprite WBRNB8, 64, 64 { Offset 32, 64 }
-Sprite WBRNC1, 64, 64 { Offset 32, 64 }
-Sprite WBRNC2, 64, 64 { Offset 32, 64 }
-Sprite WBRNC3, 64, 64 { Offset 32, 64 }
-Sprite WBRNC4, 64, 64 { Offset 32, 64 }
-Sprite WBRNC5, 64, 64 { Offset 32, 64 }
-Sprite WBRNC6, 64, 64 { Offset 32, 64 }
-Sprite WBRNC7, 64, 64 { Offset 32, 64 }
-Sprite WBRNC8, 64, 64 { Offset 32, 64 }
-Sprite WBRND1, 64, 64 { Offset 32, 64 }
-Sprite WBRND2, 64, 64 { Offset 32, 64 }
-Sprite WBRND3, 64, 64 { Offset 32, 64 }
-Sprite WBRND4, 64, 64 { Offset 32, 64 }
-Sprite WBRND5, 64, 64 { Offset 32, 64 }
-Sprite WBRND6, 64, 64 { Offset 32, 64 }
-Sprite WBRND7, 64, 64 { Offset 32, 64 }
-Sprite WBRND8, 64, 64 { Offset 32, 64 }
-Sprite WBRNJ1, 64, 64 { Offset 32, 64 }
-Sprite WBRNK0, 64, 64 { Offset 32, 64 }
-Sprite WBRNL0, 64, 64 { Offset 32, 64 }
-Sprite WBRNM0, 64, 64 { Offset 32, 64 }
-Sprite WBRNF1, 64, 64 { Offset 32, 64 }
-Sprite WBRNN0, 64, 64 { Offset 32, 64 }
-Sprite WBRNG1, 64, 64 { Offset 32, 64 }
-Sprite WBRNH1, 64, 64 { Offset 32, 64 }
-Sprite WBRNI1, 64, 64 { Offset 32, 64 }
+Sprite WBRNE1, 64, 64 { }
+Sprite WBRNE2, 64, 64 { }
+Sprite WBRNE3, 64, 64 { }
+Sprite WBRNE4, 64, 64 { }
+Sprite WBRNE5, 64, 64 { }
+Sprite WBRNE6, 64, 64 { }
+Sprite WBRNE7, 64, 64 { }
+Sprite WBRNE8, 64, 64 { }
+Sprite WBRNA1, 64, 64 { }
+Sprite WBRNA2, 64, 64 { }
+Sprite WBRNA3, 64, 64 { }
+Sprite WBRNA4, 64, 64 { }
+Sprite WBRNA5, 64, 64 { }
+Sprite WBRNA6, 64, 64 { }
+Sprite WBRNA7, 64, 64 { }
+Sprite WBRNA8, 64, 64 { }
+Sprite WBRNB1, 64, 64 { }
+Sprite WBRNB2, 64, 64 { }
+Sprite WBRNB3, 64, 64 { }
+Sprite WBRNB4, 64, 64 { }
+Sprite WBRNB5, 64, 64 { }
+Sprite WBRNB6, 64, 64 { }
+Sprite WBRNB7, 64, 64 { }
+Sprite WBRNB8, 64, 64 { }
+Sprite WBRNC1, 64, 64 { }
+Sprite WBRNC2, 64, 64 { }
+Sprite WBRNC3, 64, 64 { }
+Sprite WBRNC4, 64, 64 { }
+Sprite WBRNC5, 64, 64 { }
+Sprite WBRNC6, 64, 64 { }
+Sprite WBRNC7, 64, 64 { }
+Sprite WBRNC8, 64, 64 { }
+Sprite WBRND1, 64, 64 { }
+Sprite WBRND2, 64, 64 { }
+Sprite WBRND3, 64, 64 { }
+Sprite WBRND4, 64, 64 { }
+Sprite WBRND5, 64, 64 { }
+Sprite WBRND6, 64, 64 { }
+Sprite WBRND7, 64, 64 { }
+Sprite WBRND8, 64, 64 { }
+Sprite WBRNJ1, 64, 64 { }
+Sprite WBRNK0, 64, 64 { }
+Sprite WBRNL0, 64, 64 { }
+Sprite WBRNM0, 64, 64 { }
+Sprite WBRNF1, 64, 64 { }
+Sprite WBRNN0, 64, 64 { }
+Sprite WBRNG1, 64, 64 { }
+Sprite WBRNH1, 64, 64 { }
+Sprite WBRNI1, 64, 64 { }
 
 // Dog
-Sprite WDOGA1, 64, 64 { Offset 32, 64 }
-Sprite WDOGA2, 64, 64 { Offset 32, 64 }
-Sprite WDOGA3, 64, 64 { Offset 32, 64 }
-Sprite WDOGA4, 64, 64 { Offset 32, 64 }
-Sprite WDOGA5, 64, 64 { Offset 32, 64 }
-Sprite WDOGA6, 64, 64 { Offset 32, 64 }
-Sprite WDOGA7, 64, 64 { Offset 32, 64 }
-Sprite WDOGA8, 64, 64 { Offset 32, 64 }
-Sprite WDOGB1, 64, 64 { Offset 32, 64 }
-Sprite WDOGB2, 64, 64 { Offset 32, 64 }
-Sprite WDOGB3, 64, 64 { Offset 32, 64 }
-Sprite WDOGB4, 64, 64 { Offset 32, 64 }
-Sprite WDOGB5, 64, 64 { Offset 32, 64 }
-Sprite WDOGB6, 64, 64 { Offset 32, 64 }
-Sprite WDOGB7, 64, 64 { Offset 32, 64 }
-Sprite WDOGB8, 64, 64 { Offset 32, 64 }
-Sprite WDOGC1, 64, 64 { Offset 32, 64 }
-Sprite WDOGC2, 64, 64 { Offset 32, 64 }
-Sprite WDOGC3, 64, 64 { Offset 32, 64 }
-Sprite WDOGC4, 64, 64 { Offset 32, 64 }
-Sprite WDOGC5, 64, 64 { Offset 32, 64 }
-Sprite WDOGC6, 64, 64 { Offset 32, 64 }
-Sprite WDOGC7, 64, 64 { Offset 32, 64 }
-Sprite WDOGC8, 64, 64 { Offset 32, 64 }
-Sprite WDOGD1, 64, 64 { Offset 32, 64 }
-Sprite WDOGD2, 64, 64 { Offset 32, 64 }
-Sprite WDOGD3, 64, 64 { Offset 32, 64 }
-Sprite WDOGD4, 64, 64 { Offset 32, 64 }
-Sprite WDOGD5, 64, 64 { Offset 32, 64 }
-Sprite WDOGD6, 64, 64 { Offset 32, 64 }
-Sprite WDOGD7, 64, 64 { Offset 32, 64 }
-Sprite WDOGD8, 64, 64 { Offset 32, 64 }
-Sprite WDOGH0, 64, 64 { Offset 32, 64 }
-Sprite WDOGI0, 64, 64 { Offset 32, 64 }
-Sprite WDOGJ0, 64, 64 { Offset 32, 64 }
-Sprite WDOGK0, 64, 64 { Offset 32, 64 }
-Sprite WDOGE1, 64, 64 { Offset 32, 64 }
-Sprite WDOGF1, 64, 64 { Offset 32, 64 }
-Sprite WDOGG1, 64, 64 { Offset 32, 64 }
+Sprite WDOGA1, 64, 64 { }
+Sprite WDOGA2, 64, 64 { }
+Sprite WDOGA3, 64, 64 { }
+Sprite WDOGA4, 64, 64 { }
+Sprite WDOGA5, 64, 64 { }
+Sprite WDOGA6, 64, 64 { }
+Sprite WDOGA7, 64, 64 { }
+Sprite WDOGA8, 64, 64 { }
+Sprite WDOGB1, 64, 64 { }
+Sprite WDOGB2, 64, 64 { }
+Sprite WDOGB3, 64, 64 { }
+Sprite WDOGB4, 64, 64 { }
+Sprite WDOGB5, 64, 64 { }
+Sprite WDOGB6, 64, 64 { }
+Sprite WDOGB7, 64, 64 { }
+Sprite WDOGB8, 64, 64 { }
+Sprite WDOGC1, 64, 64 { }
+Sprite WDOGC2, 64, 64 { }
+Sprite WDOGC3, 64, 64 { }
+Sprite WDOGC4, 64, 64 { }
+Sprite WDOGC5, 64, 64 { }
+Sprite WDOGC6, 64, 64 { }
+Sprite WDOGC7, 64, 64 { }
+Sprite WDOGC8, 64, 64 { }
+Sprite WDOGD1, 64, 64 { }
+Sprite WDOGD2, 64, 64 { }
+Sprite WDOGD3, 64, 64 { }
+Sprite WDOGD4, 64, 64 { }
+Sprite WDOGD5, 64, 64 { }
+Sprite WDOGD6, 64, 64 { }
+Sprite WDOGD7, 64, 64 { }
+Sprite WDOGD8, 64, 64 { }
+Sprite WDOGH0, 64, 64 { }
+Sprite WDOGI0, 64, 64 { }
+Sprite WDOGJ0, 64, 64 { }
+Sprite WDOGK0, 64, 64 { }
+Sprite WDOGE1, 64, 64 { }
+Sprite WDOGF1, 64, 64 { }
+Sprite WDOGG1, 64, 64 { }
 
 // SS
-Sprite WBLUE1, 64, 64 { Offset 32, 64 }
-Sprite WBLUE2, 64, 64 { Offset 32, 64 }
-Sprite WBLUE3, 64, 64 { Offset 32, 64 }
-Sprite WBLUE4, 64, 64 { Offset 32, 64 }
-Sprite WBLUE5, 64, 64 { Offset 32, 64 }
-Sprite WBLUE6, 64, 64 { Offset 32, 64 }
-Sprite WBLUE7, 64, 64 { Offset 32, 64 }
-Sprite WBLUE8, 64, 64 { Offset 32, 64 }
-Sprite WBLUA1, 64, 64 { Offset 32, 64 }
-Sprite WBLUA2, 64, 64 { Offset 32, 64 }
-Sprite WBLUA3, 64, 64 { Offset 32, 64 }
-Sprite WBLUA4, 64, 64 { Offset 32, 64 }
-Sprite WBLUA5, 64, 64 { Offset 32, 64 }
-Sprite WBLUA6, 64, 64 { Offset 32, 64 }
-Sprite WBLUA7, 64, 64 { Offset 32, 64 }
-Sprite WBLUA8, 64, 64 { Offset 32, 64 }
-Sprite WBLUB1, 64, 64 { Offset 32, 64 }
-Sprite WBLUB2, 64, 64 { Offset 32, 64 }
-Sprite WBLUB3, 64, 64 { Offset 32, 64 }
-Sprite WBLUB4, 64, 64 { Offset 32, 64 }
-Sprite WBLUB5, 64, 64 { Offset 32, 64 }
-Sprite WBLUB6, 64, 64 { Offset 32, 64 }
-Sprite WBLUB7, 64, 64 { Offset 32, 64 }
-Sprite WBLUB8, 64, 64 { Offset 32, 64 }
-Sprite WBLUC1, 64, 64 { Offset 32, 64 }
-Sprite WBLUC2, 64, 64 { Offset 32, 64 }
-Sprite WBLUC3, 64, 64 { Offset 32, 64 }
-Sprite WBLUC4, 64, 64 { Offset 32, 64 }
-Sprite WBLUC5, 64, 64 { Offset 32, 64 }
-Sprite WBLUC6, 64, 64 { Offset 32, 64 }
-Sprite WBLUC7, 64, 64 { Offset 32, 64 }
-Sprite WBLUC8, 64, 64 { Offset 32, 64 }
-Sprite WBLUD1, 64, 64 { Offset 32, 64 }
-Sprite WBLUD2, 64, 64 { Offset 32, 64 }
-Sprite WBLUD3, 64, 64 { Offset 32, 64 }
-Sprite WBLUD4, 64, 64 { Offset 32, 64 }
-Sprite WBLUD5, 64, 64 { Offset 32, 64 }
-Sprite WBLUD6, 64, 64 { Offset 32, 64 }
-Sprite WBLUD7, 64, 64 { Offset 32, 64 }
-Sprite WBLUD8, 64, 64 { Offset 32, 64 }
-Sprite WBLUJ1, 64, 64 { Offset 32, 64 }
-Sprite WBLUK0, 64, 64 { Offset 32, 64 }
-Sprite WBLUL0, 64, 64 { Offset 32, 64 }
-Sprite WBLUM0, 64, 64 { Offset 32, 64 }
-Sprite WBLUF1, 64, 64 { Offset 32, 64 }
-Sprite WBLUN0, 64, 64 { Offset 32, 64 }
-Sprite WBLUG1, 64, 64 { Offset 32, 64 }
-Sprite WBLUH1, 64, 64 { Offset 32, 64 }
-Sprite WBLUI1, 64, 64 { Offset 32, 64 }
+Sprite WBLUE1, 64, 64 { }
+Sprite WBLUE2, 64, 64 { }
+Sprite WBLUE3, 64, 64 { }
+Sprite WBLUE4, 64, 64 { }
+Sprite WBLUE5, 64, 64 { }
+Sprite WBLUE6, 64, 64 { }
+Sprite WBLUE7, 64, 64 { }
+Sprite WBLUE8, 64, 64 { }
+Sprite WBLUA1, 64, 64 { }
+Sprite WBLUA2, 64, 64 { }
+Sprite WBLUA3, 64, 64 { }
+Sprite WBLUA4, 64, 64 { }
+Sprite WBLUA5, 64, 64 { }
+Sprite WBLUA6, 64, 64 { }
+Sprite WBLUA7, 64, 64 { }
+Sprite WBLUA8, 64, 64 { }
+Sprite WBLUB1, 64, 64 { }
+Sprite WBLUB2, 64, 64 { }
+Sprite WBLUB3, 64, 64 { }
+Sprite WBLUB4, 64, 64 { }
+Sprite WBLUB5, 64, 64 { }
+Sprite WBLUB6, 64, 64 { }
+Sprite WBLUB7, 64, 64 { }
+Sprite WBLUB8, 64, 64 { }
+Sprite WBLUC1, 64, 64 { }
+Sprite WBLUC2, 64, 64 { }
+Sprite WBLUC3, 64, 64 { }
+Sprite WBLUC4, 64, 64 { }
+Sprite WBLUC5, 64, 64 { }
+Sprite WBLUC6, 64, 64 { }
+Sprite WBLUC7, 64, 64 { }
+Sprite WBLUC8, 64, 64 { }
+Sprite WBLUD1, 64, 64 { }
+Sprite WBLUD2, 64, 64 { }
+Sprite WBLUD3, 64, 64 { }
+Sprite WBLUD4, 64, 64 { }
+Sprite WBLUD5, 64, 64 { }
+Sprite WBLUD6, 64, 64 { }
+Sprite WBLUD7, 64, 64 { }
+Sprite WBLUD8, 64, 64 { }
+Sprite WBLUJ1, 64, 64 { }
+Sprite WBLUK0, 64, 64 { }
+Sprite WBLUL0, 64, 64 { }
+Sprite WBLUM0, 64, 64 { }
+Sprite WBLUF1, 64, 64 { }
+Sprite WBLUN0, 64, 64 { }
+Sprite WBLUG1, 64, 64 { }
+Sprite WBLUH1, 64, 64 { }
+Sprite WBLUI1, 64, 64 { }
 
 // Mutant
-Sprite WMUTE2, 64, 64 { Offset 32, 64 }
-Sprite WMUTE1, 64, 64 { Offset 32, 64 }
-Sprite WMUTE3, 64, 64 { Offset 32, 64 }
-Sprite WMUTE4, 64, 64 { Offset 32, 64 }
-Sprite WMUTE5, 64, 64 { Offset 32, 64 }
-Sprite WMUTE6, 64, 64 { Offset 32, 64 }
-Sprite WMUTE7, 64, 64 { Offset 32, 64 }
-Sprite WMUTE8, 64, 64 { Offset 32, 64 }
-Sprite WMUTA1, 64, 64 { Offset 32, 64 }
-Sprite WMUTA2, 64, 64 { Offset 32, 64 }
-Sprite WMUTA3, 64, 64 { Offset 32, 64 }
-Sprite WMUTA4, 64, 64 { Offset 32, 64 }
-Sprite WMUTA5, 64, 64 { Offset 32, 64 }
-Sprite WMUTA6, 64, 64 { Offset 32, 64 }
-Sprite WMUTA7, 64, 64 { Offset 32, 64 }
-Sprite WMUTA8, 64, 64 { Offset 32, 64 }
-Sprite WMUTB1, 64, 64 { Offset 32, 64 }
-Sprite WMUTB2, 64, 64 { Offset 32, 64 }
-Sprite WMUTB3, 64, 64 { Offset 32, 64 }
-Sprite WMUTB4, 64, 64 { Offset 32, 64 }
-Sprite WMUTB5, 64, 64 { Offset 32, 64 }
-Sprite WMUTB6, 64, 64 { Offset 32, 64 }
-Sprite WMUTB7, 64, 64 { Offset 32, 64 }
-Sprite WMUTB8, 64, 64 { Offset 32, 64 }
-Sprite WMUTC1, 64, 64 { Offset 32, 64 }
-Sprite WMUTC2, 64, 64 { Offset 32, 64 }
-Sprite WMUTC3, 64, 64 { Offset 32, 64 }
-Sprite WMUTC4, 64, 64 { Offset 32, 64 }
-Sprite WMUTC5, 64, 64 { Offset 32, 64 }
-Sprite WMUTC6, 64, 64 { Offset 32, 64 }
-Sprite WMUTC7, 64, 64 { Offset 32, 64 }
-Sprite WMUTC8, 64, 64 { Offset 32, 64 }
-Sprite WMUTD1, 64, 64 { Offset 32, 64 }
-Sprite WMUTD2, 64, 64 { Offset 32, 64 }
-Sprite WMUTD3, 64, 64 { Offset 32, 64 }
-Sprite WMUTD4, 64, 64 { Offset 32, 64 }
-Sprite WMUTD5, 64, 64 { Offset 32, 64 }
-Sprite WMUTD6, 64, 64 { Offset 32, 64 }
-Sprite WMUTD7, 64, 64 { Offset 32, 64 }
-Sprite WMUTD8, 64, 64 { Offset 32, 64 }
-Sprite WMUTJ1, 64, 64 { Offset 32, 64 }
-Sprite WMUTK0, 64, 64 { Offset 32, 64 }
-Sprite WMUTL0, 64, 64 { Offset 32, 64 }
-Sprite WMUTM0, 64, 64 { Offset 32, 64 }
-Sprite WMUTF1, 64, 64 { Offset 32, 64 }
-Sprite WMUTN0, 64, 64 { Offset 32, 64 }
-Sprite WMUTO0, 64, 64 { Offset 32, 64 }
-Sprite WMUTG1, 64, 64 { Offset 32, 64 }
-Sprite WMUTH1, 64, 64 { Offset 32, 64 }
-Sprite WMUTI1, 64, 64 { Offset 32, 64 }
-Sprite WMUTP1, 64, 64 { Offset 32, 64 }
+Sprite WMUTE2, 64, 64 { }
+Sprite WMUTE1, 64, 64 { }
+Sprite WMUTE3, 64, 64 { }
+Sprite WMUTE4, 64, 64 { }
+Sprite WMUTE5, 64, 64 { }
+Sprite WMUTE6, 64, 64 { }
+Sprite WMUTE7, 64, 64 { }
+Sprite WMUTE8, 64, 64 { }
+Sprite WMUTA1, 64, 64 { }
+Sprite WMUTA2, 64, 64 { }
+Sprite WMUTA3, 64, 64 { }
+Sprite WMUTA4, 64, 64 { }
+Sprite WMUTA5, 64, 64 { }
+Sprite WMUTA6, 64, 64 { }
+Sprite WMUTA7, 64, 64 { }
+Sprite WMUTA8, 64, 64 { }
+Sprite WMUTB1, 64, 64 { }
+Sprite WMUTB2, 64, 64 { }
+Sprite WMUTB3, 64, 64 { }
+Sprite WMUTB4, 64, 64 { }
+Sprite WMUTB5, 64, 64 { }
+Sprite WMUTB6, 64, 64 { }
+Sprite WMUTB7, 64, 64 { }
+Sprite WMUTB8, 64, 64 { }
+Sprite WMUTC1, 64, 64 { }
+Sprite WMUTC2, 64, 64 { }
+Sprite WMUTC3, 64, 64 { }
+Sprite WMUTC4, 64, 64 { }
+Sprite WMUTC5, 64, 64 { }
+Sprite WMUTC6, 64, 64 { }
+Sprite WMUTC7, 64, 64 { }
+Sprite WMUTC8, 64, 64 { }
+Sprite WMUTD1, 64, 64 { }
+Sprite WMUTD2, 64, 64 { }
+Sprite WMUTD3, 64, 64 { }
+Sprite WMUTD4, 64, 64 { }
+Sprite WMUTD5, 64, 64 { }
+Sprite WMUTD6, 64, 64 { }
+Sprite WMUTD7, 64, 64 { }
+Sprite WMUTD8, 64, 64 { }
+Sprite WMUTJ1, 64, 64 { }
+Sprite WMUTK0, 64, 64 { }
+Sprite WMUTL0, 64, 64 { }
+Sprite WMUTM0, 64, 64 { }
+Sprite WMUTF1, 64, 64 { }
+Sprite WMUTN0, 64, 64 { }
+Sprite WMUTO0, 64, 64 { }
+Sprite WMUTG1, 64, 64 { }
+Sprite WMUTH1, 64, 64 { }
+Sprite WMUTI1, 64, 64 { }
+Sprite WMUTP1, 64, 64 { }
 
 // Officer
-Sprite WWHTE1, 64, 64 { Offset 32, 64 }
-Sprite WWHTE2, 64, 64 { Offset 32, 64 }
-Sprite WWHTE3, 64, 64 { Offset 32, 64 }
-Sprite WWHTE4, 64, 64 { Offset 32, 64 }
-Sprite WWHTE5, 64, 64 { Offset 32, 64 }
-Sprite WWHTE6, 64, 64 { Offset 32, 64 }
-Sprite WWHTE7, 64, 64 { Offset 32, 64 }
-Sprite WWHTE8, 64, 64 { Offset 32, 64 }
-Sprite WWHTA1, 64, 64 { Offset 32, 64 }
-Sprite WWHTA2, 64, 64 { Offset 32, 64 }
-Sprite WWHTA3, 64, 64 { Offset 32, 64 }
-Sprite WWHTA4, 64, 64 { Offset 32, 64 }
-Sprite WWHTA5, 64, 64 { Offset 32, 64 }
-Sprite WWHTA6, 64, 64 { Offset 32, 64 }
-Sprite WWHTA7, 64, 64 { Offset 32, 64 }
-Sprite WWHTA8, 64, 64 { Offset 32, 64 }
-Sprite WWHTB1, 64, 64 { Offset 32, 64 }
-Sprite WWHTB2, 64, 64 { Offset 32, 64 }
-Sprite WWHTB3, 64, 64 { Offset 32, 64 }
-Sprite WWHTB4, 64, 64 { Offset 32, 64 }
-Sprite WWHTB5, 64, 64 { Offset 32, 64 }
-Sprite WWHTB6, 64, 64 { Offset 32, 64 }
-Sprite WWHTB7, 64, 64 { Offset 32, 64 }
-Sprite WWHTB8, 64, 64 { Offset 32, 64 }
-Sprite WWHTC1, 64, 64 { Offset 32, 64 }
-Sprite WWHTC2, 64, 64 { Offset 32, 64 }
-Sprite WWHTC3, 64, 64 { Offset 32, 64 }
-Sprite WWHTC4, 64, 64 { Offset 32, 64 }
-Sprite WWHTC5, 64, 64 { Offset 32, 64 }
-Sprite WWHTC6, 64, 64 { Offset 32, 64 }
-Sprite WWHTC7, 64, 64 { Offset 32, 64 }
-Sprite WWHTC8, 64, 64 { Offset 32, 64 }
-Sprite WWHTD1, 64, 64 { Offset 32, 64 }
-Sprite WWHTD2, 64, 64 { Offset 32, 64 }
-Sprite WWHTD3, 64, 64 { Offset 32, 64 }
-Sprite WWHTD4, 64, 64 { Offset 32, 64 }
-Sprite WWHTD5, 64, 64 { Offset 32, 64 }
-Sprite WWHTD6, 64, 64 { Offset 32, 64 }
-Sprite WWHTD7, 64, 64 { Offset 32, 64 }
-Sprite WWHTD8, 64, 64 { Offset 32, 64 }
-Sprite WWHTJ1, 64, 64 { Offset 32, 64 }
-Sprite WWHTK0, 64, 64 { Offset 32, 64 }
-Sprite WWHTL0, 64, 64 { Offset 32, 64 }
-Sprite WWHTM0, 64, 64 { Offset 32, 64 }
-Sprite WWHTF1, 64, 64 { Offset 32, 64 }
-Sprite WWHTN0, 64, 64 { Offset 32, 64 }
-Sprite WWHTO0, 64, 64 { Offset 32, 64 }
-Sprite WWHTG1, 64, 64 { Offset 32, 64 }
-Sprite WWHTH1, 64, 64 { Offset 32, 64 }
-Sprite WWHTI1, 64, 64 { Offset 32, 64 }
+Sprite WWHTE1, 64, 64 { }
+Sprite WWHTE2, 64, 64 { }
+Sprite WWHTE3, 64, 64 { }
+Sprite WWHTE4, 64, 64 { }
+Sprite WWHTE5, 64, 64 { }
+Sprite WWHTE6, 64, 64 { }
+Sprite WWHTE7, 64, 64 { }
+Sprite WWHTE8, 64, 64 { }
+Sprite WWHTA1, 64, 64 { }
+Sprite WWHTA2, 64, 64 { }
+Sprite WWHTA3, 64, 64 { }
+Sprite WWHTA4, 64, 64 { }
+Sprite WWHTA5, 64, 64 { }
+Sprite WWHTA6, 64, 64 { }
+Sprite WWHTA7, 64, 64 { }
+Sprite WWHTA8, 64, 64 { }
+Sprite WWHTB1, 64, 64 { }
+Sprite WWHTB2, 64, 64 { }
+Sprite WWHTB3, 64, 64 { }
+Sprite WWHTB4, 64, 64 { }
+Sprite WWHTB5, 64, 64 { }
+Sprite WWHTB6, 64, 64 { }
+Sprite WWHTB7, 64, 64 { }
+Sprite WWHTB8, 64, 64 { }
+Sprite WWHTC1, 64, 64 { }
+Sprite WWHTC2, 64, 64 { }
+Sprite WWHTC3, 64, 64 { }
+Sprite WWHTC4, 64, 64 { }
+Sprite WWHTC5, 64, 64 { }
+Sprite WWHTC6, 64, 64 { }
+Sprite WWHTC7, 64, 64 { }
+Sprite WWHTC8, 64, 64 { }
+Sprite WWHTD1, 64, 64 { }
+Sprite WWHTD2, 64, 64 { }
+Sprite WWHTD3, 64, 64 { }
+Sprite WWHTD4, 64, 64 { }
+Sprite WWHTD5, 64, 64 { }
+Sprite WWHTD6, 64, 64 { }
+Sprite WWHTD7, 64, 64 { }
+Sprite WWHTD8, 64, 64 { }
+Sprite WWHTJ1, 64, 64 { }
+Sprite WWHTK0, 64, 64 { }
+Sprite WWHTL0, 64, 64 { }
+Sprite WWHTM0, 64, 64 { }
+Sprite WWHTF1, 64, 64 { }
+Sprite WWHTN0, 64, 64 { }
+Sprite WWHTO0, 64, 64 { }
+Sprite WWHTG1, 64, 64 { }
+Sprite WWHTH1, 64, 64 { }
+Sprite WWHTI1, 64, 64 { }
 
 // Hans Grosse
-Sprite WBOSA1, 64, 64 { Offset 32, 64 }
-Sprite WBOSB1, 64, 64 { Offset 32, 64 }
-Sprite WBOSC1, 64, 64 { Offset 32, 64 }
-Sprite WBOSD1, 64, 64 { Offset 32, 64 }
-Sprite WBOSE1, 64, 64 { Offset 32, 64 }
-Sprite WBOSF1, 64, 64 { Offset 32, 64 }
-Sprite WBOSG1, 64, 64 { Offset 32, 64 }
-Sprite WBOSK0, 64, 64 { Offset 32, 64 }
-Sprite WBOSH0, 64, 64 { Offset 32, 64 }
-Sprite WBOSI0, 64, 64 { Offset 32, 64 }
-Sprite WBOSJ0, 64, 64 { Offset 32, 64 }
+Sprite WBOSA1, 64, 64 { }
+Sprite WBOSB1, 64, 64 { }
+Sprite WBOSC1, 64, 64 { }
+Sprite WBOSD1, 64, 64 { }
+Sprite WBOSE1, 64, 64 { }
+Sprite WBOSF1, 64, 64 { }
+Sprite WBOSG1, 64, 64 { }
+Sprite WBOSK0, 64, 64 { }
+Sprite WBOSH0, 64, 64 { }
+Sprite WBOSI0, 64, 64 { }
+Sprite WBOSJ0, 64, 64 { }
 
 // Dr. Schabbs
-Sprite WBO3A1, 64, 64 { Offset 32, 64 }
-Sprite WBO3B1, 64, 64 { Offset 32, 64 }
-Sprite WBO3C1, 64, 64 { Offset 32, 64 }
-Sprite WBO3D1, 64, 64 { Offset 32, 64 }
-Sprite WBO3E1, 64, 64 { Offset 32, 64 }
-Sprite WBO3F1, 64, 64 { Offset 32, 64 }
-Sprite WBO3H0, 64, 64 { Offset 32, 64 }
-Sprite WBO3I0, 64, 64 { Offset 32, 64 }
-Sprite WBO3J0, 64, 64 { Offset 32, 64 }
-Sprite WBO3K0, 64, 64 { Offset 32, 64 }
+Sprite WBO3A1, 64, 64 { }
+Sprite WBO3B1, 64, 64 { }
+Sprite WBO3C1, 64, 64 { }
+Sprite WBO3D1, 64, 64 { }
+Sprite WBO3E1, 64, 64 { }
+Sprite WBO3F1, 64, 64 { }
+Sprite WBO3H0, 64, 64 { }
+Sprite WBO3I0, 64, 64 { }
+Sprite WBO3J0, 64, 64 { }
+Sprite WBO3K0, 64, 64 { }
 
 // Fake Hitler
-Sprite WHGTA1, 64, 64 { Offset 32, 64 }
-Sprite WHGTB1, 64, 64 { Offset 32, 64 }
-Sprite WHGTC1, 64, 64 { Offset 32, 64 }
-Sprite WHGTD1, 64, 64 { Offset 32, 64 }
-Sprite WHGTE1, 64, 64 { Offset 32, 64 }
-Sprite WHGTF0, 64, 64 { Offset 32, 64 }
-Sprite WHGTG0, 64, 64 { Offset 32, 64 }
-Sprite WHGTH0, 64, 64 { Offset 32, 64 }
-Sprite WHGTI0, 64, 64 { Offset 32, 64 }
-Sprite WHGTJ0, 64, 64 { Offset 32, 64 }
-Sprite WHGTK0, 64, 64 { Offset 32, 64 }
+Sprite WHGTA1, 64, 64 { }
+Sprite WHGTB1, 64, 64 { }
+Sprite WHGTC1, 64, 64 { }
+Sprite WHGTD1, 64, 64 { }
+Sprite WHGTE1, 64, 64 { }
+Sprite WHGTF0, 64, 64 { }
+Sprite WHGTG0, 64, 64 { }
+Sprite WHGTH0, 64, 64 { }
+Sprite WHGTI0, 64, 64 { }
+Sprite WHGTJ0, 64, 64 { }
+Sprite WHGTK0, 64, 64 { }
 
 // Hitler Mech Suit
-Sprite WHR1A1, 64, 64 { Offset 32, 64 }
-Sprite WHR1B1, 64, 64 { Offset 32, 64 }
-Sprite WHR1C1, 64, 64 { Offset 32, 64 }
-Sprite WHR1D1, 64, 64 { Offset 32, 64 }
-Sprite WHR1E1, 64, 64 { Offset 32, 64 }
-Sprite WHR1F1, 64, 64 { Offset 32, 64 }
-Sprite WHR1G1, 64, 64 { Offset 32, 64 }
-Sprite WHR1K0, 64, 64 { Offset 32, 64 }
-Sprite WHR1H0, 64, 64 { Offset 32, 64 }
-Sprite WHR1I0, 64, 64 { Offset 32, 64 }
-Sprite WHR1J0, 64, 64 { Offset 32, 64 }
+Sprite WHR1A1, 64, 64 { }
+Sprite WHR1B1, 64, 64 { }
+Sprite WHR1C1, 64, 64 { }
+Sprite WHR1D1, 64, 64 { }
+Sprite WHR1E1, 64, 64 { }
+Sprite WHR1F1, 64, 64 { }
+Sprite WHR1G1, 64, 64 { }
+Sprite WHR1K0, 64, 64 { }
+Sprite WHR1H0, 64, 64 { }
+Sprite WHR1I0, 64, 64 { }
+Sprite WHR1J0, 64, 64 { }
 
 // Hitler
-Sprite WHR2A1, 64, 64 { Offset 32, 64 }
-Sprite WHR2B1, 64, 64 { Offset 32, 64 }
-Sprite WHR2C1, 64, 64 { Offset 32, 64 }
-Sprite WHR2D1, 64, 64 { Offset 32, 64 }
-Sprite WHR2G1, 64, 64 { Offset 32, 64 }
-Sprite WHR2H1, 64, 64 { Offset 32, 64 }
-Sprite WHR2I1, 64, 64 { Offset 32, 64 }
-Sprite WHR2Q0, 64, 64 { Offset 32, 64 }
-Sprite WHR2J0, 64, 64 { Offset 32, 64 }
-Sprite WHR2K0, 64, 64 { Offset 32, 64 }
-Sprite WHR2L0, 64, 64 { Offset 32, 64 }
-Sprite WHR2M0, 64, 64 { Offset 32, 64 }
-Sprite WHR2N0, 64, 64 { Offset 32, 64 }
-Sprite WHR2O0, 64, 64 { Offset 32, 64 }
-Sprite WHR2P0, 64, 64 { Offset 32, 64 }
+Sprite WHR2A1, 64, 64 { }
+Sprite WHR2B1, 64, 64 { }
+Sprite WHR2C1, 64, 64 { }
+Sprite WHR2D1, 64, 64 { }
+Sprite WHR2G1, 64, 64 { }
+Sprite WHR2H1, 64, 64 { }
+Sprite WHR2I1, 64, 64 { }
+Sprite WHR2Q0, 64, 64 { }
+Sprite WHR2J0, 64, 64 { }
+Sprite WHR2K0, 64, 64 { }
+Sprite WHR2L0, 64, 64 { }
+Sprite WHR2M0, 64, 64 { }
+Sprite WHR2N0, 64, 64 { }
+Sprite WHR2O0, 64, 64 { }
+Sprite WHR2P0, 64, 64 { }
 
 // GiftMacher
-Sprite WBO8A1, 64, 64 { Offset 32, 64 }
-Sprite WBO8B1, 64, 64 { Offset 32, 64 }
-Sprite WBO8C1, 64, 64 { Offset 32, 64 }
-Sprite WBO8D1, 64, 64 { Offset 32, 64 }
-Sprite WBO8E1, 64, 64 { Offset 32, 64 }
-Sprite WBO8F1, 64, 64 { Offset 32, 64 }
-Sprite WBO8G0, 64, 64 { Offset 32, 64 }
-Sprite WBO8H0, 64, 64 { Offset 32, 64 }
-Sprite WBO8I0, 64, 64 { Offset 32, 64 }
-Sprite WBO8J0, 64, 64 { Offset 32, 64 }
+Sprite WBO8A1, 64, 64 { }
+Sprite WBO8B1, 64, 64 { }
+Sprite WBO8C1, 64, 64 { }
+Sprite WBO8D1, 64, 64 { }
+Sprite WBO8E1, 64, 64 { }
+Sprite WBO8F1, 64, 64 { }
+Sprite WBO8G0, 64, 64 { }
+Sprite WBO8H0, 64, 64 { }
+Sprite WBO8I0, 64, 64 { }
+Sprite WBO8J0, 64, 64 { }
 
 // Gretel Grosse
-Sprite WBO4A1, 64, 64 { Offset 32, 64 }
-Sprite WBO4B1, 64, 64 { Offset 32, 64 }
-Sprite WBO4C1, 64, 64 { Offset 32, 64 }
-Sprite WBO4D1, 64, 64 { Offset 32, 64 }
-Sprite WBO4E1, 64, 64 { Offset 32, 64 }
-Sprite WBO4F1, 64, 64 { Offset 32, 64 }
-Sprite WBO4G1, 64, 64 { Offset 32, 64 }
-Sprite WBO4K0, 64, 64 { Offset 32, 64 }
-Sprite WBO4H0, 64, 64 { Offset 32, 64 }
-Sprite WBO4I0, 64, 64 { Offset 32, 64 }
-Sprite WBO4J0, 64, 64 { Offset 32, 64 }
+Sprite WBO4A1, 64, 64 { }
+Sprite WBO4B1, 64, 64 { }
+Sprite WBO4C1, 64, 64 { }
+Sprite WBO4D1, 64, 64 { }
+Sprite WBO4E1, 64, 64 { }
+Sprite WBO4F1, 64, 64 { }
+Sprite WBO4G1, 64, 64 { }
+Sprite WBO4K0, 64, 64 { }
+Sprite WBO4H0, 64, 64 { }
+Sprite WBO4I0, 64, 64 { }
+Sprite WBO4J0, 64, 64 { }
 
 // Fettgesicht
-Sprite WBO5A1, 64, 64 { Offset 32, 64 }
-Sprite WBO5B1, 64, 64 { Offset 32, 64 }
-Sprite WBO5C1, 64, 64 { Offset 32, 64 }
-Sprite WBO5D1, 64, 64 { Offset 32, 64 }
-Sprite WBO5E1, 64, 64 { Offset 32, 64 }
-Sprite WBO5F1, 64, 64 { Offset 32, 64 }
-Sprite WBO5G1, 64, 64 { Offset 32, 64 }
-Sprite WBO5H1, 64, 64 { Offset 32, 64 }
-Sprite WBO5J0, 64, 64 { Offset 32, 64 }
-Sprite WBO5K0, 64, 64 { Offset 32, 64 }
-Sprite WBO5L0, 64, 64 { Offset 32, 64 }
-Sprite WBO5M0, 64, 64 { Offset 32, 64 }
+Sprite WBO5A1, 64, 64 { }
+Sprite WBO5B1, 64, 64 { }
+Sprite WBO5C1, 64, 64 { }
+Sprite WBO5D1, 64, 64 { }
+Sprite WBO5E1, 64, 64 { }
+Sprite WBO5F1, 64, 64 { }
+Sprite WBO5G1, 64, 64 { }
+Sprite WBO5H1, 64, 64 { }
+Sprite WBO5J0, 64, 64 { }
+Sprite WBO5K0, 64, 64 { }
+Sprite WBO5L0, 64, 64 { }
+Sprite WBO5M0, 64, 64 { }
 
 // Pac Man Ghosts
-Sprite GHO1A0, 64, 64 { Offset 32, 64 }
-Sprite GHO1B0, 64, 64 { Offset 32, 64 }
-Sprite GHO2A0, 64, 64 { Offset 32, 64 }
-Sprite GHO2B0, 64, 64 { Offset 32, 64 }
-Sprite GHO3A0, 64, 64 { Offset 32, 64 }
-Sprite GHO3B0, 64, 64 { Offset 32, 64 }
-Sprite GHO0A0, 64, 64 { Offset 32, 64 }
-Sprite GHO0B0, 64, 64 { Offset 32, 64 }
+Sprite GHO1A0, 64, 64 { }
+Sprite GHO1B0, 64, 64 { }
+Sprite GHO2A0, 64, 64 { }
+Sprite GHO2B0, 64, 64 { }
+Sprite GHO3A0, 64, 64 { }
+Sprite GHO3B0, 64, 64 { }
+Sprite GHO0A0, 64, 64 { }
+Sprite GHO0B0, 64, 64 { }
 
 // Running BJ
-Sprite BJJUA0, 64, 64 { Offset 32, 64 }
-Sprite BJJUB0, 64, 64 { Offset 32, 64 }
-Sprite BJJUC0, 64, 64 { Offset 32, 64 }
-Sprite BJJUD0, 64, 64 { Offset 32, 64 }
-Sprite BJJUE0, 64, 64 { Offset 32, 64 }
-Sprite BJJUF0, 64, 64 { Offset 32, 64 }
-Sprite BJJUG0, 64, 64 { Offset 32, 64 }
-Sprite BJJUH0, 64, 64 { Offset 32, 64 }
+Sprite BJJUA0, 64, 64 { }
+Sprite BJJUB0, 64, 64 { }
+Sprite BJJUC0, 64, 64 { }
+Sprite BJJUD0, 64, 64 { }
+Sprite BJJUE0, 64, 64 { }
+Sprite BJJUF0, 64, 64 { }
+Sprite BJJUG0, 64, 64 { }
+Sprite BJJUH0, 64, 64 { }
 
 // Syringes
-Sprite WB3PA0, 64, 64 { Offset 32, 32 }
-Sprite WB3PB0, 64, 64 { Offset 32, 32 }
-Sprite WB3PC0, 64, 64 { Offset 32, 32 }
-Sprite WB3PD0, 64, 64 { Offset 32, 32 }
+Sprite WB3PA0, 64, 64 { }
+Sprite WB3PB0, 64, 64 { }
+Sprite WB3PC0, 64, 64 { }
+Sprite WB3PD0, 64, 64 { }
 
 // Fireballs
-Sprite BAL3A0, 64, 64 { Offset 32, 32 }
-Sprite BAL3B0, 64, 64 { Offset 32, 32 }
+Sprite BAL3A0, 64, 64 { }
+Sprite BAL3B0, 64, 64 { }
 
 // Rockets
-Sprite ROCKA2, 64, 64 { Offset 32, 32 }
-Sprite ROCKA3, 64, 64 { Offset 32, 32 }
-Sprite ROCKA4, 64, 64 { Offset 32, 32 }
-Sprite ROCKA8, 64, 64 { Offset 32, 32 }
-Sprite ROCKA7, 64, 64 { Offset 32, 32 }
-Sprite ROCKA6, 64, 64 { Offset 32, 32 }
-Sprite RTRLA0, 64, 64 { Offset 32, 32 }
-Sprite RTRLB0, 64, 64 { Offset 32, 32 }
-Sprite RTRLC0, 64, 64 { Offset 32, 32 }
-Sprite RTRLD0, 64, 64 { Offset 32, 32 }
-Sprite ROCPA0, 64, 64 { Offset 32, 32 }
-Sprite ROCPB0, 64, 64 { Offset 32, 32 }
-Sprite ROCPC0, 64, 64 { Offset 32, 32 }
+Sprite ROCKA2, 64, 64 { }
+Sprite ROCKA3, 64, 64 { }
+Sprite ROCKA4, 64, 64 { }
+Sprite ROCKA8, 64, 64 { }
+Sprite ROCKA7, 64, 64 { }
+Sprite ROCKA6, 64, 64 { }
+Sprite RTRLA0, 64, 64 { }
+Sprite RTRLB0, 64, 64 { }
+Sprite RTRLC0, 64, 64 { }
+Sprite RTRLD0, 64, 64 { }
+Sprite ROCPA0, 64, 64 { }
+Sprite ROCPB0, 64, 64 { }
+Sprite ROCPC0, 64, 64 { }
 
 //Spear Projectiles
-Sprite ADBLA0, 64, 64 { Offset 20, 26 }
-Sprite ADBLB0, 64, 64 { Offset 20, 26 }
-Sprite ADBLC0, 64, 64 { Offset 20, 26 }
-Sprite ADBLD0, 64, 64 { Offset 20, 26 }
+Sprite ADBLA0, 64, 64 { }
+Sprite ADBLB0, 64, 64 { }
+Sprite ADBLC0, 64, 64 { }
+Sprite ADBLD0, 64, 64 { }
 
-Sprite DIBLA0, 64, 64 { Offset 20, 26 }
-Sprite DIBLB0, 64, 64 { Offset 20, 26 }
-Sprite DIBLC0, 64, 64 { Offset 20, 26 }
-Sprite DIBLD0, 64, 64 { Offset 20, 26 }
+Sprite DIBLA0, 64, 64 { }
+Sprite DIBLB0, 64, 64 { }
+Sprite DIBLC0, 64, 64 { }
+Sprite DIBLD0, 64, 64 { }
 
-Sprite ROCKB2, 64, 64 { Offset 32, 32 }
-Sprite ROCKB3, 64, 64 { Offset 32, 32 }
-Sprite ROCKB4, 64, 64 { Offset 32, 32 }
-Sprite ROCKB8, 64, 64 { Offset 32, 32 }
-Sprite ROCKB7, 64, 64 { Offset 32, 32 }
-Sprite ROCKB6, 64, 64 { Offset 32, 32 }
-Sprite RTRLE0, 64, 64 { Offset 32, 32 }
-Sprite RTRLF0, 64, 64 { Offset 32, 32 }
-Sprite RTRLG0, 64, 64 { Offset 32, 32 }
-Sprite RTRLH0, 64, 64 { Offset 32, 32 }
-Sprite BAL4A0, 64, 64 { Offset 32, 32 }
-Sprite BAL4B0, 64, 64 { Offset 32, 32 }
-Sprite BAL4C0, 64, 64 { Offset 32, 32 }
+Sprite ROCKB2, 64, 64 { }
+Sprite ROCKB3, 64, 64 { }
+Sprite ROCKB4, 64, 64 { }
+Sprite ROCKB8, 64, 64 { }
+Sprite ROCKB7, 64, 64 { }
+Sprite ROCKB6, 64, 64 { }
+Sprite RTRLE0, 64, 64 { }
+Sprite RTRLF0, 64, 64 { }
+Sprite RTRLG0, 64, 64 { }
+Sprite RTRLH0, 64, 64 { }
+Sprite BAL4A0, 64, 64 { }
+Sprite BAL4B0, 64, 64 { }
+Sprite BAL4C0, 64, 64 { }
 
 // Puffs
-Sprite WPUFD0, 64, 64 { Offset 32, 32 }
-Sprite WPUFC0, 64, 64 { Offset 32, 32 }
+Sprite WPUFD0, 64, 64 { }
+Sprite WPUFC0, 64, 64 { }
 
 // Status Bar Icons
 Texture KNIFE, 48, 24 { Patch WVGA0091, 0, 0 }
@@ -1412,483 +1412,483 @@ Texture M_SCORE, 32, 8 { Patch WVGA0040, 0, 0 }
 Texture SCORES, 224, 56 { Patch WVGA0090, 0, 0 }
 
 //Weapon HUD Sprites
-Sprite CKNIA0, 64, 64 { Offset -128, -100 }
-Sprite CKNIB0, 64, 64 { Offset -128, -100 }
-Sprite CKNIC0, 64, 64 { Offset -128, -100 }
-Sprite CKNID0, 64, 64 { Offset -128, -100 }
-Sprite CKNIE0, 64, 64 { Offset -128, -100 }
-Sprite CLUGA0, 64, 64 { Offset -128, -100 }
-Sprite CLUGB0, 64, 64 { Offset -128, -100 }
-Sprite CLUGC0, 64, 64 { Offset -128, -100 }
-Sprite CLUGD0, 64, 64 { Offset -128, -100 }
-Sprite CLUGE0, 64, 64 { Offset -128, -100 }
-Sprite CMGUA0, 64, 64 { Offset -128, -100 }
-Sprite CMGUB0, 64, 64 { Offset -128, -100 }
-Sprite CMGUC0, 64, 64 { Offset -128, -100 }
-Sprite CMGUD0, 64, 64 { Offset -128, -100 }
-Sprite CMGUE0, 64, 64 { Offset -128, -100 }
-Sprite CCGUA0, 64, 64 { Offset -128, -100 }
-Sprite CCGUB0, 64, 64 { Offset -128, -100 }
-Sprite CCGUC0, 64, 64 { Offset -128, -100 }
-Sprite CCGUD0, 64, 64 { Offset -128, -100 }
-Sprite CCGUE0, 64, 64 { Offset -128, -100 }
+Sprite CKNIA0, 64, 64 { }
+Sprite CKNIB0, 64, 64 { }
+Sprite CKNIC0, 64, 64 { }
+Sprite CKNID0, 64, 64 { }
+Sprite CKNIE0, 64, 64 { }
+Sprite CLUGA0, 64, 64 { }
+Sprite CLUGB0, 64, 64 { }
+Sprite CLUGC0, 64, 64 { }
+Sprite CLUGD0, 64, 64 { }
+Sprite CLUGE0, 64, 64 { }
+Sprite CMGUA0, 64, 64 { }
+Sprite CMGUB0, 64, 64 { }
+Sprite CMGUC0, 64, 64 { }
+Sprite CMGUD0, 64, 64 { }
+Sprite CMGUE0, 64, 64 { }
+Sprite CCGUA0, 64, 64 { }
+Sprite CCGUB0, 64, 64 { }
+Sprite CCGUC0, 64, 64 { }
+Sprite CCGUD0, 64, 64 { }
+Sprite CCGUE0, 64, 64 { }
 
 // Lost Episodes
-Sprite KNILA0, 64, 64 { Offset -128, -100 }
-Sprite KNILB0, 64, 64 { Offset -128, -100 }
-Sprite KNILC0, 64, 64 { Offset -128, -100 }
-Sprite KNILD0, 64, 64 { Offset -128, -100 }
-Sprite KNILE0, 64, 64 { Offset -128, -100 }
-Sprite LUGLA0, 64, 64 { Offset -128, -100 }
-Sprite LUGLB0, 64, 64 { Offset -128, -100 }
-Sprite LUGLC0, 64, 64 { Offset -128, -100 }
-Sprite LUGLD0, 64, 64 { Offset -128, -100 }
-Sprite LUGLE0, 64, 64 { Offset -128, -100 }
-Sprite MGULA0, 64, 64 { Offset -128, -100 }
-Sprite MGULB0, 64, 64 { Offset -128, -100 }
-Sprite MGULC0, 64, 64 { Offset -128, -100 }
-Sprite MGULD0, 64, 64 { Offset -128, -100 }
-Sprite MGULE0, 64, 64 { Offset -128, -100 }
-Sprite CGULA0, 64, 64 { Offset -128, -100 }
-Sprite CGULB0, 64, 64 { Offset -128, -100 }
-Sprite CGULC0, 64, 64 { Offset -128, -100 }
-Sprite CGULD0, 64, 64 { Offset -128, -100 }
-Sprite CGULE0, 64, 64 { Offset -128, -100 }
+Sprite KNILA0, 64, 64 { }
+Sprite KNILB0, 64, 64 { }
+Sprite KNILC0, 64, 64 { }
+Sprite KNILD0, 64, 64 { }
+Sprite KNILE0, 64, 64 { }
+Sprite LUGLA0, 64, 64 { }
+Sprite LUGLB0, 64, 64 { }
+Sprite LUGLC0, 64, 64 { }
+Sprite LUGLD0, 64, 64 { }
+Sprite LUGLE0, 64, 64 { }
+Sprite MGULA0, 64, 64 { }
+Sprite MGULB0, 64, 64 { }
+Sprite MGULC0, 64, 64 { }
+Sprite MGULD0, 64, 64 { }
+Sprite MGULE0, 64, 64 { }
+Sprite CGULA0, 64, 64 { }
+Sprite CGULB0, 64, 64 { }
+Sprite CGULC0, 64, 64 { }
+Sprite CGULD0, 64, 64 { }
+Sprite CGULE0, 64, 64 { }
 
 // Lost Episodes Enemies
 // Green Guard
-Sprite WGRNE1, 64, 64 { Offset 32, 64 }
-Sprite WGRNE2, 64, 64 { Offset 32, 64 }
-Sprite WGRNE3, 64, 64 { Offset 32, 64 }
-Sprite WGRNE4, 64, 64 { Offset 32, 64 }
-Sprite WGRNE5, 64, 64 { Offset 32, 64 }
-Sprite WGRNE6, 64, 64 { Offset 32, 64 }
-Sprite WGRNE7, 64, 64 { Offset 32, 64 }
-Sprite WGRNE8, 64, 64 { Offset 32, 64 }
-Sprite WGRNA1, 64, 64 { Offset 32, 64 }
-Sprite WGRNA2, 64, 64 { Offset 32, 64 }
-Sprite WGRNA3, 64, 64 { Offset 32, 64 }
-Sprite WGRNA4, 64, 64 { Offset 32, 64 }
-Sprite WGRNA5, 64, 64 { Offset 32, 64 }
-Sprite WGRNA6, 64, 64 { Offset 32, 64 }
-Sprite WGRNA7, 64, 64 { Offset 32, 64 }
-Sprite WGRNA8, 64, 64 { Offset 32, 64 }
-Sprite WGRNB1, 64, 64 { Offset 32, 64 }
-Sprite WGRNB2, 64, 64 { Offset 32, 64 }
-Sprite WGRNB3, 64, 64 { Offset 32, 64 }
-Sprite WGRNB4, 64, 64 { Offset 32, 64 }
-Sprite WGRNB5, 64, 64 { Offset 32, 64 }
-Sprite WGRNB6, 64, 64 { Offset 32, 64 }
-Sprite WGRNB7, 64, 64 { Offset 32, 64 }
-Sprite WGRNB8, 64, 64 { Offset 32, 64 }
-Sprite WGRNC1, 64, 64 { Offset 32, 64 }
-Sprite WGRNC2, 64, 64 { Offset 32, 64 }
-Sprite WGRNC3, 64, 64 { Offset 32, 64 }
-Sprite WGRNC4, 64, 64 { Offset 32, 64 }
-Sprite WGRNC5, 64, 64 { Offset 32, 64 }
-Sprite WGRNC6, 64, 64 { Offset 32, 64 }
-Sprite WGRNC7, 64, 64 { Offset 32, 64 }
-Sprite WGRNC8, 64, 64 { Offset 32, 64 }
-Sprite WGRND1, 64, 64 { Offset 32, 64 }
-Sprite WGRND2, 64, 64 { Offset 32, 64 }
-Sprite WGRND3, 64, 64 { Offset 32, 64 }
-Sprite WGRND4, 64, 64 { Offset 32, 64 }
-Sprite WGRND5, 64, 64 { Offset 32, 64 }
-Sprite WGRND6, 64, 64 { Offset 32, 64 }
-Sprite WGRND7, 64, 64 { Offset 32, 64 }
-Sprite WGRND8, 64, 64 { Offset 32, 64 }
-Sprite WGRNJ0, 64, 64 { Offset 32, 64 }
-Sprite WGRNK0, 64, 64 { Offset 32, 64 }
-Sprite WGRNL0, 64, 64 { Offset 32, 64 }
-Sprite WGRNM0, 64, 64 { Offset 32, 64 }
-Sprite WGRNF0, 64, 64 { Offset 32, 64 }
-Sprite WGRNN0, 64, 64 { Offset 32, 64 }
-Sprite WGRNG0, 64, 64 { Offset 32, 64 }
-Sprite WGRNH0, 64, 64 { Offset 32, 64 }
-Sprite WGRNI0, 64, 64 { Offset 32, 64 }
+Sprite WGRNE1, 64, 64 { }
+Sprite WGRNE2, 64, 64 { }
+Sprite WGRNE3, 64, 64 { }
+Sprite WGRNE4, 64, 64 { }
+Sprite WGRNE5, 64, 64 { }
+Sprite WGRNE6, 64, 64 { }
+Sprite WGRNE7, 64, 64 { }
+Sprite WGRNE8, 64, 64 { }
+Sprite WGRNA1, 64, 64 { }
+Sprite WGRNA2, 64, 64 { }
+Sprite WGRNA3, 64, 64 { }
+Sprite WGRNA4, 64, 64 { }
+Sprite WGRNA5, 64, 64 { }
+Sprite WGRNA6, 64, 64 { }
+Sprite WGRNA7, 64, 64 { }
+Sprite WGRNA8, 64, 64 { }
+Sprite WGRNB1, 64, 64 { }
+Sprite WGRNB2, 64, 64 { }
+Sprite WGRNB3, 64, 64 { }
+Sprite WGRNB4, 64, 64 { }
+Sprite WGRNB5, 64, 64 { }
+Sprite WGRNB6, 64, 64 { }
+Sprite WGRNB7, 64, 64 { }
+Sprite WGRNB8, 64, 64 { }
+Sprite WGRNC1, 64, 64 { }
+Sprite WGRNC2, 64, 64 { }
+Sprite WGRNC3, 64, 64 { }
+Sprite WGRNC4, 64, 64 { }
+Sprite WGRNC5, 64, 64 { }
+Sprite WGRNC6, 64, 64 { }
+Sprite WGRNC7, 64, 64 { }
+Sprite WGRNC8, 64, 64 { }
+Sprite WGRND1, 64, 64 { }
+Sprite WGRND2, 64, 64 { }
+Sprite WGRND3, 64, 64 { }
+Sprite WGRND4, 64, 64 { }
+Sprite WGRND5, 64, 64 { }
+Sprite WGRND6, 64, 64 { }
+Sprite WGRND7, 64, 64 { }
+Sprite WGRND8, 64, 64 { }
+Sprite WGRNJ0, 64, 64 { }
+Sprite WGRNK0, 64, 64 { }
+Sprite WGRNL0, 64, 64 { }
+Sprite WGRNM0, 64, 64 { }
+Sprite WGRNF0, 64, 64 { }
+Sprite WGRNN0, 64, 64 { }
+Sprite WGRNG0, 64, 64 { }
+Sprite WGRNH0, 64, 64 { }
+Sprite WGRNI0, 64, 64 { }
 
 // Doberman
-Sprite WDOBA1, 64, 64 { Offset 32, 64 }
-Sprite WDOBA2, 64, 64 { Offset 32, 64 }
-Sprite WDOBA3, 64, 64 { Offset 32, 64 }
-Sprite WDOBA4, 64, 64 { Offset 32, 64 }
-Sprite WDOBA5, 64, 64 { Offset 32, 64 }
-Sprite WDOBA6, 64, 64 { Offset 32, 64 }
-Sprite WDOBA7, 64, 64 { Offset 32, 64 }
-Sprite WDOBA8, 64, 64 { Offset 32, 64 }
-Sprite WDOBB1, 64, 64 { Offset 32, 64 }
-Sprite WDOBB2, 64, 64 { Offset 32, 64 }
-Sprite WDOBB3, 64, 64 { Offset 32, 64 }
-Sprite WDOBB4, 64, 64 { Offset 32, 64 }
-Sprite WDOBB5, 64, 64 { Offset 32, 64 }
-Sprite WDOBB6, 64, 64 { Offset 32, 64 }
-Sprite WDOBB7, 64, 64 { Offset 32, 64 }
-Sprite WDOBB8, 64, 64 { Offset 32, 64 }
-Sprite WDOBC1, 64, 64 { Offset 32, 64 }
-Sprite WDOBC2, 64, 64 { Offset 32, 64 }
-Sprite WDOBC3, 64, 64 { Offset 32, 64 }
-Sprite WDOBC4, 64, 64 { Offset 32, 64 }
-Sprite WDOBC5, 64, 64 { Offset 32, 64 }
-Sprite WDOBC6, 64, 64 { Offset 32, 64 }
-Sprite WDOBC7, 64, 64 { Offset 32, 64 }
-Sprite WDOBC8, 64, 64 { Offset 32, 64 }
-Sprite WDOBD1, 64, 64 { Offset 32, 64 }
-Sprite WDOBD2, 64, 64 { Offset 32, 64 }
-Sprite WDOBD3, 64, 64 { Offset 32, 64 }
-Sprite WDOBD4, 64, 64 { Offset 32, 64 }
-Sprite WDOBD5, 64, 64 { Offset 32, 64 }
-Sprite WDOBD6, 64, 64 { Offset 32, 64 }
-Sprite WDOBD7, 64, 64 { Offset 32, 64 }
-Sprite WDOBD8, 64, 64 { Offset 32, 64 }
-Sprite WDOBH0, 64, 64 { Offset 32, 64 }
-Sprite WDOBI0, 64, 64 { Offset 32, 64 }
-Sprite WDOBJ0, 64, 64 { Offset 32, 64 }
-Sprite WDOBK0, 64, 64 { Offset 32, 64 }
-Sprite WDOBE0, 64, 64 { Offset 32, 64 }
-Sprite WDOBF0, 64, 64 { Offset 32, 64 }
-Sprite WDOBG0, 64, 64 { Offset 32, 64 }
+Sprite WDOBA1, 64, 64 { }
+Sprite WDOBA2, 64, 64 { }
+Sprite WDOBA3, 64, 64 { }
+Sprite WDOBA4, 64, 64 { }
+Sprite WDOBA5, 64, 64 { }
+Sprite WDOBA6, 64, 64 { }
+Sprite WDOBA7, 64, 64 { }
+Sprite WDOBA8, 64, 64 { }
+Sprite WDOBB1, 64, 64 { }
+Sprite WDOBB2, 64, 64 { }
+Sprite WDOBB3, 64, 64 { }
+Sprite WDOBB4, 64, 64 { }
+Sprite WDOBB5, 64, 64 { }
+Sprite WDOBB6, 64, 64 { }
+Sprite WDOBB7, 64, 64 { }
+Sprite WDOBB8, 64, 64 { }
+Sprite WDOBC1, 64, 64 { }
+Sprite WDOBC2, 64, 64 { }
+Sprite WDOBC3, 64, 64 { }
+Sprite WDOBC4, 64, 64 { }
+Sprite WDOBC5, 64, 64 { }
+Sprite WDOBC6, 64, 64 { }
+Sprite WDOBC7, 64, 64 { }
+Sprite WDOBC8, 64, 64 { }
+Sprite WDOBD1, 64, 64 { }
+Sprite WDOBD2, 64, 64 { }
+Sprite WDOBD3, 64, 64 { }
+Sprite WDOBD4, 64, 64 { }
+Sprite WDOBD5, 64, 64 { }
+Sprite WDOBD6, 64, 64 { }
+Sprite WDOBD7, 64, 64 { }
+Sprite WDOBD8, 64, 64 { }
+Sprite WDOBH0, 64, 64 { }
+Sprite WDOBI0, 64, 64 { }
+Sprite WDOBJ0, 64, 64 { }
+Sprite WDOBK0, 64, 64 { }
+Sprite WDOBE0, 64, 64 { }
+Sprite WDOBF0, 64, 64 { }
+Sprite WDOBG0, 64, 64 { }
 
 // Black SS
-Sprite WBLAE1, 64, 64 { Offset 32, 64 }
-Sprite WBLAE2, 64, 64 { Offset 32, 64 }
-Sprite WBLAE3, 64, 64 { Offset 32, 64 }
-Sprite WBLAE4, 64, 64 { Offset 32, 64 }
-Sprite WBLAE5, 64, 64 { Offset 32, 64 }
-Sprite WBLAE6, 64, 64 { Offset 32, 64 }
-Sprite WBLAE7, 64, 64 { Offset 32, 64 }
-Sprite WBLAE8, 64, 64 { Offset 32, 64 }
-Sprite WBLAA1, 64, 64 { Offset 32, 64 }
-Sprite WBLAA2, 64, 64 { Offset 32, 64 }
-Sprite WBLAA3, 64, 64 { Offset 32, 64 }
-Sprite WBLAA4, 64, 64 { Offset 32, 64 }
-Sprite WBLAA5, 64, 64 { Offset 32, 64 }
-Sprite WBLAA6, 64, 64 { Offset 32, 64 }
-Sprite WBLAA7, 64, 64 { Offset 32, 64 }
-Sprite WBLAA8, 64, 64 { Offset 32, 64 }
-Sprite WBLAB1, 64, 64 { Offset 32, 64 }
-Sprite WBLAB2, 64, 64 { Offset 32, 64 }
-Sprite WBLAB3, 64, 64 { Offset 32, 64 }
-Sprite WBLAB4, 64, 64 { Offset 32, 64 }
-Sprite WBLAB5, 64, 64 { Offset 32, 64 }
-Sprite WBLAB6, 64, 64 { Offset 32, 64 }
-Sprite WBLAB7, 64, 64 { Offset 32, 64 }
-Sprite WBLAB8, 64, 64 { Offset 32, 64 }
-Sprite WBLAC1, 64, 64 { Offset 32, 64 }
-Sprite WBLAC2, 64, 64 { Offset 32, 64 }
-Sprite WBLAC3, 64, 64 { Offset 32, 64 }
-Sprite WBLAC4, 64, 64 { Offset 32, 64 }
-Sprite WBLAC5, 64, 64 { Offset 32, 64 }
-Sprite WBLAC6, 64, 64 { Offset 32, 64 }
-Sprite WBLAC7, 64, 64 { Offset 32, 64 }
-Sprite WBLAC8, 64, 64 { Offset 32, 64 }
-Sprite WBLAD1, 64, 64 { Offset 32, 64 }
-Sprite WBLAD2, 64, 64 { Offset 32, 64 }
-Sprite WBLAD3, 64, 64 { Offset 32, 64 }
-Sprite WBLAD4, 64, 64 { Offset 32, 64 }
-Sprite WBLAD5, 64, 64 { Offset 32, 64 }
-Sprite WBLAD6, 64, 64 { Offset 32, 64 }
-Sprite WBLAD7, 64, 64 { Offset 32, 64 }
-Sprite WBLAD8, 64, 64 { Offset 32, 64 }
-Sprite WBLAJ0, 64, 64 { Offset 32, 64 }
-Sprite WBLAK0, 64, 64 { Offset 32, 64 }
-Sprite WBLAL0, 64, 64 { Offset 32, 64 }
-Sprite WBLAM0, 64, 64 { Offset 32, 64 }
-Sprite WBLAF0, 64, 64 { Offset 32, 64 }
-Sprite WBLAN0, 64, 64 { Offset 32, 64 }
-Sprite WBLAG0, 64, 64 { Offset 32, 64 }
-Sprite WBLAH0, 64, 64 { Offset 32, 64 }
-Sprite WBLAI0, 64, 64 { Offset 32, 64 }
+Sprite WBLAE1, 64, 64 { }
+Sprite WBLAE2, 64, 64 { }
+Sprite WBLAE3, 64, 64 { }
+Sprite WBLAE4, 64, 64 { }
+Sprite WBLAE5, 64, 64 { }
+Sprite WBLAE6, 64, 64 { }
+Sprite WBLAE7, 64, 64 { }
+Sprite WBLAE8, 64, 64 { }
+Sprite WBLAA1, 64, 64 { }
+Sprite WBLAA2, 64, 64 { }
+Sprite WBLAA3, 64, 64 { }
+Sprite WBLAA4, 64, 64 { }
+Sprite WBLAA5, 64, 64 { }
+Sprite WBLAA6, 64, 64 { }
+Sprite WBLAA7, 64, 64 { }
+Sprite WBLAA8, 64, 64 { }
+Sprite WBLAB1, 64, 64 { }
+Sprite WBLAB2, 64, 64 { }
+Sprite WBLAB3, 64, 64 { }
+Sprite WBLAB4, 64, 64 { }
+Sprite WBLAB5, 64, 64 { }
+Sprite WBLAB6, 64, 64 { }
+Sprite WBLAB7, 64, 64 { }
+Sprite WBLAB8, 64, 64 { }
+Sprite WBLAC1, 64, 64 { }
+Sprite WBLAC2, 64, 64 { }
+Sprite WBLAC3, 64, 64 { }
+Sprite WBLAC4, 64, 64 { }
+Sprite WBLAC5, 64, 64 { }
+Sprite WBLAC6, 64, 64 { }
+Sprite WBLAC7, 64, 64 { }
+Sprite WBLAC8, 64, 64 { }
+Sprite WBLAD1, 64, 64 { }
+Sprite WBLAD2, 64, 64 { }
+Sprite WBLAD3, 64, 64 { }
+Sprite WBLAD4, 64, 64 { }
+Sprite WBLAD5, 64, 64 { }
+Sprite WBLAD6, 64, 64 { }
+Sprite WBLAD7, 64, 64 { }
+Sprite WBLAD8, 64, 64 { }
+Sprite WBLAJ0, 64, 64 { }
+Sprite WBLAK0, 64, 64 { }
+Sprite WBLAL0, 64, 64 { }
+Sprite WBLAM0, 64, 64 { }
+Sprite WBLAF0, 64, 64 { }
+Sprite WBLAN0, 64, 64 { }
+Sprite WBLAG0, 64, 64 { }
+Sprite WBLAH0, 64, 64 { }
+Sprite WBLAI0, 64, 64 { }
 
 // Bat
-Sprite WBATE1, 64, 64 { Offset 32, 64 }
-Sprite WBATE2, 64, 64 { Offset 32, 64 }
-Sprite WBATE3, 64, 64 { Offset 32, 64 }
-Sprite WBATE4, 64, 64 { Offset 32, 64 }
-Sprite WBATE5, 64, 64 { Offset 32, 64 }
-Sprite WBATE6, 64, 64 { Offset 32, 64 }
-Sprite WBATE7, 64, 64 { Offset 32, 64 }
-Sprite WBATE8, 64, 64 { Offset 32, 64 }
-Sprite WBATA1, 64, 64 { Offset 32, 64 }
-Sprite WBATA2, 64, 64 { Offset 32, 64 }
-Sprite WBATA3, 64, 64 { Offset 32, 64 }
-Sprite WBATA4, 64, 64 { Offset 32, 64 }
-Sprite WBATA5, 64, 64 { Offset 32, 64 }
-Sprite WBATA6, 64, 64 { Offset 32, 64 }
-Sprite WBATA7, 64, 64 { Offset 32, 64 }
-Sprite WBATA8, 64, 64 { Offset 32, 64 }
-Sprite WBATB1, 64, 64 { Offset 32, 64 }
-Sprite WBATB2, 64, 64 { Offset 32, 64 }
-Sprite WBATB3, 64, 64 { Offset 32, 64 }
-Sprite WBATB4, 64, 64 { Offset 32, 64 }
-Sprite WBATB5, 64, 64 { Offset 32, 64 }
-Sprite WBATB6, 64, 64 { Offset 32, 64 }
-Sprite WBATB7, 64, 64 { Offset 32, 64 }
-Sprite WBATB8, 64, 64 { Offset 32, 64 }
-Sprite WBATC1, 64, 64 { Offset 32, 64 }
-Sprite WBATC2, 64, 64 { Offset 32, 64 }
-Sprite WBATC3, 64, 64 { Offset 32, 64 }
-Sprite WBATC4, 64, 64 { Offset 32, 64 }
-Sprite WBATC5, 64, 64 { Offset 32, 64 }
-Sprite WBATC6, 64, 64 { Offset 32, 64 }
-Sprite WBATC7, 64, 64 { Offset 32, 64 }
-Sprite WBATC8, 64, 64 { Offset 32, 64 }
-Sprite WBATD1, 64, 64 { Offset 32, 64 }
-Sprite WBATD2, 64, 64 { Offset 32, 64 }
-Sprite WBATD3, 64, 64 { Offset 32, 64 }
-Sprite WBATD4, 64, 64 { Offset 32, 64 }
-Sprite WBATD5, 64, 64 { Offset 32, 64 }
-Sprite WBATD6, 64, 64 { Offset 32, 64 }
-Sprite WBATD7, 64, 64 { Offset 32, 64 }
-Sprite WBATD8, 64, 64 { Offset 32, 64 }
-Sprite WBATJ0, 64, 64 { Offset 32, 64 }
-Sprite WBATK0, 64, 64 { Offset 32, 64 }
-Sprite WBATL0, 64, 64 { Offset 32, 64 }
-Sprite WBATM0, 64, 64 { Offset 32, 64 }
-Sprite WBATF0, 64, 64 { Offset 32, 64 }
-Sprite WBATN0, 64, 64 { Offset 32, 64 }
-Sprite WBATO0, 64, 64 { Offset 32, 64 }
-Sprite WBATG0, 64, 64 { Offset 32, 64 }
-Sprite WBATH0, 64, 64 { Offset 32, 64 }
-Sprite WBATI0, 64, 64 { Offset 32, 64 }
-Sprite WBATP0, 64, 64 { Offset 32, 64 }
+Sprite WBATE1, 64, 64 { }
+Sprite WBATE2, 64, 64 { }
+Sprite WBATE3, 64, 64 { }
+Sprite WBATE4, 64, 64 { }
+Sprite WBATE5, 64, 64 { }
+Sprite WBATE6, 64, 64 { }
+Sprite WBATE7, 64, 64 { }
+Sprite WBATE8, 64, 64 { }
+Sprite WBATA1, 64, 64 { }
+Sprite WBATA2, 64, 64 { }
+Sprite WBATA3, 64, 64 { }
+Sprite WBATA4, 64, 64 { }
+Sprite WBATA5, 64, 64 { }
+Sprite WBATA6, 64, 64 { }
+Sprite WBATA7, 64, 64 { }
+Sprite WBATA8, 64, 64 { }
+Sprite WBATB1, 64, 64 { }
+Sprite WBATB2, 64, 64 { }
+Sprite WBATB3, 64, 64 { }
+Sprite WBATB4, 64, 64 { }
+Sprite WBATB5, 64, 64 { }
+Sprite WBATB6, 64, 64 { }
+Sprite WBATB7, 64, 64 { }
+Sprite WBATB8, 64, 64 { }
+Sprite WBATC1, 64, 64 { }
+Sprite WBATC2, 64, 64 { }
+Sprite WBATC3, 64, 64 { }
+Sprite WBATC4, 64, 64 { }
+Sprite WBATC5, 64, 64 { }
+Sprite WBATC6, 64, 64 { }
+Sprite WBATC7, 64, 64 { }
+Sprite WBATC8, 64, 64 { }
+Sprite WBATD1, 64, 64 { }
+Sprite WBATD2, 64, 64 { }
+Sprite WBATD3, 64, 64 { }
+Sprite WBATD4, 64, 64 { }
+Sprite WBATD5, 64, 64 { }
+Sprite WBATD6, 64, 64 { }
+Sprite WBATD7, 64, 64 { }
+Sprite WBATD8, 64, 64 { }
+Sprite WBATJ0, 64, 64 { }
+Sprite WBATK0, 64, 64 { }
+Sprite WBATL0, 64, 64 { }
+Sprite WBATM0, 64, 64 { }
+Sprite WBATF0, 64, 64 { }
+Sprite WBATN0, 64, 64 { }
+Sprite WBATO0, 64, 64 { }
+Sprite WBATG0, 64, 64 { }
+Sprite WBATH0, 64, 64 { }
+Sprite WBATI0, 64, 64 { }
+Sprite WBATP0, 64, 64 { }
 
 // Alternate Officer
-Sprite WWH2E1, 64, 64 { Offset 32, 64 }
-Sprite WWH2E2, 64, 64 { Offset 32, 64 }
-Sprite WWH2E3, 64, 64 { Offset 32, 64 }
-Sprite WWH2E4, 64, 64 { Offset 32, 64 }
-Sprite WWH2E5, 64, 64 { Offset 32, 64 }
-Sprite WWH2E6, 64, 64 { Offset 32, 64 }
-Sprite WWH2E7, 64, 64 { Offset 32, 64 }
-Sprite WWH2E8, 64, 64 { Offset 32, 64 }
-Sprite WWH2A1, 64, 64 { Offset 32, 64 }
-Sprite WWH2A2, 64, 64 { Offset 32, 64 }
-Sprite WWH2A3, 64, 64 { Offset 32, 64 }
-Sprite WWH2A4, 64, 64 { Offset 32, 64 }
-Sprite WWH2A5, 64, 64 { Offset 32, 64 }
-Sprite WWH2A6, 64, 64 { Offset 32, 64 }
-Sprite WWH2A7, 64, 64 { Offset 32, 64 }
-Sprite WWH2A8, 64, 64 { Offset 32, 64 }
-Sprite WWH2B1, 64, 64 { Offset 32, 64 }
-Sprite WWH2B2, 64, 64 { Offset 32, 64 }
-Sprite WWH2B3, 64, 64 { Offset 32, 64 }
-Sprite WWH2B4, 64, 64 { Offset 32, 64 }
-Sprite WWH2B5, 64, 64 { Offset 32, 64 }
-Sprite WWH2B6, 64, 64 { Offset 32, 64 }
-Sprite WWH2B7, 64, 64 { Offset 32, 64 }
-Sprite WWH2B8, 64, 64 { Offset 32, 64 }
-Sprite WWH2C1, 64, 64 { Offset 32, 64 }
-Sprite WWH2C2, 64, 64 { Offset 32, 64 }
-Sprite WWH2C3, 64, 64 { Offset 32, 64 }
-Sprite WWH2C4, 64, 64 { Offset 32, 64 }
-Sprite WWH2C5, 64, 64 { Offset 32, 64 }
-Sprite WWH2C6, 64, 64 { Offset 32, 64 }
-Sprite WWH2C7, 64, 64 { Offset 32, 64 }
-Sprite WWH2C8, 64, 64 { Offset 32, 64 }
-Sprite WWH2D1, 64, 64 { Offset 32, 64 }
-Sprite WWH2D2, 64, 64 { Offset 32, 64 }
-Sprite WWH2D3, 64, 64 { Offset 32, 64 }
-Sprite WWH2D4, 64, 64 { Offset 32, 64 }
-Sprite WWH2D5, 64, 64 { Offset 32, 64 }
-Sprite WWH2D6, 64, 64 { Offset 32, 64 }
-Sprite WWH2D7, 64, 64 { Offset 32, 64 }
-Sprite WWH2D8, 64, 64 { Offset 32, 64 }
-Sprite WWH2J0, 64, 64 { Offset 32, 64 }
-Sprite WWH2K0, 64, 64 { Offset 32, 64 }
-Sprite WWH2L0, 64, 64 { Offset 32, 64 }
-Sprite WWH2M0, 64, 64 { Offset 32, 64 }
-Sprite WWH2F0, 64, 64 { Offset 32, 64 }
-Sprite WWH2N0, 64, 64 { Offset 32, 64 }
-Sprite WWH2O0, 64, 64 { Offset 32, 64 }
-Sprite WWH2G0, 64, 64 { Offset 32, 64 }
-Sprite WWH2H0, 64, 64 { Offset 32, 64 }
-Sprite WWH2I0, 64, 64 { Offset 32, 64 }
+Sprite WWH2E1, 64, 64 { }
+Sprite WWH2E2, 64, 64 { }
+Sprite WWH2E3, 64, 64 { }
+Sprite WWH2E4, 64, 64 { }
+Sprite WWH2E5, 64, 64 { }
+Sprite WWH2E6, 64, 64 { }
+Sprite WWH2E7, 64, 64 { }
+Sprite WWH2E8, 64, 64 { }
+Sprite WWH2A1, 64, 64 { }
+Sprite WWH2A2, 64, 64 { }
+Sprite WWH2A3, 64, 64 { }
+Sprite WWH2A4, 64, 64 { }
+Sprite WWH2A5, 64, 64 { }
+Sprite WWH2A6, 64, 64 { }
+Sprite WWH2A7, 64, 64 { }
+Sprite WWH2A8, 64, 64 { }
+Sprite WWH2B1, 64, 64 { }
+Sprite WWH2B2, 64, 64 { }
+Sprite WWH2B3, 64, 64 { }
+Sprite WWH2B4, 64, 64 { }
+Sprite WWH2B5, 64, 64 { }
+Sprite WWH2B6, 64, 64 { }
+Sprite WWH2B7, 64, 64 { }
+Sprite WWH2B8, 64, 64 { }
+Sprite WWH2C1, 64, 64 { }
+Sprite WWH2C2, 64, 64 { }
+Sprite WWH2C3, 64, 64 { }
+Sprite WWH2C4, 64, 64 { }
+Sprite WWH2C5, 64, 64 { }
+Sprite WWH2C6, 64, 64 { }
+Sprite WWH2C7, 64, 64 { }
+Sprite WWH2C8, 64, 64 { }
+Sprite WWH2D1, 64, 64 { }
+Sprite WWH2D2, 64, 64 { }
+Sprite WWH2D3, 64, 64 { }
+Sprite WWH2D4, 64, 64 { }
+Sprite WWH2D5, 64, 64 { }
+Sprite WWH2D6, 64, 64 { }
+Sprite WWH2D7, 64, 64 { }
+Sprite WWH2D8, 64, 64 { }
+Sprite WWH2J0, 64, 64 { }
+Sprite WWH2K0, 64, 64 { }
+Sprite WWH2L0, 64, 64 { }
+Sprite WWH2M0, 64, 64 { }
+Sprite WWH2F0, 64, 64 { }
+Sprite WWH2N0, 64, 64 { }
+Sprite WWH2O0, 64, 64 { }
+Sprite WWH2G0, 64, 64 { }
+Sprite WWH2H0, 64, 64 { }
+Sprite WWH2I0, 64, 64 { }
 
 // SoD Bosses
 // Trans Grosse
-Sprite WBO2A1, 64, 64 { Offset 32, 64 }
-Sprite WBO2B1, 64, 64 { Offset 32, 64 }
-Sprite WBO2C1, 64, 64 { Offset 32, 64 }
-Sprite WBO2D1, 64, 64 { Offset 32, 64 }
-Sprite WBO2E1, 64, 64 { Offset 32, 64 }
-Sprite WBO2F1, 64, 64 { Offset 32, 64 }
-Sprite WBO2G1, 64, 64 { Offset 32, 64 }
-Sprite WBO2K0, 64, 64 { Offset 32, 64 }
-Sprite WBO2H0, 64, 64 { Offset 32, 64 }
-Sprite WBO2I0, 64, 64 { Offset 32, 64 }
-Sprite WBO2J0, 64, 64 { Offset 32, 64 }
+Sprite WBO2A1, 64, 64 { }
+Sprite WBO2B1, 64, 64 { }
+Sprite WBO2C1, 64, 64 { }
+Sprite WBO2D1, 64, 64 { }
+Sprite WBO2E1, 64, 64 { }
+Sprite WBO2F1, 64, 64 { }
+Sprite WBO2G1, 64, 64 { }
+Sprite WBO2K0, 64, 64 { }
+Sprite WBO2H0, 64, 64 { }
+Sprite WBO2I0, 64, 64 { }
+Sprite WBO2J0, 64, 64 { }
 
 // Barnacle Wilhelm
-Sprite WBO9A1, 64, 64 { Offset 32, 64 }
-Sprite WBO9B1, 64, 64 { Offset 32, 64 }
-Sprite WBO9C1, 64, 64 { Offset 32, 64 }
-Sprite WBO9D1, 64, 64 { Offset 32, 64 }
-Sprite WBO9E1, 64, 64 { Offset 32, 64 }
-Sprite WBO9F1, 64, 64 { Offset 32, 64 }
-Sprite WBO9G1, 64, 64 { Offset 32, 64 }
-Sprite WBO9H1, 64, 64 { Offset 32, 64 }
-Sprite WBO9J0, 64, 64 { Offset 32, 64 }
-Sprite WBO9K0, 64, 64 { Offset 32, 64 }
-Sprite WBO9L0, 64, 64 { Offset 32, 64 }
-Sprite WBO9M0, 64, 64 { Offset 32, 64 }
+Sprite WBO9A1, 64, 64 { }
+Sprite WBO9B1, 64, 64 { }
+Sprite WBO9C1, 64, 64 { }
+Sprite WBO9D1, 64, 64 { }
+Sprite WBO9E1, 64, 64 { }
+Sprite WBO9F1, 64, 64 { }
+Sprite WBO9G1, 64, 64 { }
+Sprite WBO9H1, 64, 64 { }
+Sprite WBO9J0, 64, 64 { }
+Sprite WBO9K0, 64, 64 { }
+Sprite WBO9L0, 64, 64 { }
+Sprite WBO9M0, 64, 64 { }
 
 // Ubermutant
-Sprite WBO6A0, 64, 64 { Offset 32, 64 }
-Sprite WBO6B0, 64, 64 { Offset 32, 64 }
-Sprite WBO6C0, 64, 64 { Offset 32, 64 }
-Sprite WBO6D0, 64, 64 { Offset 32, 64 }
-Sprite WBO6E0, 64, 64 { Offset 32, 64 }
-Sprite WBO6F0, 64, 64 { Offset 32, 64 }
-Sprite WBO6G0, 64, 64 { Offset 32, 64 }
-Sprite WBO6H0, 64, 64 { Offset 32, 64 }
-Sprite WBO6I0, 64, 64 { Offset 32, 64 }
-Sprite WBO6J0, 64, 64 { Offset 32, 64 }
-Sprite WBO6K0, 64, 64 { Offset 32, 64 }
-Sprite WBO6L0, 64, 64 { Offset 32, 64 }
-Sprite WBO6M0, 64, 64 { Offset 32, 64 }
+Sprite WBO6A0, 64, 64 { }
+Sprite WBO6B0, 64, 64 { }
+Sprite WBO6C0, 64, 64 { }
+Sprite WBO6D0, 64, 64 { }
+Sprite WBO6E0, 64, 64 { }
+Sprite WBO6F0, 64, 64 { }
+Sprite WBO6G0, 64, 64 { }
+Sprite WBO6H0, 64, 64 { }
+Sprite WBO6I0, 64, 64 { }
+Sprite WBO6J0, 64, 64 { }
+Sprite WBO6K0, 64, 64 { }
+Sprite WBO6L0, 64, 64 { }
+Sprite WBO6M0, 64, 64 { }
 
 // Death Knight
-Sprite WBO7A0, 64, 64 { Offset 32, 64 }
-Sprite WBO7B0, 64, 64 { Offset 32, 64 }
-Sprite WBO7C0, 64, 64 { Offset 32, 64 }
-Sprite WBO7D0, 64, 64 { Offset 32, 64 }
-Sprite WBO7F0, 64, 64 { Offset 32, 64 }
-Sprite WBO7G0, 64, 64 { Offset 32, 64 }
-Sprite WBO7H0, 64, 64 { Offset 32, 64 }
-Sprite WBO7I0, 64, 64 { Offset 32, 64 }
-Sprite WBO7K0, 64, 64 { Offset 32, 64 }
-Sprite WBO7L0, 64, 64 { Offset 32, 64 }
-Sprite WBO7M0, 64, 64 { Offset 32, 64 }
-Sprite WBO7N0, 64, 64 { Offset 32, 64 }
-Sprite WBO7O0, 64, 64 { Offset 32, 64 }
-Sprite WBO7P0, 64, 64 { Offset 32, 64 }
-Sprite WBO7Q0, 64, 64 { Offset 32, 64 }
+Sprite WBO7A0, 64, 64 { }
+Sprite WBO7B0, 64, 64 { }
+Sprite WBO7C0, 64, 64 { }
+Sprite WBO7D0, 64, 64 { }
+Sprite WBO7F0, 64, 64 { }
+Sprite WBO7G0, 64, 64 { }
+Sprite WBO7H0, 64, 64 { }
+Sprite WBO7I0, 64, 64 { }
+Sprite WBO7K0, 64, 64 { }
+Sprite WBO7L0, 64, 64 { }
+Sprite WBO7M0, 64, 64 { }
+Sprite WBO7N0, 64, 64 { }
+Sprite WBO7O0, 64, 64 { }
+Sprite WBO7P0, 64, 64 { }
+Sprite WBO7Q0, 64, 64 { }
 
 // Spectre
-Sprite WSPEA0, 64, 64 { Offset 32, 64 }
-Sprite WSPEB0, 64, 64 { Offset 32, 64 }
-Sprite WSPEC0, 64, 64 { Offset 32, 64 }
-Sprite WSPED0, 64, 64 { Offset 32, 64 }
-Sprite WSPEE0, 64, 64 { Offset 32, 64 }
-Sprite WSPEF0, 64, 64 { Offset 32, 64 }
-Sprite WSPEG0, 64, 64 { Offset 32, 64 }
-Sprite WSPEH0, 64, 64 { Offset 32, 64 }
+Sprite WSPEA0, 64, 64 { }
+Sprite WSPEB0, 64, 64 { }
+Sprite WSPEC0, 64, 64 { }
+Sprite WSPED0, 64, 64 { }
+Sprite WSPEE0, 64, 64 { }
+Sprite WSPEF0, 64, 64 { }
+Sprite WSPEG0, 64, 64 { }
+Sprite WSPEH0, 64, 64 { }
 
 // Angel of Death
-Sprite WB10A0, 64, 64 { Offset 32, 64 }
-Sprite WB10B0, 64, 64 { Offset 32, 64 }
-Sprite WB10C0, 64, 64 { Offset 32, 64 }
-Sprite WB10D0, 64, 64 { Offset 32, 64 }
-Sprite WB10G0, 64, 64 { Offset 32, 64 }
-Sprite WB10H0, 64, 64 { Offset 32, 64 }
-Sprite WB10I0, 64, 64 { Offset 32, 64 }
-Sprite WB10J0, 64, 64 { Offset 32, 64 }
-Sprite WB10K0, 64, 64 { Offset 32, 64 }
-Sprite WB10L0, 64, 64 { Offset 32, 64 }
-Sprite WB10M0, 64, 64 { Offset 32, 64 }
-Sprite WB10N0, 64, 64 { Offset 32, 64 }
-Sprite WB10O0, 64, 64 { Offset 32, 64 }
-Sprite WB10P0, 64, 64 { Offset 32, 64 }
-Sprite WB10Q0, 64, 64 { Offset 32, 64 }
-Sprite WB10R0, 64, 64 { Offset 32, 64 }
+Sprite WB10A0, 64, 64 { }
+Sprite WB10B0, 64, 64 { }
+Sprite WB10C0, 64, 64 { }
+Sprite WB10D0, 64, 64 { }
+Sprite WB10G0, 64, 64 { }
+Sprite WB10H0, 64, 64 { }
+Sprite WB10I0, 64, 64 { }
+Sprite WB10J0, 64, 64 { }
+Sprite WB10K0, 64, 64 { }
+Sprite WB10L0, 64, 64 { }
+Sprite WB10M0, 64, 64 { }
+Sprite WB10N0, 64, 64 { }
+Sprite WB10O0, 64, 64 { }
+Sprite WB10P0, 64, 64 { }
+Sprite WB10Q0, 64, 64 { }
+Sprite WB10R0, 64, 64 { }
 
 // Lost Episodes Bosses
 // Submarine Willy
-Sprite LBO2A0, 64, 64 { Offset 32, 64 }
-Sprite LBO2B0, 64, 64 { Offset 32, 64 }
-Sprite LBO2C0, 64, 64 { Offset 32, 64 }
-Sprite LBO2D0, 64, 64 { Offset 32, 64 }
-Sprite LBO2E0, 64, 64 { Offset 32, 64 }
-Sprite LBO2F0, 64, 64 { Offset 32, 64 }
-Sprite LBO2G0, 64, 64 { Offset 32, 64 }
-Sprite LBO2K0, 64, 64 { Offset 32, 64 }
-Sprite LBO2H0, 64, 64 { Offset 32, 64 }
-Sprite LBO2I0, 64, 64 { Offset 32, 64 }
-Sprite LBO2J0, 64, 64 { Offset 32, 64 }
+Sprite LBO2A0, 64, 64 { }
+Sprite LBO2B0, 64, 64 { }
+Sprite LBO2C0, 64, 64 { }
+Sprite LBO2D0, 64, 64 { }
+Sprite LBO2E0, 64, 64 { }
+Sprite LBO2F0, 64, 64 { }
+Sprite LBO2G0, 64, 64 { }
+Sprite LBO2K0, 64, 64 { }
+Sprite LBO2H0, 64, 64 { }
+Sprite LBO2I0, 64, 64 { }
+Sprite LBO2J0, 64, 64 { }
 
 // Quarkblitz
-Sprite LBO9A0, 64, 64 { Offset 32, 64 }
-Sprite LBO9B0, 64, 64 { Offset 32, 64 }
-Sprite LBO9C0, 64, 64 { Offset 32, 64 }
-Sprite LBO9D0, 64, 64 { Offset 32, 64 }
-Sprite LBO9E0, 64, 64 { Offset 32, 64 }
-Sprite LBO9F0, 64, 64 { Offset 32, 64 }
-Sprite LBO9G0, 64, 64 { Offset 32, 64 }
-Sprite LBO9H0, 64, 64 { Offset 32, 64 }
-Sprite LBO9J0, 64, 64 { Offset 32, 64 }
-Sprite LBO9K0, 64, 64 { Offset 32, 64 }
-Sprite LBO9L0, 64, 64 { Offset 32, 64 }
-Sprite LBO9M0, 64, 64 { Offset 32, 64 }
+Sprite LBO9A0, 64, 64 { }
+Sprite LBO9B0, 64, 64 { }
+Sprite LBO9C0, 64, 64 { }
+Sprite LBO9D0, 64, 64 { }
+Sprite LBO9E0, 64, 64 { }
+Sprite LBO9F0, 64, 64 { }
+Sprite LBO9G0, 64, 64 { }
+Sprite LBO9H0, 64, 64 { }
+Sprite LBO9J0, 64, 64 { }
+Sprite LBO9K0, 64, 64 { }
+Sprite LBO9L0, 64, 64 { }
+Sprite LBO9M0, 64, 64 { }
 
 // The Axe
-Sprite LBO6A0, 64, 64 { Offset 32, 64 }
-Sprite LBO6B0, 64, 64 { Offset 32, 64 }
-Sprite LBO6C0, 64, 64 { Offset 32, 64 }
-Sprite LBO6D0, 64, 64 { Offset 32, 64 }
-Sprite LBO6E0, 64, 64 { Offset 32, 64 }
-Sprite LBO6F0, 64, 64 { Offset 32, 64 }
-Sprite LBO6G0, 64, 64 { Offset 32, 64 }
-Sprite LBO6H0, 64, 64 { Offset 32, 64 }
-Sprite LBO6I0, 64, 64 { Offset 32, 64 }
-Sprite LBO6J0, 64, 64 { Offset 32, 64 }
-Sprite LBO6K0, 64, 64 { Offset 32, 64 }
-Sprite LBO6L0, 64, 64 { Offset 32, 64 }
-Sprite LBO6M0, 64, 64 { Offset 32, 64 }
+Sprite LBO6A0, 64, 64 { }
+Sprite LBO6B0, 64, 64 { }
+Sprite LBO6C0, 64, 64 { }
+Sprite LBO6D0, 64, 64 { }
+Sprite LBO6E0, 64, 64 { }
+Sprite LBO6F0, 64, 64 { }
+Sprite LBO6G0, 64, 64 { }
+Sprite LBO6H0, 64, 64 { }
+Sprite LBO6I0, 64, 64 { }
+Sprite LBO6J0, 64, 64 { }
+Sprite LBO6K0, 64, 64 { }
+Sprite LBO6L0, 64, 64 { }
+Sprite LBO6M0, 64, 64 { }
 
 // Robot Droid
-Sprite LBO7A0, 64, 64 { Offset 32, 64 }
-Sprite LBO7B0, 64, 64 { Offset 32, 64 }
-Sprite LBO7C0, 64, 64 { Offset 32, 64 }
-Sprite LBO7D0, 64, 64 { Offset 32, 64 }
-Sprite LBO7F0, 64, 64 { Offset 32, 64 }
-Sprite LBO7G0, 64, 64 { Offset 32, 64 }
-Sprite LBO7H0, 64, 64 { Offset 32, 64 }
-Sprite LBO7I0, 64, 64 { Offset 32, 64 }
-Sprite LBO7K0, 64, 64 { Offset 32, 64 }
-Sprite LBO7L0, 64, 64 { Offset 32, 64 }
-Sprite LBO7M0, 64, 64 { Offset 32, 64 }
-Sprite LBO7N0, 64, 64 { Offset 32, 64 }
-Sprite LBO7O0, 64, 64 { Offset 32, 64 }
-Sprite LBO7P0, 64, 64 { Offset 32, 64 }
-Sprite LBO7Q0, 64, 64 { Offset 32, 64 }
+Sprite LBO7A0, 64, 64 { }
+Sprite LBO7B0, 64, 64 { }
+Sprite LBO7C0, 64, 64 { }
+Sprite LBO7D0, 64, 64 { }
+Sprite LBO7F0, 64, 64 { }
+Sprite LBO7G0, 64, 64 { }
+Sprite LBO7H0, 64, 64 { }
+Sprite LBO7I0, 64, 64 { }
+Sprite LBO7K0, 64, 64 { }
+Sprite LBO7L0, 64, 64 { }
+Sprite LBO7M0, 64, 64 { }
+Sprite LBO7N0, 64, 64 { }
+Sprite LBO7O0, 64, 64 { }
+Sprite LBO7P0, 64, 64 { }
+Sprite LBO7Q0, 64, 64 { }
 
 // Ghost
-Sprite LSPEA0, 64, 64 { Offset 32, 64 }
-Sprite LSPEB0, 64, 64 { Offset 32, 64 }
-Sprite LSPEC0, 64, 64 { Offset 32, 64 }
-Sprite LSPED0, 64, 64 { Offset 32, 64 }
-Sprite LSPEE0, 64, 64 { Offset 32, 64 }
-Sprite LSPEF0, 64, 64 { Offset 32, 64 }
-Sprite LSPEG0, 64, 64 { Offset 32, 64 }
-Sprite LSPEH0, 64, 64 { Offset 32, 64 }
+Sprite LSPEA0, 64, 64 { }
+Sprite LSPEB0, 64, 64 { }
+Sprite LSPEC0, 64, 64 { }
+Sprite LSPED0, 64, 64 { }
+Sprite LSPEE0, 64, 64 { }
+Sprite LSPEF0, 64, 64 { }
+Sprite LSPEG0, 64, 64 { }
+Sprite LSPEH0, 64, 64 { }
 
 // Radioactive Mist
-Sprite LSP2A0, 64, 64 { Offset 32, 64 }
-Sprite LSP2B0, 64, 64 { Offset 32, 64 }
-Sprite LSP2C0, 64, 64 { Offset 32, 64 }
-Sprite LSP2D0, 64, 64 { Offset 32, 64 }
-Sprite LSP2E0, 64, 64 { Offset 32, 64 }
-Sprite LSP2F0, 64, 64 { Offset 32, 64 }
-Sprite LSP2G0, 64, 64 { Offset 32, 64 }
-Sprite LSP2H0, 64, 64 { Offset 32, 64 }
+Sprite LSP2A0, 64, 64 { }
+Sprite LSP2B0, 64, 64 { }
+Sprite LSP2C0, 64, 64 { }
+Sprite LSP2D0, 64, 64 { }
+Sprite LSP2E0, 64, 64 { }
+Sprite LSP2F0, 64, 64 { }
+Sprite LSP2G0, 64, 64 { }
+Sprite LSP2H0, 64, 64 { }
 
 // Devil Incarnate
-Sprite LB10A0, 64, 64 { Offset 32, 64 }
-Sprite LB10B0, 64, 64 { Offset 32, 64 }
-Sprite LB10C0, 64, 64 { Offset 32, 64 }
-Sprite LB10D0, 64, 64 { Offset 32, 64 }
-Sprite LB10G0, 64, 64 { Offset 32, 64 }
-Sprite LB10H0, 64, 64 { Offset 32, 64 }
-Sprite LB10I0, 64, 64 { Offset 32, 64 }
-Sprite LB10J0, 64, 64 { Offset 32, 64 }
-Sprite LB10K0, 64, 64 { Offset 32, 64 }
-Sprite LB10L0, 64, 64 { Offset 32, 64 }
-Sprite LB10M0, 64, 64 { Offset 32, 64 }
-Sprite LB10N0, 64, 64 { Offset 32, 64 }
-Sprite LB10O0, 64, 64 { Offset 32, 64 }
-Sprite LB10P0, 64, 64 { Offset 32, 64 }
-Sprite LB10Q0, 64, 64 { Offset 32, 64 }
-Sprite LB10R0, 64, 64 { Offset 32, 64 }
+Sprite LB10A0, 64, 64 { }
+Sprite LB10B0, 64, 64 { }
+Sprite LB10C0, 64, 64 { }
+Sprite LB10D0, 64, 64 { }
+Sprite LB10G0, 64, 64 { }
+Sprite LB10H0, 64, 64 { }
+Sprite LB10I0, 64, 64 { }
+Sprite LB10J0, 64, 64 { }
+Sprite LB10K0, 64, 64 { }
+Sprite LB10L0, 64, 64 { }
+Sprite LB10M0, 64, 64 { }
+Sprite LB10N0, 64, 64 { }
+Sprite LB10O0, 64, 64 { }
+Sprite LB10P0, 64, 64 { }
+Sprite LB10Q0, 64, 64 { }
+Sprite LB10R0, 64, 64 { }
 
 // Spear of Destiny VGA Graphics
 // Menu components

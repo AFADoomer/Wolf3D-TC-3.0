@@ -31,602 +31,602 @@ Default // Wolf3D
 	{
 		0
 		{
-			"Patches/Walls/WALL0000.png";
+			"Wolf3D/Wall0000";
 			"WLF0001A";
 		}
 
 		1
 		{
-			"Patches/Walls/WALL0001.png";
+			"Wolf3D/Wall0001";
 			"WLF0001B";
 		}
 
 		2
 		{
-			"Patches/Walls/WALL0002.png";
+			"Wolf3D/Wall0002";
 			"WLF0002A";
 		}
 
 		3
 		{
-			"Patches/Walls/WALL0003.png";
+			"Wolf3D/Wall0003";
 			"WLF0002B";
 		}
 
 		4
 		{
-			"Patches/Walls/WALL0004.png";
+			"Wolf3D/Wall0004";
 			"WLF0003A";
 		}
 
 		5
 		{
-			"Patches/Walls/WALL0005.png";
+			"Wolf3D/Wall0005";
 			"WLF0003B";
 		}
 
 		6
 		{
-			"Patches/Walls/WALL0006.png";
+			"Wolf3D/Wall0006";
 			"WLF0004A";
 		}
 
 		7
 		{
-			"Patches/Walls/WALL0007.png";
+			"Wolf3D/Wall0007";
 			"WLF0004B";
 		}
 
 		8
 		{
-			"Patches/Walls/WALL0008.png";
+			"Wolf3D/Wall0008";
 			"WLF0005A";
 		}
 
 		9
 		{
-			"Patches/Walls/WALL0009.png";
+			"Wolf3D/Wall0009";
 			"WLF0005B";
 		}
 
 		10
 		{
-			"Patches/Walls/WALL0010.png";
+			"Wolf3D/Wall0010";
 			"WLF0006A";
 		}
 
 		11
 		{
-			"Patches/Walls/WALL0011.png";
+			"Wolf3D/Wall0011";
 			"WLF0006B";
 		}
 
 		12
 		{
-			"Patches/Walls/WALL0012.png";
+			"Wolf3D/Wall0012";
 			"WLF0007A";
 		}
 
 		13
 		{
-			"Patches/Walls/WALL0013.png";
+			"Wolf3D/Wall0013";
 			"WLF0007B";
 		}
 
 		14
 		{
-			"Patches/Walls/WALL0014.png";
+			"Wolf3D/Wall0014";
 			"WLF0008A";
 		}
 
 		15
 		{
-			"Patches/Walls/WALL0015.png";
+			"Wolf3D/Wall0015";
 			"WLF0008B";
 		}
 
 		16
 		{
-			"Patches/Walls/WALL0016.png";
+			"Wolf3D/Wall0016";
 			"WLF0009A";
 		}
 
 		17
 		{
-			"Patches/Walls/WALL0017.png";
+			"Wolf3D/Wall0017";
 			"WLF0009B";
 		}
 
 		18
 		{
-			"Patches/Walls/WALL0018.png";
+			"Wolf3D/Wall0018";
 			"WLF000AA";
 		}
 
 		19
 		{
-			"Patches/Walls/WALL0019.png";
+			"Wolf3D/Wall0019";
 			"WLF000AB";
 		}
 
 		20
 		{
-			"Patches/Walls/WALL0020.png";
+			"Wolf3D/Wall0020";
 			"WLF000BA";
 		}
 
 		21
 		{
-			"Patches/Walls/WALL0021.png";
+			"Wolf3D/Wall0021";
 			"WLF000BB";
 		}
 
 		22
 		{
-			"Patches/Walls/WALL0022.png";
+			"Wolf3D/Wall0022";
 			"WLF000CA";
 		}
 
 		23
 		{
-			"Patches/Walls/WALL0023.png";
+			"Wolf3D/Wall0023";
 			"WLF000CB";
 		}
 
 		24
 		{
-			"Patches/Walls/WALL0024.png";
+			"Wolf3D/Wall0024";
 			"WLF000DA";
 		}
 
 		25
 		{
-			"Patches/Walls/WALL0025.png";
+			"Wolf3D/Wall0025";
 			"WLF000DB";
 		}
 
 		26
 		{
-			"Patches/Walls/WALL0026.png";
+			"Wolf3D/Wall0026";
 			"WLF000EA";
 		}
 
 		27
 		{
-			"Patches/Walls/WALL0027.png";
+			"Wolf3D/Wall0027";
 			"WLF000EB";
 		}
 
 		28
 		{
-			"Patches/Walls/WALL0028.png";
+			"Wolf3D/Wall0028";
 			"WLF000FA";
 		}
 
 		29
 		{
-			"Patches/Walls/WALL0029.png";
+			"Wolf3D/Wall0029";
 			"WLF000FB";
 		}
 
 		30
 		{
-			"Patches/Walls/WALL0030.png";
+			"Wolf3D/Wall0030";
 			"WLF0010A";
 		}
 
 		31
 		{
-			"Patches/Walls/WALL0031.png";
+			"Wolf3D/Wall0031";
 			"WLF0010B";
 		}
 
 		32
 		{
-			"Patches/Walls/WALL0032.png";
+			"Wolf3D/Wall0032";
 			"WLF0011A";
 		}
 
 		33
 		{
-			"Patches/Walls/WALL0033.png";
+			"Wolf3D/Wall0033";
 			"WLF0011B";
 		}
 
 		34
 		{
-			"Patches/Walls/WALL0034.png";
+			"Wolf3D/Wall0034";
 			"WLF0012A";
 		}
 
 		35
 		{
-			"Patches/Walls/WALL0035.png";
+			"Wolf3D/Wall0035";
 			"WLF0012B";
 		}
 
 		36
 		{
-			"Patches/Walls/WALL0036.png";
+			"Wolf3D/Wall0036";
 			"WLF0013A";
 		}
 
 		37
 		{
-			"Patches/Walls/WALL0037.png";
+			"Wolf3D/Wall0037";
 			"WLF0013B";
 		}
 
 		38
 		{
-			"Patches/Walls/WALL0038.png";
+			"Wolf3D/Wall0038";
 			"WLF0014A";
 		}
 
 		39
 		{
-			"Patches/Walls/WALL0039.png";
+			"Wolf3D/Wall0039";
 			"WLF0014B";
 		}
 
 		40
 		{
-			"Patches/Walls/WALL0040.png";
+			"Wolf3D/Wall0040";
 			"WLF0015A";
 		}
 
 		41
 		{
-			"Patches/Walls/WALL0041.png";
+			"Wolf3D/Wall0041";
 			"WLF0015B";
 		}
 
 		42
 		{
-			"Patches/Walls/WALL0042.png";
+			"Wolf3D/Wall0042";
 			"WLF0016A";
 		}
 
 		43
 		{
-			"Patches/Walls/WALL0043.png";
+			"Wolf3D/Wall0043";
 			"WLF0016B";
 		}
 
 		44
 		{
-			"Patches/Walls/WALL0044.png";
+			"Wolf3D/Wall0044";
 			"WLF0017A";
 		}
 
 		45
 		{
-			"Patches/Walls/WALL0045.png";
+			"Wolf3D/Wall0045";
 			"WLF0017B";
 		}
 
 		46
 		{
-			"Patches/Walls/WALL0046.png";
+			"Wolf3D/Wall0046";
 			"WLF0018A";
 		}
 
 		47
 		{
-			"Patches/Walls/WALL0047.png";
+			"Wolf3D/Wall0047";
 			"WLF0018B";
 		}
 
 		48
 		{
-			"Patches/Walls/WALL0048.png";
+			"Wolf3D/Wall0048";
 			"WLF0019A";
 		}
 
 		49
 		{
-			"Patches/Walls/WALL0049.png";
+			"Wolf3D/Wall0049";
 			"WLF0019B";
 		}
 
 		50
 		{
-			"Patches/Walls/WALL0050.png";
+			"Wolf3D/Wall0050";
 			"WLF001AA";
 		}
 
 		51
 		{
-			"Patches/Walls/WALL0051.png";
+			"Wolf3D/Wall0051";
 			"WLF001AB";
 		}
 
 		52
 		{
-			"Patches/Walls/WALL0052.png";
+			"Wolf3D/Wall0052";
 			"WLF001BA";
 		}
 
 		53
 		{
-			"Patches/Walls/WALL0053.png";
+			"Wolf3D/Wall0053";
 			"WLF001BB";
 		}
 
 		54
 		{
-			"Patches/Walls/WALL0054.png";
+			"Wolf3D/Wall0054";
 			"WLF001CA";
 		}
 
 		55
 		{
-			"Patches/Walls/WALL0055.png";
+			"Wolf3D/Wall0055";
 			"WLF001CB";
 		}
 
 		56
 		{
-			"Patches/Walls/WALL0056.png";
+			"Wolf3D/Wall0056";
 			"WLF001DA";
 		}
 
 		57
 		{
-			"Patches/Walls/WALL0057.png";
+			"Wolf3D/Wall0057";
 			"WLF001DB";
 		}
 
 		58
 		{
-			"Patches/Walls/WALL0058.png";
+			"Wolf3D/Wall0058";
 			"WLF001EA";
 		}
 
 		59
 		{
-			"Patches/Walls/WALL0059.png";
+			"Wolf3D/Wall0059";
 			"WLF001EB";
 		}
 
 		60
 		{
-			"Patches/Walls/WALL0060.png";
+			"Wolf3D/Wall0060";
 			"WLF001FA";
 		}
 
 		61
 		{
-			"Patches/Walls/WALL0061.png";
+			"Wolf3D/Wall0061";
 			"WLF001FB";
 		}
 
 		62
 		{
-			"Patches/Walls/WALL0062.png";
+			"Wolf3D/Wall0062";
 			"WLF0020A";
 		}
 
 		63
 		{
-			"Patches/Walls/WALL0063.png";
+			"Wolf3D/Wall0063";
 			"WLF0020B";
 		}
 
 		64
 		{
-			"Patches/Walls/WALL0064.png";
+			"Wolf3D/Wall0064";
 			"WLF0021A";
 		}
 
 		65
 		{
-			"Patches/Walls/WALL0065.png";
+			"Wolf3D/Wall0065";
 			"WLF0021B";
 		}
 
 		66
 		{
-			"Patches/Walls/WALL0066.png";
+			"Wolf3D/Wall0066";
 			"WLF0022A";
 		}
 
 		67
 		{
-			"Patches/Walls/WALL0067.png";
+			"Wolf3D/Wall0067";
 			"WLF0022B";
 		}
 
 		68
 		{
-			"Patches/Walls/WALL0068.png";
+			"Wolf3D/Wall0068";
 			"WLF0023A";
 		}
 
 		69
 		{
-			"Patches/Walls/WALL0069.png";
+			"Wolf3D/Wall0069";
 			"WLF0023B";
 		}
 
 		70
 		{
-			"Patches/Walls/WALL0070.png";
+			"Wolf3D/Wall0070";
 			"WLF0024A";
 		}
 
 		71
 		{
-			"Patches/Walls/WALL0071.png";
+			"Wolf3D/Wall0071";
 			"WLF0024B";
 		}
 
 		72
 		{
-			"Patches/Walls/WALL0072.png";
+			"Wolf3D/Wall0072";
 			"WLF0025A";
 		}
 
 		73
 		{
-			"Patches/Walls/WALL0073.png";
+			"Wolf3D/Wall0073";
 			"WLF0025B";
 		}
 
 		74
 		{
-			"Patches/Walls/WALL0074.png";
+			"Wolf3D/Wall0074";
 			"WLF0026A";
 		}
 
 		75
 		{
-			"Patches/Walls/WALL0075.png";
+			"Wolf3D/Wall0075";
 			"WLF0026B";
 		}
 
 		76
 		{
-			"Patches/Walls/WALL0076.png";
+			"Wolf3D/Wall0076";
 			"WLF0027A";
 		}
 
 		77
 		{
-			"Patches/Walls/WALL0077.png";
+			"Wolf3D/Wall0077";
 			"WLF0027B";
 		}
 
 		78
 		{
-			"Patches/Walls/WALL0078.png";
+			"Wolf3D/Wall0078";
 			"WLF0028A";
 		}
 
 		79
 		{
-			"Patches/Walls/WALL0079.png";
+			"Wolf3D/Wall0079";
 			"WLF0028B";
 		}
 
 		80
 		{
-			"Patches/Walls/WALL0080.png";
+			"Wolf3D/Wall0080";
 			"WLF0029A";
 		}
 
 		81
 		{
-			"Patches/Walls/WALL0081.png";
+			"Wolf3D/Wall0081";
 			"WLF0029B";
 		}
 
 		82
 		{
-			"Patches/Walls/WALL0082.png";
+			"Wolf3D/Wall0082";
 			"WLF002AA";
 		}
 
 		83
 		{
-			"Patches/Walls/WALL0083.png";
+			"Wolf3D/Wall0083";
 			"WLF002AB";
 		}
 
 		84
 		{
-			"Patches/Walls/WALL0084.png";
+			"Wolf3D/Wall0084";
 			"WLF002BA";
 		}
 
 		85
 		{
-			"Patches/Walls/WALL0085.png";
+			"Wolf3D/Wall0085";
 			"WLF002BB";
 		}
 
 		86
 		{
-			"Patches/Walls/WALL0086.png";
+			"Wolf3D/Wall0086";
 			"WLF002CA";
 		}
 
 		87
 		{
-			"Patches/Walls/WALL0087.png";
+			"Wolf3D/Wall0087";
 			"WLF002CB";
 		}
 
 		88
 		{
-			"Patches/Walls/WALL0088.png";
+			"Wolf3D/Wall0088";
 			"WLF002DA";
 		}
 
 		89
 		{
-			"Patches/Walls/WALL0089.png";
+			"Wolf3D/Wall0089";
 			"WLF002DB";
 		}
 
 		90
 		{
-			"Patches/Walls/WALL0090.png";
+			"Wolf3D/Wall0090";
 			"WLF002EA";
 		}
 
 		91
 		{
-			"Patches/Walls/WALL0091.png";
+			"Wolf3D/Wall0091";
 			"WLF002EB";
 		}
 
 		92
 		{
-			"Patches/Walls/WALL0092.png";
+			"Wolf3D/Wall0092";
 			"WLF002FA";
 		}
 
 		93
 		{
-			"Patches/Walls/WALL0093.png";
+			"Wolf3D/Wall0093";
 			"WLF002FB";
 		}
 
 		94
 		{
-			"Patches/Walls/WALL0094.png";
+			"Wolf3D/Wall0094";
 			"WLF0030A";
 		}
 
 		95
 		{
-			"Patches/Walls/WALL0095.png";
+			"Wolf3D/Wall0095";
 			"WLF0030B";
 		}
 
 		96
 		{
-			"Patches/Walls/WALL0096.png";
+			"Wolf3D/Wall0096";
 			"WLF0031A";
 		}
 
 		97
 		{
-			"Patches/Walls/WALL0097.png";
+			"Wolf3D/Wall0097";
 			"WLF0031B";
 		}
 
 		98
 		{
-			"Patches/Walls/WALL0098.png";
+			"Wolf3D/Wall0098";
 			"WLF0DORA" { Flip; }
 			"WLF0DORC";
 		}
 
 		99
 		{
-			"Patches/Walls/WALL0099.png";
+			"Wolf3D/Wall0099";
 			"WLF0DORB";
 			"WLF0DORD" { Flip; }
 
@@ -634,7 +634,7 @@ Default // Wolf3D
 
 		100
 		{
-			"Patches/Walls/WALL0100.png";
+			"Wolf3D/Wall0100";
 			"WLF0JMBA";
 			"WLF0JMBC" { Flip; }
 
@@ -642,7 +642,7 @@ Default // Wolf3D
 
 		101
 		{
-			"Patches/Walls/WALL0101.png";
+			"Wolf3D/Wall0101";
 			"WLF0JMBB";
 			"WLF0JMBD" { Flip; }
 
@@ -650,14 +650,14 @@ Default // Wolf3D
 
 		102
 		{
-			"Patches/Walls/WALL0102.png";
+			"Wolf3D/Wall0102";
 			"WLF0ELEA" { Flip; }
 			"WLF0ELEC";
 		}
 
 		103
 		{
-			"Patches/Walls/WALL0103.png";
+			"Wolf3D/Wall0103";
 			"WLF0ELEB";
 			"WLF0ELED" { Flip; }
 
@@ -665,7 +665,7 @@ Default // Wolf3D
 
 		104
 		{
-			"Patches/Walls/WALL0104.png";
+			"Wolf3D/Wall0104";
 			"WLF0LK1A" { Flip; }
 			"WLF0LK1C";
 			"WLF0LK2A" { Flip; }
@@ -674,7 +674,7 @@ Default // Wolf3D
 
 		105
 		{
-			"Patches/Walls/WALL0105.png";
+			"Wolf3D/Wall0105";
 			"WLF0LK1B";
 			"WLF0LK1D" { Flip; }
 			"WLF0LK2B";
@@ -1063,8 +1063,19 @@ Default // Wolf3D
 		"ROCKA6";
 		"ROCKA5";
 		"RTRLA0";
-		"RTRLB0";
-		"RTRLC0";
+
+		377
+		{
+			"RTRLB0";
+			"WPUFD0";
+		}
+
+		378
+		{
+			"RTRLC0";
+			"WPUFC0";
+		}
+
 		"RTRLD0";
 		"ROCPA0";
 		"ROCPB0";

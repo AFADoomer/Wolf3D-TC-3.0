@@ -1765,17 +1765,14 @@ class ParsedMap
 
 		if (!tex.IsValid() || !GraphicsHandler.CheckTouched(texname))
 		{
-			switch (gametype)
+			if (tile && !(tile.flags & TileInfo.TILE_FONT))
 			{
-				// case 4:
-				// 	if (t > 0xD0) { t -= 0x13C; }
-				// 	else if (t < 0x58) { return TexMan.CheckForTexture("Patches/Walls/Wall4000.png", TexMan.Type_Any); }
-				// 	else { return tex; }
-				// 	break;
-				default:
-					TileInfo defaulttile = TileAtIndex(0);
-					if (tile && !(tile.flags & TileInfo.TILE_FONT)) { return TexMan.CheckForTexture(defaulttile.tex[0], TexMan.Type_Any); }
-					break;
+				TileInfo defaulttile = TileAtIndex(0);
+
+				tex = TexMan.CheckForTexture(defaulttile.tex[0], TexMan.Type_Any);
+				if (tex.IsValid()) { return tex; }
+
+				return TexMan.CheckForTexture("Black", TexMan.Type_Any);
 			}
 
 			int c = 0;

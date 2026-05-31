@@ -6,771 +6,770 @@ SD2
 	{
 		0
 		{
-			"Patches/Walls/WALL2000.png";
+			"RtD/Wall0000";
 			"WLF2001A";
 		}
 
 		1
 		{
-			"Patches/Walls/WALL2001.png";
+			"RtD/Wall0001";
 			"WLF2001B";
 		}
 
 		2
 		{
-			"Patches/Walls/WALL2002.png";
+			"RtD/Wall0002";
 			"WLF2002A";
 		}
 
 		3
 		{
-			"Patches/Walls/WALL2003.png";
+			"RtD/Wall0003";
 			"WLF2002B";
 		}
 
 		4
 		{
-			"Patches/Walls/WALL2004.png";
+			"RtD/Wall0004";
 			"WLF2003A";
 		}
 
 		5
 		{
-			"Patches/Walls/WALL2005.png";
+			"RtD/Wall0005";
 			"WLF2003B";
 		}
 
 		6
 		{
-			"Patches/Walls/WALL2006.png";
+			"RtD/Wall0006";
 			"WLF2004A";
 		}
 
 		7
 		{
-			"Patches/Walls/WALL2007.png";
+			"RtD/Wall0007";
 			"WLF2004B";
 		}
 
 		8
 		{
-			"Patches/Walls/WALL2008.png";
+			"RtD/Wall0008";
 			"WLF2005A";
 		}
 
 		9
 		{
-			"Patches/Walls/WALL2009.png";
+			"RtD/Wall0009";
 			"WLF2005B";
 		}
 
 
 		10{
-			"Patches/Walls/WALL2010.png";
+			"RtD/Wall0010";
 			"WLF2006A";
 		}
 
 		11
 		{
-			"Patches/Walls/WALL2011.png";
+			"RtD/Wall0011";
 			"WLF2006B";
 		}
 
 		12
 		{
-			"Patches/Walls/WALL2012.png";
+			"RtD/Wall0012";
 			"WLF2007A";
 		}
 
 		13
 		{
-			"Patches/Walls/WALL2013.png";
+			"RtD/Wall0013";
 			"WLF2007B";
 		}
 
 		14
 		{
-			"Patches/Walls/WALL2014.png";
+			"RtD/Wall0014";
 			"WLF2008A";
 		}
 
 		15
 		{
-			"Patches/Walls/WALL2015.png";
+			"RtD/Wall0015";
 			"WLF2008B";
 		}
 
 		16
 		{
-			"Patches/Walls/WALL2016.png";
+			"RtD/Wall0016";
 			"WLF2009A";
 		}
 
 		17
 		{
-			"Patches/Walls/WALL2017.png";
+			"RtD/Wall0017";
 			"WLF2009B";
 		}
 
 		18
 		{
-			"Patches/Walls/WALL2018.png";
+			"RtD/Wall0018";
 			"WLF200AA";
 		}
 
 		19
 		{
-			"Patches/Walls/WALL2019.png";
+			"RtD/Wall0019";
 			"WLF200AB";
 		}
 
 		20
 		{
-			"Patches/Walls/WALL2020.png";
+			"RtD/Wall0020";
 			"WLF200BA";
 		}
 
 		21
 		{
-			"Patches/Walls/WALL2021.png";
+			"RtD/Wall0021";
 			"WLF200BB";
 		}
 
 		22
 		{
-			"Patches/Walls/WALL2022.png";
+			"RtD/Wall0022";
 			"WLF200CA";
 		}
 
 		23
 		{
-			"Patches/Walls/WALL2023.png";
+			"RtD/Wall0023";
 			"WLF200CB";
 		}
 
 		24
 		{
-			"Patches/Walls/WALL2024.png";
+			"RtD/Wall0024";
 			"WLF200DA";
 		}
 
 		25
 		{
-			"Patches/Walls/WALL2025.png";
+			"RtD/Wall0025";
 			"WLF200DB";
 		}
 
 		26
 		{
-			"Patches/Walls/WALL2026.png";
+			"RtD/Wall0026";
 			"WLF200EA";
 		}
 
 		27
 		{
-			"Patches/Walls/WALL2027.png";
+			"RtD/Wall0027";
 			"WLF200EB";
 		}
 
 		28
 		{
-			"Patches/Walls/WALL2028.png";
+			"RtD/Wall0028";
 			"WLF200FA";
 		}
 
 		29
 		{
-			"Patches/Walls/WALL2029.png";
+			"RtD/Wall0029";
 			"WLF200FB";
 		}
 
 		30
 		{
-			"Patches/Walls/WALL2030.png";
+			"RtD/Wall0030";
 			"WLF2010A";
 		}
 
 		31
 		{
-			"Patches/Walls/WALL2031.png";
+			"RtD/Wall0031";
 			"WLF2010B";
 		}
 
 		32
 		{
-			"Patches/Walls/WALL2032.png";
+			"RtD/Wall0032";
 			"WLF2011A";
 		}
 
 		33
 		{
-			"Patches/Walls/WALL2033.png";
+			"RtD/Wall0033";
 			"WLF2011B";
 		}
 
 		34
 		{
-			"Patches/Walls/WALL2034.png";
+			"RtD/Wall0034";
 			"WLF2012A";
 		}
 
 		35
 		{
-			"Patches/Walls/WALL2035.png";
+			"RtD/Wall0035";
 			"WLF2012B";
 		}
 
 		36
 		{
-			"Patches/Walls/WALL2036.png";
+			"RtD/Wall0036";
 			"WLF2013A";
 		}
 
 		37
 		{
-			"Patches/Walls/WALL2037.png";
+			"RtD/Wall0037";
 			"WLF2013B";
 		}
 
 		38
 		{
-			"Patches/Walls/WALL2038.png";
+			"RtD/Wall0038";
 			"WLF2014A";
 		}
 
 		39
 		{
-			"Patches/Walls/WALL2039.png";
+			"RtD/Wall0039";
 			"WLF2014B";
 		}
 
 		40
 		{
-			"Patches/Walls/WALL2040.png";
+			"RtD/Wall0040";
 			"WLF2015A";
 		}
 
 		41
 		{
-			"Patches/Walls/WALL2041.png";
+			"RtD/Wall0041";
 			"WLF2015B";
-			"WLF2055B";
 		}
 
 		42
 		{
-			"Patches/Walls/WALL2042.png";
+			"RtD/Wall0042";
 			"WLF2016A";
 		}
 
 		43
 		{
-			"Patches/Walls/WALL2043.png";
+			"RtD/Wall0043";
 			"WLF2016B";
 		}
 
 		44
 		{
-			"Patches/Walls/WALL2044.png";
+			"RtD/Wall0044";
 			"WLF2017A";
 		}
 
 		45
 		{
-			"Patches/Walls/WALL2045.png";
+			"RtD/Wall0045";
 			"WLF2017B";
 		}
 
 		46
 		{
-			"Patches/Walls/WALL2046.png";
+			"RtD/Wall0046";
 			"WLF2018A";
 		}
 
 		47
 		{
-			"Patches/Walls/WALL2047.png";
+			"RtD/Wall0047";
 			"WLF2018B";
 		}
 
 		48
 		{
-			"Patches/Walls/WALL2048.png";
+			"RtD/Wall0048";
 			"WLF2019A";
 		}
 
 		49
 		{
-			"Patches/Walls/WALL2049.png";
+			"RtD/Wall0049";
 			"WLF2019B";
 		}
 
 		50
 		{
-			"Patches/Walls/WALL2050.png";
+			"RtD/Wall0050";
 			"WLF201AA";
 		}
 
 		51
 		{
-			"Patches/Walls/WALL2051.png";
+			"RtD/Wall0051";
 			"WLF201AB";
 		}
 
 		52
 		{
-			"Patches/Walls/WALL2052.png";
+			"RtD/Wall0052";
 			"WLF201BA";
 		}
 
 		53
 		{
-			"Patches/Walls/WALL2053.png";
+			"RtD/Wall0053";
 			"WLF201BB";
 		}
 
 		54
 		{
-			"Patches/Walls/WALL2054.png";
+			"RtD/Wall0054";
 			"WLF201CA";
 		}
 
 		55
 		{
-			"Patches/Walls/WALL2055.png";
+			"RtD/Wall0055";
 			"WLF201CB";
 		}
 
 		56
 		{
-			"Patches/Walls/WALL2056.png";
+			"RtD/Wall0056";
 			"WLF201DA";
 		}
 
 		57
 		{
-			"Patches/Walls/WALL2057.png";
+			"RtD/Wall0057";
 			"WLF201DB";
 		}
 
 		58
 		{
-			"Patches/Walls/WALL2058.png";
+			"RtD/Wall0058";
 			"WLF201EA";
 		}
 
 		59
 		{
-			"Patches/Walls/WALL2059.png";
+			"RtD/Wall0059";
 			"WLF201EB";
 		}
 
 		60
 		{
-			"Patches/Walls/WALL2060.png";
+			"RtD/Wall0060";
 			"WLF201FA";
 		}
 
 		61
 		{
-			"Patches/Walls/WALL2061.png";
+			"RtD/Wall0061";
 			"WLF201FB";
 		}
 
 		62
 		{
-			"Patches/Walls/WALL2062.png";
+			"RtD/Wall0062";
 			"WLF2020A";
 		}
 
 		63
 		{
-			"Patches/Walls/WALL2063.png";
+			"RtD/Wall0063";
 			"WLF2020B";
 		}
 
 		64
 		{
-			"Patches/Walls/WALL2064.png";
+			"RtD/Wall0064";
 			"WLF2021A";
 		}
 
 		65
 		{
-			"Patches/Walls/WALL2065.png";
+			"RtD/Wall0065";
 			"WLF2021B";
 		}
 
 		66
 		{
-			"Patches/Walls/WALL2066.png";
+			"RtD/Wall0066";
 			"WLF2022A";
 		}
 
 		67
 		{
-			"Patches/Walls/WALL2067.png";
+			"RtD/Wall0067";
 			"WLF2022B";
 		}
 
 		68
 		{
-			"Patches/Walls/WALL2068.png";
+			"RtD/Wall0068";
 			"WLF2023A";
 		}
 
 		69
 		{
-			"Patches/Walls/WALL2069.png";
+			"RtD/Wall0069";
 			"WLF2023B";
 		}
 
 		70
 		{
-			"Patches/Walls/WALL2070.png";
+			"RtD/Wall0070";
 			"WLF2024A";
 		}
 
 		71
 		{
-			"Patches/Walls/WALL2071.png";
+			"RtD/Wall0071";
 			"WLF2024B";
 		}
 
 		72
 		{
-			"Patches/Walls/WALL2072.png";
+			"RtD/Wall0072";
 			"WLF2025A";
 		}
 
 		73
 		{
-			"Patches/Walls/WALL2073.png";
+			"RtD/Wall0073";
 			"WLF2025B";
 		}
 
 		74
 		{
-			"Patches/Walls/WALL2074.png";
+			"RtD/Wall0074";
 			"WLF2026A";
 		}
 
 		75
 		{
-			"Patches/Walls/WALL2075.png";
+			"RtD/Wall0075";
 			"WLF2026B";
 		}
 
 		76
 		{
-			"Patches/Walls/WALL2076.png";
+			"RtD/Wall0076";
 			"WLF2027A";
 		}
 
 		77
 		{
-			"Patches/Walls/WALL2077.png";
+			"RtD/Wall0077";
 			"WLF2027B";
 		}
 
 		78
 		{
-			"Patches/Walls/WALL2078.png";
+			"RtD/Wall0078";
 			"WLF2028A";
 		}
 
 		79
 		{
-			"Patches/Walls/WALL2079.png";
+			"RtD/Wall0079";
 			"WLF2028B";
 		}
 
 		80
 		{
-			"Patches/Walls/WALL2080.png";
+			"RtD/Wall0080";
 			"WLF2029A";
 		}
 
 		81
 		{
-			"Patches/Walls/WALL2081.png";
+			"RtD/Wall0081";
 			"WLF2029B";
 		}
 
 		82
 		{
-			"Patches/Walls/WALL2082.png";
+			"RtD/Wall0082";
 			"WLF202AA";
 		}
 
 		83
 		{
-			"Patches/Walls/WALL2083.png";
+			"RtD/Wall0083";
 			"WLF202AB";
 		}
 
 		84
 		{
-			"Patches/Walls/WALL2084.png";
+			"RtD/Wall0084";
 			"WLF202BA";
 		}
 
 		85
 		{
-			"Patches/Walls/WALL2085.png";
+			"RtD/Wall0085";
 			"WLF202BB";
 		}
 
 		86
 		{
-			"Patches/Walls/WALL2086.png";
+			"RtD/Wall0086";
 			"WLF202CA";
 		}
 
 		87
 		{
-			"Patches/Walls/WALL2087.png";
+			"RtD/Wall0087";
 			"WLF202CB";
 		}
 
 		88
 		{
-			"Patches/Walls/WALL2088.png";
+			"RtD/Wall0088";
 			"WLF202DA";
 		}
 
 		89
 		{
-			"Patches/Walls/WALL2089.png";
+			"RtD/Wall0089";
 			"WLF202DB";
 		}
 
 		90
 		{
-			"Patches/Walls/WALL2090.png";
+			"RtD/Wall0090";
 			"WLF202EA";
 		}
 
 		91
 		{
-			"Patches/Walls/WALL2091.png";
+			"RtD/Wall0091";
 			"WLF202EB";
 		}
 
 		92
 		{
-			"Patches/Walls/WALL2092.png";
+			"RtD/Wall0092";
 			"WLF202FA";
 		}
 
 		93
 		{
-			"Patches/Walls/WALL2093.png";
+			"RtD/Wall0093";
 			"WLF202FB";
 		}
 
 		94
 		{
-			"Patches/Walls/WALL2094.png";
+			"RtD/Wall0094";
 			"WLF2030A";
 		}
 
 		95
 		{
-			"Patches/Walls/WALL2095.png";
+			"RtD/Wall0095";
 			"WLF2030B";
 		}
 
 		96
 		{
-			"Patches/Walls/WALL2096.png";
+			"RtD/Wall0096";
 			"WLF2031A";
 		}
 
 		97
 		{
-			"Patches/Walls/WALL2097.png";
+			"RtD/Wall0097";
 			"WLF2031B";
 		}
 
 		98
 		{
-			"Patches/Walls/WALL2098.png";
+			"RtD/Wall0098";
 			"WLF2032A";
 		}
 
 		99
 		{
-			"Patches/Walls/WALL2099.png";
+			"RtD/Wall0099";
 			"WLF2032B";
 		}
 
 		100
 		{
-			"Patches/Walls/WALL2100.png";
+			"RtD/Wall0100";
 			"WLF2033A";
 		}
 
 		101
 		{
-			"Patches/Walls/WALL2101.png";
+			"RtD/Wall0101";
 			"WLF2033B";
 		}
 
 		102
 		{
-			"Patches/Walls/WALL2102.png";
+			"RtD/Wall0102";
 			"WLF2034A";
 		}
 
 		103
 		{
-			"Patches/Walls/WALL2103.png";
+			"RtD/Wall0103";
 			"WLF2034B";
 		}
 
 		104
 		{
-			"Patches/Walls/WALL2104.png";
+			"RtD/Wall0104";
 			"WLF2035A";
 		}
 
 		105
 		{
-			"Patches/Walls/WALL2105.png";
+			"RtD/Wall0105";
 			"WLF2035B";
 		}
 
 		106
 		{
-			"Patches/Walls/WALL2106.png";
+			"RtD/Wall0106";
 			"WLF2036A";
 		}
 
 		107
 		{
-			"Patches/Walls/WALL2107.png";
+			"RtD/Wall0107";
 			"WLF2036B";
 		}
 
 		108
 		{
-			"Patches/Walls/WALL2108.png";
+			"RtD/Wall0108";
 			"WLF2037A";
 		}
 
 		109
 		{
-			"Patches/Walls/WALL2109.png";
+			"RtD/Wall0109";
 			"WLF2037B";
 		}
 
 		110
 		{
-			"Patches/Walls/WALL2110.png";
+			"RtD/Wall0110";
 			"WLF2038A";
 		}
 
 		111
 		{
-			"Patches/Walls/WALL2111.png";
+			"RtD/Wall0111";
 			"WLF2038B";
 		}
 
 		112
 		{
-			"Patches/Walls/WALL2112.png";
+			"RtD/Wall0112";
 			"WLF2039A";
 		}
 
 		113
 		{
-			"Patches/Walls/WALL2113.png";
+			"RtD/Wall0113";
 			"WLF2039B";
 		}
 
 		114
 		{
-			"Patches/Walls/WALL2114.png";
+			"RtD/Wall0114";
 			"WLF203AA";
 		}
 
 		115
 		{
-			"Patches/Walls/WALL2115.png";
+			"RtD/Wall0115";
 			"WLF203AB";
 		}
 
 		116
 		{
-			"Patches/Walls/WALL2116.png";
+			"RtD/Wall0116";
 			"WLF203BA";
 		}
 
 		117
 		{
-			"Patches/Walls/WALL2117.png";
+			"RtD/Wall0117";
 			"WLF203BB";
 		}
 
 		118
 		{
-			"Patches/Walls/WALL2118.png";
+			"RtD/Wall0118";
 			"WLF203CA";
 		}
 
 		119
 		{
-			"Patches/Walls/WALL2119.png";
+			"RtD/Wall0119";
 			"WLF203CB";
 		}
 
 		120
 		{
-			"Patches/Walls/WALL2120.png";
+			"RtD/Wall0120";
 			"WLF203DA";
 		}
 
 		121
 		{
-			"Patches/Walls/WALL2121.png";
+			"RtD/Wall0121";
 			"WLF203DB";
 		}
 
 		122
 		{
-			"Patches/Walls/WALL2122.png";
+			"RtD/Wall0122";
 			"WLF203EA";
 		}
 
 		123
 		{
-			"Patches/Walls/WALL2123.png";
+			"RtD/Wall0123";
 			"WLF203EB";
 		}
 
 		124
 		{
-			"Patches/Walls/WALL2124.png";
+			"RtD/Wall0124";
 			"WLF203FA";
 		}
 
 		125
 		{
-			"Patches/Walls/WALL2125.png";
+			"RtD/Wall0125";
 			"WLF203FB";
 		}
 
 		126
 		{
-			"Patches/Walls/WALL2126.png";
+			"RtD/Wall0126";
 			"WLF2DORA" { Flip; }
 			"WLF2DORC";
 		}
 
 		127
 		{
-			"Patches/Walls/WALL2127.png";
+			"RtD/Wall0127";
 			"WLF2DORB";
 			"WLF2DORD" { Flip; }
 
@@ -778,7 +777,7 @@ SD2
 
 		128
 		{
-			"Patches/Walls/WALL2128.png";
+			"RtD/Wall0128";
 			"WLF2JMBA";
 			"WLF2JMBC" { Flip; }
 
@@ -786,7 +785,7 @@ SD2
 
 		129
 		{
-			"Patches/Walls/WALL2129.png";
+			"RtD/Wall0129";
 			"WLF2JMBB";
 			"WLF2JMBD" { Flip; }
 
@@ -794,14 +793,14 @@ SD2
 
 		130
 		{
-			"Patches/Walls/WALL2130.png";
+			"RtD/Wall0130";
 			"WLF2ELEA" { Flip; }
 			"WLF2ELEC";
 		}
 
 		131
 		{
-			"Patches/Walls/WALL2131.png";
+			"RtD/Wall0131";
 			"WLF2ELEB";
 			"WLF2ELED" { Flip; }
 
@@ -809,7 +808,7 @@ SD2
 
 		132
 		{
-			"Patches/Walls/WALL2132.png";
+			"RtD/Wall0132";
 			"WLF2LK1A" { Flip; }
 			"WLF2LK1C";
 			"WLF2LK2A" { Flip; }
@@ -818,7 +817,7 @@ SD2
 
 		133
 		{
-			"Patches/Walls/WALL2133.png";
+			"RtD/Wall0133";
 			"WLF2LK1B";
 			"WLF2LK1D" { Flip; }
 			"WLF2LK2B";

@@ -4,285 +4,285 @@ SD1
 
 	Textures
 	{
-		"Patches/Walls/WALL1000.png";
-		"Patches/Walls/WALL1001.png";
-		"Patches/Walls/WALL1002.png";
-		"Patches/Walls/WALL1003.png";
-		"Patches/Walls/WALL1004.png";
-		"Patches/Walls/WALL1005.png";
-		"Patches/Walls/WALL1006.png";
-		"Patches/Walls/WALL1007.png";
-		"Patches/Walls/WALL1008.png";
-		"Patches/Walls/WALL1009.png";
-		"Patches/Walls/WALL1010.png";
-		"Patches/Walls/WALL1011.png";
-		"Patches/Walls/WALL1012.png";
-		"Patches/Walls/WALL1013.png";
-		"Patches/Walls/WALL1014.png";
-		"Patches/Walls/WALL1015.png";
-		"Patches/Walls/WALL1016.png";
-		"Patches/Walls/WALL1017.png";
-		"Patches/Walls/WALL1018.png";
-		"Patches/Walls/WALL1019.png";
-		"Patches/Walls/WALL1020.png";
-		"Patches/Walls/WALL1021.png";
-		"Patches/Walls/WALL1022.png";
-		"Patches/Walls/WALL1023.png";
-		"Patches/Walls/WALL1024.png";
-		"Patches/Walls/WALL1025.png";
-		"Patches/Walls/WALL1026.png";
-		"Patches/Walls/WALL1027.png";
-		"Patches/Walls/WALL1028.png";
-		"Patches/Walls/WALL1029.png";
-		"Patches/Walls/WALL1030.png";
-		"Patches/Walls/WALL1031.png";
-		"Patches/Walls/WALL1032.png";
-		"Patches/Walls/WALL1033.png";
-		"Patches/Walls/WALL1034.png";
-		"Patches/Walls/WALL1035.png";
-		"Patches/Walls/WALL1036.png";
-		"Patches/Walls/WALL1037.png";
-		"Patches/Walls/WALL1038.png";
-		"Patches/Walls/WALL1039.png";
-		"Patches/Walls/WALL1040.png";
-		"Patches/Walls/WALL1041.png";
-		"Patches/Walls/WALL1042.png";
-		"Patches/Walls/WALL1043.png";
-		"Patches/Walls/WALL1044.png";
-		"Patches/Walls/WALL1045.png";
-		"Patches/Walls/WALL1046.png";
-		"Patches/Walls/WALL1047.png";
-		"Patches/Walls/WALL1048.png";
-		"Patches/Walls/WALL1049.png";
-		"Patches/Walls/WALL1050.png";
-		"Patches/Walls/WALL1051.png";
-		"Patches/Walls/WALL1052.png";
-		"Patches/Walls/WALL1053.png";
-		"Patches/Walls/WALL1054.png";
-		"Patches/Walls/WALL1055.png";
-		"Patches/Walls/WALL1056.png";
-		"Patches/Walls/WALL1057.png";
-		"Patches/Walls/WALL1058.png";
-		"Patches/Walls/WALL1059.png";
-		"Patches/Walls/WALL1060.png";
-		"Patches/Walls/WALL1061.png";
-		"Patches/Walls/WALL1062.png";
-		"Patches/Walls/WALL1063.png";
-		"Patches/Walls/WALL1064.png";
-		"Patches/Walls/WALL1065.png";
-		"Patches/Walls/WALL1066.png";
-		"Patches/Walls/WALL1067.png";
-		"Patches/Walls/WALL1068.png";
-		"Patches/Walls/WALL1069.png";
-		"Patches/Walls/WALL1070.png";
-		"Patches/Walls/WALL1071.png";
-		"Patches/Walls/WALL1072.png";
-		"Patches/Walls/WALL1073.png";
-		"Patches/Walls/WALL1074.png";
-		"Patches/Walls/WALL1075.png";
-		"Patches/Walls/WALL1076.png";
-		"Patches/Walls/WALL1077.png";
-		"Patches/Walls/WALL1078.png";
-		"Patches/Walls/WALL1079.png";
-		"Patches/Walls/WALL1080.png";
-		"Patches/Walls/WALL1081.png";
-		"Patches/Walls/WALL1082.png";
-		"Patches/Walls/WALL1083.png";
-		"Patches/Walls/WALL1084.png";
-		"Patches/Walls/WALL1085.png";
-		"Patches/Walls/WALL1086.png";
-		"Patches/Walls/WALL1087.png";
-		"Patches/Walls/WALL1088.png";
-		"Patches/Walls/WALL1089.png";
-		"Patches/Walls/WALL1090.png";
-		"Patches/Walls/WALL1091.png";
-		"Patches/Walls/WALL1092.png";
-		"Patches/Walls/WALL1093.png";
-		"Patches/Walls/WALL1094.png";
-		"Patches/Walls/WALL1095.png";
-		"Patches/Walls/WALL1096.png";
-		"Patches/Walls/WALL1097.png";
+		"SoD/Wall0000";
+		"SoD/Wall0001";
+		"SoD/Wall0002";
+		"SoD/Wall0003";
+		"SoD/Wall0004";
+		"SoD/Wall0005";
+		"SoD/Wall0006";
+		"SoD/Wall0007";
+		"SoD/Wall0008";
+		"SoD/Wall0009";
+		"SoD/Wall0010";
+		"SoD/Wall0011";
+		"SoD/Wall0012";
+		"SoD/Wall0013";
+		"SoD/Wall0014";
+		"SoD/Wall0015";
+		"SoD/Wall0016";
+		"SoD/Wall0017";
+		"SoD/Wall0018";
+		"SoD/Wall0019";
+		"SoD/Wall0020";
+		"SoD/Wall0021";
+		"SoD/Wall0022";
+		"SoD/Wall0023";
+		"SoD/Wall0024";
+		"SoD/Wall0025";
+		"SoD/Wall0026";
+		"SoD/Wall0027";
+		"SoD/Wall0028";
+		"SoD/Wall0029";
+		"SoD/Wall0030";
+		"SoD/Wall0031";
+		"SoD/Wall0032";
+		"SoD/Wall0033";
+		"SoD/Wall0034";
+		"SoD/Wall0035";
+		"SoD/Wall0036";
+		"SoD/Wall0037";
+		"SoD/Wall0038";
+		"SoD/Wall0039";
+		"SoD/Wall0040";
+		"SoD/Wall0041";
+		"SoD/Wall0042";
+		"SoD/Wall0043";
+		"SoD/Wall0044";
+		"SoD/Wall0045";
+		"SoD/Wall0046";
+		"SoD/Wall0047";
+		"SoD/Wall0048";
+		"SoD/Wall0049";
+		"SoD/Wall0050";
+		"SoD/Wall0051";
+		"SoD/Wall0052";
+		"SoD/Wall0053";
+		"SoD/Wall0054";
+		"SoD/Wall0055";
+		"SoD/Wall0056";
+		"SoD/Wall0057";
+		"SoD/Wall0058";
+		"SoD/Wall0059";
+		"SoD/Wall0060";
+		"SoD/Wall0061";
+		"SoD/Wall0062";
+		"SoD/Wall0063";
+		"SoD/Wall0064";
+		"SoD/Wall0065";
+		"SoD/Wall0066";
+		"SoD/Wall0067";
+		"SoD/Wall0068";
+		"SoD/Wall0069";
+		"SoD/Wall0070";
+		"SoD/Wall0071";
+		"SoD/Wall0072";
+		"SoD/Wall0073";
+		"SoD/Wall0074";
+		"SoD/Wall0075";
+		"SoD/Wall0076";
+		"SoD/Wall0077";
+		"SoD/Wall0078";
+		"SoD/Wall0079";
+		"SoD/Wall0080";
+		"SoD/Wall0081";
+		"SoD/Wall0082";
+		"SoD/Wall0083";
+		"SoD/Wall0084";
+		"SoD/Wall0085";
+		"SoD/Wall0086";
+		"SoD/Wall0087";
+		"SoD/Wall0088";
+		"SoD/Wall0089";
+		"SoD/Wall0090";
+		"SoD/Wall0091";
+		"SoD/Wall0092";
+		"SoD/Wall0093";
+		"SoD/Wall0094";
+		"SoD/Wall0095";
+		"SoD/Wall0096";
+		"SoD/Wall0097";
 
 		98
 		{
-			"Patches/Walls/WALL1098.png";
+			"SoD/Wall0098";
 			"WLF1032A";
 
 		}
 
 		99
 		{
-			"Patches/Walls/WALL1099.png";
+			"SoD/Wall0099";
 			"WLF1032B";
 
 		}
 
 		100
 		{
-			"Patches/Walls/WALL1100.png";
+			"SoD/Wall0100";
 			"WLF1033A";
 		}
 
 		101
 		{
-			"Patches/Walls/WALL1101.png";
+			"SoD/Wall0101";
 			"WLF1033B";
 		}
 
 		102
 		{
-			"Patches/Walls/WALL1102.png";
+			"SoD/Wall0102";
 			"WLF1034A";
 		}
 
 		103
 		{
-			"Patches/Walls/WALL1103.png";
+			"SoD/Wall0103";
 			"WLF1034B";
 		}
 
 		104
 		{
-			"Patches/Walls/WALL1104.png";
+			"SoD/Wall0104";
 			"WLF1035A";
 		}
 
 		105
 		{
-			"Patches/Walls/WALL1105.png";
+			"SoD/Wall0105";
 			"WLF1035B";
 		}
 
 		106
 		{
-			"Patches/Walls/WALL1106.png";
+			"SoD/Wall0106";
 			"WLF1036A";
 		}
 
 		107
 		{
-			"Patches/Walls/WALL1107.png";
+			"SoD/Wall0107";
 			"WLF1036B";
 		}
 
 		108
 		{
-			"Patches/Walls/WALL1108.png";
+			"SoD/Wall0108";
 			"WLF1037A";
 		}
 
 		109
 		{
-			"Patches/Walls/WALL1109.png";
+			"SoD/Wall0109";
 			"WLF1037B";
 		}
 
 		110
 		{
-			"Patches/Walls/WALL1110.png";
+			"SoD/Wall0110";
 			"WLF1038A";
 		}
 
 		111
 		{
-			"Patches/Walls/WALL1111.png";
+			"SoD/Wall0111";
 			"WLF1038B";
 		}
 
 		112
 		{
-			"Patches/Walls/WALL1112.png";
+			"SoD/Wall0112";
 			"WLF1039A";
 		}
 
 		113
 		{
-			"Patches/Walls/WALL1113.png";
+			"SoD/Wall0113";
 			"WLF1039B";
 		}
 
 		114
 		{
-			"Patches/Walls/WALL1114.png";
+			"SoD/Wall0114";
 			"WLF103AA";
 		}
 
 		115
 		{
-			"Patches/Walls/WALL1115.png";
+			"SoD/Wall0115";
 			"WLF103AB";
 		}
 
 		116
 		{
-			"Patches/Walls/WALL1116.png";
+			"SoD/Wall0116";
 			"WLF103BA";
 		}
 
 		117
 		{
-			"Patches/Walls/WALL1117.png";
+			"SoD/Wall0117";
 			"WLF103BB";
 		}
 
 		118
 		{
-			"Patches/Walls/WALL1118.png";
+			"SoD/Wall0118";
 			"WLF103CA";
 		}
 
 		119
 		{
-			"Patches/Walls/WALL1119.png";
+			"SoD/Wall0119";
 			"WLF103CB";
 		}
 
 		120
 		{
-			"Patches/Walls/WALL1120.png";
+			"SoD/Wall0120";
 			"WLF103DA";
 		}
 
 		121
 		{
-			"Patches/Walls/WALL1121.png";
+			"SoD/Wall0121";
 			"WLF103DB";
 		}
 
 		122
 		{
-			"Patches/Walls/WALL1122.png";
+			"SoD/Wall0122";
 			"WLF103EA";
 		}
 
 		123
 		{
-			"Patches/Walls/WALL1123.png";
+			"SoD/Wall0123";
 			"WLF103EB";
 		}
 
 		124
 		{
-			"Patches/Walls/WALL1124.png";
+			"SoD/Wall0124";
 			"WLF103FA";
 		}
 
 		125
 		{
-			"Patches/Walls/WALL1125.png";
+			"SoD/Wall0125";
 			"WLF103FB";
 		}
 
 		126
 		{
-			"Patches/Walls/WALL1126.png";
+			"SoD/Wall0126";
 			"WLF1DORA" { Flip; }
 			"WLF1DORC";
 		}
 
 		127
 		{
-			"Patches/Walls/WALL1127.png";
+			"SoD/Wall0127";
 			"WLF1DORB";
 			"WLF1DORD" { Flip; }
 
@@ -290,7 +290,7 @@ SD1
 
 		128
 		{
-			"Patches/Walls/WALL1128.png";
+			"SoD/Wall0128";
 			"WLF1JMBA";
 			"WLF1JMBC" { Flip; }
 
@@ -298,7 +298,7 @@ SD1
 
 		129
 		{
-			"Patches/Walls/WALL1129.png";
+			"SoD/Wall0129";
 			"WLF1JMBB";
 			"WLF1JMBD" { Flip; }
 
@@ -306,14 +306,14 @@ SD1
 
 		130
 		{
-			"Patches/Walls/WALL1130.png";
+			"SoD/Wall0130";
 			"WLF1ELEA" { Flip; }
 			"WLF1ELEC";
 		}
 
 		131
 		{
-			"Patches/Walls/WALL1131.png";
+			"SoD/Wall0131";
 			"WLF1ELEB";
 			"WLF1ELED" { Flip; }
 
@@ -321,7 +321,7 @@ SD1
 
 		132
 		{
-			"Patches/Walls/WALL1132.png";
+			"SoD/Wall0132";
 			"WLF1LK1A" { Flip; }
 			"WLF1LK1C";
 			"WLF1LK2A" { Flip; }
@@ -330,7 +330,7 @@ SD1
 
 		133
 		{
-			"Patches/Walls/WALL1133.png";
+			"SoD/Wall0133";
 			"WLF1LK1B";
 			"WLF1LK1D" { Flip; }
 			"WLF1LK2B";
@@ -641,8 +641,19 @@ SD1
 		"ROCKA6";
 		"ROCKA5";
 		"RTRLA0";
-		"RTRLB0";
-		"RTRLC0";
+
+		299
+		{
+			"RTRLB0";
+			"WPUFD0";
+		}
+
+		300
+		{
+			"RTRLC0";
+			"WPUFC0";
+		}
+
 		"RTRLD0";
 		"ROCPA0";
 		"ROCPB0";

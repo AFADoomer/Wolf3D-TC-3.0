@@ -5,7 +5,7 @@ SD2
 		Default
 		{
 			Tiles = 0x01-0x59;
-			Pattern = "Patches/Walls/Wall2%03i.png";
+			Pattern = "RtD/Wall%04i";
 			Flags = Wall;
 		}
 
@@ -32,7 +32,7 @@ SD2
 
 		0x55
 		{
-			Pattern = "Patches/Walls/Wall2040.png", "Patches/Walls/Wall2041.png";
+			Pattern = "RtD/Wall0040", "RtD/Wall0041";
 			Flags = Directional;
 		}
 	}
@@ -42,7 +42,7 @@ SD2
 		Default
 		{
 			Tiles = 0x5A, 0x5B;
-			Pattern = "Patches/Walls/Wall2126.png", "Patches/Walls/Wall2127.png";
+			Pattern = "RtD/Wall0126", "RtD/Wall0127";
 			Flags = Door;
 		}
 
@@ -51,7 +51,7 @@ SD2
 			Default
 			{
 				Tiles = 0x5C-0x63;
-				Pattern = "Patches/Walls/Wall2132.png", "Patches/Walls/Wall2133.png";
+				Pattern = "RtD/Wall0132", "RtD/Wall0133";
 				AltPattern = "WLF2LK%iG", "WLF2LK%iF";
 				Flags = Door;
 			}
@@ -102,7 +102,7 @@ SD2
 			Default
 			{
 				Tiles = 0x64, 0x65;
-				Pattern = "Patches/Walls/Wall2130.png", "Patches/Walls/Wall2131.png";
+				Pattern = "RtD/Wall0130", "RtD/Wall0131";
 				Flags = Door;
 			}
 		}

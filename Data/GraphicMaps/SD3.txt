@@ -6,770 +6,770 @@ SD3
 	{
 				0
 		{
-			"Patches/Walls/WALL3000.png";
+			"TUC/Wall0000";
 			"WLF3001A";
 		}
 
 		1
 		{
-			"Patches/Walls/WALL3001.png";
+			"TUC/Wall0001";
 			"WLF3001B";
 		}
 
 		2
 		{
-			"Patches/Walls/WALL3002.png";
+			"TUC/Wall0002";
 			"WLF3002A";
 		}
 
 		3
 		{
-			"Patches/Walls/WALL3003.png";
+			"TUC/Wall0003";
 			"WLF3002B";
 		}
 
 		4
 		{
-			"Patches/Walls/WALL3004.png";
+			"TUC/Wall0004";
 			"WLF3003A";
 		}
 
 		5
 		{
-			"Patches/Walls/WALL3005.png";
+			"TUC/Wall0005";
 			"WLF3003B";
 		}
 
 		6
 		{
-			"Patches/Walls/WALL3006.png";
+			"TUC/Wall0006";
 			"WLF3004A";
 		}
 
 		7
 		{
-			"Patches/Walls/WALL3007.png";
+			"TUC/Wall0007";
 			"WLF3004B";
 		}
 
 		8
 		{
-			"Patches/Walls/WALL3008.png";
+			"TUC/Wall0008";
 			"WLF3005A";
 		}
 
 		9
 		{
-			"Patches/Walls/WALL3009.png";
+			"TUC/Wall0009";
 			"WLF3005B";
 		}
 
 
 		10{
-			"Patches/Walls/WALL3010.png";
+			"TUC/Wall0010";
 			"WLF3006A";
 		}
 
 		11
 		{
-			"Patches/Walls/WALL3011.png";
+			"TUC/Wall0011";
 			"WLF3006B";
 		}
 
 		12
 		{
-			"Patches/Walls/WALL3012.png";
+			"TUC/Wall0012";
 			"WLF3007A";
 		}
 
 		13
 		{
-			"Patches/Walls/WALL3013.png";
+			"TUC/Wall0013";
 			"WLF3007B";
 		}
 
 		14
 		{
-			"Patches/Walls/WALL3014.png";
+			"TUC/Wall0014";
 			"WLF3008A";
 		}
 
 		15
 		{
-			"Patches/Walls/WALL3015.png";
+			"TUC/Wall0015";
 			"WLF3008B";
 		}
 
 		16
 		{
-			"Patches/Walls/WALL3016.png";
+			"TUC/Wall0016";
 			"WLF3009A";
 		}
 
 		17
 		{
-			"Patches/Walls/WALL3017.png";
+			"TUC/Wall0017";
 			"WLF3009B";
 		}
 
 		18
 		{
-			"Patches/Walls/WALL3018.png";
+			"TUC/Wall0018";
 			"WLF300AA";
 		}
 
 		19
 		{
-			"Patches/Walls/WALL3019.png";
+			"TUC/Wall0019";
 			"WLF300AB";
 		}
 
 		20
 		{
-			"Patches/Walls/WALL3020.png";
+			"TUC/Wall0020";
 			"WLF300BA";
 		}
 
 		21
 		{
-			"Patches/Walls/WALL3021.png";
+			"TUC/Wall0021";
 			"WLF300BB";
 		}
 
 		22
 		{
-			"Patches/Walls/WALL3022.png";
+			"TUC/Wall0022";
 			"WLF300CA";
 		}
 
 		23
 		{
-			"Patches/Walls/WALL3023.png";
+			"TUC/Wall0023";
 			"WLF300CB";
 		}
 
 		24
 		{
-			"Patches/Walls/WALL3024.png";
+			"TUC/Wall0024";
 			"WLF300DA";
 		}
 
 		25
 		{
-			"Patches/Walls/WALL3025.png";
+			"TUC/Wall0025";
 			"WLF300DB";
 		}
 
 		26
 		{
-			"Patches/Walls/WALL3026.png";
+			"TUC/Wall0026";
 			"WLF300EA";
 		}
 
 		27
 		{
-			"Patches/Walls/WALL3027.png";
+			"TUC/Wall0027";
 			"WLF300EB";
 		}
 
 		28
 		{
-			"Patches/Walls/WALL3028.png";
+			"TUC/Wall0028";
 			"WLF300FA";
 		}
 
 		29
 		{
-			"Patches/Walls/WALL3029.png";
+			"TUC/Wall0029";
 			"WLF300FB";
 		}
 
 		30
 		{
-			"Patches/Walls/WALL3030.png";
+			"TUC/Wall0030";
 			"WLF3010A";
 		}
 
 		31
 		{
-			"Patches/Walls/WALL3031.png";
+			"TUC/Wall0031";
 			"WLF3010B";
 		}
 
 		32
 		{
-			"Patches/Walls/WALL3032.png";
+			"TUC/Wall0032";
 			"WLF3011A";
 		}
 
 		33
 		{
-			"Patches/Walls/WALL3033.png";
+			"TUC/Wall0033";
 			"WLF3011B";
 		}
 
 		34
 		{
-			"Patches/Walls/WALL3034.png";
+			"TUC/Wall0034";
 			"WLF3012A";
 		}
 
 		35
 		{
-			"Patches/Walls/WALL3035.png";
+			"TUC/Wall0035";
 			"WLF3012B";
 		}
 
 		36
 		{
-			"Patches/Walls/WALL3036.png";
+			"TUC/Wall0036";
 			"WLF3013A";
 		}
 
 		37
 		{
-			"Patches/Walls/WALL3037.png";
+			"TUC/Wall0037";
 			"WLF3013B";
 		}
 
 		38
 		{
-			"Patches/Walls/WALL3038.png";
+			"TUC/Wall0038";
 			"WLF3014A";
 		}
 
 		39
 		{
-			"Patches/Walls/WALL3039.png";
+			"TUC/Wall0039";
 			"WLF3014B";
 		}
 
 		40
 		{
-			"Patches/Walls/WALL3040.png";
+			"TUC/Wall0040";
 			"WLF3015A";
 		}
 
 		41
 		{
-			"Patches/Walls/WALL3041.png";
+			"TUC/Wall0041";
 			"WLF3015B";
 		}
 
 		42
 		{
-			"Patches/Walls/WALL3042.png";
+			"TUC/Wall0042";
 			"WLF3016A";
 		}
 
 		43
 		{
-			"Patches/Walls/WALL3043.png";
+			"TUC/Wall0043";
 			"WLF3016B";
 		}
 
 		44
 		{
-			"Patches/Walls/WALL3044.png";
+			"TUC/Wall0044";
 			"WLF3017A";
 		}
 
 		45
 		{
-			"Patches/Walls/WALL3045.png";
+			"TUC/Wall0045";
 			"WLF3017B";
 		}
 
 		46
 		{
-			"Patches/Walls/WALL3046.png";
+			"TUC/Wall0046";
 			"WLF3018A";
 		}
 
 		47
 		{
-			"Patches/Walls/WALL3047.png";
+			"TUC/Wall0047";
 			"WLF3018B";
 		}
 
 		48
 		{
-			"Patches/Walls/WALL3048.png";
+			"TUC/Wall0048";
 			"WLF3019A";
 		}
 
 		49
 		{
-			"Patches/Walls/WALL3049.png";
+			"TUC/Wall0049";
 			"WLF3019B";
 		}
 
 		50
 		{
-			"Patches/Walls/WALL3050.png";
+			"TUC/Wall0050";
 			"WLF301AA";
 		}
 
 		51
 		{
-			"Patches/Walls/WALL3051.png";
+			"TUC/Wall0051";
 			"WLF301AB";
 		}
 
 		52
 		{
-			"Patches/Walls/WALL3052.png";
+			"TUC/Wall0052";
 			"WLF301BA";
 		}
 
 		53
 		{
-			"Patches/Walls/WALL3053.png";
+			"TUC/Wall0053";
 			"WLF301BB";
 		}
 
 		54
 		{
-			"Patches/Walls/WALL3054.png";
+			"TUC/Wall0054";
 			"WLF301CA";
 		}
 
 		55
 		{
-			"Patches/Walls/WALL3055.png";
+			"TUC/Wall0055";
 			"WLF301CB";
 		}
 
 		56
 		{
-			"Patches/Walls/WALL3056.png";
+			"TUC/Wall0056";
 			"WLF301DA";
 		}
 
 		57
 		{
-			"Patches/Walls/WALL3057.png";
+			"TUC/Wall0057";
 			"WLF301DB";
 		}
 
 		58
 		{
-			"Patches/Walls/WALL3058.png";
+			"TUC/Wall0058";
 			"WLF301EA";
 		}
 
 		59
 		{
-			"Patches/Walls/WALL3059.png";
+			"TUC/Wall0059";
 			"WLF301EB";
 		}
 
 		60
 		{
-			"Patches/Walls/WALL3060.png";
+			"TUC/Wall0060";
 			"WLF301FA";
 		}
 
 		61
 		{
-			"Patches/Walls/WALL3061.png";
+			"TUC/Wall0061";
 			"WLF301FB";
 		}
 
 		62
 		{
-			"Patches/Walls/WALL3062.png";
+			"TUC/Wall0062";
 			"WLF3020A";
 		}
 
 		63
 		{
-			"Patches/Walls/WALL3063.png";
+			"TUC/Wall0063";
 			"WLF3020B";
 		}
 
 		64
 		{
-			"Patches/Walls/WALL3064.png";
+			"TUC/Wall0064";
 			"WLF3021A";
 		}
 
 		65
 		{
-			"Patches/Walls/WALL3065.png";
+			"TUC/Wall0065";
 			"WLF3021B";
 		}
 
 		66
 		{
-			"Patches/Walls/WALL3066.png";
+			"TUC/Wall0066";
 			"WLF3022A";
 		}
 
 		67
 		{
-			"Patches/Walls/WALL3067.png";
+			"TUC/Wall0067";
 			"WLF3022B";
 		}
 
 		68
 		{
-			"Patches/Walls/WALL3068.png";
+			"TUC/Wall0068";
 			"WLF3023A";
 		}
 
 		69
 		{
-			"Patches/Walls/WALL3069.png";
+			"TUC/Wall0069";
 			"WLF3023B";
 		}
 
 		70
 		{
-			"Patches/Walls/WALL3070.png";
+			"TUC/Wall0070";
 			"WLF3024A";
 		}
 
 		71
 		{
-			"Patches/Walls/WALL3071.png";
+			"TUC/Wall0071";
 			"WLF3024B";
 		}
 
 		72
 		{
-			"Patches/Walls/WALL3072.png";
+			"TUC/Wall0072";
 			"WLF3025A";
 		}
 
 		73
 		{
-			"Patches/Walls/WALL3073.png";
+			"TUC/Wall0073";
 			"WLF3025B";
 		}
 
 		74
 		{
-			"Patches/Walls/WALL3074.png";
+			"TUC/Wall0074";
 			"WLF3026A";
 		}
 
 		75
 		{
-			"Patches/Walls/WALL3075.png";
+			"TUC/Wall0075";
 			"WLF3026B";
 		}
 
 		76
 		{
-			"Patches/Walls/WALL3076.png";
+			"TUC/Wall0076";
 			"WLF3027A";
 		}
 
 		77
 		{
-			"Patches/Walls/WALL3077.png";
+			"TUC/Wall0077";
 			"WLF3027B";
 		}
 
 		78
 		{
-			"Patches/Walls/WALL3078.png";
+			"TUC/Wall0078";
 			"WLF3028A";
 		}
 
 		79
 		{
-			"Patches/Walls/WALL3079.png";
+			"TUC/Wall0079";
 			"WLF3028B";
 		}
 
 		80
 		{
-			"Patches/Walls/WALL3080.png";
+			"TUC/Wall0080";
 			"WLF3029A";
 		}
 
 		81
 		{
-			"Patches/Walls/WALL3081.png";
+			"TUC/Wall0081";
 			"WLF3029B";
 		}
 
 		82
 		{
-			"Patches/Walls/WALL3082.png";
+			"TUC/Wall0082";
 			"WLF302AA";
 		}
 
 		83
 		{
-			"Patches/Walls/WALL3083.png";
+			"TUC/Wall0083";
 			"WLF302AB";
 		}
 
 		84
 		{
-			"Patches/Walls/WALL3084.png";
+			"TUC/Wall0084";
 			"WLF302BA";
 		}
 
 		85
 		{
-			"Patches/Walls/WALL3085.png";
+			"TUC/Wall0085";
 			"WLF302BB";
 		}
 
 		86
 		{
-			"Patches/Walls/WALL3086.png";
+			"TUC/Wall0086";
 			"WLF302CA";
 		}
 
 		87
 		{
-			"Patches/Walls/WALL3087.png";
+			"TUC/Wall0087";
 			"WLF302CB";
 		}
 
 		88
 		{
-			"Patches/Walls/WALL3088.png";
+			"TUC/Wall0088";
 			"WLF302DA";
 		}
 
 		89
 		{
-			"Patches/Walls/WALL3089.png";
+			"TUC/Wall0089";
 			"WLF302DB";
 		}
 
 		90
 		{
-			"Patches/Walls/WALL3090.png";
+			"TUC/Wall0090";
 			"WLF302EA";
 		}
 
 		91
 		{
-			"Patches/Walls/WALL3091.png";
+			"TUC/Wall0091";
 			"WLF302EB";
 		}
 
 		92
 		{
-			"Patches/Walls/WALL3092.png";
+			"TUC/Wall0092";
 			"WLF302FA";
 		}
 
 		93
 		{
-			"Patches/Walls/WALL3093.png";
+			"TUC/Wall0093";
 			"WLF302FB";
 		}
 
 		94
 		{
-			"Patches/Walls/WALL3094.png";
+			"TUC/Wall0094";
 			"WLF3030A";
 		}
 
 		95
 		{
-			"Patches/Walls/WALL3095.png";
+			"TUC/Wall0095";
 			"WLF3030B";
 		}
 
 		96
 		{
-			"Patches/Walls/WALL3096.png";
+			"TUC/Wall0096";
 			"WLF3031A";
 		}
 
 		97
 		{
-			"Patches/Walls/WALL3097.png";
+			"TUC/Wall0097";
 			"WLF3031B";
 		}
 
 		98
 		{
-			"Patches/Walls/WALL3098.png";
+			"TUC/Wall0098";
 			"WLF3032A";
 		}
 
 		99
 		{
-			"Patches/Walls/WALL3099.png";
+			"TUC/Wall0099";
 			"WLF3032B";
 		}
 
 		100
 		{
-			"Patches/Walls/WALL3100.png";
+			"TUC/Wall0100";
 			"WLF3033A";
 		}
 
 		101
 		{
-			"Patches/Walls/WALL3101.png";
+			"TUC/Wall0101";
 			"WLF3033B";
 		}
 
 		102
 		{
-			"Patches/Walls/WALL3102.png";
+			"TUC/Wall0102";
 			"WLF3034A";
 		}
 
 		103
 		{
-			"Patches/Walls/WALL3103.png";
+			"TUC/Wall0103";
 			"WLF3034B";
 		}
 
 		104
 		{
-			"Patches/Walls/WALL3104.png";
+			"TUC/Wall0104";
 			"WLF3035A";
 		}
 
 		105
 		{
-			"Patches/Walls/WALL3105.png";
+			"TUC/Wall0105";
 			"WLF3035B";
 		}
 
 		106
 		{
-			"Patches/Walls/WALL3106.png";
+			"TUC/Wall0106";
 			"WLF3036A";
 		}
 
 		107
 		{
-			"Patches/Walls/WALL3107.png";
+			"TUC/Wall0107";
 			"WLF3036B";
 		}
 
 		108
 		{
-			"Patches/Walls/WALL3108.png";
+			"TUC/Wall0108";
 			"WLF3037A";
 		}
 
 		109
 		{
-			"Patches/Walls/WALL3109.png";
+			"TUC/Wall0109";
 			"WLF3037B";
 		}
 
 		110
 		{
-			"Patches/Walls/WALL3110.png";
+			"TUC/Wall0110";
 			"WLF3038A";
 		}
 
 		111
 		{
-			"Patches/Walls/WALL3111.png";
+			"TUC/Wall0111";
 			"WLF3038B";
 		}
 
 		112
 		{
-			"Patches/Walls/WALL3112.png";
+			"TUC/Wall0112";
 			"WLF3039A";
 		}
 
 		113
 		{
-			"Patches/Walls/WALL3113.png";
+			"TUC/Wall0113";
 			"WLF3039B";
 		}
 
 		114
 		{
-			"Patches/Walls/WALL3114.png";
+			"TUC/Wall0114";
 			"WLF303AA";
 		}
 
 		115
 		{
-			"Patches/Walls/WALL3115.png";
+			"TUC/Wall0115";
 			"WLF303AB";
 		}
 
 		116
 		{
-			"Patches/Walls/WALL3116.png";
+			"TUC/Wall0116";
 			"WLF303BA";
 		}
 
 		117
 		{
-			"Patches/Walls/WALL3117.png";
+			"TUC/Wall0117";
 			"WLF303BB";
 		}
 
 		118
 		{
-			"Patches/Walls/WALL3118.png";
+			"TUC/Wall0118";
 			"WLF303CA";
 		}
 
 		119
 		{
-			"Patches/Walls/WALL3119.png";
+			"TUC/Wall0119";
 			"WLF303CB";
 		}
 
 		120
 		{
-			"Patches/Walls/WALL3120.png";
+			"TUC/Wall0120";
 			"WLF303DA";
 		}
 
 		121
 		{
-			"Patches/Walls/WALL3121.png";
+			"TUC/Wall0121";
 			"WLF303DB";
 		}
 
 		122
 		{
-			"Patches/Walls/WALL3122.png";
+			"TUC/Wall0122";
 			"WLF303EA";
 		}
 
 		123
 		{
-			"Patches/Walls/WALL3123.png";
+			"TUC/Wall0123";
 			"WLF303EB";
 		}
 
 		124
 		{
-			"Patches/Walls/WALL3124.png";
+			"TUC/Wall0124";
 			"WLF303FA";
 		}
 
 		125
 		{
-			"Patches/Walls/WALL3125.png";
+			"TUC/Wall0125";
 			"WLF303FB";
 		}
 
 		126
 		{
-			"Patches/Walls/WALL3126.png";
+			"TUC/Wall0126";
 			"WLF3DORA" { Flip; }
 			"WLF3DORC";
 		}
 
 		127
 		{
-			"Patches/Walls/WALL3127.png";
+			"TUC/Wall0127";
 			"WLF3DORB";
 			"WLF3DORD" { Flip; }
 
@@ -777,7 +777,7 @@ SD3
 
 		128
 		{
-			"Patches/Walls/WALL3128.png";
+			"TUC/Wall0128";
 			"WLF3JMBA";
 			"WLF3JMBC" { Flip; }
 
@@ -785,7 +785,7 @@ SD3
 
 		129
 		{
-			"Patches/Walls/WALL3129.png";
+			"TUC/Wall0129";
 			"WLF3JMBB";
 			"WLF3JMBD" { Flip; }
 
@@ -793,14 +793,14 @@ SD3
 
 		130
 		{
-			"Patches/Walls/WALL3130.png";
+			"TUC/Wall0130";
 			"WLF3ELEA" { Flip; }
 			"WLF3ELEC";
 		}
 
 		131
 		{
-			"Patches/Walls/WALL3131.png";
+			"TUC/Wall0131";
 			"WLF3ELEB";
 			"WLF3ELED" { Flip; }
 
@@ -808,7 +808,7 @@ SD3
 
 		132
 		{
-			"Patches/Walls/WALL3132.png";
+			"TUC/Wall0132";
 			"WLF3LK1A" { Flip; }
 			"WLF3LK1C";
 			"WLF3LK2A" { Flip; }
@@ -817,7 +817,7 @@ SD3
 
 		133
 		{
-			"Patches/Walls/WALL3133.png";
+			"TUC/Wall0133";
 			"WLF3LK1B";
 			"WLF3LK1D" { Flip; }
 			"WLF3LK2B";

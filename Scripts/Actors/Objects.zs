@@ -1115,6 +1115,7 @@ class HangingVines : ClassicDecoration
 		-SOLID
 		+SPAWNCEILING
 		+NOGRAVITY
+		Height 64;
 	}
 
 	States

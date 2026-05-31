@@ -165,6 +165,13 @@ class ParsedGraphic
 
 class WolfGraphicParser
 {
+	enum GraphicParserFlags
+	{
+		GP_FLIPX = 1,
+		GP_FLIPY = 2,
+		GP_TRANSPARENT = 4,
+	};
+
 	static void Parse(in out WolfGraphicParser parsedgraphics, in out GraphicDataFile d, in out Array<String> touchedcanvas)
 	{
 		int graphicslump = -1;
@@ -241,17 +248,17 @@ class WolfGraphicParser
 						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
 						for (int t = 0; t < texture.children.Size(); t++)
 						{
-							bool flip = false;
+							GraphicParserFlags flags = 0;
 							if (texture.children[t].children.Size())
 							{
 								for (int p = 0; p < texture.children[t].children.Size(); p++)
 								{
-									if (texture.children[t].children[p].keyname ~== "Flip") { flip = true; }
+									if (texture.children[t].children[p].keyname ~== "Flip") { flags |= GP_FLIPX; }
 								}
 							}
 
 							String canvasname = FileReader.StripQuotes(texture.children[t].keyname);
-							CreateGraphic(newgraphic, canvasname, flip);
+							CreateGraphic(newgraphic, canvasname, flags);
 
 							touchedcanvas.push(canvasname);
 						}
@@ -266,7 +273,7 @@ class WolfGraphicParser
 				}
 				else
 				{
-					newgraphic.graphicname = String.Format("Patches/Walls/WALL%i%03i.png", 0, a);
+					newgraphic.graphicname = String.Format("%s/WALL%04i.png", gamename, a);
 					CreateGraphic(newgraphic);
 
 					touchedcanvas.push(newgraphic.graphicname);
@@ -282,19 +289,40 @@ class WolfGraphicParser
 
 				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
 
-				Canvas graphic;
-
 				if (spritenames && a - wallcount < spritenames.children.Size())
 				{
-					newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
-					newgraphic.Parse(palette, true);
-					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true, true);
+					ParsedValue texture = spritenames.children[a - wallcount];
+					if (texture.children.Size())
+					{
+						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
+						for (int t = 0; t < texture.children.Size(); t++)
+						{
+							GraphicParserFlags flags = 0;
+							if (texture.children[t].children.Size())
+							{
+								for (int p = 0; p < texture.children[t].children.Size(); p++)
+								{
+									if (texture.children[t].children[p].keyname ~== "Flip") { flags |= GP_FLIPX; }
+								}
+							}
+
+							newgraphic.graphicname = FileReader.StripQuotes(texture.children[t].keyname);
+							newgraphic.Parse(palette, true);
+							CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | flags);
+						}
+					}
+					else
+					{
+						newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
+						newgraphic.Parse(palette, true);
+						CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
+					}
 				}
 				else
 				{
 					newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
 					newgraphic.Parse(palette, true);
-					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true, true);
+					CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
 				}
 				spritecount++;
 
@@ -336,7 +364,7 @@ class WolfGraphicParser
 		if (halt) { ThrowAbortException("Halting..."); }
 	}
 
-	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", bool flip = false, bool transparent = false)
+	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", GraphicParserFlags flags = 0)
 	{
 		if (canvasname == "") { canvasname = graphic.graphicname; }
 
@@ -350,33 +378,76 @@ class WolfGraphicParser
 		currentcanvas.Dim(0x0, 0.0, 0, 0, 64, 64, overwritealpha:true);
 
 		TextureID overlay;
-		if (transparent)
+		if (flags & GP_TRANSPARENT)
 		{
 			overlay = TexMan.CheckForTexture("Materials/Shadows/" .. graphic.graphicname .. ".png", TexMan.Type_Any);
 			if (overlay.IsValid())
 			{
 				currentcanvas.EnableStencil(true);
 				currentcanvas.SetStencil(0, SOP_Increment, SF_ColorMaskOff);
-				currentcanvas.DrawTexture(overlay, false, 0, 0, DTA_FlipY, flip);
+				currentcanvas.DrawTexture(overlay, false, 0, 0, DTA_FlipY, flags & GP_FLIPY);
 				currentcanvas.SetStencil(0, SOP_Keep, SF_AllOn);
 			}
 		}
 
-		if (canvasname ~== "POB3A0" && false)
+		for (int p = 0; p < graphic.posts.Size(); p++)
 		{
-			TextureID tex = TexMan.CheckForTexture("Sprites/Items/AARDA0.png", TexMan.Type_Any);
-			currentcanvas.DrawTexture(tex, false, 0, 0, DTA_FlipY, flip, DTA_TopOffset, 0, DTA_LeftOffset, 0);
+			let post = graphic.posts[p];
+			int y = post.start;
+			for (int d = 0; d < post.data.Size(); d++)
+			{
+				currentcanvas.Dim(post.data[d], 1.0, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y++ : y++, 1, 1, overwritealpha:true);
+			}
 		}
-		else
+
+		if (flags & GP_TRANSPARENT)
 		{
+			if (overlay.IsValid())
+			{
+				currentcanvas.SetStencil(1, SOP_Keep, SF_AllOn);
+			}
+
+			CVar dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
 			for (int p = 0; p < graphic.posts.Size(); p++)
 			{
 				let post = graphic.posts[p];
 				int y = post.start;
+
+				if (!overlay.IsValid() && y < 48) { continue; }
+
 				for (int d = 0; d < post.data.Size(); d++)
 				{
-					currentcanvas.Dim(post.data[d], 1.0, post.column, flip ? 63 - y++ : y++, 1, 1, overwritealpha:true);
+					Color clr = post.data[d];
+
+					if (clr.r == clr.g && clr.g == clr.b)
+					{
+						double alpha = 2 * (110 - clr.r) / 255.0;
+						if (alpha > 0)
+						{
+							alpha = clamp(alpha, 0.0, 1.0);
+							currentcanvas.Dim(0x0, alpha, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y : y, 1, 1, overwritealpha:true);
+						}
+						else if (alpha < 0)
+						{
+							if (dynlights && !dynlights.GetInt())
+							{
+								int r = int(145 + clr.r * clr.r / 255.0 * 2);
+								int g = int(145 + clr.g * clr.b / 255.0 * 2);
+								int b = int(145 + clr.g * clr.b / 255.0 * 2);
+								clr = Color(r, g, b);
+								currentcanvas.Dim(0xD0D0D0, -alpha * 0.85, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y : y, 1, 1, overwritealpha:true);
+							}
+						}
+					}
+
+					y++;
 				}
+			}
+
+			if (overlay.IsValid())
+			{
+				currentcanvas.EnableStencil(false);
+				currentcanvas.ClearStencil();
 			}
 		}
 
@@ -389,45 +460,10 @@ class WolfGraphicParser
 
 			for (int l = 0; l < lines.Size(); l++)
 			{
-				String line = l == lines.Size() - 1 ? lines[l] : lines[l] .. "/";
-				currentcanvas.DrawText(fnt, Font.FindFontColor("TrueBlack"), 2, flip ? 62 - 8 * (l + 1) : 8 * l + 1, line, DTA_FlipY, flip);
-				currentcanvas.DrawText(fnt, -1, 1, flip ? 63 - 8 * (l + 1) : 8 * l, line, DTA_FlipY, flip);
+				String line = l == lines.Size() - 1 ? lines[l] : lines[l];
+				currentcanvas.DrawText(fnt, Font.FindFontColor("TrueBlack"), 2, flags & GP_FLIPY ? (62 - 8 * (l + 1)) : (8 * l + 2), line, DTA_FlipY, flags & GP_FLIPY);
+				currentcanvas.DrawText(fnt, -1, 1, flags & GP_FLIPY ? (63 - 8 * (l + 1)) : (8 * l + 1), line, DTA_FlipY, flags & GP_FLIPY);
 			}
-		}
-
-		if (transparent && overlay.IsValid())
-		{
-			currentcanvas.SetStencil(1, SOP_Keep, SF_AllOn);
-			CVar dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
-			for (int p = 0; p < graphic.posts.Size(); p++)
-			{
-				let post = graphic.posts[p];
-				int y = post.start;
-				for (int d = 0; d < post.data.Size(); d++)
-				{
-					Color clr = post.data[d];
-					double alpha = 2 * (110 - clr.r) / 255.0;
-					if (alpha > 0)
-					{
-						alpha = clamp(alpha, 0.0, 1.0);
-						currentcanvas.Dim(0x0, alpha, post.column, flip ? 63 - y++ : y++, 1, 1, overwritealpha:true);
-					}
-					else if (alpha < 0)
-					{
-						if (dynlights && !dynlights.GetInt())
-						{
-							int r = int(145 + clr.r * clr.r / 255.0 * 2);
-							int g = int(145 + clr.g * clr.b / 255.0 * 2);
-							int b = int(145 + clr.g * clr.b / 255.0 * 2);
-							clr = Color(r, g, b);
-							currentcanvas.Dim(0xD0D0D0, -alpha * 0.85, post.column, flip ? 63 - y++ : y++, 1, 1, overwritealpha:true);
-						}
-					}
-				}
-			}
-
-			currentcanvas.EnableStencil(false);
-			currentcanvas.ClearStencil();
 		}
 
 		return currentcanvas;

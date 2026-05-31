@@ -26,1989 +26,1992 @@ canvastexture "CONBACK" 1280 800
 
 // Texture canvases
 // Walls
-canvastexture "Patches/Walls/WALL0000.png" 64 64
-canvastexture "Patches/Walls/WALL0001.png" 64 64
-canvastexture "Patches/Walls/WALL0002.png" 64 64
-canvastexture "Patches/Walls/WALL0003.png" 64 64
-canvastexture "Patches/Walls/WALL0004.png" 64 64
-canvastexture "Patches/Walls/WALL0005.png" 64 64
-canvastexture "Patches/Walls/WALL0006.png" 64 64
-canvastexture "Patches/Walls/WALL0007.png" 64 64
-canvastexture "Patches/Walls/WALL0008.png" 64 64
-canvastexture "Patches/Walls/WALL0009.png" 64 64
-canvastexture "Patches/Walls/WALL0010.png" 64 64
-canvastexture "Patches/Walls/WALL0011.png" 64 64
-canvastexture "Patches/Walls/WALL0012.png" 64 64
-canvastexture "Patches/Walls/WALL0013.png" 64 64
-canvastexture "Patches/Walls/WALL0014.png" 64 64
-canvastexture "Patches/Walls/WALL0015.png" 64 64
-canvastexture "Patches/Walls/WALL0016.png" 64 64
-canvastexture "Patches/Walls/WALL0017.png" 64 64
-canvastexture "Patches/Walls/WALL0018.png" 64 64
-canvastexture "Patches/Walls/WALL0019.png" 64 64
-canvastexture "Patches/Walls/WALL0020.png" 64 64
-canvastexture "Patches/Walls/WALL0021.png" 64 64
-canvastexture "Patches/Walls/WALL0022.png" 64 64
-canvastexture "Patches/Walls/WALL0023.png" 64 64
-canvastexture "Patches/Walls/WALL0024.png" 64 64
-canvastexture "Patches/Walls/WALL0025.png" 64 64
-canvastexture "Patches/Walls/WALL0026.png" 64 64
-canvastexture "Patches/Walls/WALL0027.png" 64 64
-canvastexture "Patches/Walls/WALL0028.png" 64 64
-canvastexture "Patches/Walls/WALL0029.png" 64 64
-canvastexture "Patches/Walls/WALL0030.png" 64 64
-canvastexture "Patches/Walls/WALL0031.png" 64 64
-canvastexture "Patches/Walls/WALL0032.png" 64 64
-canvastexture "Patches/Walls/WALL0033.png" 64 64
-canvastexture "Patches/Walls/WALL0034.png" 64 64
-canvastexture "Patches/Walls/WALL0035.png" 64 64
-canvastexture "Patches/Walls/WALL0036.png" 64 64
-canvastexture "Patches/Walls/WALL0037.png" 64 64
-canvastexture "Patches/Walls/WALL0038.png" 64 64
-canvastexture "Patches/Walls/WALL0039.png" 64 64
-canvastexture "Patches/Walls/WALL0040.png" 64 64
-canvastexture "Patches/Walls/WALL0041.png" 64 64
-canvastexture "Patches/Walls/WALL0042.png" 64 64
-canvastexture "Patches/Walls/WALL0043.png" 64 64
-canvastexture "Patches/Walls/WALL0044.png" 64 64
-canvastexture "Patches/Walls/WALL0045.png" 64 64
-canvastexture "Patches/Walls/WALL0046.png" 64 64
-canvastexture "Patches/Walls/WALL0047.png" 64 64
-canvastexture "Patches/Walls/WALL0048.png" 64 64
-canvastexture "Patches/Walls/WALL0049.png" 64 64
-canvastexture "Patches/Walls/WALL0050.png" 64 64
-canvastexture "Patches/Walls/WALL0051.png" 64 64
-canvastexture "Patches/Walls/WALL0052.png" 64 64
-canvastexture "Patches/Walls/WALL0053.png" 64 64
-canvastexture "Patches/Walls/WALL0054.png" 64 64
-canvastexture "Patches/Walls/WALL0055.png" 64 64
-canvastexture "Patches/Walls/WALL0056.png" 64 64
-canvastexture "Patches/Walls/WALL0057.png" 64 64
-canvastexture "Patches/Walls/WALL0058.png" 64 64
-canvastexture "Patches/Walls/WALL0059.png" 64 64
-canvastexture "Patches/Walls/WALL0060.png" 64 64
-canvastexture "Patches/Walls/WALL0061.png" 64 64
-canvastexture "Patches/Walls/WALL0062.png" 64 64
-canvastexture "Patches/Walls/WALL0063.png" 64 64
-canvastexture "Patches/Walls/WALL0064.png" 64 64
-canvastexture "Patches/Walls/WALL0065.png" 64 64
-canvastexture "Patches/Walls/WALL0066.png" 64 64
-canvastexture "Patches/Walls/WALL0067.png" 64 64
-canvastexture "Patches/Walls/WALL0068.png" 64 64
-canvastexture "Patches/Walls/WALL0069.png" 64 64
-canvastexture "Patches/Walls/WALL0070.png" 64 64
-canvastexture "Patches/Walls/WALL0071.png" 64 64
-canvastexture "Patches/Walls/WALL0072.png" 64 64
-canvastexture "Patches/Walls/WALL0073.png" 64 64
-canvastexture "Patches/Walls/WALL0074.png" 64 64
-canvastexture "Patches/Walls/WALL0075.png" 64 64
-canvastexture "Patches/Walls/WALL0076.png" 64 64
-canvastexture "Patches/Walls/WALL0077.png" 64 64
-canvastexture "Patches/Walls/WALL0078.png" 64 64
-canvastexture "Patches/Walls/WALL0079.png" 64 64
-canvastexture "Patches/Walls/WALL0080.png" 64 64
-canvastexture "Patches/Walls/WALL0081.png" 64 64
-canvastexture "Patches/Walls/WALL0082.png" 64 64
-canvastexture "Patches/Walls/WALL0083.png" 64 64
-canvastexture "Patches/Walls/WALL0084.png" 64 64
-canvastexture "Patches/Walls/WALL0085.png" 64 64
-canvastexture "Patches/Walls/WALL0086.png" 64 64
-canvastexture "Patches/Walls/WALL0087.png" 64 64
-canvastexture "Patches/Walls/WALL0088.png" 64 64
-canvastexture "Patches/Walls/WALL0089.png" 64 64
-canvastexture "Patches/Walls/WALL0090.png" 64 64
-canvastexture "Patches/Walls/WALL0091.png" 64 64
-canvastexture "Patches/Walls/WALL0092.png" 64 64
-canvastexture "Patches/Walls/WALL0093.png" 64 64
-canvastexture "Patches/Walls/WALL0094.png" 64 64
-canvastexture "Patches/Walls/WALL0095.png" 64 64
-canvastexture "Patches/Walls/WALL0096.png" 64 64
-canvastexture "Patches/Walls/WALL0097.png" 64 64
-canvastexture "Patches/Walls/WALL0098.png" 64 64
-canvastexture "Patches/Walls/WALL0099.png" 64 64
-canvastexture "Patches/Walls/WALL0100.png" 64 64
-canvastexture "Patches/Walls/WALL0101.png" 64 64
-canvastexture "Patches/Walls/WALL0102.png" 64 64
-canvastexture "Patches/Walls/WALL0103.png" 64 64
-canvastexture "Patches/Walls/WALL0104.png" 64 64
-canvastexture "Patches/Walls/WALL0105.png" 64 64
-canvastexture "Patches/Walls/WALL0106.png" 64 64
-canvastexture "Patches/Walls/WALL0107.png" 64 64
-canvastexture "Patches/Walls/WALL0108.png" 64 64
-canvastexture "Patches/Walls/WALL0109.png" 64 64
-canvastexture "Patches/Walls/WALL0110.png" 64 64
-canvastexture "Patches/Walls/WALL0111.png" 64 64
-canvastexture "Patches/Walls/WALL0112.png" 64 64
-canvastexture "Patches/Walls/WALL0113.png" 64 64
-canvastexture "Patches/Walls/WALL0114.png" 64 64
-canvastexture "Patches/Walls/WALL0115.png" 64 64
-canvastexture "Patches/Walls/WALL0116.png" 64 64
-canvastexture "Patches/Walls/WALL0117.png" 64 64
-canvastexture "Patches/Walls/WALL0118.png" 64 64
-canvastexture "Patches/Walls/WALL0119.png" 64 64
-canvastexture "Patches/Walls/WALL0120.png" 64 64
-canvastexture "Patches/Walls/WALL0121.png" 64 64
-canvastexture "Patches/Walls/WALL0122.png" 64 64
-canvastexture "Patches/Walls/WALL0123.png" 64 64
-canvastexture "Patches/Walls/WALL0124.png" 64 64
-canvastexture "Patches/Walls/WALL0125.png" 64 64
-canvastexture "Patches/Walls/WALL0126.png" 64 64
-canvastexture "Patches/Walls/WALL0127.png" 64 64
-canvastexture "Patches/Walls/WALL0128.png" 64 64
-canvastexture "Patches/Walls/WALL0129.png" 64 64
-canvastexture "Patches/Walls/WALL0130.png" 64 64
-canvastexture "Patches/Walls/WALL0131.png" 64 64
-canvastexture "Patches/Walls/WALL0132.png" 64 64
-canvastexture "Patches/Walls/WALL0133.png" 64 64
-canvastexture "Patches/Walls/WALL0134.png" 64 64
-canvastexture "Patches/Walls/WALL0135.png" 64 64
-canvastexture "Patches/Walls/WALL0136.png" 64 64
-canvastexture "Patches/Walls/WALL0137.png" 64 64
-canvastexture "Patches/Walls/WALL0138.png" 64 64
-canvastexture "Patches/Walls/WALL0139.png" 64 64
-canvastexture "Patches/Walls/WALL0140.png" 64 64
-canvastexture "Patches/Walls/WALL0141.png" 64 64
-canvastexture "Patches/Walls/WALL0142.png" 64 64
-canvastexture "Patches/Walls/WALL0143.png" 64 64
-canvastexture "Patches/Walls/WALL0144.png" 64 64
-canvastexture "Patches/Walls/WALL0145.png" 64 64
-canvastexture "Patches/Walls/WALL0146.png" 64 64
-canvastexture "Patches/Walls/WALL0147.png" 64 64
-canvastexture "Patches/Walls/WALL0148.png" 64 64
-canvastexture "Patches/Walls/WALL0149.png" 64 64
-canvastexture "Patches/Walls/WALL0150.png" 64 64
-canvastexture "Patches/Walls/WALL0151.png" 64 64
-canvastexture "Patches/Walls/WALL0152.png" 64 64
-canvastexture "Patches/Walls/WALL0153.png" 64 64
-canvastexture "Patches/Walls/WALL0154.png" 64 64
-canvastexture "Patches/Walls/WALL0155.png" 64 64
-canvastexture "Patches/Walls/WALL0156.png" 64 64
-canvastexture "Patches/Walls/WALL0157.png" 64 64
-canvastexture "Patches/Walls/WALL0158.png" 64 64
-canvastexture "Patches/Walls/WALL0159.png" 64 64
-canvastexture "Patches/Walls/WALL0160.png" 64 64
-canvastexture "Patches/Walls/WALL0161.png" 64 64
-canvastexture "Patches/Walls/WALL0162.png" 64 64
-canvastexture "Patches/Walls/WALL0163.png" 64 64
-canvastexture "Patches/Walls/WALL0164.png" 64 64
-canvastexture "Patches/Walls/WALL0165.png" 64 64
-canvastexture "Patches/Walls/WALL0166.png" 64 64
-canvastexture "Patches/Walls/WALL0167.png" 64 64
-canvastexture "Patches/Walls/WALL0168.png" 64 64
-canvastexture "Patches/Walls/WALL0169.png" 64 64
-canvastexture "Patches/Walls/WALL0170.png" 64 64
-canvastexture "Patches/Walls/WALL0171.png" 64 64
-canvastexture "Patches/Walls/WALL0172.png" 64 64
-canvastexture "Patches/Walls/WALL0173.png" 64 64
-canvastexture "Patches/Walls/WALL0174.png" 64 64
-canvastexture "Patches/Walls/WALL0175.png" 64 64
-canvastexture "Patches/Walls/WALL0176.png" 64 64
-canvastexture "Patches/Walls/WALL0177.png" 64 64
-canvastexture "Patches/Walls/WALL0178.png" 64 64
-canvastexture "Patches/Walls/WALL0179.png" 64 64
-canvastexture "Patches/Walls/WALL0180.png" 64 64
-canvastexture "Patches/Walls/WALL0181.png" 64 64
-canvastexture "Patches/Walls/WALL0182.png" 64 64
-canvastexture "Patches/Walls/WALL0183.png" 64 64
-canvastexture "Patches/Walls/WALL0184.png" 64 64
-canvastexture "Patches/Walls/WALL0185.png" 64 64
-canvastexture "Patches/Walls/WALL0186.png" 64 64
-canvastexture "Patches/Walls/WALL0187.png" 64 64
-canvastexture "Patches/Walls/WALL0188.png" 64 64
-canvastexture "Patches/Walls/WALL0189.png" 64 64
-canvastexture "Patches/Walls/WALL0190.png" 64 64
-canvastexture "Patches/Walls/WALL0191.png" 64 64
-canvastexture "Patches/Walls/WALL0192.png" 64 64
-canvastexture "Patches/Walls/WALL0193.png" 64 64
-canvastexture "Patches/Walls/WALL0194.png" 64 64
-canvastexture "Patches/Walls/WALL0195.png" 64 64
-canvastexture "Patches/Walls/WALL0196.png" 64 64
-canvastexture "Patches/Walls/WALL0197.png" 64 64
-canvastexture "Patches/Walls/WALL0198.png" 64 64
-canvastexture "Patches/Walls/WALL0199.png" 64 64
-canvastexture "Patches/Walls/WALL0200.png" 64 64
-canvastexture "Patches/Walls/WALL0201.png" 64 64
-canvastexture "Patches/Walls/WALL0202.png" 64 64
-canvastexture "Patches/Walls/WALL0203.png" 64 64
-canvastexture "Patches/Walls/WALL0204.png" 64 64
-canvastexture "Patches/Walls/WALL0205.png" 64 64
-canvastexture "Patches/Walls/WALL0206.png" 64 64
-canvastexture "Patches/Walls/WALL0207.png" 64 64
-canvastexture "Patches/Walls/WALL0208.png" 64 64
-canvastexture "Patches/Walls/WALL0209.png" 64 64
-canvastexture "Patches/Walls/WALL0210.png" 64 64
-canvastexture "Patches/Walls/WALL0211.png" 64 64
-canvastexture "Patches/Walls/WALL0212.png" 64 64
-canvastexture "Patches/Walls/WALL0213.png" 64 64
-canvastexture "Patches/Walls/WALL0214.png" 64 64
-canvastexture "Patches/Walls/WALL0215.png" 64 64
-canvastexture "Patches/Walls/WALL0216.png" 64 64
-canvastexture "Patches/Walls/WALL0217.png" 64 64
-canvastexture "Patches/Walls/WALL0218.png" 64 64
-canvastexture "Patches/Walls/WALL0219.png" 64 64
-canvastexture "Patches/Walls/WALL0220.png" 64 64
-canvastexture "Patches/Walls/WALL0221.png" 64 64
-canvastexture "Patches/Walls/WALL0222.png" 64 64
-canvastexture "Patches/Walls/WALL0223.png" 64 64
-canvastexture "Patches/Walls/WALL0224.png" 64 64
-canvastexture "Patches/Walls/WALL0225.png" 64 64
-canvastexture "Patches/Walls/WALL0226.png" 64 64
-canvastexture "Patches/Walls/WALL0227.png" 64 64
-canvastexture "Patches/Walls/WALL0228.png" 64 64
-canvastexture "Patches/Walls/WALL0229.png" 64 64
-canvastexture "Patches/Walls/WALL0230.png" 64 64
-canvastexture "Patches/Walls/WALL0231.png" 64 64
-canvastexture "Patches/Walls/WALL0232.png" 64 64
-canvastexture "Patches/Walls/WALL0233.png" 64 64
-canvastexture "Patches/Walls/WALL0234.png" 64 64
-canvastexture "Patches/Walls/WALL0235.png" 64 64
-canvastexture "Patches/Walls/WALL0236.png" 64 64
-canvastexture "Patches/Walls/WALL0237.png" 64 64
-canvastexture "Patches/Walls/WALL0238.png" 64 64
-canvastexture "Patches/Walls/WALL0239.png" 64 64
-canvastexture "Patches/Walls/WALL0240.png" 64 64
-canvastexture "Patches/Walls/WALL0241.png" 64 64
-canvastexture "Patches/Walls/WALL0242.png" 64 64
-canvastexture "Patches/Walls/WALL0243.png" 64 64
-canvastexture "Patches/Walls/WALL0244.png" 64 64
-canvastexture "Patches/Walls/WALL0245.png" 64 64
-canvastexture "Patches/Walls/WALL0246.png" 64 64
-canvastexture "Patches/Walls/WALL0247.png" 64 64
-canvastexture "Patches/Walls/WALL0248.png" 64 64
-canvastexture "Patches/Walls/WALL0249.png" 64 64
-canvastexture "Patches/Walls/WALL0250.png" 64 64
-canvastexture "Patches/Walls/WALL0251.png" 64 64
-canvastexture "Patches/Walls/WALL0252.png" 64 64
-canvastexture "Patches/Walls/WALL0253.png" 64 64
-canvastexture "Patches/Walls/WALL0254.png" 64 64
-canvastexture "Patches/Walls/WALL0255.png" 64 64
+canvastexture "Wolf3D/Wall0000" 64 64
+canvastexture "Wolf3D/Wall0001" 64 64
+canvastexture "Wolf3D/Wall0002" 64 64
+canvastexture "Wolf3D/Wall0003" 64 64
+canvastexture "Wolf3D/Wall0004" 64 64
+canvastexture "Wolf3D/Wall0005" 64 64
+canvastexture "Wolf3D/Wall0006" 64 64
+canvastexture "Wolf3D/Wall0007" 64 64
+canvastexture "Wolf3D/Wall0008" 64 64
+canvastexture "Wolf3D/Wall0009" 64 64
+canvastexture "Wolf3D/Wall0010" 64 64
+canvastexture "Wolf3D/Wall0011" 64 64
+canvastexture "Wolf3D/Wall0012" 64 64
+canvastexture "Wolf3D/Wall0013" 64 64
+canvastexture "Wolf3D/Wall0014" 64 64
+canvastexture "Wolf3D/Wall0015" 64 64
+canvastexture "Wolf3D/Wall0016" 64 64
+canvastexture "Wolf3D/Wall0017" 64 64
+canvastexture "Wolf3D/Wall0018" 64 64
+canvastexture "Wolf3D/Wall0019" 64 64
+canvastexture "Wolf3D/Wall0020" 64 64
+canvastexture "Wolf3D/Wall0021" 64 64
+canvastexture "Wolf3D/Wall0022" 64 64
+canvastexture "Wolf3D/Wall0023" 64 64
+canvastexture "Wolf3D/Wall0024" 64 64
+canvastexture "Wolf3D/Wall0025" 64 64
+canvastexture "Wolf3D/Wall0026" 64 64
+canvastexture "Wolf3D/Wall0027" 64 64
+canvastexture "Wolf3D/Wall0028" 64 64
+canvastexture "Wolf3D/Wall0029" 64 64
+canvastexture "Wolf3D/Wall0030" 64 64
+canvastexture "Wolf3D/Wall0031" 64 64
+canvastexture "Wolf3D/Wall0032" 64 64
+canvastexture "Wolf3D/Wall0033" 64 64
+canvastexture "Wolf3D/Wall0034" 64 64
+canvastexture "Wolf3D/Wall0035" 64 64
+canvastexture "Wolf3D/Wall0036" 64 64
+canvastexture "Wolf3D/Wall0037" 64 64
+canvastexture "Wolf3D/Wall0038" 64 64
+canvastexture "Wolf3D/Wall0039" 64 64
+canvastexture "Wolf3D/Wall0040" 64 64
+canvastexture "Wolf3D/Wall0041" 64 64
+canvastexture "Wolf3D/Wall0042" 64 64
+canvastexture "Wolf3D/Wall0043" 64 64
+canvastexture "Wolf3D/Wall0044" 64 64
+canvastexture "Wolf3D/Wall0045" 64 64
+canvastexture "Wolf3D/Wall0046" 64 64
+canvastexture "Wolf3D/Wall0047" 64 64
+canvastexture "Wolf3D/Wall0048" 64 64
+canvastexture "Wolf3D/Wall0049" 64 64
+canvastexture "Wolf3D/Wall0050" 64 64
+canvastexture "Wolf3D/Wall0051" 64 64
+canvastexture "Wolf3D/Wall0052" 64 64
+canvastexture "Wolf3D/Wall0053" 64 64
+canvastexture "Wolf3D/Wall0054" 64 64
+canvastexture "Wolf3D/Wall0055" 64 64
+canvastexture "Wolf3D/Wall0056" 64 64
+canvastexture "Wolf3D/Wall0057" 64 64
+canvastexture "Wolf3D/Wall0058" 64 64
+canvastexture "Wolf3D/Wall0059" 64 64
+canvastexture "Wolf3D/Wall0060" 64 64
+canvastexture "Wolf3D/Wall0061" 64 64
+canvastexture "Wolf3D/Wall0062" 64 64
+canvastexture "Wolf3D/Wall0063" 64 64
+canvastexture "Wolf3D/Wall0064" 64 64
+canvastexture "Wolf3D/Wall0065" 64 64
+canvastexture "Wolf3D/Wall0066" 64 64
+canvastexture "Wolf3D/Wall0067" 64 64
+canvastexture "Wolf3D/Wall0068" 64 64
+canvastexture "Wolf3D/Wall0069" 64 64
+canvastexture "Wolf3D/Wall0070" 64 64
+canvastexture "Wolf3D/Wall0071" 64 64
+canvastexture "Wolf3D/Wall0072" 64 64
+canvastexture "Wolf3D/Wall0073" 64 64
+canvastexture "Wolf3D/Wall0074" 64 64
+canvastexture "Wolf3D/Wall0075" 64 64
+canvastexture "Wolf3D/Wall0076" 64 64
+canvastexture "Wolf3D/Wall0077" 64 64
+canvastexture "Wolf3D/Wall0078" 64 64
+canvastexture "Wolf3D/Wall0079" 64 64
+canvastexture "Wolf3D/Wall0080" 64 64
+canvastexture "Wolf3D/Wall0081" 64 64
+canvastexture "Wolf3D/Wall0082" 64 64
+canvastexture "Wolf3D/Wall0083" 64 64
+canvastexture "Wolf3D/Wall0084" 64 64
+canvastexture "Wolf3D/Wall0085" 64 64
+canvastexture "Wolf3D/Wall0086" 64 64
+canvastexture "Wolf3D/Wall0087" 64 64
+canvastexture "Wolf3D/Wall0088" 64 64
+canvastexture "Wolf3D/Wall0089" 64 64
+canvastexture "Wolf3D/Wall0090" 64 64
+canvastexture "Wolf3D/Wall0091" 64 64
+canvastexture "Wolf3D/Wall0092" 64 64
+canvastexture "Wolf3D/Wall0093" 64 64
+canvastexture "Wolf3D/Wall0094" 64 64
+canvastexture "Wolf3D/Wall0095" 64 64
+canvastexture "Wolf3D/Wall0096" 64 64
+canvastexture "Wolf3D/Wall0097" 64 64
+canvastexture "Wolf3D/Wall0098" 64 64
+canvastexture "Wolf3D/Wall0099" 64 64
+canvastexture "Wolf3D/Wall0100" 64 64
+canvastexture "Wolf3D/Wall0101" 64 64
+canvastexture "Wolf3D/Wall0102" 64 64
+canvastexture "Wolf3D/Wall0103" 64 64
+canvastexture "Wolf3D/Wall0104" 64 64
+canvastexture "Wolf3D/Wall0105" 64 64
+canvastexture "Wolf3D/Wall0106" 64 64
+canvastexture "Wolf3D/Wall0107" 64 64
+canvastexture "Wolf3D/Wall0108" 64 64
+canvastexture "Wolf3D/Wall0109" 64 64
+canvastexture "Wolf3D/Wall0110" 64 64
+canvastexture "Wolf3D/Wall0111" 64 64
+canvastexture "Wolf3D/Wall0112" 64 64
+canvastexture "Wolf3D/Wall0113" 64 64
+canvastexture "Wolf3D/Wall0114" 64 64
+canvastexture "Wolf3D/Wall0115" 64 64
+canvastexture "Wolf3D/Wall0116" 64 64
+canvastexture "Wolf3D/Wall0117" 64 64
+canvastexture "Wolf3D/Wall0118" 64 64
+canvastexture "Wolf3D/Wall0119" 64 64
+canvastexture "Wolf3D/Wall0120" 64 64
+canvastexture "Wolf3D/Wall0121" 64 64
+canvastexture "Wolf3D/Wall0122" 64 64
+canvastexture "Wolf3D/Wall0123" 64 64
+canvastexture "Wolf3D/Wall0124" 64 64
+canvastexture "Wolf3D/Wall0125" 64 64
+canvastexture "Wolf3D/Wall0126" 64 64
+canvastexture "Wolf3D/Wall0127" 64 64
+canvastexture "Wolf3D/Wall0128" 64 64
+canvastexture "Wolf3D/Wall0129" 64 64
+canvastexture "Wolf3D/Wall0130" 64 64
+canvastexture "Wolf3D/Wall0131" 64 64
+canvastexture "Wolf3D/Wall0132" 64 64
+canvastexture "Wolf3D/Wall0133" 64 64
+canvastexture "Wolf3D/Wall0134" 64 64
+canvastexture "Wolf3D/Wall0135" 64 64
+canvastexture "Wolf3D/Wall0136" 64 64
+canvastexture "Wolf3D/Wall0137" 64 64
+canvastexture "Wolf3D/Wall0138" 64 64
+canvastexture "Wolf3D/Wall0139" 64 64
+canvastexture "Wolf3D/Wall0140" 64 64
+canvastexture "Wolf3D/Wall0141" 64 64
+canvastexture "Wolf3D/Wall0142" 64 64
+canvastexture "Wolf3D/Wall0143" 64 64
+canvastexture "Wolf3D/Wall0144" 64 64
+canvastexture "Wolf3D/Wall0145" 64 64
+canvastexture "Wolf3D/Wall0146" 64 64
+canvastexture "Wolf3D/Wall0147" 64 64
+canvastexture "Wolf3D/Wall0148" 64 64
+canvastexture "Wolf3D/Wall0149" 64 64
+canvastexture "Wolf3D/Wall0150" 64 64
+canvastexture "Wolf3D/Wall0151" 64 64
+canvastexture "Wolf3D/Wall0152" 64 64
+canvastexture "Wolf3D/Wall0153" 64 64
+canvastexture "Wolf3D/Wall0154" 64 64
+canvastexture "Wolf3D/Wall0155" 64 64
+canvastexture "Wolf3D/Wall0156" 64 64
+canvastexture "Wolf3D/Wall0157" 64 64
+canvastexture "Wolf3D/Wall0158" 64 64
+canvastexture "Wolf3D/Wall0159" 64 64
+canvastexture "Wolf3D/Wall0160" 64 64
+canvastexture "Wolf3D/Wall0161" 64 64
+canvastexture "Wolf3D/Wall0162" 64 64
+canvastexture "Wolf3D/Wall0163" 64 64
+canvastexture "Wolf3D/Wall0164" 64 64
+canvastexture "Wolf3D/Wall0165" 64 64
+canvastexture "Wolf3D/Wall0166" 64 64
+canvastexture "Wolf3D/Wall0167" 64 64
+canvastexture "Wolf3D/Wall0168" 64 64
+canvastexture "Wolf3D/Wall0169" 64 64
+canvastexture "Wolf3D/Wall0170" 64 64
+canvastexture "Wolf3D/Wall0171" 64 64
+canvastexture "Wolf3D/Wall0172" 64 64
+canvastexture "Wolf3D/Wall0173" 64 64
+canvastexture "Wolf3D/Wall0174" 64 64
+canvastexture "Wolf3D/Wall0175" 64 64
+canvastexture "Wolf3D/Wall0176" 64 64
+canvastexture "Wolf3D/Wall0177" 64 64
+canvastexture "Wolf3D/Wall0178" 64 64
+canvastexture "Wolf3D/Wall0179" 64 64
+canvastexture "Wolf3D/Wall0180" 64 64
+canvastexture "Wolf3D/Wall0181" 64 64
+canvastexture "Wolf3D/Wall0182" 64 64
+canvastexture "Wolf3D/Wall0183" 64 64
+canvastexture "Wolf3D/Wall0184" 64 64
+canvastexture "Wolf3D/Wall0185" 64 64
+canvastexture "Wolf3D/Wall0186" 64 64
+canvastexture "Wolf3D/Wall0187" 64 64
+canvastexture "Wolf3D/Wall0188" 64 64
+canvastexture "Wolf3D/Wall0189" 64 64
+canvastexture "Wolf3D/Wall0190" 64 64
+canvastexture "Wolf3D/Wall0191" 64 64
+canvastexture "Wolf3D/Wall0192" 64 64
+canvastexture "Wolf3D/Wall0193" 64 64
+canvastexture "Wolf3D/Wall0194" 64 64
+canvastexture "Wolf3D/Wall0195" 64 64
+canvastexture "Wolf3D/Wall0196" 64 64
+canvastexture "Wolf3D/Wall0197" 64 64
+canvastexture "Wolf3D/Wall0198" 64 64
+canvastexture "Wolf3D/Wall0199" 64 64
+canvastexture "Wolf3D/Wall0200" 64 64
+canvastexture "Wolf3D/Wall0201" 64 64
+canvastexture "Wolf3D/Wall0202" 64 64
+canvastexture "Wolf3D/Wall0203" 64 64
+canvastexture "Wolf3D/Wall0204" 64 64
+canvastexture "Wolf3D/Wall0205" 64 64
+canvastexture "Wolf3D/Wall0206" 64 64
+canvastexture "Wolf3D/Wall0207" 64 64
+canvastexture "Wolf3D/Wall0208" 64 64
+canvastexture "Wolf3D/Wall0209" 64 64
+canvastexture "Wolf3D/Wall0210" 64 64
+canvastexture "Wolf3D/Wall0211" 64 64
+canvastexture "Wolf3D/Wall0212" 64 64
+canvastexture "Wolf3D/Wall0213" 64 64
+canvastexture "Wolf3D/Wall0214" 64 64
+canvastexture "Wolf3D/Wall0215" 64 64
+canvastexture "Wolf3D/Wall0216" 64 64
+canvastexture "Wolf3D/Wall0217" 64 64
+canvastexture "Wolf3D/Wall0218" 64 64
+canvastexture "Wolf3D/Wall0219" 64 64
+canvastexture "Wolf3D/Wall0220" 64 64
+canvastexture "Wolf3D/Wall0221" 64 64
+canvastexture "Wolf3D/Wall0222" 64 64
+canvastexture "Wolf3D/Wall0223" 64 64
+canvastexture "Wolf3D/Wall0224" 64 64
+canvastexture "Wolf3D/Wall0225" 64 64
+canvastexture "Wolf3D/Wall0226" 64 64
+canvastexture "Wolf3D/Wall0227" 64 64
+canvastexture "Wolf3D/Wall0228" 64 64
+canvastexture "Wolf3D/Wall0229" 64 64
+canvastexture "Wolf3D/Wall0230" 64 64
+canvastexture "Wolf3D/Wall0231" 64 64
+canvastexture "Wolf3D/Wall0232" 64 64
+canvastexture "Wolf3D/Wall0233" 64 64
+canvastexture "Wolf3D/Wall0234" 64 64
+canvastexture "Wolf3D/Wall0235" 64 64
+canvastexture "Wolf3D/Wall0236" 64 64
+canvastexture "Wolf3D/Wall0237" 64 64
+canvastexture "Wolf3D/Wall0238" 64 64
+canvastexture "Wolf3D/Wall0239" 64 64
+canvastexture "Wolf3D/Wall0240" 64 64
+canvastexture "Wolf3D/Wall0241" 64 64
+canvastexture "Wolf3D/Wall0242" 64 64
+canvastexture "Wolf3D/Wall0243" 64 64
+canvastexture "Wolf3D/Wall0244" 64 64
+canvastexture "Wolf3D/Wall0245" 64 64
+canvastexture "Wolf3D/Wall0246" 64 64
+canvastexture "Wolf3D/Wall0247" 64 64
+canvastexture "Wolf3D/Wall0248" 64 64
+canvastexture "Wolf3D/Wall0249" 64 64
+canvastexture "Wolf3D/Wall0250" 64 64
+canvastexture "Wolf3D/Wall0251" 64 64
+canvastexture "Wolf3D/Wall0252" 64 64
+canvastexture "Wolf3D/Wall0253" 64 64
+canvastexture "Wolf3D/Wall0254" 64 64
+canvastexture "Wolf3D/Wall0255" 64 64
 
 // Sprites
-canvastexture "DEMO" 64 64 translucent offset
-canvastexture "DEATHCAM" 64 64 translucent offset
-canvastexture "POL1A0" 64 64 translucent offset
-canvastexture "BARLC0" 64 64 translucent offset
-canvastexture "TAB1A0" 64 64 translucent offset
-canvastexture "LIT1A0" 64 64 translucent offset
-canvastexture "LIT3A0" 64 64 translucent offset
-canvastexture "HNG1A0" 64 64 translucent offset
-canvastexture "HLTHC0" 64 64 translucent offset
-canvastexture "COLWA0" 64 64 translucent offset
-canvastexture "PLT1A0" 64 64 translucent offset
-canvastexture "BONCA0" 64 64 translucent offset
-canvastexture "SINKA0" 64 64 translucent offset
-canvastexture "PLT2A0" 64 64 translucent offset
-canvastexture "VASEC0" 64 64 translucent offset
-canvastexture "TAB2A0" 64 64 translucent offset
-canvastexture "LIT5A0" 64 64 translucent offset
-canvastexture "POT1A0" 64 64 translucent offset
-canvastexture "KNIGA0" 64 64 translucent offset
-canvastexture "CAG1A0" 64 64 translucent offset
-canvastexture "CAG2A0" 64 64 translucent offset
-canvastexture "POB1A0" 64 64 translucent offset
-canvastexture "KEYSA0" 64 64 translucent offset
-canvastexture "KEYSB0" 64 64 translucent offset
-canvastexture "BED1A0" 64 64 translucent offset
-canvastexture "BASKA0" 64 64 translucent offset
-canvastexture "HLTHD0" 64 64 translucent offset
-canvastexture "HLTHE0" 64 64 translucent offset
-canvastexture "CCLIA0" 64 64 translucent offset
-canvastexture "CMGUP0" 64 64 translucent offset
-canvastexture "CCGUP0" 64 64 translucent offset
-canvastexture "TRECA0" 64 64 translucent offset
-canvastexture "TRECC0" 64 64 translucent offset
-canvastexture "TRECD0" 64 64 translucent offset
-canvastexture "TRECB0" 64 64 translucent offset
-canvastexture "LIFEA0" 64 64 translucent offset
-canvastexture "HLTHB0" 64 64 translucent offset
-canvastexture "BAR2A0" 64 64 translucent offset
-canvastexture "WEL1A0" 64 64 translucent offset
-canvastexture "WEL2A0" 64 64 translucent offset
-canvastexture "HLTHA0" 64 64 translucent offset
-canvastexture "FLACA0" 64 64 translucent offset
-canvastexture "POB3A0" 64 64 translucent offset
-canvastexture "POB2C0" 64 64 translucent offset
-canvastexture "POB5A0" 64 64 translucent offset
-canvastexture "POB4A0" 64 64 translucent offset
-canvastexture "POT2A0" 64 64 translucent offset
-canvastexture "STOVA0" 64 64 translucent offset
-canvastexture "SPECA0" 64 64 translucent offset
-canvastexture "VINEA0" 64 64 translucent offset
-canvastexture "WBRNE1" 64 64 translucent offset
-canvastexture "WBRNE2" 64 64 translucent offset
-canvastexture "WBRNE3" 64 64 translucent offset
-canvastexture "WBRNE4" 64 64 translucent offset
-canvastexture "WBRNE5" 64 64 translucent offset
-canvastexture "WBRNE6" 64 64 translucent offset
-canvastexture "WBRNE7" 64 64 translucent offset
-canvastexture "WBRNE8" 64 64 translucent offset
-canvastexture "WBRNA1" 64 64 translucent offset
-canvastexture "WBRNA2" 64 64 translucent offset
-canvastexture "WBRNA3" 64 64 translucent offset
-canvastexture "WBRNA4" 64 64 translucent offset
-canvastexture "WBRNA5" 64 64 translucent offset
-canvastexture "WBRNA6" 64 64 translucent offset
-canvastexture "WBRNA7" 64 64 translucent offset
-canvastexture "WBRNA8" 64 64 translucent offset
-canvastexture "WBRNB1" 64 64 translucent offset
-canvastexture "WBRNB2" 64 64 translucent offset
-canvastexture "WBRNB3" 64 64 translucent offset
-canvastexture "WBRNB4" 64 64 translucent offset
-canvastexture "WBRNB5" 64 64 translucent offset
-canvastexture "WBRNB6" 64 64 translucent offset
-canvastexture "WBRNB7" 64 64 translucent offset
-canvastexture "WBRNB8" 64 64 translucent offset
-canvastexture "WBRNC1" 64 64 translucent offset
-canvastexture "WBRNC2" 64 64 translucent offset
-canvastexture "WBRNC3" 64 64 translucent offset
-canvastexture "WBRNC4" 64 64 translucent offset
-canvastexture "WBRNC5" 64 64 translucent offset
-canvastexture "WBRNC6" 64 64 translucent offset
-canvastexture "WBRNC7" 64 64 translucent offset
-canvastexture "WBRNC8" 64 64 translucent offset
-canvastexture "WBRND1" 64 64 translucent offset
-canvastexture "WBRND2" 64 64 translucent offset
-canvastexture "WBRND3" 64 64 translucent offset
-canvastexture "WBRND4" 64 64 translucent offset
-canvastexture "WBRND5" 64 64 translucent offset
-canvastexture "WBRND6" 64 64 translucent offset
-canvastexture "WBRND7" 64 64 translucent offset
-canvastexture "WBRND8" 64 64 translucent offset
-canvastexture "WBRNJ1" 64 64 translucent offset
-canvastexture "WBRNK0" 64 64 translucent offset
-canvastexture "WBRNL0" 64 64 translucent offset
-canvastexture "WBRNM0" 64 64 translucent offset
-canvastexture "WBRNF1" 64 64 translucent offset
-canvastexture "WBRNN0" 64 64 translucent offset
-canvastexture "WBRNG1" 64 64 translucent offset
-canvastexture "WBRNH1" 64 64 translucent offset
-canvastexture "WBRNI1" 64 64 translucent offset
-canvastexture "WDOGA1" 64 64 translucent offset
-canvastexture "WDOGA2" 64 64 translucent offset
-canvastexture "WDOGA3" 64 64 translucent offset
-canvastexture "WDOGA4" 64 64 translucent offset
-canvastexture "WDOGA5" 64 64 translucent offset
-canvastexture "WDOGA6" 64 64 translucent offset
-canvastexture "WDOGA7" 64 64 translucent offset
-canvastexture "WDOGA8" 64 64 translucent offset
-canvastexture "WDOGB1" 64 64 translucent offset
-canvastexture "WDOGB2" 64 64 translucent offset
-canvastexture "WDOGB3" 64 64 translucent offset
-canvastexture "WDOGB4" 64 64 translucent offset
-canvastexture "WDOGB5" 64 64 translucent offset
-canvastexture "WDOGB6" 64 64 translucent offset
-canvastexture "WDOGB7" 64 64 translucent offset
-canvastexture "WDOGB8" 64 64 translucent offset
-canvastexture "WDOGC1" 64 64 translucent offset
-canvastexture "WDOGC2" 64 64 translucent offset
-canvastexture "WDOGC3" 64 64 translucent offset
-canvastexture "WDOGC4" 64 64 translucent offset
-canvastexture "WDOGC5" 64 64 translucent offset
-canvastexture "WDOGC6" 64 64 translucent offset
-canvastexture "WDOGC7" 64 64 translucent offset
-canvastexture "WDOGC8" 64 64 translucent offset
-canvastexture "WDOGD1" 64 64 translucent offset
-canvastexture "WDOGD2" 64 64 translucent offset
-canvastexture "WDOGD3" 64 64 translucent offset
-canvastexture "WDOGD4" 64 64 translucent offset
-canvastexture "WDOGD5" 64 64 translucent offset
-canvastexture "WDOGD6" 64 64 translucent offset
-canvastexture "WDOGD7" 64 64 translucent offset
-canvastexture "WDOGD8" 64 64 translucent offset
-canvastexture "WDOGH0" 64 64 translucent offset
-canvastexture "WDOGI0" 64 64 translucent offset
-canvastexture "WDOGJ0" 64 64 translucent offset
-canvastexture "WDOGK0" 64 64 translucent offset
-canvastexture "WDOGE1" 64 64 translucent offset
-canvastexture "WDOGF1" 64 64 translucent offset
-canvastexture "WDOGG1" 64 64 translucent offset
-canvastexture "WBLUE1" 64 64 translucent offset
-canvastexture "WBLUE2" 64 64 translucent offset
-canvastexture "WBLUE3" 64 64 translucent offset
-canvastexture "WBLUE4" 64 64 translucent offset
-canvastexture "WBLUE5" 64 64 translucent offset
-canvastexture "WBLUE6" 64 64 translucent offset
-canvastexture "WBLUE7" 64 64 translucent offset
-canvastexture "WBLUE8" 64 64 translucent offset
-canvastexture "WBLUA1" 64 64 translucent offset
-canvastexture "WBLUA2" 64 64 translucent offset
-canvastexture "WBLUA3" 64 64 translucent offset
-canvastexture "WBLUA4" 64 64 translucent offset
-canvastexture "WBLUA5" 64 64 translucent offset
-canvastexture "WBLUA6" 64 64 translucent offset
-canvastexture "WBLUA7" 64 64 translucent offset
-canvastexture "WBLUA8" 64 64 translucent offset
-canvastexture "WBLUB1" 64 64 translucent offset
-canvastexture "WBLUB2" 64 64 translucent offset
-canvastexture "WBLUB3" 64 64 translucent offset
-canvastexture "WBLUB4" 64 64 translucent offset
-canvastexture "WBLUB5" 64 64 translucent offset
-canvastexture "WBLUB6" 64 64 translucent offset
-canvastexture "WBLUB7" 64 64 translucent offset
-canvastexture "WBLUB8" 64 64 translucent offset
-canvastexture "WBLUC1" 64 64 translucent offset
-canvastexture "WBLUC2" 64 64 translucent offset
-canvastexture "WBLUC3" 64 64 translucent offset
-canvastexture "WBLUC4" 64 64 translucent offset
-canvastexture "WBLUC5" 64 64 translucent offset
-canvastexture "WBLUC6" 64 64 translucent offset
-canvastexture "WBLUC7" 64 64 translucent offset
-canvastexture "WBLUC8" 64 64 translucent offset
-canvastexture "WBLUD1" 64 64 translucent offset
-canvastexture "WBLUD2" 64 64 translucent offset
-canvastexture "WBLUD3" 64 64 translucent offset
-canvastexture "WBLUD4" 64 64 translucent offset
-canvastexture "WBLUD5" 64 64 translucent offset
-canvastexture "WBLUD6" 64 64 translucent offset
-canvastexture "WBLUD7" 64 64 translucent offset
-canvastexture "WBLUD8" 64 64 translucent offset
-canvastexture "WBLUJ1" 64 64 translucent offset
-canvastexture "WBLUK0" 64 64 translucent offset
-canvastexture "WBLUL0" 64 64 translucent offset
-canvastexture "WBLUM0" 64 64 translucent offset
-canvastexture "WBLUF1" 64 64 translucent offset
-canvastexture "WBLUN0" 64 64 translucent offset
-canvastexture "WBLUG1" 64 64 translucent offset
-canvastexture "WBLUH1" 64 64 translucent offset
-canvastexture "WBLUI1" 64 64 translucent offset
-canvastexture "WMUTE1" 64 64 translucent offset
-canvastexture "WMUTE2" 64 64 translucent offset
-canvastexture "WMUTE3" 64 64 translucent offset
-canvastexture "WMUTE4" 64 64 translucent offset
-canvastexture "WMUTE5" 64 64 translucent offset
-canvastexture "WMUTE6" 64 64 translucent offset
-canvastexture "WMUTE7" 64 64 translucent offset
-canvastexture "WMUTE8" 64 64 translucent offset
-canvastexture "WMUTA1" 64 64 translucent offset
-canvastexture "WMUTA2" 64 64 translucent offset
-canvastexture "WMUTA3" 64 64 translucent offset
-canvastexture "WMUTA4" 64 64 translucent offset
-canvastexture "WMUTA5" 64 64 translucent offset
-canvastexture "WMUTA6" 64 64 translucent offset
-canvastexture "WMUTA7" 64 64 translucent offset
-canvastexture "WMUTA8" 64 64 translucent offset
-canvastexture "WMUTB1" 64 64 translucent offset
-canvastexture "WMUTB2" 64 64 translucent offset
-canvastexture "WMUTB3" 64 64 translucent offset
-canvastexture "WMUTB4" 64 64 translucent offset
-canvastexture "WMUTB5" 64 64 translucent offset
-canvastexture "WMUTB6" 64 64 translucent offset
-canvastexture "WMUTB7" 64 64 translucent offset
-canvastexture "WMUTB8" 64 64 translucent offset
-canvastexture "WMUTC1" 64 64 translucent offset
-canvastexture "WMUTC2" 64 64 translucent offset
-canvastexture "WMUTC3" 64 64 translucent offset
-canvastexture "WMUTC4" 64 64 translucent offset
-canvastexture "WMUTC5" 64 64 translucent offset
-canvastexture "WMUTC6" 64 64 translucent offset
-canvastexture "WMUTC7" 64 64 translucent offset
-canvastexture "WMUTC8" 64 64 translucent offset
-canvastexture "WMUTD1" 64 64 translucent offset
-canvastexture "WMUTD2" 64 64 translucent offset
-canvastexture "WMUTD3" 64 64 translucent offset
-canvastexture "WMUTD4" 64 64 translucent offset
-canvastexture "WMUTD5" 64 64 translucent offset
-canvastexture "WMUTD6" 64 64 translucent offset
-canvastexture "WMUTD7" 64 64 translucent offset
-canvastexture "WMUTD8" 64 64 translucent offset
-canvastexture "WMUTJ1" 64 64 translucent offset
-canvastexture "WMUTK0" 64 64 translucent offset
-canvastexture "WMUTL0" 64 64 translucent offset
-canvastexture "WMUTM0" 64 64 translucent offset
-canvastexture "WMUTF1" 64 64 translucent offset
-canvastexture "WMUTN0" 64 64 translucent offset
-canvastexture "WMUTO0" 64 64 translucent offset
-canvastexture "WMUTG1" 64 64 translucent offset
-canvastexture "WMUTH1" 64 64 translucent offset
-canvastexture "WMUTI1" 64 64 translucent offset
-canvastexture "WMUTP1" 64 64 translucent offset
-canvastexture "WWHTE1" 64 64 translucent offset
-canvastexture "WWHTE2" 64 64 translucent offset
-canvastexture "WWHTE3" 64 64 translucent offset
-canvastexture "WWHTE4" 64 64 translucent offset
-canvastexture "WWHTE5" 64 64 translucent offset
-canvastexture "WWHTE6" 64 64 translucent offset
-canvastexture "WWHTE7" 64 64 translucent offset
-canvastexture "WWHTE8" 64 64 translucent offset
-canvastexture "WWHTA1" 64 64 translucent offset
-canvastexture "WWHTA2" 64 64 translucent offset
-canvastexture "WWHTA3" 64 64 translucent offset
-canvastexture "WWHTA4" 64 64 translucent offset
-canvastexture "WWHTA5" 64 64 translucent offset
-canvastexture "WWHTA6" 64 64 translucent offset
-canvastexture "WWHTA7" 64 64 translucent offset
-canvastexture "WWHTA8" 64 64 translucent offset
-canvastexture "WWHTB1" 64 64 translucent offset
-canvastexture "WWHTB2" 64 64 translucent offset
-canvastexture "WWHTB3" 64 64 translucent offset
-canvastexture "WWHTB4" 64 64 translucent offset
-canvastexture "WWHTB5" 64 64 translucent offset
-canvastexture "WWHTB6" 64 64 translucent offset
-canvastexture "WWHTB7" 64 64 translucent offset
-canvastexture "WWHTB8" 64 64 translucent offset
-canvastexture "WWHTC1" 64 64 translucent offset
-canvastexture "WWHTC2" 64 64 translucent offset
-canvastexture "WWHTC3" 64 64 translucent offset
-canvastexture "WWHTC4" 64 64 translucent offset
-canvastexture "WWHTC5" 64 64 translucent offset
-canvastexture "WWHTC6" 64 64 translucent offset
-canvastexture "WWHTC7" 64 64 translucent offset
-canvastexture "WWHTC8" 64 64 translucent offset
-canvastexture "WWHTD1" 64 64 translucent offset
-canvastexture "WWHTD2" 64 64 translucent offset
-canvastexture "WWHTD3" 64 64 translucent offset
-canvastexture "WWHTD4" 64 64 translucent offset
-canvastexture "WWHTD5" 64 64 translucent offset
-canvastexture "WWHTD6" 64 64 translucent offset
-canvastexture "WWHTD7" 64 64 translucent offset
-canvastexture "WWHTD8" 64 64 translucent offset
-canvastexture "WWHTJ1" 64 64 translucent offset
-canvastexture "WWHTK0" 64 64 translucent offset
-canvastexture "WWHTL0" 64 64 translucent offset
-canvastexture "WWHTM0" 64 64 translucent offset
-canvastexture "WWHTF1" 64 64 translucent offset
-canvastexture "WWHTN0" 64 64 translucent offset
-canvastexture "WWHTO0" 64 64 translucent offset
-canvastexture "WWHTG1" 64 64 translucent offset
-canvastexture "WWHTH1" 64 64 translucent offset
-canvastexture "WWHTI1" 64 64 translucent offset
-canvastexture "GHO1A0" 64 64 translucent offset
-canvastexture "GHO1B0" 64 64 translucent offset
-canvastexture "GHO2A0" 64 64 translucent offset
-canvastexture "GHO2B0" 64 64 translucent offset
-canvastexture "GHO3A0" 64 64 translucent offset
-canvastexture "GHO3B0" 64 64 translucent offset
-canvastexture "GHO0A0" 64 64 translucent offset
-canvastexture "GHO0B0" 64 64 translucent offset
-canvastexture "WBOSA1" 64 64 translucent offset
-canvastexture "WBOSB1" 64 64 translucent offset
-canvastexture "WBOSC1" 64 64 translucent offset
-canvastexture "WBOSD1" 64 64 translucent offset
-canvastexture "WBOSE1" 64 64 translucent offset
-canvastexture "WBOSF1" 64 64 translucent offset
-canvastexture "WBOSG1" 64 64 translucent offset
-canvastexture "WBOSK0" 64 64 translucent offset
-canvastexture "WBOSH0" 64 64 translucent offset
-canvastexture "WBOSI0" 64 64 translucent offset
-canvastexture "WBOSJ0" 64 64 translucent offset
-canvastexture "WBO2A1" 64 64 translucent offset
-canvastexture "WBO2B1" 64 64 translucent offset
-canvastexture "WBO2C1" 64 64 translucent offset
-canvastexture "WBO2D1" 64 64 translucent offset
-canvastexture "WBO2E1" 64 64 translucent offset
-canvastexture "WBO2F1" 64 64 translucent offset
-canvastexture "WBO2G1" 64 64 translucent offset
-canvastexture "WBO2H0" 64 64 translucent offset
-canvastexture "WBO2I0" 64 64 translucent offset
-canvastexture "WBO2J0" 64 64 translucent offset
-canvastexture "WBO2K0" 64 64 translucent offset
-canvastexture "WBO3A1" 64 64 translucent offset
-canvastexture "WBO3B1" 64 64 translucent offset
-canvastexture "WBO3C1" 64 64 translucent offset
-canvastexture "WBO3D1" 64 64 translucent offset
-canvastexture "WBO3E1" 64 64 translucent offset
-canvastexture "WBO3F1" 64 64 translucent offset
-canvastexture "WBO3H0" 64 64 translucent offset
-canvastexture "WBO3I0" 64 64 translucent offset
-canvastexture "WBO3J0" 64 64 translucent offset
-canvastexture "WBO3K0" 64 64 translucent offset
-canvastexture "WB3PA0" 64 64 translucent offset
-canvastexture "WB3PB0" 64 64 translucent offset
-canvastexture "WB3PC0" 64 64 translucent offset
-canvastexture "WB3PD0" 64 64 translucent offset
-canvastexture "WHGTA1" 64 64 translucent offset
-canvastexture "WHGTB1" 64 64 translucent offset
-canvastexture "WHGTC1" 64 64 translucent offset
-canvastexture "WHGTD1" 64 64 translucent offset
-canvastexture "WHGTE1" 64 64 translucent offset
-canvastexture "BAL3A0" 64 64 translucent offset
-canvastexture "BAL3B0" 64 64 translucent offset
-canvastexture "WHGTF0" 64 64 translucent offset
-canvastexture "WHGTG0" 64 64 translucent offset
-canvastexture "WHGTH0" 64 64 translucent offset
-canvastexture "WHGTI0" 64 64 translucent offset
-canvastexture "WHGTJ0" 64 64 translucent offset
-canvastexture "WHGTK0" 64 64 translucent offset
-canvastexture "WHR1A1" 64 64 translucent offset
-canvastexture "WHR1B1" 64 64 translucent offset
-canvastexture "WHR1C1" 64 64 translucent offset
-canvastexture "WHR1D1" 64 64 translucent offset
-canvastexture "WHR1E1" 64 64 translucent offset
-canvastexture "WHR1F1" 64 64 translucent offset
-canvastexture "WHR1G1" 64 64 translucent offset
-canvastexture "WHR1K0" 64 64 translucent offset
-canvastexture "WHR1H0" 64 64 translucent offset
-canvastexture "WHR1I0" 64 64 translucent offset
-canvastexture "WHR1J0" 64 64 translucent offset
-canvastexture "WHR2A1" 64 64 translucent offset
-canvastexture "WHR2B1" 64 64 translucent offset
-canvastexture "WHR2C1" 64 64 translucent offset
-canvastexture "WHR2D1" 64 64 translucent offset
-canvastexture "WHR2G1" 64 64 translucent offset
-canvastexture "WHR2H1" 64 64 translucent offset
-canvastexture "WHR2I1" 64 64 translucent offset
-canvastexture "WHR2Q0" 64 64 translucent offset
-canvastexture "WHR2J0" 64 64 translucent offset
-canvastexture "WHR2K0" 64 64 translucent offset
-canvastexture "WHR2L0" 64 64 translucent offset
-canvastexture "WHR2M0" 64 64 translucent offset
-canvastexture "WHR2N0" 64 64 translucent offset
-canvastexture "WHR2O0" 64 64 translucent offset
-canvastexture "WHR2P0" 64 64 translucent offset
-canvastexture "WBO8A1" 64 64 translucent offset
-canvastexture "WBO8B1" 64 64 translucent offset
-canvastexture "WBO8C1" 64 64 translucent offset
-canvastexture "WBO8D1" 64 64 translucent offset
-canvastexture "WBO8E1" 64 64 translucent offset
-canvastexture "WBO8F1" 64 64 translucent offset
-canvastexture "WBO8G0" 64 64 translucent offset
-canvastexture "WBO8H0" 64 64 translucent offset
-canvastexture "WBO8I0" 64 64 translucent offset
-canvastexture "WBO8J0" 64 64 translucent offset
-canvastexture "WBO9A1" 64 64 translucent offset
-canvastexture "WBO9B1" 64 64 translucent offset
-canvastexture "WBO9C1" 64 64 translucent offset
-canvastexture "WBO9D1" 64 64 translucent offset
-canvastexture "WBO9E1" 64 64 translucent offset
-canvastexture "WBO9F1" 64 64 translucent offset
-canvastexture "WBO9G1" 64 64 translucent offset
-canvastexture "WBO9H1" 64 64 translucent offset
-canvastexture "WBO9I0" 64 64 translucent offset
-canvastexture "WBO9J0" 64 64 translucent offset
-canvastexture "WBO9K0" 64 64 translucent offset
-canvastexture "WBO9L0" 64 64 translucent offset
-canvastexture "WB10A0" 64 64 translucent offset
-canvastexture "WB10B0" 64 64 translucent offset
-canvastexture "WB10C0" 64 64 translucent offset
-canvastexture "WB10D0" 64 64 translucent offset
-canvastexture "WB10E0" 64 64 translucent offset
-canvastexture "WB10F0" 64 64 translucent offset
-canvastexture "WB10G0" 64 64 translucent offset
-canvastexture "WB10H0" 64 64 translucent offset
-canvastexture "WB10I0" 64 64 translucent offset
-canvastexture "WB10J0" 64 64 translucent offset
-canvastexture "WB10K0" 64 64 translucent offset
-canvastexture "WB10L0" 64 64 translucent offset
-canvastexture "WB10M0" 64 64 translucent offset
-canvastexture "WB10N0" 64 64 translucent offset
-canvastexture "WB10O0" 64 64 translucent offset
-canvastexture "WB10P0" 64 64 translucent offset
-canvastexture "ROCKA1" 64 64 translucent offset
-canvastexture "ROCKA2" 64 64 translucent offset
-canvastexture "ROCKA3" 64 64 translucent offset
-canvastexture "ROCKA4" 64 64 translucent offset
-canvastexture "ROCKA8" 64 64 translucent offset
-canvastexture "ROCKA7" 64 64 translucent offset
-canvastexture "ROCKA6" 64 64 translucent offset
-canvastexture "ROCKA5" 64 64 translucent offset
-canvastexture "RTRLA0" 64 64 translucent offset
-canvastexture "RTRLB0" 64 64 translucent offset
-canvastexture "RTRLC0" 64 64 translucent offset
-canvastexture "RTRLD0" 64 64 translucent offset
-canvastexture "ROCPA0" 64 64 translucent offset
-canvastexture "ROCPB0" 64 64 translucent offset
-canvastexture "ROCPC0" 64 64 translucent offset
-canvastexture "WBO4A1" 64 64 translucent offset
-canvastexture "WBO4B1" 64 64 translucent offset
-canvastexture "WBO4C1" 64 64 translucent offset
-canvastexture "WBO4D1" 64 64 translucent offset
-canvastexture "WBO4E1" 64 64 translucent offset
-canvastexture "WBO4F1" 64 64 translucent offset
-canvastexture "WBO4G1" 64 64 translucent offset
-canvastexture "WBO4K0" 64 64 translucent offset
-canvastexture "WBO4H0" 64 64 translucent offset
-canvastexture "WBO4I0" 64 64 translucent offset
-canvastexture "WBO4J0" 64 64 translucent offset
-canvastexture "WBO5A1" 64 64 translucent offset
-canvastexture "WBO5B1" 64 64 translucent offset
-canvastexture "WBO5C1" 64 64 translucent offset
-canvastexture "WBO5D1" 64 64 translucent offset
-canvastexture "WBO5E1" 64 64 translucent offset
-canvastexture "WBO5F1" 64 64 translucent offset
-canvastexture "WBO5G1" 64 64 translucent offset
-canvastexture "WBO5H1" 64 64 translucent offset
-canvastexture "WBO5I0" 64 64 translucent offset
-canvastexture "WBO5J0" 64 64 translucent offset
-canvastexture "WBO5K0" 64 64 translucent offset
-canvastexture "WBO5L0" 64 64 translucent offset
-canvastexture "WBO5M0" 64 64 translucent offset
-canvastexture "WBO6A0" 64 64 translucent offset
-canvastexture "WBO6B0" 64 64 translucent offset
-canvastexture "WBO6C0" 64 64 translucent offset
-canvastexture "WBO6D0" 64 64 translucent offset
-canvastexture "WBO6E0" 64 64 translucent offset
-canvastexture "WBO6F0" 64 64 translucent offset
-canvastexture "WBO6G0" 64 64 translucent offset
-canvastexture "WBO6H0" 64 64 translucent offset
-canvastexture "WBO6I0" 64 64 translucent offset
-canvastexture "WBO6J0" 64 64 translucent offset
-canvastexture "WBO6K0" 64 64 translucent offset
-canvastexture "WBO6L0" 64 64 translucent offset
-canvastexture "WBO6M0" 64 64 translucent offset
-canvastexture "WBO7A0" 64 64 translucent offset
-canvastexture "WBO7B0" 64 64 translucent offset
-canvastexture "WBO7C0" 64 64 translucent offset
-canvastexture "WBO7D0" 64 64 translucent offset
-canvastexture "WBO7E0" 64 64 translucent offset
-canvastexture "WBO7F0" 64 64 translucent offset
-canvastexture "WBO7G0" 64 64 translucent offset
-canvastexture "WBO7H0" 64 64 translucent offset
-canvastexture "WBO7I0" 64 64 translucent offset
-canvastexture "WBO7J0" 64 64 translucent offset
-canvastexture "WBO7K0" 64 64 translucent offset
-canvastexture "WBO7L0" 64 64 translucent offset
-canvastexture "WBO7M0" 64 64 translucent offset
-canvastexture "WBO7N0" 64 64 translucent offset
-canvastexture "WBO7O0" 64 64 translucent offset
-canvastexture "WSPEA0" 64 64 translucent offset
-canvastexture "WSPEB0" 64 64 translucent offset
-canvastexture "WSPEC0" 64 64 translucent offset
-canvastexture "WSPED0" 64 64 translucent offset
-canvastexture "WSPEE0" 64 64 translucent offset
-canvastexture "WSPEF0" 64 64 translucent offset
-canvastexture "WSPEG0" 64 64 translucent offset
-canvastexture "WSPEH0" 64 64 translucent offset
-canvastexture "BJJUA0" 64 64 translucent offset
-canvastexture "BJJUB0" 64 64 translucent offset
-canvastexture "BJJUC0" 64 64 translucent offset
-canvastexture "BJJUD0" 64 64 translucent offset
-canvastexture "BJJUE0" 64 64 translucent offset
-canvastexture "BJJUF0" 64 64 translucent offset
-canvastexture "BJJUG0" 64 64 translucent offset
-canvastexture "BJJUH0" 64 64 translucent offset
-canvastexture "CKNIA0" 64 64 translucent offset
-canvastexture "CKNIB0" 64 64 translucent offset
-canvastexture "CKNIC0" 64 64 translucent offset
-canvastexture "CKNID0" 64 64 translucent offset
-canvastexture "CKNIE0" 64 64 translucent offset
-canvastexture "CLUGA0" 64 64 translucent offset
-canvastexture "CLUGB0" 64 64 translucent offset
-canvastexture "CLUGC0" 64 64 translucent offset
-canvastexture "CLUGD0" 64 64 translucent offset
-canvastexture "CLUGE0" 64 64 translucent offset
-canvastexture "CMGUA0" 64 64 translucent offset
-canvastexture "CMGUB0" 64 64 translucent offset
-canvastexture "CMGUC0" 64 64 translucent offset
-canvastexture "CMGUD0" 64 64 translucent offset
-canvastexture "CMGUE0" 64 64 translucent offset
-canvastexture "CCGUA0" 64 64 translucent offset
-canvastexture "CCGUB0" 64 64 translucent offset
-canvastexture "CCGUC0" 64 64 translucent offset
-canvastexture "CCGUD0" 64 64 translucent offset
-canvastexture "CCGUE0" 64 64 translucent offset
+canvastexture "DEMO" 64 64 translucent offset 32 64
+canvastexture "DEATHCAM" 64 64 translucent offset 32 64
+canvastexture "POL1A0" 64 64 translucent offset 32 64
+canvastexture "BARLC0" 64 64 translucent offset 32 64
+canvastexture "TAB1A0" 64 64 translucent offset 32 64
+canvastexture "LIT1A0" 64 64 translucent offset 32 64
+canvastexture "LIT3A0" 64 64 translucent offset 32 64
+canvastexture "HNG1A0" 64 64 translucent offset 32 64
+canvastexture "HLTHC0" 64 64 translucent offset 32 64
+canvastexture "COLWA0" 64 64 translucent offset 32 64
+canvastexture "PLT1A0" 64 64 translucent offset 32 64
+canvastexture "BONCA0" 64 64 translucent offset 32 64
+canvastexture "SINKA0" 64 64 translucent offset 32 64
+canvastexture "PLT2A0" 64 64 translucent offset 32 64
+canvastexture "VASEC0" 64 64 translucent offset 32 64
+canvastexture "TAB2A0" 64 64 translucent offset 32 64
+canvastexture "LIT5A0" 64 64 translucent offset 32 64
+canvastexture "POT1A0" 64 64 translucent offset 32 64
+canvastexture "KNIGA0" 64 64 translucent offset 32 64
+canvastexture "CAG1A0" 64 64 translucent offset 32 64
+canvastexture "CAG2A0" 64 64 translucent offset 32 64
+canvastexture "POB1A0" 64 64 translucent offset 32 64
+canvastexture "KEYSA0" 64 64 translucent offset 32 64
+canvastexture "KEYSB0" 64 64 translucent offset 32 64
+canvastexture "BED1A0" 64 64 translucent offset 32 64
+canvastexture "BASKA0" 64 64 translucent offset 32 64
+canvastexture "HLTHD0" 64 64 translucent offset 32 64
+canvastexture "HLTHE0" 64 64 translucent offset 32 64
+canvastexture "CCLIA0" 64 64 translucent offset 32 64
+canvastexture "CMGUP0" 64 64 translucent offset 32 64
+canvastexture "CCGUP0" 64 64 translucent offset 32 64
+canvastexture "TRECA0" 64 64 translucent offset 32 64
+canvastexture "TRECC0" 64 64 translucent offset 32 64
+canvastexture "TRECD0" 64 64 translucent offset 32 64
+canvastexture "TRECB0" 64 64 translucent offset 32 64
+canvastexture "LIFEA0" 64 64 translucent offset 32 64
+canvastexture "HLTHB0" 64 64 translucent offset 32 64
+canvastexture "BAR2A0" 64 64 translucent offset 32 64
+canvastexture "WEL1A0" 64 64 translucent offset 32 64
+canvastexture "WEL2A0" 64 64 translucent offset 32 64
+canvastexture "HLTHA0" 64 64 translucent offset 32 64
+canvastexture "FLACA0" 64 64 translucent offset 32 64
+canvastexture "POB3A0" 64 64 translucent offset 32 64
+canvastexture "POB2C0" 64 64 translucent offset 32 64
+canvastexture "POB5A0" 64 64 translucent offset 32 64
+canvastexture "POB4A0" 64 64 translucent offset 32 64
+canvastexture "POT2A0" 64 64 translucent offset 32 64
+canvastexture "STOVA0" 64 64 translucent offset 32 64
+canvastexture "SPECA0" 64 64 translucent offset 32 64
+canvastexture "VINEA0" 64 64 translucent offset 32 64
+canvastexture "WBRNE1" 64 64 translucent offset 32 64
+canvastexture "WBRNE2" 64 64 translucent offset 32 64
+canvastexture "WBRNE3" 64 64 translucent offset 32 64
+canvastexture "WBRNE4" 64 64 translucent offset 32 64
+canvastexture "WBRNE5" 64 64 translucent offset 32 64
+canvastexture "WBRNE6" 64 64 translucent offset 32 64
+canvastexture "WBRNE7" 64 64 translucent offset 32 64
+canvastexture "WBRNE8" 64 64 translucent offset 32 64
+canvastexture "WBRNA1" 64 64 translucent offset 32 64
+canvastexture "WBRNA2" 64 64 translucent offset 32 64
+canvastexture "WBRNA3" 64 64 translucent offset 32 64
+canvastexture "WBRNA4" 64 64 translucent offset 32 64
+canvastexture "WBRNA5" 64 64 translucent offset 32 64
+canvastexture "WBRNA6" 64 64 translucent offset 32 64
+canvastexture "WBRNA7" 64 64 translucent offset 32 64
+canvastexture "WBRNA8" 64 64 translucent offset 32 64
+canvastexture "WBRNB1" 64 64 translucent offset 32 64
+canvastexture "WBRNB2" 64 64 translucent offset 32 64
+canvastexture "WBRNB3" 64 64 translucent offset 32 64
+canvastexture "WBRNB4" 64 64 translucent offset 32 64
+canvastexture "WBRNB5" 64 64 translucent offset 32 64
+canvastexture "WBRNB6" 64 64 translucent offset 32 64
+canvastexture "WBRNB7" 64 64 translucent offset 32 64
+canvastexture "WBRNB8" 64 64 translucent offset 32 64
+canvastexture "WBRNC1" 64 64 translucent offset 32 64
+canvastexture "WBRNC2" 64 64 translucent offset 32 64
+canvastexture "WBRNC3" 64 64 translucent offset 32 64
+canvastexture "WBRNC4" 64 64 translucent offset 32 64
+canvastexture "WBRNC5" 64 64 translucent offset 32 64
+canvastexture "WBRNC6" 64 64 translucent offset 32 64
+canvastexture "WBRNC7" 64 64 translucent offset 32 64
+canvastexture "WBRNC8" 64 64 translucent offset 32 64
+canvastexture "WBRND1" 64 64 translucent offset 32 64
+canvastexture "WBRND2" 64 64 translucent offset 32 64
+canvastexture "WBRND3" 64 64 translucent offset 32 64
+canvastexture "WBRND4" 64 64 translucent offset 32 64
+canvastexture "WBRND5" 64 64 translucent offset 32 64
+canvastexture "WBRND6" 64 64 translucent offset 32 64
+canvastexture "WBRND7" 64 64 translucent offset 32 64
+canvastexture "WBRND8" 64 64 translucent offset 32 64
+canvastexture "WBRNJ1" 64 64 translucent offset 32 64
+canvastexture "WBRNK0" 64 64 translucent offset 32 64
+canvastexture "WBRNL0" 64 64 translucent offset 32 64
+canvastexture "WBRNM0" 64 64 translucent offset 32 64
+canvastexture "WBRNF1" 64 64 translucent offset 32 64
+canvastexture "WBRNN0" 64 64 translucent offset 32 64
+canvastexture "WBRNG1" 64 64 translucent offset 32 64
+canvastexture "WBRNH1" 64 64 translucent offset 32 64
+canvastexture "WBRNI1" 64 64 translucent offset 32 64
+canvastexture "WDOGA1" 64 64 translucent offset 32 64
+canvastexture "WDOGA2" 64 64 translucent offset 32 64
+canvastexture "WDOGA3" 64 64 translucent offset 32 64
+canvastexture "WDOGA4" 64 64 translucent offset 32 64
+canvastexture "WDOGA5" 64 64 translucent offset 32 64
+canvastexture "WDOGA6" 64 64 translucent offset 32 64
+canvastexture "WDOGA7" 64 64 translucent offset 32 64
+canvastexture "WDOGA8" 64 64 translucent offset 32 64
+canvastexture "WDOGB1" 64 64 translucent offset 32 64
+canvastexture "WDOGB2" 64 64 translucent offset 32 64
+canvastexture "WDOGB3" 64 64 translucent offset 32 64
+canvastexture "WDOGB4" 64 64 translucent offset 32 64
+canvastexture "WDOGB5" 64 64 translucent offset 32 64
+canvastexture "WDOGB6" 64 64 translucent offset 32 64
+canvastexture "WDOGB7" 64 64 translucent offset 32 64
+canvastexture "WDOGB8" 64 64 translucent offset 32 64
+canvastexture "WDOGC1" 64 64 translucent offset 32 64
+canvastexture "WDOGC2" 64 64 translucent offset 32 64
+canvastexture "WDOGC3" 64 64 translucent offset 32 64
+canvastexture "WDOGC4" 64 64 translucent offset 32 64
+canvastexture "WDOGC5" 64 64 translucent offset 32 64
+canvastexture "WDOGC6" 64 64 translucent offset 32 64
+canvastexture "WDOGC7" 64 64 translucent offset 32 64
+canvastexture "WDOGC8" 64 64 translucent offset 32 64
+canvastexture "WDOGD1" 64 64 translucent offset 32 64
+canvastexture "WDOGD2" 64 64 translucent offset 32 64
+canvastexture "WDOGD3" 64 64 translucent offset 32 64
+canvastexture "WDOGD4" 64 64 translucent offset 32 64
+canvastexture "WDOGD5" 64 64 translucent offset 32 64
+canvastexture "WDOGD6" 64 64 translucent offset 32 64
+canvastexture "WDOGD7" 64 64 translucent offset 32 64
+canvastexture "WDOGD8" 64 64 translucent offset 32 64
+canvastexture "WDOGH0" 64 64 translucent offset 32 64
+canvastexture "WDOGI0" 64 64 translucent offset 32 64
+canvastexture "WDOGJ0" 64 64 translucent offset 32 64
+canvastexture "WDOGK0" 64 64 translucent offset 32 64
+canvastexture "WDOGE1" 64 64 translucent offset 32 64
+canvastexture "WDOGF1" 64 64 translucent offset 32 64
+canvastexture "WDOGG1" 64 64 translucent offset 32 64
+canvastexture "WBLUE1" 64 64 translucent offset 32 64
+canvastexture "WBLUE2" 64 64 translucent offset 32 64
+canvastexture "WBLUE3" 64 64 translucent offset 32 64
+canvastexture "WBLUE4" 64 64 translucent offset 32 64
+canvastexture "WBLUE5" 64 64 translucent offset 32 64
+canvastexture "WBLUE6" 64 64 translucent offset 32 64
+canvastexture "WBLUE7" 64 64 translucent offset 32 64
+canvastexture "WBLUE8" 64 64 translucent offset 32 64
+canvastexture "WBLUA1" 64 64 translucent offset 32 64
+canvastexture "WBLUA2" 64 64 translucent offset 32 64
+canvastexture "WBLUA3" 64 64 translucent offset 32 64
+canvastexture "WBLUA4" 64 64 translucent offset 32 64
+canvastexture "WBLUA5" 64 64 translucent offset 32 64
+canvastexture "WBLUA6" 64 64 translucent offset 32 64
+canvastexture "WBLUA7" 64 64 translucent offset 32 64
+canvastexture "WBLUA8" 64 64 translucent offset 32 64
+canvastexture "WBLUB1" 64 64 translucent offset 32 64
+canvastexture "WBLUB2" 64 64 translucent offset 32 64
+canvastexture "WBLUB3" 64 64 translucent offset 32 64
+canvastexture "WBLUB4" 64 64 translucent offset 32 64
+canvastexture "WBLUB5" 64 64 translucent offset 32 64
+canvastexture "WBLUB6" 64 64 translucent offset 32 64
+canvastexture "WBLUB7" 64 64 translucent offset 32 64
+canvastexture "WBLUB8" 64 64 translucent offset 32 64
+canvastexture "WBLUC1" 64 64 translucent offset 32 64
+canvastexture "WBLUC2" 64 64 translucent offset 32 64
+canvastexture "WBLUC3" 64 64 translucent offset 32 64
+canvastexture "WBLUC4" 64 64 translucent offset 32 64
+canvastexture "WBLUC5" 64 64 translucent offset 32 64
+canvastexture "WBLUC6" 64 64 translucent offset 32 64
+canvastexture "WBLUC7" 64 64 translucent offset 32 64
+canvastexture "WBLUC8" 64 64 translucent offset 32 64
+canvastexture "WBLUD1" 64 64 translucent offset 32 64
+canvastexture "WBLUD2" 64 64 translucent offset 32 64
+canvastexture "WBLUD3" 64 64 translucent offset 32 64
+canvastexture "WBLUD4" 64 64 translucent offset 32 64
+canvastexture "WBLUD5" 64 64 translucent offset 32 64
+canvastexture "WBLUD6" 64 64 translucent offset 32 64
+canvastexture "WBLUD7" 64 64 translucent offset 32 64
+canvastexture "WBLUD8" 64 64 translucent offset 32 64
+canvastexture "WBLUJ1" 64 64 translucent offset 32 64
+canvastexture "WBLUK0" 64 64 translucent offset 32 64
+canvastexture "WBLUL0" 64 64 translucent offset 32 64
+canvastexture "WBLUM0" 64 64 translucent offset 32 64
+canvastexture "WBLUF1" 64 64 translucent offset 32 64
+canvastexture "WBLUN0" 64 64 translucent offset 32 64
+canvastexture "WBLUG1" 64 64 translucent offset 32 64
+canvastexture "WBLUH1" 64 64 translucent offset 32 64
+canvastexture "WBLUI1" 64 64 translucent offset 32 64
+canvastexture "WMUTE1" 64 64 translucent offset 32 64
+canvastexture "WMUTE2" 64 64 translucent offset 32 64
+canvastexture "WMUTE3" 64 64 translucent offset 32 64
+canvastexture "WMUTE4" 64 64 translucent offset 32 64
+canvastexture "WMUTE5" 64 64 translucent offset 32 64
+canvastexture "WMUTE6" 64 64 translucent offset 32 64
+canvastexture "WMUTE7" 64 64 translucent offset 32 64
+canvastexture "WMUTE8" 64 64 translucent offset 32 64
+canvastexture "WMUTA1" 64 64 translucent offset 32 64
+canvastexture "WMUTA2" 64 64 translucent offset 32 64
+canvastexture "WMUTA3" 64 64 translucent offset 32 64
+canvastexture "WMUTA4" 64 64 translucent offset 32 64
+canvastexture "WMUTA5" 64 64 translucent offset 32 64
+canvastexture "WMUTA6" 64 64 translucent offset 32 64
+canvastexture "WMUTA7" 64 64 translucent offset 32 64
+canvastexture "WMUTA8" 64 64 translucent offset 32 64
+canvastexture "WMUTB1" 64 64 translucent offset 32 64
+canvastexture "WMUTB2" 64 64 translucent offset 32 64
+canvastexture "WMUTB3" 64 64 translucent offset 32 64
+canvastexture "WMUTB4" 64 64 translucent offset 32 64
+canvastexture "WMUTB5" 64 64 translucent offset 32 64
+canvastexture "WMUTB6" 64 64 translucent offset 32 64
+canvastexture "WMUTB7" 64 64 translucent offset 32 64
+canvastexture "WMUTB8" 64 64 translucent offset 32 64
+canvastexture "WMUTC1" 64 64 translucent offset 32 64
+canvastexture "WMUTC2" 64 64 translucent offset 32 64
+canvastexture "WMUTC3" 64 64 translucent offset 32 64
+canvastexture "WMUTC4" 64 64 translucent offset 32 64
+canvastexture "WMUTC5" 64 64 translucent offset 32 64
+canvastexture "WMUTC6" 64 64 translucent offset 32 64
+canvastexture "WMUTC7" 64 64 translucent offset 32 64
+canvastexture "WMUTC8" 64 64 translucent offset 32 64
+canvastexture "WMUTD1" 64 64 translucent offset 32 64
+canvastexture "WMUTD2" 64 64 translucent offset 32 64
+canvastexture "WMUTD3" 64 64 translucent offset 32 64
+canvastexture "WMUTD4" 64 64 translucent offset 32 64
+canvastexture "WMUTD5" 64 64 translucent offset 32 64
+canvastexture "WMUTD6" 64 64 translucent offset 32 64
+canvastexture "WMUTD7" 64 64 translucent offset 32 64
+canvastexture "WMUTD8" 64 64 translucent offset 32 64
+canvastexture "WMUTJ1" 64 64 translucent offset 32 64
+canvastexture "WMUTK0" 64 64 translucent offset 32 64
+canvastexture "WMUTL0" 64 64 translucent offset 32 64
+canvastexture "WMUTM0" 64 64 translucent offset 32 64
+canvastexture "WMUTF1" 64 64 translucent offset 32 64
+canvastexture "WMUTN0" 64 64 translucent offset 32 64
+canvastexture "WMUTO0" 64 64 translucent offset 32 64
+canvastexture "WMUTG1" 64 64 translucent offset 32 64
+canvastexture "WMUTH1" 64 64 translucent offset 32 64
+canvastexture "WMUTI1" 64 64 translucent offset 32 64
+canvastexture "WMUTP1" 64 64 translucent offset 32 64
+canvastexture "WWHTE1" 64 64 translucent offset 32 64
+canvastexture "WWHTE2" 64 64 translucent offset 32 64
+canvastexture "WWHTE3" 64 64 translucent offset 32 64
+canvastexture "WWHTE4" 64 64 translucent offset 32 64
+canvastexture "WWHTE5" 64 64 translucent offset 32 64
+canvastexture "WWHTE6" 64 64 translucent offset 32 64
+canvastexture "WWHTE7" 64 64 translucent offset 32 64
+canvastexture "WWHTE8" 64 64 translucent offset 32 64
+canvastexture "WWHTA1" 64 64 translucent offset 32 64
+canvastexture "WWHTA2" 64 64 translucent offset 32 64
+canvastexture "WWHTA3" 64 64 translucent offset 32 64
+canvastexture "WWHTA4" 64 64 translucent offset 32 64
+canvastexture "WWHTA5" 64 64 translucent offset 32 64
+canvastexture "WWHTA6" 64 64 translucent offset 32 64
+canvastexture "WWHTA7" 64 64 translucent offset 32 64
+canvastexture "WWHTA8" 64 64 translucent offset 32 64
+canvastexture "WWHTB1" 64 64 translucent offset 32 64
+canvastexture "WWHTB2" 64 64 translucent offset 32 64
+canvastexture "WWHTB3" 64 64 translucent offset 32 64
+canvastexture "WWHTB4" 64 64 translucent offset 32 64
+canvastexture "WWHTB5" 64 64 translucent offset 32 64
+canvastexture "WWHTB6" 64 64 translucent offset 32 64
+canvastexture "WWHTB7" 64 64 translucent offset 32 64
+canvastexture "WWHTB8" 64 64 translucent offset 32 64
+canvastexture "WWHTC1" 64 64 translucent offset 32 64
+canvastexture "WWHTC2" 64 64 translucent offset 32 64
+canvastexture "WWHTC3" 64 64 translucent offset 32 64
+canvastexture "WWHTC4" 64 64 translucent offset 32 64
+canvastexture "WWHTC5" 64 64 translucent offset 32 64
+canvastexture "WWHTC6" 64 64 translucent offset 32 64
+canvastexture "WWHTC7" 64 64 translucent offset 32 64
+canvastexture "WWHTC8" 64 64 translucent offset 32 64
+canvastexture "WWHTD1" 64 64 translucent offset 32 64
+canvastexture "WWHTD2" 64 64 translucent offset 32 64
+canvastexture "WWHTD3" 64 64 translucent offset 32 64
+canvastexture "WWHTD4" 64 64 translucent offset 32 64
+canvastexture "WWHTD5" 64 64 translucent offset 32 64
+canvastexture "WWHTD6" 64 64 translucent offset 32 64
+canvastexture "WWHTD7" 64 64 translucent offset 32 64
+canvastexture "WWHTD8" 64 64 translucent offset 32 64
+canvastexture "WWHTJ1" 64 64 translucent offset 32 64
+canvastexture "WWHTK0" 64 64 translucent offset 32 64
+canvastexture "WWHTL0" 64 64 translucent offset 32 64
+canvastexture "WWHTM0" 64 64 translucent offset 32 64
+canvastexture "WWHTF1" 64 64 translucent offset 32 64
+canvastexture "WWHTN0" 64 64 translucent offset 32 64
+canvastexture "WWHTO0" 64 64 translucent offset 32 64
+canvastexture "WWHTG1" 64 64 translucent offset 32 64
+canvastexture "WWHTH1" 64 64 translucent offset 32 64
+canvastexture "WWHTI1" 64 64 translucent offset 32 64
+canvastexture "GHO1A0" 64 64 translucent offset 32 64
+canvastexture "GHO1B0" 64 64 translucent offset 32 64
+canvastexture "GHO2A0" 64 64 translucent offset 32 64
+canvastexture "GHO2B0" 64 64 translucent offset 32 64
+canvastexture "GHO3A0" 64 64 translucent offset 32 64
+canvastexture "GHO3B0" 64 64 translucent offset 32 64
+canvastexture "GHO0A0" 64 64 translucent offset 32 64
+canvastexture "GHO0B0" 64 64 translucent offset 32 64
+canvastexture "WBOSA1" 64 64 translucent offset 32 64
+canvastexture "WBOSB1" 64 64 translucent offset 32 64
+canvastexture "WBOSC1" 64 64 translucent offset 32 64
+canvastexture "WBOSD1" 64 64 translucent offset 32 64
+canvastexture "WBOSE1" 64 64 translucent offset 32 64
+canvastexture "WBOSF1" 64 64 translucent offset 32 64
+canvastexture "WBOSG1" 64 64 translucent offset 32 64
+canvastexture "WBOSK0" 64 64 translucent offset 32 64
+canvastexture "WBOSH0" 64 64 translucent offset 32 64
+canvastexture "WBOSI0" 64 64 translucent offset 32 64
+canvastexture "WBOSJ0" 64 64 translucent offset 32 64
+canvastexture "WBO2A1" 64 64 translucent offset 32 64
+canvastexture "WBO2B1" 64 64 translucent offset 32 64
+canvastexture "WBO2C1" 64 64 translucent offset 32 64
+canvastexture "WBO2D1" 64 64 translucent offset 32 64
+canvastexture "WBO2E1" 64 64 translucent offset 32 64
+canvastexture "WBO2F1" 64 64 translucent offset 32 64
+canvastexture "WBO2G1" 64 64 translucent offset 32 64
+canvastexture "WBO2H0" 64 64 translucent offset 32 64
+canvastexture "WBO2I0" 64 64 translucent offset 32 64
+canvastexture "WBO2J0" 64 64 translucent offset 32 64
+canvastexture "WBO2K0" 64 64 translucent offset 32 64
+canvastexture "WBO3A1" 64 64 translucent offset 32 64
+canvastexture "WBO3B1" 64 64 translucent offset 32 64
+canvastexture "WBO3C1" 64 64 translucent offset 32 64
+canvastexture "WBO3D1" 64 64 translucent offset 32 64
+canvastexture "WBO3E1" 64 64 translucent offset 32 64
+canvastexture "WBO3F1" 64 64 translucent offset 32 64
+canvastexture "WBO3H0" 64 64 translucent offset 32 64
+canvastexture "WBO3I0" 64 64 translucent offset 32 64
+canvastexture "WBO3J0" 64 64 translucent offset 32 64
+canvastexture "WBO3K0" 64 64 translucent offset 32 64
+canvastexture "WB3PA0" 64 64 translucent offset 32 32
+canvastexture "WB3PB0" 64 64 translucent offset 32 32
+canvastexture "WB3PC0" 64 64 translucent offset 32 32
+canvastexture "WB3PD0" 64 64 translucent offset 32 32
+canvastexture "WHGTA1" 64 64 translucent offset 32 64
+canvastexture "WHGTB1" 64 64 translucent offset 32 64
+canvastexture "WHGTC1" 64 64 translucent offset 32 64
+canvastexture "WHGTD1" 64 64 translucent offset 32 64
+canvastexture "WHGTE1" 64 64 translucent offset 32 64
+canvastexture "BAL3A0" 64 64 translucent offset 32 32
+canvastexture "BAL3B0" 64 64 translucent offset 32 32
+canvastexture "WHGTF0" 64 64 translucent offset 32 64
+canvastexture "WHGTG0" 64 64 translucent offset 32 64
+canvastexture "WHGTH0" 64 64 translucent offset 32 64
+canvastexture "WHGTI0" 64 64 translucent offset 32 64
+canvastexture "WHGTJ0" 64 64 translucent offset 32 64
+canvastexture "WHGTK0" 64 64 translucent offset 32 64
+canvastexture "WHR1A1" 64 64 translucent offset 32 64
+canvastexture "WHR1B1" 64 64 translucent offset 32 64
+canvastexture "WHR1C1" 64 64 translucent offset 32 64
+canvastexture "WHR1D1" 64 64 translucent offset 32 64
+canvastexture "WHR1E1" 64 64 translucent offset 32 64
+canvastexture "WHR1F1" 64 64 translucent offset 32 64
+canvastexture "WHR1G1" 64 64 translucent offset 32 64
+canvastexture "WHR1K0" 64 64 translucent offset 32 64
+canvastexture "WHR1H0" 64 64 translucent offset 32 64
+canvastexture "WHR1I0" 64 64 translucent offset 32 64
+canvastexture "WHR1J0" 64 64 translucent offset 32 64
+canvastexture "WHR2A1" 64 64 translucent offset 32 64
+canvastexture "WHR2B1" 64 64 translucent offset 32 64
+canvastexture "WHR2C1" 64 64 translucent offset 32 64
+canvastexture "WHR2D1" 64 64 translucent offset 32 64
+canvastexture "WHR2G1" 64 64 translucent offset 32 64
+canvastexture "WHR2H1" 64 64 translucent offset 32 64
+canvastexture "WHR2I1" 64 64 translucent offset 32 64
+canvastexture "WHR2Q0" 64 64 translucent offset 32 64
+canvastexture "WHR2J0" 64 64 translucent offset 32 64
+canvastexture "WHR2K0" 64 64 translucent offset 32 64
+canvastexture "WHR2L0" 64 64 translucent offset 32 64
+canvastexture "WHR2M0" 64 64 translucent offset 32 64
+canvastexture "WHR2N0" 64 64 translucent offset 32 64
+canvastexture "WHR2O0" 64 64 translucent offset 32 64
+canvastexture "WHR2P0" 64 64 translucent offset 32 64
+canvastexture "WBO8A1" 64 64 translucent offset 32 64
+canvastexture "WBO8B1" 64 64 translucent offset 32 64
+canvastexture "WBO8C1" 64 64 translucent offset 32 64
+canvastexture "WBO8D1" 64 64 translucent offset 32 64
+canvastexture "WBO8E1" 64 64 translucent offset 32 64
+canvastexture "WBO8F1" 64 64 translucent offset 32 64
+canvastexture "WBO8G0" 64 64 translucent offset 32 64
+canvastexture "WBO8H0" 64 64 translucent offset 32 64
+canvastexture "WBO8I0" 64 64 translucent offset 32 64
+canvastexture "WBO8J0" 64 64 translucent offset 32 64
+canvastexture "WBO9A1" 64 64 translucent offset 32 64
+canvastexture "WBO9B1" 64 64 translucent offset 32 64
+canvastexture "WBO9C1" 64 64 translucent offset 32 64
+canvastexture "WBO9D1" 64 64 translucent offset 32 64
+canvastexture "WBO9E1" 64 64 translucent offset 32 64
+canvastexture "WBO9F1" 64 64 translucent offset 32 64
+canvastexture "WBO9G1" 64 64 translucent offset 32 64
+canvastexture "WBO9H1" 64 64 translucent offset 32 64
+canvastexture "WBO9I0" 64 64 translucent offset 32 64
+canvastexture "WBO9J0" 64 64 translucent offset 32 64
+canvastexture "WBO9K0" 64 64 translucent offset 32 64
+canvastexture "WBO9L0" 64 64 translucent offset 32 64
+canvastexture "WB10A0" 64 64 translucent offset 32 64
+canvastexture "WB10B0" 64 64 translucent offset 32 64
+canvastexture "WB10C0" 64 64 translucent offset 32 64
+canvastexture "WB10D0" 64 64 translucent offset 32 64
+canvastexture "WB10E0" 64 64 translucent offset 32 64
+canvastexture "WB10F0" 64 64 translucent offset 32 64
+canvastexture "WB10G0" 64 64 translucent offset 32 64
+canvastexture "WB10H0" 64 64 translucent offset 32 64
+canvastexture "WB10I0" 64 64 translucent offset 32 64
+canvastexture "WB10J0" 64 64 translucent offset 32 64
+canvastexture "WB10K0" 64 64 translucent offset 32 64
+canvastexture "WB10L0" 64 64 translucent offset 32 64
+canvastexture "WB10M0" 64 64 translucent offset 32 64
+canvastexture "WB10N0" 64 64 translucent offset 32 64
+canvastexture "WB10O0" 64 64 translucent offset 32 64
+canvastexture "WB10P0" 64 64 translucent offset 32 64
+canvastexture "ROCKA1" 64 64 translucent offset 32 32
+canvastexture "ROCKA2" 64 64 translucent offset 32 32
+canvastexture "ROCKA3" 64 64 translucent offset 32 32
+canvastexture "ROCKA4" 64 64 translucent offset 32 32
+canvastexture "ROCKA8" 64 64 translucent offset 32 32
+canvastexture "ROCKA7" 64 64 translucent offset 32 32
+canvastexture "ROCKA6" 64 64 translucent offset 32 32
+canvastexture "ROCKA5" 64 64 translucent offset 32 32
+canvastexture "RTRLA0" 64 64 translucent offset 32 32
+canvastexture "RTRLB0" 64 64 translucent offset 32 32
+canvastexture "RTRLC0" 64 64 translucent offset 32 32
+canvastexture "RTRLD0" 64 64 translucent offset 32 32
+canvastexture "ROCPA0" 64 64 translucent offset 32 32
+canvastexture "ROCPB0" 64 64 translucent offset 32 32
+canvastexture "ROCPC0" 64 64 translucent offset 32 32
+canvastexture "WBO4A1" 64 64 translucent offset 32 64
+canvastexture "WBO4B1" 64 64 translucent offset 32 64
+canvastexture "WBO4C1" 64 64 translucent offset 32 64
+canvastexture "WBO4D1" 64 64 translucent offset 32 64
+canvastexture "WBO4E1" 64 64 translucent offset 32 64
+canvastexture "WBO4F1" 64 64 translucent offset 32 64
+canvastexture "WBO4G1" 64 64 translucent offset 32 64
+canvastexture "WBO4K0" 64 64 translucent offset 32 64
+canvastexture "WBO4H0" 64 64 translucent offset 32 64
+canvastexture "WBO4I0" 64 64 translucent offset 32 64
+canvastexture "WBO4J0" 64 64 translucent offset 32 64
+canvastexture "WBO5A1" 64 64 translucent offset 32 64
+canvastexture "WBO5B1" 64 64 translucent offset 32 64
+canvastexture "WBO5C1" 64 64 translucent offset 32 64
+canvastexture "WBO5D1" 64 64 translucent offset 32 64
+canvastexture "WBO5E1" 64 64 translucent offset 32 64
+canvastexture "WBO5F1" 64 64 translucent offset 32 64
+canvastexture "WBO5G1" 64 64 translucent offset 32 64
+canvastexture "WBO5H1" 64 64 translucent offset 32 64
+canvastexture "WBO5I0" 64 64 translucent offset 32 64
+canvastexture "WBO5J0" 64 64 translucent offset 32 64
+canvastexture "WBO5K0" 64 64 translucent offset 32 64
+canvastexture "WBO5L0" 64 64 translucent offset 32 64
+canvastexture "WBO5M0" 64 64 translucent offset 32 64
+canvastexture "WBO6A0" 64 64 translucent offset 32 64
+canvastexture "WBO6B0" 64 64 translucent offset 32 64
+canvastexture "WBO6C0" 64 64 translucent offset 32 64
+canvastexture "WBO6D0" 64 64 translucent offset 32 64
+canvastexture "WBO6E0" 64 64 translucent offset 32 64
+canvastexture "WBO6F0" 64 64 translucent offset 32 64
+canvastexture "WBO6G0" 64 64 translucent offset 32 64
+canvastexture "WBO6H0" 64 64 translucent offset 32 64
+canvastexture "WBO6I0" 64 64 translucent offset 32 64
+canvastexture "WBO6J0" 64 64 translucent offset 32 64
+canvastexture "WBO6K0" 64 64 translucent offset 32 64
+canvastexture "WBO6L0" 64 64 translucent offset 32 64
+canvastexture "WBO6M0" 64 64 translucent offset 32 64
+canvastexture "WBO7A0" 64 64 translucent offset 32 64
+canvastexture "WBO7B0" 64 64 translucent offset 32 64
+canvastexture "WBO7C0" 64 64 translucent offset 32 64
+canvastexture "WBO7D0" 64 64 translucent offset 32 64
+canvastexture "WBO7E0" 64 64 translucent offset 32 64
+canvastexture "WBO7F0" 64 64 translucent offset 32 64
+canvastexture "WBO7G0" 64 64 translucent offset 32 64
+canvastexture "WBO7H0" 64 64 translucent offset 32 64
+canvastexture "WBO7I0" 64 64 translucent offset 32 64
+canvastexture "WBO7J0" 64 64 translucent offset 32 64
+canvastexture "WBO7K0" 64 64 translucent offset 32 64
+canvastexture "WBO7L0" 64 64 translucent offset 32 64
+canvastexture "WBO7M0" 64 64 translucent offset 32 64
+canvastexture "WBO7N0" 64 64 translucent offset 32 64
+canvastexture "WBO7O0" 64 64 translucent offset 32 64
+canvastexture "WSPEA0" 64 64 translucent offset 32 64
+canvastexture "WSPEB0" 64 64 translucent offset 32 64
+canvastexture "WSPEC0" 64 64 translucent offset 32 64
+canvastexture "WSPED0" 64 64 translucent offset 32 64
+canvastexture "WSPEE0" 64 64 translucent offset 32 64
+canvastexture "WSPEF0" 64 64 translucent offset 32 64
+canvastexture "WSPEG0" 64 64 translucent offset 32 64
+canvastexture "WSPEH0" 64 64 translucent offset 32 64
+canvastexture "BJJUA0" 64 64 translucent offset 32 64
+canvastexture "BJJUB0" 64 64 translucent offset 32 64
+canvastexture "BJJUC0" 64 64 translucent offset 32 64
+canvastexture "BJJUD0" 64 64 translucent offset 32 64
+canvastexture "BJJUE0" 64 64 translucent offset 32 64
+canvastexture "BJJUF0" 64 64 translucent offset 32 64
+canvastexture "BJJUG0" 64 64 translucent offset 32 64
+canvastexture "BJJUH0" 64 64 translucent offset 32 64
+canvastexture "CKNIA0" 64 64 translucent offset -128 -100
+canvastexture "CKNIB0" 64 64 translucent offset -128 -100
+canvastexture "CKNIC0" 64 64 translucent offset -128 -100
+canvastexture "CKNID0" 64 64 translucent offset -128 -100
+canvastexture "CKNIE0" 64 64 translucent offset -128 -100
+canvastexture "CLUGA0" 64 64 translucent offset -128 -100
+canvastexture "CLUGB0" 64 64 translucent offset -128 -100
+canvastexture "CLUGC0" 64 64 translucent offset -128 -100
+canvastexture "CLUGD0" 64 64 translucent offset -128 -100
+canvastexture "CLUGE0" 64 64 translucent offset -128 -100
+canvastexture "CMGUA0" 64 64 translucent offset -128 -100
+canvastexture "CMGUB0" 64 64 translucent offset -128 -100
+canvastexture "CMGUC0" 64 64 translucent offset -128 -100
+canvastexture "CMGUD0" 64 64 translucent offset -128 -100
+canvastexture "CMGUE0" 64 64 translucent offset -128 -100
+canvastexture "CCGUA0" 64 64 translucent offset -128 -100
+canvastexture "CCGUB0" 64 64 translucent offset -128 -100
+canvastexture "CCGUC0" 64 64 translucent offset -128 -100
+canvastexture "CCGUD0" 64 64 translucent offset -128 -100
+canvastexture "CCGUE0" 64 64 translucent offset -128 -100
+
+canvastexture "WPUFC0" 64 64 translucent offset 32 32
+canvastexture "WPUFD0" 64 64 translucent offset 32 32
 
 // SoD Walls
-canvastexture "Patches/Walls/WALL1000.png" 64 64
-canvastexture "Patches/Walls/WALL1001.png" 64 64
-canvastexture "Patches/Walls/WALL1002.png" 64 64
-canvastexture "Patches/Walls/WALL1003.png" 64 64
-canvastexture "Patches/Walls/WALL1004.png" 64 64
-canvastexture "Patches/Walls/WALL1005.png" 64 64
-canvastexture "Patches/Walls/WALL1006.png" 64 64
-canvastexture "Patches/Walls/WALL1007.png" 64 64
-canvastexture "Patches/Walls/WALL1008.png" 64 64
-canvastexture "Patches/Walls/WALL1009.png" 64 64
-canvastexture "Patches/Walls/WALL1010.png" 64 64
-canvastexture "Patches/Walls/WALL1011.png" 64 64
-canvastexture "Patches/Walls/WALL1012.png" 64 64
-canvastexture "Patches/Walls/WALL1013.png" 64 64
-canvastexture "Patches/Walls/WALL1014.png" 64 64
-canvastexture "Patches/Walls/WALL1015.png" 64 64
-canvastexture "Patches/Walls/WALL1016.png" 64 64
-canvastexture "Patches/Walls/WALL1017.png" 64 64
-canvastexture "Patches/Walls/WALL1018.png" 64 64
-canvastexture "Patches/Walls/WALL1019.png" 64 64
-canvastexture "Patches/Walls/WALL1020.png" 64 64
-canvastexture "Patches/Walls/WALL1021.png" 64 64
-canvastexture "Patches/Walls/WALL1022.png" 64 64
-canvastexture "Patches/Walls/WALL1023.png" 64 64
-canvastexture "Patches/Walls/WALL1024.png" 64 64
-canvastexture "Patches/Walls/WALL1025.png" 64 64
-canvastexture "Patches/Walls/WALL1026.png" 64 64
-canvastexture "Patches/Walls/WALL1027.png" 64 64
-canvastexture "Patches/Walls/WALL1028.png" 64 64
-canvastexture "Patches/Walls/WALL1029.png" 64 64
-canvastexture "Patches/Walls/WALL1030.png" 64 64
-canvastexture "Patches/Walls/WALL1031.png" 64 64
-canvastexture "Patches/Walls/WALL1032.png" 64 64
-canvastexture "Patches/Walls/WALL1033.png" 64 64
-canvastexture "Patches/Walls/WALL1034.png" 64 64
-canvastexture "Patches/Walls/WALL1035.png" 64 64
-canvastexture "Patches/Walls/WALL1036.png" 64 64
-canvastexture "Patches/Walls/WALL1037.png" 64 64
-canvastexture "Patches/Walls/WALL1038.png" 64 64
-canvastexture "Patches/Walls/WALL1039.png" 64 64
-canvastexture "Patches/Walls/WALL1040.png" 64 64
-canvastexture "Patches/Walls/WALL1041.png" 64 64
-canvastexture "Patches/Walls/WALL1042.png" 64 64
-canvastexture "Patches/Walls/WALL1043.png" 64 64
-canvastexture "Patches/Walls/WALL1044.png" 64 64
-canvastexture "Patches/Walls/WALL1045.png" 64 64
-canvastexture "Patches/Walls/WALL1046.png" 64 64
-canvastexture "Patches/Walls/WALL1047.png" 64 64
-canvastexture "Patches/Walls/WALL1048.png" 64 64
-canvastexture "Patches/Walls/WALL1049.png" 64 64
-canvastexture "Patches/Walls/WALL1050.png" 64 64
-canvastexture "Patches/Walls/WALL1051.png" 64 64
-canvastexture "Patches/Walls/WALL1052.png" 64 64
-canvastexture "Patches/Walls/WALL1053.png" 64 64
-canvastexture "Patches/Walls/WALL1054.png" 64 64
-canvastexture "Patches/Walls/WALL1055.png" 64 64
-canvastexture "Patches/Walls/WALL1056.png" 64 64
-canvastexture "Patches/Walls/WALL1057.png" 64 64
-canvastexture "Patches/Walls/WALL1058.png" 64 64
-canvastexture "Patches/Walls/WALL1059.png" 64 64
-canvastexture "Patches/Walls/WALL1060.png" 64 64
-canvastexture "Patches/Walls/WALL1061.png" 64 64
-canvastexture "Patches/Walls/WALL1062.png" 64 64
-canvastexture "Patches/Walls/WALL1063.png" 64 64
-canvastexture "Patches/Walls/WALL1064.png" 64 64
-canvastexture "Patches/Walls/WALL1065.png" 64 64
-canvastexture "Patches/Walls/WALL1066.png" 64 64
-canvastexture "Patches/Walls/WALL1067.png" 64 64
-canvastexture "Patches/Walls/WALL1068.png" 64 64
-canvastexture "Patches/Walls/WALL1069.png" 64 64
-canvastexture "Patches/Walls/WALL1070.png" 64 64
-canvastexture "Patches/Walls/WALL1071.png" 64 64
-canvastexture "Patches/Walls/WALL1072.png" 64 64
-canvastexture "Patches/Walls/WALL1073.png" 64 64
-canvastexture "Patches/Walls/WALL1074.png" 64 64
-canvastexture "Patches/Walls/WALL1075.png" 64 64
-canvastexture "Patches/Walls/WALL1076.png" 64 64
-canvastexture "Patches/Walls/WALL1077.png" 64 64
-canvastexture "Patches/Walls/WALL1078.png" 64 64
-canvastexture "Patches/Walls/WALL1079.png" 64 64
-canvastexture "Patches/Walls/WALL1080.png" 64 64
-canvastexture "Patches/Walls/WALL1081.png" 64 64
-canvastexture "Patches/Walls/WALL1082.png" 64 64
-canvastexture "Patches/Walls/WALL1083.png" 64 64
-canvastexture "Patches/Walls/WALL1084.png" 64 64
-canvastexture "Patches/Walls/WALL1085.png" 64 64
-canvastexture "Patches/Walls/WALL1086.png" 64 64
-canvastexture "Patches/Walls/WALL1087.png" 64 64
-canvastexture "Patches/Walls/WALL1088.png" 64 64
-canvastexture "Patches/Walls/WALL1089.png" 64 64
-canvastexture "Patches/Walls/WALL1090.png" 64 64
-canvastexture "Patches/Walls/WALL1091.png" 64 64
-canvastexture "Patches/Walls/WALL1092.png" 64 64
-canvastexture "Patches/Walls/WALL1093.png" 64 64
-canvastexture "Patches/Walls/WALL1094.png" 64 64
-canvastexture "Patches/Walls/WALL1095.png" 64 64
-canvastexture "Patches/Walls/WALL1096.png" 64 64
-canvastexture "Patches/Walls/WALL1097.png" 64 64
-canvastexture "Patches/Walls/WALL1098.png" 64 64
-canvastexture "Patches/Walls/WALL1099.png" 64 64
-canvastexture "Patches/Walls/WALL1100.png" 64 64
-canvastexture "Patches/Walls/WALL1101.png" 64 64
-canvastexture "Patches/Walls/WALL1102.png" 64 64
-canvastexture "Patches/Walls/WALL1103.png" 64 64
-canvastexture "Patches/Walls/WALL1104.png" 64 64
-canvastexture "Patches/Walls/WALL1105.png" 64 64
-canvastexture "Patches/Walls/WALL1106.png" 64 64
-canvastexture "Patches/Walls/WALL1107.png" 64 64
-canvastexture "Patches/Walls/WALL1108.png" 64 64
-canvastexture "Patches/Walls/WALL1109.png" 64 64
-canvastexture "Patches/Walls/WALL1110.png" 64 64
-canvastexture "Patches/Walls/WALL1111.png" 64 64
-canvastexture "Patches/Walls/WALL1112.png" 64 64
-canvastexture "Patches/Walls/WALL1113.png" 64 64
-canvastexture "Patches/Walls/WALL1114.png" 64 64
-canvastexture "Patches/Walls/WALL1115.png" 64 64
-canvastexture "Patches/Walls/WALL1116.png" 64 64
-canvastexture "Patches/Walls/WALL1117.png" 64 64
-canvastexture "Patches/Walls/WALL1118.png" 64 64
-canvastexture "Patches/Walls/WALL1119.png" 64 64
-canvastexture "Patches/Walls/WALL1120.png" 64 64
-canvastexture "Patches/Walls/WALL1121.png" 64 64
-canvastexture "Patches/Walls/WALL1122.png" 64 64
-canvastexture "Patches/Walls/WALL1123.png" 64 64
-canvastexture "Patches/Walls/WALL1124.png" 64 64
-canvastexture "Patches/Walls/WALL1125.png" 64 64
-canvastexture "Patches/Walls/WALL1126.png" 64 64
-canvastexture "Patches/Walls/WALL1127.png" 64 64
-canvastexture "Patches/Walls/WALL1128.png" 64 64
-canvastexture "Patches/Walls/WALL1129.png" 64 64
-canvastexture "Patches/Walls/WALL1130.png" 64 64
-canvastexture "Patches/Walls/WALL1131.png" 64 64
-canvastexture "Patches/Walls/WALL1132.png" 64 64
-canvastexture "Patches/Walls/WALL1133.png" 64 64
-canvastexture "Patches/Walls/WALL1134.png" 64 64
-canvastexture "Patches/Walls/WALL1135.png" 64 64
-canvastexture "Patches/Walls/WALL1136.png" 64 64
-canvastexture "Patches/Walls/WALL1137.png" 64 64
-canvastexture "Patches/Walls/WALL1138.png" 64 64
-canvastexture "Patches/Walls/WALL1139.png" 64 64
-canvastexture "Patches/Walls/WALL1140.png" 64 64
-canvastexture "Patches/Walls/WALL1141.png" 64 64
-canvastexture "Patches/Walls/WALL1142.png" 64 64
-canvastexture "Patches/Walls/WALL1143.png" 64 64
-canvastexture "Patches/Walls/WALL1144.png" 64 64
-canvastexture "Patches/Walls/WALL1145.png" 64 64
-canvastexture "Patches/Walls/WALL1146.png" 64 64
-canvastexture "Patches/Walls/WALL1147.png" 64 64
-canvastexture "Patches/Walls/WALL1148.png" 64 64
-canvastexture "Patches/Walls/WALL1149.png" 64 64
-canvastexture "Patches/Walls/WALL1150.png" 64 64
-canvastexture "Patches/Walls/WALL1151.png" 64 64
-canvastexture "Patches/Walls/WALL1152.png" 64 64
-canvastexture "Patches/Walls/WALL1153.png" 64 64
-canvastexture "Patches/Walls/WALL1154.png" 64 64
-canvastexture "Patches/Walls/WALL1155.png" 64 64
-canvastexture "Patches/Walls/WALL1156.png" 64 64
-canvastexture "Patches/Walls/WALL1157.png" 64 64
-canvastexture "Patches/Walls/WALL1158.png" 64 64
-canvastexture "Patches/Walls/WALL1159.png" 64 64
-canvastexture "Patches/Walls/WALL1160.png" 64 64
-canvastexture "Patches/Walls/WALL1161.png" 64 64
-canvastexture "Patches/Walls/WALL1162.png" 64 64
-canvastexture "Patches/Walls/WALL1163.png" 64 64
-canvastexture "Patches/Walls/WALL1164.png" 64 64
-canvastexture "Patches/Walls/WALL1165.png" 64 64
-canvastexture "Patches/Walls/WALL1166.png" 64 64
-canvastexture "Patches/Walls/WALL1167.png" 64 64
-canvastexture "Patches/Walls/WALL1168.png" 64 64
-canvastexture "Patches/Walls/WALL1169.png" 64 64
-canvastexture "Patches/Walls/WALL1170.png" 64 64
-canvastexture "Patches/Walls/WALL1171.png" 64 64
-canvastexture "Patches/Walls/WALL1172.png" 64 64
-canvastexture "Patches/Walls/WALL1173.png" 64 64
-canvastexture "Patches/Walls/WALL1174.png" 64 64
-canvastexture "Patches/Walls/WALL1175.png" 64 64
-canvastexture "Patches/Walls/WALL1176.png" 64 64
-canvastexture "Patches/Walls/WALL1177.png" 64 64
-canvastexture "Patches/Walls/WALL1178.png" 64 64
-canvastexture "Patches/Walls/WALL1179.png" 64 64
-canvastexture "Patches/Walls/WALL1180.png" 64 64
-canvastexture "Patches/Walls/WALL1181.png" 64 64
-canvastexture "Patches/Walls/WALL1182.png" 64 64
-canvastexture "Patches/Walls/WALL1183.png" 64 64
-canvastexture "Patches/Walls/WALL1184.png" 64 64
-canvastexture "Patches/Walls/WALL1185.png" 64 64
-canvastexture "Patches/Walls/WALL1186.png" 64 64
-canvastexture "Patches/Walls/WALL1187.png" 64 64
-canvastexture "Patches/Walls/WALL1188.png" 64 64
-canvastexture "Patches/Walls/WALL1189.png" 64 64
-canvastexture "Patches/Walls/WALL1190.png" 64 64
-canvastexture "Patches/Walls/WALL1191.png" 64 64
-canvastexture "Patches/Walls/WALL1192.png" 64 64
-canvastexture "Patches/Walls/WALL1193.png" 64 64
-canvastexture "Patches/Walls/WALL1194.png" 64 64
-canvastexture "Patches/Walls/WALL1195.png" 64 64
-canvastexture "Patches/Walls/WALL1196.png" 64 64
-canvastexture "Patches/Walls/WALL1197.png" 64 64
-canvastexture "Patches/Walls/WALL1198.png" 64 64
-canvastexture "Patches/Walls/WALL1199.png" 64 64
-canvastexture "Patches/Walls/WALL1200.png" 64 64
-canvastexture "Patches/Walls/WALL1201.png" 64 64
-canvastexture "Patches/Walls/WALL1202.png" 64 64
-canvastexture "Patches/Walls/WALL1203.png" 64 64
-canvastexture "Patches/Walls/WALL1204.png" 64 64
-canvastexture "Patches/Walls/WALL1205.png" 64 64
-canvastexture "Patches/Walls/WALL1206.png" 64 64
-canvastexture "Patches/Walls/WALL1207.png" 64 64
-canvastexture "Patches/Walls/WALL1208.png" 64 64
-canvastexture "Patches/Walls/WALL1209.png" 64 64
-canvastexture "Patches/Walls/WALL1210.png" 64 64
-canvastexture "Patches/Walls/WALL1211.png" 64 64
-canvastexture "Patches/Walls/WALL1212.png" 64 64
-canvastexture "Patches/Walls/WALL1213.png" 64 64
-canvastexture "Patches/Walls/WALL1214.png" 64 64
-canvastexture "Patches/Walls/WALL1215.png" 64 64
-canvastexture "Patches/Walls/WALL1216.png" 64 64
-canvastexture "Patches/Walls/WALL1217.png" 64 64
-canvastexture "Patches/Walls/WALL1218.png" 64 64
-canvastexture "Patches/Walls/WALL1219.png" 64 64
-canvastexture "Patches/Walls/WALL1220.png" 64 64
-canvastexture "Patches/Walls/WALL1221.png" 64 64
-canvastexture "Patches/Walls/WALL1222.png" 64 64
-canvastexture "Patches/Walls/WALL1223.png" 64 64
-canvastexture "Patches/Walls/WALL1224.png" 64 64
-canvastexture "Patches/Walls/WALL1225.png" 64 64
-canvastexture "Patches/Walls/WALL1226.png" 64 64
-canvastexture "Patches/Walls/WALL1227.png" 64 64
-canvastexture "Patches/Walls/WALL1228.png" 64 64
-canvastexture "Patches/Walls/WALL1229.png" 64 64
-canvastexture "Patches/Walls/WALL1230.png" 64 64
-canvastexture "Patches/Walls/WALL1231.png" 64 64
-canvastexture "Patches/Walls/WALL1232.png" 64 64
-canvastexture "Patches/Walls/WALL1233.png" 64 64
-canvastexture "Patches/Walls/WALL1234.png" 64 64
-canvastexture "Patches/Walls/WALL1235.png" 64 64
-canvastexture "Patches/Walls/WALL1236.png" 64 64
-canvastexture "Patches/Walls/WALL1237.png" 64 64
-canvastexture "Patches/Walls/WALL1238.png" 64 64
-canvastexture "Patches/Walls/WALL1239.png" 64 64
-canvastexture "Patches/Walls/WALL1240.png" 64 64
-canvastexture "Patches/Walls/WALL1241.png" 64 64
-canvastexture "Patches/Walls/WALL1242.png" 64 64
-canvastexture "Patches/Walls/WALL1243.png" 64 64
-canvastexture "Patches/Walls/WALL1244.png" 64 64
-canvastexture "Patches/Walls/WALL1245.png" 64 64
-canvastexture "Patches/Walls/WALL1246.png" 64 64
-canvastexture "Patches/Walls/WALL1247.png" 64 64
-canvastexture "Patches/Walls/WALL1248.png" 64 64
-canvastexture "Patches/Walls/WALL1249.png" 64 64
-canvastexture "Patches/Walls/WALL1250.png" 64 64
-canvastexture "Patches/Walls/WALL1251.png" 64 64
-canvastexture "Patches/Walls/WALL1252.png" 64 64
-canvastexture "Patches/Walls/WALL1253.png" 64 64
-canvastexture "Patches/Walls/WALL1254.png" 64 64
-canvastexture "Patches/Walls/WALL1255.png" 64 64
+canvastexture "SoD/Wall0000" 64 64
+canvastexture "SoD/Wall0001" 64 64
+canvastexture "SoD/Wall0002" 64 64
+canvastexture "SoD/Wall0003" 64 64
+canvastexture "SoD/Wall0004" 64 64
+canvastexture "SoD/Wall0005" 64 64
+canvastexture "SoD/Wall0006" 64 64
+canvastexture "SoD/Wall0007" 64 64
+canvastexture "SoD/Wall0008" 64 64
+canvastexture "SoD/Wall0009" 64 64
+canvastexture "SoD/Wall0010" 64 64
+canvastexture "SoD/Wall0011" 64 64
+canvastexture "SoD/Wall0012" 64 64
+canvastexture "SoD/Wall0013" 64 64
+canvastexture "SoD/Wall0014" 64 64
+canvastexture "SoD/Wall0015" 64 64
+canvastexture "SoD/Wall0016" 64 64
+canvastexture "SoD/Wall0017" 64 64
+canvastexture "SoD/Wall0018" 64 64
+canvastexture "SoD/Wall0019" 64 64
+canvastexture "SoD/Wall0020" 64 64
+canvastexture "SoD/Wall0021" 64 64
+canvastexture "SoD/Wall0022" 64 64
+canvastexture "SoD/Wall0023" 64 64
+canvastexture "SoD/Wall0024" 64 64
+canvastexture "SoD/Wall0025" 64 64
+canvastexture "SoD/Wall0026" 64 64
+canvastexture "SoD/Wall0027" 64 64
+canvastexture "SoD/Wall0028" 64 64
+canvastexture "SoD/Wall0029" 64 64
+canvastexture "SoD/Wall0030" 64 64
+canvastexture "SoD/Wall0031" 64 64
+canvastexture "SoD/Wall0032" 64 64
+canvastexture "SoD/Wall0033" 64 64
+canvastexture "SoD/Wall0034" 64 64
+canvastexture "SoD/Wall0035" 64 64
+canvastexture "SoD/Wall0036" 64 64
+canvastexture "SoD/Wall0037" 64 64
+canvastexture "SoD/Wall0038" 64 64
+canvastexture "SoD/Wall0039" 64 64
+canvastexture "SoD/Wall0040" 64 64
+canvastexture "SoD/Wall0041" 64 64
+canvastexture "SoD/Wall0042" 64 64
+canvastexture "SoD/Wall0043" 64 64
+canvastexture "SoD/Wall0044" 64 64
+canvastexture "SoD/Wall0045" 64 64
+canvastexture "SoD/Wall0046" 64 64
+canvastexture "SoD/Wall0047" 64 64
+canvastexture "SoD/Wall0048" 64 64
+canvastexture "SoD/Wall0049" 64 64
+canvastexture "SoD/Wall0050" 64 64
+canvastexture "SoD/Wall0051" 64 64
+canvastexture "SoD/Wall0052" 64 64
+canvastexture "SoD/Wall0053" 64 64
+canvastexture "SoD/Wall0054" 64 64
+canvastexture "SoD/Wall0055" 64 64
+canvastexture "SoD/Wall0056" 64 64
+canvastexture "SoD/Wall0057" 64 64
+canvastexture "SoD/Wall0058" 64 64
+canvastexture "SoD/Wall0059" 64 64
+canvastexture "SoD/Wall0060" 64 64
+canvastexture "SoD/Wall0061" 64 64
+canvastexture "SoD/Wall0062" 64 64
+canvastexture "SoD/Wall0063" 64 64
+canvastexture "SoD/Wall0064" 64 64
+canvastexture "SoD/Wall0065" 64 64
+canvastexture "SoD/Wall0066" 64 64
+canvastexture "SoD/Wall0067" 64 64
+canvastexture "SoD/Wall0068" 64 64
+canvastexture "SoD/Wall0069" 64 64
+canvastexture "SoD/Wall0070" 64 64
+canvastexture "SoD/Wall0071" 64 64
+canvastexture "SoD/Wall0072" 64 64
+canvastexture "SoD/Wall0073" 64 64
+canvastexture "SoD/Wall0074" 64 64
+canvastexture "SoD/Wall0075" 64 64
+canvastexture "SoD/Wall0076" 64 64
+canvastexture "SoD/Wall0077" 64 64
+canvastexture "SoD/Wall0078" 64 64
+canvastexture "SoD/Wall0079" 64 64
+canvastexture "SoD/Wall0080" 64 64
+canvastexture "SoD/Wall0081" 64 64
+canvastexture "SoD/Wall0082" 64 64
+canvastexture "SoD/Wall0083" 64 64
+canvastexture "SoD/Wall0084" 64 64
+canvastexture "SoD/Wall0085" 64 64
+canvastexture "SoD/Wall0086" 64 64
+canvastexture "SoD/Wall0087" 64 64
+canvastexture "SoD/Wall0088" 64 64
+canvastexture "SoD/Wall0089" 64 64
+canvastexture "SoD/Wall0090" 64 64
+canvastexture "SoD/Wall0091" 64 64
+canvastexture "SoD/Wall0092" 64 64
+canvastexture "SoD/Wall0093" 64 64
+canvastexture "SoD/Wall0094" 64 64
+canvastexture "SoD/Wall0095" 64 64
+canvastexture "SoD/Wall0096" 64 64
+canvastexture "SoD/Wall0097" 64 64
+canvastexture "SoD/Wall0098" 64 64
+canvastexture "SoD/Wall0099" 64 64
+canvastexture "SoD/Wall0100" 64 64
+canvastexture "SoD/Wall0101" 64 64
+canvastexture "SoD/Wall0102" 64 64
+canvastexture "SoD/Wall0103" 64 64
+canvastexture "SoD/Wall0104" 64 64
+canvastexture "SoD/Wall0105" 64 64
+canvastexture "SoD/Wall0106" 64 64
+canvastexture "SoD/Wall0107" 64 64
+canvastexture "SoD/Wall0108" 64 64
+canvastexture "SoD/Wall0109" 64 64
+canvastexture "SoD/Wall0110" 64 64
+canvastexture "SoD/Wall0111" 64 64
+canvastexture "SoD/Wall0112" 64 64
+canvastexture "SoD/Wall0113" 64 64
+canvastexture "SoD/Wall0114" 64 64
+canvastexture "SoD/Wall0115" 64 64
+canvastexture "SoD/Wall0116" 64 64
+canvastexture "SoD/Wall0117" 64 64
+canvastexture "SoD/Wall0118" 64 64
+canvastexture "SoD/Wall0119" 64 64
+canvastexture "SoD/Wall0120" 64 64
+canvastexture "SoD/Wall0121" 64 64
+canvastexture "SoD/Wall0122" 64 64
+canvastexture "SoD/Wall0123" 64 64
+canvastexture "SoD/Wall0124" 64 64
+canvastexture "SoD/Wall0125" 64 64
+canvastexture "SoD/Wall0126" 64 64
+canvastexture "SoD/Wall0127" 64 64
+canvastexture "SoD/Wall0128" 64 64
+canvastexture "SoD/Wall0129" 64 64
+canvastexture "SoD/Wall0130" 64 64
+canvastexture "SoD/Wall0131" 64 64
+canvastexture "SoD/Wall0132" 64 64
+canvastexture "SoD/Wall0133" 64 64
+canvastexture "SoD/Wall0134" 64 64
+canvastexture "SoD/Wall0135" 64 64
+canvastexture "SoD/Wall0136" 64 64
+canvastexture "SoD/Wall0137" 64 64
+canvastexture "SoD/Wall0138" 64 64
+canvastexture "SoD/Wall0139" 64 64
+canvastexture "SoD/Wall0140" 64 64
+canvastexture "SoD/Wall0141" 64 64
+canvastexture "SoD/Wall0142" 64 64
+canvastexture "SoD/Wall0143" 64 64
+canvastexture "SoD/Wall0144" 64 64
+canvastexture "SoD/Wall0145" 64 64
+canvastexture "SoD/Wall0146" 64 64
+canvastexture "SoD/Wall0147" 64 64
+canvastexture "SoD/Wall0148" 64 64
+canvastexture "SoD/Wall0149" 64 64
+canvastexture "SoD/Wall0150" 64 64
+canvastexture "SoD/Wall0151" 64 64
+canvastexture "SoD/Wall0152" 64 64
+canvastexture "SoD/Wall0153" 64 64
+canvastexture "SoD/Wall0154" 64 64
+canvastexture "SoD/Wall0155" 64 64
+canvastexture "SoD/Wall0156" 64 64
+canvastexture "SoD/Wall0157" 64 64
+canvastexture "SoD/Wall0158" 64 64
+canvastexture "SoD/Wall0159" 64 64
+canvastexture "SoD/Wall0160" 64 64
+canvastexture "SoD/Wall0161" 64 64
+canvastexture "SoD/Wall0162" 64 64
+canvastexture "SoD/Wall0163" 64 64
+canvastexture "SoD/Wall0164" 64 64
+canvastexture "SoD/Wall0165" 64 64
+canvastexture "SoD/Wall0166" 64 64
+canvastexture "SoD/Wall0167" 64 64
+canvastexture "SoD/Wall0168" 64 64
+canvastexture "SoD/Wall0169" 64 64
+canvastexture "SoD/Wall0170" 64 64
+canvastexture "SoD/Wall0171" 64 64
+canvastexture "SoD/Wall0172" 64 64
+canvastexture "SoD/Wall0173" 64 64
+canvastexture "SoD/Wall0174" 64 64
+canvastexture "SoD/Wall0175" 64 64
+canvastexture "SoD/Wall0176" 64 64
+canvastexture "SoD/Wall0177" 64 64
+canvastexture "SoD/Wall0178" 64 64
+canvastexture "SoD/Wall0179" 64 64
+canvastexture "SoD/Wall0180" 64 64
+canvastexture "SoD/Wall0181" 64 64
+canvastexture "SoD/Wall0182" 64 64
+canvastexture "SoD/Wall0183" 64 64
+canvastexture "SoD/Wall0184" 64 64
+canvastexture "SoD/Wall0185" 64 64
+canvastexture "SoD/Wall0186" 64 64
+canvastexture "SoD/Wall0187" 64 64
+canvastexture "SoD/Wall0188" 64 64
+canvastexture "SoD/Wall0189" 64 64
+canvastexture "SoD/Wall0190" 64 64
+canvastexture "SoD/Wall0191" 64 64
+canvastexture "SoD/Wall0192" 64 64
+canvastexture "SoD/Wall0193" 64 64
+canvastexture "SoD/Wall0194" 64 64
+canvastexture "SoD/Wall0195" 64 64
+canvastexture "SoD/Wall0196" 64 64
+canvastexture "SoD/Wall0197" 64 64
+canvastexture "SoD/Wall0198" 64 64
+canvastexture "SoD/Wall0199" 64 64
+canvastexture "SoD/Wall0200" 64 64
+canvastexture "SoD/Wall0201" 64 64
+canvastexture "SoD/Wall0202" 64 64
+canvastexture "SoD/Wall0203" 64 64
+canvastexture "SoD/Wall0204" 64 64
+canvastexture "SoD/Wall0205" 64 64
+canvastexture "SoD/Wall0206" 64 64
+canvastexture "SoD/Wall0207" 64 64
+canvastexture "SoD/Wall0208" 64 64
+canvastexture "SoD/Wall0209" 64 64
+canvastexture "SoD/Wall0210" 64 64
+canvastexture "SoD/Wall0211" 64 64
+canvastexture "SoD/Wall0212" 64 64
+canvastexture "SoD/Wall0213" 64 64
+canvastexture "SoD/Wall0214" 64 64
+canvastexture "SoD/Wall0215" 64 64
+canvastexture "SoD/Wall0216" 64 64
+canvastexture "SoD/Wall0217" 64 64
+canvastexture "SoD/Wall0218" 64 64
+canvastexture "SoD/Wall0219" 64 64
+canvastexture "SoD/Wall0220" 64 64
+canvastexture "SoD/Wall0221" 64 64
+canvastexture "SoD/Wall0222" 64 64
+canvastexture "SoD/Wall0223" 64 64
+canvastexture "SoD/Wall0224" 64 64
+canvastexture "SoD/Wall0225" 64 64
+canvastexture "SoD/Wall0226" 64 64
+canvastexture "SoD/Wall0227" 64 64
+canvastexture "SoD/Wall0228" 64 64
+canvastexture "SoD/Wall0229" 64 64
+canvastexture "SoD/Wall0230" 64 64
+canvastexture "SoD/Wall0231" 64 64
+canvastexture "SoD/Wall0232" 64 64
+canvastexture "SoD/Wall0233" 64 64
+canvastexture "SoD/Wall0234" 64 64
+canvastexture "SoD/Wall0235" 64 64
+canvastexture "SoD/Wall0236" 64 64
+canvastexture "SoD/Wall0237" 64 64
+canvastexture "SoD/Wall0238" 64 64
+canvastexture "SoD/Wall0239" 64 64
+canvastexture "SoD/Wall0240" 64 64
+canvastexture "SoD/Wall0241" 64 64
+canvastexture "SoD/Wall0242" 64 64
+canvastexture "SoD/Wall0243" 64 64
+canvastexture "SoD/Wall0244" 64 64
+canvastexture "SoD/Wall0245" 64 64
+canvastexture "SoD/Wall0246" 64 64
+canvastexture "SoD/Wall0247" 64 64
+canvastexture "SoD/Wall0248" 64 64
+canvastexture "SoD/Wall0249" 64 64
+canvastexture "SoD/Wall0250" 64 64
+canvastexture "SoD/Wall0251" 64 64
+canvastexture "SoD/Wall0252" 64 64
+canvastexture "SoD/Wall0253" 64 64
+canvastexture "SoD/Wall0254" 64 64
+canvastexture "SoD/Wall0255" 64 64
 
 // SD1 Sprites
-canvastexture "HEL3A0" 64 64 translucent offset
-canvastexture "HEL4A0" 64 64 translucent offset
-canvastexture "HEL2A0" 64 64 translucent offset
-canvastexture "LITRA0" 64 64 translucent offset
-canvastexture "HEL1A0" 64 64 translucent offset
-canvastexture "HEL5A0" 64 64 translucent offset
-canvastexture "ADTHA0" 64 64 translucent offset
-canvastexture "COL2A0" 64 64 translucent offset
-canvastexture "WAMMA0" 64 64 translucent offset
-canvastexture "WTRKA0" 64 64 translucent offset
-canvastexture "SOFDA0" 64 64 translucent offset
-canvastexture "ADBLA0" 64 64 translucent offset
-canvastexture "ADBLB0" 64 64 translucent offset
-canvastexture "ADBLC0" 64 64 translucent offset
-canvastexture "ADBLD0" 64 64 translucent offset
+canvastexture "HEL3A0" 64 64 translucent offset 32 64
+canvastexture "HEL4A0" 64 64 translucent offset 32 64
+canvastexture "HEL2A0" 64 64 translucent offset 32 64
+canvastexture "LITRA0" 64 64 translucent offset 32 64
+canvastexture "HEL1A0" 64 64 translucent offset 32 64
+canvastexture "HEL5A0" 64 64 translucent offset 32 64
+canvastexture "ADTHA0" 64 64 translucent offset 32 64
+canvastexture "COL2A0" 64 64 translucent offset 32 64
+canvastexture "WAMMA0" 64 64 translucent offset 32 64
+canvastexture "WTRKA0" 64 64 translucent offset 32 64
+canvastexture "SOFDA0" 64 64 translucent offset 32 64
+canvastexture "ADBLA0" 64 64 translucent offset 20 26
+canvastexture "ADBLB0" 64 64 translucent offset 20 26
+canvastexture "ADBLC0" 64 64 translucent offset 20 26
+canvastexture "ADBLD0" 64 64 translucent offset 20 26
 
 // SD2 Walls
-canvastexture "Patches/Walls/WALL2000.png" 64 64
-canvastexture "Patches/Walls/WALL2001.png" 64 64
-canvastexture "Patches/Walls/WALL2002.png" 64 64
-canvastexture "Patches/Walls/WALL2003.png" 64 64
-canvastexture "Patches/Walls/WALL2004.png" 64 64
-canvastexture "Patches/Walls/WALL2005.png" 64 64
-canvastexture "Patches/Walls/WALL2006.png" 64 64
-canvastexture "Patches/Walls/WALL2007.png" 64 64
-canvastexture "Patches/Walls/WALL2008.png" 64 64
-canvastexture "Patches/Walls/WALL2009.png" 64 64
-canvastexture "Patches/Walls/WALL2010.png" 64 64
-canvastexture "Patches/Walls/WALL2011.png" 64 64
-canvastexture "Patches/Walls/WALL2012.png" 64 64
-canvastexture "Patches/Walls/WALL2013.png" 64 64
-canvastexture "Patches/Walls/WALL2014.png" 64 64
-canvastexture "Patches/Walls/WALL2015.png" 64 64
-canvastexture "Patches/Walls/WALL2016.png" 64 64
-canvastexture "Patches/Walls/WALL2017.png" 64 64
-canvastexture "Patches/Walls/WALL2018.png" 64 64
-canvastexture "Patches/Walls/WALL2019.png" 64 64
-canvastexture "Patches/Walls/WALL2020.png" 64 64
-canvastexture "Patches/Walls/WALL2021.png" 64 64
-canvastexture "Patches/Walls/WALL2022.png" 64 64
-canvastexture "Patches/Walls/WALL2023.png" 64 64
-canvastexture "Patches/Walls/WALL2024.png" 64 64
-canvastexture "Patches/Walls/WALL2025.png" 64 64
-canvastexture "Patches/Walls/WALL2026.png" 64 64
-canvastexture "Patches/Walls/WALL2027.png" 64 64
-canvastexture "Patches/Walls/WALL2028.png" 64 64
-canvastexture "Patches/Walls/WALL2029.png" 64 64
-canvastexture "Patches/Walls/WALL2030.png" 64 64
-canvastexture "Patches/Walls/WALL2031.png" 64 64
-canvastexture "Patches/Walls/WALL2032.png" 64 64
-canvastexture "Patches/Walls/WALL2033.png" 64 64
-canvastexture "Patches/Walls/WALL2034.png" 64 64
-canvastexture "Patches/Walls/WALL2035.png" 64 64
-canvastexture "Patches/Walls/WALL2036.png" 64 64
-canvastexture "Patches/Walls/WALL2037.png" 64 64
-canvastexture "Patches/Walls/WALL2038.png" 64 64
-canvastexture "Patches/Walls/WALL2039.png" 64 64
-canvastexture "Patches/Walls/WALL2040.png" 64 64
-canvastexture "Patches/Walls/WALL2041.png" 64 64
-canvastexture "Patches/Walls/WALL2042.png" 64 64
-canvastexture "Patches/Walls/WALL2043.png" 64 64
-canvastexture "Patches/Walls/WALL2044.png" 64 64
-canvastexture "Patches/Walls/WALL2045.png" 64 64
-canvastexture "Patches/Walls/WALL2046.png" 64 64
-canvastexture "Patches/Walls/WALL2047.png" 64 64
-canvastexture "Patches/Walls/WALL2048.png" 64 64
-canvastexture "Patches/Walls/WALL2049.png" 64 64
-canvastexture "Patches/Walls/WALL2050.png" 64 64
-canvastexture "Patches/Walls/WALL2051.png" 64 64
-canvastexture "Patches/Walls/WALL2052.png" 64 64
-canvastexture "Patches/Walls/WALL2053.png" 64 64
-canvastexture "Patches/Walls/WALL2054.png" 64 64
-canvastexture "Patches/Walls/WALL2055.png" 64 64
-canvastexture "Patches/Walls/WALL2056.png" 64 64
-canvastexture "Patches/Walls/WALL2057.png" 64 64
-canvastexture "Patches/Walls/WALL2058.png" 64 64
-canvastexture "Patches/Walls/WALL2059.png" 64 64
-canvastexture "Patches/Walls/WALL2060.png" 64 64
-canvastexture "Patches/Walls/WALL2061.png" 64 64
-canvastexture "Patches/Walls/WALL2062.png" 64 64
-canvastexture "Patches/Walls/WALL2063.png" 64 64
-canvastexture "Patches/Walls/WALL2064.png" 64 64
-canvastexture "Patches/Walls/WALL2065.png" 64 64
-canvastexture "Patches/Walls/WALL2066.png" 64 64
-canvastexture "Patches/Walls/WALL2067.png" 64 64
-canvastexture "Patches/Walls/WALL2068.png" 64 64
-canvastexture "Patches/Walls/WALL2069.png" 64 64
-canvastexture "Patches/Walls/WALL2070.png" 64 64
-canvastexture "Patches/Walls/WALL2071.png" 64 64
-canvastexture "Patches/Walls/WALL2072.png" 64 64
-canvastexture "Patches/Walls/WALL2073.png" 64 64
-canvastexture "Patches/Walls/WALL2074.png" 64 64
-canvastexture "Patches/Walls/WALL2075.png" 64 64
-canvastexture "Patches/Walls/WALL2076.png" 64 64
-canvastexture "Patches/Walls/WALL2077.png" 64 64
-canvastexture "Patches/Walls/WALL2078.png" 64 64
-canvastexture "Patches/Walls/WALL2079.png" 64 64
-canvastexture "Patches/Walls/WALL2080.png" 64 64
-canvastexture "Patches/Walls/WALL2081.png" 64 64
-canvastexture "Patches/Walls/WALL2082.png" 64 64
-canvastexture "Patches/Walls/WALL2083.png" 64 64
-canvastexture "Patches/Walls/WALL2084.png" 64 64
-canvastexture "Patches/Walls/WALL2085.png" 64 64
-canvastexture "Patches/Walls/WALL2086.png" 64 64
-canvastexture "Patches/Walls/WALL2087.png" 64 64
-canvastexture "Patches/Walls/WALL2088.png" 64 64
-canvastexture "Patches/Walls/WALL2089.png" 64 64
-canvastexture "Patches/Walls/WALL2090.png" 64 64
-canvastexture "Patches/Walls/WALL2091.png" 64 64
-canvastexture "Patches/Walls/WALL2092.png" 64 64
-canvastexture "Patches/Walls/WALL2093.png" 64 64
-canvastexture "Patches/Walls/WALL2094.png" 64 64
-canvastexture "Patches/Walls/WALL2095.png" 64 64
-canvastexture "Patches/Walls/WALL2096.png" 64 64
-canvastexture "Patches/Walls/WALL2097.png" 64 64
-canvastexture "Patches/Walls/WALL2098.png" 64 64
-canvastexture "Patches/Walls/WALL2099.png" 64 64
-canvastexture "Patches/Walls/WALL2100.png" 64 64
-canvastexture "Patches/Walls/WALL2101.png" 64 64
-canvastexture "Patches/Walls/WALL2102.png" 64 64
-canvastexture "Patches/Walls/WALL2103.png" 64 64
-canvastexture "Patches/Walls/WALL2104.png" 64 64
-canvastexture "Patches/Walls/WALL2105.png" 64 64
-canvastexture "Patches/Walls/WALL2106.png" 64 64
-canvastexture "Patches/Walls/WALL2107.png" 64 64
-canvastexture "Patches/Walls/WALL2108.png" 64 64
-canvastexture "Patches/Walls/WALL2109.png" 64 64
-canvastexture "Patches/Walls/WALL2110.png" 64 64
-canvastexture "Patches/Walls/WALL2111.png" 64 64
-canvastexture "Patches/Walls/WALL2112.png" 64 64
-canvastexture "Patches/Walls/WALL2113.png" 64 64
-canvastexture "Patches/Walls/WALL2114.png" 64 64
-canvastexture "Patches/Walls/WALL2115.png" 64 64
-canvastexture "Patches/Walls/WALL2116.png" 64 64
-canvastexture "Patches/Walls/WALL2117.png" 64 64
-canvastexture "Patches/Walls/WALL2118.png" 64 64
-canvastexture "Patches/Walls/WALL2119.png" 64 64
-canvastexture "Patches/Walls/WALL2120.png" 64 64
-canvastexture "Patches/Walls/WALL2121.png" 64 64
-canvastexture "Patches/Walls/WALL2122.png" 64 64
-canvastexture "Patches/Walls/WALL2123.png" 64 64
-canvastexture "Patches/Walls/WALL2124.png" 64 64
-canvastexture "Patches/Walls/WALL2125.png" 64 64
-canvastexture "Patches/Walls/WALL2126.png" 64 64
-canvastexture "Patches/Walls/WALL2127.png" 64 64
-canvastexture "Patches/Walls/WALL2128.png" 64 64
-canvastexture "Patches/Walls/WALL2129.png" 64 64
-canvastexture "Patches/Walls/WALL2130.png" 64 64
-canvastexture "Patches/Walls/WALL2131.png" 64 64
-canvastexture "Patches/Walls/WALL2132.png" 64 64
-canvastexture "Patches/Walls/WALL2133.png" 64 64
-canvastexture "Patches/Walls/WALL2134.png" 64 64
-canvastexture "Patches/Walls/WALL2135.png" 64 64
-canvastexture "Patches/Walls/WALL2136.png" 64 64
-canvastexture "Patches/Walls/WALL2137.png" 64 64
-canvastexture "Patches/Walls/WALL2138.png" 64 64
-canvastexture "Patches/Walls/WALL2139.png" 64 64
-canvastexture "Patches/Walls/WALL2140.png" 64 64
-canvastexture "Patches/Walls/WALL2141.png" 64 64
-canvastexture "Patches/Walls/WALL2142.png" 64 64
-canvastexture "Patches/Walls/WALL2143.png" 64 64
-canvastexture "Patches/Walls/WALL2144.png" 64 64
-canvastexture "Patches/Walls/WALL2145.png" 64 64
-canvastexture "Patches/Walls/WALL2146.png" 64 64
-canvastexture "Patches/Walls/WALL2147.png" 64 64
-canvastexture "Patches/Walls/WALL2148.png" 64 64
-canvastexture "Patches/Walls/WALL2149.png" 64 64
-canvastexture "Patches/Walls/WALL2150.png" 64 64
-canvastexture "Patches/Walls/WALL2151.png" 64 64
-canvastexture "Patches/Walls/WALL2152.png" 64 64
-canvastexture "Patches/Walls/WALL2153.png" 64 64
-canvastexture "Patches/Walls/WALL2154.png" 64 64
-canvastexture "Patches/Walls/WALL2155.png" 64 64
-canvastexture "Patches/Walls/WALL2156.png" 64 64
-canvastexture "Patches/Walls/WALL2157.png" 64 64
-canvastexture "Patches/Walls/WALL2158.png" 64 64
-canvastexture "Patches/Walls/WALL2159.png" 64 64
-canvastexture "Patches/Walls/WALL2160.png" 64 64
-canvastexture "Patches/Walls/WALL2161.png" 64 64
-canvastexture "Patches/Walls/WALL2162.png" 64 64
-canvastexture "Patches/Walls/WALL2163.png" 64 64
-canvastexture "Patches/Walls/WALL2164.png" 64 64
-canvastexture "Patches/Walls/WALL2165.png" 64 64
-canvastexture "Patches/Walls/WALL2166.png" 64 64
-canvastexture "Patches/Walls/WALL2167.png" 64 64
-canvastexture "Patches/Walls/WALL2168.png" 64 64
-canvastexture "Patches/Walls/WALL2169.png" 64 64
-canvastexture "Patches/Walls/WALL2170.png" 64 64
-canvastexture "Patches/Walls/WALL2171.png" 64 64
-canvastexture "Patches/Walls/WALL2172.png" 64 64
-canvastexture "Patches/Walls/WALL2173.png" 64 64
-canvastexture "Patches/Walls/WALL2174.png" 64 64
-canvastexture "Patches/Walls/WALL2175.png" 64 64
-canvastexture "Patches/Walls/WALL2176.png" 64 64
-canvastexture "Patches/Walls/WALL2177.png" 64 64
-canvastexture "Patches/Walls/WALL2178.png" 64 64
-canvastexture "Patches/Walls/WALL2179.png" 64 64
-canvastexture "Patches/Walls/WALL2180.png" 64 64
-canvastexture "Patches/Walls/WALL2181.png" 64 64
-canvastexture "Patches/Walls/WALL2182.png" 64 64
-canvastexture "Patches/Walls/WALL2183.png" 64 64
-canvastexture "Patches/Walls/WALL2184.png" 64 64
-canvastexture "Patches/Walls/WALL2185.png" 64 64
-canvastexture "Patches/Walls/WALL2186.png" 64 64
-canvastexture "Patches/Walls/WALL2187.png" 64 64
-canvastexture "Patches/Walls/WALL2188.png" 64 64
-canvastexture "Patches/Walls/WALL2189.png" 64 64
-canvastexture "Patches/Walls/WALL2190.png" 64 64
-canvastexture "Patches/Walls/WALL2191.png" 64 64
-canvastexture "Patches/Walls/WALL2192.png" 64 64
-canvastexture "Patches/Walls/WALL2193.png" 64 64
-canvastexture "Patches/Walls/WALL2194.png" 64 64
-canvastexture "Patches/Walls/WALL2195.png" 64 64
-canvastexture "Patches/Walls/WALL2196.png" 64 64
-canvastexture "Patches/Walls/WALL2197.png" 64 64
-canvastexture "Patches/Walls/WALL2198.png" 64 64
-canvastexture "Patches/Walls/WALL2199.png" 64 64
-canvastexture "Patches/Walls/WALL2200.png" 64 64
-canvastexture "Patches/Walls/WALL2201.png" 64 64
-canvastexture "Patches/Walls/WALL2202.png" 64 64
-canvastexture "Patches/Walls/WALL2203.png" 64 64
-canvastexture "Patches/Walls/WALL2204.png" 64 64
-canvastexture "Patches/Walls/WALL2205.png" 64 64
-canvastexture "Patches/Walls/WALL2206.png" 64 64
-canvastexture "Patches/Walls/WALL2207.png" 64 64
-canvastexture "Patches/Walls/WALL2208.png" 64 64
-canvastexture "Patches/Walls/WALL2209.png" 64 64
-canvastexture "Patches/Walls/WALL2210.png" 64 64
-canvastexture "Patches/Walls/WALL2211.png" 64 64
-canvastexture "Patches/Walls/WALL2212.png" 64 64
-canvastexture "Patches/Walls/WALL2213.png" 64 64
-canvastexture "Patches/Walls/WALL2214.png" 64 64
-canvastexture "Patches/Walls/WALL2215.png" 64 64
-canvastexture "Patches/Walls/WALL2216.png" 64 64
-canvastexture "Patches/Walls/WALL2217.png" 64 64
-canvastexture "Patches/Walls/WALL2218.png" 64 64
-canvastexture "Patches/Walls/WALL2219.png" 64 64
-canvastexture "Patches/Walls/WALL2220.png" 64 64
-canvastexture "Patches/Walls/WALL2221.png" 64 64
-canvastexture "Patches/Walls/WALL2222.png" 64 64
-canvastexture "Patches/Walls/WALL2223.png" 64 64
-canvastexture "Patches/Walls/WALL2224.png" 64 64
-canvastexture "Patches/Walls/WALL2225.png" 64 64
-canvastexture "Patches/Walls/WALL2226.png" 64 64
-canvastexture "Patches/Walls/WALL2227.png" 64 64
-canvastexture "Patches/Walls/WALL2228.png" 64 64
-canvastexture "Patches/Walls/WALL2229.png" 64 64
-canvastexture "Patches/Walls/WALL2230.png" 64 64
-canvastexture "Patches/Walls/WALL2231.png" 64 64
-canvastexture "Patches/Walls/WALL2232.png" 64 64
-canvastexture "Patches/Walls/WALL2233.png" 64 64
-canvastexture "Patches/Walls/WALL2234.png" 64 64
-canvastexture "Patches/Walls/WALL2235.png" 64 64
-canvastexture "Patches/Walls/WALL2236.png" 64 64
-canvastexture "Patches/Walls/WALL2237.png" 64 64
-canvastexture "Patches/Walls/WALL2238.png" 64 64
-canvastexture "Patches/Walls/WALL2239.png" 64 64
-canvastexture "Patches/Walls/WALL2240.png" 64 64
-canvastexture "Patches/Walls/WALL2241.png" 64 64
-canvastexture "Patches/Walls/WALL2242.png" 64 64
-canvastexture "Patches/Walls/WALL2243.png" 64 64
-canvastexture "Patches/Walls/WALL2244.png" 64 64
-canvastexture "Patches/Walls/WALL2245.png" 64 64
-canvastexture "Patches/Walls/WALL2246.png" 64 64
-canvastexture "Patches/Walls/WALL2247.png" 64 64
-canvastexture "Patches/Walls/WALL2248.png" 64 64
-canvastexture "Patches/Walls/WALL2249.png" 64 64
-canvastexture "Patches/Walls/WALL2250.png" 64 64
-canvastexture "Patches/Walls/WALL2251.png" 64 64
-canvastexture "Patches/Walls/WALL2252.png" 64 64
-canvastexture "Patches/Walls/WALL2253.png" 64 64
-canvastexture "Patches/Walls/WALL2254.png" 64 64
-canvastexture "Patches/Walls/WALL2255.png" 64 64
+canvastexture "RtD/Wall0000" 64 64
+canvastexture "RtD/Wall0001" 64 64
+canvastexture "RtD/Wall0002" 64 64
+canvastexture "RtD/Wall0003" 64 64
+canvastexture "RtD/Wall0004" 64 64
+canvastexture "RtD/Wall0005" 64 64
+canvastexture "RtD/Wall0006" 64 64
+canvastexture "RtD/Wall0007" 64 64
+canvastexture "RtD/Wall0008" 64 64
+canvastexture "RtD/Wall0009" 64 64
+canvastexture "RtD/Wall0010" 64 64
+canvastexture "RtD/Wall0011" 64 64
+canvastexture "RtD/Wall0012" 64 64
+canvastexture "RtD/Wall0013" 64 64
+canvastexture "RtD/Wall0014" 64 64
+canvastexture "RtD/Wall0015" 64 64
+canvastexture "RtD/Wall0016" 64 64
+canvastexture "RtD/Wall0017" 64 64
+canvastexture "RtD/Wall0018" 64 64
+canvastexture "RtD/Wall0019" 64 64
+canvastexture "RtD/Wall0020" 64 64
+canvastexture "RtD/Wall0021" 64 64
+canvastexture "RtD/Wall0022" 64 64
+canvastexture "RtD/Wall0023" 64 64
+canvastexture "RtD/Wall0024" 64 64
+canvastexture "RtD/Wall0025" 64 64
+canvastexture "RtD/Wall0026" 64 64
+canvastexture "RtD/Wall0027" 64 64
+canvastexture "RtD/Wall0028" 64 64
+canvastexture "RtD/Wall0029" 64 64
+canvastexture "RtD/Wall0030" 64 64
+canvastexture "RtD/Wall0031" 64 64
+canvastexture "RtD/Wall0032" 64 64
+canvastexture "RtD/Wall0033" 64 64
+canvastexture "RtD/Wall0034" 64 64
+canvastexture "RtD/Wall0035" 64 64
+canvastexture "RtD/Wall0036" 64 64
+canvastexture "RtD/Wall0037" 64 64
+canvastexture "RtD/Wall0038" 64 64
+canvastexture "RtD/Wall0039" 64 64
+canvastexture "RtD/Wall0040" 64 64
+canvastexture "RtD/Wall0041" 64 64
+canvastexture "RtD/Wall0042" 64 64
+canvastexture "RtD/Wall0043" 64 64
+canvastexture "RtD/Wall0044" 64 64
+canvastexture "RtD/Wall0045" 64 64
+canvastexture "RtD/Wall0046" 64 64
+canvastexture "RtD/Wall0047" 64 64
+canvastexture "RtD/Wall0048" 64 64
+canvastexture "RtD/Wall0049" 64 64
+canvastexture "RtD/Wall0050" 64 64
+canvastexture "RtD/Wall0051" 64 64
+canvastexture "RtD/Wall0052" 64 64
+canvastexture "RtD/Wall0053" 64 64
+canvastexture "RtD/Wall0054" 64 64
+canvastexture "RtD/Wall0055" 64 64
+canvastexture "RtD/Wall0056" 64 64
+canvastexture "RtD/Wall0057" 64 64
+canvastexture "RtD/Wall0058" 64 64
+canvastexture "RtD/Wall0059" 64 64
+canvastexture "RtD/Wall0060" 64 64
+canvastexture "RtD/Wall0061" 64 64
+canvastexture "RtD/Wall0062" 64 64
+canvastexture "RtD/Wall0063" 64 64
+canvastexture "RtD/Wall0064" 64 64
+canvastexture "RtD/Wall0065" 64 64
+canvastexture "RtD/Wall0066" 64 64
+canvastexture "RtD/Wall0067" 64 64
+canvastexture "RtD/Wall0068" 64 64
+canvastexture "RtD/Wall0069" 64 64
+canvastexture "RtD/Wall0070" 64 64
+canvastexture "RtD/Wall0071" 64 64
+canvastexture "RtD/Wall0072" 64 64
+canvastexture "RtD/Wall0073" 64 64
+canvastexture "RtD/Wall0074" 64 64
+canvastexture "RtD/Wall0075" 64 64
+canvastexture "RtD/Wall0076" 64 64
+canvastexture "RtD/Wall0077" 64 64
+canvastexture "RtD/Wall0078" 64 64
+canvastexture "RtD/Wall0079" 64 64
+canvastexture "RtD/Wall0080" 64 64
+canvastexture "RtD/Wall0081" 64 64
+canvastexture "RtD/Wall0082" 64 64
+canvastexture "RtD/Wall0083" 64 64
+canvastexture "RtD/Wall0084" 64 64
+canvastexture "RtD/Wall0085" 64 64
+canvastexture "RtD/Wall0086" 64 64
+canvastexture "RtD/Wall0087" 64 64
+canvastexture "RtD/Wall0088" 64 64
+canvastexture "RtD/Wall0089" 64 64
+canvastexture "RtD/Wall0090" 64 64
+canvastexture "RtD/Wall0091" 64 64
+canvastexture "RtD/Wall0092" 64 64
+canvastexture "RtD/Wall0093" 64 64
+canvastexture "RtD/Wall0094" 64 64
+canvastexture "RtD/Wall0095" 64 64
+canvastexture "RtD/Wall0096" 64 64
+canvastexture "RtD/Wall0097" 64 64
+canvastexture "RtD/Wall0098" 64 64
+canvastexture "RtD/Wall0099" 64 64
+canvastexture "RtD/Wall0100" 64 64
+canvastexture "RtD/Wall0101" 64 64
+canvastexture "RtD/Wall0102" 64 64
+canvastexture "RtD/Wall0103" 64 64
+canvastexture "RtD/Wall0104" 64 64
+canvastexture "RtD/Wall0105" 64 64
+canvastexture "RtD/Wall0106" 64 64
+canvastexture "RtD/Wall0107" 64 64
+canvastexture "RtD/Wall0108" 64 64
+canvastexture "RtD/Wall0109" 64 64
+canvastexture "RtD/Wall0110" 64 64
+canvastexture "RtD/Wall0111" 64 64
+canvastexture "RtD/Wall0112" 64 64
+canvastexture "RtD/Wall0113" 64 64
+canvastexture "RtD/Wall0114" 64 64
+canvastexture "RtD/Wall0115" 64 64
+canvastexture "RtD/Wall0116" 64 64
+canvastexture "RtD/Wall0117" 64 64
+canvastexture "RtD/Wall0118" 64 64
+canvastexture "RtD/Wall0119" 64 64
+canvastexture "RtD/Wall0120" 64 64
+canvastexture "RtD/Wall0121" 64 64
+canvastexture "RtD/Wall0122" 64 64
+canvastexture "RtD/Wall0123" 64 64
+canvastexture "RtD/Wall0124" 64 64
+canvastexture "RtD/Wall0125" 64 64
+canvastexture "RtD/Wall0126" 64 64
+canvastexture "RtD/Wall0127" 64 64
+canvastexture "RtD/Wall0128" 64 64
+canvastexture "RtD/Wall0129" 64 64
+canvastexture "RtD/Wall0130" 64 64
+canvastexture "RtD/Wall0131" 64 64
+canvastexture "RtD/Wall0132" 64 64
+canvastexture "RtD/Wall0133" 64 64
+canvastexture "RtD/Wall0134" 64 64
+canvastexture "RtD/Wall0135" 64 64
+canvastexture "RtD/Wall0136" 64 64
+canvastexture "RtD/Wall0137" 64 64
+canvastexture "RtD/Wall0138" 64 64
+canvastexture "RtD/Wall0139" 64 64
+canvastexture "RtD/Wall0140" 64 64
+canvastexture "RtD/Wall0141" 64 64
+canvastexture "RtD/Wall0142" 64 64
+canvastexture "RtD/Wall0143" 64 64
+canvastexture "RtD/Wall0144" 64 64
+canvastexture "RtD/Wall0145" 64 64
+canvastexture "RtD/Wall0146" 64 64
+canvastexture "RtD/Wall0147" 64 64
+canvastexture "RtD/Wall0148" 64 64
+canvastexture "RtD/Wall0149" 64 64
+canvastexture "RtD/Wall0150" 64 64
+canvastexture "RtD/Wall0151" 64 64
+canvastexture "RtD/Wall0152" 64 64
+canvastexture "RtD/Wall0153" 64 64
+canvastexture "RtD/Wall0154" 64 64
+canvastexture "RtD/Wall0155" 64 64
+canvastexture "RtD/Wall0156" 64 64
+canvastexture "RtD/Wall0157" 64 64
+canvastexture "RtD/Wall0158" 64 64
+canvastexture "RtD/Wall0159" 64 64
+canvastexture "RtD/Wall0160" 64 64
+canvastexture "RtD/Wall0161" 64 64
+canvastexture "RtD/Wall0162" 64 64
+canvastexture "RtD/Wall0163" 64 64
+canvastexture "RtD/Wall0164" 64 64
+canvastexture "RtD/Wall0165" 64 64
+canvastexture "RtD/Wall0166" 64 64
+canvastexture "RtD/Wall0167" 64 64
+canvastexture "RtD/Wall0168" 64 64
+canvastexture "RtD/Wall0169" 64 64
+canvastexture "RtD/Wall0170" 64 64
+canvastexture "RtD/Wall0171" 64 64
+canvastexture "RtD/Wall0172" 64 64
+canvastexture "RtD/Wall0173" 64 64
+canvastexture "RtD/Wall0174" 64 64
+canvastexture "RtD/Wall0175" 64 64
+canvastexture "RtD/Wall0176" 64 64
+canvastexture "RtD/Wall0177" 64 64
+canvastexture "RtD/Wall0178" 64 64
+canvastexture "RtD/Wall0179" 64 64
+canvastexture "RtD/Wall0180" 64 64
+canvastexture "RtD/Wall0181" 64 64
+canvastexture "RtD/Wall0182" 64 64
+canvastexture "RtD/Wall0183" 64 64
+canvastexture "RtD/Wall0184" 64 64
+canvastexture "RtD/Wall0185" 64 64
+canvastexture "RtD/Wall0186" 64 64
+canvastexture "RtD/Wall0187" 64 64
+canvastexture "RtD/Wall0188" 64 64
+canvastexture "RtD/Wall0189" 64 64
+canvastexture "RtD/Wall0190" 64 64
+canvastexture "RtD/Wall0191" 64 64
+canvastexture "RtD/Wall0192" 64 64
+canvastexture "RtD/Wall0193" 64 64
+canvastexture "RtD/Wall0194" 64 64
+canvastexture "RtD/Wall0195" 64 64
+canvastexture "RtD/Wall0196" 64 64
+canvastexture "RtD/Wall0197" 64 64
+canvastexture "RtD/Wall0198" 64 64
+canvastexture "RtD/Wall0199" 64 64
+canvastexture "RtD/Wall0200" 64 64
+canvastexture "RtD/Wall0201" 64 64
+canvastexture "RtD/Wall0202" 64 64
+canvastexture "RtD/Wall0203" 64 64
+canvastexture "RtD/Wall0204" 64 64
+canvastexture "RtD/Wall0205" 64 64
+canvastexture "RtD/Wall0206" 64 64
+canvastexture "RtD/Wall0207" 64 64
+canvastexture "RtD/Wall0208" 64 64
+canvastexture "RtD/Wall0209" 64 64
+canvastexture "RtD/Wall0210" 64 64
+canvastexture "RtD/Wall0211" 64 64
+canvastexture "RtD/Wall0212" 64 64
+canvastexture "RtD/Wall0213" 64 64
+canvastexture "RtD/Wall0214" 64 64
+canvastexture "RtD/Wall0215" 64 64
+canvastexture "RtD/Wall0216" 64 64
+canvastexture "RtD/Wall0217" 64 64
+canvastexture "RtD/Wall0218" 64 64
+canvastexture "RtD/Wall0219" 64 64
+canvastexture "RtD/Wall0220" 64 64
+canvastexture "RtD/Wall0221" 64 64
+canvastexture "RtD/Wall0222" 64 64
+canvastexture "RtD/Wall0223" 64 64
+canvastexture "RtD/Wall0224" 64 64
+canvastexture "RtD/Wall0225" 64 64
+canvastexture "RtD/Wall0226" 64 64
+canvastexture "RtD/Wall0227" 64 64
+canvastexture "RtD/Wall0228" 64 64
+canvastexture "RtD/Wall0229" 64 64
+canvastexture "RtD/Wall0230" 64 64
+canvastexture "RtD/Wall0231" 64 64
+canvastexture "RtD/Wall0232" 64 64
+canvastexture "RtD/Wall0233" 64 64
+canvastexture "RtD/Wall0234" 64 64
+canvastexture "RtD/Wall0235" 64 64
+canvastexture "RtD/Wall0236" 64 64
+canvastexture "RtD/Wall0237" 64 64
+canvastexture "RtD/Wall0238" 64 64
+canvastexture "RtD/Wall0239" 64 64
+canvastexture "RtD/Wall0240" 64 64
+canvastexture "RtD/Wall0241" 64 64
+canvastexture "RtD/Wall0242" 64 64
+canvastexture "RtD/Wall0243" 64 64
+canvastexture "RtD/Wall0244" 64 64
+canvastexture "RtD/Wall0245" 64 64
+canvastexture "RtD/Wall0246" 64 64
+canvastexture "RtD/Wall0247" 64 64
+canvastexture "RtD/Wall0248" 64 64
+canvastexture "RtD/Wall0249" 64 64
+canvastexture "RtD/Wall0250" 64 64
+canvastexture "RtD/Wall0251" 64 64
+canvastexture "RtD/Wall0252" 64 64
+canvastexture "RtD/Wall0253" 64 64
+canvastexture "RtD/Wall0254" 64 64
+canvastexture "RtD/Wall0255" 64 64
 
 // SD2 Sprites
-canvastexture "DEMO2" 64 64 translucent offset
-canvastexture "DEATHCA2" 64 64 translucent offset
-canvastexture "POL2A0" 64 64 translucent offset
-canvastexture "BAR3A0" 64 64 translucent offset
-canvastexture "TAB3A0" 64 64 translucent offset
-canvastexture "LIT2A0" 64 64 translucent offset
-canvastexture "LIT4A0" 64 64 translucent offset
-canvastexture "HNG2A0" 64 64 translucent offset
-canvastexture "HLTHH0" 64 64 translucent offset
-canvastexture "PILWA0" 64 64 translucent offset
-canvastexture "PLT3A0" 64 64 translucent offset
-canvastexture "BONEB0" 64 64 translucent offset
-canvastexture "POSKA0" 64 64 translucent offset
-canvastexture "PLT4A0" 64 64 translucent offset
-canvastexture "VAS2A0" 64 64 translucent offset
-canvastexture "TAB4A0" 64 64 translucent offset
-canvastexture "LIT6A0" 64 64 translucent offset
-canvastexture "CAG6A0" 64 64 translucent offset
-canvastexture "KNIGB0" 64 64 translucent offset
-canvastexture "CAG3A0" 64 64 translucent offset
-canvastexture "CAG4A0" 64 64 translucent offset
-canvastexture "POB6A0" 64 64 translucent offset
-canvastexture "KEYSC0" 64 64 translucent offset
-canvastexture "KEYSD0" 64 64 translucent offset
-canvastexture "CAG5A0" 64 64 translucent offset
-canvastexture "DRATA0" 64 64 translucent offset
-canvastexture "HLTHI0" 64 64 translucent offset
-canvastexture "HLTHJ0" 64 64 translucent offset
-canvastexture "WCLIB0" 64 64 translucent offset
-canvastexture "MGUNU0" 64 64 translucent offset
-canvastexture "CGUNU0" 64 64 translucent offset
-canvastexture "TREAE0" 64 64 translucent offset
-canvastexture "TREAG0" 64 64 translucent offset
-canvastexture "TREAH0" 64 64 translucent offset
-canvastexture "TREAF0" 64 64 translucent offset
-canvastexture "LIFEB0" 64 64 translucent offset
-canvastexture "HLTHG0" 64 64 translucent offset
-canvastexture "BAR4A0" 64 64 translucent offset
-canvastexture "WEL3A0" 64 64 translucent offset
-canvastexture "WEL4A0" 64 64 translucent offset
-canvastexture "HLTHF0" 64 64 translucent offset
-canvastexture "GZMOA0" 64 64 translucent offset
-canvastexture "LIT7A0" 64 64 translucent offset
-canvastexture "POB7A0" 64 64 translucent offset
-canvastexture "LIT8A0" 64 64 translucent offset
-canvastexture "GGOOA0" 64 64 translucent offset
-canvastexture "TAB5A0" 64 64 translucent offset
-canvastexture "BAR5A0" 64 64 translucent offset
-canvastexture "PIPEA0" 64 64 translucent offset
-canvastexture "BUBLA0" 64 64 translucent offset
-canvastexture "DEVSA0" 64 64 translucent offset
-canvastexture "WAMMB0" 64 64 translucent offset
-canvastexture "BJWHA0" 64 64 translucent offset
-canvastexture "SOFDB0" 64 64 translucent offset
-canvastexture "WGRNE1" 64 64 translucent offset
-canvastexture "WGRNE2" 64 64 translucent offset
-canvastexture "WGRNE3" 64 64 translucent offset
-canvastexture "WGRNE4" 64 64 translucent offset
-canvastexture "WGRNE5" 64 64 translucent offset
-canvastexture "WGRNE6" 64 64 translucent offset
-canvastexture "WGRNE7" 64 64 translucent offset
-canvastexture "WGRNE8" 64 64 translucent offset
-canvastexture "WGRNA1" 64 64 translucent offset
-canvastexture "WGRNA2" 64 64 translucent offset
-canvastexture "WGRNA3" 64 64 translucent offset
-canvastexture "WGRNA4" 64 64 translucent offset
-canvastexture "WGRNA5" 64 64 translucent offset
-canvastexture "WGRNA6" 64 64 translucent offset
-canvastexture "WGRNA7" 64 64 translucent offset
-canvastexture "WGRNA8" 64 64 translucent offset
-canvastexture "WGRNB1" 64 64 translucent offset
-canvastexture "WGRNB2" 64 64 translucent offset
-canvastexture "WGRNB3" 64 64 translucent offset
-canvastexture "WGRNB4" 64 64 translucent offset
-canvastexture "WGRNB5" 64 64 translucent offset
-canvastexture "WGRNB6" 64 64 translucent offset
-canvastexture "WGRNB7" 64 64 translucent offset
-canvastexture "WGRNB8" 64 64 translucent offset
-canvastexture "WGRNC1" 64 64 translucent offset
-canvastexture "WGRNC2" 64 64 translucent offset
-canvastexture "WGRNC3" 64 64 translucent offset
-canvastexture "WGRNC4" 64 64 translucent offset
-canvastexture "WGRNC5" 64 64 translucent offset
-canvastexture "WGRNC6" 64 64 translucent offset
-canvastexture "WGRNC7" 64 64 translucent offset
-canvastexture "WGRNC8" 64 64 translucent offset
-canvastexture "WGRND1" 64 64 translucent offset
-canvastexture "WGRND2" 64 64 translucent offset
-canvastexture "WGRND3" 64 64 translucent offset
-canvastexture "WGRND4" 64 64 translucent offset
-canvastexture "WGRND5" 64 64 translucent offset
-canvastexture "WGRND6" 64 64 translucent offset
-canvastexture "WGRND7" 64 64 translucent offset
-canvastexture "WGRND8" 64 64 translucent offset
-canvastexture "WGRNJ0" 64 64 translucent offset
-canvastexture "WGRNK0" 64 64 translucent offset
-canvastexture "WGRNL0" 64 64 translucent offset
-canvastexture "WGRNM0" 64 64 translucent offset
-canvastexture "WGRNF0" 64 64 translucent offset
-canvastexture "WGRNN0" 64 64 translucent offset
-canvastexture "WGRNG0" 64 64 translucent offset
-canvastexture "WGRNH0" 64 64 translucent offset
-canvastexture "WGRNI0" 64 64 translucent offset
-canvastexture "WDOBA1" 64 64 translucent offset
-canvastexture "WDOBA2" 64 64 translucent offset
-canvastexture "WDOBA3" 64 64 translucent offset
-canvastexture "WDOBA4" 64 64 translucent offset
-canvastexture "WDOBA5" 64 64 translucent offset
-canvastexture "WDOBA6" 64 64 translucent offset
-canvastexture "WDOBA7" 64 64 translucent offset
-canvastexture "WDOBA8" 64 64 translucent offset
-canvastexture "WDOBB1" 64 64 translucent offset
-canvastexture "WDOBB2" 64 64 translucent offset
-canvastexture "WDOBB3" 64 64 translucent offset
-canvastexture "WDOBB4" 64 64 translucent offset
-canvastexture "WDOBB5" 64 64 translucent offset
-canvastexture "WDOBB6" 64 64 translucent offset
-canvastexture "WDOBB7" 64 64 translucent offset
-canvastexture "WDOBB8" 64 64 translucent offset
-canvastexture "WDOBC1" 64 64 translucent offset
-canvastexture "WDOBC2" 64 64 translucent offset
-canvastexture "WDOBC3" 64 64 translucent offset
-canvastexture "WDOBC4" 64 64 translucent offset
-canvastexture "WDOBC5" 64 64 translucent offset
-canvastexture "WDOBC6" 64 64 translucent offset
-canvastexture "WDOBC7" 64 64 translucent offset
-canvastexture "WDOBC8" 64 64 translucent offset
-canvastexture "WDOBD1" 64 64 translucent offset
-canvastexture "WDOBD2" 64 64 translucent offset
-canvastexture "WDOBD3" 64 64 translucent offset
-canvastexture "WDOBD4" 64 64 translucent offset
-canvastexture "WDOBD5" 64 64 translucent offset
-canvastexture "WDOBD6" 64 64 translucent offset
-canvastexture "WDOBD7" 64 64 translucent offset
-canvastexture "WDOBD8" 64 64 translucent offset
-canvastexture "WDOBH0" 64 64 translucent offset
-canvastexture "WDOBI0" 64 64 translucent offset
-canvastexture "WDOBJ0" 64 64 translucent offset
-canvastexture "WDOBK0" 64 64 translucent offset
-canvastexture "WDOBE0" 64 64 translucent offset
-canvastexture "WDOBF0" 64 64 translucent offset
-canvastexture "WDOBG0" 64 64 translucent offset
-canvastexture "WBLAE1" 64 64 translucent offset
-canvastexture "WBLAE2" 64 64 translucent offset
-canvastexture "WBLAE3" 64 64 translucent offset
-canvastexture "WBLAE4" 64 64 translucent offset
-canvastexture "WBLAE5" 64 64 translucent offset
-canvastexture "WBLAE6" 64 64 translucent offset
-canvastexture "WBLAE7" 64 64 translucent offset
-canvastexture "WBLAE8" 64 64 translucent offset
-canvastexture "WBLAA1" 64 64 translucent offset
-canvastexture "WBLAA2" 64 64 translucent offset
-canvastexture "WBLAA3" 64 64 translucent offset
-canvastexture "WBLAA4" 64 64 translucent offset
-canvastexture "WBLAA5" 64 64 translucent offset
-canvastexture "WBLAA6" 64 64 translucent offset
-canvastexture "WBLAA7" 64 64 translucent offset
-canvastexture "WBLAA8" 64 64 translucent offset
-canvastexture "WBLAB1" 64 64 translucent offset
-canvastexture "WBLAB2" 64 64 translucent offset
-canvastexture "WBLAB3" 64 64 translucent offset
-canvastexture "WBLAB4" 64 64 translucent offset
-canvastexture "WBLAB5" 64 64 translucent offset
-canvastexture "WBLAB6" 64 64 translucent offset
-canvastexture "WBLAB7" 64 64 translucent offset
-canvastexture "WBLAB8" 64 64 translucent offset
-canvastexture "WBLAC1" 64 64 translucent offset
-canvastexture "WBLAC2" 64 64 translucent offset
-canvastexture "WBLAC3" 64 64 translucent offset
-canvastexture "WBLAC4" 64 64 translucent offset
-canvastexture "WBLAC5" 64 64 translucent offset
-canvastexture "WBLAC6" 64 64 translucent offset
-canvastexture "WBLAC7" 64 64 translucent offset
-canvastexture "WBLAC8" 64 64 translucent offset
-canvastexture "WBLAD1" 64 64 translucent offset
-canvastexture "WBLAD2" 64 64 translucent offset
-canvastexture "WBLAD3" 64 64 translucent offset
-canvastexture "WBLAD4" 64 64 translucent offset
-canvastexture "WBLAD5" 64 64 translucent offset
-canvastexture "WBLAD6" 64 64 translucent offset
-canvastexture "WBLAD7" 64 64 translucent offset
-canvastexture "WBLAD8" 64 64 translucent offset
-canvastexture "WBLAJ0" 64 64 translucent offset
-canvastexture "WBLAK0" 64 64 translucent offset
-canvastexture "WBLAL0" 64 64 translucent offset
-canvastexture "WBLAM0" 64 64 translucent offset
-canvastexture "WBLAF0" 64 64 translucent offset
-canvastexture "WBLAN0" 64 64 translucent offset
-canvastexture "WBLAG0" 64 64 translucent offset
-canvastexture "WBLAH0" 64 64 translucent offset
-canvastexture "WBLAI0" 64 64 translucent offset
-canvastexture "WBATE1" 64 64 translucent offset
-canvastexture "WBATE2" 64 64 translucent offset
-canvastexture "WBATE3" 64 64 translucent offset
-canvastexture "WBATE4" 64 64 translucent offset
-canvastexture "WBATE5" 64 64 translucent offset
-canvastexture "WBATE6" 64 64 translucent offset
-canvastexture "WBATE7" 64 64 translucent offset
-canvastexture "WBATE8" 64 64 translucent offset
-canvastexture "WBATA1" 64 64 translucent offset
-canvastexture "WBATA2" 64 64 translucent offset
-canvastexture "WBATA3" 64 64 translucent offset
-canvastexture "WBATA4" 64 64 translucent offset
-canvastexture "WBATA5" 64 64 translucent offset
-canvastexture "WBATA6" 64 64 translucent offset
-canvastexture "WBATA7" 64 64 translucent offset
-canvastexture "WBATA8" 64 64 translucent offset
-canvastexture "WBATB1" 64 64 translucent offset
-canvastexture "WBATB2" 64 64 translucent offset
-canvastexture "WBATB3" 64 64 translucent offset
-canvastexture "WBATB4" 64 64 translucent offset
-canvastexture "WBATB5" 64 64 translucent offset
-canvastexture "WBATB6" 64 64 translucent offset
-canvastexture "WBATB7" 64 64 translucent offset
-canvastexture "WBATB8" 64 64 translucent offset
-canvastexture "WBATC1" 64 64 translucent offset
-canvastexture "WBATC2" 64 64 translucent offset
-canvastexture "WBATC3" 64 64 translucent offset
-canvastexture "WBATC4" 64 64 translucent offset
-canvastexture "WBATC5" 64 64 translucent offset
-canvastexture "WBATC6" 64 64 translucent offset
-canvastexture "WBATC7" 64 64 translucent offset
-canvastexture "WBATC8" 64 64 translucent offset
-canvastexture "WBATD1" 64 64 translucent offset
-canvastexture "WBATD2" 64 64 translucent offset
-canvastexture "WBATD3" 64 64 translucent offset
-canvastexture "WBATD4" 64 64 translucent offset
-canvastexture "WBATD5" 64 64 translucent offset
-canvastexture "WBATD6" 64 64 translucent offset
-canvastexture "WBATD7" 64 64 translucent offset
-canvastexture "WBATD8" 64 64 translucent offset
-canvastexture "WBATJ0" 64 64 translucent offset
-canvastexture "WBATK0" 64 64 translucent offset
-canvastexture "WBATL0" 64 64 translucent offset
-canvastexture "WBATM0" 64 64 translucent offset
-canvastexture "WBATF0" 64 64 translucent offset
-canvastexture "WBATN0" 64 64 translucent offset
-canvastexture "WBATO0" 64 64 translucent offset
-canvastexture "WBATG0" 64 64 translucent offset
-canvastexture "WBATH0" 64 64 translucent offset
-canvastexture "WBATI0" 64 64 translucent offset
-canvastexture "WBATP0" 64 64 translucent offset
-canvastexture "WWH2E1" 64 64 translucent offset
-canvastexture "WWH2E2" 64 64 translucent offset
-canvastexture "WWH2E3" 64 64 translucent offset
-canvastexture "WWH2E4" 64 64 translucent offset
-canvastexture "WWH2E5" 64 64 translucent offset
-canvastexture "WWH2E6" 64 64 translucent offset
-canvastexture "WWH2E7" 64 64 translucent offset
-canvastexture "WWH2E8" 64 64 translucent offset
-canvastexture "WWH2A1" 64 64 translucent offset
-canvastexture "WWH2A2" 64 64 translucent offset
-canvastexture "WWH2A3" 64 64 translucent offset
-canvastexture "WWH2A4" 64 64 translucent offset
-canvastexture "WWH2A5" 64 64 translucent offset
-canvastexture "WWH2A6" 64 64 translucent offset
-canvastexture "WWH2A7" 64 64 translucent offset
-canvastexture "WWH2A8" 64 64 translucent offset
-canvastexture "WWH2B1" 64 64 translucent offset
-canvastexture "WWH2B2" 64 64 translucent offset
-canvastexture "WWH2B3" 64 64 translucent offset
-canvastexture "WWH2B4" 64 64 translucent offset
-canvastexture "WWH2B5" 64 64 translucent offset
-canvastexture "WWH2B6" 64 64 translucent offset
-canvastexture "WWH2B7" 64 64 translucent offset
-canvastexture "WWH2B8" 64 64 translucent offset
-canvastexture "WWH2C1" 64 64 translucent offset
-canvastexture "WWH2C2" 64 64 translucent offset
-canvastexture "WWH2C3" 64 64 translucent offset
-canvastexture "WWH2C4" 64 64 translucent offset
-canvastexture "WWH2C5" 64 64 translucent offset
-canvastexture "WWH2C6" 64 64 translucent offset
-canvastexture "WWH2C7" 64 64 translucent offset
-canvastexture "WWH2C8" 64 64 translucent offset
-canvastexture "WWH2D1" 64 64 translucent offset
-canvastexture "WWH2D2" 64 64 translucent offset
-canvastexture "WWH2D3" 64 64 translucent offset
-canvastexture "WWH2D4" 64 64 translucent offset
-canvastexture "WWH2D5" 64 64 translucent offset
-canvastexture "WWH2D6" 64 64 translucent offset
-canvastexture "WWH2D7" 64 64 translucent offset
-canvastexture "WWH2D8" 64 64 translucent offset
-canvastexture "WWH2J0" 64 64 translucent offset
-canvastexture "WWH2K0" 64 64 translucent offset
-canvastexture "WWH2L0" 64 64 translucent offset
-canvastexture "WWH2M0" 64 64 translucent offset
-canvastexture "WWH2F0" 64 64 translucent offset
-canvastexture "WWH2N0" 64 64 translucent offset
-canvastexture "WWH2O0" 64 64 translucent offset
-canvastexture "WWH2G0" 64 64 translucent offset
-canvastexture "WWH2H0" 64 64 translucent offset
-canvastexture "WWH2I0" 64 64 translucent offset
-canvastexture "ROCKB1" 64 64 translucent offset
-canvastexture "ROCKB2" 64 64 translucent offset
-canvastexture "ROCKB3" 64 64 translucent offset
-canvastexture "ROCKB4" 64 64 translucent offset
-canvastexture "ROCKB8" 64 64 translucent offset
-canvastexture "ROCKB7" 64 64 translucent offset
-canvastexture "ROCKB6" 64 64 translucent offset
-canvastexture "ROCKB5" 64 64 translucent offset
-canvastexture "RTRLE0" 64 64 translucent offset
-canvastexture "RTRLF0" 64 64 translucent offset
-canvastexture "RTRLG0" 64 64 translucent offset
-canvastexture "RTRLH0" 64 64 translucent offset
-canvastexture "BAL4A0" 64 64 translucent offset
-canvastexture "BAL4B0" 64 64 translucent offset
-canvastexture "BAL4C0" 64 64 translucent offset
-canvastexture "DIBLA0" 64 64 translucent offset
-canvastexture "DIBLB0" 64 64 translucent offset
-canvastexture "DIBLC0" 64 64 translucent offset
-canvastexture "DIBLD0" 64 64 translucent offset
-canvastexture "LBO2A1" 64 64 translucent offset
-canvastexture "LBO2B1" 64 64 translucent offset
-canvastexture "LBO2C1" 64 64 translucent offset
-canvastexture "LBO2D1" 64 64 translucent offset
-canvastexture "LBO2E1" 64 64 translucent offset
-canvastexture "LBO2F1" 64 64 translucent offset
-canvastexture "LBO2G1" 64 64 translucent offset
-canvastexture "LBO2K0" 64 64 translucent offset
-canvastexture "LBO2H0" 64 64 translucent offset
-canvastexture "LBO2I0" 64 64 translucent offset
-canvastexture "LBO2J0" 64 64 translucent offset
-canvastexture "LBO9A1" 64 64 translucent offset
-canvastexture "LBO9B1" 64 64 translucent offset
-canvastexture "LBO9C1" 64 64 translucent offset
-canvastexture "LBO9D1" 64 64 translucent offset
-canvastexture "LBO9E1" 64 64 translucent offset
-canvastexture "LBO9F1" 64 64 translucent offset
-canvastexture "LBO9G1" 64 64 translucent offset
-canvastexture "LBO9H1" 64 64 translucent offset
-canvastexture "LBO9J0" 64 64 translucent offset
-canvastexture "LBO9K0" 64 64 translucent offset
-canvastexture "LBO9L0" 64 64 translucent offset
-canvastexture "LBO9M0" 64 64 translucent offset
-canvastexture "LBO6A0" 64 64 translucent offset
-canvastexture "LBO6B0" 64 64 translucent offset
-canvastexture "LBO6C0" 64 64 translucent offset
-canvastexture "LBO6D0" 64 64 translucent offset
-canvastexture "LBO6E0" 64 64 translucent offset
-canvastexture "LBO6F0" 64 64 translucent offset
-canvastexture "LBO6G0" 64 64 translucent offset
-canvastexture "LBO6H0" 64 64 translucent offset
-canvastexture "LBO6I0" 64 64 translucent offset
-canvastexture "LBO6J0" 64 64 translucent offset
-canvastexture "LBO6K0" 64 64 translucent offset
-canvastexture "LBO6L0" 64 64 translucent offset
-canvastexture "LBO6M0" 64 64 translucent offset
-canvastexture "LBO7A0" 64 64 translucent offset
-canvastexture "LBO7B0" 64 64 translucent offset
-canvastexture "LBO7C0" 64 64 translucent offset
-canvastexture "LBO7D0" 64 64 translucent offset
-canvastexture "LBO7F0" 64 64 translucent offset
-canvastexture "LBO7G0" 64 64 translucent offset
-canvastexture "LBO7H0" 64 64 translucent offset
-canvastexture "LBO7I0" 64 64 translucent offset
-canvastexture "LBO7K0" 64 64 translucent offset
-canvastexture "LBO7L0" 64 64 translucent offset
-canvastexture "LBO7M0" 64 64 translucent offset
-canvastexture "LBO7N0" 64 64 translucent offset
-canvastexture "LBO7O0" 64 64 translucent offset
-canvastexture "LBO7P0" 64 64 translucent offset
-canvastexture "LBO7Q0" 64 64 translucent offset
-canvastexture "LSPEA0" 64 64 translucent offset
-canvastexture "LSPEB0" 64 64 translucent offset
-canvastexture "LSPEC0" 64 64 translucent offset
-canvastexture "LSPED0" 64 64 translucent offset
-canvastexture "LSPEE0" 64 64 translucent offset
-canvastexture "LSPEF0" 64 64 translucent offset
-canvastexture "LSPEG0" 64 64 translucent offset
-canvastexture "LSPEH0" 64 64 translucent offset
-canvastexture "LB10A0" 64 64 translucent offset
-canvastexture "LB10B0" 64 64 translucent offset
-canvastexture "LB10C0" 64 64 translucent offset
-canvastexture "LB10D0" 64 64 translucent offset
-canvastexture "LB10G0" 64 64 translucent offset
-canvastexture "LB10H0" 64 64 translucent offset
-canvastexture "LB10I0" 64 64 translucent offset
-canvastexture "LB10J0" 64 64 translucent offset
-canvastexture "LB10K0" 64 64 translucent offset
-canvastexture "LB10L0" 64 64 translucent offset
-canvastexture "LB10M0" 64 64 translucent offset
-canvastexture "LB10N0" 64 64 translucent offset
-canvastexture "LB10O0" 64 64 translucent offset
-canvastexture "LB10P0" 64 64 translucent offset
-canvastexture "LB10Q0" 64 64 translucent offset
-canvastexture "LB10R0" 64 64 translucent offset
-canvastexture "DIBLA0" 64 64 translucent offset
-canvastexture "DIBLB0" 64 64 translucent offset
-canvastexture "DIBLC0" 64 64 translucent offset
-canvastexture "DIBLD0" 64 64 translucent offset
-canvastexture "KNILA0" 64 64 translucent offset
-canvastexture "KNILB0" 64 64 translucent offset
-canvastexture "KNILC0" 64 64 translucent offset
-canvastexture "KNILD0" 64 64 translucent offset
-canvastexture "KNILE0" 64 64 translucent offset
-canvastexture "LUGLA0" 64 64 translucent offset
-canvastexture "LUGLB0" 64 64 translucent offset
-canvastexture "LUGLC0" 64 64 translucent offset
-canvastexture "LUGLD0" 64 64 translucent offset
-canvastexture "LUGLE0" 64 64 translucent offset
-canvastexture "MGULA0" 64 64 translucent offset
-canvastexture "MGULB0" 64 64 translucent offset
-canvastexture "MGULC0" 64 64 translucent offset
-canvastexture "MGULD0" 64 64 translucent offset
-canvastexture "MGULE0" 64 64 translucent offset
-canvastexture "CGULA0" 64 64 translucent offset
-canvastexture "CGULB0" 64 64 translucent offset
-canvastexture "CGULC0" 64 64 translucent offset
-canvastexture "CGULD0" 64 64 translucent offset
-canvastexture "CGULE0" 64 64 translucent offset
+canvastexture "DEMO2" 64 64 translucent offset 32 64
+canvastexture "DEATHCA2" 64 64 translucent offset 32 64
+canvastexture "POL2A0" 64 64 translucent offset 32 64
+canvastexture "BAR3A0" 64 64 translucent offset 32 64
+canvastexture "TAB3A0" 64 64 translucent offset 32 64
+canvastexture "LIT2A0" 64 64 translucent offset 32 64
+canvastexture "LIT4A0" 64 64 translucent offset 32 64
+canvastexture "HNG2A0" 64 64 translucent offset 32 64
+canvastexture "HLTHH0" 64 64 translucent offset 32 64
+canvastexture "PILWA0" 64 64 translucent offset 32 64
+canvastexture "PLT3A0" 64 64 translucent offset 32 64
+canvastexture "BONEB0" 64 64 translucent offset 32 64
+canvastexture "POSKA0" 64 64 translucent offset 32 64
+canvastexture "PLT4A0" 64 64 translucent offset 32 64
+canvastexture "VAS2A0" 64 64 translucent offset 32 64
+canvastexture "TAB4A0" 64 64 translucent offset 32 64
+canvastexture "LIT6A0" 64 64 translucent offset 32 64
+canvastexture "CAG6A0" 64 64 translucent offset 32 64
+canvastexture "KNIGB0" 64 64 translucent offset 32 64
+canvastexture "CAG3A0" 64 64 translucent offset 32 64
+canvastexture "CAG4A0" 64 64 translucent offset 32 64
+canvastexture "POB6A0" 64 64 translucent offset 32 64
+canvastexture "KEYSC0" 64 64 translucent offset 32 64
+canvastexture "KEYSD0" 64 64 translucent offset 32 64
+canvastexture "CAG5A0" 64 64 translucent offset 32 64
+canvastexture "DRATA0" 64 64 translucent offset 32 64
+canvastexture "HLTHI0" 64 64 translucent offset 32 64
+canvastexture "HLTHJ0" 64 64 translucent offset 32 64
+canvastexture "WCLIB0" 64 64 translucent offset 32 64
+canvastexture "MGUNU0" 64 64 translucent offset 32 64
+canvastexture "CGUNU0" 64 64 translucent offset 32 64
+canvastexture "TREAE0" 64 64 translucent offset 32 64
+canvastexture "TREAG0" 64 64 translucent offset 32 64
+canvastexture "TREAH0" 64 64 translucent offset 32 64
+canvastexture "TREAF0" 64 64 translucent offset 32 64
+canvastexture "LIFEB0" 64 64 translucent offset 32 64
+canvastexture "HLTHG0" 64 64 translucent offset 32 64
+canvastexture "BAR4A0" 64 64 translucent offset 32 64
+canvastexture "WEL3A0" 64 64 translucent offset 32 64
+canvastexture "WEL4A0" 64 64 translucent offset 32 64
+canvastexture "HLTHF0" 64 64 translucent offset 32 64
+canvastexture "GZMOA0" 64 64 translucent offset 32 64
+canvastexture "LIT7A0" 64 64 translucent offset 32 64
+canvastexture "POB7A0" 64 64 translucent offset 32 64
+canvastexture "LIT8A0" 64 64 translucent offset 32 64
+canvastexture "GGOOA0" 64 64 translucent offset 32 64
+canvastexture "TAB5A0" 64 64 translucent offset 32 64
+canvastexture "BAR5A0" 64 64 translucent offset 32 64
+canvastexture "PIPEA0" 64 64 translucent offset 32 64
+canvastexture "BUBLA0" 64 64 translucent offset 32 64
+canvastexture "DEVSA0" 64 64 translucent offset 32 64
+canvastexture "WAMMB0" 64 64 translucent offset 32 64
+canvastexture "BJWHA0" 64 64 translucent offset 32 64
+canvastexture "SOFDB0" 64 64 translucent offset 32 64
+canvastexture "WGRNE1" 64 64 translucent offset 32 64
+canvastexture "WGRNE2" 64 64 translucent offset 32 64
+canvastexture "WGRNE3" 64 64 translucent offset 32 64
+canvastexture "WGRNE4" 64 64 translucent offset 32 64
+canvastexture "WGRNE5" 64 64 translucent offset 32 64
+canvastexture "WGRNE6" 64 64 translucent offset 32 64
+canvastexture "WGRNE7" 64 64 translucent offset 32 64
+canvastexture "WGRNE8" 64 64 translucent offset 32 64
+canvastexture "WGRNA1" 64 64 translucent offset 32 64
+canvastexture "WGRNA2" 64 64 translucent offset 32 64
+canvastexture "WGRNA3" 64 64 translucent offset 32 64
+canvastexture "WGRNA4" 64 64 translucent offset 32 64
+canvastexture "WGRNA5" 64 64 translucent offset 32 64
+canvastexture "WGRNA6" 64 64 translucent offset 32 64
+canvastexture "WGRNA7" 64 64 translucent offset 32 64
+canvastexture "WGRNA8" 64 64 translucent offset 32 64
+canvastexture "WGRNB1" 64 64 translucent offset 32 64
+canvastexture "WGRNB2" 64 64 translucent offset 32 64
+canvastexture "WGRNB3" 64 64 translucent offset 32 64
+canvastexture "WGRNB4" 64 64 translucent offset 32 64
+canvastexture "WGRNB5" 64 64 translucent offset 32 64
+canvastexture "WGRNB6" 64 64 translucent offset 32 64
+canvastexture "WGRNB7" 64 64 translucent offset 32 64
+canvastexture "WGRNB8" 64 64 translucent offset 32 64
+canvastexture "WGRNC1" 64 64 translucent offset 32 64
+canvastexture "WGRNC2" 64 64 translucent offset 32 64
+canvastexture "WGRNC3" 64 64 translucent offset 32 64
+canvastexture "WGRNC4" 64 64 translucent offset 32 64
+canvastexture "WGRNC5" 64 64 translucent offset 32 64
+canvastexture "WGRNC6" 64 64 translucent offset 32 64
+canvastexture "WGRNC7" 64 64 translucent offset 32 64
+canvastexture "WGRNC8" 64 64 translucent offset 32 64
+canvastexture "WGRND1" 64 64 translucent offset 32 64
+canvastexture "WGRND2" 64 64 translucent offset 32 64
+canvastexture "WGRND3" 64 64 translucent offset 32 64
+canvastexture "WGRND4" 64 64 translucent offset 32 64
+canvastexture "WGRND5" 64 64 translucent offset 32 64
+canvastexture "WGRND6" 64 64 translucent offset 32 64
+canvastexture "WGRND7" 64 64 translucent offset 32 64
+canvastexture "WGRND8" 64 64 translucent offset 32 64
+canvastexture "WGRNJ0" 64 64 translucent offset 32 64
+canvastexture "WGRNK0" 64 64 translucent offset 32 64
+canvastexture "WGRNL0" 64 64 translucent offset 32 64
+canvastexture "WGRNM0" 64 64 translucent offset 32 64
+canvastexture "WGRNF0" 64 64 translucent offset 32 64
+canvastexture "WGRNN0" 64 64 translucent offset 32 64
+canvastexture "WGRNG0" 64 64 translucent offset 32 64
+canvastexture "WGRNH0" 64 64 translucent offset 32 64
+canvastexture "WGRNI0" 64 64 translucent offset 32 64
+canvastexture "WDOBA1" 64 64 translucent offset 32 64
+canvastexture "WDOBA2" 64 64 translucent offset 32 64
+canvastexture "WDOBA3" 64 64 translucent offset 32 64
+canvastexture "WDOBA4" 64 64 translucent offset 32 64
+canvastexture "WDOBA5" 64 64 translucent offset 32 64
+canvastexture "WDOBA6" 64 64 translucent offset 32 64
+canvastexture "WDOBA7" 64 64 translucent offset 32 64
+canvastexture "WDOBA8" 64 64 translucent offset 32 64
+canvastexture "WDOBB1" 64 64 translucent offset 32 64
+canvastexture "WDOBB2" 64 64 translucent offset 32 64
+canvastexture "WDOBB3" 64 64 translucent offset 32 64
+canvastexture "WDOBB4" 64 64 translucent offset 32 64
+canvastexture "WDOBB5" 64 64 translucent offset 32 64
+canvastexture "WDOBB6" 64 64 translucent offset 32 64
+canvastexture "WDOBB7" 64 64 translucent offset 32 64
+canvastexture "WDOBB8" 64 64 translucent offset 32 64
+canvastexture "WDOBC1" 64 64 translucent offset 32 64
+canvastexture "WDOBC2" 64 64 translucent offset 32 64
+canvastexture "WDOBC3" 64 64 translucent offset 32 64
+canvastexture "WDOBC4" 64 64 translucent offset 32 64
+canvastexture "WDOBC5" 64 64 translucent offset 32 64
+canvastexture "WDOBC6" 64 64 translucent offset 32 64
+canvastexture "WDOBC7" 64 64 translucent offset 32 64
+canvastexture "WDOBC8" 64 64 translucent offset 32 64
+canvastexture "WDOBD1" 64 64 translucent offset 32 64
+canvastexture "WDOBD2" 64 64 translucent offset 32 64
+canvastexture "WDOBD3" 64 64 translucent offset 32 64
+canvastexture "WDOBD4" 64 64 translucent offset 32 64
+canvastexture "WDOBD5" 64 64 translucent offset 32 64
+canvastexture "WDOBD6" 64 64 translucent offset 32 64
+canvastexture "WDOBD7" 64 64 translucent offset 32 64
+canvastexture "WDOBD8" 64 64 translucent offset 32 64
+canvastexture "WDOBH0" 64 64 translucent offset 32 64
+canvastexture "WDOBI0" 64 64 translucent offset 32 64
+canvastexture "WDOBJ0" 64 64 translucent offset 32 64
+canvastexture "WDOBK0" 64 64 translucent offset 32 64
+canvastexture "WDOBE0" 64 64 translucent offset 32 64
+canvastexture "WDOBF0" 64 64 translucent offset 32 64
+canvastexture "WDOBG0" 64 64 translucent offset 32 64
+canvastexture "WBLAE1" 64 64 translucent offset 32 64
+canvastexture "WBLAE2" 64 64 translucent offset 32 64
+canvastexture "WBLAE3" 64 64 translucent offset 32 64
+canvastexture "WBLAE4" 64 64 translucent offset 32 64
+canvastexture "WBLAE5" 64 64 translucent offset 32 64
+canvastexture "WBLAE6" 64 64 translucent offset 32 64
+canvastexture "WBLAE7" 64 64 translucent offset 32 64
+canvastexture "WBLAE8" 64 64 translucent offset 32 64
+canvastexture "WBLAA1" 64 64 translucent offset 32 64
+canvastexture "WBLAA2" 64 64 translucent offset 32 64
+canvastexture "WBLAA3" 64 64 translucent offset 32 64
+canvastexture "WBLAA4" 64 64 translucent offset 32 64
+canvastexture "WBLAA5" 64 64 translucent offset 32 64
+canvastexture "WBLAA6" 64 64 translucent offset 32 64
+canvastexture "WBLAA7" 64 64 translucent offset 32 64
+canvastexture "WBLAA8" 64 64 translucent offset 32 64
+canvastexture "WBLAB1" 64 64 translucent offset 32 64
+canvastexture "WBLAB2" 64 64 translucent offset 32 64
+canvastexture "WBLAB3" 64 64 translucent offset 32 64
+canvastexture "WBLAB4" 64 64 translucent offset 32 64
+canvastexture "WBLAB5" 64 64 translucent offset 32 64
+canvastexture "WBLAB6" 64 64 translucent offset 32 64
+canvastexture "WBLAB7" 64 64 translucent offset 32 64
+canvastexture "WBLAB8" 64 64 translucent offset 32 64
+canvastexture "WBLAC1" 64 64 translucent offset 32 64
+canvastexture "WBLAC2" 64 64 translucent offset 32 64
+canvastexture "WBLAC3" 64 64 translucent offset 32 64
+canvastexture "WBLAC4" 64 64 translucent offset 32 64
+canvastexture "WBLAC5" 64 64 translucent offset 32 64
+canvastexture "WBLAC6" 64 64 translucent offset 32 64
+canvastexture "WBLAC7" 64 64 translucent offset 32 64
+canvastexture "WBLAC8" 64 64 translucent offset 32 64
+canvastexture "WBLAD1" 64 64 translucent offset 32 64
+canvastexture "WBLAD2" 64 64 translucent offset 32 64
+canvastexture "WBLAD3" 64 64 translucent offset 32 64
+canvastexture "WBLAD4" 64 64 translucent offset 32 64
+canvastexture "WBLAD5" 64 64 translucent offset 32 64
+canvastexture "WBLAD6" 64 64 translucent offset 32 64
+canvastexture "WBLAD7" 64 64 translucent offset 32 64
+canvastexture "WBLAD8" 64 64 translucent offset 32 64
+canvastexture "WBLAJ0" 64 64 translucent offset 32 64
+canvastexture "WBLAK0" 64 64 translucent offset 32 64
+canvastexture "WBLAL0" 64 64 translucent offset 32 64
+canvastexture "WBLAM0" 64 64 translucent offset 32 64
+canvastexture "WBLAF0" 64 64 translucent offset 32 64
+canvastexture "WBLAN0" 64 64 translucent offset 32 64
+canvastexture "WBLAG0" 64 64 translucent offset 32 64
+canvastexture "WBLAH0" 64 64 translucent offset 32 64
+canvastexture "WBLAI0" 64 64 translucent offset 32 64
+canvastexture "WBATE1" 64 64 translucent offset 32 64
+canvastexture "WBATE2" 64 64 translucent offset 32 64
+canvastexture "WBATE3" 64 64 translucent offset 32 64
+canvastexture "WBATE4" 64 64 translucent offset 32 64
+canvastexture "WBATE5" 64 64 translucent offset 32 64
+canvastexture "WBATE6" 64 64 translucent offset 32 64
+canvastexture "WBATE7" 64 64 translucent offset 32 64
+canvastexture "WBATE8" 64 64 translucent offset 32 64
+canvastexture "WBATA1" 64 64 translucent offset 32 64
+canvastexture "WBATA2" 64 64 translucent offset 32 64
+canvastexture "WBATA3" 64 64 translucent offset 32 64
+canvastexture "WBATA4" 64 64 translucent offset 32 64
+canvastexture "WBATA5" 64 64 translucent offset 32 64
+canvastexture "WBATA6" 64 64 translucent offset 32 64
+canvastexture "WBATA7" 64 64 translucent offset 32 64
+canvastexture "WBATA8" 64 64 translucent offset 32 64
+canvastexture "WBATB1" 64 64 translucent offset 32 64
+canvastexture "WBATB2" 64 64 translucent offset 32 64
+canvastexture "WBATB3" 64 64 translucent offset 32 64
+canvastexture "WBATB4" 64 64 translucent offset 32 64
+canvastexture "WBATB5" 64 64 translucent offset 32 64
+canvastexture "WBATB6" 64 64 translucent offset 32 64
+canvastexture "WBATB7" 64 64 translucent offset 32 64
+canvastexture "WBATB8" 64 64 translucent offset 32 64
+canvastexture "WBATC1" 64 64 translucent offset 32 64
+canvastexture "WBATC2" 64 64 translucent offset 32 64
+canvastexture "WBATC3" 64 64 translucent offset 32 64
+canvastexture "WBATC4" 64 64 translucent offset 32 64
+canvastexture "WBATC5" 64 64 translucent offset 32 64
+canvastexture "WBATC6" 64 64 translucent offset 32 64
+canvastexture "WBATC7" 64 64 translucent offset 32 64
+canvastexture "WBATC8" 64 64 translucent offset 32 64
+canvastexture "WBATD1" 64 64 translucent offset 32 64
+canvastexture "WBATD2" 64 64 translucent offset 32 64
+canvastexture "WBATD3" 64 64 translucent offset 32 64
+canvastexture "WBATD4" 64 64 translucent offset 32 64
+canvastexture "WBATD5" 64 64 translucent offset 32 64
+canvastexture "WBATD6" 64 64 translucent offset 32 64
+canvastexture "WBATD7" 64 64 translucent offset 32 64
+canvastexture "WBATD8" 64 64 translucent offset 32 64
+canvastexture "WBATJ0" 64 64 translucent offset 32 64
+canvastexture "WBATK0" 64 64 translucent offset 32 64
+canvastexture "WBATL0" 64 64 translucent offset 32 64
+canvastexture "WBATM0" 64 64 translucent offset 32 64
+canvastexture "WBATF0" 64 64 translucent offset 32 64
+canvastexture "WBATN0" 64 64 translucent offset 32 64
+canvastexture "WBATO0" 64 64 translucent offset 32 64
+canvastexture "WBATG0" 64 64 translucent offset 32 64
+canvastexture "WBATH0" 64 64 translucent offset 32 64
+canvastexture "WBATI0" 64 64 translucent offset 32 64
+canvastexture "WBATP0" 64 64 translucent offset 32 64
+canvastexture "WWH2E1" 64 64 translucent offset 32 64
+canvastexture "WWH2E2" 64 64 translucent offset 32 64
+canvastexture "WWH2E3" 64 64 translucent offset 32 64
+canvastexture "WWH2E4" 64 64 translucent offset 32 64
+canvastexture "WWH2E5" 64 64 translucent offset 32 64
+canvastexture "WWH2E6" 64 64 translucent offset 32 64
+canvastexture "WWH2E7" 64 64 translucent offset 32 64
+canvastexture "WWH2E8" 64 64 translucent offset 32 64
+canvastexture "WWH2A1" 64 64 translucent offset 32 64
+canvastexture "WWH2A2" 64 64 translucent offset 32 64
+canvastexture "WWH2A3" 64 64 translucent offset 32 64
+canvastexture "WWH2A4" 64 64 translucent offset 32 64
+canvastexture "WWH2A5" 64 64 translucent offset 32 64
+canvastexture "WWH2A6" 64 64 translucent offset 32 64
+canvastexture "WWH2A7" 64 64 translucent offset 32 64
+canvastexture "WWH2A8" 64 64 translucent offset 32 64
+canvastexture "WWH2B1" 64 64 translucent offset 32 64
+canvastexture "WWH2B2" 64 64 translucent offset 32 64
+canvastexture "WWH2B3" 64 64 translucent offset 32 64
+canvastexture "WWH2B4" 64 64 translucent offset 32 64
+canvastexture "WWH2B5" 64 64 translucent offset 32 64
+canvastexture "WWH2B6" 64 64 translucent offset 32 64
+canvastexture "WWH2B7" 64 64 translucent offset 32 64
+canvastexture "WWH2B8" 64 64 translucent offset 32 64
+canvastexture "WWH2C1" 64 64 translucent offset 32 64
+canvastexture "WWH2C2" 64 64 translucent offset 32 64
+canvastexture "WWH2C3" 64 64 translucent offset 32 64
+canvastexture "WWH2C4" 64 64 translucent offset 32 64
+canvastexture "WWH2C5" 64 64 translucent offset 32 64
+canvastexture "WWH2C6" 64 64 translucent offset 32 64
+canvastexture "WWH2C7" 64 64 translucent offset 32 64
+canvastexture "WWH2C8" 64 64 translucent offset 32 64
+canvastexture "WWH2D1" 64 64 translucent offset 32 64
+canvastexture "WWH2D2" 64 64 translucent offset 32 64
+canvastexture "WWH2D3" 64 64 translucent offset 32 64
+canvastexture "WWH2D4" 64 64 translucent offset 32 64
+canvastexture "WWH2D5" 64 64 translucent offset 32 64
+canvastexture "WWH2D6" 64 64 translucent offset 32 64
+canvastexture "WWH2D7" 64 64 translucent offset 32 64
+canvastexture "WWH2D8" 64 64 translucent offset 32 64
+canvastexture "WWH2J0" 64 64 translucent offset 32 64
+canvastexture "WWH2K0" 64 64 translucent offset 32 64
+canvastexture "WWH2L0" 64 64 translucent offset 32 64
+canvastexture "WWH2M0" 64 64 translucent offset 32 64
+canvastexture "WWH2F0" 64 64 translucent offset 32 64
+canvastexture "WWH2N0" 64 64 translucent offset 32 64
+canvastexture "WWH2O0" 64 64 translucent offset 32 64
+canvastexture "WWH2G0" 64 64 translucent offset 32 64
+canvastexture "WWH2H0" 64 64 translucent offset 32 64
+canvastexture "WWH2I0" 64 64 translucent offset 32 64
+canvastexture "ROCKB1" 64 64 translucent offset 32 32
+canvastexture "ROCKB2" 64 64 translucent offset 32 32
+canvastexture "ROCKB3" 64 64 translucent offset 32 32
+canvastexture "ROCKB4" 64 64 translucent offset 32 32
+canvastexture "ROCKB8" 64 64 translucent offset 32 32
+canvastexture "ROCKB7" 64 64 translucent offset 32 32
+canvastexture "ROCKB6" 64 64 translucent offset 32 32
+canvastexture "ROCKB5" 64 64 translucent offset 32 32
+canvastexture "RTRLE0" 64 64 translucent offset 32 32
+canvastexture "RTRLF0" 64 64 translucent offset 32 32
+canvastexture "RTRLG0" 64 64 translucent offset 32 32
+canvastexture "RTRLH0" 64 64 translucent offset 32 32
+canvastexture "BAL4A0" 64 64 translucent offset 32 32
+canvastexture "BAL4B0" 64 64 translucent offset 32 32
+canvastexture "BAL4C0" 64 64 translucent offset 32 32
+canvastexture "DIBLA0" 64 64 translucent offset 20 26
+canvastexture "DIBLB0" 64 64 translucent offset 20 26
+canvastexture "DIBLC0" 64 64 translucent offset 20 26
+canvastexture "DIBLD0" 64 64 translucent offset 20 26
+canvastexture "LBO2A1" 64 64 translucent offset 32 64
+canvastexture "LBO2B1" 64 64 translucent offset 32 64
+canvastexture "LBO2C1" 64 64 translucent offset 32 64
+canvastexture "LBO2D1" 64 64 translucent offset 32 64
+canvastexture "LBO2E1" 64 64 translucent offset 32 64
+canvastexture "LBO2F1" 64 64 translucent offset 32 64
+canvastexture "LBO2G1" 64 64 translucent offset 32 64
+canvastexture "LBO2K0" 64 64 translucent offset 32 64
+canvastexture "LBO2H0" 64 64 translucent offset 32 64
+canvastexture "LBO2I0" 64 64 translucent offset 32 64
+canvastexture "LBO2J0" 64 64 translucent offset 32 64
+canvastexture "LBO9A1" 64 64 translucent offset 32 64
+canvastexture "LBO9B1" 64 64 translucent offset 32 64
+canvastexture "LBO9C1" 64 64 translucent offset 32 64
+canvastexture "LBO9D1" 64 64 translucent offset 32 64
+canvastexture "LBO9E1" 64 64 translucent offset 32 64
+canvastexture "LBO9F1" 64 64 translucent offset 32 64
+canvastexture "LBO9G1" 64 64 translucent offset 32 64
+canvastexture "LBO9H1" 64 64 translucent offset 32 64
+canvastexture "LBO9J0" 64 64 translucent offset 32 64
+canvastexture "LBO9K0" 64 64 translucent offset 32 64
+canvastexture "LBO9L0" 64 64 translucent offset 32 64
+canvastexture "LBO9M0" 64 64 translucent offset 32 64
+canvastexture "LBO6A0" 64 64 translucent offset 32 64
+canvastexture "LBO6B0" 64 64 translucent offset 32 64
+canvastexture "LBO6C0" 64 64 translucent offset 32 64
+canvastexture "LBO6D0" 64 64 translucent offset 32 64
+canvastexture "LBO6E0" 64 64 translucent offset 32 64
+canvastexture "LBO6F0" 64 64 translucent offset 32 64
+canvastexture "LBO6G0" 64 64 translucent offset 32 64
+canvastexture "LBO6H0" 64 64 translucent offset 32 64
+canvastexture "LBO6I0" 64 64 translucent offset 32 64
+canvastexture "LBO6J0" 64 64 translucent offset 32 64
+canvastexture "LBO6K0" 64 64 translucent offset 32 64
+canvastexture "LBO6L0" 64 64 translucent offset 32 64
+canvastexture "LBO6M0" 64 64 translucent offset 32 64
+canvastexture "LBO7A0" 64 64 translucent offset 32 64
+canvastexture "LBO7B0" 64 64 translucent offset 32 64
+canvastexture "LBO7C0" 64 64 translucent offset 32 64
+canvastexture "LBO7D0" 64 64 translucent offset 32 64
+canvastexture "LBO7F0" 64 64 translucent offset 32 64
+canvastexture "LBO7G0" 64 64 translucent offset 32 64
+canvastexture "LBO7H0" 64 64 translucent offset 32 64
+canvastexture "LBO7I0" 64 64 translucent offset 32 64
+canvastexture "LBO7K0" 64 64 translucent offset 32 64
+canvastexture "LBO7L0" 64 64 translucent offset 32 64
+canvastexture "LBO7M0" 64 64 translucent offset 32 64
+canvastexture "LBO7N0" 64 64 translucent offset 32 64
+canvastexture "LBO7O0" 64 64 translucent offset 32 64
+canvastexture "LBO7P0" 64 64 translucent offset 32 64
+canvastexture "LBO7Q0" 64 64 translucent offset 32 64
+canvastexture "LSPEA0" 64 64 translucent offset 32 64
+canvastexture "LSPEB0" 64 64 translucent offset 32 64
+canvastexture "LSPEC0" 64 64 translucent offset 32 64
+canvastexture "LSPED0" 64 64 translucent offset 32 64
+canvastexture "LSPEE0" 64 64 translucent offset 32 64
+canvastexture "LSPEF0" 64 64 translucent offset 32 64
+canvastexture "LSPEG0" 64 64 translucent offset 32 64
+canvastexture "LSPEH0" 64 64 translucent offset 32 64
+canvastexture "LB10A0" 64 64 translucent offset 32 64
+canvastexture "LB10B0" 64 64 translucent offset 32 64
+canvastexture "LB10C0" 64 64 translucent offset 32 64
+canvastexture "LB10D0" 64 64 translucent offset 32 64
+canvastexture "LB10G0" 64 64 translucent offset 32 64
+canvastexture "LB10H0" 64 64 translucent offset 32 64
+canvastexture "LB10I0" 64 64 translucent offset 32 64
+canvastexture "LB10J0" 64 64 translucent offset 32 64
+canvastexture "LB10K0" 64 64 translucent offset 32 64
+canvastexture "LB10L0" 64 64 translucent offset 32 64
+canvastexture "LB10M0" 64 64 translucent offset 32 64
+canvastexture "LB10N0" 64 64 translucent offset 32 64
+canvastexture "LB10O0" 64 64 translucent offset 32 64
+canvastexture "LB10P0" 64 64 translucent offset 32 64
+canvastexture "LB10Q0" 64 64 translucent offset 32 64
+canvastexture "LB10R0" 64 64 translucent offset 32 64
+canvastexture "DIBLA0" 64 64 translucent offset 32 64
+canvastexture "DIBLB0" 64 64 translucent offset 32 64
+canvastexture "DIBLC0" 64 64 translucent offset 32 64
+canvastexture "DIBLD0" 64 64 translucent offset -128 -100
+canvastexture "KNILA0" 64 64 translucent offset -128 -100
+canvastexture "KNILB0" 64 64 translucent offset -128 -100
+canvastexture "KNILC0" 64 64 translucent offset -128 -100
+canvastexture "KNILD0" 64 64 translucent offset -128 -100
+canvastexture "KNILE0" 64 64 translucent offset -128 -100
+canvastexture "LUGLA0" 64 64 translucent offset -128 -100
+canvastexture "LUGLB0" 64 64 translucent offset -128 -100
+canvastexture "LUGLC0" 64 64 translucent offset -128 -100
+canvastexture "LUGLD0" 64 64 translucent offset -128 -100
+canvastexture "LUGLE0" 64 64 translucent offset -128 -100
+canvastexture "MGULA0" 64 64 translucent offset -128 -100
+canvastexture "MGULB0" 64 64 translucent offset -128 -100
+canvastexture "MGULC0" 64 64 translucent offset -128 -100
+canvastexture "MGULD0" 64 64 translucent offset -128 -100
+canvastexture "MGULE0" 64 64 translucent offset -128 -100
+canvastexture "CGULA0" 64 64 translucent offset -128 -100
+canvastexture "CGULB0" 64 64 translucent offset -128 -100
+canvastexture "CGULC0" 64 64 translucent offset -128 -100
+canvastexture "CGULD0" 64 64 translucent offset -128 -100
+canvastexture "CGULE0" 64 64 translucent offset -128 -100
 
 // SD3 Walls
-canvastexture "Patches/Walls/WALL3000.png" 64 64
-canvastexture "Patches/Walls/WALL3001.png" 64 64
-canvastexture "Patches/Walls/WALL3002.png" 64 64
-canvastexture "Patches/Walls/WALL3003.png" 64 64
-canvastexture "Patches/Walls/WALL3004.png" 64 64
-canvastexture "Patches/Walls/WALL3005.png" 64 64
-canvastexture "Patches/Walls/WALL3006.png" 64 64
-canvastexture "Patches/Walls/WALL3007.png" 64 64
-canvastexture "Patches/Walls/WALL3008.png" 64 64
-canvastexture "Patches/Walls/WALL3009.png" 64 64
-canvastexture "Patches/Walls/WALL3010.png" 64 64
-canvastexture "Patches/Walls/WALL3011.png" 64 64
-canvastexture "Patches/Walls/WALL3012.png" 64 64
-canvastexture "Patches/Walls/WALL3013.png" 64 64
-canvastexture "Patches/Walls/WALL3014.png" 64 64
-canvastexture "Patches/Walls/WALL3015.png" 64 64
-canvastexture "Patches/Walls/WALL3016.png" 64 64
-canvastexture "Patches/Walls/WALL3017.png" 64 64
-canvastexture "Patches/Walls/WALL3018.png" 64 64
-canvastexture "Patches/Walls/WALL3019.png" 64 64
-canvastexture "Patches/Walls/WALL3020.png" 64 64
-canvastexture "Patches/Walls/WALL3021.png" 64 64
-canvastexture "Patches/Walls/WALL3022.png" 64 64
-canvastexture "Patches/Walls/WALL3023.png" 64 64
-canvastexture "Patches/Walls/WALL3024.png" 64 64
-canvastexture "Patches/Walls/WALL3025.png" 64 64
-canvastexture "Patches/Walls/WALL3026.png" 64 64
-canvastexture "Patches/Walls/WALL3027.png" 64 64
-canvastexture "Patches/Walls/WALL3028.png" 64 64
-canvastexture "Patches/Walls/WALL3029.png" 64 64
-canvastexture "Patches/Walls/WALL3030.png" 64 64
-canvastexture "Patches/Walls/WALL3031.png" 64 64
-canvastexture "Patches/Walls/WALL3032.png" 64 64
-canvastexture "Patches/Walls/WALL3033.png" 64 64
-canvastexture "Patches/Walls/WALL3034.png" 64 64
-canvastexture "Patches/Walls/WALL3035.png" 64 64
-canvastexture "Patches/Walls/WALL3036.png" 64 64
-canvastexture "Patches/Walls/WALL3037.png" 64 64
-canvastexture "Patches/Walls/WALL3038.png" 64 64
-canvastexture "Patches/Walls/WALL3039.png" 64 64
-canvastexture "Patches/Walls/WALL3040.png" 64 64
-canvastexture "Patches/Walls/WALL3041.png" 64 64
-canvastexture "Patches/Walls/WALL3042.png" 64 64
-canvastexture "Patches/Walls/WALL3043.png" 64 64
-canvastexture "Patches/Walls/WALL3044.png" 64 64
-canvastexture "Patches/Walls/WALL3045.png" 64 64
-canvastexture "Patches/Walls/WALL3046.png" 64 64
-canvastexture "Patches/Walls/WALL3047.png" 64 64
-canvastexture "Patches/Walls/WALL3048.png" 64 64
-canvastexture "Patches/Walls/WALL3049.png" 64 64
-canvastexture "Patches/Walls/WALL3050.png" 64 64
-canvastexture "Patches/Walls/WALL3051.png" 64 64
-canvastexture "Patches/Walls/WALL3052.png" 64 64
-canvastexture "Patches/Walls/WALL3053.png" 64 64
-canvastexture "Patches/Walls/WALL3054.png" 64 64
-canvastexture "Patches/Walls/WALL3055.png" 64 64
-canvastexture "Patches/Walls/WALL3056.png" 64 64
-canvastexture "Patches/Walls/WALL3057.png" 64 64
-canvastexture "Patches/Walls/WALL3058.png" 64 64
-canvastexture "Patches/Walls/WALL3059.png" 64 64
-canvastexture "Patches/Walls/WALL3060.png" 64 64
-canvastexture "Patches/Walls/WALL3061.png" 64 64
-canvastexture "Patches/Walls/WALL3062.png" 64 64
-canvastexture "Patches/Walls/WALL3063.png" 64 64
-canvastexture "Patches/Walls/WALL3064.png" 64 64
-canvastexture "Patches/Walls/WALL3065.png" 64 64
-canvastexture "Patches/Walls/WALL3066.png" 64 64
-canvastexture "Patches/Walls/WALL3067.png" 64 64
-canvastexture "Patches/Walls/WALL3068.png" 64 64
-canvastexture "Patches/Walls/WALL3069.png" 64 64
-canvastexture "Patches/Walls/WALL3070.png" 64 64
-canvastexture "Patches/Walls/WALL3071.png" 64 64
-canvastexture "Patches/Walls/WALL3072.png" 64 64
-canvastexture "Patches/Walls/WALL3073.png" 64 64
-canvastexture "Patches/Walls/WALL3074.png" 64 64
-canvastexture "Patches/Walls/WALL3075.png" 64 64
-canvastexture "Patches/Walls/WALL3076.png" 64 64
-canvastexture "Patches/Walls/WALL3077.png" 64 64
-canvastexture "Patches/Walls/WALL3078.png" 64 64
-canvastexture "Patches/Walls/WALL3079.png" 64 64
-canvastexture "Patches/Walls/WALL3080.png" 64 64
-canvastexture "Patches/Walls/WALL3081.png" 64 64
-canvastexture "Patches/Walls/WALL3082.png" 64 64
-canvastexture "Patches/Walls/WALL3083.png" 64 64
-canvastexture "Patches/Walls/WALL3084.png" 64 64
-canvastexture "Patches/Walls/WALL3085.png" 64 64
-canvastexture "Patches/Walls/WALL3086.png" 64 64
-canvastexture "Patches/Walls/WALL3087.png" 64 64
-canvastexture "Patches/Walls/WALL3088.png" 64 64
-canvastexture "Patches/Walls/WALL3089.png" 64 64
-canvastexture "Patches/Walls/WALL3090.png" 64 64
-canvastexture "Patches/Walls/WALL3091.png" 64 64
-canvastexture "Patches/Walls/WALL3092.png" 64 64
-canvastexture "Patches/Walls/WALL3093.png" 64 64
-canvastexture "Patches/Walls/WALL3094.png" 64 64
-canvastexture "Patches/Walls/WALL3095.png" 64 64
-canvastexture "Patches/Walls/WALL3096.png" 64 64
-canvastexture "Patches/Walls/WALL3097.png" 64 64
-canvastexture "Patches/Walls/WALL3098.png" 64 64
-canvastexture "Patches/Walls/WALL3099.png" 64 64
-canvastexture "Patches/Walls/WALL3100.png" 64 64
-canvastexture "Patches/Walls/WALL3101.png" 64 64
-canvastexture "Patches/Walls/WALL3102.png" 64 64
-canvastexture "Patches/Walls/WALL3103.png" 64 64
-canvastexture "Patches/Walls/WALL3104.png" 64 64
-canvastexture "Patches/Walls/WALL3105.png" 64 64
-canvastexture "Patches/Walls/WALL3106.png" 64 64
-canvastexture "Patches/Walls/WALL3107.png" 64 64
-canvastexture "Patches/Walls/WALL3108.png" 64 64
-canvastexture "Patches/Walls/WALL3109.png" 64 64
-canvastexture "Patches/Walls/WALL3110.png" 64 64
-canvastexture "Patches/Walls/WALL3111.png" 64 64
-canvastexture "Patches/Walls/WALL3112.png" 64 64
-canvastexture "Patches/Walls/WALL3113.png" 64 64
-canvastexture "Patches/Walls/WALL3114.png" 64 64
-canvastexture "Patches/Walls/WALL3115.png" 64 64
-canvastexture "Patches/Walls/WALL3116.png" 64 64
-canvastexture "Patches/Walls/WALL3117.png" 64 64
-canvastexture "Patches/Walls/WALL3118.png" 64 64
-canvastexture "Patches/Walls/WALL3119.png" 64 64
-canvastexture "Patches/Walls/WALL3120.png" 64 64
-canvastexture "Patches/Walls/WALL3121.png" 64 64
-canvastexture "Patches/Walls/WALL3122.png" 64 64
-canvastexture "Patches/Walls/WALL3123.png" 64 64
-canvastexture "Patches/Walls/WALL3124.png" 64 64
-canvastexture "Patches/Walls/WALL3125.png" 64 64
-canvastexture "Patches/Walls/WALL3126.png" 64 64
-canvastexture "Patches/Walls/WALL3127.png" 64 64
-canvastexture "Patches/Walls/WALL3128.png" 64 64
-canvastexture "Patches/Walls/WALL3129.png" 64 64
-canvastexture "Patches/Walls/WALL3130.png" 64 64
-canvastexture "Patches/Walls/WALL3131.png" 64 64
-canvastexture "Patches/Walls/WALL3132.png" 64 64
-canvastexture "Patches/Walls/WALL3133.png" 64 64
-canvastexture "Patches/Walls/WALL3134.png" 64 64
-canvastexture "Patches/Walls/WALL3135.png" 64 64
-canvastexture "Patches/Walls/WALL3136.png" 64 64
-canvastexture "Patches/Walls/WALL3137.png" 64 64
-canvastexture "Patches/Walls/WALL3138.png" 64 64
-canvastexture "Patches/Walls/WALL3139.png" 64 64
-canvastexture "Patches/Walls/WALL3140.png" 64 64
-canvastexture "Patches/Walls/WALL3141.png" 64 64
-canvastexture "Patches/Walls/WALL3142.png" 64 64
-canvastexture "Patches/Walls/WALL3143.png" 64 64
-canvastexture "Patches/Walls/WALL3144.png" 64 64
-canvastexture "Patches/Walls/WALL3145.png" 64 64
-canvastexture "Patches/Walls/WALL3146.png" 64 64
-canvastexture "Patches/Walls/WALL3147.png" 64 64
-canvastexture "Patches/Walls/WALL3148.png" 64 64
-canvastexture "Patches/Walls/WALL3149.png" 64 64
-canvastexture "Patches/Walls/WALL3150.png" 64 64
-canvastexture "Patches/Walls/WALL3151.png" 64 64
-canvastexture "Patches/Walls/WALL3152.png" 64 64
-canvastexture "Patches/Walls/WALL3153.png" 64 64
-canvastexture "Patches/Walls/WALL3154.png" 64 64
-canvastexture "Patches/Walls/WALL3155.png" 64 64
-canvastexture "Patches/Walls/WALL3156.png" 64 64
-canvastexture "Patches/Walls/WALL3157.png" 64 64
-canvastexture "Patches/Walls/WALL3158.png" 64 64
-canvastexture "Patches/Walls/WALL3159.png" 64 64
-canvastexture "Patches/Walls/WALL3160.png" 64 64
-canvastexture "Patches/Walls/WALL3161.png" 64 64
-canvastexture "Patches/Walls/WALL3162.png" 64 64
-canvastexture "Patches/Walls/WALL3163.png" 64 64
-canvastexture "Patches/Walls/WALL3164.png" 64 64
-canvastexture "Patches/Walls/WALL3165.png" 64 64
-canvastexture "Patches/Walls/WALL3166.png" 64 64
-canvastexture "Patches/Walls/WALL3167.png" 64 64
-canvastexture "Patches/Walls/WALL3168.png" 64 64
-canvastexture "Patches/Walls/WALL3169.png" 64 64
-canvastexture "Patches/Walls/WALL3170.png" 64 64
-canvastexture "Patches/Walls/WALL3171.png" 64 64
-canvastexture "Patches/Walls/WALL3172.png" 64 64
-canvastexture "Patches/Walls/WALL3173.png" 64 64
-canvastexture "Patches/Walls/WALL3174.png" 64 64
-canvastexture "Patches/Walls/WALL3175.png" 64 64
-canvastexture "Patches/Walls/WALL3176.png" 64 64
-canvastexture "Patches/Walls/WALL3177.png" 64 64
-canvastexture "Patches/Walls/WALL3178.png" 64 64
-canvastexture "Patches/Walls/WALL3179.png" 64 64
-canvastexture "Patches/Walls/WALL3180.png" 64 64
-canvastexture "Patches/Walls/WALL3181.png" 64 64
-canvastexture "Patches/Walls/WALL3182.png" 64 64
-canvastexture "Patches/Walls/WALL3183.png" 64 64
-canvastexture "Patches/Walls/WALL3184.png" 64 64
-canvastexture "Patches/Walls/WALL3185.png" 64 64
-canvastexture "Patches/Walls/WALL3186.png" 64 64
-canvastexture "Patches/Walls/WALL3187.png" 64 64
-canvastexture "Patches/Walls/WALL3188.png" 64 64
-canvastexture "Patches/Walls/WALL3189.png" 64 64
-canvastexture "Patches/Walls/WALL3190.png" 64 64
-canvastexture "Patches/Walls/WALL3191.png" 64 64
-canvastexture "Patches/Walls/WALL3192.png" 64 64
-canvastexture "Patches/Walls/WALL3193.png" 64 64
-canvastexture "Patches/Walls/WALL3194.png" 64 64
-canvastexture "Patches/Walls/WALL3195.png" 64 64
-canvastexture "Patches/Walls/WALL3196.png" 64 64
-canvastexture "Patches/Walls/WALL3197.png" 64 64
-canvastexture "Patches/Walls/WALL3198.png" 64 64
-canvastexture "Patches/Walls/WALL3199.png" 64 64
-canvastexture "Patches/Walls/WALL3200.png" 64 64
-canvastexture "Patches/Walls/WALL3201.png" 64 64
-canvastexture "Patches/Walls/WALL3202.png" 64 64
-canvastexture "Patches/Walls/WALL3203.png" 64 64
-canvastexture "Patches/Walls/WALL3204.png" 64 64
-canvastexture "Patches/Walls/WALL3205.png" 64 64
-canvastexture "Patches/Walls/WALL3206.png" 64 64
-canvastexture "Patches/Walls/WALL3207.png" 64 64
-canvastexture "Patches/Walls/WALL3208.png" 64 64
-canvastexture "Patches/Walls/WALL3209.png" 64 64
-canvastexture "Patches/Walls/WALL3210.png" 64 64
-canvastexture "Patches/Walls/WALL3211.png" 64 64
-canvastexture "Patches/Walls/WALL3212.png" 64 64
-canvastexture "Patches/Walls/WALL3213.png" 64 64
-canvastexture "Patches/Walls/WALL3214.png" 64 64
-canvastexture "Patches/Walls/WALL3215.png" 64 64
-canvastexture "Patches/Walls/WALL3216.png" 64 64
-canvastexture "Patches/Walls/WALL3217.png" 64 64
-canvastexture "Patches/Walls/WALL3218.png" 64 64
-canvastexture "Patches/Walls/WALL3219.png" 64 64
-canvastexture "Patches/Walls/WALL3220.png" 64 64
-canvastexture "Patches/Walls/WALL3221.png" 64 64
-canvastexture "Patches/Walls/WALL3222.png" 64 64
-canvastexture "Patches/Walls/WALL3223.png" 64 64
-canvastexture "Patches/Walls/WALL3224.png" 64 64
-canvastexture "Patches/Walls/WALL3225.png" 64 64
-canvastexture "Patches/Walls/WALL3226.png" 64 64
-canvastexture "Patches/Walls/WALL3227.png" 64 64
-canvastexture "Patches/Walls/WALL3228.png" 64 64
-canvastexture "Patches/Walls/WALL3229.png" 64 64
-canvastexture "Patches/Walls/WALL3230.png" 64 64
-canvastexture "Patches/Walls/WALL3231.png" 64 64
-canvastexture "Patches/Walls/WALL3232.png" 64 64
-canvastexture "Patches/Walls/WALL3233.png" 64 64
-canvastexture "Patches/Walls/WALL3234.png" 64 64
-canvastexture "Patches/Walls/WALL3235.png" 64 64
-canvastexture "Patches/Walls/WALL3236.png" 64 64
-canvastexture "Patches/Walls/WALL3237.png" 64 64
-canvastexture "Patches/Walls/WALL3238.png" 64 64
-canvastexture "Patches/Walls/WALL3239.png" 64 64
-canvastexture "Patches/Walls/WALL3240.png" 64 64
-canvastexture "Patches/Walls/WALL3241.png" 64 64
-canvastexture "Patches/Walls/WALL3242.png" 64 64
-canvastexture "Patches/Walls/WALL3243.png" 64 64
-canvastexture "Patches/Walls/WALL3244.png" 64 64
-canvastexture "Patches/Walls/WALL3245.png" 64 64
-canvastexture "Patches/Walls/WALL3246.png" 64 64
-canvastexture "Patches/Walls/WALL3247.png" 64 64
-canvastexture "Patches/Walls/WALL3248.png" 64 64
-canvastexture "Patches/Walls/WALL3249.png" 64 64
-canvastexture "Patches/Walls/WALL3250.png" 64 64
-canvastexture "Patches/Walls/WALL3251.png" 64 64
-canvastexture "Patches/Walls/WALL3252.png" 64 64
-canvastexture "Patches/Walls/WALL3253.png" 64 64
-canvastexture "Patches/Walls/WALL3254.png" 64 64
-canvastexture "Patches/Walls/WALL3255.png" 64 64
+canvastexture "TUC/Wall0000" 64 64
+canvastexture "TUC/Wall0001" 64 64
+canvastexture "TUC/Wall0002" 64 64
+canvastexture "TUC/Wall0003" 64 64
+canvastexture "TUC/Wall0004" 64 64
+canvastexture "TUC/Wall0005" 64 64
+canvastexture "TUC/Wall0006" 64 64
+canvastexture "TUC/Wall0007" 64 64
+canvastexture "TUC/Wall0008" 64 64
+canvastexture "TUC/Wall0009" 64 64
+canvastexture "TUC/Wall0010" 64 64
+canvastexture "TUC/Wall0011" 64 64
+canvastexture "TUC/Wall0012" 64 64
+canvastexture "TUC/Wall0013" 64 64
+canvastexture "TUC/Wall0014" 64 64
+canvastexture "TUC/Wall0015" 64 64
+canvastexture "TUC/Wall0016" 64 64
+canvastexture "TUC/Wall0017" 64 64
+canvastexture "TUC/Wall0018" 64 64
+canvastexture "TUC/Wall0019" 64 64
+canvastexture "TUC/Wall0020" 64 64
+canvastexture "TUC/Wall0021" 64 64
+canvastexture "TUC/Wall0022" 64 64
+canvastexture "TUC/Wall0023" 64 64
+canvastexture "TUC/Wall0024" 64 64
+canvastexture "TUC/Wall0025" 64 64
+canvastexture "TUC/Wall0026" 64 64
+canvastexture "TUC/Wall0027" 64 64
+canvastexture "TUC/Wall0028" 64 64
+canvastexture "TUC/Wall0029" 64 64
+canvastexture "TUC/Wall0030" 64 64
+canvastexture "TUC/Wall0031" 64 64
+canvastexture "TUC/Wall0032" 64 64
+canvastexture "TUC/Wall0033" 64 64
+canvastexture "TUC/Wall0034" 64 64
+canvastexture "TUC/Wall0035" 64 64
+canvastexture "TUC/Wall0036" 64 64
+canvastexture "TUC/Wall0037" 64 64
+canvastexture "TUC/Wall0038" 64 64
+canvastexture "TUC/Wall0039" 64 64
+canvastexture "TUC/Wall0040" 64 64
+canvastexture "TUC/Wall0041" 64 64
+canvastexture "TUC/Wall0042" 64 64
+canvastexture "TUC/Wall0043" 64 64
+canvastexture "TUC/Wall0044" 64 64
+canvastexture "TUC/Wall0045" 64 64
+canvastexture "TUC/Wall0046" 64 64
+canvastexture "TUC/Wall0047" 64 64
+canvastexture "TUC/Wall0048" 64 64
+canvastexture "TUC/Wall0049" 64 64
+canvastexture "TUC/Wall0050" 64 64
+canvastexture "TUC/Wall0051" 64 64
+canvastexture "TUC/Wall0052" 64 64
+canvastexture "TUC/Wall0053" 64 64
+canvastexture "TUC/Wall0054" 64 64
+canvastexture "TUC/Wall0055" 64 64
+canvastexture "TUC/Wall0056" 64 64
+canvastexture "TUC/Wall0057" 64 64
+canvastexture "TUC/Wall0058" 64 64
+canvastexture "TUC/Wall0059" 64 64
+canvastexture "TUC/Wall0060" 64 64
+canvastexture "TUC/Wall0061" 64 64
+canvastexture "TUC/Wall0062" 64 64
+canvastexture "TUC/Wall0063" 64 64
+canvastexture "TUC/Wall0064" 64 64
+canvastexture "TUC/Wall0065" 64 64
+canvastexture "TUC/Wall0066" 64 64
+canvastexture "TUC/Wall0067" 64 64
+canvastexture "TUC/Wall0068" 64 64
+canvastexture "TUC/Wall0069" 64 64
+canvastexture "TUC/Wall0070" 64 64
+canvastexture "TUC/Wall0071" 64 64
+canvastexture "TUC/Wall0072" 64 64
+canvastexture "TUC/Wall0073" 64 64
+canvastexture "TUC/Wall0074" 64 64
+canvastexture "TUC/Wall0075" 64 64
+canvastexture "TUC/Wall0076" 64 64
+canvastexture "TUC/Wall0077" 64 64
+canvastexture "TUC/Wall0078" 64 64
+canvastexture "TUC/Wall0079" 64 64
+canvastexture "TUC/Wall0080" 64 64
+canvastexture "TUC/Wall0081" 64 64
+canvastexture "TUC/Wall0082" 64 64
+canvastexture "TUC/Wall0083" 64 64
+canvastexture "TUC/Wall0084" 64 64
+canvastexture "TUC/Wall0085" 64 64
+canvastexture "TUC/Wall0086" 64 64
+canvastexture "TUC/Wall0087" 64 64
+canvastexture "TUC/Wall0088" 64 64
+canvastexture "TUC/Wall0089" 64 64
+canvastexture "TUC/Wall0090" 64 64
+canvastexture "TUC/Wall0091" 64 64
+canvastexture "TUC/Wall0092" 64 64
+canvastexture "TUC/Wall0093" 64 64
+canvastexture "TUC/Wall0094" 64 64
+canvastexture "TUC/Wall0095" 64 64
+canvastexture "TUC/Wall0096" 64 64
+canvastexture "TUC/Wall0097" 64 64
+canvastexture "TUC/Wall0098" 64 64
+canvastexture "TUC/Wall0099" 64 64
+canvastexture "TUC/Wall0100" 64 64
+canvastexture "TUC/Wall0101" 64 64
+canvastexture "TUC/Wall0102" 64 64
+canvastexture "TUC/Wall0103" 64 64
+canvastexture "TUC/Wall0104" 64 64
+canvastexture "TUC/Wall0105" 64 64
+canvastexture "TUC/Wall0106" 64 64
+canvastexture "TUC/Wall0107" 64 64
+canvastexture "TUC/Wall0108" 64 64
+canvastexture "TUC/Wall0109" 64 64
+canvastexture "TUC/Wall0110" 64 64
+canvastexture "TUC/Wall0111" 64 64
+canvastexture "TUC/Wall0112" 64 64
+canvastexture "TUC/Wall0113" 64 64
+canvastexture "TUC/Wall0114" 64 64
+canvastexture "TUC/Wall0115" 64 64
+canvastexture "TUC/Wall0116" 64 64
+canvastexture "TUC/Wall0117" 64 64
+canvastexture "TUC/Wall0118" 64 64
+canvastexture "TUC/Wall0119" 64 64
+canvastexture "TUC/Wall0120" 64 64
+canvastexture "TUC/Wall0121" 64 64
+canvastexture "TUC/Wall0122" 64 64
+canvastexture "TUC/Wall0123" 64 64
+canvastexture "TUC/Wall0124" 64 64
+canvastexture "TUC/Wall0125" 64 64
+canvastexture "TUC/Wall0126" 64 64
+canvastexture "TUC/Wall0127" 64 64
+canvastexture "TUC/Wall0128" 64 64
+canvastexture "TUC/Wall0129" 64 64
+canvastexture "TUC/Wall0130" 64 64
+canvastexture "TUC/Wall0131" 64 64
+canvastexture "TUC/Wall0132" 64 64
+canvastexture "TUC/Wall0133" 64 64
+canvastexture "TUC/Wall0134" 64 64
+canvastexture "TUC/Wall0135" 64 64
+canvastexture "TUC/Wall0136" 64 64
+canvastexture "TUC/Wall0137" 64 64
+canvastexture "TUC/Wall0138" 64 64
+canvastexture "TUC/Wall0139" 64 64
+canvastexture "TUC/Wall0140" 64 64
+canvastexture "TUC/Wall0141" 64 64
+canvastexture "TUC/Wall0142" 64 64
+canvastexture "TUC/Wall0143" 64 64
+canvastexture "TUC/Wall0144" 64 64
+canvastexture "TUC/Wall0145" 64 64
+canvastexture "TUC/Wall0146" 64 64
+canvastexture "TUC/Wall0147" 64 64
+canvastexture "TUC/Wall0148" 64 64
+canvastexture "TUC/Wall0149" 64 64
+canvastexture "TUC/Wall0150" 64 64
+canvastexture "TUC/Wall0151" 64 64
+canvastexture "TUC/Wall0152" 64 64
+canvastexture "TUC/Wall0153" 64 64
+canvastexture "TUC/Wall0154" 64 64
+canvastexture "TUC/Wall0155" 64 64
+canvastexture "TUC/Wall0156" 64 64
+canvastexture "TUC/Wall0157" 64 64
+canvastexture "TUC/Wall0158" 64 64
+canvastexture "TUC/Wall0159" 64 64
+canvastexture "TUC/Wall0160" 64 64
+canvastexture "TUC/Wall0161" 64 64
+canvastexture "TUC/Wall0162" 64 64
+canvastexture "TUC/Wall0163" 64 64
+canvastexture "TUC/Wall0164" 64 64
+canvastexture "TUC/Wall0165" 64 64
+canvastexture "TUC/Wall0166" 64 64
+canvastexture "TUC/Wall0167" 64 64
+canvastexture "TUC/Wall0168" 64 64
+canvastexture "TUC/Wall0169" 64 64
+canvastexture "TUC/Wall0170" 64 64
+canvastexture "TUC/Wall0171" 64 64
+canvastexture "TUC/Wall0172" 64 64
+canvastexture "TUC/Wall0173" 64 64
+canvastexture "TUC/Wall0174" 64 64
+canvastexture "TUC/Wall0175" 64 64
+canvastexture "TUC/Wall0176" 64 64
+canvastexture "TUC/Wall0177" 64 64
+canvastexture "TUC/Wall0178" 64 64
+canvastexture "TUC/Wall0179" 64 64
+canvastexture "TUC/Wall0180" 64 64
+canvastexture "TUC/Wall0181" 64 64
+canvastexture "TUC/Wall0182" 64 64
+canvastexture "TUC/Wall0183" 64 64
+canvastexture "TUC/Wall0184" 64 64
+canvastexture "TUC/Wall0185" 64 64
+canvastexture "TUC/Wall0186" 64 64
+canvastexture "TUC/Wall0187" 64 64
+canvastexture "TUC/Wall0188" 64 64
+canvastexture "TUC/Wall0189" 64 64
+canvastexture "TUC/Wall0190" 64 64
+canvastexture "TUC/Wall0191" 64 64
+canvastexture "TUC/Wall0192" 64 64
+canvastexture "TUC/Wall0193" 64 64
+canvastexture "TUC/Wall0194" 64 64
+canvastexture "TUC/Wall0195" 64 64
+canvastexture "TUC/Wall0196" 64 64
+canvastexture "TUC/Wall0197" 64 64
+canvastexture "TUC/Wall0198" 64 64
+canvastexture "TUC/Wall0199" 64 64
+canvastexture "TUC/Wall0200" 64 64
+canvastexture "TUC/Wall0201" 64 64
+canvastexture "TUC/Wall0202" 64 64
+canvastexture "TUC/Wall0203" 64 64
+canvastexture "TUC/Wall0204" 64 64
+canvastexture "TUC/Wall0205" 64 64
+canvastexture "TUC/Wall0206" 64 64
+canvastexture "TUC/Wall0207" 64 64
+canvastexture "TUC/Wall0208" 64 64
+canvastexture "TUC/Wall0209" 64 64
+canvastexture "TUC/Wall0210" 64 64
+canvastexture "TUC/Wall0211" 64 64
+canvastexture "TUC/Wall0212" 64 64
+canvastexture "TUC/Wall0213" 64 64
+canvastexture "TUC/Wall0214" 64 64
+canvastexture "TUC/Wall0215" 64 64
+canvastexture "TUC/Wall0216" 64 64
+canvastexture "TUC/Wall0217" 64 64
+canvastexture "TUC/Wall0218" 64 64
+canvastexture "TUC/Wall0219" 64 64
+canvastexture "TUC/Wall0220" 64 64
+canvastexture "TUC/Wall0221" 64 64
+canvastexture "TUC/Wall0222" 64 64
+canvastexture "TUC/Wall0223" 64 64
+canvastexture "TUC/Wall0224" 64 64
+canvastexture "TUC/Wall0225" 64 64
+canvastexture "TUC/Wall0226" 64 64
+canvastexture "TUC/Wall0227" 64 64
+canvastexture "TUC/Wall0228" 64 64
+canvastexture "TUC/Wall0229" 64 64
+canvastexture "TUC/Wall0230" 64 64
+canvastexture "TUC/Wall0231" 64 64
+canvastexture "TUC/Wall0232" 64 64
+canvastexture "TUC/Wall0233" 64 64
+canvastexture "TUC/Wall0234" 64 64
+canvastexture "TUC/Wall0235" 64 64
+canvastexture "TUC/Wall0236" 64 64
+canvastexture "TUC/Wall0237" 64 64
+canvastexture "TUC/Wall0238" 64 64
+canvastexture "TUC/Wall0239" 64 64
+canvastexture "TUC/Wall0240" 64 64
+canvastexture "TUC/Wall0241" 64 64
+canvastexture "TUC/Wall0242" 64 64
+canvastexture "TUC/Wall0243" 64 64
+canvastexture "TUC/Wall0244" 64 64
+canvastexture "TUC/Wall0245" 64 64
+canvastexture "TUC/Wall0246" 64 64
+canvastexture "TUC/Wall0247" 64 64
+canvastexture "TUC/Wall0248" 64 64
+canvastexture "TUC/Wall0249" 64 64
+canvastexture "TUC/Wall0250" 64 64
+canvastexture "TUC/Wall0251" 64 64
+canvastexture "TUC/Wall0252" 64 64
+canvastexture "TUC/Wall0253" 64 64
+canvastexture "TUC/Wall0254" 64 64
+canvastexture "TUC/Wall0255" 64 64
 
 // SD3 Sprites
-canvastexture "LSP2A0" 64 64 translucent offset
-canvastexture "LSP2B0" 64 64 translucent offset
-canvastexture "LSP2C0" 64 64 translucent offset
-canvastexture "LSP2D0" 64 64 translucent offset
-canvastexture "LSP2E0" 64 64 translucent offset
-canvastexture "LSP2F0" 64 64 translucent offset
-canvastexture "LSP2G0" 64 64 translucent offset
-canvastexture "LSP2H0" 64 64 translucent offset
+canvastexture "LSP2A0" 64 64 translucent offset 32 64
+canvastexture "LSP2B0" 64 64 translucent offset 32 64
+canvastexture "LSP2C0" 64 64 translucent offset 32 64
+canvastexture "LSP2D0" 64 64 translucent offset 32 64
+canvastexture "LSP2E0" 64 64 translucent offset 32 64
+canvastexture "LSP2F0" 64 64 translucent offset 32 64
+canvastexture "LSP2G0" 64 64 translucent offset 32 64
+canvastexture "LSP2H0" 64 64 translucent offset 32 64
 
 // Legacy textures
 canvastexture "WLF0001A" 64 64
@@ -2111,33 +2114,285 @@ canvastexture "WLF0031A" 64 64
 canvastexture "WLF0031B" 64 64
 
 canvastexture "WLF1032A" 64 64
-canvastexture "WLF1032B" 64 65
-canvastexture "WLF1033A" 64 66
-canvastexture "WLF1033B" 64 67
-canvastexture "WLF1034A" 64 68
-canvastexture "WLF1034B" 64 69
-canvastexture "WLF1035A" 64 70
-canvastexture "WLF1035B" 64 71
-canvastexture "WLF1036A" 64 72
-canvastexture "WLF1036B" 64 73
-canvastexture "WLF1037A" 64 74
-canvastexture "WLF1037B" 64 75
-canvastexture "WLF1038A" 64 76
-canvastexture "WLF1038B" 64 77
-canvastexture "WLF1039A" 64 78
-canvastexture "WLF1039B" 64 79
-canvastexture "WLF103AA" 64 80
-canvastexture "WLF103AB" 64 81
-canvastexture "WLF103BA" 64 82
-canvastexture "WLF103BB" 64 83
-canvastexture "WLF103CA" 64 84
-canvastexture "WLF103CB" 64 85
-canvastexture "WLF103DA" 64 86
-canvastexture "WLF103DB" 64 87
-canvastexture "WLF103EA" 64 88
-canvastexture "WLF103EB" 64 89
-canvastexture "WLF103FA" 64 90
-canvastexture "WLF103FB" 64 91
+canvastexture "WLF1032B" 64 64
+canvastexture "WLF1033A" 64 64
+canvastexture "WLF1033B" 64 64
+canvastexture "WLF1034A" 64 64
+canvastexture "WLF1034B" 64 64
+canvastexture "WLF1035A" 64 64
+canvastexture "WLF1035B" 64 64
+canvastexture "WLF1036A" 64 64
+canvastexture "WLF1036B" 64 64
+canvastexture "WLF1037A" 64 64
+canvastexture "WLF1037B" 64 64
+canvastexture "WLF1038A" 64 64
+canvastexture "WLF1038B" 64 64
+canvastexture "WLF1039A" 64 64
+canvastexture "WLF1039B" 64 64
+canvastexture "WLF103AA" 64 64
+canvastexture "WLF103AB" 64 64
+canvastexture "WLF103BA" 64 64
+canvastexture "WLF103BB" 64 64
+canvastexture "WLF103CA" 64 64
+canvastexture "WLF103CB" 64 64
+canvastexture "WLF103DA" 64 64
+canvastexture "WLF103DB" 64 64
+canvastexture "WLF103EA" 64 64
+canvastexture "WLF103EB" 64 64
+canvastexture "WLF103FA" 64 64
+canvastexture "WLF103FB" 64 64
+canvastexture "WLF2001A" 64 64
+canvastexture "WLF2001B" 64 64
+canvastexture "WLF2002A" 64 64
+canvastexture "WLF2002B" 64 64
+canvastexture "WLF2003A" 64 64
+canvastexture "WLF2003B" 64 64
+canvastexture "WLF2004A" 64 64
+canvastexture "WLF2004B" 64 64
+canvastexture "WLF2005A" 64 64
+canvastexture "WLF2005B" 64 64
+canvastexture "WLF2006A" 64 64
+canvastexture "WLF2006B" 64 64
+canvastexture "WLF2007A" 64 64
+canvastexture "WLF2007B" 64 64
+canvastexture "WLF2008A" 64 64
+canvastexture "WLF2008B" 64 64
+canvastexture "WLF2009A" 64 64
+canvastexture "WLF2009B" 64 64
+canvastexture "WLF200AA" 64 64
+canvastexture "WLF200AB" 64 64
+canvastexture "WLF200BA" 64 64
+canvastexture "WLF200BB" 64 64
+canvastexture "WLF200CA" 64 64
+canvastexture "WLF200CB" 64 64
+canvastexture "WLF200DA" 64 64
+canvastexture "WLF200DB" 64 64
+canvastexture "WLF200EA" 64 64
+canvastexture "WLF200EB" 64 64
+canvastexture "WLF200FA" 64 64
+canvastexture "WLF200FB" 64 64
+canvastexture "WLF2010A" 64 64
+canvastexture "WLF2010B" 64 64
+canvastexture "WLF2011A" 64 64
+canvastexture "WLF2011B" 64 64
+canvastexture "WLF2012A" 64 64
+canvastexture "WLF2012B" 64 64
+canvastexture "WLF2013A" 64 64
+canvastexture "WLF2013B" 64 64
+canvastexture "WLF2014A" 64 64
+canvastexture "WLF2014B" 64 64
+canvastexture "WLF2015A" 64 64
+canvastexture "WLF2015B" 64 64
+canvastexture "WLF2016A" 64 64
+canvastexture "WLF2016B" 64 64
+canvastexture "WLF2017A" 64 64
+canvastexture "WLF2017B" 64 64
+canvastexture "WLF2018A" 64 64
+canvastexture "WLF2018B" 64 64
+canvastexture "WLF2019A" 64 64
+canvastexture "WLF2019B" 64 64
+canvastexture "WLF201AA" 64 64
+canvastexture "WLF201AB" 64 64
+canvastexture "WLF201BA" 64 64
+canvastexture "WLF201BB" 64 64
+canvastexture "WLF201CA" 64 64
+canvastexture "WLF201CB" 64 64
+canvastexture "WLF201DA" 64 64
+canvastexture "WLF201DB" 64 64
+canvastexture "WLF201EA" 64 64
+canvastexture "WLF201EB" 64 64
+canvastexture "WLF201FA" 64 64
+canvastexture "WLF201FB" 64 64
+canvastexture "WLF2020A" 64 64
+canvastexture "WLF2020B" 64 64
+canvastexture "WLF2021A" 64 64
+canvastexture "WLF2021B" 64 64
+canvastexture "WLF2022A" 64 64
+canvastexture "WLF2022B" 64 64
+canvastexture "WLF2023A" 64 64
+canvastexture "WLF2023B" 64 64
+canvastexture "WLF2024A" 64 64
+canvastexture "WLF2024B" 64 64
+canvastexture "WLF2025A" 64 64
+canvastexture "WLF2025B" 64 64
+canvastexture "WLF2026A" 64 64
+canvastexture "WLF2026B" 64 64
+canvastexture "WLF2027A" 64 64
+canvastexture "WLF2027B" 64 64
+canvastexture "WLF2028A" 64 64
+canvastexture "WLF2028B" 64 64
+canvastexture "WLF2029A" 64 64
+canvastexture "WLF2029B" 64 64
+canvastexture "WLF202AA" 64 64
+canvastexture "WLF202AB" 64 64
+canvastexture "WLF202BA" 64 64
+canvastexture "WLF202BB" 64 64
+canvastexture "WLF202CA" 64 64
+canvastexture "WLF202CB" 64 64
+canvastexture "WLF202DA" 64 64
+canvastexture "WLF202DB" 64 64
+canvastexture "WLF202EA" 64 64
+canvastexture "WLF202EB" 64 64
+canvastexture "WLF202FA" 64 64
+canvastexture "WLF202FB" 64 64
+canvastexture "WLF2030A" 64 64
+canvastexture "WLF2030B" 64 64
+canvastexture "WLF2031A" 64 64
+canvastexture "WLF2031B" 64 64
+canvastexture "WLF2032A" 64 64
+canvastexture "WLF2032B" 64 64
+canvastexture "WLF2033A" 64 64
+canvastexture "WLF2033B" 64 64
+canvastexture "WLF2034A" 64 64
+canvastexture "WLF2034B" 64 64
+canvastexture "WLF2035A" 64 64
+canvastexture "WLF2035B" 64 64
+canvastexture "WLF2036A" 64 64
+canvastexture "WLF2036B" 64 64
+canvastexture "WLF2037A" 64 64
+canvastexture "WLF2037B" 64 64
+canvastexture "WLF2038A" 64 64
+canvastexture "WLF2038B" 64 64
+canvastexture "WLF2039A" 64 64
+canvastexture "WLF2039B" 64 64
+canvastexture "WLF203AA" 64 64
+canvastexture "WLF203AB" 64 64
+canvastexture "WLF203BA" 64 64
+canvastexture "WLF203BB" 64 64
+canvastexture "WLF203CA" 64 64
+canvastexture "WLF203CB" 64 64
+canvastexture "WLF203DA" 64 64
+canvastexture "WLF203DB" 64 64
+canvastexture "WLF203EA" 64 64
+canvastexture "WLF203EB" 64 64
+canvastexture "WLF203FA" 64 64
+canvastexture "WLF203FB" 64 64
+canvastexture "WLF3001A" 64 64
+canvastexture "WLF3001B" 64 64
+canvastexture "WLF3002A" 64 64
+canvastexture "WLF3002B" 64 64
+canvastexture "WLF3003A" 64 64
+canvastexture "WLF3003B" 64 64
+canvastexture "WLF3004A" 64 64
+canvastexture "WLF3004B" 64 64
+canvastexture "WLF3005A" 64 64
+canvastexture "WLF3005B" 64 64
+canvastexture "WLF3006A" 64 64
+canvastexture "WLF3006B" 64 64
+canvastexture "WLF3007A" 64 64
+canvastexture "WLF3007B" 64 64
+canvastexture "WLF3008A" 64 64
+canvastexture "WLF3008B" 64 64
+canvastexture "WLF3009A" 64 64
+canvastexture "WLF3009B" 64 64
+canvastexture "WLF300AA" 64 64
+canvastexture "WLF300AB" 64 64
+canvastexture "WLF300BA" 64 64
+canvastexture "WLF300BB" 64 64
+canvastexture "WLF300CA" 64 64
+canvastexture "WLF300CB" 64 64
+canvastexture "WLF300DA" 64 64
+canvastexture "WLF300DB" 64 64
+canvastexture "WLF300EA" 64 64
+canvastexture "WLF300EB" 64 64
+canvastexture "WLF300FA" 64 64
+canvastexture "WLF300FB" 64 64
+canvastexture "WLF3010A" 64 64
+canvastexture "WLF3010B" 64 64
+canvastexture "WLF3011A" 64 64
+canvastexture "WLF3011B" 64 64
+canvastexture "WLF3012A" 64 64
+canvastexture "WLF3012B" 64 64
+canvastexture "WLF3013A" 64 64
+canvastexture "WLF3013B" 64 64
+canvastexture "WLF3014A" 64 64
+canvastexture "WLF3014B" 64 64
+canvastexture "WLF3015A" 64 64
+canvastexture "WLF3015B" 64 64
+canvastexture "WLF3016A" 64 64
+canvastexture "WLF3016B" 64 64
+canvastexture "WLF3017A" 64 64
+canvastexture "WLF3017B" 64 64
+canvastexture "WLF3018A" 64 64
+canvastexture "WLF3018B" 64 64
+canvastexture "WLF3019A" 64 64
+canvastexture "WLF3019B" 64 64
+canvastexture "WLF301AA" 64 64
+canvastexture "WLF301AB" 64 64
+canvastexture "WLF301BA" 64 64
+canvastexture "WLF301BB" 64 64
+canvastexture "WLF301CA" 64 64
+canvastexture "WLF301CB" 64 64
+canvastexture "WLF301DA" 64 64
+canvastexture "WLF301DB" 64 64
+canvastexture "WLF301EA" 64 64
+canvastexture "WLF301EB" 64 64
+canvastexture "WLF301FA" 64 64
+canvastexture "WLF301FB" 64 64
+canvastexture "WLF3020A" 64 64
+canvastexture "WLF3020B" 64 64
+canvastexture "WLF3021A" 64 64
+canvastexture "WLF3021B" 64 64
+canvastexture "WLF3022A" 64 64
+canvastexture "WLF3022B" 64 64
+canvastexture "WLF3023A" 64 64
+canvastexture "WLF3023B" 64 64
+canvastexture "WLF3024A" 64 64
+canvastexture "WLF3024B" 64 64
+canvastexture "WLF3025A" 64 64
+canvastexture "WLF3025B" 64 64
+canvastexture "WLF3026A" 64 64
+canvastexture "WLF3026B" 64 64
+canvastexture "WLF3027A" 64 64
+canvastexture "WLF3027B" 64 64
+canvastexture "WLF3028A" 64 64
+canvastexture "WLF3028B" 64 64
+canvastexture "WLF3029A" 64 64
+canvastexture "WLF3029B" 64 64
+canvastexture "WLF302AA" 64 64
+canvastexture "WLF302AB" 64 64
+canvastexture "WLF302BA" 64 64
+canvastexture "WLF302BB" 64 64
+canvastexture "WLF302CA" 64 64
+canvastexture "WLF302CB" 64 64
+canvastexture "WLF302DA" 64 64
+canvastexture "WLF302DB" 64 64
+canvastexture "WLF302EA" 64 64
+canvastexture "WLF302EB" 64 64
+canvastexture "WLF302FA" 64 64
+canvastexture "WLF302FB" 64 64
+canvastexture "WLF3030A" 64 64
+canvastexture "WLF3030B" 64 64
+canvastexture "WLF3031A" 64 64
+canvastexture "WLF3031B" 64 64
+canvastexture "WLF3032A" 64 64
+canvastexture "WLF3032B" 64 64
+canvastexture "WLF3033A" 64 64
+canvastexture "WLF3033B" 64 64
+canvastexture "WLF3034A" 64 64
+canvastexture "WLF3034B" 64 64
+canvastexture "WLF3035A" 64 64
+canvastexture "WLF3035B" 64 64
+canvastexture "WLF3036A" 64 64
+canvastexture "WLF3036B" 64 64
+canvastexture "WLF3037A" 64 64
+canvastexture "WLF3037B" 64 64
+canvastexture "WLF3038A" 64 64
+canvastexture "WLF3038B" 64 64
+canvastexture "WLF3039A" 64 64
+canvastexture "WLF3039B" 64 64
+canvastexture "WLF303AA" 64 64
+canvastexture "WLF303AB" 64 64
+canvastexture "WLF303BA" 64 64
+canvastexture "WLF303BB" 64 64
+canvastexture "WLF303CA" 64 64
+canvastexture "WLF303CB" 64 64
+canvastexture "WLF303DA" 64 64
+canvastexture "WLF303DB" 64 64
+canvastexture "WLF303EA" 64 64
+canvastexture "WLF303EB" 64 64
+canvastexture "WLF303FA" 64 64
+canvastexture "WLF303FB" 64 64
 
 canvastexture "WLF0DORA" 64 64
 canvastexture "WLF0DORB" 64 64
@@ -2232,18 +2487,18 @@ switch WLF2015B
 on sound switches/elevator2
 pic WLF2016B tics 0
 
-switch "Patches/Walls/WALL0041.png"
+switch "Wolf3D/Wall0041"
 on sound switches/elevator
-pic "Patches/Walls/WALL0043.png" tics 0
+pic "Wolf3D/Wall0043" tics 0
 
-switch "Patches/Walls/WALL1041.png"
+switch "SoD/Wall0041"
 on sound switches/elevator
-pic "Patches/Walls/WALL1043.png" tics 0
+pic "SoD/Wall0043" tics 0
 
-switch "Patches/Walls/WALL2041.png"
+switch "RtD/Wall0041"
 on sound switches/elevator2
-pic "Patches/Walls/WALL2043.png" tics 0
+pic "RtD/Wall0043" tics 0
 
-switch "Patches/Walls/WALL3041.png"
+switch "TUC/Wall0041"
 on sound switches/elevator2
-pic "Patches/Walls/WALL3043.png" tics 0
+pic "TUC/Wall0043" tics 0

@@ -5,8 +5,13 @@ Default
 		Default
 		{
 			Tiles = 0x01-0x59, 0x66-0x69;
-			Pattern = "Patches/Walls/Wall0%03i.png";
+			Pattern = "Wolf3D/Wall%04i";
 			Flags = Wall;
+		}
+
+		0x10
+		{
+			Flags = Directional;
 		}
 
 		0x15
@@ -32,7 +37,7 @@ Default
 
 		0x55
 		{
-			Pattern = "Patches/Walls/Wall0040.png", "Patches/Walls/Wall0041.png";
+			Pattern = "Wolf3D/Wall0040", "Wolf3D/Wall0041";
 			Flags = Directional;
 		}
 	}
@@ -61,7 +66,7 @@ Default
 		Default
 		{
 			Tiles = 0x5A, 0x5B;
-			Pattern = "Patches/Walls/Wall0098.png", "Patches/Walls/Wall0099.png";
+			Pattern = "Wolf3D/Wall0098", "Wolf3D/Wall0099";
 			Flags = Door;
 		}
 
@@ -70,7 +75,7 @@ Default
 			Default
 			{
 				Tiles = 0x5C-0x63;
-				Pattern = "Patches/Walls/Wall0104.png", "Patches/Walls/Wall0105.png";
+				Pattern = "Wolf3D/Wall0104", "Wolf3D/Wall0105";
 				AltPattern = "WLF0LK%iG", "WLF0LK%iF";
 				Flags = Door;
 			}
@@ -121,7 +126,7 @@ Default
 			Default
 			{
 				Tiles = 0x64, 0x65;
-				Pattern = "Patches/Walls/Wall0102.png", "Patches/Walls/Wall0103.png";
+				Pattern = "Wolf3D/Wall0102", "Wolf3D/Wall0103";
 				Flags = Door;
 			}
 		}
