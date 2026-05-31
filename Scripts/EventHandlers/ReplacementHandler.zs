@@ -142,12 +142,13 @@ class ReplacementHandler : StaticEventHandler
 		if (val == -1) { val = useflats.GetInt(); }
 
 		int levelnum;
-		ParsedMap queuedmap;
+		ParsedMap thismap;
 		MapHandler handler = MapHandler.Get();
-		if (handler && handler.queuedmap)
+		if (handler)
 		{
-			queuedmap = handler.queuedmap;
-			levelnum = handler.queuedmap.mapnum;
+			thismap = handler.curmap;
+			if (!thismap) { thismap = handler.queuedmap; }
+			levelnum = thismap.mapnum;
 		}
 		else { levelnum = level.levelnum; }
 
@@ -160,7 +161,7 @@ class ReplacementHandler : StaticEventHandler
 		String floorname = "FLOOR";
 
 		int h, gamemode = -1;
-		if (queuedmap) { gamemode = queuedmap.gametype; }
+		if (thismap) { gamemode = thismap.gametype; }
 		if (gamemode < 0) { [h, gamemode] = Game.IsSoD(); }
 
 		if (gamemode > 0) { ceilname = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
@@ -195,6 +196,32 @@ class ReplacementHandler : StaticEventHandler
 
 			if (ceiltex.IsValid()) { sec.SetTexture(sector.ceiling, ceiltex); }
 			if (floortex.IsValid()) { sec.SetTexture(sector.floor, floortex); }
+
+			if (handler && thismap)
+			{
+				TileInfo flat;
+				int f;
+				[f, flat] = thismap.TileAt(ParsedMap.CoordsToGrid(sec.CenterSpot), -1, 2);
+
+				if (f > 0)
+				{
+					int floornum = (f & 0xFF00) >> 8;
+					if (floornum > 0)
+					{
+						String texname = val > 0 ? val > 1 ? String.Format("FLOOR%02x", floornum) : String.Format("CEIL%02x", floornum) : String.Format("%02x", floornum);
+						TextureID floor = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+						if (floor.IsValid()) { sec.SetTexture(sector.floor, floor); }
+					}
+
+					int ceilingnum = f & 0xFF;
+					if (ceilingnum > 0)
+					{
+						String texname = val > 0 ? val > 2 ? String.Format("FLOOR%02x", ceilingnum) : String.Format("CEIL%02x", ceilingnum) : String.Format("%02x", ceilingnum);
+						TextureID ceiling = TexMan.CheckForTexture(texname, TexMan.Type_Any);
+						if (ceiling.IsValid()) { sec.SetTexture(sector.ceiling, ceiling); }
+					}
+				}
+			}
 		}
 	}
 

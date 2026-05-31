@@ -226,7 +226,7 @@ class DoorEffector: PolyobjectEffector
 	// Open the door
 	void Open()
 	{
-		Polyobject.StartSector.SetTexture(Sector.floor, Activator.floorpic);
+		if (delay < 0) { Polyobject.StartSector.SetTexture(Sector.floor, Activator.floorpic); }
 
 		// Door is opening, set status accordingly
 		if (Status == WDST_CLOSED)
@@ -623,7 +623,7 @@ class DoorEffector: PolyobjectEffector
 						if (door && door != Polyobject)
 						{
 							t = handler.curmap.CountDoors(ParsedMap.CoordsToGrid(PolyObject.StartSpotPos));
-							tile = handler.curmap.TileAtIndex(t - 1);
+							tile = handler.curmap.TileAtIndex(t);
 						}
 
 						for (int l = 0; l < PolyObject.Lines.Size(); l++)

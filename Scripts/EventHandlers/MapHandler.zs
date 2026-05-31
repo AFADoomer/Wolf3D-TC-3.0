@@ -157,9 +157,9 @@ Class TileInfo
 Class GameTileInfo
 {
 	String gamename;
-	Array<TileInfo> Tiles;
+	Array<TileInfo>[4] Tiles;
 
-	void ParseTileInfo(ParsedValue tiledata)
+	void ParseTileInfo(ParsedValue tiledata, int plane = 0)
 	{
 		if (!tiledata.children.Size()) { return; }
 
@@ -173,7 +173,7 @@ Class GameTileInfo
 			{
 				for (int i = 0; i < tilerange.Size(); i++)
 				{
-					TileInfo tile = GetTile(tilerange[i]);
+					TileInfo tile = GetTile(tilerange[i], plane);
 
 					tile.ParseKey(tiledefault);
 					tile.ParseFlags(tiledefault);
@@ -193,7 +193,7 @@ Class GameTileInfo
 
 			if (tileindex > 0)
 			{
-				TileInfo tile = GetTile(tileindex);
+				TileInfo tile = GetTile(tileindex, plane);
 
 				tile.ParseKey(tiles);
 				tile.ParseFlags(tiles);
@@ -206,23 +206,23 @@ Class GameTileInfo
 		}
 	}
 
-	TileInfo GetTile(int index)
+	TileInfo GetTile(int index, int plane = 0)
 	{
-		if (Tiles.Size() <= index) { Tiles.Resize(index + 1); }
-		if (!Tiles[index])
+		if (Tiles[plane].Size() <= index) { Tiles[plane].Resize(index + 1); }
+		if (!Tiles[plane][index])
 		{
-			Tiles[index] = New("TileInfo");
-			Tiles[index].id = index;
+			Tiles[plane][index] = New("TileInfo");
+			Tiles[plane][index].id = index;
 		}
 
-		return Tiles[index];
+		return Tiles[plane][index];
 	}
 
-	TileInfo GetSpecialTile(int type, int parameter = 0)
+	TileInfo GetSpecialTile(int type, int parameter = 0, int plane = 0)
 	{
-		for (int t = 0; t < Tiles.Size(); t++)
+		for (int t = 0; t < Tiles[plane].Size(); t++)
 		{
-			TileInfo tile = Tiles[t];
+			TileInfo tile = Tiles[plane][t];
 			if (!tile || !(tile.flags & type)) { continue; }
 			if (!(tile.flags & TileInfo.TILE_MATCHKEY)) { return tile; }
 			if (tile.key == parameter) { return tile; }
@@ -231,11 +231,23 @@ Class GameTileInfo
 		return null;
 	}
 
-	void Add(ParsedValue tiledata)
+	void Add(ParsedValue tiledata, in out ParsedValue actormaps)
 	{
 		gamename = tiledata.keyname;
 
-		ParseTileInfo(tiledata);
+		for (int p = 0; p < tiledata.children.Size(); p++)
+		{
+			if (p == 1)
+			{
+				ParsedValue actordata = tiledata.Find("1");
+				if (actordata) { ParseActorMaps(gamename, actordata, actormaps); }
+			}
+			else
+			{
+				ParsedValue planedata = tiledata.Find(String.Format("%i", p));
+				if (planedata) { ParseTileInfo(planedata, p); }
+			}
+		}
 	}
 
 	static GameTileInfo Find(in out Array<GameTileInfo> tilemaps, String gamename, bool create = false)
@@ -257,16 +269,16 @@ Class GameTileInfo
 		return tilemap;
 	}
 
-	static TileInfo GetTileInfo(Array<GameTileInfo> tilemaps, String gamename, int tileid)
+	static TileInfo GetTileInfo(Array<GameTileInfo> tilemaps, String gamename, int plane, int tileid)
 	{
 		if (tileid < 0) { return null; }
 
 		GameTileInfo tilemap = Find(tilemaps, gamename);
 
-		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { tilemap = Find(tilemaps, "Default"); }
-		if (!tilemap || tileid >= tilemap.Tiles.Size() || !tilemap.Tiles[tileid]) { return null; }
+		if (!tilemap || tileid >= tilemap.Tiles[plane].Size() || !tilemap.Tiles[plane][tileid]) { tilemap = Find(tilemaps, "Default"); }
+		if (!tilemap || tileid >= tilemap.Tiles[plane].Size() || !tilemap.Tiles[plane][tileid]) { return null; }
 
-		return tilemap.Tiles[tileid];
+		return tilemap.Tiles[plane][tileid];
 	}
 
 	static TileInfo GetSpecialTileInfo(Array<GameTileInfo> tilemaps, String gamename, int type, int parameter)
@@ -287,6 +299,55 @@ Class GameTileInfo
 		if (tilemap) { return tilemap.GetSpecialTile(type); }
 
 		return null;
+	}
+
+	void ParseActorMaps(String gamename, ParsedValue actordata, in out ParsedValue actormaps)
+	{
+		if (!actormaps) { actormaps = ParsedValue.Create(); }
+
+		ParsedValue current = actormaps.Find(gamename);
+		if (!current)
+		{
+			current = actormaps.AddKey();
+			current.keyname = gamename;
+		}
+
+		for (int d = 0; d < actordata.children.Size(); d++)
+		{
+			ParsedValue actorkey = actordata.children[d];
+			ParsedValue entry = current.AddKey();
+
+			entry.keyname = actorkey.keyname;
+			entry.value = actorkey.value;
+
+			String value = entry.value;
+
+			Array<String> values;
+			value.split(values, ",");
+			if (!values.Size()) { values.Push(value); }
+
+			ParsedValue m;
+			m = entry.AddKey(true);
+			m.keyname = "Class";
+			m.value = ZScriptTools.Trim(values[0]);
+
+			m = entry.AddKey(true);
+			m.keyname = "Skill";
+			if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
+			else { m.value = "-1"; }
+
+			m = entry.AddKey(true);
+			m.keyname = "Angle";
+			if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
+			else { m.value = "270"; }
+
+			m = entry.AddKey(true);
+			m.keyname = "Patrolling";
+			if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
+			else { m.value = "0"; }
+
+			entry.value = "";
+		}
 	}
 }
 
@@ -341,7 +402,6 @@ class MapHandler : StaticEventHandler
 	override void OnRegister()
 	{
 		ParseGameMaps();
-		ParseActorMaps();
 		ParseTileMaps();
 	}
 
@@ -672,51 +732,6 @@ class MapHandler : StaticEventHandler
 		players[p].mo.angle = angle;
 	}
 
-	void ParseActorMaps()
-	{
-		if (developer) { console.printf("Parsing actor data..."); }
-
-		actormaps = FileReader.Parse("Data/ActorCodes.txt");
-
-		for (int d = 0; d < actormaps.children.Size(); d++)
-		{
-			let gamedata = actormaps.children[d];
-
-			for (int e = 0; e < gamedata.children.Size(); e++)
-			{
-				let entry = gamedata.children[e];
-
-				String value = entry.value;
-
-				Array<String> values;
-				value.split(values, ",");
-				if (!values.Size()) { values.Push(value); }
-
-				ParsedValue m;
-				m = entry.AddKey(true);
-				m.keyname = "Class";
-				m.value = ZScriptTools.Trim(values[0]);
-
-				m = entry.AddKey(true);
-				m.keyname = "Skill";
-				if (values.Size() > 1) { m.value = ZScriptTools.Trim(values[1]); }
-				else { m.value = "-1"; }
-
-				m = entry.AddKey(true);
-				m.keyname = "Angle";
-				if (values.Size() > 2) { m.value = ZScriptTools.Trim(values[2]); }
-				else { m.value = "270"; }
-
-				m = entry.AddKey(true);
-				m.keyname = "Patrolling";
-				if (values.Size() > 3) { m.value = ZScriptTools.Trim(values[3]); }
-				else { m.value = "0"; }
-
-				entry.value = "";
-			}
-		}
-	}
-
 	void ParseTileMaps()
 	{
 		if (developer) { console.printf("Parsing tile data..."); }
@@ -735,7 +750,7 @@ class MapHandler : StaticEventHandler
 					let gamedata = tilemapdata.children[d];
 
 					GameTileInfo gametiles = GameTileInfo.Find(tilemaps, gamedata.keyname, true);
-					gametiles.Add(gamedata);
+					gametiles.Add(gamedata, actormaps);
 				}
 			}
 		}
@@ -775,7 +790,7 @@ class MapHandler : StaticEventHandler
 		return this.curmap.info.music;
 	}
 
-	static int, TileInfo TileAt(Vector2 pos, ParsedMap curmap = null)
+	static int, TileInfo TileAt(Vector2 pos, ParsedMap curmap = null, int plane = 0)
 	{
 		if (!curmap)
 		{
@@ -790,7 +805,7 @@ class MapHandler : StaticEventHandler
 
 		TileInfo tile;
 		int t;
-		[t, tile] = curmap.TileAt(pos);
+		[t, tile] = curmap.TileAt(pos, plane);
 
 		return t, tile;
 	}
@@ -905,35 +920,36 @@ class ParsedMap
 	String signature;
 	int width;
 	int height;
-	Array<int> planes[3];
+	int planecount;
+	Array<int> planes[4];
 	Array<Sector> voidspace;
 	bool noclip;
 	Vector2 startspot;
 	String hash;
 	int lump;
 
-	int, TileInfo TileAt(Vector2 pos, int style = -1)
+	int, TileInfo TileAt(Vector2 pos, int style = -1, uint plane = 0)
 	{
 		if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) { return -1, null; }
 
 		int index = int(pos.y * width + pos.x);
-		if (index < 0 || index >= planes[0].Size()) { return -1, null; } // Map edges return an invalid tile, but not "nothing"
+		if (index < 0 || index >= planes[plane].Size()) { return -1, null; } // Map edges return an invalid tile, but not "nothing"
 
 		let this = MapHandler.Get();
 
 		if (style < 0) { style = max(0, g_sod); }
 
-		return planes[0][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), planes[0][index]) : null;
+		return planes[plane][index], this ? GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), plane, planes[plane][index]) : null;
 	}
 
-	TileInfo TileAtIndex(int index, int style = -1)
+	TileInfo TileAtIndex(int index, int style = -1, uint plane = 0)
 	{
 		let this = MapHandler.Get();
 		if (index < 0 || !this) { return null; }
 
 		if (style < 0) { style = max(0, g_sod); }
 
-		return GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), index);
+		return GameTileInfo.GetTileInfo(this.tilemaps, GetGameName(style, extension), plane, index);
 	}
 
 	static String GetGameName(int gametype, String extension = "")
@@ -1710,13 +1726,13 @@ class ParsedMap
 		return null;
 	}
 
-	TextureID GetTexture(Vector2 pos, Line ln = null, int style = -1)
+	TextureID GetTexture(Vector2 pos, Line ln = null, int style = -1, int plane = 0)
 	{
 		if (style < 0) { style = max(0, g_sod); }
 
 		TileInfo tile;
 		int t;
-		[t, tile] = TileAt(pos, style);
+		[t, tile] = TileAt(pos, style, plane);
 
 		TextureID tex = GetTileTexture(tile, pos, ln);
 
@@ -1741,6 +1757,7 @@ class ParsedMap
 		if (!tile) { return null; }
 
 		String texname;
+		double angle = 0;
 
 		if (!ln)
 		{
@@ -2041,6 +2058,7 @@ class WolfMapParser
 				newmap.width = 64;
 				newmap.height = 64;
 				newmap.mapname = "Custom Map";
+				newmap.planecount = newmap.planes.Size();
 
 				if (type == RawWithHeader)
 				{
@@ -2049,6 +2067,7 @@ class WolfMapParser
 
 					if (newmap.signature.left(3) ~== "WDC")
 					{
+						newmap.planecount = WolfMapParser.GetLittleEndian(content, 0x0A, 2);
 						newmap.width = WolfMapParser.GetLittleEndian(content, 0x1E, 2);
 						newmap.height = WolfMapParser.GetLittleEndian(content, 0x20, 2);
 						newmap.mapname = content.Mid(0x0E, WolfMapParser.GetLittleEndian(content, 0x0C, 2));
@@ -2066,12 +2085,18 @@ class WolfMapParser
 					planeoffsets[0] = 9;
 				}
 
-				planesizes[0] = planesizes[1] = newmap.width * newmap.height * 2;
-				planeoffsets[1] = planeoffsets[0] + planesizes[0];
+				for (int p = 0; p < newmap.planecount; p++)
+				{
+					planesizes[p] = newmap.width * newmap.height * 2;
+					if (p > 0)
+					{
+						planeoffsets[p] = planeoffsets[p - 1] + planesizes[p - 1];
+					}
+				}
 
 				newmap.mapnum = 1000 + custommapcount++;
 
-				for (int p = 0; p < 2; p++)
+				for (int p = 0; p < newmap.planecount; p++)
 				{
 					String plane = content.Mid(planeoffsets[p]);
 
@@ -2111,7 +2136,7 @@ class WolfMapParser
 				newmap.signature = content.Mid(offset, 4);
 				newmap.mapnum = gametype <= 0 ? (a / 10 + 1) * 100 + a % 10 + 1 : 600 + gametype * 100 + a + 1;
 
-				for (int p = 0; p < 3; p++)
+				for (int p = 0; p < newmap.planes.Size(); p++)
 				{
 					if (planesizes[p] <= 0) { continue; }
 					newmap.ExpandData(p, content.mid(planeoffsets[p], planesizes[p]), encoding, d.carmack);
