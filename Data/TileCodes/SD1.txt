@@ -1,105 +1,122 @@
 SD1
 {
-	Walls
+	0
 	{
-		Default
+		Walls
 		{
-			Tiles = 0x01-0x59;
-			Pattern = "SoD/Wall%04i";
-			Flags = Wall;
+			Default
+			{
+				Tiles = 0x01-0x59;
+				Pattern = "SoD/Wall%04i";
+				Flags = Wall;
+			}
+
+			0x15
+			{
+				Special = 80, 10;
+				Flags = Directional;
+			}
+
+			0x16
+			{
+				Flags = Directional;
+			}
+
+			0x41
+			{
+				Flags = DoorFrame;
+			}
+
+			0x55
+			{
+				Pattern = "SoD/Wall0040", "SoD/Wall0041";
+				Flags = Directional;
+			}
 		}
 
-		0x15
+		Doors
 		{
-			Special = 80, 10;
-			Flags = Directional;
-		}
+			Default
+			{
+				Tiles = 0x5A, 0x5B;
+				Pattern = "SoD/Wall0126", "SoD/Wall0127";
+				Flags = Door;
+			}
 
-		0x16
-		{
-			Flags = Directional;
-		}
+			Locked
+			{
+				Default
+				{
+					Tiles = 0x5C-0x63;
+					Pattern = "SoD/Wall0132", "SoD/Wall0133";
+					AltPattern = "WLF1LK%iG", "WLF1LK%iF";
+					Flags = Door;
+				}
 
-		0x41
-		{
-			Flags = DoorFrame;
-		}
+				0x5C
+				{
+					Key = 1;
+				}
 
-		0x55
-		{
-			Pattern = "SoD/Wall0040", "SoD/Wall0041";
-			Flags = Directional;
+				0x5D
+				{
+					Key = 1;
+				}
+
+				0x5E
+				{
+					Key = 2;
+				}
+
+				0x5F
+				{
+					Key = 2;
+				}
+
+				0x60
+				{
+					Key = 3;
+				}
+
+				0x61
+				{
+					Key = 3;
+				}
+
+				0x62
+				{
+					Key = 4;
+				}
+
+				0x63
+				{
+					Key = 4;
+				}
+			}
+
+			Elevator
+			{
+				Default
+				{
+					Tiles = 0x64, 0x65;
+					Pattern = "SoD/Wall0130", "SoD/Wall0131";
+					Flags = Door;
+				}
+			}
 		}
 	}
 
-	Doors
+	1
 	{
-		Default
-		{
-			Tiles = 0x5A, 0x5B;
-			Pattern = "SoD/Wall0126", "SoD/Wall0127";
-			Flags = Door;
-		}
-
-		Locked
-		{
-			Default
-			{
-				Tiles = 0x5C-0x63;
-				Pattern = "SoD/Wall0132", "SoD/Wall0133";
-				AltPattern = "WLF1LK%iG", "WLF1LK%iF";
-				Flags = Door;
-			}
-
-			0x5C
-			{
-				Key = 1;
-			}
-
-			0x5D
-			{
-				Key = 1;
-			}
-
-			0x5E
-			{
-				Key = 2;
-			}
-
-			0x5F
-			{
-				Key = 2;
-			}
-
-			0x60
-			{
-				Key = 3;
-			}
-
-			0x61
-			{
-				Key = 3;
-			}
-
-			0x62
-			{
-				Key = 4;
-			}
-
-			0x63
-			{
-				Key = 4;
-			}
-		}
-
-		Elevator
-		{
-			Default
-			{
-				Tiles = 0x64, 0x65;
-				Pattern = "SoD/Wall0130", "SoD/Wall0131";
-				Flags = Door;
-			}
-		}
+		// Objects
+		33 = "SkullsonStick";
+		38 = "BloodyCage";
+		45 = "CageofSkulls";
+		51 = "WolfChaingunSoD";
+		63 = "RedCeilingLight";
+		67 = "BullHeadonStick";
+		68 = "BloodyWell";
+		69 = "AngelofDeathStatue";
+		72 = "WolfClipBox";
 	}
 }

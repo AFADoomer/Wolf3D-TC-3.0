@@ -1,110 +1,287 @@
 SD2
 {
-	Walls
+	0
 	{
-		Default
+		Walls
 		{
-			Tiles = 0x01-0x59;
-			Pattern = "RtD/Wall%04i";
-			Flags = Wall;
+			Default
+			{
+				Tiles = 0x01-0x59;
+				Pattern = "RtD/Wall%04i";
+				Flags = Wall;
+			}
+
+			0x15
+			{
+				Special = 80, 10;
+				Flags = Directional;
+			}
+
+			0x16
+			{
+				Flags = Directional;
+			}
+
+			0x40
+			{
+				Flags = Invalid;
+			}
+
+			0x41
+			{
+				Flags = DoorFrame;
+			}
+
+			0x55
+			{
+				Pattern = "RtD/Wall0040", "RtD/Wall0041";
+				Flags = Directional;
+			}
 		}
 
-		0x15
+		Doors
 		{
-			Special = 80, 10;
-			Flags = Directional;
-		}
+			Default
+			{
+				Tiles = 0x5A, 0x5B;
+				Pattern = "RtD/Wall0126", "RtD/Wall0127";
+				Flags = Door;
+			}
 
-		0x16
-		{
-			Flags = Directional;
-		}
+			Locked
+			{
+				Default
+				{
+					Tiles = 0x5C-0x63;
+					Pattern = "RtD/Wall0132", "RtD/Wall0133";
+					AltPattern = "WLF2LK%iG", "WLF2LK%iF";
+					Flags = Door;
+				}
 
-		0x40
-		{
-			Flags = Invalid;
-		}
+				0x5C
+				{
+					Key = 1;
+				}
 
-		0x41
-		{
-			Flags = DoorFrame;
-		}
+				0x5D
+				{
+					Key = 1;
+				}
 
-		0x55
-		{
-			Pattern = "RtD/Wall0040", "RtD/Wall0041";
-			Flags = Directional;
+				0x5E
+				{
+					Key = 2;
+				}
+
+				0x5F
+				{
+					Key = 2;
+				}
+
+				0x60
+				{
+					Key = 3;
+				}
+
+				0x61
+				{
+					Key = 3;
+				}
+
+				0x62
+				{
+					Key = 4;
+				}
+
+				0x63
+				{
+					Key = 4;
+				}
+			}
+
+			Elevator
+			{
+				Default
+				{
+					Tiles = 0x64, 0x65;
+					Pattern = "RtD/Wall0130", "RtD/Wall0131";
+					Flags = Door;
+				}
+			}
 		}
 	}
 
-	Doors
+	1
 	{
-		Default
-		{
-			Tiles = 0x5A, 0x5B;
-			Pattern = "RtD/Wall0126", "RtD/Wall0127";
-			Flags = Door;
-		}
+		// Objects
+		23 = "PoolofWaterLost";
+		24 = "OilDrumLost";
+		25 = "TableandChairsLost";
+		26 = "FloorLampLost";
+		27 = "HangingChandelierLost";
+		28 = "HangingSkeletonLost";
+		29 = "DogFoodLost";
+		30 = "StoneColumnLost";
+		31 = "PlantLost";
+		32 = "SkeletonLost";
+		33 = "PileofSkullsLost";
+		34 = "BrownPlantLost";
+		35 = "VaseLost";
+		36 = "TableLost";
+		37 = "GreenCeilingLightLost";
+		38 = "CagewithBloodLost";
+		39 = "SuitofArmorLost";
+		40 = "EmptyCageLost";
+		41 = "BrokenCageLost";
+		42 = "Bones1Lost";
+		43 = "YellowKeyLost";
+		44 = "BlueKeyLost";
+		45 = "CagewithSkullsLost";
+		46 = "DeadRatLost";
+		47 = "PlateofFoodLost";
+		48 = "FirstAidKitLost";
+		49 = "WolfClipLost";
+		50 = "WolfMachineGunLost";
+		51 = "WolfChaingunLost";
+		52 = "RadioLost";
+		53 = "ShellLost";
+		54 = "TimerLost";
+		55 = "BombLost";
+		56 = "LifeLost";
+		57 = "BoneswithBloodLost";
+		58 = "WoodBarrelLost";
+		59 = "WellwithWaterLost";
+		60 = "DryWellLost";
+		61 = "PoolofBloodLost";
+		62 = "ElectrofieldLost";
+		63 = "RedCeilingLightLost";
+		64 = "Bones2Lost";
+		65 = "LightBulbLost";
+		66 = "SlimeLost";
+		67 = "HLabTableLost";
+		68 = "RadioactiveBarrelLost";
+		69 = "PipeLost";
+		70 = "BubblesLost";
+		71 = "DemonStatueLost";
+		72 = "WolfClipBoxLost";
+		73 = "BJWasHereLost";
+		74 = "SpearofDestinyLost";
 
-		Locked
-		{
-			Default
-			{
-				Tiles = 0x5C-0x63;
-				Pattern = "RtD/Wall0132", "RtD/Wall0133";
-				AltPattern = "WLF2LK%iG", "WLF2LK%iF";
-				Flags = Door;
-			}
-
-			0x5C
-			{
-				Key = 1;
-			}
-
-			0x5D
-			{
-				Key = 1;
-			}
-
-			0x5E
-			{
-				Key = 2;
-			}
-
-			0x5F
-			{
-				Key = 2;
-			}
-
-			0x60
-			{
-				Key = 3;
-			}
-
-			0x61
-			{
-				Key = 3;
-			}
-
-			0x62
-			{
-				Key = 4;
-			}
-
-			0x63
-			{
-				Key = 4;
-			}
-		}
-
-		Elevator
-		{
-			Default
-			{
-				Tiles = 0x64, 0x65;
-				Pattern = "RtD/Wall0130", "RtD/Wall0131";
-				Flags = Door;
-			}
-		}
+		// Enemies
+		106 = "WolfGhost";
+		107 = "DevilIncarnate";
+		108 = "GreenGuard", 1, 0, 0;
+		109 = "GreenGuard", 1, 90, 0;
+		110 = "GreenGuard", 1, 180, 0;
+		111 = "GreenGuard", 1, 270, 0;
+		112 = "GreenGuard", 1, 0, 1;
+		113 = "GreenGuard", 1, 90, 1;
+		114 = "GreenGuard", 1, 180, 1;
+		115 = "GreenGuard", 1, 270, 1;
+		116 = "AltOfficer", 1, 0, 0;
+		117 = "AltOfficer", 1, 90, 0;
+		118 = "AltOfficer", 1, 180, 0;
+		119 = "AltOfficer", 1, 270, 0;
+		120 = "AltOfficer", 1, 0, 1;
+		121 = "AltOfficer", 1, 90, 1;
+		122 = "AltOfficer", 1, 180, 1;
+		123 = "AltOfficer", 1, 270, 1;
+		124 = "DeadGuardLost";
+		125 = "SubmarineWilly";
+		126 = "BlackSS", 1, 0, 0;
+		127 = "BlackSS", 1, 90, 0;
+		128 = "BlackSS", 1, 180, 0;
+		129 = "BlackSS", 1, 270, 0;
+		130 = "BlackSS", 1, 0, 1;
+		131 = "BlackSS", 1, 90, 1;
+		132 = "BlackSS", 1, 180, 1;
+		133 = "BlackSS", 1, 270, 1;
+		138 = "Doberman", 1, 0, 1;
+		139 = "Doberman", 1, 90, 1;
+		140 = "Doberman", 1, 180, 1;
+		141 = "Doberman", 1, 270, 1;
+		142 = "TheAxe";
+		143 = "ProfessorQuarkblitz";
+		144 = "GreenGuard", 3, 0, 0;
+		145 = "GreenGuard", 3, 90, 0;
+		146 = "GreenGuard", 3, 180, 0;
+		147 = "GreenGuard", 3, 270, 0;
+		148 = "GreenGuard", 3, 0, 1;
+		149 = "GreenGuard", 3, 90, 1;
+		150 = "GreenGuard", 3, 180, 1;
+		151 = "GreenGuard", 3, 270, 1;
+		152 = "AltOfficer", 3, 0, 0;
+		153 = "AltOfficer", 3, 90, 0;
+		154 = "AltOfficer", 3, 180, 0;
+		155 = "AltOfficer", 3, 270, 0;
+		156 = "AltOfficer", 3, 0, 1;
+		157 = "AltOfficer", 3, 90, 1;
+		158 = "AltOfficer", 3, 180, 1;
+		159 = "AltOfficer", 3, 270, 1;
+		161 = "RobotDroid";
+		162 = "BlackSS", 3, 0, 0;
+		163 = "BlackSS", 3, 90, 0;
+		164 = "BlackSS", 3, 180, 0;
+		165 = "BlackSS", 3, 270, 0;
+		166 = "BlackSS", 3, 0, 1;
+		167 = "BlackSS", 3, 90, 1;
+		168 = "BlackSS", 3, 180, 1;
+		169 = "BlackSS", 3, 270, 1;
+		174 = "Doberman", 3, 0, 1;
+		175 = "Doberman", 3, 90, 1;
+		176 = "Doberman", 3, 180, 1;
+		177 = "Doberman", 3, 270, 1;
+		180 = "GreenGuard", 4, 0, 0;
+		181 = "GreenGuard", 4, 90, 0;
+		182 = "GreenGuard", 4, 180, 0;
+		183 = "GreenGuard", 4, 270, 0;
+		184 = "GreenGuard", 4, 0, 1;
+		185 = "GreenGuard", 4, 90, 1;
+		186 = "GreenGuard", 4, 180, 1;
+		187 = "GreenGuard", 4, 270, 1;
+		188 = "AltOfficer", 4, 0, 0;
+		189 = "AltOfficer", 4, 90, 0;
+		190 = "AltOfficer", 4, 180, 0;
+		191 = "AltOfficer", 4, 270, 0;
+		192 = "AltOfficer", 4, 0, 1;
+		193 = "AltOfficer", 4, 90, 1;
+		194 = "AltOfficer", 4, 180, 1;
+		195 = "AltOfficer", 4, 270, 1;
+		198 = "BlackSS", 4, 0, 0;
+		199 = "BlackSS", 4, 90, 0;
+		200 = "BlackSS", 4, 180, 0;
+		201 = "BlackSS", 4, 270, 0;
+		202 = "BlackSS", 4, 0, 1;
+		203 = "BlackSS", 4, 90, 1;
+		204 = "BlackSS", 4, 180, 1;
+		205 = "BlackSS", 4, 270, 1;
+		210 = "Doberman", 4, 0, 1;
+		211 = "Doberman", 4, 90, 1;
+		212 = "Doberman", 4, 180, 1;
+		213 = "Doberman", 4, 270, 1;
+		216 = "BatLost", 1, 0, 0;
+		217 = "BatLost", 1, 90, 0;
+		218 = "BatLost", 1, 180, 0;
+		219 = "BatLost", 1, 270, 0;
+		220 = "BatLost", 1, 0, 1;
+		221 = "BatLost", 1, 90, 1;
+		222 = "BatLost", 1, 180, 1;
+		223 = "BatLost", 1, 270, 1;
+		234 = "BatLost", 3, 0, 0;
+		235 = "BatLost", 3, 90, 0;
+		236 = "BatLost", 3, 180, 0;
+		237 = "BatLost", 3, 270, 0;
+		238 = "BatLost", 3, 0, 1;
+		239 = "BatLost", 3, 90, 1;
+		240 = "BatLost", 3, 180, 1;
+		241 = "BatLost", 3, 270, 1;
+		252 = "BatLost", 4, 0, 0;
+		253 = "BatLost", 4, 90, 0;
+		254 = "BatLost", 4, 180, 0;
+		255 = "BatLost", 4, 270, 0;
+		256 = "BatLost", 4, 0, 1;
+		257 = "BatLost", 4, 90, 1;
+		258 = "BatLost", 4, 180, 1;
+		259 = "BatLost", 4, 270, 1;
 	}
 }

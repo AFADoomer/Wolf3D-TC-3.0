@@ -1,111 +1,119 @@
 SD3
 {
-	Walls
+	0
 	{
-		Default
+		Walls
 		{
-			Tiles = 0x01-0x59;
-			Pattern = "TUC/Wall%04i";
-			Flags = Wall;
+			Default
+			{
+				Tiles = 0x01-0x59;
+				Pattern = "TUC/Wall%04i";
+				Flags = Wall;
+			}
+
+			0x15
+			{
+				Special = 80, 10;
+				Flags = Directional;
+			}
+
+			0x16
+			{
+				Flags = Directional;
+			}
+
+			0x40
+			{
+				Flags = Invalid;
+			}
+
+			0x41
+			{
+				Flags = DoorFrame;
+			}
+
+			0x55
+			{
+				Pattern = "RtD/Wall0040", "RtD/Wall0041";
+				Flags = Directional;
+			}
 		}
 
-		0x15
+		Doors
 		{
-			Special = 80, 10;
-			Flags = Directional;
-		}
+			Default
+			{
+				Tiles = 0x5A, 0x5B;
+				Pattern = "TUC/Wall0126", "TUC/Wall0127";
+				Flags = Door;
+			}
 
-		0x16
-		{
-			Flags = Directional;
-		}
+			Locked
+			{
+				Default
+				{
+					Tiles = 0x5C-0x63;
+					Pattern = "TUC/Wall0132", "TUC/Wall0133";
+					AltPattern = "WLF3LK%iG", "WLF3LK%iF";
+					Flags = Door;
+				}
 
-		0x40
-		{
-			Flags = Invalid;
-		}
+				0x5C
+				{
+					Key = 1;
+				}
 
-		0x41
-		{
-			Flags = DoorFrame;
-		}
+				0x5D
+				{
+					Key = 1;
+				}
 
-		0x55
-		{
-			Pattern = "RtD/Wall0040", "RtD/Wall0041";
-			Flags = Directional;
+				0x5E
+				{
+					Key = 2;
+				}
+
+				0x5F
+				{
+					Key = 2;
+				}
+
+				0x60
+				{
+					Key = 3;
+				}
+
+				0x61
+				{
+					Key = 3;
+				}
+
+				0x62
+				{
+					Key = 4;
+				}
+
+				0x63
+				{
+					Key = 4;
+				}
+			}
+
+			Elevator
+			{
+				Default
+				{
+					Tiles = 0x64, 0x65;
+					Pattern = "TUC/Wall0130", "TUC/Wall0131";
+					Flags = Door;
+				}
+			}
 		}
 	}
 
-	Doors
+	1
 	{
-		Default
-		{
-			Tiles = 0x5A, 0x5B;
-			Pattern = "TUC/Wall0126", "TUC/Wall0127";
-			Flags = Door;
-		}
-
-		Locked
-		{
-			Default
-			{
-				Tiles = 0x5C-0x63;
-				Pattern = "TUC/Wall0132", "TUC/Wall0133";
-				AltPattern = "WLF3LK%iG", "WLF3LK%iF";
-				Flags = Door;
-			}
-
-			0x5C
-			{
-				Key = 1;
-			}
-
-			0x5D
-			{
-				Key = 1;
-			}
-
-			0x5E
-			{
-				Key = 2;
-			}
-
-			0x5F
-			{
-				Key = 2;
-			}
-
-			0x60
-			{
-				Key = 3;
-			}
-
-			0x61
-			{
-				Key = 3;
-			}
-
-			0x62
-			{
-				Key = 4;
-			}
-
-			0x63
-			{
-				Key = 4;
-			}
-		}
-
-		Elevator
-		{
-			Default
-			{
-				Tiles = 0x64, 0x65;
-				Pattern = "TUC/Wall0130", "TUC/Wall0131";
-				Flags = Door;
-			}
-		}
+		106 = "RadioactiveMist";
 	}
 }
 

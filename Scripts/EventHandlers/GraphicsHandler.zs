@@ -170,6 +170,7 @@ class WolfGraphicParser
 		GP_FLIPX = 1,
 		GP_FLIPY = 2,
 		GP_TRANSPARENT = 4,
+		GP_NOMASK = 8,
 	};
 
 	static void Parse(in out WolfGraphicParser parsedgraphics, in out GraphicDataFile d, in out Array<String> touchedcanvas)
@@ -297,12 +298,13 @@ class WolfGraphicParser
 						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
 						for (int t = 0; t < texture.children.Size(); t++)
 						{
-							GraphicParserFlags flags = 0;
+							GraphicParserFlags flags = GP_TRANSPARENT;
 							if (texture.children[t].children.Size())
 							{
 								for (int p = 0; p < texture.children[t].children.Size(); p++)
 								{
 									if (texture.children[t].children[p].keyname ~== "Flip") { flags |= GP_FLIPX; }
+									if (texture.children[t].children[p].keyname ~== "NoShadowMask") { flags |= GP_NOMASK; }
 								}
 							}
 
@@ -382,7 +384,8 @@ class WolfGraphicParser
 		currentcanvas.Dim(0x0, 0.0, 0, 0, 64, 64, overwritealpha:true);
 
 		TextureID overlay;
-		if (flags & GP_TRANSPARENT)
+		bool masked = (flags & GP_TRANSPARENT && !(flags & GP_NOMASK));
+		if (masked)
 		{
 			overlay = TexMan.CheckForTexture("Materials/Shadows/" .. graphic.graphicname .. ".png", TexMan.Type_Any);
 			if (overlay.IsValid())
@@ -404,7 +407,7 @@ class WolfGraphicParser
 			}
 		}
 
-		if (flags & GP_TRANSPARENT)
+		if (masked)
 		{
 			if (overlay.IsValid())
 			{

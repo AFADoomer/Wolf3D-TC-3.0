@@ -1,144 +1,370 @@
 Default
 {
-	Walls
+	0
 	{
-		Default
-		{
-			Tiles = 0x01-0x59, 0x66-0x69;
-			Pattern = "Wolf3D/Wall%04i";
-			Flags = Wall;
-		}
-
-		0x10
-		{
-			Flags = Directional;
-		}
-
-		0x15
-		{
-			Special = 80, 10;
-			Flags = Directional;
-		}
-
-		0x16
-		{
-			Flags = Directional;
-		}
-
-		0x33
-		{
-			Flags = DoorFrame;
-		}
-
-		0x40
-		{
-			Flags = Invalid;
-		}
-
-		0x55
-		{
-			Pattern = "Wolf3D/Wall0040", "Wolf3D/Wall0041";
-			Flags = Directional;
-		}
-	}
-
-	Floors
-	{
-		Default
-		{
-			Tiles = 0x00, 0x6A-0x8F;
-			Flags = Floor;
-		}
-
-		0x6A
-		{
-			Flags = Ambush;
-		}
-
-		0x6B
-		{
-			Flags = SecretExit;
-		}
-	}
-
-	Doors
-	{
-		Default
-		{
-			Tiles = 0x5A, 0x5B;
-			Pattern = "Wolf3D/Wall0098", "Wolf3D/Wall0099";
-			Flags = Door;
-		}
-
-		Locked
+		Walls
 		{
 			Default
 			{
-				Tiles = 0x5C-0x63;
-				Pattern = "Wolf3D/Wall0104", "Wolf3D/Wall0105";
-				AltPattern = "WLF0LK%iG", "WLF0LK%iF";
-				Flags = Door;
+				Tiles = 0x01-0x59, 0x66-0x69;
+				Pattern = "Wolf3D/Wall%04i";
+				Flags = Wall;
 			}
 
-			0x5C
+			0x10
 			{
-				Key = 1;
+				Flags = Directional;
 			}
 
-			0x5D
+			0x15
 			{
-				Key = 1;
+				Special = 80, 10;
+				Flags = Directional;
 			}
 
-			0x5E
+			0x16
 			{
-				Key = 2;
+				Flags = Directional;
 			}
 
-			0x5F
+			0x33
 			{
-				Key = 2;
+				Flags = DoorFrame;
 			}
 
-			0x60
+			0x40
 			{
-				Key = 3;
+				Flags = Invalid;
 			}
 
-			0x61
+			0x55
 			{
-				Key = 3;
-			}
-
-			0x62
-			{
-				Key = 4;
-			}
-
-			0x63
-			{
-				Key = 4;
+				Pattern = "Wolf3D/Wall0040", "Wolf3D/Wall0041";
+				Flags = Directional;
 			}
 		}
 
-		Elevator
+		Floors
 		{
 			Default
 			{
-				Tiles = 0x64, 0x65;
-				Pattern = "Wolf3D/Wall0102", "Wolf3D/Wall0103";
+				Tiles = 0x00, 0x6A-0x8F;
+				Flags = Floor;
+			}
+
+			0x6A
+			{
+				Flags = Ambush;
+			}
+
+			0x6B
+			{
+				Flags = SecretExit;
+			}
+		}
+
+		Doors
+		{
+			Default
+			{
+				Tiles = 0x5A, 0x5B;
+				Pattern = "Wolf3D/Wall0098", "Wolf3D/Wall0099";
 				Flags = Door;
+			}
+
+			Locked
+			{
+				Default
+				{
+					Tiles = 0x5C-0x63;
+					Pattern = "Wolf3D/Wall0104", "Wolf3D/Wall0105";
+					AltPattern = "WLF0LK%iG", "WLF0LK%iF";
+					Flags = Door;
+				}
+
+				0x5C
+				{
+					Key = 1;
+				}
+
+				0x5D
+				{
+					Key = 1;
+				}
+
+				0x5E
+				{
+					Key = 2;
+				}
+
+				0x5F
+				{
+					Key = 2;
+				}
+
+				0x60
+				{
+					Key = 3;
+				}
+
+				0x61
+				{
+					Key = 3;
+				}
+
+				0x62
+				{
+					Key = 4;
+				}
+
+				0x63
+				{
+					Key = 4;
+				}
+			}
+
+			Elevator
+			{
+				Default
+				{
+					Tiles = 0x64, 0x65;
+					Pattern = "Wolf3D/Wall0102", "Wolf3D/Wall0103";
+					Flags = Door;
+				}
+			}
+		}
+
+		Comments
+		{
+			Default
+			{
+				Tiles = 0x96-0xE3;
+				Pattern = "Fonts/Tiles/%04x.png";
+				Flags = Font;
 			}
 		}
 	}
 
-	Comments
+	// Translation table for Wolfenstein map things to GZDoom actor classes
+	//
+	// Format of entries:
+	//   ID = "Class", Skill, Angle, Patrolling
+	//
+	// Classes 'fall back' to previous entry, so if only Wolf3D is defined, all games will use that
+	//
+	// All SoD-only actors are defined at Wolf3D level to allow modding/mapping flexibility.  They technically
+	// are cross-game compatible, but the code in the Wolf engine was #ifdef'ed out between versions
+	1
 	{
-		Default
-		{
-			Tiles = 0x96-0xE3;
-			Pattern = "Fonts/Tiles/%04x.png";
-			Flags = Font;
-		}
+		// Objects
+		23 = "PoolofWater";
+		24 = "OilDrum";
+		25 = "TableandChairs";
+		26 = "FloorLamp";
+		27 = "HangingChandelier";
+		28 = "HangingSkeleton";
+		29 = "DogFood";
+		30 = "StoneColumn";
+		31 = "Plant";
+		32 = "Skeleton";
+		33 = "Sink";
+		34 = "PlantinVase";
+		35 = "Vase";
+		36 = "Table";
+		37 = "GreenCeilingLight";
+		38 = "KitchenUtensils";
+		39 = "SuitofArmor";
+		40 = "EmptyCage";
+		41 = "Cage";
+		42 = "Bones";
+		43 = "YellowKey";
+		44 = "BlueKey";
+		45 = "Bed";
+		46 = "Basket";
+		47 = "PlateofFood";
+		48 = "FirstAidKit";
+		49 = "WolfClip";
+		50 = "WolfMachineGun";
+		51 = "WolfChaingun";
+		52 = "JeweledCross";
+		53 = "Chalice";
+		54 = "Chest";
+		55 = "Crown";
+		56 = "Life";
+		57 = "BoneswithBlood";
+		58 = "WoodBarrel";
+		59 = "WellwithWater";
+		60 = "DryWell";
+		61 = "PoolofBlood";
+		62 = "NaziFlag";
+		63 = "AardwolfSign";
+		64 = "CrushedBones1";
+		65 = "CrushedBones2";
+		66 = "CrushedBody";
+		67 = "HangingUtensils";
+		68 = "Stove";
+		69 = "SpearRack";
+		70 = "HangingVines";
+		71 = "BrownColumn";
+		72 = "WolfClipBox";
+		73 = "Truck";
+		74 = "SpearofDestiny";
+		75 = "WolfRocketPickup";
+		76 = "WolfRocketCrate";
+		77 = "WolfRocketLauncher";
+		78 = "WolfGas";
+		79 = "MoldyCheese";
+		80 = "WolfFlameThrower";
+		81 = "WolfKnife";
+		82 = "WolfPistol";
+		83 = "WolfBerserk";
+		84 = "WolfBackpack";
+		85 = "ExplosiveOilDrum";
+		86 = "BreakableColumn";
+		87 = "RedKey";
+		88 = "GreenKey";
+		89 = "JeweledScepter";
+
+		// Turn Markers
+		90 = "Turn", 0, 0, 0;
+		91 = "Turn45", 0, 45, 0;
+		92 = "Turn90", 0, 90, 0;
+		93 = "Turn135", 0, 135, 0;
+		94 = "Turn180", 0, 180, 0;
+		95 = "Turn225", 0, 225, 0;
+		96 = "Turn270", 0, 270, 0;
+		97 = "Turn315", 0, 315, 0;
+
+		// Secret Door (doesn't spawn anything)
+		//98
+
+		// Enemies
+		106 = "WolfSpectre";
+		107 = "AngelOfDeath";
+		108 = "Guard", 1, 0, 0;
+		109 = "Guard", 1, 90, 0;
+		110 = "Guard", 1, 180, 0;
+		111 = "Guard", 1, 270, 0;
+		112 = "Guard", 1, 0, 1;
+		113 = "Guard", 1, 90, 1;
+		114 = "Guard", 1, 180, 1;
+		115 = "Guard", 1, 270, 1;
+		116 = "Officer", 1, 0, 0;
+		117 = "Officer", 1, 90, 0;
+		118 = "Officer", 1, 180, 0;
+		119 = "Officer", 1, 270, 0;
+		120 = "Officer", 1, 0, 1;
+		121 = "Officer", 1, 90, 1;
+		122 = "Officer", 1, 180, 1;
+		123 = "Officer", 1, 270, 1;
+		124 = "DeadGuard";
+		125 = "TransGrosse";
+		126 = "SS", 1, 0, 0;
+		127 = "SS", 1, 90, 0;
+		128 = "SS", 1, 180, 0;
+		129 = "SS", 1, 270, 0;
+		130 = "SS", 1, 0, 1;
+		131 = "SS", 1, 90, 1;
+		132 = "SS", 1, 180, 1;
+		133 = "SS", 1, 270, 1;
+		138 = "Dog", 1, 0, 1;
+		139 = "Dog", 1, 90, 1;
+		140 = "Dog", 1, 180, 1;
+		141 = "Dog", 1, 270, 1;
+		142 = "UberMutant";
+		143 = "BarnacleWilhelm";
+		144 = "Guard", 3, 0, 0;
+		145 = "Guard", 3, 90, 0;
+		146 = "Guard", 3, 180, 0;
+		147 = "Guard", 3, 270, 0;
+		148 = "Guard", 3, 0, 1;
+		149 = "Guard", 3, 90, 1;
+		150 = "Guard", 3, 180, 1;
+		151 = "Guard", 3, 270, 1;
+		152 = "Officer", 3, 0, 0;
+		153 = "Officer", 3, 90, 0;
+		154 = "Officer", 3, 180, 0;
+		155 = "Officer", 3, 270, 0;
+		156 = "Officer", 3, 0, 1;
+		157 = "Officer", 3, 90, 1;
+		158 = "Officer", 3, 180, 1;
+		159 = "Officer", 3, 270, 1;
+		160 = "FakeHitler";
+		161 = "DeathKnight";
+		162 = "SS", 3, 0, 0;
+		163 = "SS", 3, 90, 0;
+		164 = "SS", 3, 180, 0;
+		165 = "SS", 3, 270, 0;
+		166 = "SS", 3, 0, 1;
+		167 = "SS", 3, 90, 1;
+		168 = "SS", 3, 180, 1;
+		169 = "SS", 3, 270, 1;
+		174 = "Dog", 3, 0, 1;
+		175 = "Dog", 3, 90, 1;
+		176 = "Dog", 3, 180, 1;
+		177 = "Dog", 3, 270, 1;
+		178 = "Hitler";
+		179 = "Fettgesicht";
+		180 = "Guard", 4, 0, 0;
+		181 = "Guard", 4, 90, 0;
+		182 = "Guard", 4, 180, 0;
+		183 = "Guard", 4, 270, 0;
+		184 = "Guard", 4, 0, 1;
+		185 = "Guard", 4, 90, 1;
+		186 = "Guard", 4, 180, 1;
+		187 = "Guard", 4, 270, 1;
+		188 = "Officer", 4, 0, 0;
+		189 = "Officer", 4, 90, 0;
+		190 = "Officer", 4, 180, 0;
+		191 = "Officer", 4, 270, 0;
+		192 = "Officer", 4, 0, 1;
+		193 = "Officer", 4, 90, 1;
+		194 = "Officer", 4, 180, 1;
+		195 = "Officer", 4, 270, 1;
+		196 = "DrSchabbs";
+		197 = "GretelGrosse";
+		198 = "SS", 4, 0, 0;
+		199 = "SS", 4, 90, 0;
+		200 = "SS", 4, 180, 0;
+		201 = "SS", 4, 270, 0;
+		202 = "SS", 4, 0, 1;
+		203 = "SS", 4, 90, 1;
+		204 = "SS", 4, 180, 1;
+		205 = "SS", 4, 270, 1;
+		210 = "Dog", 4, 0, 1;
+		211 = "Dog", 4, 90, 1;
+		212 = "Dog", 4, 180, 1;
+		213 = "Dog", 4, 270, 1;
+		214 = "HansGrosse";
+		215 = "Giftmacher";
+		216 = "Mutant", 1, 0, 0;
+		217 = "Mutant", 1, 90, 0;
+		218 = "Mutant", 1, 180, 0;
+		219 = "Mutant", 1, 270, 0;
+		220 = "Mutant", 1, 0, 1;
+		221 = "Mutant", 1, 90, 1;
+		222 = "Mutant", 1, 180, 1;
+		223 = "Mutant", 1, 270, 1;
+		224 = "Blinky";
+		225 = "Clyde";
+		226 = "Pinky";
+		227 = "Inky";
+		234 = "Mutant", 3, 0, 0;
+		235 = "Mutant", 3, 90, 0;
+		236 = "Mutant", 3, 180, 0;
+		237 = "Mutant", 3, 270, 0;
+		238 = "Mutant", 3, 0, 1;
+		239 = "Mutant", 3, 90, 1;
+		240 = "Mutant", 3, 180, 1;
+		241 = "Mutant", 3, 270, 1;
+		252 = "Mutant", 4, 0, 0;
+		253 = "Mutant", 4, 90, 0;
+		254 = "Mutant", 4, 180, 0;
+		255 = "Mutant", 4, 270, 0;
+		256 = "Mutant", 4, 0, 1;
+		257 = "Mutant", 4, 90, 1;
+		258 = "Mutant", 4, 180, 1;
+		259 = "Mutant", 4, 270, 1;
+		65535 = "ActorDisplay";
 	}
 }
