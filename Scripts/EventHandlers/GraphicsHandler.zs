@@ -273,7 +273,7 @@ class WolfGraphicParser
 				}
 				else
 				{
-					newgraphic.graphicname = String.Format("Wolf3D/WALL%04i.png", a);
+					newgraphic.graphicname = String.Format("Wolf3D/WALL%04i", a);
 					CreateGraphic(newgraphic);
 
 					touchedcanvas.push(newgraphic.graphicname);
