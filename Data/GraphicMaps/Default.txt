@@ -1111,25 +1111,105 @@ Default // Wolf3D
 		"BJJUF0";
 		"BJJUG0";
 		"BJJUH0";
-		"CKNIA0";
-		"CKNIB0";
-		"CKNIC0";
-		"CKNID0";
-		"CKNIE0";
-		"CLUGA0";
-		"CLUGB0";
-		"CLUGC0";
-		"CLUGD0";
-		"CLUGE0";
-		"CMGUA0";
-		"CMGUB0";
-		"CMGUC0";
-		"CMGUD0";
-		"CMGUE0";
-		"CCGUA0";
-		"CCGUB0";
-		"CCGUC0";
-		"CCGUD0";
-		"CCGUE0";
+
+		414
+		{
+			"CKNIA0" { NoShadowMask; }
+		}
+
+		415
+		{
+			"CKNIB0" { NoShadowMask; }
+		}
+
+		416
+		{
+			"CKNIC0" { NoShadowMask; }
+		}
+
+		417
+		{
+			"CKNID0" { NoShadowMask; }
+		}
+
+		418
+		{
+			"CKNIE0" { NoShadowMask; }
+		}
+
+		419
+		{
+			"CLUGA0" { NoShadowMask; }
+		}
+
+		420
+		{
+			"CLUGB0" { NoShadowMask; }
+		}
+
+		421
+		{
+			"CLUGC0" { NoShadowMask; }
+		}
+
+		422
+		{
+			"CLUGD0" { NoShadowMask; }
+		}
+
+		423
+		{
+			"CLUGE0" { NoShadowMask; }
+		}
+
+		424
+		{
+			"CMGUA0" { NoShadowMask; }
+		}
+
+		425
+		{
+			"CMGUB0" { NoShadowMask; }
+		}
+
+		426
+		{
+			"CMGUC0" { NoShadowMask; }
+		}
+
+		427
+		{
+			"CMGUD0" { NoShadowMask; }
+		}
+
+		428
+		{
+			"CMGUE0" { NoShadowMask; }
+		}
+
+		429
+		{
+			"CCGUA0" { NoShadowMask; }
+		}
+
+		430
+		{
+			"CCGUB0" { NoShadowMask; }
+		}
+
+		431
+		{
+			"CCGUC0" { NoShadowMask; }
+		}
+
+		432
+		{
+			"CCGUD0" { NoShadowMask; }
+		}
+
+		433
+		{
+			"CCGUE0" { NoShadowMask; }
+		}
 	}
 }

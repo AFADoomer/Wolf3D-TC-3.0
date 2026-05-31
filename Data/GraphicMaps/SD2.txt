@@ -1228,25 +1228,105 @@ SD2
 		"LB10P0";
 		"LB10Q0";
 		"LB10R0";
-		"KNILA0";
-		"KNILB0";
-		"KNILC0";
-		"KNILD0";
-		"KNILE0";
-		"LUGLA0";
-		"LUGLB0";
-		"LUGLC0";
-		"LUGLD0";
-		"LUGLE0";
-		"MGULA0";
-		"MGULB0";
-		"MGULC0";
-		"MGULD0";
-		"MGULE0";
-		"CGULA0";
-		"CGULB0";
-		"CGULC0";
-		"CGULD0";
-		"CGULE0";
+
+		399
+		{
+			"KNILA0" { NoShadowMask; }
+		}
+
+		400
+		{
+			"KNILB0" { NoShadowMask; }
+		}
+
+		401
+		{
+			"KNILC0" { NoShadowMask; }
+		}
+
+		402
+		{
+			"KNILD0" { NoShadowMask; }
+		}
+
+		403
+		{
+			"KNILE0" { NoShadowMask; }
+		}
+
+		404
+		{
+			"LUGLA0" { NoShadowMask; }
+		}
+
+		405
+		{
+			"LUGLB0" { NoShadowMask; }
+		}
+
+		406
+		{
+			"LUGLC0" { NoShadowMask; }
+		}
+
+		407
+		{
+			"LUGLD0" { NoShadowMask; }
+		}
+
+		408
+		{
+			"LUGLE0" { NoShadowMask; }
+		}
+
+		409
+		{
+			"MGULA0" { NoShadowMask; }
+		}
+
+		410
+		{
+			"MGULB0" { NoShadowMask; }
+		}
+
+		411
+		{
+			"MGULC0" { NoShadowMask; }
+		}
+
+		412
+		{
+			"MGULD0" { NoShadowMask; }
+		}
+
+		413
+		{
+			"MGULE0" { NoShadowMask; }
+		}
+
+		414
+		{
+			"CGULA0" { NoShadowMask; }
+		}
+
+		415
+		{
+			"CGULB0" { NoShadowMask; }
+		}
+
+		416
+		{
+			"CGULC0" { NoShadowMask; }
+		}
+
+		417
+		{
+			"CGULD0" { NoShadowMask; }
+		}
+
+		418
+		{
+			"CGULE0" { NoShadowMask; }
+		}
 	}
 }

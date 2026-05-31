@@ -752,25 +752,105 @@ SD1
 		"WB10N0";
 		"WB10O0";
 		"WB10P0";
-		"CKNIA0";
-		"CKNIB0";
-		"CKNIC0";
-		"CKNID0";
-		"CKNIE0";
-		"CLUGA0";
-		"CLUGB0";
-		"CLUGC0";
-		"CLUGD0";
-		"CLUGE0";
-		"CMGUA0";
-		"CMGUB0";
-		"CMGUC0";
-		"CMGUD0";
-		"CMGUE0";
-		"CCGUA0";
-		"CCGUB0";
-		"CCGUC0";
-		"CCGUD0";
-		"CCGUE0";
+
+		399
+		{
+			"CKNIA0" { NoShadowMask; }
+		}
+
+		400
+		{
+			"CKNIB0" { NoShadowMask; }
+		}
+
+		401
+		{
+			"CKNIC0" { NoShadowMask; }
+		}
+
+		402
+		{
+			"CKNID0" { NoShadowMask; }
+		}
+
+		403
+		{
+			"CKNIE0" { NoShadowMask; }
+		}
+
+		404
+		{
+			"CLUGA0" { NoShadowMask; }
+		}
+
+		405
+		{
+			"CLUGB0" { NoShadowMask; }
+		}
+
+		406
+		{
+			"CLUGC0" { NoShadowMask; }
+		}
+
+		407
+		{
+			"CLUGD0" { NoShadowMask; }
+		}
+
+		408
+		{
+			"CLUGE0" { NoShadowMask; }
+		}
+
+		409
+		{
+			"CMGUA0" { NoShadowMask; }
+		}
+
+		410
+		{
+			"CMGUB0" { NoShadowMask; }
+		}
+
+		411
+		{
+			"CMGUC0" { NoShadowMask; }
+		}
+
+		412
+		{
+			"CMGUD0" { NoShadowMask; }
+		}
+
+		413
+		{
+			"CMGUE0" { NoShadowMask; }
+		}
+
+		414
+		{
+			"CCGUA0" { NoShadowMask; }
+		}
+
+		415
+		{
+			"CCGUB0" { NoShadowMask; }
+		}
+
+		416
+		{
+			"CCGUC0" { NoShadowMask; }
+		}
+
+		417
+		{
+			"CCGUD0" { NoShadowMask; }
+		}
+
+		418
+		{
+			"CCGUE0" { NoShadowMask; }
+		}
 	}
 }
