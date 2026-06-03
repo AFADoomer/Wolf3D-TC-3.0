@@ -995,7 +995,7 @@ class ClassicNazi : ClassicBase
 	{
 		Super.PostBeginPlay();
 
-		if (bPatrolling) { SetStateLabel("Spawn.Patrol"); }
+		if (!bDormant && bPatrolling) { SetStateLabel("Spawn.Patrol"); }
 		else { SetStateLabel("Spawn.Stand"); }
 	}
 
@@ -1143,7 +1143,10 @@ class Dog : ClassicNazi
 			"####" A 0 A_SetAngle(angle + 180);
 			Goto Spawn.Patrol;
 		Spawn.Stand:
-			"####" AAAABBBBCCCCDDDD 1 A_LookEx (0, 0, 0, 2048, 0, "See");
+			"####" AAAABBBBCCCCDDDD 1 {
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
 			Loop;
 		Melee:
 			"####" E 0 A_Stop();
@@ -1644,9 +1647,12 @@ class FakeHitler : ClassicNazi
 
 	States
 	{
-		Spawn:
-			WHGT A 0;
-			Goto Spawn.Stand;
+		Spawn.Stand:
+			WHGT AAAAAA 4 {
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
+				A_LookEx (0, 0, 0, 2048, 0, "See");
+			}
+			Loop;
 		Chase:
 			WHGT AAAAA 1 A_NaziChase(chance:4);
 			WHGT A 1;
@@ -1878,20 +1884,20 @@ class Fettgesicht : ClassicBoss
 			Goto Chase;
 		Death:
 			"####" A 70 A_Scream();
-			"####" JK 5;
-			"####" L 1;
-			"####" L 4 A_WolfBossDeath();
+			"####" IJ 5;
+			"####" K 1;
+			"####" K 4 A_WolfBossDeath();
 		Dead:
-			"####" M -1;
+			"####" L -1;
 			Stop;
 		Death.Cam:
-			"####" M 5 A_FaceTarget();
-			"####" M 65 RemoveEnemies();
+			"####" L 5 A_FaceTarget();
+			"####" L 65 RemoveEnemies();
 			"####" A 60;
 			"####" A 70 A_Scream();
-			"####" JK 5;
-			"####" L 5;
-			"####" M -1;
+			"####" IJ 5;
+			"####" K 5;
+			"####" L -1;
 			Stop;
 	}
 }
@@ -1924,7 +1930,10 @@ class PacManGhost : ClassicBase
 	States
 	{
 		Spawn:
-			"####" AAAAABBBBB 1 A_Look;
+			"####" AAAAABBBBB 1 {
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
+				A_Look();
+			}
 			Loop;
 		Chase:
 			"####" AAAAABBBBB 1 A_NaziChase();
@@ -2354,11 +2363,11 @@ class BarnacleWilhelm : Fettgesicht
 	{
 		Death:
 			"####" A 35 A_Scream();
-			"####" J 5 A_DeathDrop();
-			"####" K 5;
-			"####" L 5 A_WolfBossDeath();
+			"####" I 5 A_DeathDrop();
+			"####" J 5;
+			"####" K 5 A_WolfBossDeath();
 		Dead:
-			"####" M -1;
+			"####" L -1;
 			Stop;
 	}
 }
@@ -2413,7 +2422,10 @@ class WolfSpectre : ClassicNazi
 	States
 	{
 		Spawn.Stand:
-			"####" AAAABBBBCCCCDDDD 1 A_Look;
+			"####" AAAABBBBCCCCDDDD 1 {
+				if (bDormant || bDeafandBlind || GetAge() < 2 || GameHandler.CheckFizzle()) { return; }
+				A_Look;
+			}
 			Loop;
 		Chase:
 			"####" AAAAABBBBBCCCCCDDDDD 1 A_NaziChase();

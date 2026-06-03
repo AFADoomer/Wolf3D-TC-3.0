@@ -35,6 +35,7 @@ Class TileInfo
 		TILE_DOORFRAME = 128,
 		TILE_INVALID = 256,
 		TILE_MATCHKEY = 512,
+		TILE_DORMANT = 1024,
 	};
 
 	uint id;
@@ -124,6 +125,7 @@ Class TileInfo
 			else if (flag ~== "DoorFrame") { flags |= TileInfo.TILE_DOORFRAME; }
 			else if (flag ~== "Invalid") { flags |= TileInfo.TILE_INVALID; }
 			else if (flag ~== "MatchKey") { flags |= TileInfo.TILE_MATCHKEY; }
+			else if (flag ~== "Dormant") { flags |= TileInfo.TILE_DORMANT; }
 		}
 	}
 
@@ -1322,6 +1324,8 @@ class ParsedMap
 
 								mo.ChangeTID(t);
 								mo.bDropped = false;
+
+								if (tile && tile.flags & TileInfo.TILE_DORMANT) { mo.bDormant = true; }
 
 								if (ClassicNazi(mo)) { ClassicNazi(mo).bPatrolling = am.GetBool("Patrolling"); }
 							}
