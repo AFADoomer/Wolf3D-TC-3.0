@@ -1116,10 +1116,10 @@ Sprite WBO5E1, 64, 64 { }
 Sprite WBO5F1, 64, 64 { }
 Sprite WBO5G1, 64, 64 { }
 Sprite WBO5H1, 64, 64 { }
+Sprite WBO5I0, 64, 64 { }
 Sprite WBO5J0, 64, 64 { }
 Sprite WBO5K0, 64, 64 { }
 Sprite WBO5L0, 64, 64 { }
-Sprite WBO5M0, 64, 64 { }
 
 // Pac Man Ghosts
 Sprite GHO1A0, 64, 64 { }
@@ -1729,10 +1729,10 @@ Sprite WBO9E1, 64, 64 { }
 Sprite WBO9F1, 64, 64 { }
 Sprite WBO9G1, 64, 64 { }
 Sprite WBO9H1, 64, 64 { }
+Sprite WBO9I0, 64, 64 { }
 Sprite WBO9J0, 64, 64 { }
 Sprite WBO9K0, 64, 64 { }
 Sprite WBO9L0, 64, 64 { }
-Sprite WBO9M0, 64, 64 { }
 
 // Ubermutant
 Sprite WBO6A0, 64, 64 { }
@@ -1817,10 +1817,10 @@ Sprite LBO9E0, 64, 64 { }
 Sprite LBO9F0, 64, 64 { }
 Sprite LBO9G0, 64, 64 { }
 Sprite LBO9H0, 64, 64 { }
+Sprite LBO9I0, 64, 64 { }
 Sprite LBO9J0, 64, 64 { }
 Sprite LBO9K0, 64, 64 { }
 Sprite LBO9L0, 64, 64 { }
-Sprite LBO9M0, 64, 64 { }
 
 // The Axe
 Sprite LBO6A0, 64, 64 { }

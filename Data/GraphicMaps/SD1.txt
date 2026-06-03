@@ -688,7 +688,6 @@ SD1
 		"WBO2H0";
 		"WBO2I0";
 		"WBO2J0";
-		"WBO2K0";
 		"WBO9A1";
 		"WBO9B1";
 		"WBO9C1";
@@ -698,6 +697,7 @@ SD1
 		"WBO9G1";
 		"WBO9H1";
 		"WBO9J0";
+		"WBO9I0";
 		"WBO9K0";
 		"WBO9L0";
 		"WBO6A0";

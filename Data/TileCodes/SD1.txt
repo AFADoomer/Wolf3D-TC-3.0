@@ -11,6 +11,11 @@ SD1
 				Flags = Wall;
 			}
 
+			0x10
+			{
+				Flags = Directional;
+			}
+
 			0x15
 			{
 				Special = 80, 10;

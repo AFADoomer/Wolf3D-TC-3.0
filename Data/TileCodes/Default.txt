@@ -61,6 +61,11 @@ Default
 			{
 				Flags = SecretExit;
 			}
+
+			0xFFFF
+			{
+				Flags = Dormant;
+			}
 		}
 
 		Doors
@@ -303,7 +308,7 @@ Default
 		175 = "Dog", 3, 90, 1;
 		176 = "Dog", 3, 180, 1;
 		177 = "Dog", 3, 270, 1;
-		178 = "Hitler";
+		178 = "HitlerMech";
 		179 = "Fettgesicht";
 		180 = "Guard", 4, 0, 0;
 		181 = "Guard", 4, 90, 0;

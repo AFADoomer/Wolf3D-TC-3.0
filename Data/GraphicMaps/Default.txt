@@ -1099,10 +1099,10 @@ Default // Wolf3D
 		"WBO5F1";
 		"WBO5G1";
 		"WBO5H1";
+		"WBO5I0";
 		"WBO5J0";
 		"WBO5K0";
 		"WBO5L0";
-		"WBO5M0";
 		"BJJUA0";
 		"BJJUB0";
 		"BJJUC0";
