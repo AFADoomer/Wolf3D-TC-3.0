@@ -146,48 +146,74 @@ class ReplacementHandler : StaticEventHandler
 		MapHandler handler = MapHandler.Get();
 		if (handler)
 		{
-			thismap = handler.curmap;
-			if (!thismap) { thismap = handler.queuedmap; }
-			levelnum = thismap.mapnum;
+			if (level.time > 0 && handler.curmap) { thismap = handler.curmap; }
+			else if (handler.queuedmap) { thismap = handler.queuedmap; }
+			if (thismap) { levelnum = thismap.mapnum; }
 		}
-		else { levelnum = level.levelnum; }
+
+		if (!levelnum) { levelnum = level.levelnum; }
 
 		if (val < 4 && levelnum <= 100) { return; }
 
-		static const String WolfCeilings[] = {"1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "1D", "BF", "4E", "4E", "4E", "1D", "8D", "4E", "1D", "2D", "1D", "8D", "1D", "1D", "1D", "1D", "1D", "2D", "DD", "1D", "1D", "98", "1D", "9D", "2D", "DD", "DD", "9D", "2D", "4D", "1D", "DD", "7D", "1D", "2D", "2D", "DD", "D7", "1D", "1D", "1D", "2D", "1D", "1D", "1D", "1D", "DD", "DD", "7D", "DD", "DD", "DD"};
-		static const String SoDCeilings[] = {"6F", "4F", "1D", "DE", "DF", "2E", "7F", "9E", "AE", "7F", "1D", "DE", "DF", "DE", "DF", "DE", "E1", "DC", "2E", "1D", "DC"};
-
-		String ceilname = "1D";
-		String floorname = "FLOOR";
+		static const int WolfCeilings[] = {0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0xBF, 0x4E, 0x4E, 0x4E, 0x1D, 0x8D, 0x4E, 0x1D, 0x2D, 0x1D, 0x8D, 0x1D, 0x1D, 0x1D, 0x1D, 0x1D, 0x2D, 0xDD, 0x1D, 0x1D, 0x98, 0x1D, 0x9D, 0x2D, 0xDD, 0xDD, 0x9D, 0x2D, 0x4D, 0x1D, 0xDD, 0x7D, 0x1D, 0x2D, 0x2D, 0xDD, 0xD7, 0x1D, 0x1D, 0x1D, 0x2D, 0x1D, 0x1D, 0x1D, 0x1D, 0xDD, 0xDD, 0x7D, 0xDD, 0xDD, 0xDD};
+		static const int SoDCeilings[] = {0x6F, 0x4F, 0x1D, 0xDE, 0xDF, 0x2E, 0x7F, 0x9E, 0xAE, 0x7F, 0x1D, 0xDE, 0xDF, 0xDE, 0xDF, 0xDE, 0xE1, 0xDC, 0x2E, 0x1D, 0xDC};
 
 		int h, gamemode = -1;
 		if (thismap) { gamemode = thismap.gametype; }
 		if (gamemode < 0) { [h, gamemode] = Game.IsSoD(); }
 
-		if (gamemode > 0) { ceilname = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
-		else { ceilname = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
+		int ceilingnum = 0x1D;
+		if (gamemode > 0) { ceilingnum = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
+		else { ceilingnum = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
 
+		String ceilname, floorname;
 		TextureID floortex, ceiltex;
 
 		switch (val)
 		{
 			case 3:
-				floorname = "FLOOR" .. (levelnum / 5) % 8;
-				ceilname = "CEIL" .. levelnum % 7;
-				break;
-			case 2:
-				floorname = "FLOOR" .. (levelnum / 5) % 8;
-				ceilname = "CEIL" .. ceilname;
-				break;
-			case 1:
-				floorname = "FLOORDEF";
-				ceilname = "CEIL" .. ceilname;
-			default:
-				break;
-		}
+				floorname = String.Format("Textures/Flats/FLAT%02x.png", ceilingnum - 1);
+				floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
 
-		ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
-		floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
+				ceilname = String.Format("Textures/Flats/FLAT%02x.png", ceilingnum);
+				ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
+			case 2:
+				if (!floortex.IsValid())
+				{
+					floorname = String.Format("Textures/Flats/FLAT%02x.png", ceilingnum - 1);
+					floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
+				}
+
+				if (!ceiltex.IsValid())
+				{
+					ceilname = String.Format("CEIL%02x", ceilingnum);
+					ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
+				}
+			case 1:
+				if (!floortex.IsValid())
+				{
+					floorname = "Textures/Flats/FLAT01.png";
+					floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
+				}
+
+				if (!ceiltex.IsValid())
+				{
+					ceilname = String.Format("CEIL%02x", ceilingnum);
+					ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
+				}
+			default:
+				if (!floortex.IsValid())
+				{
+					floorname = "FLOOR";
+					floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
+				}
+
+				if (!ceiltex.IsValid())
+				{
+					ceilname = String.Format("%02x", ceilingnum);
+					ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
+				}
+		}
 
 		for (int s = 0; s < level.sectors.Size(); s++)
 		{
@@ -205,18 +231,18 @@ class ReplacementHandler : StaticEventHandler
 
 				if (f > 0)
 				{
-					int floornum = (f & 0xFF00) >> 8;
+					int floornum = f & 0xFF;
 					if (floornum > 0)
 					{
-						String texname = val > 0 ? val > 1 ? String.Format("FLOOR%02x", floornum) : String.Format("CEIL%02x", floornum) : String.Format("%02x", floornum);
+						String texname = val > 0 ? val > 1 ? String.Format("Textures/Flats/FLAT%02x.png", floornum) : String.Format("CEIL%02x", floornum) : String.Format("%02x", floornum);
 						TextureID floor = TexMan.CheckForTexture(texname, TexMan.Type_Any);
 						if (floor.IsValid()) { sec.SetTexture(sector.floor, floor); }
 					}
 
-					int ceilingnum = f & 0xFF;
+					int ceilingnum = (f & 0xFF00) >> 8;
 					if (ceilingnum > 0)
 					{
-						String texname = val > 0 ? val > 2 ? String.Format("FLOOR%02x", ceilingnum) : String.Format("CEIL%02x", ceilingnum) : String.Format("%02x", ceilingnum);
+						String texname = val > 0 ? val > 2 ? String.Format("Textures/Flats/FLAT%02x.png", ceilingnum) : String.Format("CEIL%02x", ceilingnum) : String.Format("%02x", ceilingnum);
 						TextureID ceiling = TexMan.CheckForTexture(texname, TexMan.Type_Any);
 						if (ceiling.IsValid()) { sec.SetTexture(sector.ceiling, ceiling); }
 					}
