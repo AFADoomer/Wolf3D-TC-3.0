@@ -161,13 +161,13 @@ class WolfPostProcessor : LevelPostProcessor
 					[t1, tile1] = handler.TileAt((x1, y1), handler.queuedmap);
 					[t2, tile2] = handler.TileAt((x2, y2), handler.queuedmap);
 
-					if (tile1 && tile1.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR && tile2 && tile2.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) { continue; } // Void space; ignore
-					else if (tile1 && tile1.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) // t2 is floor, t1 is a wall
+					if (tile1 && (tile1.flags & (TileInfo.TILE_SOLID | TileInfo.TILE_DOOR)) && tile2 && (tile2.flags & (TileInfo.TILE_SOLID | TileInfo.TILE_DOOR))) { continue; } // Void space; ignore
+					else if (tile1 && (tile1.flags & (TileInfo.TILE_SOLID | TileInfo.TILE_DOOR))) // t2 is floor, t1 is a wall
 					{
 						if (y1 > y2 || x1 > x2) { continue; }
 						FlipLineCompletely(ln.Index());
 					}
-					else if (tile2 && tile2.flags & TileInfo.TILE_SOLID | TileInfo.TILE_DOOR) // t1 is floor, t2 is a wall
+					else if (tile2 && (tile2.flags & (TileInfo.TILE_SOLID | TileInfo.TILE_DOOR))) // t1 is floor, t2 is a wall
 					{
 						if (y1 < y2 || x1 < x2) { continue; }
 						FlipLineCompletely(ln.Index());
