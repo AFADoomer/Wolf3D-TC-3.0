@@ -54,26 +54,27 @@ vec4 ProcessAlphaMap(inout Material material)
 #else
 	float shadowclip = 1.0 - 10.0 / size.y;
 #endif
+
 	if (vTexCoord.t < shadowclip) { return color; }
 
-	vec4 shadowmap = texture(shadow, vTexCoord.st);
-
-	if (textureSize(shadow, 0) == ivec2(1, 1))
+	vec4 shadowmap;
+#ifdef shadow
+	shadowmap = texture(shadow, vTexCoord.st);
+#else
+	// If no shadow map is provided, fudge the shadow based on gray elements in
+	// the bottom of the sprite image - not perfect, but good for many sprites
+	if (vTexCoord.t > shadowclip && color.rgb != vec3(0.0) && color.r < maxshade && color.r == color.g && color.g == color.b)
 	{
-		// If blank shadow map is provided, fudge the shadow based on gray elements in
-		// the bottom of the sprite image - not perfect, but good for many sprites
-		if (vTexCoord.t > shadowclip && color.rgb != vec3(0.0) && color.r < maxshade && color.r == color.g && color.g == color.b)
-		{
-			shadowmap = color;
-		}
-		else { return color; }
+		shadowmap = color;
 	}
+	else { return color; }
+#endif
 
-	if (shadowmap.a == 0.0) { return color; }
+	if (shadowmap.a == 0.0 || shadowmap.rgb == vec3(0.0)) { return color; }
 
 	// Calculate an alpha to approximate original shade/appearance on
 	// the default Wolf3D floor color
-	float alpha = 2.0 * mix(0.0, 1.0, maxshade - shadowmap.r) * color.a;
+	float alpha = 2.0 * (maxshade - shadowmap.r) * color.a;
 
 	// Shade the dark spots
 	if (alpha > 0.0) { return vec4(shadowcolor.rgb, color.a = clamp(alpha * shadowcolor.a, 0.0, 1.0)); }

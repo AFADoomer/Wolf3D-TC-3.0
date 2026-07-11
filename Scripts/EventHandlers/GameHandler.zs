@@ -95,29 +95,6 @@ class GameHandler : StaticEventHandler
 			if (keys.Size() < 2) { if (keys.Find("YellowKey") == keys.Size() && keys.Find("YellowKeyLost") == keys.Size()) { keys.Push("YellowKey"); } }
 			if (keys.Size() < 2) { if (keys.Find("BlueKey") == keys.Size() && keys.Find("BlueKeyLost") == keys.Size()) { keys.Push("BlueKey"); } }
 		}
-
-		if (!MapHandler.IsParsedMap()) { return; }
-
-		for (int s = 0; s < level.sectors.Size(); s++)
-		{
-			let sec = level.sectors[s];
-			if (!sec || !sec.thinglist) { continue; }
-
-			Actor thing = sec.thinglist;
-			while (thing)
-			{
-				TextureID tex = thing.CurState.GetSpriteTexture(0);
-				String texname = TexMan.GetName(tex);
-
-				if (TexMan.GetCanvas(texname, TexMan.Type_Any))
-				{
-					thing.SpriteOffset.x = -32;
-					thing.SpriteOffset.y = -64;
-				}
-
-				thing = thing.snext;
-			}
-		}
 	}
 
 	override void WorldThingSpawned(WorldEvent e)
@@ -130,6 +107,7 @@ class GameHandler : StaticEventHandler
 
 		e.Thing.TeleFogSourceType = "WolfTeleportOut";
 		e.Thing.TeleFogDestType = "WolfTeleportIn";
+		if (e.Thing.GetRenderstyle() == STYLE_Normal) { e.Thing.A_SetRenderStyle(0.99999, STYLE_Translucent); }
 
 		if (multiplayer && !deathmatch && level.time > 5 && e.thing.player)
 		{
@@ -180,7 +158,9 @@ class GameHandler : StaticEventHandler
 
 	ui static bool GameFilePresent(String extension, bool allowdemos = false)
 	{
-		if (allowdemos && (extension ~== "WL6" || extension ~== "SOD")) { return true; }
+		if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
+		if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
+		if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
 
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)
@@ -886,7 +866,7 @@ class DataHandler : StaticEventHandler
 			if (lumpname.IndexOf("data/graphicmaps/") > -1)
 			{
 				ParsedValue graphicmapdata = FileReader.Parse(lumpname);
-				if (developer) { console.printf(" Parsing %s graphic data from '%s'...", graphicmapdata.children[0].keyname, lumpname); }
+				if (developer) { console.printf(" Reading %s graphic data from '%s'...", graphicmapdata.children[0].keyname, lumpname); }
 
 				for (int d = 0; d < graphicmapdata.children.Size(); d++)
 				{
@@ -940,6 +920,7 @@ class DataHandler : StaticEventHandler
 			palette[i].g = sc.Number;
 			sc.MustGetNumber();
 			palette[i].b = sc.Number;
+			palette[i].a = 255;
 		}
 
 		sc.Close();

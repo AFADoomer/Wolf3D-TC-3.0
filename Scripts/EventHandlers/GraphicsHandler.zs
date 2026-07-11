@@ -33,65 +33,7 @@ class GraphicsHandler : StaticEventHandler
 
 	void ParseGraphics()
 	{
-		// Load default graphics
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
-
-		for (int g = 0; g < handler.graphicmaps.Size(); g++)
-		{
-			ParsedValue data = handler.graphicmaps[g];
-			if (!data) { continue; }
-
-			ParsedValue texturenames = data.Find("Textures");
-
-			for (int t = 0; t < texturenames.children.Size(); t++)
-			{
-				ParsedValue texture = texturenames.children[t];
-				if (texture.children.Size())
-				{
-					for (int c = 0; c < texture.children.Size(); c++)
-					{
-						bool flip = false;
-						if (texture.children[c].children.Size())
-						{
-							for (int p = 0; p < texture.children[c].children.Size(); p++)
-							{
-								if (texture.children[c].children[p].keyname ~== "Flip") { flip = true; }
-							}
-						}
-
-						String texname = FileReader.StripQuotes(texture.children[c].keyname);
-						String shortname = texname.Mid(texname.RightIndexOf("/") + 1);
-						shortname.Replace(".png", "");
-
-						Canvas currentcanvas = TexMan.GetCanvas(texname);
-						if (!currentcanvas) { continue; }
-
-						currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
-
-						TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_Any);
-						if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0, DTA_FlipX, flip); }
-
-						touchedcanvas.Push(texname);
-					}
-				}
-				else
-				{
-					String texname = FileReader.StripQuotes(texture.keyname);
-					String shortname = texname.Mid(texname.RightIndexOf("/") + 1);
-					shortname.Replace(".png", "");
-
-					Canvas currentcanvas = TexMan.GetCanvas(texname);
-					if (!currentcanvas) { continue; }
-
-					currentcanvas.Clear(0, 0, 64, 64, 0x0, -1);
-
-					TextureID tex = TexMan.CheckForTexture(shortname, TexMan.Type_Any);
-					if (tex.IsValid()) { currentcanvas.DrawTexture(tex, true, 0, 0); }
-
-					touchedcanvas.Push(texname);
-				}
-			}
-		}
 
 		// Parse any loaded VSWAP files
 		for (int l = 0; l < Wads.GetNumLumps(); l++)
@@ -100,6 +42,7 @@ class GraphicsHandler : StaticEventHandler
 			lumpname = lumpname.MakeUpper();
 			if (lumpname.IndexOf("VSWAP.") > -1)
 			{
+				if (developer) { console.printf("Writing graphics from %s...", lumpname); }
 				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
 				WolfGraphicParser.Parse(parsedgraphics, e, touchedcanvas);
 			}
@@ -222,6 +165,14 @@ class ParsedGraphic
 
 class WolfGraphicParser
 {
+	enum GraphicParserFlags
+	{
+		GP_FLIPX = 1,
+		GP_FLIPY = 2,
+		GP_TRANSPARENT = 4,
+		GP_NOMASK = 8,
+	};
+
 	static void Parse(in out WolfGraphicParser parsedgraphics, in out GraphicDataFile d, in out Array<String> touchedcanvas)
 	{
 		int graphicslump = -1;
@@ -250,7 +201,7 @@ class WolfGraphicParser
 
 		String content = d.content;
 		String gamename = d.path.Mid(d.path.length() - 3);
-		if (gamename ~== "SOD") { gamename = "SD1"; }
+		if (gamename ~== "SOD" || gamename ~== "SDM") { gamename = "SD1"; }
 
 		ParsedValue data = handler.GetGraphicMap(gamename);
 		if (!data)
@@ -284,7 +235,10 @@ class WolfGraphicParser
 
 			if (a < d.spriteaddress)
 			{
+				if (!newgraphic.size) { wallcount++; continue; }
+
 				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
+
 				newgraphic.Parse(palette);
 
 				if (a < texturenames.children.Size())
@@ -295,17 +249,17 @@ class WolfGraphicParser
 						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
 						for (int t = 0; t < texture.children.Size(); t++)
 						{
-							bool flip = false;
+							GraphicParserFlags flags = 0;
 							if (texture.children[t].children.Size())
 							{
 								for (int p = 0; p < texture.children[t].children.Size(); p++)
 								{
-									if (texture.children[t].children[p].keyname ~== "Flip") { flip = true; }
+									if (texture.children[t].children[p].keyname ~== "Flip") { flags |= GP_FLIPX; }
 								}
 							}
 
 							String canvasname = FileReader.StripQuotes(texture.children[t].keyname);
-							CreateGraphic(newgraphic, canvasname, flip);
+							CreateGraphic(newgraphic, canvasname, flags);
 
 							touchedcanvas.push(canvasname);
 						}
@@ -320,7 +274,7 @@ class WolfGraphicParser
 				}
 				else
 				{
-					newgraphic.graphicname = String.Format("Patches/Walls/WALL%i%03i.png", 0, a);
+					newgraphic.graphicname = String.Format("Wolf3D/WALL%04i", a);
 					CreateGraphic(newgraphic);
 
 					touchedcanvas.push(newgraphic.graphicname);
@@ -332,22 +286,49 @@ class WolfGraphicParser
 			}
 			else if (a < d.soundaddress)
 			{
-				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
+				if (!newgraphic.size) { spritecount++; continue; }
 
-				Canvas graphic;
+				newgraphic.data = content.Mid(newgraphic.position, newgraphic.size);
 
 				if (spritenames && a - wallcount < spritenames.children.Size())
 				{
-					newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
-					newgraphic.Parse(palette, true);
-					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
+					ParsedValue texture = spritenames.children[a - wallcount];
+					if (texture.children.Size())
+					{
+						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
+						for (int t = 0; t < texture.children.Size(); t++)
+						{
+							GraphicParserFlags flags = GP_TRANSPARENT;
+							if (texture.children[t].children.Size())
+							{
+								for (int p = 0; p < texture.children[t].children.Size(); p++)
+								{
+									if (texture.children[t].children[p].keyname ~== "Flip") { flags |= GP_FLIPX; }
+									if (texture.children[t].children[p].keyname ~== "NoShadowMask") { flags |= GP_NOMASK; }
+								}
+							}
+
+							newgraphic.graphicname = FileReader.StripQuotes(texture.children[t].keyname);
+							newgraphic.Parse(palette, true);
+							CreateGraphic(newgraphic, newgraphic.graphicname, flags);
+						}
+					}
+					else
+					{
+						newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
+						newgraphic.Parse(palette, true);
+						CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
+					}
 				}
-				else
-				{
-					newgraphic.graphicname = String.Format("WSPR%04i", a - wallcount);
-					newgraphic.Parse(palette, true);
-					graphic = CreateGraphic(newgraphic, newgraphic.graphicname, true);
-				}
+
+				int num = a - wallcount;
+				int frame = 0x41 + num % 26;
+				num /= 26;
+				newgraphic.graphicname = String.Format("W%03i%c0", num, frame);
+				newgraphic.Parse(palette, true);
+				CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
+
+				touchedcanvas.push(newgraphic.graphicname);
 
 				spritecount++;
 
@@ -389,14 +370,36 @@ class WolfGraphicParser
 		if (halt) { ThrowAbortException("Halting..."); }
 	}
 
-	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", bool flip = false)
+	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", GraphicParserFlags flags = 0)
 	{
 		if (canvasname == "") { canvasname = graphic.graphicname; }
 
-		Canvas currentcanvas = TexMan.GetCanvas(canvasname);
-		if (!currentcanvas) { return null; }
+		TextureID canvastexture = TexMan.CheckForTexture(canvasname, TexMan.Type_Any);
+		Vector2 canvassize = (64, 64);
+		if (canvastexture.IsValid()) { canvassize = TexMan.GetScaledSize(canvastexture); }
 
-		currentcanvas.Dim(Color(152, 0, 136), 0.0, 0, 0, 64, 64, overwritealpha:true);
+		Canvas currentcanvas = TexMan.GetCanvas(canvasname, TexMan.Type_Any);
+		if (!currentcanvas)
+		{
+			if (developer && canvasname.length()) { console.printf("Missing canvas for '%s'", canvasname); }
+			return null;
+		}
+
+		currentcanvas.Dim(0x0, 0.0, 0, 0, 64, 64, overwritealpha:true);
+
+		TextureID overlay;
+		bool masked = (flags & GP_TRANSPARENT && !(flags & GP_NOMASK));
+		if (masked)
+		{
+			overlay = TexMan.CheckForTexture("Materials/Shadows/" .. graphic.graphicname .. ".png", TexMan.Type_Any);
+			if (overlay.IsValid())
+			{
+				currentcanvas.EnableStencil(true);
+				currentcanvas.SetStencil(0, SOP_Increment, SF_ColorMaskOff);
+				currentcanvas.DrawTexture(overlay, false, 0, 0, DTA_FlipY, flags & GP_FLIPY);
+				currentcanvas.SetStencil(0, SOP_Keep, SF_AllOn);
+			}
+		}
 
 		for (int p = 0; p < graphic.posts.Size(); p++)
 		{
@@ -404,7 +407,73 @@ class WolfGraphicParser
 			int y = post.start;
 			for (int d = 0; d < post.data.Size(); d++)
 			{
-				currentcanvas.Dim(post.data[d], 1.0, post.column, flip ? 63 - y++ : y++, 1, 1, overwritealpha:true);
+				currentcanvas.Dim(post.data[d], 1.0, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y++ : y++, 1, 1, overwritealpha:true);
+			}
+		}
+
+		if (masked)
+		{
+			if (overlay.IsValid())
+			{
+				currentcanvas.SetStencil(1, SOP_Keep, SF_AllOn);
+			}
+
+			CVar dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
+			for (int p = 0; p < graphic.posts.Size(); p++)
+			{
+				let post = graphic.posts[p];
+				int y = post.start;
+
+				if (!overlay.IsValid() && y < 48) { continue; }
+
+				for (int d = 0; d < post.data.Size(); d++)
+				{
+					Color clr = post.data[d];
+
+					if (clr.r == clr.g && clr.g == clr.b)
+					{
+						double alpha = 2 * (110 - clr.r) / 255.0;
+						if (alpha > 0)
+						{
+							alpha = clamp(alpha, 0.0, 1.0);
+							currentcanvas.Dim(0x0, alpha, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y : y, 1, 1, overwritealpha:true);
+						}
+						else if (alpha < 0)
+						{
+							if (dynlights && !dynlights.GetInt())
+							{
+								int r = int(145 + clr.r * clr.r / 255.0 * 2);
+								int g = int(145 + clr.g * clr.b / 255.0 * 2);
+								int b = int(145 + clr.g * clr.b / 255.0 * 2);
+								clr = Color(r, g, b);
+								currentcanvas.Dim(0xD0D0D0, -alpha * 0.85, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y : y, 1, 1, overwritealpha:true);
+							}
+						}
+					}
+
+					y++;
+				}
+			}
+
+			if (overlay.IsValid())
+			{
+				currentcanvas.EnableStencil(false);
+				currentcanvas.ClearStencil();
+			}
+		}
+
+		if (g_debugvswaptextures)
+		{
+			Font fnt = Font.GetFont("MiniFont");
+
+			Array<String> lines;
+			graphic.graphicname.Split(lines, "/");
+
+			for (int l = 0; l < lines.Size(); l++)
+			{
+				String line = l == lines.Size() - 1 ? lines[l] : lines[l];
+				currentcanvas.DrawText(fnt, Font.FindFontColor("TrueBlack"), 2, flags & GP_FLIPY ? (int(canvassize.y - 2) - 8 * (l + 1)) : (8 * l + 2), line, DTA_FlipY, flags & GP_FLIPY);
+				currentcanvas.DrawText(fnt, -1, 1, flags & GP_FLIPY ? (int(canvassize.y - 1) - 8 * (l + 1)) : (8 * l + 1), line, DTA_FlipY, flags & GP_FLIPY);
 			}
 		}
 

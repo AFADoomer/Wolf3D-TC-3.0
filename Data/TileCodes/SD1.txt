@@ -1,57 +1,127 @@
 SD1
 {
-	Walls
+	0
 	{
-		Default
+		Walls
 		{
-			Tiles = 0x01-0x59;
-			Pattern = "Patches/Walls/Wall1%03i.png";
-			Flags = Wall;
+			Default
+			{
+				Tiles = 0x01-0x59;
+				Pattern = "SoD/Wall%04i";
+				Flags = Wall;
+			}
+
+			0x10
+			{
+				Flags = Directional;
+			}
+
+			0x15
+			{
+				Special = 80, 10;
+				Flags = Directional;
+			}
+
+			0x16
+			{
+				Flags = Directional;
+			}
+
+			0x41
+			{
+				Flags = DoorFrame;
+			}
+
+			0x55
+			{
+				Pattern = "SoD/Wall0040", "SoD/Wall0041";
+				Flags = Directional;
+			}
 		}
 
-		0x15
+		Doors
 		{
-			Special = 80, 10;
-			Pattern = "Patches/Walls/Wall0%03i.png";
-			Flags = Directional;
-		}
+			Default
+			{
+				Tiles = 0x5A, 0x5B;
+				Pattern = "SoD/Wall0126", "SoD/Wall0127";
+				Flags = Door;
+			}
 
-		0x16
-		{
-			Pattern = "Patches/Walls/Wall0%03i.png";
-			Flags = Directional;
-		}
+			Locked
+			{
+				Default
+				{
+					Tiles = 0x5C-0x63;
+					Pattern = "SoD/Wall0132", "SoD/Wall0133";
+					AltPattern = "WLF1LK%iG", "WLF1LK%iF";
+					Flags = Door;
+				}
 
-		0x40
-		{
-			Flags = Invalid;
-		}
+				0x5C
+				{
+					Key = 1;
+				}
 
-		0x40
-		{
-			Pattern = "Patches/Walls/Wall0098.png", "Patches/Walls/Wall0099.png";
-		}
+				0x5D
+				{
+					Key = 1;
+				}
 
-		0x41
-		{
-			Pattern = "Patches/Walls/Wall0100.png", "Patches/Walls/Wall0101.png";
-			Flags = DoorFrame;
-		}
+				0x5E
+				{
+					Key = 2;
+				}
 
-		0x42
-		{
-			Pattern = "Patches/Walls/Wall0102.png", "Patches/Walls/Wall0103.png";
-		}
+				0x5F
+				{
+					Key = 2;
+				}
 
-		0x43
-		{
-			Pattern = "Patches/Walls/Wall0104.png", "Patches/Walls/Wall0105.png";
-		}
+				0x60
+				{
+					Key = 3;
+				}
 
-		0x55
-		{
-			Pattern = "Patches/Walls/Wall0040.png", "Patches/Walls/Wall0041.png";
-			Flags = Directional;
+				0x61
+				{
+					Key = 3;
+				}
+
+				0x62
+				{
+					Key = 4;
+				}
+
+				0x63
+				{
+					Key = 4;
+				}
+			}
+
+			Elevator
+			{
+				Default
+				{
+					Tiles = 0x64, 0x65;
+					Pattern = "SoD/Wall0130", "SoD/Wall0131";
+					Flags = Door;
+				}
+			}
 		}
+	}
+
+	1
+	{
+		// Objects
+		33 = "SkullsonStick";
+		38 = "BloodyCage";
+		45 = "CageofSkulls";
+		51 = "WolfChaingunSoD";
+		63 = "RedCeilingLight";
+		67 = "BullHeadonStick";
+		68 = "BloodyWell";
+		69 = "AngelofDeathStatue";
+		72 = "WolfClipBox";
 	}
 }

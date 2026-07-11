@@ -31,674 +31,654 @@ Default // Wolf3D
 	{
 		0
 		{
-			"Patches/Walls/WALL0000.png";
+			"Wolf3D/Wall0000";
 			"WLF0001A";
 		}
 
 		1
 		{
-			"Patches/Walls/WALL0001.png";
+			"Wolf3D/Wall0001";
 			"WLF0001B";
 		}
 
 		2
 		{
-			"Patches/Walls/WALL0002.png";
+			"Wolf3D/Wall0002";
 			"WLF0002A";
 		}
 
 		3
 		{
-			"Patches/Walls/WALL0003.png";
+			"Wolf3D/Wall0003";
 			"WLF0002B";
 		}
 
 		4
 		{
-			"Patches/Walls/WALL0004.png";
+			"Wolf3D/Wall0004";
 			"WLF0003A";
 		}
 
 		5
 		{
-			"Patches/Walls/WALL0005.png";
+			"Wolf3D/Wall0005";
 			"WLF0003B";
 		}
 
 		6
 		{
-			"Patches/Walls/WALL0006.png";
+			"Wolf3D/Wall0006";
 			"WLF0004A";
 		}
 
 		7
 		{
-			"Patches/Walls/WALL0007.png";
+			"Wolf3D/Wall0007";
 			"WLF0004B";
 		}
 
 		8
 		{
-			"Patches/Walls/WALL0008.png";
+			"Wolf3D/Wall0008";
 			"WLF0005A";
 		}
 
 		9
 		{
-			"Patches/Walls/WALL0009.png";
+			"Wolf3D/Wall0009";
 			"WLF0005B";
 		}
 
 		10
 		{
-			"Patches/Walls/WALL0010.png";
+			"Wolf3D/Wall0010";
 			"WLF0006A";
 		}
 
 		11
 		{
-			"Patches/Walls/WALL0011.png";
+			"Wolf3D/Wall0011";
 			"WLF0006B";
 		}
 
 		12
 		{
-			"Patches/Walls/WALL0012.png";
+			"Wolf3D/Wall0012";
 			"WLF0007A";
 		}
 
 		13
 		{
-			"Patches/Walls/WALL0013.png";
+			"Wolf3D/Wall0013";
 			"WLF0007B";
 		}
 
 		14
 		{
-			"Patches/Walls/WALL0014.png";
+			"Wolf3D/Wall0014";
 			"WLF0008A";
 		}
 
 		15
 		{
-			"Patches/Walls/WALL0015.png";
+			"Wolf3D/Wall0015";
 			"WLF0008B";
 		}
 
 		16
 		{
-			"Patches/Walls/WALL0016.png";
+			"Wolf3D/Wall0016";
 			"WLF0009A";
 		}
 
 		17
 		{
-			"Patches/Walls/WALL0017.png";
+			"Wolf3D/Wall0017";
 			"WLF0009B";
 		}
 
 		18
 		{
-			"Patches/Walls/WALL0018.png";
+			"Wolf3D/Wall0018";
 			"WLF000AA";
 		}
 
 		19
 		{
-			"Patches/Walls/WALL0019.png";
+			"Wolf3D/Wall0019";
 			"WLF000AB";
 		}
 
 		20
 		{
-			"Patches/Walls/WALL0020.png";
+			"Wolf3D/Wall0020";
 			"WLF000BA";
 		}
 
 		21
 		{
-			"Patches/Walls/WALL0021.png";
+			"Wolf3D/Wall0021";
 			"WLF000BB";
 		}
 
 		22
 		{
-			"Patches/Walls/WALL0022.png";
+			"Wolf3D/Wall0022";
 			"WLF000CA";
 		}
 
 		23
 		{
-			"Patches/Walls/WALL0023.png";
+			"Wolf3D/Wall0023";
 			"WLF000CB";
 		}
 
 		24
 		{
-			"Patches/Walls/WALL0024.png";
+			"Wolf3D/Wall0024";
 			"WLF000DA";
 		}
 
 		25
 		{
-			"Patches/Walls/WALL0025.png";
+			"Wolf3D/Wall0025";
 			"WLF000DB";
 		}
 
 		26
 		{
-			"Patches/Walls/WALL0026.png";
+			"Wolf3D/Wall0026";
 			"WLF000EA";
 		}
 
 		27
 		{
-			"Patches/Walls/WALL0027.png";
+			"Wolf3D/Wall0027";
 			"WLF000EB";
 		}
 
 		28
 		{
-			"Patches/Walls/WALL0028.png";
+			"Wolf3D/Wall0028";
 			"WLF000FA";
 		}
 
 		29
 		{
-			"Patches/Walls/WALL0029.png";
+			"Wolf3D/Wall0029";
 			"WLF000FB";
 		}
 
 		30
 		{
-			"Patches/Walls/WALL0030.png";
+			"Wolf3D/Wall0030";
 			"WLF0010A";
 		}
 
 		31
 		{
-			"Patches/Walls/WALL0031.png";
+			"Wolf3D/Wall0031";
 			"WLF0010B";
 		}
 
 		32
 		{
-			"Patches/Walls/WALL0032.png";
+			"Wolf3D/Wall0032";
 			"WLF0011A";
 		}
 
 		33
 		{
-			"Patches/Walls/WALL0033.png";
+			"Wolf3D/Wall0033";
 			"WLF0011B";
 		}
 
 		34
 		{
-			"Patches/Walls/WALL0034.png";
+			"Wolf3D/Wall0034";
 			"WLF0012A";
 		}
 
 		35
 		{
-			"Patches/Walls/WALL0035.png";
+			"Wolf3D/Wall0035";
 			"WLF0012B";
 		}
 
 		36
 		{
-			"Patches/Walls/WALL0036.png";
+			"Wolf3D/Wall0036";
 			"WLF0013A";
 		}
 
 		37
 		{
-			"Patches/Walls/WALL0037.png";
+			"Wolf3D/Wall0037";
 			"WLF0013B";
 		}
 
 		38
 		{
-			"Patches/Walls/WALL0038.png";
+			"Wolf3D/Wall0038";
 			"WLF0014A";
 		}
 
 		39
 		{
-			"Patches/Walls/WALL0039.png";
+			"Wolf3D/Wall0039";
 			"WLF0014B";
 		}
 
 		40
 		{
-			"Patches/Walls/WALL0040.png";
+			"Wolf3D/Wall0040";
 			"WLF0015A";
 		}
 
 		41
 		{
-			"Patches/Walls/WALL0041.png";
+			"Wolf3D/Wall0041";
 			"WLF0015B";
 		}
 
 		42
 		{
-			"Patches/Walls/WALL0042.png";
+			"Wolf3D/Wall0042";
 			"WLF0016A";
 		}
 
 		43
 		{
-			"Patches/Walls/WALL0043.png";
+			"Wolf3D/Wall0043";
 			"WLF0016B";
 		}
 
 		44
 		{
-			"Patches/Walls/WALL0044.png";
+			"Wolf3D/Wall0044";
 			"WLF0017A";
 		}
 
 		45
 		{
-			"Patches/Walls/WALL0045.png";
+			"Wolf3D/Wall0045";
 			"WLF0017B";
 		}
 
 		46
 		{
-			"Patches/Walls/WALL0046.png";
+			"Wolf3D/Wall0046";
 			"WLF0018A";
 		}
 
 		47
 		{
-			"Patches/Walls/WALL0047.png";
+			"Wolf3D/Wall0047";
 			"WLF0018B";
 		}
 
 		48
 		{
-			"Patches/Walls/WALL0048.png";
+			"Wolf3D/Wall0048";
 			"WLF0019A";
 		}
 
 		49
 		{
-			"Patches/Walls/WALL0049.png";
+			"Wolf3D/Wall0049";
 			"WLF0019B";
 		}
 
 		50
 		{
-			"Patches/Walls/WALL0050.png";
+			"Wolf3D/Wall0050";
 			"WLF001AA";
 		}
 
 		51
 		{
-			"Patches/Walls/WALL0051.png";
+			"Wolf3D/Wall0051";
 			"WLF001AB";
 		}
 
 		52
 		{
-			"Patches/Walls/WALL0052.png";
+			"Wolf3D/Wall0052";
 			"WLF001BA";
 		}
 
 		53
 		{
-			"Patches/Walls/WALL0053.png";
+			"Wolf3D/Wall0053";
 			"WLF001BB";
 		}
 
 		54
 		{
-			"Patches/Walls/WALL0054.png";
+			"Wolf3D/Wall0054";
 			"WLF001CA";
 		}
 
 		55
 		{
-			"Patches/Walls/WALL0055.png";
+			"Wolf3D/Wall0055";
 			"WLF001CB";
 		}
 
 		56
 		{
-			"Patches/Walls/WALL0056.png";
+			"Wolf3D/Wall0056";
 			"WLF001DA";
 		}
 
 		57
 		{
-			"Patches/Walls/WALL0057.png";
+			"Wolf3D/Wall0057";
 			"WLF001DB";
 		}
 
 		58
 		{
-			"Patches/Walls/WALL0058.png";
+			"Wolf3D/Wall0058";
 			"WLF001EA";
 		}
 
 		59
 		{
-			"Patches/Walls/WALL0059.png";
+			"Wolf3D/Wall0059";
 			"WLF001EB";
 		}
 
 		60
 		{
-			"Patches/Walls/WALL0060.png";
+			"Wolf3D/Wall0060";
 			"WLF001FA";
 		}
 
 		61
 		{
-			"Patches/Walls/WALL0061.png";
+			"Wolf3D/Wall0061";
 			"WLF001FB";
 		}
 
 		62
 		{
-			"Patches/Walls/WALL0062.png";
+			"Wolf3D/Wall0062";
 			"WLF0020A";
 		}
 
 		63
 		{
-			"Patches/Walls/WALL0063.png";
+			"Wolf3D/Wall0063";
 			"WLF0020B";
 		}
 
 		64
 		{
-			"Patches/Walls/WALL0064.png";
+			"Wolf3D/Wall0064";
 			"WLF0021A";
 		}
 
 		65
 		{
-			"Patches/Walls/WALL0065.png";
+			"Wolf3D/Wall0065";
 			"WLF0021B";
 		}
 
 		66
 		{
-			"Patches/Walls/WALL0066.png";
+			"Wolf3D/Wall0066";
 			"WLF0022A";
 		}
 
 		67
 		{
-			"Patches/Walls/WALL0067.png";
+			"Wolf3D/Wall0067";
 			"WLF0022B";
 		}
 
 		68
 		{
-			"Patches/Walls/WALL0068.png";
+			"Wolf3D/Wall0068";
 			"WLF0023A";
 		}
 
 		69
 		{
-			"Patches/Walls/WALL0069.png";
+			"Wolf3D/Wall0069";
 			"WLF0023B";
 		}
 
 		70
 		{
-			"Patches/Walls/WALL0070.png";
+			"Wolf3D/Wall0070";
 			"WLF0024A";
 		}
 
 		71
 		{
-			"Patches/Walls/WALL0071.png";
+			"Wolf3D/Wall0071";
 			"WLF0024B";
 		}
 
 		72
 		{
-			"Patches/Walls/WALL0072.png";
+			"Wolf3D/Wall0072";
 			"WLF0025A";
 		}
 
 		73
 		{
-			"Patches/Walls/WALL0073.png";
+			"Wolf3D/Wall0073";
 			"WLF0025B";
 		}
 
 		74
 		{
-			"Patches/Walls/WALL0074.png";
+			"Wolf3D/Wall0074";
 			"WLF0026A";
 		}
 
 		75
 		{
-			"Patches/Walls/WALL0075.png";
+			"Wolf3D/Wall0075";
 			"WLF0026B";
 		}
 
 		76
 		{
-			"Patches/Walls/WALL0076.png";
+			"Wolf3D/Wall0076";
 			"WLF0027A";
 		}
 
 		77
 		{
-			"Patches/Walls/WALL0077.png";
+			"Wolf3D/Wall0077";
 			"WLF0027B";
 		}
 
 		78
 		{
-			"Patches/Walls/WALL0078.png";
+			"Wolf3D/Wall0078";
 			"WLF0028A";
 		}
 
 		79
 		{
-			"Patches/Walls/WALL0079.png";
+			"Wolf3D/Wall0079";
 			"WLF0028B";
 		}
 
 		80
 		{
-			"Patches/Walls/WALL0080.png";
+			"Wolf3D/Wall0080";
 			"WLF0029A";
 		}
 
 		81
 		{
-			"Patches/Walls/WALL0081.png";
+			"Wolf3D/Wall0081";
 			"WLF0029B";
 		}
 
 		82
 		{
-			"Patches/Walls/WALL0082.png";
+			"Wolf3D/Wall0082";
 			"WLF002AA";
 		}
 
 		83
 		{
-			"Patches/Walls/WALL0083.png";
+			"Wolf3D/Wall0083";
 			"WLF002AB";
 		}
 
 		84
 		{
-			"Patches/Walls/WALL0084.png";
+			"Wolf3D/Wall0084";
 			"WLF002BA";
 		}
 
 		85
 		{
-			"Patches/Walls/WALL0085.png";
+			"Wolf3D/Wall0085";
 			"WLF002BB";
 		}
 
 		86
 		{
-			"Patches/Walls/WALL0086.png";
+			"Wolf3D/Wall0086";
 			"WLF002CA";
 		}
 
 		87
 		{
-			"Patches/Walls/WALL0087.png";
+			"Wolf3D/Wall0087";
 			"WLF002CB";
 		}
 
 		88
 		{
-			"Patches/Walls/WALL0088.png";
+			"Wolf3D/Wall0088";
 			"WLF002DA";
 		}
 
 		89
 		{
-			"Patches/Walls/WALL0089.png";
+			"Wolf3D/Wall0089";
 			"WLF002DB";
 		}
 
 		90
 		{
-			"Patches/Walls/WALL0090.png";
+			"Wolf3D/Wall0090";
 			"WLF002EA";
 		}
 
 		91
 		{
-			"Patches/Walls/WALL0091.png";
+			"Wolf3D/Wall0091";
 			"WLF002EB";
 		}
 
 		92
 		{
-			"Patches/Walls/WALL0092.png";
+			"Wolf3D/Wall0092";
 			"WLF002FA";
 		}
 
 		93
 		{
-			"Patches/Walls/WALL0093.png";
+			"Wolf3D/Wall0093";
 			"WLF002FB";
 		}
 
 		94
 		{
-			"Patches/Walls/WALL0094.png";
+			"Wolf3D/Wall0094";
 			"WLF0030A";
 		}
 
 		95
 		{
-			"Patches/Walls/WALL0095.png";
+			"Wolf3D/Wall0095";
 			"WLF0030B";
 		}
 
 		96
 		{
-			"Patches/Walls/WALL0096.png";
+			"Wolf3D/Wall0096";
 			"WLF0031A";
 		}
 
 		97
 		{
-			"Patches/Walls/WALL0097.png";
+			"Wolf3D/Wall0097";
 			"WLF0031B";
 		}
 
 		98
 		{
-			"Patches/Walls/WALL0098.png";
+			"Wolf3D/Wall0098";
 			"WLF0DORA" { Flip; }
-			"WLF1DORA" { Flip; }
 			"WLF0DORC";
-			"WLF1DORC";
 		}
 
 		99
 		{
-			"Patches/Walls/WALL0099.png";
+			"Wolf3D/Wall0099";
 			"WLF0DORB";
-			"WLF1DORB";
 			"WLF0DORD" { Flip; }
-			"WLF1DORD" { Flip; }
 
 		}
 
 		100
 		{
-			"Patches/Walls/WALL0100.png";
+			"Wolf3D/Wall0100";
 			"WLF0JMBA";
-			"WLF1JMBA";
 			"WLF0JMBC" { Flip; }
-			"WLF1JMBC" { Flip; }
 
 		}
 
 		101
 		{
-			"Patches/Walls/WALL0101.png";
+			"Wolf3D/Wall0101";
 			"WLF0JMBB";
-			"WLF1JMBB";
 			"WLF0JMBD" { Flip; }
-			"WLF1JMBD" { Flip; }
 
 		}
 
 		102
 		{
-			"Patches/Walls/WALL0102.png";
+			"Wolf3D/Wall0102";
 			"WLF0ELEA" { Flip; }
-			"WLF1ELEA" { Flip; }
 			"WLF0ELEC";
-			"WLF1ELEC";
 		}
 
 		103
 		{
-			"Patches/Walls/WALL0103.png";
+			"Wolf3D/Wall0103";
 			"WLF0ELEB";
-			"WLF1ELEB";
 			"WLF0ELED" { Flip; }
-			"WLF1ELED" { Flip; }
 
 		}
 
 		104
 		{
-			"Patches/Walls/WALL0104.png";
+			"Wolf3D/Wall0104";
 			"WLF0LK1A" { Flip; }
-			"WLF1LK1A" { Flip; }
 			"WLF0LK1C";
-			"WLF1LK1C";
 			"WLF0LK2A" { Flip; }
-			"WLF1LK2A" { Flip; }
 			"WLF0LK2C";
-			"WLF1LK2C";
 		}
 
 		105
 		{
-			"Patches/Walls/WALL0105.png";
+			"Wolf3D/Wall0105";
 			"WLF0LK1B";
-			"WLF1LK1B";
 			"WLF0LK1D" { Flip; }
-			"WLF1LK1D" { Flip; }
 			"WLF0LK2B";
-			"WLF1LK2B";
 			"WLF0LK2D" { Flip; }
-			"WLF1LK2D" { Flip; }
 		}
 	}
 
@@ -754,5 +734,482 @@ Default // Wolf3D
 		"STOVA0";
 		"SPECA0";
 		"VINEA0";
+		"WBRNE1";
+		"WBRNE2";
+		"WBRNE3";
+		"WBRNE4";
+		"WBRNE5";
+		"WBRNE6";
+		"WBRNE7";
+		"WBRNE8";
+		"WBRNA1";
+		"WBRNA2";
+		"WBRNA3";
+		"WBRNA4";
+		"WBRNA5";
+		"WBRNA6";
+		"WBRNA7";
+		"WBRNA8";
+		"WBRNB1";
+		"WBRNB2";
+		"WBRNB3";
+		"WBRNB4";
+		"WBRNB5";
+		"WBRNB6";
+		"WBRNB7";
+		"WBRNB8";
+		"WBRNC1";
+		"WBRNC2";
+		"WBRNC3";
+		"WBRNC4";
+		"WBRNC5";
+		"WBRNC6";
+		"WBRNC7";
+		"WBRNC8";
+		"WBRND1";
+		"WBRND2";
+		"WBRND3";
+		"WBRND4";
+		"WBRND5";
+		"WBRND6";
+		"WBRND7";
+		"WBRND8";
+		"WBRNJ1";
+		"WBRNK0";
+		"WBRNL0";
+		"WBRNM0";
+		"WBRNF1";
+		"WBRNN0";
+		"WBRNG1";
+		"WBRNH1";
+		"WBRNI1";
+		"WDOGA1";
+		"WDOGA2";
+		"WDOGA3";
+		"WDOGA4";
+		"WDOGA5";
+		"WDOGA6";
+		"WDOGA7";
+		"WDOGA8";
+		"WDOGB1";
+		"WDOGB2";
+		"WDOGB3";
+		"WDOGB4";
+		"WDOGB5";
+		"WDOGB6";
+		"WDOGB7";
+		"WDOGB8";
+		"WDOGC1";
+		"WDOGC2";
+		"WDOGC3";
+		"WDOGC4";
+		"WDOGC5";
+		"WDOGC6";
+		"WDOGC7";
+		"WDOGC8";
+		"WDOGD1";
+		"WDOGD2";
+		"WDOGD3";
+		"WDOGD4";
+		"WDOGD5";
+		"WDOGD6";
+		"WDOGD7";
+		"WDOGD8";
+		"WDOGH0";
+		"WDOGI0";
+		"WDOGJ0";
+		"WDOGK0";
+		"WDOGE1";
+		"WDOGF1";
+		"WDOGG1";
+		"WBLUE1";
+		"WBLUE2";
+		"WBLUE3";
+		"WBLUE4";
+		"WBLUE5";
+		"WBLUE6";
+		"WBLUE7";
+		"WBLUE8";
+		"WBLUA1";
+		"WBLUA2";
+		"WBLUA3";
+		"WBLUA4";
+		"WBLUA5";
+		"WBLUA6";
+		"WBLUA7";
+		"WBLUA8";
+		"WBLUB1";
+		"WBLUB2";
+		"WBLUB3";
+		"WBLUB4";
+		"WBLUB5";
+		"WBLUB6";
+		"WBLUB7";
+		"WBLUB8";
+		"WBLUC1";
+		"WBLUC2";
+		"WBLUC3";
+		"WBLUC4";
+		"WBLUC5";
+		"WBLUC6";
+		"WBLUC7";
+		"WBLUC8";
+		"WBLUD1";
+		"WBLUD2";
+		"WBLUD3";
+		"WBLUD4";
+		"WBLUD5";
+		"WBLUD6";
+		"WBLUD7";
+		"WBLUD8";
+		"WBLUJ1";
+		"WBLUK0";
+		"WBLUL0";
+		"WBLUM0";
+		"WBLUF1";
+		"WBLUN0";
+		"WBLUG1";
+		"WBLUH1";
+		"WBLUI1";
+		"WMUTE1";
+		"WMUTE2";
+		"WMUTE3";
+		"WMUTE4";
+		"WMUTE5";
+		"WMUTE6";
+		"WMUTE7";
+		"WMUTE8";
+		"WMUTA1";
+		"WMUTA2";
+		"WMUTA3";
+		"WMUTA4";
+		"WMUTA5";
+		"WMUTA6";
+		"WMUTA7";
+		"WMUTA8";
+		"WMUTB1";
+		"WMUTB2";
+		"WMUTB3";
+		"WMUTB4";
+		"WMUTB5";
+		"WMUTB6";
+		"WMUTB7";
+		"WMUTB8";
+		"WMUTC1";
+		"WMUTC2";
+		"WMUTC3";
+		"WMUTC4";
+		"WMUTC5";
+		"WMUTC6";
+		"WMUTC7";
+		"WMUTC8";
+		"WMUTD1";
+		"WMUTD2";
+		"WMUTD3";
+		"WMUTD4";
+		"WMUTD5";
+		"WMUTD6";
+		"WMUTD7";
+		"WMUTD8";
+		"WMUTJ1";
+		"WMUTK0";
+		"WMUTL0";
+		"WMUTM0";
+		"WMUTF1";
+		"WMUTN0";
+		"WMUTO0";
+		"WMUTG1";
+		"WMUTH1";
+		"WMUTI1";
+		"WMUTP1";
+		"WWHTE1";
+		"WWHTE2";
+		"WWHTE3";
+		"WWHTE4";
+		"WWHTE5";
+		"WWHTE6";
+		"WWHTE7";
+		"WWHTE8";
+		"WWHTA1";
+		"WWHTA2";
+		"WWHTA3";
+		"WWHTA4";
+		"WWHTA5";
+		"WWHTA6";
+		"WWHTA7";
+		"WWHTA8";
+		"WWHTB1";
+		"WWHTB2";
+		"WWHTB3";
+		"WWHTB4";
+		"WWHTB5";
+		"WWHTB6";
+		"WWHTB7";
+		"WWHTB8";
+		"WWHTC1";
+		"WWHTC2";
+		"WWHTC3";
+		"WWHTC4";
+		"WWHTC5";
+		"WWHTC6";
+		"WWHTC7";
+		"WWHTC8";
+		"WWHTD1";
+		"WWHTD2";
+		"WWHTD3";
+		"WWHTD4";
+		"WWHTD5";
+		"WWHTD6";
+		"WWHTD7";
+		"WWHTD8";
+		"WWHTJ1";
+		"WWHTK0";
+		"WWHTL0";
+		"WWHTM0";
+		"WWHTF1";
+		"WWHTN0";
+		"WWHTO0";
+		"WWHTG1";
+		"WWHTH1";
+		"WWHTI1";
+		"GHO1A0";
+		"GHO1B0";
+		"GHO2A0";
+		"GHO2B0";
+		"GHO3A0";
+		"GHO3B0";
+		"GHO0A0";
+		"GHO0B0";
+		"WBOSA1";
+		"WBOSB1";
+		"WBOSC1";
+		"WBOSD1";
+		"WBOSE1";
+		"WBOSF1";
+		"WBOSG1";
+		"WBOSK0";
+		"WBOSH0";
+		"WBOSI0";
+		"WBOSJ0";
+		"WBO3A1";
+		"WBO3B1";
+		"WBO3C1";
+		"WBO3D1";
+		"WBO3E1";
+		"WBO3F1";
+		"WBO3H0";
+		"WBO3I0";
+		"WBO3J0";
+		"WBO3K0";
+		"WB3PA0";
+		"WB3PB0";
+		"WB3PC0";
+		"WB3PD0";
+		"WHGTA1";
+		"WHGTB1";
+		"WHGTC1";
+		"WHGTD1";
+		"WHGTE1";
+		"BAL3A0";
+		"BAL3B0";
+		"WHGTF0";
+		"WHGTG0";
+		"WHGTH0";
+		"WHGTI0";
+		"WHGTJ0";
+		"WHGTK0";
+		"WHR1A1";
+		"WHR1B1";
+		"WHR1C1";
+		"WHR1D1";
+		"WHR1E1";
+		"WHR1F1";
+		"WHR1G1";
+		"WHR1K0";
+		"WHR1H0";
+		"WHR1I0";
+		"WHR1J0";
+		"WHR2A1";
+		"WHR2B1";
+		"WHR2C1";
+		"WHR2D1";
+		"WHR2G1";
+		"WHR2H1";
+		"WHR2I1";
+		"WHR2Q0";
+		"WHR2J0";
+		"WHR2K0";
+		"WHR2L0";
+		"WHR2M0";
+		"WHR2N0";
+		"WHR2O0";
+		"WHR2P0";
+		"WBO8A1";
+		"WBO8B1";
+		"WBO8C1";
+		"WBO8D1";
+		"WBO8E1";
+		"WBO8F1";
+		"WBO8G0";
+		"WBO8H0";
+		"WBO8I0";
+		"WBO8J0";
+		"ROCKA1";
+		"ROCKA2";
+		"ROCKA3";
+		"ROCKA4";
+		"ROCKA8";
+		"ROCKA7";
+		"ROCKA6";
+		"ROCKA5";
+		"RTRLA0";
+
+		377
+		{
+			"RTRLB0";
+			"WPUFD0";
+		}
+
+		378
+		{
+			"RTRLC0";
+			"WPUFC0";
+		}
+
+		"RTRLD0";
+		"ROCPA0";
+		"ROCPB0";
+		"ROCPC0";
+		"WBO4A1";
+		"WBO4B1";
+		"WBO4C1";
+		"WBO4D1";
+		"WBO4E1";
+		"WBO4F1";
+		"WBO4G1";
+		"WBO4K0";
+		"WBO4H0";
+		"WBO4I0";
+		"WBO4J0";
+		"WBO5A1";
+		"WBO5B1";
+		"WBO5C1";
+		"WBO5D1";
+		"WBO5E1";
+		"WBO5F1";
+		"WBO5G1";
+		"WBO5H1";
+		"WBO5I0";
+		"WBO5J0";
+		"WBO5K0";
+		"WBO5L0";
+		"BJJUA0";
+		"BJJUB0";
+		"BJJUC0";
+		"BJJUD0";
+		"BJJUE0";
+		"BJJUF0";
+		"BJJUG0";
+		"BJJUH0";
+
+		414
+		{
+			"CKNIA0" { NoShadowMask; }
+		}
+
+		415
+		{
+			"CKNIB0" { NoShadowMask; }
+		}
+
+		416
+		{
+			"CKNIC0" { NoShadowMask; }
+		}
+
+		417
+		{
+			"CKNID0" { NoShadowMask; }
+		}
+
+		418
+		{
+			"CKNIE0" { NoShadowMask; }
+		}
+
+		419
+		{
+			"CLUGA0" { NoShadowMask; }
+		}
+
+		420
+		{
+			"CLUGB0" { NoShadowMask; }
+		}
+
+		421
+		{
+			"CLUGC0" { NoShadowMask; }
+		}
+
+		422
+		{
+			"CLUGD0" { NoShadowMask; }
+		}
+
+		423
+		{
+			"CLUGE0" { NoShadowMask; }
+		}
+
+		424
+		{
+			"CMGUA0" { NoShadowMask; }
+		}
+
+		425
+		{
+			"CMGUB0" { NoShadowMask; }
+		}
+
+		426
+		{
+			"CMGUC0" { NoShadowMask; }
+		}
+
+		427
+		{
+			"CMGUD0" { NoShadowMask; }
+		}
+
+		428
+		{
+			"CMGUE0" { NoShadowMask; }
+		}
+
+		429
+		{
+			"CCGUA0" { NoShadowMask; }
+		}
+
+		430
+		{
+			"CCGUB0" { NoShadowMask; }
+		}
+
+		431
+		{
+			"CCGUC0" { NoShadowMask; }
+		}
+
+		432
+		{
+			"CCGUD0" { NoShadowMask; }
+		}
+
+		433
+		{
+			"CCGUE0" { NoShadowMask; }
+		}
 	}
 }

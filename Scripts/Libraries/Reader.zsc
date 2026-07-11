@@ -141,7 +141,6 @@ class ParsedValue
 		}
 	}
 
-
 	void GetRange(String range, in out Array<int> output)
 	{
 		Array<String> temp;

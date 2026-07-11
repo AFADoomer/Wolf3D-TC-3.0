@@ -4,215 +4,1329 @@ SD2
 
 	Textures
 	{
-		"Patches/Walls/WALL2000.png";
-		"Patches/Walls/WALL2001.png";
-		"Patches/Walls/WALL2002.png";
-		"Patches/Walls/WALL2003.png";
-		"Patches/Walls/WALL2004.png";
-		"Patches/Walls/WALL2005.png";
-		"Patches/Walls/WALL2006.png";
-		"Patches/Walls/WALL2007.png";
-		"Patches/Walls/WALL2008.png";
-		"Patches/Walls/WALL2009.png";
-		"Patches/Walls/WALL2010.png";
-		"Patches/Walls/WALL2011.png";
-		"Patches/Walls/WALL2012.png";
-		"Patches/Walls/WALL2013.png";
-		"Patches/Walls/WALL2014.png";
-		"Patches/Walls/WALL2015.png";
-		"Patches/Walls/WALL2016.png";
-		"Patches/Walls/WALL2017.png";
-		"Patches/Walls/WALL2018.png";
-		"Patches/Walls/WALL2019.png";
-		"Patches/Walls/WALL2020.png";
-		"Patches/Walls/WALL2021.png";
-		"Patches/Walls/WALL2022.png";
-		"Patches/Walls/WALL2023.png";
-		"Patches/Walls/WALL2024.png";
-		"Patches/Walls/WALL2025.png";
-		"Patches/Walls/WALL2026.png";
-		"Patches/Walls/WALL2027.png";
-		"Patches/Walls/WALL2028.png";
-		"Patches/Walls/WALL2029.png";
-		"Patches/Walls/WALL2030.png";
-		"Patches/Walls/WALL2031.png";
-		"Patches/Walls/WALL2032.png";
-		"Patches/Walls/WALL2033.png";
-		"Patches/Walls/WALL2034.png";
-		"Patches/Walls/WALL2035.png";
-		"Patches/Walls/WALL2036.png";
-		"Patches/Walls/WALL2037.png";
-		"Patches/Walls/WALL2038.png";
-		"Patches/Walls/WALL2039.png";
-		"Patches/Walls/WALL2040.png";
-		"Patches/Walls/WALL2041.png";
-		"Patches/Walls/WALL2042.png";
-		"Patches/Walls/WALL2043.png";
-		"Patches/Walls/WALL2044.png";
-		"Patches/Walls/WALL2045.png";
-		"Patches/Walls/WALL2046.png";
-		"Patches/Walls/WALL2047.png";
-		"Patches/Walls/WALL2048.png";
-		"Patches/Walls/WALL2049.png";
-		"Patches/Walls/WALL2050.png";
-		"Patches/Walls/WALL2051.png";
-		"Patches/Walls/WALL2052.png";
-		"Patches/Walls/WALL2053.png";
-		"Patches/Walls/WALL2054.png";
-		"Patches/Walls/WALL2055.png";
-		"Patches/Walls/WALL2056.png";
-		"Patches/Walls/WALL2057.png";
-		"Patches/Walls/WALL2058.png";
-		"Patches/Walls/WALL2059.png";
-		"Patches/Walls/WALL2060.png";
-		"Patches/Walls/WALL2061.png";
-		"Patches/Walls/WALL2062.png";
-		"Patches/Walls/WALL2063.png";
-		"Patches/Walls/WALL2064.png";
-		"Patches/Walls/WALL2065.png";
-		"Patches/Walls/WALL2066.png";
-		"Patches/Walls/WALL2067.png";
-		"Patches/Walls/WALL2068.png";
-		"Patches/Walls/WALL2069.png";
-		"Patches/Walls/WALL2070.png";
-		"Patches/Walls/WALL2071.png";
-		"Patches/Walls/WALL2072.png";
-		"Patches/Walls/WALL2073.png";
-		"Patches/Walls/WALL2074.png";
-		"Patches/Walls/WALL2075.png";
-		"Patches/Walls/WALL2076.png";
-		"Patches/Walls/WALL2077.png";
-		"Patches/Walls/WALL2078.png";
-		"Patches/Walls/WALL2079.png";
-		"Patches/Walls/WALL2080.png";
-		"Patches/Walls/WALL2081.png";
-		"Patches/Walls/WALL2082.png";
-		"Patches/Walls/WALL2083.png";
-		"Patches/Walls/WALL2084.png";
-		"Patches/Walls/WALL2085.png";
-		"Patches/Walls/WALL2086.png";
-		"Patches/Walls/WALL2087.png";
-		"Patches/Walls/WALL2088.png";
-		"Patches/Walls/WALL2089.png";
-		"Patches/Walls/WALL2090.png";
-		"Patches/Walls/WALL2091.png";
-		"Patches/Walls/WALL2092.png";
-		"Patches/Walls/WALL2093.png";
-		"Patches/Walls/WALL2094.png";
-		"Patches/Walls/WALL2095.png";
-		"Patches/Walls/WALL2096.png";
-		"Patches/Walls/WALL2097.png";
-		"Patches/Walls/WALL2098.png";
-		"Patches/Walls/WALL2099.png";
-		"Patches/Walls/WALL2100.png";
-		"Patches/Walls/WALL2101.png";
-		"Patches/Walls/WALL2102.png";
-		"Patches/Walls/WALL2103.png";
-		"Patches/Walls/WALL2104.png";
-		"Patches/Walls/WALL2105.png";
-		"Patches/Walls/WALL2106.png";
-		"Patches/Walls/WALL2107.png";
-		"Patches/Walls/WALL2108.png";
-		"Patches/Walls/WALL2109.png";
-		"Patches/Walls/WALL2110.png";
-		"Patches/Walls/WALL2111.png";
-		"Patches/Walls/WALL2112.png";
-		"Patches/Walls/WALL2113.png";
-		"Patches/Walls/WALL2114.png";
-		"Patches/Walls/WALL2115.png";
-		"Patches/Walls/WALL2116.png";
-		"Patches/Walls/WALL2117.png";
-		"Patches/Walls/WALL2118.png";
-		"Patches/Walls/WALL2119.png";
-		"Patches/Walls/WALL2120.png";
-		"Patches/Walls/WALL2121.png";
-		"Patches/Walls/WALL2122.png";
-		"Patches/Walls/WALL2123.png";
-		"Patches/Walls/WALL2124.png";
-		"Patches/Walls/WALL2125.png";
+		0
+		{
+			"RtD/Wall0000";
+			"WLF2001A";
+		}
+
+		1
+		{
+			"RtD/Wall0001";
+			"WLF2001B";
+		}
+
+		2
+		{
+			"RtD/Wall0002";
+			"WLF2002A";
+		}
+
+		3
+		{
+			"RtD/Wall0003";
+			"WLF2002B";
+		}
+
+		4
+		{
+			"RtD/Wall0004";
+			"WLF2003A";
+		}
+
+		5
+		{
+			"RtD/Wall0005";
+			"WLF2003B";
+		}
+
+		6
+		{
+			"RtD/Wall0006";
+			"WLF2004A";
+		}
+
+		7
+		{
+			"RtD/Wall0007";
+			"WLF2004B";
+		}
+
+		8
+		{
+			"RtD/Wall0008";
+			"WLF2005A";
+		}
+
+		9
+		{
+			"RtD/Wall0009";
+			"WLF2005B";
+		}
+
+
+		10{
+			"RtD/Wall0010";
+			"WLF2006A";
+		}
+
+		11
+		{
+			"RtD/Wall0011";
+			"WLF2006B";
+		}
+
+		12
+		{
+			"RtD/Wall0012";
+			"WLF2007A";
+		}
+
+		13
+		{
+			"RtD/Wall0013";
+			"WLF2007B";
+		}
+
+		14
+		{
+			"RtD/Wall0014";
+			"WLF2008A";
+		}
+
+		15
+		{
+			"RtD/Wall0015";
+			"WLF2008B";
+		}
+
+		16
+		{
+			"RtD/Wall0016";
+			"WLF2009A";
+		}
+
+		17
+		{
+			"RtD/Wall0017";
+			"WLF2009B";
+		}
+
+		18
+		{
+			"RtD/Wall0018";
+			"WLF200AA";
+		}
+
+		19
+		{
+			"RtD/Wall0019";
+			"WLF200AB";
+		}
+
+		20
+		{
+			"RtD/Wall0020";
+			"WLF200BA";
+		}
+
+		21
+		{
+			"RtD/Wall0021";
+			"WLF200BB";
+		}
+
+		22
+		{
+			"RtD/Wall0022";
+			"WLF200CA";
+		}
+
+		23
+		{
+			"RtD/Wall0023";
+			"WLF200CB";
+		}
+
+		24
+		{
+			"RtD/Wall0024";
+			"WLF200DA";
+		}
+
+		25
+		{
+			"RtD/Wall0025";
+			"WLF200DB";
+		}
+
+		26
+		{
+			"RtD/Wall0026";
+			"WLF200EA";
+		}
+
+		27
+		{
+			"RtD/Wall0027";
+			"WLF200EB";
+		}
+
+		28
+		{
+			"RtD/Wall0028";
+			"WLF200FA";
+		}
+
+		29
+		{
+			"RtD/Wall0029";
+			"WLF200FB";
+		}
+
+		30
+		{
+			"RtD/Wall0030";
+			"WLF2010A";
+		}
+
+		31
+		{
+			"RtD/Wall0031";
+			"WLF2010B";
+		}
+
+		32
+		{
+			"RtD/Wall0032";
+			"WLF2011A";
+		}
+
+		33
+		{
+			"RtD/Wall0033";
+			"WLF2011B";
+		}
+
+		34
+		{
+			"RtD/Wall0034";
+			"WLF2012A";
+		}
+
+		35
+		{
+			"RtD/Wall0035";
+			"WLF2012B";
+		}
+
+		36
+		{
+			"RtD/Wall0036";
+			"WLF2013A";
+		}
+
+		37
+		{
+			"RtD/Wall0037";
+			"WLF2013B";
+		}
+
+		38
+		{
+			"RtD/Wall0038";
+			"WLF2014A";
+		}
+
+		39
+		{
+			"RtD/Wall0039";
+			"WLF2014B";
+		}
+
+		40
+		{
+			"RtD/Wall0040";
+			"WLF2015A";
+		}
+
+		41
+		{
+			"RtD/Wall0041";
+			"WLF2015B";
+		}
+
+		42
+		{
+			"RtD/Wall0042";
+			"WLF2016A";
+		}
+
+		43
+		{
+			"RtD/Wall0043";
+			"WLF2016B";
+		}
+
+		44
+		{
+			"RtD/Wall0044";
+			"WLF2017A";
+		}
+
+		45
+		{
+			"RtD/Wall0045";
+			"WLF2017B";
+		}
+
+		46
+		{
+			"RtD/Wall0046";
+			"WLF2018A";
+		}
+
+		47
+		{
+			"RtD/Wall0047";
+			"WLF2018B";
+		}
+
+		48
+		{
+			"RtD/Wall0048";
+			"WLF2019A";
+		}
+
+		49
+		{
+			"RtD/Wall0049";
+			"WLF2019B";
+		}
+
+		50
+		{
+			"RtD/Wall0050";
+			"WLF201AA";
+		}
+
+		51
+		{
+			"RtD/Wall0051";
+			"WLF201AB";
+		}
+
+		52
+		{
+			"RtD/Wall0052";
+			"WLF201BA";
+		}
+
+		53
+		{
+			"RtD/Wall0053";
+			"WLF201BB";
+		}
+
+		54
+		{
+			"RtD/Wall0054";
+			"WLF201CA";
+		}
+
+		55
+		{
+			"RtD/Wall0055";
+			"WLF201CB";
+		}
+
+		56
+		{
+			"RtD/Wall0056";
+			"WLF201DA";
+		}
+
+		57
+		{
+			"RtD/Wall0057";
+			"WLF201DB";
+		}
+
+		58
+		{
+			"RtD/Wall0058";
+			"WLF201EA";
+		}
+
+		59
+		{
+			"RtD/Wall0059";
+			"WLF201EB";
+		}
+
+		60
+		{
+			"RtD/Wall0060";
+			"WLF201FA";
+		}
+
+		61
+		{
+			"RtD/Wall0061";
+			"WLF201FB";
+		}
+
+		62
+		{
+			"RtD/Wall0062";
+			"WLF2020A";
+		}
+
+		63
+		{
+			"RtD/Wall0063";
+			"WLF2020B";
+		}
+
+		64
+		{
+			"RtD/Wall0064";
+			"WLF2021A";
+		}
+
+		65
+		{
+			"RtD/Wall0065";
+			"WLF2021B";
+		}
+
+		66
+		{
+			"RtD/Wall0066";
+			"WLF2022A";
+		}
+
+		67
+		{
+			"RtD/Wall0067";
+			"WLF2022B";
+		}
+
+		68
+		{
+			"RtD/Wall0068";
+			"WLF2023A";
+		}
+
+		69
+		{
+			"RtD/Wall0069";
+			"WLF2023B";
+		}
+
+		70
+		{
+			"RtD/Wall0070";
+			"WLF2024A";
+		}
+
+		71
+		{
+			"RtD/Wall0071";
+			"WLF2024B";
+		}
+
+		72
+		{
+			"RtD/Wall0072";
+			"WLF2025A";
+		}
+
+		73
+		{
+			"RtD/Wall0073";
+			"WLF2025B";
+		}
+
+		74
+		{
+			"RtD/Wall0074";
+			"WLF2026A";
+		}
+
+		75
+		{
+			"RtD/Wall0075";
+			"WLF2026B";
+		}
+
+		76
+		{
+			"RtD/Wall0076";
+			"WLF2027A";
+		}
+
+		77
+		{
+			"RtD/Wall0077";
+			"WLF2027B";
+		}
+
+		78
+		{
+			"RtD/Wall0078";
+			"WLF2028A";
+		}
+
+		79
+		{
+			"RtD/Wall0079";
+			"WLF2028B";
+		}
+
+		80
+		{
+			"RtD/Wall0080";
+			"WLF2029A";
+		}
+
+		81
+		{
+			"RtD/Wall0081";
+			"WLF2029B";
+		}
+
+		82
+		{
+			"RtD/Wall0082";
+			"WLF202AA";
+		}
+
+		83
+		{
+			"RtD/Wall0083";
+			"WLF202AB";
+		}
+
+		84
+		{
+			"RtD/Wall0084";
+			"WLF202BA";
+		}
+
+		85
+		{
+			"RtD/Wall0085";
+			"WLF202BB";
+		}
+
+		86
+		{
+			"RtD/Wall0086";
+			"WLF202CA";
+		}
+
+		87
+		{
+			"RtD/Wall0087";
+			"WLF202CB";
+		}
+
+		88
+		{
+			"RtD/Wall0088";
+			"WLF202DA";
+		}
+
+		89
+		{
+			"RtD/Wall0089";
+			"WLF202DB";
+		}
+
+		90
+		{
+			"RtD/Wall0090";
+			"WLF202EA";
+		}
+
+		91
+		{
+			"RtD/Wall0091";
+			"WLF202EB";
+		}
+
+		92
+		{
+			"RtD/Wall0092";
+			"WLF202FA";
+		}
+
+		93
+		{
+			"RtD/Wall0093";
+			"WLF202FB";
+		}
+
+		94
+		{
+			"RtD/Wall0094";
+			"WLF2030A";
+		}
+
+		95
+		{
+			"RtD/Wall0095";
+			"WLF2030B";
+		}
+
+		96
+		{
+			"RtD/Wall0096";
+			"WLF2031A";
+		}
+
+		97
+		{
+			"RtD/Wall0097";
+			"WLF2031B";
+		}
+
+		98
+		{
+			"RtD/Wall0098";
+			"WLF2032A";
+		}
+
+		99
+		{
+			"RtD/Wall0099";
+			"WLF2032B";
+		}
+
+		100
+		{
+			"RtD/Wall0100";
+			"WLF2033A";
+		}
+
+		101
+		{
+			"RtD/Wall0101";
+			"WLF2033B";
+		}
+
+		102
+		{
+			"RtD/Wall0102";
+			"WLF2034A";
+		}
+
+		103
+		{
+			"RtD/Wall0103";
+			"WLF2034B";
+		}
+
+		104
+		{
+			"RtD/Wall0104";
+			"WLF2035A";
+		}
+
+		105
+		{
+			"RtD/Wall0105";
+			"WLF2035B";
+		}
+
+		106
+		{
+			"RtD/Wall0106";
+			"WLF2036A";
+		}
+
+		107
+		{
+			"RtD/Wall0107";
+			"WLF2036B";
+		}
+
+		108
+		{
+			"RtD/Wall0108";
+			"WLF2037A";
+		}
+
+		109
+		{
+			"RtD/Wall0109";
+			"WLF2037B";
+		}
+
+		110
+		{
+			"RtD/Wall0110";
+			"WLF2038A";
+		}
+
+		111
+		{
+			"RtD/Wall0111";
+			"WLF2038B";
+		}
+
+		112
+		{
+			"RtD/Wall0112";
+			"WLF2039A";
+		}
+
+		113
+		{
+			"RtD/Wall0113";
+			"WLF2039B";
+		}
+
+		114
+		{
+			"RtD/Wall0114";
+			"WLF203AA";
+		}
+
+		115
+		{
+			"RtD/Wall0115";
+			"WLF203AB";
+		}
+
+		116
+		{
+			"RtD/Wall0116";
+			"WLF203BA";
+		}
+
+		117
+		{
+			"RtD/Wall0117";
+			"WLF203BB";
+		}
+
+		118
+		{
+			"RtD/Wall0118";
+			"WLF203CA";
+		}
+
+		119
+		{
+			"RtD/Wall0119";
+			"WLF203CB";
+		}
+
+		120
+		{
+			"RtD/Wall0120";
+			"WLF203DA";
+		}
+
+		121
+		{
+			"RtD/Wall0121";
+			"WLF203DB";
+		}
+
+		122
+		{
+			"RtD/Wall0122";
+			"WLF203EA";
+		}
+
+		123
+		{
+			"RtD/Wall0123";
+			"WLF203EB";
+		}
+
+		124
+		{
+			"RtD/Wall0124";
+			"WLF203FA";
+		}
+
+		125
+		{
+			"RtD/Wall0125";
+			"WLF203FB";
+		}
 
 		126
 		{
-			"Patches/Walls/WALL2126.png";
+			"RtD/Wall0126";
 			"WLF2DORA" { Flip; }
-			"WLF2DORA" { Flip; }
-			"WLF2DORC";
 			"WLF2DORC";
 		}
 
 		127
 		{
-			"Patches/Walls/WALL2127.png";
+			"RtD/Wall0127";
 			"WLF2DORB";
-			"WLF2DORB";
-			"WLF2DORD" { Flip; }
 			"WLF2DORD" { Flip; }
 
 		}
 
 		128
 		{
-			"Patches/Walls/WALL2128.png";
+			"RtD/Wall0128";
 			"WLF2JMBA";
-			"WLF2JMBA";
-			"WLF2JMBC" { Flip; }
 			"WLF2JMBC" { Flip; }
 
 		}
 
 		129
 		{
-			"Patches/Walls/WALL2129.png";
+			"RtD/Wall0129";
 			"WLF2JMBB";
-			"WLF2JMBB";
-			"WLF2JMBD" { Flip; }
 			"WLF2JMBD" { Flip; }
 
 		}
 
 		130
 		{
-			"Patches/Walls/WALL2130.png";
+			"RtD/Wall0130";
 			"WLF2ELEA" { Flip; }
-			"WLF2ELEA" { Flip; }
-			"WLF2ELEC";
 			"WLF2ELEC";
 		}
 
 		131
 		{
-			"Patches/Walls/WALL2131.png";
+			"RtD/Wall0131";
 			"WLF2ELEB";
-			"WLF2ELEB";
-			"WLF2ELED" { Flip; }
 			"WLF2ELED" { Flip; }
 
 		}
 
 		132
 		{
-			"Patches/Walls/WALL2132.png";
-			"WLF2LK1A" { Flip; }
+			"RtD/Wall0132";
 			"WLF2LK1A" { Flip; }
 			"WLF2LK1C";
-			"WLF2LK1C";
 			"WLF2LK2A" { Flip; }
-			"WLF2LK2A" { Flip; }
-			"WLF2LK2C";
 			"WLF2LK2C";
 		}
 
 		133
 		{
-			"Patches/Walls/WALL2133.png";
-			"WLF2LK1B";
+			"RtD/Wall0133";
 			"WLF2LK1B";
 			"WLF2LK1D" { Flip; }
-			"WLF2LK1D" { Flip; }
-			"WLF2LK2B";
 			"WLF2LK2B";
 			"WLF2LK2D" { Flip; }
-			"WLF2LK2D" { Flip; }
+		}
+	}
+
+	Sprites
+	{
+		"DEMO2";
+		"DEATHCA2";
+		"POL2A0";
+		"BAR3A0";
+		"TAB3A0";
+		"LIT2A0";
+		"LIT4A0";
+		"HNG2A0";
+		"HLTHH0";
+		"PILWA0";
+		"PLT3A0";
+		"BONEB0";
+		"POSKA0";
+		"PLT4A0";
+		"VAS2A0";
+		"TAB4A0";
+		"LIT6A0";
+		"CAG6A0";
+		"KNIGB0";
+		"CAG3A0";
+		"CAG4A0";
+		"POB6A0";
+		"KEYSC0";
+		"KEYSD0";
+		"CAG5A0";
+		"DRATA0";
+		"HLTHI0";
+		"HLTHJ0";
+		"WCLIB0";
+		"MGUNU0";
+		"CGUNU0";
+		"TREAE0";
+		"TREAG0";
+		"TREAH0";
+		"TREAF0";
+		"LIFEB0";
+		"HLTHG0";
+		"BAR4A0";
+		"WEL3A0";
+		"WEL4A0";
+		"HLTHF0";
+		"GZMOA0";
+		"LIT7A0";
+		"POB7A0";
+		"LIT8A0";
+		"GGOOA0";
+		"TAB5A0";
+		"BAR5A0";
+		"PIPEA0";
+		"BUBLA0";
+		"DEVSA0";
+		"WAMMB0";
+		"BJWHA0";
+		"SOFDB0";
+		"WGRNE1";
+		"WGRNE2";
+		"WGRNE3";
+		"WGRNE4";
+		"WGRNE5";
+		"WGRNE6";
+		"WGRNE7";
+		"WGRNE8";
+		"WGRNA1";
+		"WGRNA2";
+		"WGRNA3";
+		"WGRNA4";
+		"WGRNA5";
+		"WGRNA6";
+		"WGRNA7";
+		"WGRNA8";
+		"WGRNB1";
+		"WGRNB2";
+		"WGRNB3";
+		"WGRNB4";
+		"WGRNB5";
+		"WGRNB6";
+		"WGRNB7";
+		"WGRNB8";
+		"WGRNC1";
+		"WGRNC2";
+		"WGRNC3";
+		"WGRNC4";
+		"WGRNC5";
+		"WGRNC6";
+		"WGRNC7";
+		"WGRNC8";
+		"WGRND1";
+		"WGRND2";
+		"WGRND3";
+		"WGRND4";
+		"WGRND5";
+		"WGRND6";
+		"WGRND7";
+		"WGRND8";
+		"WGRNJ0";
+		"WGRNK0";
+		"WGRNL0";
+		"WGRNM0";
+		"WGRNF0";
+		"WGRNN0";
+		"WGRNG0";
+		"WGRNH0";
+		"WGRNI0";
+		"WDOBA1";
+		"WDOBA2";
+		"WDOBA3";
+		"WDOBA4";
+		"WDOBA5";
+		"WDOBA6";
+		"WDOBA7";
+		"WDOBA8";
+		"WDOBB1";
+		"WDOBB2";
+		"WDOBB3";
+		"WDOBB4";
+		"WDOBB5";
+		"WDOBB6";
+		"WDOBB7";
+		"WDOBB8";
+		"WDOBC1";
+		"WDOBC2";
+		"WDOBC3";
+		"WDOBC4";
+		"WDOBC5";
+		"WDOBC6";
+		"WDOBC7";
+		"WDOBC8";
+		"WDOBD1";
+		"WDOBD2";
+		"WDOBD3";
+		"WDOBD4";
+		"WDOBD5";
+		"WDOBD6";
+		"WDOBD7";
+		"WDOBD8";
+		"WDOBH0";
+		"WDOBI0";
+		"WDOBJ0";
+		"WDOBK0";
+		"WDOBE0";
+		"WDOBF0";
+		"WDOBG0";
+		"WBLAE1";
+		"WBLAE2";
+		"WBLAE3";
+		"WBLAE4";
+		"WBLAE5";
+		"WBLAE6";
+		"WBLAE7";
+		"WBLAE8";
+		"WBLAA1";
+		"WBLAA2";
+		"WBLAA3";
+		"WBLAA4";
+		"WBLAA5";
+		"WBLAA6";
+		"WBLAA7";
+		"WBLAA8";
+		"WBLAB1";
+		"WBLAB2";
+		"WBLAB3";
+		"WBLAB4";
+		"WBLAB5";
+		"WBLAB6";
+		"WBLAB7";
+		"WBLAB8";
+		"WBLAC1";
+		"WBLAC2";
+		"WBLAC3";
+		"WBLAC4";
+		"WBLAC5";
+		"WBLAC6";
+		"WBLAC7";
+		"WBLAC8";
+		"WBLAD1";
+		"WBLAD2";
+		"WBLAD3";
+		"WBLAD4";
+		"WBLAD5";
+		"WBLAD6";
+		"WBLAD7";
+		"WBLAD8";
+		"WBLAJ0";
+		"WBLAK0";
+		"WBLAL0";
+		"WBLAM0";
+		"WBLAF0";
+		"WBLAN0";
+		"WBLAG0";
+		"WBLAH0";
+		"WBLAI0";
+		"WBATE1";
+		"WBATE2";
+		"WBATE3";
+		"WBATE4";
+		"WBATE5";
+		"WBATE6";
+		"WBATE7";
+		"WBATE8";
+		"WBATA1";
+		"WBATA2";
+		"WBATA3";
+		"WBATA4";
+		"WBATA5";
+		"WBATA6";
+		"WBATA7";
+		"WBATA8";
+		"WBATB1";
+		"WBATB2";
+		"WBATB3";
+		"WBATB4";
+		"WBATB5";
+		"WBATB6";
+		"WBATB7";
+		"WBATB8";
+		"WBATC1";
+		"WBATC2";
+		"WBATC3";
+		"WBATC4";
+		"WBATC5";
+		"WBATC6";
+		"WBATC7";
+		"WBATC8";
+		"WBATD1";
+		"WBATD2";
+		"WBATD3";
+		"WBATD4";
+		"WBATD5";
+		"WBATD6";
+		"WBATD7";
+		"WBATD8";
+		"WBATJ0";
+		"WBATK0";
+		"WBATL0";
+		"WBATM0";
+		"WBATF0";
+		"WBATN0";
+		"WBATO0";
+		"WBATG0";
+		"WBATH0";
+		"WBATI0";
+		"WBATP0";
+		"WWH2E1";
+		"WWH2E2";
+		"WWH2E3";
+		"WWH2E4";
+		"WWH2E5";
+		"WWH2E6";
+		"WWH2E7";
+		"WWH2E8";
+		"WWH2A1";
+		"WWH2A2";
+		"WWH2A3";
+		"WWH2A4";
+		"WWH2A5";
+		"WWH2A6";
+		"WWH2A7";
+		"WWH2A8";
+		"WWH2B1";
+		"WWH2B2";
+		"WWH2B3";
+		"WWH2B4";
+		"WWH2B5";
+		"WWH2B6";
+		"WWH2B7";
+		"WWH2B8";
+		"WWH2C1";
+		"WWH2C2";
+		"WWH2C3";
+		"WWH2C4";
+		"WWH2C5";
+		"WWH2C6";
+		"WWH2C7";
+		"WWH2C8";
+		"WWH2D1";
+		"WWH2D2";
+		"WWH2D3";
+		"WWH2D4";
+		"WWH2D5";
+		"WWH2D6";
+		"WWH2D7";
+		"WWH2D8";
+		"WWH2J0";
+		"WWH2K0";
+		"WWH2L0";
+		"WWH2M0";
+		"WWH2F0";
+		"WWH2N0";
+		"WWH2O0";
+		"WWH2G0";
+		"WWH2H0";
+		"WWH2I0";
+		"ROCKB1";
+		"ROCKB2";
+		"ROCKB3";
+		"ROCKB4";
+		"ROCKB8";
+		"ROCKB7";
+		"ROCKB6";
+		"ROCKB5";
+		"RTRLE0";
+		"RTRLF0";
+		"RTRLG0";
+		"RTRLH0";
+		"BAL4A0";
+		"BAL4B0";
+		"BAL4C0";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"";
+		"DIBLA0";
+		"DIBLB0";
+		"DIBLC0";
+		"DIBLD0";
+		"LBO2A0";
+		"LBO2B0";
+		"LBO2C0";
+		"LBO2D0";
+		"LBO2E0";
+		"LBO2F0";
+		"LBO2G0";
+		"LBO2K0";
+		"LBO2H0";
+		"LBO2I0";
+		"LBO2J0";
+		"LBO9A0";
+		"LBO9B0";
+		"LBO9C0";
+		"LBO9D0";
+		"LBO9E0";
+		"LBO9F0";
+		"LBO9G0";
+		"LBO9H0";
+		"LBO9I0";
+		"LBO9J0";
+		"LBO9K0";
+		"LBO9L0";
+		"LBO6A0";
+		"LBO6B0";
+		"LBO6C0";
+		"LBO6D0";
+		"LBO6E0";
+		"LBO6F0";
+		"LBO6G0";
+		"LBO6H0";
+		"LBO6I0";
+		"LBO6J0";
+		"LBO6K0";
+		"LBO6L0";
+		"LBO6M0";
+		"LBO7A0";
+		"LBO7B0";
+		"LBO7C0";
+		"LBO7D0";
+		"LBO7F0";
+		"LBO7G0";
+		"LBO7H0";
+		"LBO7I0";
+		"LBO7K0";
+		"LBO7L0";
+		"LBO7M0";
+		"LBO7N0";
+		"LBO7O0";
+		"LBO7P0";
+		"LBO7Q0";
+		"LSPEA0";
+		"LSPEB0";
+		"LSPEC0";
+		"LSPED0";
+		"LSPEE0";
+		"LSPEF0";
+		"LSPEG0";
+		"LSPEH0";
+		"LB10A0";
+		"LB10B0";
+		"LB10C0";
+		"LB10D0";
+		"LB10G0";
+		"LB10H0";
+		"LB10I0";
+		"LB10J0";
+		"LB10K0";
+		"LB10L0";
+		"LB10M0";
+		"LB10N0";
+		"LB10O0";
+		"LB10P0";
+		"LB10Q0";
+		"LB10R0";
+
+		399
+		{
+			"KNILA0" { NoShadowMask; }
+		}
+
+		400
+		{
+			"KNILB0" { NoShadowMask; }
+		}
+
+		401
+		{
+			"KNILC0" { NoShadowMask; }
+		}
+
+		402
+		{
+			"KNILD0" { NoShadowMask; }
+		}
+
+		403
+		{
+			"KNILE0" { NoShadowMask; }
+		}
+
+		404
+		{
+			"LUGLA0" { NoShadowMask; }
+		}
+
+		405
+		{
+			"LUGLB0" { NoShadowMask; }
+		}
+
+		406
+		{
+			"LUGLC0" { NoShadowMask; }
+		}
+
+		407
+		{
+			"LUGLD0" { NoShadowMask; }
+		}
+
+		408
+		{
+			"LUGLE0" { NoShadowMask; }
+		}
+
+		409
+		{
+			"MGULA0" { NoShadowMask; }
+		}
+
+		410
+		{
+			"MGULB0" { NoShadowMask; }
+		}
+
+		411
+		{
+			"MGULC0" { NoShadowMask; }
+		}
+
+		412
+		{
+			"MGULD0" { NoShadowMask; }
+		}
+
+		413
+		{
+			"MGULE0" { NoShadowMask; }
+		}
+
+		414
+		{
+			"CGULA0" { NoShadowMask; }
+		}
+
+		415
+		{
+			"CGULB0" { NoShadowMask; }
+		}
+
+		416
+		{
+			"CGULC0" { NoShadowMask; }
+		}
+
+		417
+		{
+			"CGULD0" { NoShadowMask; }
+		}
+
+		418
+		{
+			"CGULE0" { NoShadowMask; }
 		}
 	}
 }

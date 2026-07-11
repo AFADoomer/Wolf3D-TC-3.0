@@ -152,14 +152,14 @@ class ClassicWeapon : Weapon
 
 			SetYPosition();
 
-			let psp = owner.player.GetPSprite(PSP_WEAPON);
-			if (psp)
-			{
-				if (!translatehud) { translatehud = CVar.GetCVar("g_translatewpnsprites", owner.player); }
+			// let psp = owner.player.GetPSprite(PSP_WEAPON);
+			// if (psp)
+			// {
+			// 	if (!translatehud) { translatehud = CVar.GetCVar("g_translatewpnsprites", owner.player); }
 
-				if (translatehud && translatehud.GetInt()) { psp.translation = owner.translation; }
-				else { psp.translation = Translate.GetID("DefaultGray"); }
-			}
+			// 	if (translatehud && translatehud.GetInt()) { psp.translation = owner.translation; }
+			// 	else { psp.translation = Translate.GetID("DefaultGray"); };
+			// }
 		}
 	}
 
