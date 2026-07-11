@@ -310,14 +310,14 @@ class WolfGraphicParser
 
 							newgraphic.graphicname = FileReader.StripQuotes(texture.children[t].keyname);
 							newgraphic.Parse(palette, true);
-							CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | flags);
+							CreateGraphic(newgraphic, newgraphic.graphicname, flags);
 						}
 					}
 					else
 					{
 						newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
 						newgraphic.Parse(palette, true);
-						CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
+						CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
 					}
 				}
 
@@ -326,7 +326,7 @@ class WolfGraphicParser
 				num /= 26;
 				newgraphic.graphicname = String.Format("W%03i%c0", num, frame);
 				newgraphic.Parse(palette, true);
-				CreateGraphic(newgraphic, newgraphic.graphicname, GP_FLIPY | GP_TRANSPARENT);
+				CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
 
 				touchedcanvas.push(newgraphic.graphicname);
 
@@ -374,6 +374,10 @@ class WolfGraphicParser
 	{
 		if (canvasname == "") { canvasname = graphic.graphicname; }
 
+		TextureID canvastexture = TexMan.CheckForTexture(canvasname, TexMan.Type_Any);
+		Vector2 canvassize = (64, 64);
+		if (canvastexture.IsValid()) { canvassize = TexMan.GetScaledSize(canvastexture); }
+
 		Canvas currentcanvas = TexMan.GetCanvas(canvasname, TexMan.Type_Any);
 		if (!currentcanvas)
 		{
@@ -403,7 +407,7 @@ class WolfGraphicParser
 			int y = post.start;
 			for (int d = 0; d < post.data.Size(); d++)
 			{
-				currentcanvas.Dim(post.data[d], 1.0, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y++ : y++, 1, 1, overwritealpha:true);
+				currentcanvas.Dim(post.data[d], 1.0, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y++ : y++, 1, 1, overwritealpha:true);
 			}
 		}
 
@@ -432,7 +436,7 @@ class WolfGraphicParser
 						if (alpha > 0)
 						{
 							alpha = clamp(alpha, 0.0, 1.0);
-							currentcanvas.Dim(0x0, alpha, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y : y, 1, 1, overwritealpha:true);
+							currentcanvas.Dim(0x0, alpha, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y : y, 1, 1, overwritealpha:true);
 						}
 						else if (alpha < 0)
 						{
@@ -442,7 +446,7 @@ class WolfGraphicParser
 								int g = int(145 + clr.g * clr.b / 255.0 * 2);
 								int b = int(145 + clr.g * clr.b / 255.0 * 2);
 								clr = Color(r, g, b);
-								currentcanvas.Dim(0xD0D0D0, -alpha * 0.85, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? 63 - y : y, 1, 1, overwritealpha:true);
+								currentcanvas.Dim(0xD0D0D0, -alpha * 0.85, flags & GP_FLIPX ? (graphic.posts.Size() - post.column - 1) : post.column, flags & GP_FLIPY ? int(canvassize.y - 1) - y : y, 1, 1, overwritealpha:true);
 							}
 						}
 					}
@@ -468,8 +472,8 @@ class WolfGraphicParser
 			for (int l = 0; l < lines.Size(); l++)
 			{
 				String line = l == lines.Size() - 1 ? lines[l] : lines[l];
-				currentcanvas.DrawText(fnt, Font.FindFontColor("TrueBlack"), 2, flags & GP_FLIPY ? (62 - 8 * (l + 1)) : (8 * l + 2), line, DTA_FlipY, flags & GP_FLIPY);
-				currentcanvas.DrawText(fnt, -1, 1, flags & GP_FLIPY ? (63 - 8 * (l + 1)) : (8 * l + 1), line, DTA_FlipY, flags & GP_FLIPY);
+				currentcanvas.DrawText(fnt, Font.FindFontColor("TrueBlack"), 2, flags & GP_FLIPY ? (int(canvassize.y - 2) - 8 * (l + 1)) : (8 * l + 2), line, DTA_FlipY, flags & GP_FLIPY);
+				currentcanvas.DrawText(fnt, -1, 1, flags & GP_FLIPY ? (int(canvassize.y - 1) - 8 * (l + 1)) : (8 * l + 1), line, DTA_FlipY, flags & GP_FLIPY);
 			}
 		}
 
