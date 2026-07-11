@@ -180,12 +180,22 @@ class GameHandler : StaticEventHandler
 
 	ui static bool GameFilePresent(String extension, bool allowdemos = false)
 	{
+		if (allowdemos && (extension ~== "WL6" || extension ~== "SOD")) { return true; }
+
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)
 		{
-			if (this.gamefiles.Find(extension) < this.gamefiles.Size()) { return true; }
-			if (extension ~== "WL3" && this.gamefiles.Find("WL6") < this.gamefiles.Size()) { return true; }
-			if (allowdemos && extension ~== "SOD") { return true; }
+			if (
+				this.gamefiles.Find(extension) < this.gamefiles.Size() ||
+				(extension ~== "WL3" && this.gamefiles.Find("WL6") < this.gamefiles.Size())
+			)
+			{
+				if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
+				if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
+				if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
+
+				return true;
+			}
 		}
 
 		return false;
@@ -214,48 +224,56 @@ class GameHandler : StaticEventHandler
 		{
 			hash = MD5.hash(Wads.ReadLump(g));
 			if (
-				hash == "cec494930f3ac0545563cbd23cd611d6" // v1.2
+				hash ~== "8B6CE9EAD4AF23119D4FE3F1EB6BD47B" // v1.2
 			)
 			{
 				ext = "WL3";
-				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3)");
+				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3) v1.2");
 			}
-			else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
+			else if (
+				hash ~== "cec494930f3ac0545563cbd23cd611d6" || // I don't remember where this hash came from
+				hash ~== "8D9F2C0F47E02D405A6B785217679299" // v1.4
+			)
+			{
+				ext = "WL3";
+				message.Replace("%s", "Wolfenstein 3D (Episodes 1-3) v1.4");
+			}
+			else if (hash ~== "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
 			{
 				ext = "WL6";
 				message.Replace("%s", "Wolfenstein 3D v1.1");
 			}
-			else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
+			else if (hash ~== "a15b04941937b7e136419a1e74e57e2f") // v1.2
 			{
 				ext = "WL6";
 				message.Replace("%s", "Wolfenstein 3D v1.2");
 			}
-			else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
+			else if (hash ~== "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
 			{
 				ext = "WL6";
 				message.Replace("%s", "Wolfenstein 3D v1.4");
 			}
-			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
+			else if (hash ~== "4eb2f538aab6e4061dadbc3b73837762")
 			{
 				ext = "SDM";
 				message.Replace("%s", "Spear of Destiny Demo");
 			}
-			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
+			else if (hash ~== "04f16534235b4b57fc379d5709f88f4a")
 			{
 				ext = "SOD";
 				message.Replace("%s", "Spear of Destiny");
 			}
-			else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
+			else if (hash ~== "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
 			{
 				ext = "SD2";
 				message.Replace("%s", "Return to Danger");
 			}
-			else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
+			else if (hash ~== "4219d83568d770b1c6ac9c2d4d1dfb9e")
 			{
 				ext = "SD3";
 				message.Replace("%s", "The Ultimate Challenge");
 			}
-			else if (hash == "29860b87c31348e163e10f8aa6f19295")
+			else if (hash ~== "29860b87c31348e163e10f8aa6f19295")
 			{
 				ext = "SD3";
 				message.Replace("%s", "The Ultimate Challenge (UAC Version)");
@@ -337,7 +355,7 @@ class GameHandler : StaticEventHandler
 		{
 			temp = episode;
 			int s, e;
-			s = temp.IndexOf("[Optional");
+			s = temp.IndexOf("[Requires ");
 			if (s > -1)
 			{
 				e = temp.IndexOf("]", s);

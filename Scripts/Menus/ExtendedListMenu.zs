@@ -20,87 +20,6 @@
  * SOFTWARE.
  */
 
-/*
-
-  ListMenu extension that allows for menus in the style of Wolf3D's episode and
-  skill selection screens.
-
-  This code implements two new ListItem classes:
-	IconListMenu
-	- Adds an image to the left of each menu entry, resulting in a menu that
-	  looks similar to the Wolf3D episode selection menu
-	- Also handles automatically offsetting the selection cursor
-
-	StaticIconListMenu
-	- Adds an image to the center-right of the entire menu, similar to the one
-	  seen on the Wolf3D skill selection menu
-	- Automatically calculates position and offsets based on the number and size
-	  of the entries in the menu
-
-  Both of these classes also add the ability to cause menu entries to generate a
-  popup message similar to Wolf3D shareware's "Click Read This to find out how to
-  order" message.
-
-  To use these classes, they must be set up in MENUDEF by setting the class of
-  the menu you are changing to one of these class names.  For example, if I
-  wanted to have a Wolf3D-style episode select, my EpisodeMenu definition would
-  look something like this:
-
-		ListMenu "EpisodeMenu"
-		{
-			StaticPatchCentered 160, 5, "M_EPIS"
-
-			NetgameMessage "$NEWGAME"
-			Position 70, 60
-
-			Linespacing 26
-
-			Class "IconListMenu"
-		}
-
-  Once this is done, you must add the appropriate images and/or LANGUAGE lump
-  entries to your mod. Note that if your image is taller than one line of the
-  menu font's text, you will also need to adjust Linespacing in MENUDEFS, since
-  Episode properties aren't exported to ZScript (yet?).
-
-  All additional menu content must follows a specific naming convention!
-
-  The name of the menu (with "Menu" removed from the end) is used as the base
-  of all lookup strings (So, "Episode", "Skill", etc.).  The number of the menu
-  item (1st item is 1, 2nd item is 2, etc.) is used as the index (this also
-  means that if you re-order your menu items, you'll need to rename your images
-  and LANGUAGE entries as well).
-
-    Lookup Strings Used:
-	Icon Images (Texture name lookup):
-	[Lookup Base][index] 	   	Example: EPISODE1, SKILL2, etc.
-
-	Popup Text (LANGUAGE lookup):
-	[Lookup Base][index]MESSAGE	Example: EPISODE1MESSAGE, SKILL5MESSAGE
-
-  Images will automatically be used if they are present.  If you do not
-  provide an image or string for a menu item, then the menu entry will appear
-  as it normally would in a standard ListMenu (though spacing and offsets may
-  still be affected if other icons are present).
-
-  Popup messages are handled slightly differently.  In order to set up a popup
-  message, you must add "[Optional]" to the beginning of your episode's name
-  in MAPINFO:
-
-		episode C3M1
-		{
-			name = "[Optional]The Clash of Faith"
-		}
-
-  The "[Optional]" portion of the name will be stripped off when the episode
-  select screen is rendered, but is used as a flag internally by this code.
-
-  If you add "[Optional]" to the episode name but do not include an
-  EPISODExMESSAGE string in LANGUAGE, the code will attempt to look up the
-  SWSTRING string as a fallback.  If that string is empty, no message will be
-  displayed.
-
-*/
 // Base class that handles drawing informational text under menu entries and display of Wolf3D-style popup message on tagged menu entries
 class ExtendedListMenu : ListMenu
 {
@@ -132,7 +51,7 @@ class ExtendedListMenu : ListMenu
 	{
 		Super.Init(parent, desc);
 
-		GetPlaceholders();
+		if (!placeholders.Size()) { GetPlaceholders(); }
 
 		// Allow generic lookups - strip "menu" off of the menu name, and use that stub as the lookup base (e.g., SKILL, EPISODE, etc.)
 		String MenuName = mDesc.mMenuName;
@@ -167,6 +86,22 @@ class ExtendedListMenu : ListMenu
 
 		nodim = false;
 		DontDim = true;
+
+		for (int i = 0; i < mDesc.mItems.Size(); i++)
+		{
+			let item = ListMenuItemGameSelection(mDesc.mItems[i]);
+
+			if (item)
+			{
+				if (GameHandler.GameFilePresent(item.mExtension, true)) { continue; }
+
+				// Otherwise, recolor it, and add it to the list of known placeholders
+				ListMenuItemTextItem(item).mColor = DisabledColor();
+				ListMenuItemTextItem(item).mColorSelected = DisabledColor();
+
+				placeholders.Push(i);
+			}
+		}
 	}
 
 	override void Drawer()
@@ -382,12 +317,12 @@ class ExtendedListMenu : ListMenu
 
 	override void OnReturn()
 	{
-		GetPlaceholders();
-
 		if (!nodim)
 		{
 			fadetarget = gametic;
 			initialalpha = 1.0;
+
+			GetPlaceholders();
 		}
 		nodim = false;
 
@@ -421,7 +356,7 @@ class ExtendedListMenu : ListMenu
 				String temp2 = temp;
 
 				int s, e;
-				s = temp.IndexOf("[Optional");
+				s = temp.IndexOf("[Requires ");
 				if (s > -1)
 				{
 					e = temp.IndexOf("]", s);
@@ -438,7 +373,7 @@ class ExtendedListMenu : ListMenu
 				// Fix the text string...
 				ListMenuItemTextItem(mDesc.mItems[i]).mText = temp;
 
-				if (GameHandler.GameFilePresent(filecheck, true)) { continue; }
+				if (GameHandler.GameFilePresent(filecheck)) { continue; }
 
 				// Otherwise, recolor it, and add it to the list of known placeholders
 				ListMenuItemTextItem(mDesc.mItems[i]).mColor = DisabledColor();
@@ -462,7 +397,7 @@ class ExtendedListMenu : ListMenu
 		{
 			if (filechecks[f].length())
 			{
-				ListMenuItemTextItem(mDesc.mItems[f]).mText = "[Optional" .. filechecks[f] .. "]" .. ListMenuItemTextItem(mDesc.mItems[f]).mText;
+				ListMenuItemTextItem(mDesc.mItems[f]).mText = "[Requires " .. filechecks[f] .. "]" .. ListMenuItemTextItem(mDesc.mItems[f]).mText;
 			}
 		}
 	}
@@ -637,7 +572,40 @@ class GameMenu : IconListMenu
 
 	override void Init(Menu parent, ListMenuDescriptor desc)
 	{
-		Super.Init(parent, desc);
+		ExtendedListMenu.Init(parent, desc);
+
+		Vector2 iconSize;
+
+		for (int i = 0; i < mDesc.mItems.Size(); i++)
+		{
+			TextureID tex;
+
+			let item = mDesc.mItems[i];
+			if (item is "ListMenuItemTextItemCentered")
+			{
+				tex = TexMan.CheckForTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
+			}
+			else if (item is "ListMenuItemGameSelection")
+			{
+				tex = TexMan.CheckForTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
+			}
+			else
+			{
+				tex = TexMan.CheckForTexture(lookupBase .. i, TexMan.Type_MiscPatch);
+			}
+
+			if (tex.IsValid())
+			{
+				Vector2 texsize = TexMan.GetScaledSize(tex);
+
+				if (texsize.x > iconSize.x) { iconSize.x = int(texsize.x); }
+			}
+
+			if (mDesc.mItems[i].Selectable()) { mDesc.mItems[i].SetX(mDesc.mXpos + iconsize.x / 2); }
+		}
+
+		if (mDesc.mXpos + mDesc.mSelectOfsX > mDesc.mXpos - iconSize.x * 1.3) { mDesc.mSelectOfsX -= iconSize.x * 1.3; }
+
 		controls = TexMan.CheckForTexture("M_GCNTRLS", TexMan.Type_Any);
 		demo = TexMan.CheckForTexture("DEMOOVERLAY", TexMan.Type_Any);
 		shareware = TexMan.CheckForTexture("SHAREWAREOVERLAY", TexMan.Type_Any);
@@ -651,6 +619,8 @@ class GameMenu : IconListMenu
 		fadecolor = 0x000000;
 
 		GameHandler.ChangeMusic("SALUTE");
+
+
 	}
 
 	override void Drawer()
@@ -697,12 +667,30 @@ class GameMenu : IconListMenu
 
 		for (int i = 0; i < mDesc.mItems.Size(); i++)
 		{
-			if (mDesc.mItems[i].Selectable())
+			let item = mDesc.mItems[i];
+			if (item.Selectable())
 			{
 				itemindex++;
 
-				// Again, semi-hard-coded, unfortunately - Icons must be named [Menu name]1, [Menu name]2, etc.
-				TextureID tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+				TextureID tex;
+				String extension = "";
+
+				if (item is "ListMenuItemTextItemCentered")
+				{
+					tex = TexMan.CheckForTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
+					extension = ListMenuItemTextItemCentered(item).mIcon;
+				}
+				else if (item is "ListMenuItemGameSelection")
+				{
+					tex = TexMan.CheckForTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
+					extension = ListMenuItemGameSelection(item).mExtension;
+				}
+				else
+				{
+					// Fallback to semi-hard-coded - Icons must be named [Menu name]1, [Menu name]2, etc.
+					tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+				}
+
 				if (tex.IsValid())
 				{
 					double alpha = i == mDesc.mSelectedItem ? 0.9 : 0.6;
@@ -729,9 +717,8 @@ class GameMenu : IconListMenu
 
 					TextureID overlay;
 
-					if (filechecks[i] == "")
+					if (extension ~== "WL6" && !GameHandler.GameFilePresent("WL6"))
 					{
-						if (GameHandler.GameFilePresent("WL6")) { continue; }
 						if (GameHandler.GameFilePresent("WL3"))
 						{
 							overlay = registered;
@@ -741,7 +728,7 @@ class GameMenu : IconListMenu
 							overlay = shareware;
 						}
 					}
-					else if (filechecks[i] == "SOD" && !GameHandler.GameFilePresent("SOD"))
+					else if (extension == "SOD" && !GameHandler.GameFilePresent("SOD"))
 					{
 						overlay = demo;
 					}
@@ -770,7 +757,21 @@ class GameMenu : IconListMenu
 						if (overlaytext == "GAMEMAPSSTRING") { overlaytext = ""; return false; } // Default wasn't found either
 					}
 
-					overlaytext.Replace("%s", filechecks[mDesc.mSelectedItem]);
+					overlaytext.Replace("%s", ListMenuItemGameSelection(mDesc.mItems[mDesc.mSelectedItem]).mExtension);
+
+					String iwad = "IWAD";
+					int l = Wads.CheckNumForFullName("Data/Palettes/Wolf3D.pal");
+					if (l != -1)
+					{
+						iwad = Wads.GetLumpFullPath(l);
+
+						Array<String> parts;
+						iwad.Split(parts, ":");
+
+						iwad = parts[0];
+					}
+
+					overlaytext.Replace("%iwad", iwad);
 
 					MenuSound("menu/alert");
 					StartMessage(overlaytext, 1);
@@ -805,6 +806,16 @@ class GameMenu : IconListMenu
 
 class ListMenuItemGameSelection : ListMenuItemTextItem
 {
+	String mIcon;
+	String mExtension;
+
+	void Init(ListMenuDescriptor desc, String text, String hotkey, String icon, String extension, int param = 0)
+	{
+		Super.Init(desc, text, hotkey, "", param);
+		mIcon = icon;
+		mExtension = extension;
+	}
+
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{
 		let fnt = menuDelegate.PickFont(mFont);
@@ -820,6 +831,14 @@ class ListMenuItemGameSelection : ListMenuItemTextItem
 
 class ListMenuItemTextItemCentered : ListMenuItemTextItem
 {
+	String mIcon;
+
+	void Init(ListMenuDescriptor desc, String text, String hotkey, String child, String icon, int param = 0)
+	{
+		Super.Init(desc, text, hotkey, child, param);
+		mIcon = icon;
+	}
+
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{
 		let fnt = menuDelegate.PickFont(mFont);

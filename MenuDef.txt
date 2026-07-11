@@ -26,11 +26,11 @@ ListMenu "GameMenu"
 
 	Font "BigFont", "WolfMenuGray", "WolfMenuLightGray"
 
-	GameSelection "$EP_WOLF", "w", ""
-	GameSelection "$EP_SOD", "s", ""
-	GameSelection "$EP_SD2", "r", ""
-	GameSelection "$EP_SD3", "u", ""
-	TextItemCentered "$EP_CUSTOM", "e", "MapMenu"
+	GameSelection "$EP_WOLF", "w", "GAME_Wolf", "WL6"
+	GameSelection "$EP_SOD", "s", "GAME_Spear", "SOD"
+	GameSelection "$EP_SD2", "r", "GAME_SD2", "SD2"
+	GameSelection "$EP_SD3", "u", "GAME_SD3", "SD3"
+	TextItemCentered "$EP_CUSTOM", "e", "MapMenu", "GAME_Custom"
 
 	Class "GameMenu"
 }

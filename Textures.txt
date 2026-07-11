@@ -1680,14 +1680,14 @@ Texture EPISODE4, 48, 24 { Patch WVGA0033, 0, 0 }
 Texture EPISODE5, 48, 24 { Patch WVGA0034, 0, 0 }
 Texture EPISODE6, 48, 24 { Patch WVGA0035, 0, 0 }
 
-Texture GAME1, 48, 24
+Texture GAME_Wolf, 48, 24
 {
 	Patch WVGA0004, -46, 0
 	Patch WSPR0349, -24, -12
 	Graphic Frame, 0, 0
 }
 
-Texture GAME2, 48, 24
+Texture GAME_Spear, 48, 24
 {
 	Graphic WVGA1035, -64, -12
 	Graphic WSPR1324, -15, -22 { Translation Gold Alpha 0.4 Style Translucent }
@@ -1696,7 +1696,7 @@ Texture GAME2, 48, 24
 	Graphic Frame, 0, 0
 }
 
-Texture GAME3, 48, 24
+Texture GAME_SD2, 48, 24
 {
 	Graphic WALL2096, 0, -28
 	Graphic WSPR2324, 21, -20 { Translation Gold Alpha 0.3 Style Translucent }
@@ -1706,7 +1706,7 @@ Texture GAME3, 48, 24
 	Graphic Frame, 0, 0
 }
 
-Texture GAME4, 48, 24
+Texture GAME_SD3, 48, 24
 {
 	Graphic WALL2026, -10, -32
 	Graphic WSPR2053, 10, -8
@@ -1714,7 +1714,7 @@ Texture GAME4, 48, 24
 	Graphic Frame, 0, 0
 }
 
-Texture GAME5, 48, 24
+Texture GAME_Custom, 48, 24
 {
 	Graphic "Graphics/Menu/CustomMaps.png", 0, 0
 	Graphic Frame, 0, 0

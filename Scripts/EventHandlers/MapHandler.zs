@@ -532,6 +532,12 @@ class MapHandler : StaticEventHandler
 		}
 	}
 
+	override void WorldUnloaded(WorldEvent e)
+	{
+		// Make sure the 'map *' command works properly to reload the current map
+		if (level.mapname ~== "Level" && e.NextMap == "") { queuedmap = curmap; }
+	}
+
 	void InitializeParsedMap(int style = -1, bool initial = true)
 	{
 		if (!curmap) { return; }
@@ -1242,16 +1248,22 @@ class ParsedMap
 						{
 							let ln = sec.lines[l];
 
-							ln.flags &= ~Line.ML_TWOSIDED;
-							ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
-
-							TextureID tex = GetTexture(pos, ln, style);
-
-							for (int s = 0; s < 2; s++)
+							// Make lines blocking and set textures
+							for (int l = 0; l < sec.lines.Size(); l++)
 							{
-								if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
+								let ln = sec.lines[l];
+
+								ln.flags &= ~Line.ML_TWOSIDED;
+								ln.flags |= Line.ML_BLOCKING | Line.ML_BLOCKSIGHT | Line.ML_SOUNDBLOCK;
+
+								TextureID tex = GetTexture(pos, ln, style);
+
+								for (int s = 0; s < 2; s++)
 								{
-									ln.sidedef[s].SetTexture(side.mid, tex);
+									if (ln.sidedef[s] && ln.sidedef[s].sector != sec)
+									{
+										ln.sidedef[s].SetTexture(side.mid, tex);
+									}
 								}
 							}
 						}
@@ -2205,27 +2217,33 @@ class DataFile
 
 			String hash = MD5.hash(Wads.ReadLump(d.lump));
 
-			if (hash == "30fecd7cce6bc70402651ec922d2da3d")
-			{ d.gametitle = "Wolfenstein 3D Shareware"; }
-			if (hash == "cec494930f3ac0545563cbd23cd611d6") // v1.2
-			{ d.gametitle = "Wolfenstein 3D (Episodes 1-3)"; }
-			else if (hash == "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
+			if (hash ~== "D50DFC66596C00622CF5731A7A071858") // v1.1 Shareware
+			{ d.gametitle = "Wolfenstein 3D Shareware v1.1"; }
+			else if (hash ~== "F0BEDEB1BA51BAAB557328693665ADE2") // v1.2 Shareware
+			{ d.gametitle = "Wolfenstein 3D Shareware v1.2"; }
+			else if (hash ~== "30FECD7CCE6BC70402651EC922D2DA3D") // 1.4 Shareware
+			{ d.gametitle = "Wolfenstein 3D Shareware v1.4"; }
+			else if (hash ~== "8B6CE9EAD4AF23119D4FE3F1EB6BD47B") // v1.2
+			{ d.gametitle = "Wolfenstein 3D (Episodes 1-3) v1.2"; }
+			else if (hash ~== "8D9F2C0F47E02D405A6B785217679299") // v1.4
+			{ d.gametitle = "Wolfenstein 3D (Episodes 1-3) v1.4"; }
+			else if (hash ~== "05ee51e9bc7d60f01a05334b1cfab1a5") // v1.1
 			{ d.gametitle = "Wolfenstein 3D v1.1"; }
-			else if (hash == "a15b04941937b7e136419a1e74e57e2f") // v1.2
+			else if (hash ~== "a15b04941937b7e136419a1e74e57e2f") // v1.2
 			{ d.gametitle = "Wolfenstein 3D v1.2"; }
-			else if (hash == "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
+			else if (hash ~== "a4e73706e100dc0cadfb02d23de46481") // v1.4 / GoG / Steam
 			{ d.gametitle = "Wolfenstein 3D v1.4"; }
-			else if (hash == "4eb2f538aab6e4061dadbc3b73837762")
+			else if (hash ~== "4eb2f538aab6e4061dadbc3b73837762")
 			{ d.gametitle = "Spear of Destiny Demo"; }
-			else if (hash == "04f16534235b4b57fc379d5709f88f4a")
+			else if (hash ~== "04f16534235b4b57fc379d5709f88f4a")
 			{ d.gametitle = "Spear of Destiny"; }
-			else if (hash == "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
+			else if (hash ~== "fa5752c5b1e25ee5c4a9ec0e9d4013a9")
 			{ d.gametitle = "Return to Danger"; }
-			else if (hash == "4219d83568d770b1c6ac9c2d4d1dfb9e")
+			else if (hash ~== "4219d83568d770b1c6ac9c2d4d1dfb9e")
 			{ d.gametitle = "The Ultimate Challenge"; }
-			else if (hash == "29860b87c31348e163e10f8aa6f19295")
+			else if (hash ~== "29860b87c31348e163e10f8aa6f19295")
 			{ d.gametitle = "The Ultimate Challenge (UAC Version)"; }
-			else if (hash == "6532d4062fed1817b440684c41a21fb5")
+			else if (hash ~== "6532d4062fed1817b440684c41a21fb5")
 			{
 				d.gametitle = "Blake Stone: Aliens of Gold Demo";
 				d.carmack = false;
