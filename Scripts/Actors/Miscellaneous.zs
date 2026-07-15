@@ -609,11 +609,23 @@ class ActorDisplay : Actor
 	int switchtime;
 	int index;
 
+	Default
+	{
+		YScale -1.0;
+		+SPECIALFLOORCLIP
+	}
+
 	States
 	{
 		Spawn:
 			UNKN A -1;
 			Stop;
+	}
+
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		floorclip = -64.0;
 	}
 
 	override void Tick()
