@@ -158,27 +158,33 @@ class GameHandler : StaticEventHandler
 
 	ui static bool GameFilePresent(String extension, bool allowdemos = false)
 	{
-		if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
-		if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
-		if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
+		if (allowdemos && extension ~== "WL1" || extension ~== "SDM") { return true; }
+
+		if (extension ~== "WL3" && !CheckForGameFiles("WL3")) { extension = "WL6"; }
+
+		if (!CheckForGameFiles(extension)) { return false; }
 
 		GameHandler this = GameHandler(StaticEventHandler.Find("GameHandler"));
 		if (this)
 		{
-			if (
-				this.gamefiles.Find(extension) < this.gamefiles.Size() ||
-				(extension ~== "WL3" && this.gamefiles.Find("WL6") < this.gamefiles.Size())
-			)
+			if (this.gamefiles.Find(extension) < this.gamefiles.Size())
 			{
-				if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
-				if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
-				if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
+				if (!CheckForGameFiles(extension)) { return false; }
 
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	ui static bool CheckForGameFiles(String extension)
+	{
+		if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
+		if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
+		if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
+
+		return true;
 	}
 
 	ui static bool NoGamemaps()
@@ -347,7 +353,7 @@ class GameHandler : StaticEventHandler
 		}
 
 		// Treat episodes with no filter as if they were the shareware version
-		if (!allowunfiltered && !extension.length()) { extension = "WL6"; }
+		if (!allowunfiltered && !extension.length()) { extension = "WL1"; }
 
 		// If the replacement string wasn't there, then this one is good
 		if (allowunfiltered && (temp == episode || !extension.length())) { return true; }

@@ -93,6 +93,8 @@ class ExtendedListMenu : ListMenu
 
 			if (item)
 			{
+				if (item.mExtension ~== "WL6" || item.mExtension ~== "WL3" || item.mExtension ~== "SOD") { continue; }
+
 				if (GameHandler.GameFilePresent(item.mExtension, true)) { continue; }
 
 				// Otherwise, recolor it, and add it to the list of known placeholders
@@ -695,14 +697,6 @@ class GameMenu : IconListMenu
 				{
 					double alpha = i == mDesc.mSelectedItem ? 0.9 : 0.6;
 
-					bool disabled = false;
-					int p = placeholders.Find(i);
-					if (p != placeholders.Size())
-					{
-						disabled = true;
-						alpha = 0.3;
-					}
-
 					Vector2 texsize = TexMan.GetScaledSize(tex);
 
 					// Default to Wolf3D-style positioning, roughly vertically centered on the episode name
@@ -713,9 +707,8 @@ class GameMenu : IconListMenu
 					drawx -= texsize.x / 2;
 					drawy -= texsize.y / 2;
 
-					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, alpha, DTA_Desaturate, disabled ? 255 : 0);
-
 					TextureID overlay;
+					bool disabled = false;
 
 					if (extension ~== "WL6" && !GameHandler.GameFilePresent("WL6"))
 					{
@@ -732,6 +725,18 @@ class GameMenu : IconListMenu
 					{
 						overlay = demo;
 					}
+
+					if (!overlay.IsValid())
+					{
+						int p = placeholders.Find(i);
+						if (p != placeholders.Size())
+						{
+							disabled = true;
+							alpha = 0.3;
+						}
+					}
+
+					screen.DrawTexture(tex, false, drawx, drawy, DTA_Clean, true, DTA_Alpha, alpha, DTA_Desaturate, disabled ? 255 : 0);
 
 					if (overlay.IsValid())
 					{
