@@ -86,24 +86,6 @@ class ExtendedListMenu : ListMenu
 
 		nodim = false;
 		DontDim = true;
-
-		for (int i = 0; i < mDesc.mItems.Size(); i++)
-		{
-			let item = ListMenuItemGameSelection(mDesc.mItems[i]);
-
-			if (item)
-			{
-				if (item.mExtension ~== "WL6" || item.mExtension ~== "WL3" || item.mExtension ~== "SOD") { continue; }
-
-				if (GameHandler.GameFilePresent(item.mExtension, true)) { continue; }
-
-				// Otherwise, recolor it, and add it to the list of known placeholders
-				ListMenuItemTextItem(item).mColor = DisabledColor();
-				ListMenuItemTextItem(item).mColorSelected = DisabledColor();
-
-				placeholders.Push(i);
-			}
-		}
 	}
 
 	override void Drawer()
@@ -323,10 +305,10 @@ class ExtendedListMenu : ListMenu
 		{
 			fadetarget = gametic;
 			initialalpha = 1.0;
-
-			GetPlaceholders();
 		}
 		nodim = false;
+
+		GetPlaceholders();
 
 		fadecolor = Game.GetFadeColor(self);
 	}
@@ -344,7 +326,21 @@ class ExtendedListMenu : ListMenu
 		{
 			filecheck = "";
 
-			if (
+			if (mDesc.mItems[i] is "ListMenuItemGameSelection")
+			{
+				let item = ListMenuItemGameSelection(mDesc.mItems[i]);
+
+				if (item.mExtension ~== "WL6" || item.mExtension ~== "WL3" || item.mExtension ~== "SOD") { continue; }
+
+				if (GameHandler.GameFilePresent(item.mExtension, true)) { continue; }
+
+				// Otherwise, recolor it, and add it to the list of known placeholders
+				ListMenuItemTextItem(item).mColor = DisabledColor();
+				ListMenuItemTextItem(item).mColorSelected = DisabledColor();
+
+				placeholders.Push(i);
+			}
+			else if (
 				mDesc.mItems[i] is "ListMenuItemTextItem" &&
 				(
 					mDesc.mItems[i].GetAction() == "SkillMenu" ||
@@ -621,8 +617,6 @@ class GameMenu : IconListMenu
 		fadecolor = 0x000000;
 
 		GameHandler.ChangeMusic("SALUTE");
-
-
 	}
 
 	override void Drawer()
@@ -634,8 +628,6 @@ class GameMenu : IconListMenu
 		// Calculate width and height to keep the image at the same relative size, regardless of aspect ratio
 		double width = ratio > 1.25 ? 200 * ratio : 320;
 		double height = ratio < 1.25 ? 320 / ratio : 200;
-
-		// if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_FullscreenEx, 2); }
 
 		if (controls)
 		{
