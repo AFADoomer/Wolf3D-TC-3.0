@@ -337,7 +337,15 @@ class WolfGraphicParser
 		}
 	}
 
-	static void DumpGraphicToConsole(ParsedGraphic graphic, bool halt = false)
+	enum DumpFlags
+	{
+		DUMP_DEFAULT = 0,
+		DUMP_CLIPCOLUMNS = 1,
+		DUMP_CLIPROWS = 2,
+		DUMP_CLIP = 3,
+	};
+
+	static void DumpGraphicToConsole(ParsedGraphic graphic, String halt = "", DumpFlags clip = 0, String bgcolor = "ConsoleBackground")
 	{
 		Color data[64][64];
 		for (int x = 0; x < 64; x++) { for (int y = 0; y < 64; y++) { data[x][y] = Color(152, 0, 136); } }
@@ -352,23 +360,71 @@ class WolfGraphicParser
 			}
 		}
 
+		String block = "█";
+		String bkgblock = block;
 		String row;
-		for (int r = 0; r < 64; r++)
+
+		int rowcontents = 0;
+		int colcontents = 0;
+		int colstart = 0;
+		int colend = 64;
+
+		if (clip & DUMP_CLIPROWS)
 		{
 			for (int c = 0; c < 64; c++)
 			{
+				colcontents = 0;
+				for (int r = 0; r < 64; r++)
+				{
+					colcontents += data[c][r].a;
+					if (colcontents > 0) { break; }
+				}
+
+				if (colcontents == 0) { colstart++; }
+				else { break; }
+			}
+
+			for (int c = 63; c >= colstart; c--)
+			{
+				colcontents = 0;
+				for (int r = 0; r < 64; r++)
+				{
+					colcontents += data[c][r].a;
+					if (colcontents > 0) { break; }
+				}
+
+				if (colcontents == 0) { colend--; }
+				else { break; }
+			}
+		}
+
+		for (int r = 0; r < 64; r++)
+		{
+			if (clip & DUMP_CLIPCOLUMNS && !rowcontents)
+			{
+				for (int c = colstart; c < colend; c++)
+				{
+					rowcontents += data[c][r].a;
+					if (rowcontents > 0) { break; }
+				}
+
+				if (rowcontents == 0) { continue; }
+			}
+
+			for (int c = colstart; c < colend; c++)
+			{
 				int index = c * 64 + r;
 				Color colorindex = data[c][r];
-				if (colorindex.a == 0) { row.AppendFormat("\c[ConsoleBackground]█"); }
-				else if (colorindex == 0xFF000000) { row.AppendFormat("\c[TrueBlack]█"); }
-				else { row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), "█"); }
+				if (colorindex.a == 0) { row.AppendFormat("\c[%s]%s", bgcolor, bkgblock); }
+				else if (colorindex == 0xFF000000) { row.AppendFormat("\c[TrueBlack]%s", block); }
+				else { row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), block); }
 			}
 
 			console.printf(row);
 			row = "";
 		}
 
-		if (halt) { ThrowAbortException("Halting..."); }
+		if (halt.length()) { ThrowAbortException(halt); }
 	}
 
 	static Canvas CreateGraphic(ParsedGraphic graphic, String canvasname = "", GraphicParserFlags flags = 0)
