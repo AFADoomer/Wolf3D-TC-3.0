@@ -315,16 +315,9 @@ class BJFinaleRun : Actor
 
 	Default
 	{
-		MONSTER;
-		-COUNTKILL
-		-SOLID
-		-SHOOTABLE
-		+FRIENDLY
 		+FULLVOLDEATH
 		+INVULNERABLE
-		+NOTARGET
 		+NOTIMEFREEZE
-		+AMBUSH
 
 		Height 0;
 		Radius 0;
@@ -438,7 +431,7 @@ class BJFinaleRun : Actor
 		if (p)
 		{
 			p.angle = angle;
-			p.translation = caller.translation;
+			// p.translation = caller.translation;
 		}
 	}
 }
