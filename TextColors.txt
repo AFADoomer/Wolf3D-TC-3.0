@@ -1889,3 +1889,10 @@ PaletteFF
 Flat:
 	#980088
 }
+
+ConsoleBackground
+{
+	#262626 #262626
+Flat:
+	#262626
+}

@@ -359,7 +359,8 @@ class WolfGraphicParser
 			{
 				int index = c * 64 + r;
 				Color colorindex = data[c][r];
-				if (colorindex == Color(152, 0, 136)) { row.AppendFormat(" "); }
+				if (colorindex.a == 0) { row.AppendFormat("\c[ConsoleBackground]█"); }
+				else if (colorindex == 0xFF000000) { row.AppendFormat("\c[TrueBlack]█"); }
 				else { row.AppendFormat("\c%s%s", ZScriptTools.BestTextColor(data[c][r]), "█"); }
 			}
 
