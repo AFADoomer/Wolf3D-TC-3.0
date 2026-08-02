@@ -990,3 +990,13 @@ class FlatStyle : CustomIntCVar
 		return val;
 	}
 }
+
+class VSwapDebug : CustomBoolCVar
+{
+	override bool ModifyValue(Name CVarName, bool val)
+	{
+		EventHandler.SendNetworkEvent("reloadtextures");
+
+		return val;
+	}
+}
