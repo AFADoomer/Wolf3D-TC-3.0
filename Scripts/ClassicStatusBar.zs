@@ -522,7 +522,7 @@ class ClassicStatusBar : WidgetStatusBar
 				viewportsize.x = (blocks * (320 - 16)) / 10;
 			}
 
-			viewportsize.y = (blocks * yoffset) / 10 - 4;
+			viewportsize.y = (blocks * yoffset) / 10 - 5;
 
 			viewport.x = (320 - viewportsize.x) / 2;
 			viewport.y = (yoffset - viewportsize.y) / 2 + 2;
@@ -556,7 +556,7 @@ class ClassicStatusBar : WidgetStatusBar
 				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
 				if (screenblocks == 10 || automapactive)
 				{
-					DrawImage("WBRD_B", ((coords.x + size.x) / 2, viewport.y + viewportsize.y - 1), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(screensize.x / 3, 1.0));
+					DrawImage("WBRD_B", ((coords.x + size.x) / 2, viewport.y + viewportsize.y), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(screensize.x / 3, 1.0));
 				}
 			}
 		}

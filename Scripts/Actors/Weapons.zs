@@ -23,7 +23,6 @@
 // Wolf3D Weapons
 class ClassicWeapon : Weapon
 {
-	const WEAPON_OFFSET_Y = 14.4;
 	CVar translatehud;
 
 	enum WeaponStates
@@ -35,6 +34,7 @@ class ClassicWeapon : Weapon
 
 	int flags;
 	WeaponStates status;
+	Vector2 offsets;
 
 	FlagDef DOGRIN:flags, 0;
 	FlagDef NOREFIRE:flags, 1;
@@ -47,7 +47,7 @@ class ClassicWeapon : Weapon
 		Mass 10000;
 		Obituary "";
 		Inventory.PickupMessage "";
-		Weapon.YAdjust 2.0;
+		Weapon.YAdjust -9.0;
 		Weapon.BobSpeed 2.0;
 	}
 
@@ -165,13 +165,34 @@ class ClassicWeapon : Weapon
 
 	virtual void SetYPosition()
 	{
+		if (st_scale || screenblocks > 10) { return; }
+
 		let psp = owner.player.GetPSprite(PSP_WEAPON);
 		if (!psp) { return; }
 
-		if (screenblocks < 11) { psp.y = WEAPONTOP - WEAPON_OFFSET_Y * clamp(st_scale, 0, 1) / WeaponScaleY; }
-		else { psp.y = WEAPONTOP + 6.0 / WeaponScaleY; }
+		double scale = GetUIScale(uiscale);
+		double ratio = 240.0 * scale / Screen.GetHeight();
+		double barheight = 42.0 * ratio;
 
-		if (uiscale && !st_scale) { psp.y += (6.0 / WeaponScaleY) / max(1, uiscale - 1); }
+		psp.y = WEAPONTOP + (YAdjust - 6.0) / WeaponScaleY;
+	}
+
+	int GetUIScale(int altval = 0)
+	{
+		double scale = altval;
+
+		if (!scale)
+		{
+			int vscale = Screen.GetHeight() / 400;
+			int hscale = Screen.GetWidth() / 640;
+			scale = max(1, min(vscale, hscale));
+		}
+
+		int vmax = Screen.GetHeight() / 200;
+		int hmax = Screen.GetWidth() / 320;
+		scale = max(1, min(scale, max(vmax, hmax)));
+
+		return scale;
 	}
 
 	override void Touch(Actor toucher)
@@ -200,12 +221,15 @@ class ClassicWeapon : Weapon
 			if (tex.IsValid())
 			{
 				Vector2 size = TexMan.GetScaledSize(tex);
+				offsets = TexMan.GetScaledOffset(tex);
 				if (size.x == size.y && size.x <= 64.0)
 				{
 					double factor = 160.0 / size.x;
 					WeaponScaleX = Default.WeaponScaleX * factor;
 					WeaponScaleY = Default.WeaponScaleY * factor;
 				}
+				//YAdjust = (-offsets.y - 14.0) / WeaponScaleY;
+				console.printf("%s %f %f", GetClassNAme(), weaponscaley, yadjust);
 			}
 		}
 	}
@@ -722,6 +746,7 @@ class WolfFlameThrower : ClassicWeapon
 		Weapon.SlotNumber 5;
 		Weapon.WeaponScaleX 1.0;
 		Weapon.WeaponScaleY 1.2;
+		Weapon.YAdjust 22.0;
 		+Weapon.CHEATNOTWEAPON
 		+ClassicWeapon.DOGRIN
 	}
@@ -803,6 +828,7 @@ class WolfRocketLauncher : ClassicWeapon
 		Weapon.SlotNumber 6;
 		Weapon.WeaponScaleX 1.0;
 		Weapon.WeaponScaleY 1.2;
+		Weapon.YAdjust 22.0;
 		+Weapon.CHEATNOTWEAPON
 		+Weapon.EXPLOSIVE
 		+ClassicWeapon.DOGRIN
