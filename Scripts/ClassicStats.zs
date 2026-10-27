@@ -34,6 +34,7 @@ class ClassicStats : DoomStatusScreen
 	Font ClassicFont;
 	LevelData totals;
 	LevelInfo info;
+	String statskey; // Parsed maps keep their stats under the map's own name, not "Level"
 
 	int fadetarget;
 	int fadetime;
@@ -170,7 +171,7 @@ class ClassicStats : DoomStatusScreen
 	{
 		// Actual score bonus handled in MapStatsHandler WorldLoaded function
 		// This is just here for appearances
-		LevelData stats = MapStatsHandler.GetStats(wbs.current);
+		LevelData stats = MapStatsHandler.GetStats(statskey);
 		if (!stats) { return; }
 
 		int timeleft = style == normal ? stats.timebonusamt : 0;
@@ -593,6 +594,7 @@ class ClassicStats : DoomStatusScreen
 		ParsedMap curmap = MapHandler.GetCurrentMap();
 		if (curmap) { info = curmap.GetInfo(); }
 		if (!info) { info = level.info; }
+		statskey = curmap ? curmap.mapname : wbs.current;
 
 		String levelname = StringTable.Localize(info.levelname, false);
 		// Use the local level structure which can be overridden by hubs

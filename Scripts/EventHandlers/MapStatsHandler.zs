@@ -88,6 +88,7 @@ class MapStatsHandler : StaticEventHandler
 		String mapname = level.mapname;
 		String levelname = level.levelname;
 		int levelnum = level.levelnum;
+		int partime = level.partime;
 
 		MapHandler maphandle = MapHandler.Get();
 		if (maphandle)
@@ -97,6 +98,10 @@ class MapStatsHandler : StaticEventHandler
 			{
 				mapname = levelname = curmap.mapname;
 				levelnum = curmap.mapnum;
+
+				// The shared "Level" map has no par of its own
+				LevelInfo info = curmap.GetInfo();
+				if (info && info.partime > 0) { partime = info.partime; }
 			}
 		}
 
@@ -135,7 +140,7 @@ class MapStatsHandler : StaticEventHandler
 		}
 
 		if (l.levelnum % 100 == 10) { l.timebonusamt = 30; }
-		else { l.timebonusamt = level.partime > 0 ? max(level.partime - Thinker.Tics2Seconds(level.maptime), 0) : 0;}
+		else { l.timebonusamt = partime > 0 ? max(partime - Thinker.Tics2Seconds(level.maptime), 0) : 0;}
 
 		// Save the copy of the data that will persist across saves...
 		if (!this.persistent) { this.persistent = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler")); }
