@@ -150,7 +150,7 @@ Default
 		}
 	}
 
-	// Translation table for Wolfenstein map things to GZDoom actor classes
+	// Translation table for Wolfenstein map things to engine actor classes
 	//
 	// Format of entries:
 	//   ID = "Class", Skill, Angle, Patrolling

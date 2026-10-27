@@ -746,7 +746,7 @@ class LoadScreen : IntroSlideShow
 	int nextscreen, actiontick, tickcount;
 	double speed;
 	double assetalpha;
-	TextureID bkg, bkg1, bkg2, gametitle, gzdoom, thirtyyears;
+	TextureID bkg, bkg1, bkg2, gametitle, engine, thirtyyears;
 
 	override void SetGraphics()
 	{
@@ -754,7 +754,7 @@ class LoadScreen : IntroSlideShow
 		bkg1 = TexMan.CheckForTexture("Graphics/Title/bkg1.png", TexMan.Type_Any);
 		bkg2 = TexMan.CheckForTexture("Graphics/Title/bkg2.png", TexMan.Type_Any);
 		gametitle = TexMan.CheckForTexture("Graphics/Wolf3D.png", TexMan.Type_Any);
-		gzdoom = TexMan.CheckForTexture("Graphics/Title/uzdoom.png", TexMan.Type_Any);
+		engine = TexMan.CheckForTexture("Graphics/Title/uzdoom.png", TexMan.Type_Any);
 		thirtyyears = TexMan.CheckForTexture("Graphics/Title/30years.png", TexMan.Type_Any);
 	}
 
@@ -786,7 +786,7 @@ class LoadScreen : IntroSlideShow
 			else if (curscreen == 3)
 			{
 				screen.DrawTexture(gametitle, false, 0, 32, DTA_VirtualWidth, 480, DTA_VirtualHeight, 360);
-				screen.DrawTexture(gzdoom, false, int(w * 3 / 4), 320, DTA_KeepRatio, true, DTA_VirtualWidth, w, DTA_VirtualHeight, 640, DTA_VirtualHeight, 480, DTA_Alpha, assetalpha);
+				screen.DrawTexture(engine, false, int(w * 3 / 4), 320, DTA_KeepRatio, true, DTA_VirtualWidth, w, DTA_VirtualHeight, 640, DTA_VirtualHeight, 480, DTA_Alpha, assetalpha);
 			}
 		}
 
@@ -828,7 +828,7 @@ class LoadScreen : IntroSlideShow
 					advancetime = gametic + GameTicRate * 5;
 					fadetarget = -1;
 					break;
-				case 3: // Powered by GZDoom
+				case 3: // Engine splash
 					advancetime = gametic + GameTicRate * 6;
 					fadetarget = gametic + fadetime;
 					break;

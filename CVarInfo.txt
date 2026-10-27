@@ -25,7 +25,7 @@ user int g_musicstyle = 0; // MUS or MIDI music - 0 = MUS, 1 = MIDI
 server bool g_userotations = false; // Use additional sprite rotations if they are available
 server HandlerClass(LockColors) bool g_usedoorkeycolors = false; // Show color of locked doors' locks on their texture
 user bool g_translatewpnsprites = true; // Use player's color to recolor weapon sprite sleeves
-user bool g_wallhitsounds = false; // Use player's color to recolor weapon sprite sleeves
+user bool g_wallhitsounds = false; // Toggle the annoying sound that plays when a player runs into a wall
 
 // HUD
 user int g_borderstyle = 0; // Style of screen border
@@ -33,8 +33,8 @@ user int g_hudratio = 0; // Force fullscreen hud to draw at a specific ratio
 
 // Debug or internal use
 server bool g_debugtextscreens = false; // Draw debug info on some text screens
-user bool g_defaultlog = false; // Use the GZDoom console output
-server bool g_defaultmenus = false; // Use the default GZDoom option menus
+user bool g_defaultlog = false; // Use the engine's console output
+server bool g_defaultmenus = false; // Use the default engine option menus
 server cheat noarchive HandlerClass(PushwallHighlight) color g_highlightpushwalls = 0; // Give pushwalls a yellow highlight
 server noarchive HandlerClass(LightVar) int g_lightlevel = -1; // Debug override for map light level
 server bool g_placeholders = true; // Enable dubious legality
