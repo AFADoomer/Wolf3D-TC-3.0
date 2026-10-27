@@ -214,10 +214,10 @@ class GetPsyched : WolfMenu
 				}
 				break;
 			case 3:
-				if (gametic == fadetarget) { curstate++; }
+				if (gametic >= fadetarget) { curstate++; }
 				break;
 			case 4:
-				if (gametic == fadetarget + fadetime) { Close(); }
+				if (gametic >= fadetarget + fadetime) { Close(); }
 				break;
 			case 5:
 				if (ClassicStatusBar(StatusBar)) { ClassicStatusBar(StatusBar).ReverseFizzle(players[consoleplayer].mo); }

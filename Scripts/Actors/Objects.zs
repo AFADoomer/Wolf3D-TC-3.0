@@ -1316,7 +1316,12 @@ class SpearofDestiny : Inventory
 
 		if (owner)
 		{
-			if (!actiontime && Game.IsSoD() && level.levelnum % 100 == 18)
+			// Parsed maps all run as "Level"; their own level number is in their MAPINFO entry
+			int levelnum = level.levelnum;
+			MapHandler handler = MapHandler.Get();
+			if (handler && handler.curmap && handler.curmap.GetInfo()) { levelnum = handler.curmap.GetInfo().levelnum; }
+
+			if (!actiontime && Game.IsSoD() && levelnum % 100 == 18)
 			{
 				actiontime = level.time + 70;
 				InterHubAmount = 0;

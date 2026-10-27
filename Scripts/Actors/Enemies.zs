@@ -554,9 +554,20 @@ class ClassicBase : Actor
 		return delta, d[0], d[1];
 	}
 
+	// The killer has the drop weapon or a weapon it derives from or that derives from it
+	bool HasDropWeapon(Actor mo)
+	{
+		for (Class<Object> cls = dropweapon; cls && cls != "ClassicWeapon" && cls != "Weapon"; cls = cls.GetParentClass())
+		{
+			if (mo.FindInventory((Class<Inventory>)(cls), true)) { return true; }
+		}
+
+		return false;
+	}
+
 	void A_DeathDrop()
 	{
-		if (dropweapon && target && !target.CheckInventory(dropweapon, 1))
+		if (dropweapon && target && !HasDropWeapon(target))
 		{
 			A_SpawnItemEx(dropweapon);
 			return;
