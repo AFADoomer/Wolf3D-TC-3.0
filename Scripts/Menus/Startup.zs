@@ -1275,7 +1275,7 @@ class Notice : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
-		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4, DTA_VirtualWidth, w, DTA_VirtualHeight, h); }
+		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_DestWidth, Screen.GetWidth(), DTA_DestHeight, Screen.GetHeight(), DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4); }
 
 		PrintFullJustified(lines, maxwidth);
 	}
