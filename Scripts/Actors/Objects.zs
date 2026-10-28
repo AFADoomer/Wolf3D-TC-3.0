@@ -1321,7 +1321,15 @@ class SpearofDestiny : Inventory
 			MapHandler handler = MapHandler.Get();
 			if (handler && handler.curmap && handler.curmap.GetInfo()) { levelnum = handler.curmap.GetInfo().levelnum; }
 
-			if (!actiontime && Game.IsSoD() && levelnum % 100 == 18)
+			// A game extension can decide which of its maps the Spear ends
+			GameExtension ex;
+			String extgame;
+			[ex, extgame] = GameExtension.Current();
+
+			int spear = ex && handler && handler.curmap ? ex.SpearEndsLevel(extgame, handler.curmap) : -1;
+			if (spear < 0) { spear = Game.IsSoD() && levelnum % 100 == 18; }
+
+			if (!actiontime && spear)
 			{
 				actiontime = level.time + 70;
 				InterHubAmount = 0;

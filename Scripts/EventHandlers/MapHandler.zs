@@ -40,6 +40,7 @@ Class TileInfo
 
 	uint id;
 	String tex[2], alttex[2];
+	String frame[2]; // Per-door frame textures (Frame in TileCodes); empty = the DoorFrame tile
 	uint special;
 	uint args[5];
 	int key;
@@ -129,6 +130,19 @@ Class TileInfo
 		}
 	}
 
+	void ParseFrame(ParsedValue tiledata)
+	{
+		String match = tiledata.GetString("Frame");
+		if (!match.length()) { return; }
+
+		Array<String> patterns;
+		match.Split(patterns, ",");
+		if (patterns.Size() < 2) { return; }
+
+		frame[0] = FileReader.StripQuotes(ZScriptTools.Trim(patterns[0]));
+		frame[1] = FileReader.StripQuotes(ZScriptTools.Trim(patterns[1]));
+	}
+
 	void ParseKey(ParsedValue tiledata)
 	{
 		key = tiledata.GetInt("Key");
@@ -181,6 +195,7 @@ Class GameTileInfo
 					tile.ParseFlags(tiledefault);
 					tile.ParsePattern(tiledefault);
 					tile.ParseAltPattern(tiledefault);
+					tile.ParseFrame(tiledefault);
 					tile.ParseSpecial(tiledefault);
 				}
 			}
@@ -201,6 +216,7 @@ Class GameTileInfo
 				tile.ParseFlags(tiles);
 				tile.ParsePattern(tiles);
 				tile.ParseAltPattern(tiles);
+				tile.ParseFrame(tiles);
 				tile.ParseSpecial(tiles);
 			}
 
@@ -355,10 +371,17 @@ Class GameTileInfo
 
 Class ActorMap : ParsedValue
 {
-	static ParsedValue GetActor(ParsedValue actormaps, int gametype, int index, int skill)
+	static ParsedValue GetActor(ParsedValue actormaps, int gametype, int index, int skill, String gamename = "")
 	{
 		String istr = String.Format("%i", index);
 		ParsedValue gm, am;
+
+		if (gamename.length())
+		{
+			gm = actormaps.Find(gamename);
+			if (gm) { am = gm.Find(istr); }
+			if (am && am.GetInt("Skill") <= skill) { return am; }
+		}
 
 		switch (gametype)
 		{
@@ -590,7 +613,7 @@ class MapHandler : StaticEventHandler
 		if (level.mapname ~== "Level" && queuedmap)
 		{
 			curmap = queuedmap;
-			InitializeParsedMap(g_sod);
+			InitializeParsedMap(queuedmap.gametype >= 0 ? queuedmap.gametype : g_sod);
 		}
 		else
 		{
@@ -611,12 +634,20 @@ class MapHandler : StaticEventHandler
 
 		if (style < 0) { style = max(0, g_sod); }
 
+		// Games from extensions can share sprite names between their data sets: draw this one's
+		String dataset = GameExtension.GetDataSet(curmap.extension);
+		if (dataset.length()) { GraphicsHandler.Activate(dataset); }
+
 		curmap.Initialize(style, initial);
 
 		if (initial)
 		{
 			activatedfloors.Clear();
 			activatedpushwalls.Clear();
+
+			// Flats were set from whichever map was queued when the level loaded; redo them for this one
+			let flats = ReplacementHandler(StaticEventHandler.Find("ReplacementHandler"));
+			if (flats && dataset.length()) { flats.CheckFlats(); }
 		}
 
 		if (!initial) { return; }
@@ -762,6 +793,37 @@ class MapHandler : StaticEventHandler
 				}
 			}
 		}
+	}
+
+	// The map a fresh "Level" should build when nothing was queued: a game
+	// extension's choice, else the first map of the game picked in the game
+	// menu (g_modgame), else the TC's demo map.
+	// Called from level post-processing, which lays out doors for this map.
+	ParsedMap StartingMap()
+	{
+		ParsedMap start;
+
+		let extensions = GameExtension.GetHandler();
+		for (int e = 0; !start && extensions && e < extensions.extensions.Size(); e++)
+		{
+			start = extensions.extensions[e].StartingMap(self);
+		}
+
+		GameExtension ex = GameExtension.Find(g_modgame);
+		if (!start && ex)
+		{
+			String game = g_modgame.MakeUpper();
+			start = parsedmaps.GetMapDataByNumber(ex.MapNumber(game, 0), "GAMEMAPS." .. game);
+		}
+
+		if (start)
+		{
+			CVar sodvar = CVar.FindCVar("g_sod");
+			if (sodvar && start.gametype >= 0) { sodvar.SetInt(start.gametype); }
+			return start;
+		}
+
+		return parsedmaps.GetMapData("Wolf3D TC Test");
 	}
 
 	static clearscope MapHandler Get()
@@ -930,6 +992,7 @@ class ParsedMap
 	int height;
 	int planecount;
 	Array<int> planes[4];
+	Object extdata; // Whatever a game extension keeps with the map (GameExtension.PrepareMap)
 	Array<Sector> voidspace;
 	bool noclip;
 	Vector2 startspot;
@@ -963,6 +1026,9 @@ class ParsedMap
 	static String GetGameName(int gametype, String extension = "")
 	{
 		if (g_forcetilemap.length()) { extension = g_forcetilemap; }
+
+		String dataset = GameExtension.GetDataSet(extension);
+		if (dataset.length()) { return dataset; }
 
 		if (extension.length())
 		{
@@ -1236,7 +1302,7 @@ class ParsedMap
 				}
 
 				// Build the wall structure
-				if ((!tile || tile.flags & TileInfo.TILE_SOLID) && (a == 0 || (a > 0x59 && a < 0x62)))
+				if ((!tile || tile.flags & TileInfo.TILE_SOLID) && (a == 0 || (a > 0x59 && a < 0x62) || GameExtension.IsWallActor(extension, a)))
 				{
 					// Collapse the sector height
 					if (tile && !(tile.flags & TileInfo.TILE_FONT) && !GraphicsHandler.CheckTouched(tile.tex[0]))
@@ -1300,7 +1366,7 @@ class ParsedMap
 				if (initial && a > 0)
 				{
 					Actor mo;
-					ParsedValue am = ActorMap.GetActor(handler.actormaps, style, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
+					ParsedValue am = ActorMap.GetActor(handler.actormaps, style, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1, GetGameName(style, extension));
 
 					if (am)
 					{
@@ -1536,7 +1602,7 @@ class ParsedMap
 						{
 							if (ln.sidedef[s] && ln.sidedef[s].sector == sec)
 							{
-								ln.sidedef[s].SetTexture(side.mid, GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, pos, ln, -1, tile.key));
+								ln.sidedef[s].SetTexture(side.mid, DoorFrameTexture(tile, pos, ln, -1));
 							}
 						}
 					}
@@ -1584,7 +1650,7 @@ class ParsedMap
 									if (ntile && ntile.flags & TileInfo.TILE_DOOR)
 									{
 										Vector2 gridpos = ParsedMap.CoordsToGrid(door.StartSpotPos);
-										tex = GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, (0, 0), ln, ntile.key);
+										tex = DoorFrameTexture(ntile, (0, 0), ln, ntile.key);
 									}
 								}
 
@@ -1766,6 +1832,19 @@ class ParsedMap
 		if (!tile) { return null, null; }
 
 		return GetTileTexture(tile, pos, ln), tile;
+	}
+
+	// A door's own frame textures if its tile code defines them (light side on
+	// lines running east-west, as for walls), else the game's DoorFrame tile
+	TextureID DoorFrameTexture(TileInfo door, Vector2 pos, Line ln, int style)
+	{
+		if (door && door.frame[0].length())
+		{
+			TextureID tex = TexMan.CheckForTexture((!ln || ln.delta.x) ? door.frame[0] : door.frame[1], TexMan.Type_Any);
+			if (tex.IsValid()) { return tex; }
+		}
+
+		return GetSpecialTileTexture(TileInfo.TILE_DOORFRAME, pos, ln, style, door ? door.key : 0);
 	}
 
 	TextureID GetTileTexture(TileInfo tile, Vector2 pos, Line ln = null)
@@ -1997,6 +2076,7 @@ class WolfMapParser
 		else if (game ~== "SD2") { parsedmaps.gametype = 2; }
 		else if (game ~== "SD3") { parsedmaps.gametype = 3; }
 		else if (game ~== "BS1" || game ~== "BS6") { parsedmaps.gametype = 4; }
+		else if (GameExtension.Find(game)) { parsedmaps.gametype = GameExtension.Find(game).GameType(game.MakeUpper()); } // -1 as below
 		else { parsedmaps.gametype = -1; } // Play as Wolf, but allow setting via CVar
 
 		parsedmaps.extension = game;
@@ -2151,6 +2231,9 @@ class WolfMapParser
 				offset += 16;
 				newmap.signature = content.Mid(offset, 4);
 				newmap.mapnum = gametype <= 0 ? (a / 10 + 1) * 100 + a % 10 + 1 : 600 + gametype * 100 + a + 1;
+				GameExtension ex = GameExtension.Find(extension);
+				int num = ex ? ex.MapNumber(extension.MakeUpper(), a) : -1;
+				if (num >= 0) { newmap.mapnum = num; }
 
 				for (int p = 0; p < newmap.planes.Size(); p++)
 				{
@@ -2163,6 +2246,8 @@ class WolfMapParser
 
 			newmap.gametype = gametype;
 			newmap.extension = extension;
+			GameExtension ex = GameExtension.Find(extension);
+			if (ex) { ex.PrepareMap(newmap); }
 			newmap.info = newmap.GetInfo();
 
 			d.maps.Push(newmap);
@@ -2294,7 +2379,11 @@ class DataFile
 				String ext = path.Mid(path.length() - 3, 3);
 				ext = ext.MakeLower();
 
-				if (ext == "wl6") { d.gametitle = "Wolfenstein 3D (Modified)"; }
+				GameExtension ex = GameExtension.Find(ext);
+				String title = ex ? ex.Title(ext.MakeUpper()) : "";
+
+				if (title.length()) { d.gametitle = title; }
+				else if (ext == "wl6") { d.gametitle = "Wolfenstein 3D (Modified)"; }
 				else if (ext == "wl3") { d.gametitle = "Wolfenstein 3D (Episodes 1-3) (Modified)"; }
 				else if (ext == "wl1") { d.gametitle = "Wolfenstein 3D Shareware (Modified)"; }
 				else if (ext == "sdm") { d.gametitle = "Spear of Destiny Demo (Modified)"; }

@@ -31,6 +31,7 @@ class OldHelpMenu : ReadThisMenu
 	bool sharewareremap;
 	bool allowexit;
 	bool allowinput;
+	String graphicprefix; // ^G picture n is <prefix>%04i
 
 	override void Init(Menu parent)
 	{
@@ -57,6 +58,7 @@ class OldHelpMenu : ReadThisMenu
 
 		fontheight = 10;
 		allowinput = true;
+		graphicprefix = "WVGA";
 	}
 
 	override void Drawer()
@@ -216,7 +218,7 @@ class OldHelpMenu : ReadThisMenu
 
 								TextureID tex;
 								if (sharewareremap) { tex = TexMan.CheckForTexture(String.Format("SLIDEG%i", g), TexMan.Type_Any); }
-								if (!sharewareremap || !tex.IsValid()) { tex = TexMan.CheckForTexture(String.Format("WVGA%04i", g), TexMan.Type_Any); }
+								if (!sharewareremap || !tex.IsValid()) { tex = TexMan.CheckForTexture(String.Format("%s%04i", graphicprefix, g), TexMan.Type_Any); }
 
 								if (tex)
 								{
@@ -543,9 +545,13 @@ class IntroSlideshow : WolfMenu
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 	}
 
+	String gamegraphics; // g_modgame the screens were picked for
+
 	virtual void SetGraphics()
 	{
-		if (sodversion == Game.IsSoD()) { return; }
+		if (sodversion == Game.IsSoD() && gamegraphics == g_modgame) { return; }
+
+		gamegraphics = g_modgame;
 
 		startup = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD") ? "SSTARTUP" : "SDSTARTU" : "STARTUP"), TexMan.Type_Any);
 		startup2 = TexMan.CheckForTexture((Game.IsSoD() ? GameHandler.GameFilePresent("SOD") ? "SSTARTU2" : "SDSTART2" : "STARTUP2"), TexMan.Type_Any);
@@ -554,7 +560,40 @@ class IntroSlideshow : WolfMenu
 		credits = TexMan.CheckForTexture((Game.IsSoD() ? "SCREDIT" : "CREDIT"), TexMan.Type_Any);
 		selected = TexMan.CheckForTexture("STARTSEL", TexMan.Type_Any);
 
+		// A game extension's own screens
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex)
+		{
+			startup = IntroGraphic(ex, extgame, "startup", startup);
+			startup2 = IntroGraphic(ex, extgame, "startup2", startup2);
+			warning = IntroGraphic(ex, extgame, "warning", warning);
+			title = IntroGraphic(ex, extgame, "title", title);
+			credits = IntroGraphic(ex, extgame, "credits", credits);
+			selected = IntroGraphic(ex, extgame, "selected", selected);
+		}
+
 		sodversion = Game.IsSoD();
+	}
+
+	TextureID IntroGraphic(GameExtension ex, String extgame, String which, TextureID tex)
+	{
+		String name = ex.IntroGraphic(extgame, which);
+		if (!name.length()) { return tex; }
+
+		TextureID replacement = TexMan.CheckForTexture(name, TexMan.Type_Any);
+		return replacement.IsValid() ? replacement : tex;
+	}
+
+	// The extension's own drawing of a slideshow screen
+	bool DrawIntroScreen(String which)
+	{
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		return ex && ex.DrawIntroScreen(extgame, which, current);
 	}
 
 	override void Drawer()
@@ -591,9 +630,14 @@ class IntroSlideshow : WolfMenu
 				}
 			}
 
-			if (use_mouse) { screen.DrawTexture(selected, false, 164, 82, DTA_320x200, true); }
-			if (use_joystick) { screen.DrawTexture(selected, false, 164, 105, DTA_320x200, true); }
+			// The mouse / joystick ticks of the sign-on screen (not where a game's title stands in for it)
+			if (startup2 != title)
+			{
+				if (use_mouse) { screen.DrawTexture(selected, false, 164, 82, DTA_320x200, true); }
+				if (use_joystick) { screen.DrawTexture(selected, false, 164, 105, DTA_320x200, true); }
+			}
 		}
+		else if (current == warning && DrawIntroScreen("warning")) {}
 		else if (current == warning)
 		{
 			screen.Dim(0x20A8FC, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
@@ -998,7 +1042,7 @@ class HighScores : WolfMenu
 		screen.Dim(0x000000, 0.3, 0, int(32 * ratio), screen.GetWidth(), int(1 * ratio));
 		screen.Dim(0x000000, 1.0, 0, int(33 * ratio), screen.GetWidth(), int(1 * ratio));
 
-		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		if (Game.IsSoD() && bkg) { if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); } }
 
 		if (title) { screen.DrawTexture(title, false, (Game.IsSoD() ? 0 : 48), (Game.IsSoD() ? 0 : -0.25), DTA_320x200, true, DTA_LeftOffset, 0, DTA_TopOffset, 0); }
 
@@ -2933,7 +2977,7 @@ class MapDataInfo : HelpInfo
 					}
 					else if (a > 0)
 					{
-						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_warpsod, a, g_warpskill);
+						ParsedValue am = ActorMap.GetActor(handler.actormaps, g_warpsod, a, g_warpskill, ParsedMap.GetGameName(g_warpsod, map.extension));
 
 						if (am)
 						{

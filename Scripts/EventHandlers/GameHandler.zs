@@ -153,6 +153,27 @@ class GameHandler : StaticEventHandler
 			GameHandler.CheckGameFile("GAMEMAPS.SOD", this.gamefiles, g_showhashes);
 			GameHandler.CheckGameFile("GAMEMAPS.SD2", this.gamefiles, g_showhashes);
 			GameHandler.CheckGameFile("GAMEMAPS.SD3", this.gamefiles, g_showhashes);
+
+			// Games added by extensions, recognized by their files (their data set's VSWAP + maps)
+			let extensions = GameExtension.GetHandler();
+			for (int e = 0; extensions && e < extensions.extensions.Size(); e++)
+			{
+				Array<String> games;
+				extensions.extensions[e].ListGames(games);
+
+				for (int g = 0; g < games.Size(); g++)
+				{
+					String vswap = "VSWAP." .. extensions.extensions[e].DataSet(games[g]);
+					if (
+						Wads.CheckNumForFullName(vswap) > -1 &&
+						Wads.CheckNumForFullName("GAMEMAPS." .. games[g]) > -1 &&
+						Wads.CheckNumForFullName("MAPHEAD." .. games[g]) > -1
+					)
+					{
+						this.gamefiles.Push(games[g]);
+					}
+				}
+			}
 		}
 	}
 
@@ -180,7 +201,10 @@ class GameHandler : StaticEventHandler
 
 	ui static bool CheckForGameFiles(String extension)
 	{
-		if (Wads.CheckNumForFullName("VSWAP." .. extension) == -1) { return false; }
+		String vswap = GameExtension.GetDataSet(extension); // games from extensions can share a VSWAP
+		if (!vswap.length()) { vswap = extension; }
+
+		if (Wads.CheckNumForFullName("VSWAP." .. vswap) == -1) { return false; }
 		if (Wads.CheckNumForFullName("GAMEMAPS." .. extension) == -1 && Wads.CheckNumForFullName("MAPTEMP" .. extension) == -1) { return false; };
 		if (Wads.CheckNumForFullName("MAPHEAD." .. extension) == -1) { return false; }
 
@@ -453,6 +477,13 @@ class GameHandler : StaticEventHandler
 
 	ui static String GetMusic(String IMFname)
 	{
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		String music = ex ? ex.Music(extgame, IMFname) : "";
+		if (music.length()) { return music; }
+
 		CVar stylevar = CVar.GetCVar("g_musicstyle", players[consoleplayer]);
 		if (stylevar && !stylevar.GetInt()) { return IMFname; }
 
@@ -668,7 +699,7 @@ class GameHandler : StaticEventHandler
 		}
 		else if (e.Name == "openfinale")
 		{
-			if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
+			if (Game.IsSoD()) { Menu.SetMenu(GameExtension.GetFinaleMenu(), -1); }
 			else { Menu.SetMenu("Episode" .. e.args[0] .. "End", -1); }
 		}
 		else if (e.Name == "setpage")
@@ -785,6 +816,8 @@ class Game
 	ui static Color GetFadeColor(Menu m = null)
 	{
 		if (m is "GameMenu") { return 0x0; }
+		int fade = GameExtension.GetFadeColor();
+		if (fade >= 0) { return fade; }
 
 		if (Game.IsSoD()) { return 0x000088; }
 		else { return 0x880000; }

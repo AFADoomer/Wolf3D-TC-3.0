@@ -1220,7 +1220,20 @@ class Notice : WolfMenu
 	virtual void NextScreen()
 	{
 		if (!multiplayer || players[consoleplayer].settings_controller) { initial.SetInt(0); }
-		Menu.SetMenu("LoadScreen");
+
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		if (ex && ex.SkipIntro(extgame))
+		{
+			// Straight on to the game menu
+			Menu.SetMenu(GameHandler.NoGamemaps() ? "GamemapsMessage" : "GameMenu", -1);
+
+			Menu current = GetCurrentMenu();
+			if (current) { current.mParentMenu = null; }
+		}
+		else { Menu.SetMenu("LoadScreen"); }
 	}
 
 	virtual void DoTick()

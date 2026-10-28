@@ -131,7 +131,7 @@ class WolfPostProcessor : LevelPostProcessor
 		MapHandler handler = MapHandler.Get();
 		if (handler && level.mapname ~== "Level")
 		{
-			if (!handler.queuedmap) { handler.queuedmap = handler.parsedmaps.GetMapData("Wolf3D TC Test"); }
+			if (!handler.queuedmap) { handler.queuedmap = handler.StartingMap(); }
 
 			if (handler.queuedmap)
 			{

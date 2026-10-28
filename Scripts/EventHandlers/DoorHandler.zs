@@ -62,6 +62,12 @@ class DoorHandler: EventHandler
 		// Prevent line from activating
 		e.ShouldActivate = false;
 
+		// A game extension can keep doors and pushwalls from being used
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex && !ex.AllowDoorUse(extgame, ln, e.Thing)) { return; }
+
 		// Save and temporarily unset the line special to prevent infinite recursion
 		int special = ln.special;
 		ln.Special = -1;
@@ -118,6 +124,14 @@ class DoorHandler: EventHandler
 
 			if (eff.delay < 0) { po.SoundSequenceNum = gametype <= 1 ? 4 : 3; } // A pushwall
 			else { po.SoundSequenceNum = gametype <= 1 ? 1 : 2; } // Otherwise a normal door
+
+			// Or a game extension's own
+			GameExtension ex;
+			String extgame;
+			[ex, extgame] = GameExtension.Current();
+
+			int sequence = ex ? ex.DoorSound(extgame, po, eff.delay < 0) : -1;
+			if (sequence >= 0) { po.SoundSequenceNum = sequence; }
 		}
 
 		// Check if activator is actually able to activate the line
@@ -420,7 +434,12 @@ class DoorEffector: PolyobjectEffector
 
 			// See how far the door can move without being blocked
 			int m = 1;
-			for (m = 1; m <= g_maxpushwallmove; m++)
+			GameExtension ex;
+			String extgame;
+			[ex, extgame] = GameExtension.Current();
+
+			int maxmove = ex ? ex.PushwallMoves(extgame, g_maxpushwallmove) : g_maxpushwallmove;
+			for (m = 1; m <= maxmove; m++)
 			{
 				Vector2 spot = Polyobject.StartSpotPos + moveunit * m;
 
@@ -477,7 +496,7 @@ class DoorEffector: PolyobjectEffector
 			}
 
 			distance = (m - 1) * 64;
-			speed = max(speed, int(speed * max(g_maxpushwallmove * 64, distance) / 64.0));
+			speed = max(speed, int(speed * max(min(g_maxpushwallmove, maxmove) * 64, distance) / 64.0));
 		}
 		else
 		{

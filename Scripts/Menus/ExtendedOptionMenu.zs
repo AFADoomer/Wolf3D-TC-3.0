@@ -47,22 +47,22 @@ class ExtendedOptionMenu : GenericOptionMenu
 		if (Game.IsSoD())
 		{
 			titlestring = titlestring.left(3) .. "S" .. titlestring.mid(3);
-			title = TexMan.CheckForTexture(titlestring.Mid(1), TexMan.Type_Any);
+			title = GameExtension.GetMenuTexture(titlestring.Mid(1), TexMan.Type_Any);
 
 			if (!title.IsValid()) { titlestring = titlestring.left(9); }
 
-			bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+			bkg = GameExtension.GetMenuTexture("MENUBLUE", TexMan.Type_Any);
 		}
 
-		if (!title.IsValid()) { title = TexMan.CheckForTexture(titlestring.Mid(1), TexMan.Type_Any); }
-		generictitle = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
-		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		if (!title.IsValid()) { title = GameExtension.GetMenuTexture(titlestring.Mid(1), TexMan.Type_Any); }
+		generictitle = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SCUSTO" : "M_CUSTOM"), TexMan.Type_Any);
+		controls = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
 
-		select0 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
-		select1 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
+		select0 = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SSELC0" : "M_SELCT0"), TexMan.Type_Any);
+		select1 = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SSELC1" : "M_SELCT1"), TexMan.Type_Any);
 
-		cursor0 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
-		cursor1 = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
+		cursor0 = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		cursor1 = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SSEL2" : "M_SEL2"), TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { GameHandler.ChangeMusic("WONDERIN"); }
 
@@ -390,7 +390,7 @@ class ExtendedOptionMenu : GenericOptionMenu
 	{
 		screen.Dim(fadecolor, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
 
-		if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight()) && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
 
 		if (controls)
 		{
@@ -506,7 +506,16 @@ class ExtendedOptionMenu : GenericOptionMenu
 			screen.Dim(0x000088, alpha, x, y, w, h);
 		}
 
-		screen.Dim(0x000000, 0.35 * alpha, x, y, w, h);
+		bool custom;
+		color fill, top, bottom;
+		[custom, fill, top, bottom] = GameExtension.GetWindowColors();
+		if (custom)
+		{
+			clrt = top;
+			clrb = bottom;
+			screen.Dim(fill, alpha, x, y, w, h);
+		}
+		else { screen.Dim(0x000000, 0.35 * alpha, x, y, w, h); }
 
 		int t = int(CleanYfac);
 		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
@@ -771,7 +780,16 @@ class OptionMenuItemBox : OptionMenuItem
 			screen.Dim(0x000088, 1.0, x, y, w, h);
 		}
 
-		screen.Dim(0x000000, 0.35, x, y, w, h);
+		bool custom;
+		color fill, top, bottom;
+		[custom, fill, top, bottom] = GameExtension.GetWindowColors();
+		if (custom)
+		{
+			clrt = top;
+			clrb = bottom;
+			screen.Dim(fill, 1.0, x, y, w, h);
+		}
+		else { screen.Dim(0x000000, 0.35, x, y, w, h); }
 
 		int t = int(CleanYfac);
 		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
@@ -828,7 +846,7 @@ class OptionMenuItemStripTitle : OptionMenuItem
 			patch = patch.left(8);
 		}
 
-		mTexture = TexMan.CheckForTexture(patch, TexMan.Type_Any);
+		mTexture = GameExtension.GetMenuTexture(patch, TexMan.Type_Any);
 
 		Super.Init("Title", 'None', true);
 
@@ -860,7 +878,7 @@ class WolfNewPlayerMenu : NewPlayerMenu
 	{
 		Super.Init(parent, desc);
 
-		mPlayerDisplay.mBackdrop = TexMan.CheckForTexture("BACKDROP", TexMan.Type_Any);
+		mPlayerDisplay.mBackdrop = GameExtension.GetMenuTexture("BACKDROP", TexMan.Type_Any);
 		mPlayerDisplay.mBaseColor = color(255, 255, 255);
 	}
 
