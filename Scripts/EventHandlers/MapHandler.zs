@@ -1296,8 +1296,8 @@ class ParsedMap
 					}
 				}
 
-				// Spawn actors
-				if (a > 0)
+				// Spawn actors (once: a style change rebuilds the map's textures, not its contents)
+				if (initial && a > 0)
 				{
 					Actor mo;
 					ParsedValue am = ActorMap.GetActor(handler.actormaps, style, a, G_SkillPropertyInt(SKILLP_ACSReturn) + 1);
