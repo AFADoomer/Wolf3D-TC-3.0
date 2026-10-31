@@ -950,7 +950,8 @@ class LockColors : CustomBoolCVar
 {
 	override bool ModifyValue(Name CVarName, bool val)
 	{
-		EventHandler.SendNetworkEvent("updatedoorgraphics", val);
+		// Loading a save sets this as well, usually to the same value
+		if (val != g_usedoorkeycolors) { EventHandler.SendNetworkEvent("updatedoorgraphics", val); }
 
 		return val;
 	}

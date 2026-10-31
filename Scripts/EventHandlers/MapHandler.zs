@@ -1382,6 +1382,7 @@ class ParsedMap
 						ln.flags |= Line.ML_DONTDRAW;
 						edges++;
 					}
+					else if (solid == 1) { ln.flags &= ~Line.ML_DONTDRAW; } // Some of the map's lines are hidden until something is built on them
 				}
 
 				bool accessible = (ActorAt(pos + (1, 0)) || ActorAt(pos - (1, 0)) || ActorAt(pos + (0, 1)) || ActorAt(pos - (0, 1)));
