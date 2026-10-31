@@ -995,7 +995,8 @@ class VSwapDebug : CustomBoolCVar
 {
 	override bool ModifyValue(Name CVarName, bool val)
 	{
-		EventHandler.SendNetworkEvent("reloadtextures");
+		// Loading a save sets this as well, usually to the same value; redrawing is slow
+		if (val != g_debugvswaptextures) { EventHandler.SendNetworkEvent("reloadtextures"); }
 
 		return val;
 	}

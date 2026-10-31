@@ -393,6 +393,8 @@ Class ActorMap : ParsedValue
 
 class MapHandler : StaticEventHandler
 {
+	int builtstyle;
+	bool startingnewgame;
 	WolfMapParser parsedmaps;
 	Array<DataFile> datafiles;
 	ParsedMap curmap, queuedmap, secretmapnext;
@@ -534,6 +536,10 @@ class MapHandler : StaticEventHandler
 				console.printf("'%s' (%s)", mapname, parsedmaps.maps[m].datafile.path);
 			}
 		}
+		else if (e.Name == "resetdeaths") // Sent as New Game starts
+		{
+			startingnewgame = true;
+		}
 		else if (e.Name == "reloadtextures")
 		{
 			let handler = GraphicsHandler.Get();
@@ -546,7 +552,8 @@ class MapHandler : StaticEventHandler
 
 		if (e.Name == "updatestyle")
 		{
-			if (e.args[0] >= 0) { InitializeParsedMap(e.args[0], false); }
+			// Setting g_sod to the value it has, as loading a save does, changes nothing
+			if (e.args[0] >= 0 && e.args[0] != builtstyle) { InitializeParsedMap(e.args[0], false); }
 		}
 	}
 
@@ -579,7 +586,7 @@ class MapHandler : StaticEventHandler
 
 	override void WorldLoaded(WorldEvent e)
 	{
-		if (e.IsSaveGame) { return; }
+		if (e.IsSaveGame) { return; } // MapStatsHandler has called RestoreParsedMap
 
 		if (g_sod < 0)
 		{
@@ -597,12 +604,132 @@ class MapHandler : StaticEventHandler
 			queuedmap = null;
 			curmap = null;
 		}
+
+		RecordParsedMap();
+	}
+
+	// For saves, which don't keep this handler
+	void RecordParsedMap()
+	{
+		let saved = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler"));
+		if (!saved) { return; }
+
+		saved.datafile = curmap ? curmap.datafile.path : "";
+		saved.mapnum = curmap ? curmap.mapnum : 0;
+		saved.nextmapnum = curmap && queuedmap ? queuedmap.mapnum : 0;
+	}
+
+	// A save older than the record can only say which file it's from: the last
+	// level in its stats is the one before this one. Find the map whose layout
+	// has the most of the level's things where they're placed
+	ParsedMap FindMapFromActors(ParsedMap fallback)
+	{
+		Array<int> spots;
+
+		let it = ThinkerIterator.Create("Actor");
+		Actor mo;
+		while (mo = Actor(it.Next()))
+		{
+			if (mo.player || mo.bIsMonster) { continue; }
+
+			Vector2 pos = ParsedMap.CoordsToGrid(mo.pos.xy);
+			spots.Push(int(pos.x));
+			spots.Push(int(pos.y));
+		}
+
+		ParsedMap best = fallback;
+		int bestcount = 0;
+
+		for (int m = 0; m < parsedmaps.maps.Size(); m++)
+		{
+			ParsedMap candidate = parsedmaps.maps[m];
+			if (fallback && !(candidate.datafile.path ~== fallback.datafile.path)) { continue; }
+
+			int count = 0;
+			for (int s = 0; s < spots.Size(); s += 2)
+			{
+				if (candidate.ActorAt((spots[s], spots[s + 1])) > 0) { count++; }
+			}
+
+			if (count > bestcount)
+			{
+				best = candidate;
+				bestcount = count;
+			}
+		}
+
+		return best;
+	}
+
+	// This handler isn't part of a save, so find the parsed map a loaded save is playing
+	void RestoreParsedMap()
+	{
+		curmap = queuedmap = null;
+		if (!(level.mapname ~== "Level")) { return; }
+
+		let saved = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler"));
+		if (saved && saved.mapnum) { curmap = parsedmaps.GetMapDataByNumber(saved.mapnum, saved.datafile); }
+
+		if (!curmap)
+		{
+			ParsedMap last;
+			for (int l = saved ? saved.Levels.Size() - 1 : -1; !last && l >= 0; l--)
+			{
+				last = parsedmaps.GetMapDataByNumber(saved.Levels[l].levelnum);
+			}
+
+			curmap = FindMapFromActors(last);
+		}
+
+		if (!curmap) { return; }
+
+		builtstyle = curmap.gametype >= 0 ? curmap.gametype : max(0, g_sod);
+
+		// Only set while building the map; respawning goes back to it
+		for (int i = 0; i < curmap.planes[1].Size(); i++)
+		{
+			int a = curmap.planes[1][i];
+			if (a < 0x13 || a > 0x16) { continue; }
+
+			curmap.startspot = ParsedMap.GridToCoords((i % curmap.width, i / curmap.width));
+			break;
+		}
+
+		if (saved && saved.nextmapnum) { queuedmap = parsedmaps.GetMapDataByNumber(saved.nextmapnum, curmap.datafile.path); }
+		if (!queuedmap) { QueueNextMap(); }
+		if (queuedmap) { level.nextmap = "Level"; }
+
+		RecordParsedMap();
 	}
 
 	override void WorldUnloaded(WorldEvent e)
 	{
 		// Make sure the 'map *' command works properly to reload the current map
-		if (level.mapname ~== "Level" && e.NextMap == "") { queuedmap = curmap; }
+		// (New Game leaves it to StartingMap)
+		if (level.mapname ~== "Level" && e.NextMap == "") { queuedmap = startingnewgame ? null : curmap; }
+
+		startingnewgame = false;
+	}
+
+	void QueueNextMap()
+	{
+		if (!curmap || !curmap.info) { return; }
+
+		if (secretmapnext)
+		{
+			queuedmap = secretmapnext;
+			secretmapnext = null;
+			level.nextmap = "Level";
+			return;
+		}
+
+		String nextmap = curmap.info.nextmap;
+		if (nextmap.length() && nextmap.left(6) != "enDSeQ")
+		{
+			LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
+			if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
+			level.nextmap = "Level";
+		}
 	}
 
 	void InitializeParsedMap(int style = -1, bool initial = true)
@@ -610,6 +737,7 @@ class MapHandler : StaticEventHandler
 		if (!curmap) { return; }
 
 		if (style < 0) { style = max(0, g_sod); }
+		builtstyle = style;
 
 		curmap.Initialize(style, initial);
 
@@ -625,22 +753,7 @@ class MapHandler : StaticEventHandler
 		{
 			console.PrintfEx(PRINT_HIGH | PRINT_NONOTIFY, "\c[%s]%s\n", style <= 0 ? "DarkRed" : "Gold", StringTable.Localize(curmap.info.levelname, false));
 
-			if (secretmapnext)
-			{
-				queuedmap = secretmapnext;
-				secretmapnext = null;
-				level.nextmap = "Level";
-			}
-			else
-			{
-				String nextmap = curmap.info.nextmap;
-				if (nextmap.length() && nextmap.left(6) != "enDSeQ")
-				{
-					LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
-					if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
-					level.nextmap = "Level";
-				}
-			}
+			QueueNextMap();
 
 			String IMFname = curmap.info.music;
 
@@ -1194,7 +1307,7 @@ class ParsedMap
 				if (abs(sec.centerspot.x) > 4096 || abs(sec.centerspot.y) > 4096) { continue; }
 
 				// Clear any previously spawned actors
-				Actor thing = sec.thinglist;
+				Actor thing = initial ? sec.thinglist : null;
 				while (thing != null)
 				{
 					if (!(thing is "PlayerPawn")) { thing.Destroy(); }
