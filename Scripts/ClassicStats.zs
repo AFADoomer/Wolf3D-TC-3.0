@@ -306,7 +306,8 @@ class ClassicStats : DoomStatusScreen
 		{
 			if (acceleratestage)
 			{
-				if (Game.IsSod() && info.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD"))
+				// The Spear demo stops after level 2; games added by extensions aren't that demo
+				if (Game.IsSod() && info.levelnum % 100 >= 2 && !GameHandler.GameFilePresent("SOD") && GameExtension.CurrentGame(false) == "")
 				{
 					PlaySound("pickups/life");
 					Menu.StartMessage(StringTable.Localize("$DEMOSTRING"), 1);
@@ -318,7 +319,7 @@ class ClassicStats : DoomStatusScreen
 
 				if (!multiplayer && (style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == ""))
 				{
-					if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
+					if (Game.IsSoD()) { Menu.SetMenu(GameExtension.GetFinaleMenu(), -1); }
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }
 				}
 
@@ -358,7 +359,7 @@ class ClassicStats : DoomStatusScreen
 					cnt_deaths[i] = player_deaths[i];
 				}
 
-				if (Game.IsSoD()) { Menu.SetMenu("SoDFinale", -1); }
+				if (Game.IsSoD()) { Menu.SetMenu(GameExtension.GetFinaleMenu(), -1); }
 				else { Menu.SetMenu("Episode" .. level.info.levelnum / 100 .. "End", -1); }
 
 				sp_state++;
@@ -694,7 +695,8 @@ class ClassicStats : DoomStatusScreen
 		switch (CurState)
 		{
 			case StatCount:
-				Screen.Dim(0x004040, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
+				int fill = GameExtension.GetIntermissionColor();
+				Screen.Dim(fill >= 0 ? fill : 0x004040, 1.0, 0, 0, Screen.GetWidth(), Screen.GetHeight());
 				DrawStats();
 				break;
 			case LeavingIntermission:

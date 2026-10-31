@@ -51,6 +51,16 @@ class ClassicWeapon : Weapon
 		Weapon.BobSpeed 2.0;
 	}
 
+	override String PickupMessage()
+	{
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		String msg = ex ? ex.PickupMessage(extgame, self) : "";
+		return msg.length() ? msg : Super.PickupMessage();
+	}
+
 	States
 	{
 		Spawn:

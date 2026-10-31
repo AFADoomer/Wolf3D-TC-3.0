@@ -1220,7 +1220,20 @@ class Notice : WolfMenu
 	virtual void NextScreen()
 	{
 		if (!multiplayer || players[consoleplayer].settings_controller) { initial.SetInt(0); }
-		Menu.SetMenu("LoadScreen");
+
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		if (ex && ex.SkipIntro(extgame))
+		{
+			// Straight on to the game menu
+			Menu.SetMenu(GameHandler.NoGamemaps() ? "GamemapsMessage" : "GameMenu", -1);
+
+			Menu current = GetCurrentMenu();
+			if (current) { current.mParentMenu = null; }
+		}
+		else { Menu.SetMenu("LoadScreen"); }
 	}
 
 	virtual void DoTick()
@@ -1262,7 +1275,7 @@ class Notice : WolfMenu
 	override void Drawer()
 	{
 		screen.Dim(0x000000, bgalpha, 0, 0, Screen.GetWidth(), screen.GetHeight());
-		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_FullscreenEx, FSMode_ScaleToFill, DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4, DTA_VirtualWidth, w, DTA_VirtualHeight, h); }
+		if (bkg.IsValid()) { screen.DrawTexture(bkg, false, 0, 0, DTA_DestWidth, Screen.GetWidth(), DTA_DestHeight, Screen.GetHeight(), DTA_Desaturate, 255, DTA_Alpha, alpha * 0.4); }
 
 		PrintFullJustified(lines, maxwidth);
 	}

@@ -162,9 +162,19 @@ class ReplacementHandler : StaticEventHandler
 		if (thismap) { gamemode = thismap.gametype; }
 		if (gamemode < 0) { [h, gamemode] = Game.IsSoD(); }
 
-		int ceilingnum = 0x1D;
-		if (gamemode > 0) { ceilingnum = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
-		else { ceilingnum = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
+		// A game extension's own colours, textures and sky
+		int ceilingnum = -1, floornum = -1;
+		String ceilingtexname, floortexname;
+		bool sky;
+
+		GameExtension ex = thismap ? GameExtension.Find(thismap.extension) : null;
+		if (ex) { [ceilingnum, floornum, ceilingtexname, floortexname, sky] = ex.LevelFlats(thismap.extension.MakeUpper(), thismap); }
+
+		if (ceilingnum < 0)
+		{
+			if (gamemode > 0) { ceilingnum = SoDCeilings[clamp(levelnum % 100 - 1, 0, 20)]; }
+			else { ceilingnum = WolfCeilings[clamp((levelnum / 100 - 1) * 10 + levelnum % 100 - 1, 0, 59)]; }
+		}
 
 		String ceilname, floorname;
 		TextureID floortex, ceiltex;
@@ -204,7 +214,7 @@ class ReplacementHandler : StaticEventHandler
 			default:
 				if (!floortex.IsValid())
 				{
-					floorname = "FLOOR";
+					floorname = floornum >= 0 && floornum != 0x19 ? String.Format("%02x", floornum) : "FLOOR";
 					floortex = TexMan.CheckForTexture(floorname, TexMan.Type_Any);
 				}
 
@@ -214,6 +224,20 @@ class ReplacementHandler : StaticEventHandler
 					ceiltex = TexMan.CheckForTexture(ceilname, TexMan.Type_Any);
 				}
 		}
+
+		if (floortexname.length())
+		{
+			TextureID tex = TexMan.CheckForTexture(floortexname, TexMan.Type_Any);
+			if (tex.IsValid()) { floortex = tex; }
+		}
+
+		if (ceilingtexname.length())
+		{
+			TextureID tex = TexMan.CheckForTexture(ceilingtexname, TexMan.Type_Any);
+			if (tex.IsValid()) { ceiltex = tex; }
+		}
+
+		if (sky) { ceiltex = skyflatnum; }
 
 		for (int s = 0; s < level.sectors.Size(); s++)
 		{

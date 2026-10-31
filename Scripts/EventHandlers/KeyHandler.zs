@@ -31,9 +31,17 @@ class KeyHandler : EventHandler
 
 	override bool InputProcess(InputEvent e)
 	{
+		if (e.Type == InputEvent.Type_KeyDown && msg) { msg.Close(); }
+
+		// A game extension's own keys, and whether Wolf3D's cheats are kept
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex && ex.InputProcess(extgame, e)) { return true; }
+		bool stockcheats = !ex || ex.StockCheats(extgame);
+
 		if (e.Type == InputEvent.Type_KeyDown)
 		{
-			if (msg) { msg.Close(); }
 
 			switch (e.KeyScan)
 			{
@@ -154,7 +162,7 @@ class KeyHandler : EventHandler
 			return true;
 		}
 
-		if (ilmcount == 3)
+		if (ilmcount == 3 && stockcheats)
 		{
 			String text = StringTable.Localize("$CHEAT_ILM");
 			msg = ClassicMessageBox.PrintMessage(text, "BG_", 0x8c8c8c, 1);
@@ -164,7 +172,7 @@ class KeyHandler : EventHandler
 			return true;
 		}
 
-		if (batcount == 3)
+		if (batcount == 3 && stockcheats)
 		{
 			String text = StringTable.Localize("$CHEAT_BAT");
 			msg = ClassicMessageBox.PrintMessage(text, "BG_", 0x8c8c8c, 1);
