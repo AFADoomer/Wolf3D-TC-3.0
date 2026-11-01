@@ -10,6 +10,7 @@ version "5.0.0"
 #include "Scripts/Extensions/GameExtension.zs"	// Hooks for mods that add their own games
 
 // Menu Components
+#include "Scripts/Menus/SaveInfo.zs"			// What a save is, for the load and save menus
 #include "Scripts/Menus/ExtendedListMenu.zs"	// New menu with background and skill/episode icons
 #include "Scripts/Menus/GenericOptionMenu.zs"	// New option menu with background and generic drawing
 #include "Scripts/Menus/ExtendedOptionMenu.zs"	// New menu with background

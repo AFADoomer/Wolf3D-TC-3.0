@@ -48,7 +48,22 @@ class GameExtension
 	// Several games can share one VSWAP / GraphicMaps / TileCodes set
 	virtual String DataSet(String ext) { return ext; }
 
-	virtual String Title(String ext) { return ""; }
+	virtual clearscope String Title(String ext) { return ""; }
+
+	// A few letters for this game's Title, where there's no room for it; "" if it isn't one of this extension's
+	virtual ui String ShortTitle(String title) { return ""; }
+
+	static ui String GetShortTitle(String title)
+	{
+		let handler = GetHandler();
+		for (int e = 0; handler && e < handler.extensions.Size(); e++)
+		{
+			String label = handler.extensions[e].ShortTitle(title);
+			if (label.length()) { return label; }
+		}
+
+		return title;
+	}
 
 	// Game rules the maps run under, as g_sod (0 Wolf3D, 1 Spear...); -1 lets the TC decide
 	virtual int GameType(String ext) { return -1; }
