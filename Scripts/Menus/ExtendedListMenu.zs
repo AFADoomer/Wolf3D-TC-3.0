@@ -60,8 +60,8 @@ class ExtendedListMenu : ListMenu
 
 		lookupBase = MenuName;
 
-		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
-		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		controls = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = GameExtension.GetMenuTexture("MENUBLUE", TexMan.Type_Any);
 
 		if (gamestate != GS_FINALE) { GameHandler.ChangeMusic("WONDERIN"); }
 
@@ -100,10 +100,10 @@ class ExtendedListMenu : ListMenu
 
 		if (!fadecolor) { fadecolor = Game.GetFadeColor(self); }
 		screen.Dim(fadecolor, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
-		mDesc.mSelector = TexMan.CheckForTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
+		mDesc.mSelector = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SSEL1" : "M_SEL1"), TexMan.Type_Any);
 		if (Game.IsSoD())
 		{
-			if (bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+			if (bkg) { if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); } }
 			mDesc.mSelectOfsY = 1;
 		}
 		else
@@ -484,7 +484,7 @@ class IconListMenu : ExtendedListMenu
 
 		for (int i = 0; i < mDesc.mItems.Size(); i++)
 		{
-			TextureID tex = TexMan.CheckForTexture(lookupBase .. i, TexMan.Type_MiscPatch);
+			TextureID tex = GameExtension.GetMenuTexture(lookupBase .. i, TexMan.Type_MiscPatch);
 
 			if (tex.IsValid())
 			{
@@ -513,7 +513,7 @@ class IconListMenu : ExtendedListMenu
 				itemindex++;
 
 				// Again, semi-hard-coded, unfortunately - Icons must be named [Menu name]1, [Menu name]2, etc.
-				TextureID tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+				TextureID tex = GameExtension.GetMenuTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
 				if (tex.IsValid())
 				{
 					Vector2 texsize = TexMan.GetScaledSize(tex);
@@ -537,6 +537,20 @@ class EpisodeMenu : IconListMenu
 {
 	override void Drawer()
 	{
+		// A game from an extension can go straight to its episode; MapHandler.StartingMap picks its first map
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		int episode = ex ? ex.Episode(extgame) : -1;
+		if (episode >= 0)
+		{
+			Close();
+			Menu.SetMenu("SkillMenu", episode);
+
+			return;
+		}
+
 		if (Game.IsSoD())
 		{
 			Close();
@@ -581,15 +595,15 @@ class GameMenu : IconListMenu
 			let item = mDesc.mItems[i];
 			if (item is "ListMenuItemTextItemCentered")
 			{
-				tex = TexMan.CheckForTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
+				tex = GameExtension.GetMenuTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
 			}
 			else if (item is "ListMenuItemGameSelection")
 			{
-				tex = TexMan.CheckForTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
+				tex = GameExtension.GetMenuTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
 			}
 			else
 			{
-				tex = TexMan.CheckForTexture(lookupBase .. i, TexMan.Type_MiscPatch);
+				tex = GameExtension.GetMenuTexture(lookupBase .. i, TexMan.Type_MiscPatch);
 			}
 
 			if (tex.IsValid())
@@ -604,10 +618,10 @@ class GameMenu : IconListMenu
 
 		if (mDesc.mXpos + mDesc.mSelectOfsX > mDesc.mXpos - iconSize.x * 1.3) { mDesc.mSelectOfsX -= iconSize.x * 1.3; }
 
-		controls = TexMan.CheckForTexture("M_GCNTRLS", TexMan.Type_Any);
-		demo = TexMan.CheckForTexture("DEMOOVERLAY", TexMan.Type_Any);
-		shareware = TexMan.CheckForTexture("SHAREWAREOVERLAY", TexMan.Type_Any);
-		registered = TexMan.CheckForTexture("REGISTEREDOVERLAY", TexMan.Type_Any);
+		controls = GameExtension.GetMenuTexture("M_GCNTRLS", TexMan.Type_Any);
+		demo = GameExtension.GetMenuTexture("DEMOOVERLAY", TexMan.Type_Any);
+		shareware = GameExtension.GetMenuTexture("SHAREWAREOVERLAY", TexMan.Type_Any);
+		registered = GameExtension.GetMenuTexture("REGISTEREDOVERLAY", TexMan.Type_Any);
 
 		sodvar = CVar.FindCVar("g_sod");
 		if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(-1); }
@@ -621,7 +635,7 @@ class GameMenu : IconListMenu
 
 	override void Drawer()
 	{
-		screen.Dim(0x282828, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+		if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.Dim(0x282828, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight()); }
 
 		double ratio = screen.GetAspectRatio();
 
@@ -671,18 +685,18 @@ class GameMenu : IconListMenu
 
 				if (item is "ListMenuItemTextItemCentered")
 				{
-					tex = TexMan.CheckForTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
+					tex = GameExtension.GetMenuTexture(ListMenuItemTextItemCentered(item).mIcon, TexMan.Type_MiscPatch);
 					extension = ListMenuItemTextItemCentered(item).mIcon;
 				}
 				else if (item is "ListMenuItemGameSelection")
 				{
-					tex = TexMan.CheckForTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
+					tex = GameExtension.GetMenuTexture(ListMenuItemGameSelection(item).mIcon, TexMan.Type_MiscPatch);
 					extension = ListMenuItemGameSelection(item).mExtension;
 				}
 				else
 				{
 					// Fallback to semi-hard-coded - Icons must be named [Menu name]1, [Menu name]2, etc.
-					tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+					tex = GameExtension.GetMenuTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
 				}
 
 				if (tex.IsValid())
@@ -777,7 +791,23 @@ class GameMenu : IconListMenu
 
 				if (mDesc.mItems[mDesc.mSelectedItem] is "ListMenuItemGameSelection")
 				{
-					if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(mDesc.mSelectedItem - 2); }
+					// A game from an extension runs on the rules it names; New Game then starts its first map
+					String ext = ListMenuItemGameSelection(mDesc.mItems[mDesc.mSelectedItem]).mExtension;
+					GameExtension ex = GameExtension.Find(ext);
+					CVar gamevar = CVar.FindCVar("g_modgame");
+					if (gamevar) { gamevar.SetString(ex ? ext : ""); }
+
+					if (sodvar && (!multiplayer || players[consoleplayer].settings_controller)) { sodvar.SetInt(ex ? max(ex.GameType(ext.MakeUpper()), 0) : mDesc.mSelectedItem - 2); }
+
+					// A fresh game's main menu opens on New Game, not where the last one left off
+					let mainmenu = ListMenuDescriptor(MenuDescriptor.GetDescriptor('MainMenu'));
+					if (mainmenu)
+					{
+						for (int i = 0; i < mainmenu.mItems.Size(); i++)
+						{
+							if (mainmenu.mItems[i].Selectable()) { mainmenu.mSelectedItem = i; break; }
+						}
+					}
 
 					SetMenu("IntroSlideShow", -1);
 
@@ -859,7 +889,7 @@ class ListMenuItemTitle : ListMenuItemStaticText
 
 	override void Draw(bool selected, ListMenuDescriptor desc)
 	{
-		TextureID tex = TexMan.CheckForTexture(mText.Mid(1), TexMan.Type_Any);
+		TextureID tex = GameExtension.GetMenuTexture(mText.Mid(1), TexMan.Type_Any);
 
 		if (Game.IsSod() && tex.IsValid()) { DrawTexture(desc, tex, mXpos, mYpos); }
 		else { Super.Draw(selected, desc); }
@@ -931,7 +961,7 @@ class StaticIconListMenu : ExtendedListMenu
 		}
 
 		// Again, semi-hard-coded, unfortunately - Icons must be named [Menu name]1, [Menu name]2, etc.
-		TextureID tex = TexMan.CheckForTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
+		TextureID tex = GameExtension.GetMenuTexture(lookupBase .. itemindex, TexMan.Type_MiscPatch);
 		if (tex.IsValid())
 		{
 			Vector2 texsize = TexMan.GetScaledSize(tex);
@@ -985,8 +1015,8 @@ class ExtendedLoadMenu : LoadMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
-		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		controls = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = GameExtension.GetMenuTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
@@ -1018,7 +1048,7 @@ class ExtendedLoadMenu : LoadMenu
 		}
 
 		screen.Dim(fadecolor, 1.0 * initialalpha, 0, 0, screen.GetWidth(), screen.GetHeight());
-		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		if (Game.IsSoD() && bkg) { if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); } }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -1108,8 +1138,8 @@ class ExtendedSaveMenu : SaveMenu
 
 		SetYOffsets(yoffset);
 
-		controls = TexMan.CheckForTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
-		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
+		controls = GameExtension.GetMenuTexture((Game.IsSoD() ? "M_SCNTRL" : "M_CNTRLS"), TexMan.Type_Any);
+		bkg = GameExtension.GetMenuTexture("MENUBLUE", TexMan.Type_Any);
 
 		fadetime = 12;
 		fadetarget = gametic;
@@ -1141,7 +1171,7 @@ class ExtendedSaveMenu : SaveMenu
 		}
 
 		screen.Dim(fadecolor, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
-		if (Game.IsSoD() && bkg) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); }
+		if (Game.IsSoD() && bkg) { if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.DrawTexture(bkg, true, 0, 0, DTA_Fullscreen, 1); } }
 
 		int y = Screen.GetHeight() / 2 - 100 * CleanYfac;
 		SetYOffsets(y / CleanYfac + yOffset);
@@ -1273,6 +1303,11 @@ class ListMenuItemBox : ListMenuItem
 		x = Screen.GetWidth() / 2 - w / 2;
 		y = Screen.GetHeight() / 2 - 103 * CleanYfac + int((mYpos + yoffset) * CleanYfac);
 
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex && !ex.MenuBox(extgame, Menu.GetCurrentMenu())) { return; }
+
 		color clrt = 0x700000;
 		color clrb = 0xD40000;
 
@@ -1296,14 +1331,23 @@ class ListMenuItemBox : ListMenuItem
 					ListMenu(current.mParentMenu) &&
 					ListMenu(current.mParentMenu).mDesc.mMenuName == "Mainmenu"
 				)
-			) { h -= 13 * CleanYfac; }
+			) { if (!ex || !ex.ReadThis(extgame)) { h -= 13 * CleanYfac; } } // unless an extension's game has it back
 
 			clrt = 0x000070;
 			clrb = 0x0000D4;
 			screen.Dim(0x000088, 1.0, x, y, w, h);
 		}
 
-		screen.Dim(0x000000, 0.35, x, y, w, h);
+		bool custom;
+		color fill, top, bottom;
+		[custom, fill, top, bottom] = GameExtension.GetWindowColors();
+		if (custom)
+		{
+			clrt = top;
+			clrb = bottom;
+			screen.Dim(fill, 1.0, x, y, w, h);
+		}
+		else { screen.Dim(0x000000, 0.35, x, y, w, h); }
 
 		int t = int(CleanYfac);
 		screen.DrawThickLine(x - t, y - t / 2, x + w, y - t / 2, t, clrt);
@@ -1346,7 +1390,7 @@ class ListMenuItemStripTitle : ListMenuItemStaticPatch
 
 		patchname = patch;
 
-		Super.Init(desc, xoffset, yoffset, TexMan.CheckForTexture(patchname, TexMan.Type_Any), true);
+		Super.Init(desc, xoffset, yoffset, GameExtension.GetMenuTexture(patchname, TexMan.Type_Any), true);
 	}
 
 	override void Draw(bool selected, ListMenuDescriptor desc)
@@ -1358,7 +1402,7 @@ class ListMenuItemStripTitle : ListMenuItemStaticPatch
 			patch = patch.left(8);
 		}
 
-		mTexture = TexMan.CheckForTexture(patch, TexMan.Type_Any);
+		mTexture = GameExtension.GetMenuTexture(patch, TexMan.Type_Any);
 
 		if (!mTexture.Exists()) { return; }
 
@@ -1506,6 +1550,12 @@ class ListMenuItemWolfTextItemDisabled : ListMenuItemWolfTextItem
 		Super.OnMenuCreated();
 
 		mColor = Game.IsSoD() ? Font.FindFontColor("SpearMenuDisable") : Font.FindFontColor("WolfMenuDisable");
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+
+		int disabled = ex ? ex.DisabledColor(extgame) : -1;
+		if (disabled >= 0) { mColor = disabled; }
 	}
 
 	override bool Selectable()

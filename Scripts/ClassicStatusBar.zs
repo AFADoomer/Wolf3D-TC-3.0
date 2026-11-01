@@ -359,6 +359,11 @@ class ClassicStatusBar : WidgetStatusBar
 
 		DrawSaveIcon();
 
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex) { ex.DrawOverlay(extgame, self); }
+
 		if (fizzlelayer == 1)
 		{
 			DrawFizzle();
@@ -532,10 +537,10 @@ class ClassicStatusBar : WidgetStatusBar
 			if (screenblocks < 11 && st_scale && !automapactive && (borderstyle != 2 || screenblocks < 10))
 			{
 				// Fill outside of boundaries with green
-				Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y));
-				Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x + 1), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y));
-				Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 4), int(window.y));
-				Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 4), int(screensize.y - window.y - windowsize.y + 1));
+				if (!GameExtension.Backdrop(0, 0, int(window.x - 1), int(screensize.y))) { Screen.Dim(0x004040, 1.0, 0, 0, int(window.x - 1), int(screensize.y)); }
+				if (!GameExtension.Backdrop(int(window.x + windowsize.x + 1), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y))) { Screen.Dim(0x004040, 1.0, int(window.x + windowsize.x + 1), 0, int(screensize.x - window.x - windowsize.x + 1), int(screensize.y)); }
+				if (!GameExtension.Backdrop(int(window.x - 1), 0, int(windowsize.x + 4), int(window.y))) { Screen.Dim(0x004040, 1.0, int(window.x - 1), 0, int(windowsize.x + 4), int(window.y)); }
+				if (!GameExtension.Backdrop(int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 4), int(screensize.y - window.y - windowsize.y + 1))) { Screen.Dim(0x004040, 1.0, int(window.x - 1), int(window.y + windowsize.y), int(windowsize.x + 4), int(screensize.y - window.y - windowsize.y + 1)); }
 
 				// Draw border
 				DrawImage("WBRD_T", (viewport.x, viewport.y - 3), DI_ITEM_LEFT_TOP, scale:(viewportsize.x / 3, 1.0));
@@ -553,13 +558,19 @@ class ClassicStatusBar : WidgetStatusBar
 				Vector2 coords, size;
 				[coords.x, coords.y, size.x, size.y] = Statusbar.StatusbarToRealCoords(0, 200 - RelTop, 320, RelTop);
 
-				Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y));
+				if (!GameExtension.Backdrop(0, int(coords.y), int(screensize.x), int(size.y))) { Screen.Dim(0x004040, 1.0, 0, int(coords.y), int(screensize.x), int(size.y)); }
 				if (screenblocks == 10 || automapactive)
 				{
 					DrawImage("WBRD_B", ((coords.x + size.x) / 2, viewport.y + viewportsize.y), DI_ITEM_TOP | DI_ITEM_HCENTER, scale:(screensize.x / 3, 1.0));
 				}
 			}
 		}
+
+		// A game extension's own status bar
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex && ex.DrawStatusBar(extgame, self, points, lives)) { return; }
 
 		DrawImage("BAR", (160, 198), DI_SCREEN_CENTER_BOTTOM);
 
@@ -713,15 +724,15 @@ class ClassicStatusBar : WidgetStatusBar
 		DrawImage(TexMan.GetName(key.icon), (x + 3, y + 5), DI_ITEM_CENTER, 1.0, (8, 15));
 	}
 
-	void DrawMugShot(int x, int y, int size = 32)
+	void DrawMugShot(int x, int y, int size = 32, String face = "", int accuracy = 5)
 	{
 		if (staticmugshot && staticmugshottimer >= gametic)
 		{
-			mugshot = GetMugShot(5, type:staticmugshot);
+			mugshot = GetMugShot(accuracy, face, staticmugshot);
 		}
-		else if (!mugshot.IsValid() || mugshottimer < gametic)
+		else if (!mugshot.IsValid() || mugshottimer < gametic || (face.length() && TexMan.GetName(mugshot).Left(3) != face))
 		{
-			mugshot = GetMugShot(5);
+			mugshot = GetMugShot(accuracy, face);
 			mugshottimer = gametic + GameHandler.UIRandom(1, 25);
 		}
 
@@ -1059,6 +1070,14 @@ class ClassicStatusBar : WidgetStatusBar
 			processed = true;
 		}
 
+		if (!processed)
+		{
+			GameExtension ex;
+			String extgame;
+			[ex, extgame] = GameExtension.Current();
+			if (ex && ex.ProcessNotify(extgame, self, printlevel, outline)) { return true; }
+		}
+
 		CVar logstyle = CVar.FindCVar("g_defaultlog");
 		if (logstyle && logstyle.GetInt()) { return false; }
 
@@ -1084,6 +1103,11 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override bool ProcessMidPrint(Font fnt, String msg, bool bold)
 	{
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex && ex.ProcessMidPrint(extgame, self, msg)) { return true; }
+
 		Log.Add(CPlayer, msg .. "\r", "MidPrint", PRINT_BOLD, fnt, "White");
 
 		return true;

@@ -25,13 +25,23 @@ class GraphicsHandler : StaticEventHandler
 	WolfGraphicParser parsedgraphics;
 	Array<GraphicDataFile> datafiles;
 	Array<String> touchedcanvas;
+	String activevswap; // Extension of the VSWAP drawn last; data sets with a SpritePrefix can share sprite names
 
 	override void OnRegister()
 	{
 		ParseGraphics();
 	}
 
-	void ParseGraphics()
+	// Redraw one family's VSWAP so its art owns the shared sprite names
+	static void Activate(String ext)
+	{
+		let this = GraphicsHandler.Get();
+		if (!this || this.activevswap ~== ext) { return; }
+
+		this.ParseGraphics(ext);
+	}
+
+	void ParseGraphics(String only = "")
 	{
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
 
@@ -42,6 +52,10 @@ class GraphicsHandler : StaticEventHandler
 			lumpname = lumpname.MakeUpper();
 			if (lumpname.IndexOf("VSWAP.") > -1)
 			{
+				String ext = lumpname.Mid(lumpname.RightIndexOf(".") + 1);
+				if (only.length() && !(ext ~== only)) { continue; }
+				activevswap = ext;
+
 				if (developer) { console.printf("Writing graphics from %s...", lumpname); }
 				let e = GraphicDataFile.Find(datafiles, lumpname, lumpname);
 				WolfGraphicParser.Parse(parsedgraphics, e, touchedcanvas);
@@ -200,7 +214,7 @@ class WolfGraphicParser
 		DataHandler handler = DataHandler(StaticEventHandler.Find("DataHandler"));
 
 		String content = d.content;
-		String gamename = d.path.Mid(d.path.length() - 3);
+		String gamename = d.path.Mid(d.path.RightIndexOf(".") + 1);
 		if (gamename ~== "SOD" || gamename ~== "SDM") { gamename = "SD1"; }
 
 		ParsedValue data = handler.GetGraphicMap(gamename);
@@ -209,6 +223,14 @@ class WolfGraphicParser
 			gamename = ParsedMap.GetGameName(max(0, g_sod));
 			data = handler.GetGraphicMap(gamename);
 		}
+
+		String spriteprefix = data.GetString("SpritePrefix", true);
+		if (!spriteprefix.length()) { spriteprefix = "W"; }
+
+		// Some mods' sprites have their shadows painted in solid grey; the TC's
+		// shadow masking would turn those (and grey objects like skulls) translucent
+		GraphicParserFlags spriteflags = GP_TRANSPARENT;
+		if (data.GetBool("NoShadowMask")) { spriteflags |= GP_NOMASK; }
 
 		ParsedValue palettepath = data.Find("Palette");
 		ParsedValue texturenames = data.Find("Textures");
@@ -298,7 +320,7 @@ class WolfGraphicParser
 						newgraphic.graphicname = FileReader.StripQuotes(texture.children[0].keyname);
 						for (int t = 0; t < texture.children.Size(); t++)
 						{
-							GraphicParserFlags flags = GP_TRANSPARENT;
+							GraphicParserFlags flags = spriteflags;
 							if (texture.children[t].children.Size())
 							{
 								for (int p = 0; p < texture.children[t].children.Size(); p++)
@@ -317,16 +339,16 @@ class WolfGraphicParser
 					{
 						newgraphic.graphicname = FileReader.StripQuotes(spritenames.children[a - wallcount].keyname);
 						newgraphic.Parse(palette, true);
-						CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
+						CreateGraphic(newgraphic, newgraphic.graphicname, spriteflags);
 					}
 				}
 
 				int num = a - wallcount;
 				int frame = 0x41 + num % 26;
 				num /= 26;
-				newgraphic.graphicname = String.Format("W%03i%c0", num, frame);
+				newgraphic.graphicname = String.Format("%s%03i%c0", spriteprefix, num, frame);
 				newgraphic.Parse(palette, true);
-				CreateGraphic(newgraphic, newgraphic.graphicname, GP_TRANSPARENT);
+				CreateGraphic(newgraphic, newgraphic.graphicname, spriteflags);
 
 				touchedcanvas.push(newgraphic.graphicname);
 

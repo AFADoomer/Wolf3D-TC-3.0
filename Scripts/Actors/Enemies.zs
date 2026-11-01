@@ -125,6 +125,12 @@ class ClassicBase : Actor
 
 		handler = MapHandler.Get();
 
+		// A game extension's own hit points, scores and speeds
+		GameExtension ex;
+		String extgame;
+		[ex, extgame] = GameExtension.Current();
+		if (ex) { ex.SetupEnemy(extgame, self); }
+
 		Super.BeginPlay();
 	}
 
@@ -333,7 +339,7 @@ class ClassicBase : Actor
 		olddir = movedir;
 		turnaround = opposite[movedir];
 
-		[delta, d[0], d[1]] = GetDirections();
+		[delta, d[0], d[1]] = GetDirections(true);
 
 		movedir = diags[((delta.y < 0) << 1) + (delta.x > 0)];
 		if (TryWalk()) { return movedir; }
@@ -533,13 +539,18 @@ class ClassicBase : Actor
 		return d[1];
 	}
 
-	Vector2, int, int GetDirections()
+	// A spot for a mod's actor to head for instead of its target: 1 for chasing
+	// and running, 2 for dodging as well
+	int goalmode;
+	Vector2 goal;
+
+	Vector2, int, int GetDirections(bool dodge = false)
 	{
 		if (!target) return (0, 0), DI_NODIR, DI_NODIR;
 
 		int d[2];
 
-		Vector2 delta = Vec2To(target);
+		Vector2 delta = goalmode > (dodge ? 1 : 0) ? level.Vec2Diff(pos.xy, goal) : Vec2To(target);
 		delta.x = int(delta.x / 64);
 		delta.y = int(delta.y / 64);
 

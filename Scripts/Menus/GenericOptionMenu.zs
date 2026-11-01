@@ -492,7 +492,7 @@ class GenericOptionMenu : OptionMenu
 
 	void DrawElement(double x, double y, String pic, int clr = 0, Vector2 size = (16, 16))
 	{
-		let tex = TexMan.CheckForTexture(pic, TexMan.Type_MiscPatch);
+		let tex = GameExtension.GetMenuTexture(pic, TexMan.Type_MiscPatch);
 
 		if (tex.isValid())
 		{

@@ -149,7 +149,7 @@ class GetPsyched : WolfMenu
 	{
 		if (curstate < 4)
 		{
-			screen.Dim(0x004040, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight());
+			if (!GameExtension.Backdrop(0, 0, screen.GetWidth(), screen.GetHeight())) { screen.Dim(0x004040, 1.0, 0, 0, screen.GetWidth(), screen.GetHeight()); }
 
 			if (back)
 			{

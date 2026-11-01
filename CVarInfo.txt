@@ -65,3 +65,4 @@ user string wolf3dtc_highscores4 = "T2l6bXIkR3BzeWiAgEk1M1A1gIA1NDQ0NA==";
 user string wolf3dtc_highscores5 = "WXRyJU1mcXGBgUo2NFE2gYE2NTU1NQ==";
 user string wolf3dtc_highscores6 = "UHVudCZYdXNreHWCgks3NVI3goI3NjY2Ng==";
 user string wolf3dtc_highscores7 = "UWiAJ15wc2l8eYODTDg2UziDgzg3Nzc3";
+server noarchive string g_modgame = ""; // Game from a GameExtension picked in the game menu (its data file extension)
