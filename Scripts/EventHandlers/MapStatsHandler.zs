@@ -35,6 +35,10 @@ class LevelData
 class PersistentMapStatsHandler : EventHandler
 {
 	Array<LevelData> Levels;
+
+	// The map being played, which a save doesn't otherwise keep, and the one after it
+	String datafile;
+	int mapnum, nextmapnum;
 }
 
 class MapStatsHandler : StaticEventHandler
@@ -195,7 +199,13 @@ class MapStatsHandler : StaticEventHandler
 	{
 		if (e.IsSaveGame) // If loading a save, check for saved stats and copy them over if found
 		{
-			if (!persistent) { persistent = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler")); }
+			// This handler runs first, and the stats below go by the current map:
+			// put the save's in place of the one that was running
+			MapHandler maps = MapHandler.Get();
+			if (maps) { maps.RestoreParsedMap(); }
+
+			// The handler from before the load is gone
+			persistent = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler"));
 			if (persistent) { Levels.Copy(persistent.Levels); }
 		}
 		else
