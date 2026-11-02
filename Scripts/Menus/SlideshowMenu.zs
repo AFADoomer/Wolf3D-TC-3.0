@@ -1011,6 +1011,10 @@ class HighScores : WolfMenu
 		let p = players[consoleplayer].mo;
 
 		finale = (gamestate == GS_FINALE || !Game.InGame());
+
+		// A parsed map's ending doesn't go through GS_FINALE
+		MapHandler handler = MapHandler.Get();
+		if (gamestate != GS_LEVEL && handler && handler.curmap && handler.curmap.info && handler.curmap.info.nextmap.left(6) == "enDSeQ") { finale = true; }
 		inputindex = -1;
 
 		if (finale && (!mParentMenu || !ListMenu(mParentMenu) || (!ListMenu(mParentMenu).mDesc || ListMenu(mParentMenu).mDesc.mMenuName != "MainMenu")))
@@ -1149,6 +1153,10 @@ class HighScores : WolfMenu
 
 	String LevelString()
 	{
+		// Parsed maps all run as "Level"
+		MapHandler handler = MapHandler.Get();
+		if (handler && handler.curmap) { return String.Format("   %i", handler.curmap.mapnum % 100); }
+
 		String levelname = level.mapname;
 
 		if (levelname.Length() == 4 && levelname.Mid(0, 1) ~== "E" && levelname.Mid(2, 1) ~== "L")
