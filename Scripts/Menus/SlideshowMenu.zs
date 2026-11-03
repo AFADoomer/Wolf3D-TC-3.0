@@ -948,6 +948,7 @@ class HighScores : WolfMenu
 	TextureID title, nametitle, scoretitle, leveltitle, bkg, icon;
 	int currentline, fontheight;
 	Array<ScoreEntry> scores;
+	String scoreprefix;
 
 	int fadetarget;
 	int fadetime;
@@ -985,27 +986,26 @@ class HighScores : WolfMenu
 		fontheight = 10;
 
 		GameHandler.ChangeMusic("ROSTER");
+		scoreprefix = GameExtension.GetHighScorePrefix();
+		static const String defaults[] = {
+			"amUhVHBndXhic2YuKDozfX1GMjBNMn19MjExMTE=", "Q2Z0a2NwIkVjdG9jZW1+fkczMU4zfn4zMjIyMg==",
+			"TXJrcSNGZHVwZGZuf39INDJPNH9/NDMzMzM=", "T2l6bXIkR3BzeWiAgEk1M1A1gIA1NDQ0NA==",
+			"WXRyJU1mcXGBgUo2NFE2gYE2NTU1NQ==", "UHVudCZYdXNreHWCgks3NVI3goI3NjY2Ng==",
+			"UWiAJ15wc2l8eYODTDg2UziDgzg3Nzc3" };
 
 		for (int s = 1; s <= 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s);
+			CVar scorevalue = CVar.FindCvar(scoreprefix .. s);
+			String encoded = scorevalue && scorevalue.GetString().Length() ? scorevalue.GetString() : defaults[s - 1];
+			Array<String> entry;
 
-			if (scorevalue)
-			{
-				Array<String> entry;
+			decode(encoded, s).Split(entry, "||");
 
-				decode(scorevalue.GetString(), s).Split(entry, "||");
-
-				ScoreEntry h = New("ScoreEntry");
-				if (entry.Size()) { h.n = entry[0]; }
-				if (entry.Size() > 1) { h.l = entry[1]; }
-				if (entry.Size() > 2) { h.s = entry[2]; }
-
-				scores.Push(h);
-
-				entry.Clear();
-				scorevalue = null;
-			}
+			ScoreEntry h = New("ScoreEntry");
+			if (entry.Size()) { h.n = entry[0]; }
+			if (entry.Size() > 1) { h.l = entry[1]; }
+			if (entry.Size() > 2) { h.s = entry[2]; }
+			scores.Push(h);
 		}
 
 		let p = players[consoleplayer].mo;
@@ -1268,7 +1268,7 @@ class HighScores : WolfMenu
 	{
 		for (int s = 0; s < 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s + 1);
+			CVar scorevalue = CVar.FindCvar(scoreprefix .. (s + 1));
 
 			if (scorevalue && scores[s])
 			{
