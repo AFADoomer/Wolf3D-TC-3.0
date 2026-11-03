@@ -1061,6 +1061,9 @@ class ClassicStatusBar : WidgetStatusBar
 
 	override bool ProcessNotify(EPrintLevel printlevel, String outline)
 	{
+		let saves = SaveInfo.Get();
+		if (saves && gametic < saves.quietsave && outline.IndexOf(StringTable.Localize("$GGSAVED")) >= 0) { return true; }
+
 		bool processed = false;
 
 		if (gameaction == ga_savegame || gameaction == ga_autosave)

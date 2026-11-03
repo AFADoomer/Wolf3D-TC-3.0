@@ -239,7 +239,6 @@ class LifeHandler : StaticEventHandler
 
 		Level.MakeAutoSave();
 		SaveInfo.RequestAutosave();
-		SaveInfo.RequestAutosave();
 	}
 
 	override void PlayerDied(PlayerEvent e)

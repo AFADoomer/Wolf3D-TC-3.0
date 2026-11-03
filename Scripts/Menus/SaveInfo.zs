@@ -14,6 +14,8 @@ class SaveInfo : StaticEventHandler
 	ui Map<String, String> known; // By file name
 	int autosaves; // Levels entered
 	ui int autosaveswritten;
+	ui int quietsave; // Autosaves don't say "Game saved." until this tic
+	bool loaded; // This level came from a save, so there's nothing new to keep
 
 	static clearscope SaveInfo Get()
 	{
@@ -38,6 +40,11 @@ class SaveInfo : StaticEventHandler
 		return String.Format("%s|%s|%i|%i|%i", handler ? handler.gametitle : "", mapname, level.maptime, level.totaltime, map ? map.mapnum % 100 : 0);
 	}
 
+	override void WorldLoaded(WorldEvent e)
+	{
+		loaded = e.IsSaveGame;
+	}
+
 	static void RequestAutosave()
 	{
 		let this = SaveInfo.Get();
@@ -51,8 +58,9 @@ class SaveInfo : StaticEventHandler
 		if (autosaveswritten == autosaves || level.maptime < AUTOSAVEDELAY) { return; }
 		autosaveswritten = autosaves;
 
-		if (multiplayer || disableautosave >= 2) { return; }
+		if (loaded || multiplayer || disableautosave >= 2) { return; }
 
+		quietsave = gametic + GameTicRate; // It's done by the next tic or so
 		WriteSave("Autosave");
 	}
 
