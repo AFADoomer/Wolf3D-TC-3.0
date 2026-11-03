@@ -807,7 +807,7 @@ class Game
 		)
 		{
 			let p = players[consoleplayer].mo;
-			if (p && LifeHandler.GetLives(p) > -1) { return true; }
+			if (p && LifeHandler.GetLives(p) > -1 && !LifeHandler.GameFinished()) { return true; }
 		}
 
 		return false;

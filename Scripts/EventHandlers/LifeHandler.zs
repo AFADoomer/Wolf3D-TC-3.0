@@ -32,6 +32,26 @@ class LifeHandler : StaticEventHandler
 	bool died[MAXPLAYERS];
 
 	PersistentLifeHandler persistent;
+	ui bool finished;
+
+	// Network events don't run during the intermission, which is where a parsed map's
+	// game ends: this lasts until a level is running again
+	ui static void FinishGame()
+	{
+		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
+		if (this) { this.finished = true; }
+	}
+
+	ui static bool GameFinished()
+	{
+		LifeHandler this = LifeHandler(StaticEventHandler.Find("LifeHandler"));
+		return this && this.finished;
+	}
+
+	override void UiTick()
+	{
+		if (gamestate == GS_LEVEL) { finished = false; }
+	}
 
 	ui static int GetLives(Actor p)
 	{
