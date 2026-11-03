@@ -130,6 +130,9 @@ class GameExtension
 	// The ending sequence menu; 'None' for the TC's
 	virtual Name FinaleMenu(String game) { return 'None'; }
 
+	// CVar base for seven encoded high scores; empty keeps the stock Wolf3D/Spear boards
+	virtual String HighScorePrefix(String game) { return ""; }
+
 	// Episode (MAPINFO cluster menu index) New Game goes straight to; -1 shows the episode menu
 	virtual ui int Episode(String game) { return -1; }
 
@@ -298,6 +301,16 @@ class GameExtension
 
 		Name finale = ex ? ex.FinaleMenu(game) : 'None';
 		return finale == 'None' ? 'SoDFinale' : finale;
+	}
+
+	static clearscope String GetHighScorePrefix()
+	{
+		GameExtension ex;
+		String game;
+		[ex, game] = Current();
+
+		String prefix = ex ? ex.HighScorePrefix(game) : "";
+		return prefix.Length() ? prefix : "wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "");
 	}
 }
 
