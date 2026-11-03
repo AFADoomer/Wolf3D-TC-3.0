@@ -418,6 +418,7 @@ class MapHandler : StaticEventHandler
 {
 	int builtstyle;
 	bool startingnewgame;
+	String gametitle; // For saves: what the running extension game is called
 	WolfMapParser parsedmaps;
 	Array<DataFile> datafiles;
 	ParsedMap curmap, queuedmap, secretmapnext;
@@ -638,6 +639,9 @@ class MapHandler : StaticEventHandler
 	// For saves, which don't keep this handler
 	void RecordParsedMap()
 	{
+		GameExtension ex = curmap ? GameExtension.Find(curmap.extension) : null;
+		gametitle = ex ? ex.Title(curmap.extension.MakeUpper()) : "";
+
 		let saved = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler"));
 		if (!saved) { return; }
 
