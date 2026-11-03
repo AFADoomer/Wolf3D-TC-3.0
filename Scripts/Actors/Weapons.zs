@@ -238,8 +238,6 @@ class ClassicWeapon : Weapon
 					WeaponScaleX = Default.WeaponScaleX * factor;
 					WeaponScaleY = Default.WeaponScaleY * factor;
 				}
-				//YAdjust = (-offsets.y - 14.0) / WeaponScaleY;
-				console.printf("%s %f %f", GetClassNAme(), weaponscaley, yadjust);
 			}
 		}
 	}
