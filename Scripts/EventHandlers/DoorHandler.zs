@@ -282,7 +282,8 @@ class DoorEffector: PolyobjectEffector
 		// Close an open door (unless it's currently opening for the first time), and open a closed door
 		if (Status == WDST_OPENING || Status == WDST_OPEN)
 		{
-			if (Delay >= 0) { TryClose(); }
+			// Enemies only ever open doors
+			if (Delay >= 0 && !(Activator && Activator.bIsMonster)) { TryClose(); }
 		}
 		else if (Status == WDST_CLOSING || Status == WDST_CLOSED) { Open(); }
 	}

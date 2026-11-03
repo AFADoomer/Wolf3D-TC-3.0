@@ -569,6 +569,10 @@ class MapHandler : StaticEventHandler
 			if (!handler) { return; }
 
 			handler.ParseGraphics();
+
+			// That drew every data set; the current game's goes back on top
+			String dataset = curmap ? GameExtension.GetDataSet(curmap.extension) : "";
+			if (dataset.length()) { GraphicsHandler.Activate(dataset); }
 		}
 
 		if (e.IsManual) { return; }
@@ -718,11 +722,30 @@ class MapHandler : StaticEventHandler
 			break;
 		}
 
-		if (saved && saved.nextmapnum) { queuedmap = parsedmaps.GetMapDataByNumber(saved.nextmapnum, curmap.datafile.path); }
+		if (saved && saved.nextmapnum && saved.nextmapnum != saved.mapnum) { queuedmap = parsedmaps.GetMapDataByNumber(saved.nextmapnum, curmap.datafile.path); }
 		if (!queuedmap) { QueueNextMap(); }
 		if (queuedmap) { level.nextmap = "Level"; }
 
 		RecordParsedMap();
+
+		// A save keeps its lines as they were built, in saves from before walls were
+		// always drawn on the automap too
+		for (int l = 0; l < level.lines.Size(); l++)
+		{
+			let ln = level.lines[l];
+			if (!ln.sidedef[0] || !ln.sidedef[1]) { continue; }
+
+			Sector front = ln.sidedef[0].sector;
+			Sector back = ln.sidedef[1].sector;
+			if ((front.CenterCeiling() == front.CenterFloor()) != (back.CenterCeiling() == back.CenterFloor())) { ln.flags &= ~Line.ML_DONTDRAW; }
+		}
+
+		// As for a new map: the graphics, and which extension game this is
+		String dataset = GameExtension.GetDataSet(curmap.extension);
+		if (dataset.length()) { GraphicsHandler.Activate(dataset); }
+
+		CVar gamevar = CVar.FindCVar("g_modgame");
+		if (gamevar) { gamevar.SetString(dataset.length() ? curmap.extension.MakeUpper() : ""); }
 	}
 
 	override void WorldUnloaded(WorldEvent e)
@@ -752,6 +775,12 @@ class MapHandler : StaticEventHandler
 			LevelInfo nextinfo = LevelInfo.FindLevelInfo(nextmap);
 			if (nextinfo) { queuedmap = parsedmaps.GetMapDataByNumber(nextinfo.levelnum, curmap.datafile.path); }
 			level.nextmap = "Level";
+		}
+		else if (nextmap.length())
+		{
+			// The game ends here: anything left queued would go round this map again
+			queuedmap = null;
+			level.nextmap = nextmap;
 		}
 	}
 

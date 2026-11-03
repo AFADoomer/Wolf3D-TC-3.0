@@ -136,6 +136,8 @@ class ClassicStats : DoomStatusScreen
 		totals.leveltime = 0;
 
 		MapStatsHandler stats = MapStatsHandler(StaticEventHandler.Find("MapStatsHandler"));
+		MapHandler maps = MapHandler.Get();
+		ParsedMap curmap = maps ? maps.curmap : null;
 
 		if (stats)
 		{
@@ -146,7 +148,9 @@ class ClassicStats : DoomStatusScreen
 				let m = stats.Levels[i];
 
 				// Filter to only show results from maps named in this episode (e.g., matching "E1L").
-				if (m.mapname.Mid(0, 3) ~== wbs.current.Mid(0, 3)) { summary.Push(m); }
+				// Parsed maps have their own names, so go by their numbers
+				bool sameepisode = curmap ? m.levelnum / 100 == curmap.mapnum / 100 : m.mapname.Mid(0, 3) ~== wbs.current.Mid(0, 3);
+				if (sameepisode) { summary.Push(m); }
 				else { continue; }
 			}
 
@@ -317,7 +321,10 @@ class ClassicStats : DoomStatusScreen
 					return;
 				}
 
-				if (!multiplayer && (style == finale || level.info.nextmap.left(6) == "enDSeQ" || level.info.nextmap == ""))
+				// Parsed maps all run as "Level", so their own entry says if the game ends here
+				MapHandler handler = MapHandler.Get();
+				String nextmap = handler && handler.curmap && handler.curmap.info ? handler.curmap.info.nextmap : level.info.nextmap;
+				if (!multiplayer && (style == finale || nextmap.left(6) == "enDSeQ" || nextmap == ""))
 				{
 					if (Game.IsSoD()) { Menu.SetMenu(GameExtension.GetFinaleMenu(), -1); }
 					else { Menu.SetMenu("Episode" .. info.levelnum / 100 .. "End", -1); }

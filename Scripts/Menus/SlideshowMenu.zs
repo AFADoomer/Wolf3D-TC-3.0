@@ -948,6 +948,7 @@ class HighScores : WolfMenu
 	TextureID title, nametitle, scoretitle, leveltitle, bkg, icon;
 	int currentline, fontheight;
 	Array<ScoreEntry> scores;
+	String scoreprefix;
 
 	int fadetarget;
 	int fadetime;
@@ -973,44 +974,52 @@ class HighScores : WolfMenu
 		fadealpha = 1.0;
 		fadecolor = Game.GetFadeColor(self);
 
-		title = TexMan.CheckForTexture((Game.IsSoD() ? "SSCORES" : "SCORES"), TexMan.Type_Any);
+		title = GameExtension.GetMenuTexture((Game.IsSoD() ? "SSCORES" : "SCORES"), TexMan.Type_Any);
 		nametitle = TexMan.CheckForTexture("M_NAME", TexMan.Type_Any);
 		scoretitle = TexMan.CheckForTexture("M_SCORE", TexMan.Type_Any);
 		leveltitle = TexMan.CheckForTexture("M_LEVEL", TexMan.Type_Any);
 		bkg = TexMan.CheckForTexture("MENUBLUE", TexMan.Type_Any);
-		icon = TexMan.CheckForTexture("SODICON", TexMan.Type_Any);
+		icon = GameExtension.GetMenuTexture("SODICON", TexMan.Type_Any);
 
 		[dimcoords, dimsize] = screen.VirtualToRealCoords((0, 0), (320, 200), (320, 200));
 
 		fontheight = 10;
 
 		GameHandler.ChangeMusic("ROSTER");
+		scoreprefix = GameExtension.GetHighScorePrefix();
+		static const String defaults[] = {
+			"amUhVHBndXhic2YuKDozfX1GMjBNMn19MjExMTE=", "Q2Z0a2NwIkVjdG9jZW1+fkczMU4zfn4zMjIyMg==",
+			"TXJrcSNGZHVwZGZuf39INDJPNH9/NDMzMzM=", "T2l6bXIkR3BzeWiAgEk1M1A1gIA1NDQ0NA==",
+			"WXRyJU1mcXGBgUo2NFE2gYE2NTU1NQ==", "UHVudCZYdXNreHWCgks3NVI3goI3NjY2Ng==",
+			"UWiAJ15wc2l8eYODTDg2UziDgzg3Nzc3" };
 
 		for (int s = 1; s <= 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s);
+			CVar scorevalue = CVar.FindCvar(scoreprefix .. s);
+			String encoded = scorevalue && scorevalue.GetString().Length() ? scorevalue.GetString() : defaults[s - 1];
+			Array<String> entry;
 
-			if (scorevalue)
-			{
-				Array<String> entry;
+			decode(encoded, s).Split(entry, "||");
 
-				decode(scorevalue.GetString(), s).Split(entry, "||");
-
-				ScoreEntry h = New("ScoreEntry");
-				if (entry.Size()) { h.n = entry[0]; }
-				if (entry.Size() > 1) { h.l = entry[1]; }
-				if (entry.Size() > 2) { h.s = entry[2]; }
-
-				scores.Push(h);
-
-				entry.Clear();
-				scorevalue = null;
-			}
+			ScoreEntry h = New("ScoreEntry");
+			if (entry.Size()) { h.n = entry[0]; }
+			if (entry.Size() > 1) { h.l = entry[1]; }
+			if (entry.Size() > 2) { h.s = entry[2]; }
+			scores.Push(h);
 		}
 
 		let p = players[consoleplayer].mo;
 
 		finale = (gamestate == GS_FINALE || !Game.InGame());
+
+		// A parsed map's ending doesn't go through GS_FINALE
+		MapHandler handler = MapHandler.Get();
+		if (gamestate != GS_LEVEL && handler && handler.curmap && handler.curmap.info && handler.curmap.info.nextmap.left(6) == "enDSeQ")
+		{
+			// Nothing to go back to from here, the same as after a game over
+			LifeHandler.FinishGame();
+			finale = true;
+		}
 		inputindex = -1;
 
 		if (finale && (!mParentMenu || !ListMenu(mParentMenu) || (!ListMenu(mParentMenu).mDesc || ListMenu(mParentMenu).mDesc.mMenuName != "MainMenu")))
@@ -1131,6 +1140,7 @@ class HighScores : WolfMenu
 			WriteScores();
 			mInput = null;
 			inputindex = -1;
+			exitmenu = true; // Entering the name is the last thing on this screen
 			return true;
 		}
 
@@ -1149,6 +1159,10 @@ class HighScores : WolfMenu
 
 	String LevelString()
 	{
+		// Parsed maps all run as "Level"
+		MapHandler handler = MapHandler.Get();
+		if (handler && handler.curmap) { return String.Format("   %i", handler.curmap.mapnum % 100); }
+
 		String levelname = level.mapname;
 
 		if (levelname.Length() == 4 && levelname.Mid(0, 1) ~== "E" && levelname.Mid(2, 1) ~== "L")
@@ -1254,7 +1268,7 @@ class HighScores : WolfMenu
 	{
 		for (int s = 0; s < 7; s++)
 		{
-			CVar scorevalue = CVar.FindCvar("wolf3dtc_highscore" .. (g_sod > 0 ? "s" : "") .. s + 1);
+			CVar scorevalue = CVar.FindCvar(scoreprefix .. (s + 1));
 
 			if (scorevalue && scores[s])
 			{

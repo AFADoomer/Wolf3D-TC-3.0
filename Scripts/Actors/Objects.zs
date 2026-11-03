@@ -1334,7 +1334,7 @@ class SpearofDestiny : Inventory
 				actiontime = level.time + 70;
 				InterHubAmount = 0;
 			}
-			if (level.time == actiontime) { level.ExitLevel(0, true); }
+			if (level.time == actiontime) { level.ChangeLevel(level.nextmap, 0, CHANGELEVEL_KEEPFACING | CHANGELEVEL_NOINTERMISSION); } // Straight on, as the original
 		}
 	}
 }
