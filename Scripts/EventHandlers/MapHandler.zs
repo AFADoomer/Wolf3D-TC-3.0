@@ -569,6 +569,10 @@ class MapHandler : StaticEventHandler
 			if (!handler) { return; }
 
 			handler.ParseGraphics();
+
+			// That drew every data set; the current game's goes back on top
+			String dataset = curmap ? GameExtension.GetDataSet(curmap.extension) : "";
+			if (dataset.length()) { GraphicsHandler.Activate(dataset); }
 		}
 
 		if (e.IsManual) { return; }
@@ -723,6 +727,25 @@ class MapHandler : StaticEventHandler
 		if (queuedmap) { level.nextmap = "Level"; }
 
 		RecordParsedMap();
+
+		// A save keeps its lines as they were built, in saves from before walls were
+		// always drawn on the automap too
+		for (int l = 0; l < level.lines.Size(); l++)
+		{
+			let ln = level.lines[l];
+			if (!ln.sidedef[0] || !ln.sidedef[1]) { continue; }
+
+			Sector front = ln.sidedef[0].sector;
+			Sector back = ln.sidedef[1].sector;
+			if ((front.CenterCeiling() == front.CenterFloor()) != (back.CenterCeiling() == back.CenterFloor())) { ln.flags &= ~Line.ML_DONTDRAW; }
+		}
+
+		// As for a new map: the graphics, and which extension game this is
+		String dataset = GameExtension.GetDataSet(curmap.extension);
+		if (dataset.length()) { GraphicsHandler.Activate(dataset); }
+
+		CVar gamevar = CVar.FindCVar("g_modgame");
+		if (gamevar) { gamevar.SetString(dataset.length() ? curmap.extension.MakeUpper() : ""); }
 	}
 
 	override void WorldUnloaded(WorldEvent e)
