@@ -252,7 +252,14 @@ class MapStatsHandler : StaticEventHandler
 			}
 		}
 
-		SaveLevelData();
+		// A parsed map isn't current yet: this would put the new level's stats on the last one's
+		if (e.IsSaveGame || !(level.mapname ~== "Level")) { SaveLevelData(); }
+		else
+		{
+			// But this level's saves still need the levels before it
+			persistent = PersistentMapStatsHandler(EventHandler.Find("PersistentMapStatsHandler"));
+			if (persistent) { persistent.Levels.Copy(Levels); }
+		}
 	}
 
 	override void WorldUnloaded(WorldEvent e)
