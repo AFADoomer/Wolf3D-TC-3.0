@@ -187,7 +187,8 @@ class ClassicBase : Actor
 	{
 		if (health > 0)
 		{
-			if (spr > -1 && sprite != spr) { sprite = spr; }
+			// A save can't keep spr's -1 and gives back 0, so that's no base sprite too
+			if (spr > 0 && sprite != spr) { sprite = spr; }
 
 			if (!multiplayer && target && target.player && target.health <= 0)
 			{
