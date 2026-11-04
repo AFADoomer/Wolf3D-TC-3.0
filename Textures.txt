@@ -1,3 +1,6 @@
+// Automap marker for solid scenery on the line map
+Sprite WMBKA0, 32, 32 { Offset 16, 16 Patch "Patches/AMBLOCK.png", 0, 0 }
+
 // Silence parsing errors from default MENUDEF
 Graphic M_DOOM, 1, 1 { Patch BLACK, 0, 0 }
 Graphic M_NGAME, 1, 1 { Patch BLACK, 0, 0 }
