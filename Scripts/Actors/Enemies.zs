@@ -199,8 +199,16 @@ class ClassicBase : Actor
 
 		Super.Tick();
 
+		SetSpriteRotation();
+
+		if (multiplayer && targetswitchdelay > 0) { targetswitchdelay--; }
+	}
+
+	// Attack and pain frames face the player unless extra rotations are wanted
+	void SetSpriteRotation()
+	{
 		if (
-			!multiplayer &&
+			!multiplayer && players[consoleplayer].mo &&
 			(bOptionalRotations || InStateSequence(CurState, MissileState) || InStateSequence(CurState, ResolveState("Pain"))) &&
 			!g_userotations
 		)
@@ -211,8 +219,6 @@ class ClassicBase : Actor
 		{
 			spriterotation = 0;
 		}
-
-		if (multiplayer && targetswitchdelay > 0) { targetswitchdelay--; }
 	}
 
 	void TargetNearestVisiblePlayer()
@@ -798,7 +804,13 @@ class ClassicBase : Actor
 			if (multiplayer) { targetswitchdelay = 70; } // Don't let the enemy change targets again for 2 seconds
 		}
 
-		return Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		int dealt = Super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+
+		// Damage can start the pain frames after this enemy has ticked, so face
+		// them now rather than drawing a turned-away view until the next tic
+		SetSpriteRotation();
+
+		return dealt;
 	}
 }
 
