@@ -159,7 +159,7 @@ class ZScriptTools
 
 	static String GetText(String input)
 	{
-		return ZScriptTools.StripColorCodes(ZScriptTools.Trim(input));
+		return ZScriptTools.Trim(ZScriptTools.StripColorCodes(input));
 	}
 
 	static String Trim(String input)

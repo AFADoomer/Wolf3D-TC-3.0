@@ -545,6 +545,11 @@ class MapHandler : StaticEventHandler
 			}
 
 			queuedmap = parsedmaps.GetMapData(mapname, datafile);
+			if (!queuedmap)
+			{
+				console.printf("Map '%s' not found%s", mapname, datafile.length() ? string.format(" in '%s'", datafile) : "");
+				return;
+			}
 
 			if (gamestate == GS_LEVEL)
 			{
@@ -2402,12 +2407,12 @@ class WolfMapParser
 	{
 		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
-			if (maps[m].mapname ~== mapname && (!datafile.length() || maps[m].datafile.path ~== datafile)) { return maps[m]; }
+			if (ZScriptTools.GetText(maps[m].mapname) ~== mapname && (!datafile.length() || maps[m].datafile.path ~== datafile)) { return maps[m]; }
 		}
 
 		for (int m = maps.Size() - 1; m >= 0; m--)
 		{
-			if (maps[m].mapname ~== mapname && maps[m].datafile.gametitle == "Standalone Maps") { return maps[m]; }
+			if (ZScriptTools.GetText(maps[m].mapname) ~== mapname && maps[m].datafile.gametitle == "Standalone Maps") { return maps[m]; }
 		}
 
 		return null;
