@@ -497,7 +497,7 @@ class WolfGraphicParser
 				currentcanvas.SetStencil(1, SOP_Keep, SF_AllOn);
 			}
 
-			CVar dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
+			bool lightson = GameExtension.LightsOn();
 			for (int p = 0; p < graphic.posts.Size(); p++)
 			{
 				let post = graphic.posts[p];
@@ -519,7 +519,7 @@ class WolfGraphicParser
 						}
 						else if (alpha < 0)
 						{
-							if (dynlights && !dynlights.GetInt())
+							if (!lightson)
 							{
 								int r = int(145 + clr.r * clr.r / 255.0 * 2);
 								int g = int(145 + clr.g * clr.b / 255.0 * 2);
