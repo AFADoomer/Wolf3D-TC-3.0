@@ -166,6 +166,10 @@ class GameExtension
 	// Whether Wolf3D's own cheat keys work in this game
 	virtual ui bool StockCheats(String game) { return true; }
 
+	// Whether g_dynamiclights may light this game: false keeps it off (its lamp
+	// art may be something else), and the lamps' painted light pools stay
+	virtual clearscope bool DynamicLights(String game) { return true; }
+
 	// Lookups -----------------------------------------------------------------
 
 	static clearscope GameExtensionHandler GetHandler()
@@ -229,6 +233,19 @@ class GameExtension
 	{
 		let ex = Find(ext);
 		return ex ? ex.DataSet(ext.MakeUpper()) : "";
+	}
+
+	// g_dynamiclights, unless the game being played turns it off
+	static clearscope bool LightsOn()
+	{
+		CVar dynlights = CVar.GetCVar("g_dynamiclights", players[consoleplayer]);
+		if (!dynlights || !dynlights.GetInt()) { return false; }
+
+		GameExtension ex;
+		String game;
+		[ex, game] = Current();
+
+		return !ex || ex.DynamicLights(game);
 	}
 
 	static clearscope TextureID GetMenuTexture(String name, int usetype = TexMan.Type_Any)

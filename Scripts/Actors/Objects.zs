@@ -204,7 +204,7 @@ class FloorLamp : ClassicDecoration
 
 		Game.AttachLight(self, 22.0, "White", (0, 0, 36), DYNAMICLIGHT.LF_SPOT, 2, 25, 90);
 
-		floorclip = (dynlights && dynlights.GetInt()) ? 2 : 0;
+		floorclip = GameExtension.LightsOn() ? 2 : 0;
 	}
 }
 

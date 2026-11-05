@@ -825,8 +825,7 @@ class Game
 
 	play static void AttachLight(Actor mo, int radius = 32, color clr = 0xFFFFFF, Vector3 offset = (0, 0, 0), int flags = 0, int inner = 10, int outer = 35, int angle = 0)
 	{
-		CVar dynlights = CVar.GetCvar("g_dynamiclights", players[consoleplayer]);
-		if (dynlights && dynlights.GetInt())
+		if (GameExtension.LightsOn())
 		{
 			mo.A_AttachLight("Trigger", DynamicLight.PointLight, 0x00010101, 16, 0, 0, (0, 0, 32.0));
 			mo.A_AttachLight("Light", DynamicLight.PointLight, clr, radius, 0, DYNAMICLIGHT.LF_ATTENUATE | DYNAMICLIGHT.LF_DONTLIGHTSELF | (flags & ~DYNAMICLIGHT.LF_SPOT), offset);
